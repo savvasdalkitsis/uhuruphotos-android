@@ -41,7 +41,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.view.api.ui.LocalMedi
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.view.api.ui.RequestBanner
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.LoginButton
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.LoginButton
 
 @Composable
 fun FeedHeaders(

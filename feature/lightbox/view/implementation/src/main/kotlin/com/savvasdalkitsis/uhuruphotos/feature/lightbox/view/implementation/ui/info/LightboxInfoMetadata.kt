@@ -49,7 +49,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_save
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_shutter_speed
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_videocam
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ActionIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SectionHeader
 
 @Composable

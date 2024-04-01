@@ -26,7 +26,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.DoNotShowUpsellAgain
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.Login
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.DiscoverState
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UpsellDialog
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.dialogs.UpsellDialog
 
 @Composable fun Discover(
     state: DiscoverState,

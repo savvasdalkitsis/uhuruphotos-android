@@ -32,11 +32,11 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.Swip
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.PeopleBanner
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ActionIcon
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CommonScaffold
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.NoContent
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SwipeRefresh
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UpNavButton
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.refresh.SwipeRefresh
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UpNavButton
 
 @Composable
 fun Gallery(

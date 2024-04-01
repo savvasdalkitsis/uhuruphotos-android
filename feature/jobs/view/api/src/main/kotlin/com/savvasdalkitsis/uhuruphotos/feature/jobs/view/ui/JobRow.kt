@@ -44,7 +44,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus.Q
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.state.JobState
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.state.Title
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
 
 @Composable
 fun JobRow(

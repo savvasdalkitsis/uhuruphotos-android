@@ -33,8 +33,8 @@ import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ContentTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.CustomColors
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.DynamicIcon
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.TextWithIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.DynamicIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.TextWithIcon
 
 @Composable
 internal fun RowScope.WelcomeUseCase(

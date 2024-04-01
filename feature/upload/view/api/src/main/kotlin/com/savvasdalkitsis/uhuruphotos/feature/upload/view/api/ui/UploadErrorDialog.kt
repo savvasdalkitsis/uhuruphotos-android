@@ -24,7 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.upload.view.api.ui.state.UploadEr
 import com.savvasdalkitsis.uhuruphotos.feature.upload.view.api.ui.state.UploadErrorDialogMode.NOT_ALLOWED
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.OkDialog
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.dialogs.OkDialog
 
 @Composable
 fun UploadErrorDialog(

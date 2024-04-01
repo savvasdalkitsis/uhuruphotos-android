@@ -25,7 +25,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.state.T
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either.Right
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ActionIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
 
 @Composable
 internal fun TrashAlbumPage(

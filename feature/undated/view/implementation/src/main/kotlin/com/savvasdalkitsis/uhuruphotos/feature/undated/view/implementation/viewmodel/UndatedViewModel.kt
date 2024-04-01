@@ -24,7 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.undated.view.implementation.seam.
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.state.Title
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

@@ -41,8 +41,8 @@ import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.Logo
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SwipeRefresh
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UpsellDialog
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.refresh.SwipeRefresh
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.dialogs.UpsellDialog
 
 @Composable
 internal fun Library(

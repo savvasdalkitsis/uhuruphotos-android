@@ -24,7 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxS
 import com.savvasdalkitsis.uhuruphotos.feature.videos.domain.api.usecase.VideosUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simpleOk
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.state.Title
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject

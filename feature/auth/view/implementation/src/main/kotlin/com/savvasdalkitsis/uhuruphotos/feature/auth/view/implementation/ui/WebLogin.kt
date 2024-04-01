@@ -24,7 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.google.accompanist.web.WebView
 import com.google.accompanist.web.rememberWebViewState
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CommonScaffold
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
 
 private const val USER_AGENT =
@@ -47,7 +47,7 @@ fun WebLogin(state: WebLoginState) {
                         CookieManager.getInstance().setAcceptThirdPartyCookies(it, true)
                         with(it.settings) {
                             userAgentString =
-                                com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.ui.USER_AGENT
+                                USER_AGENT
                             javaScriptEnabled = true
                         }
                     }

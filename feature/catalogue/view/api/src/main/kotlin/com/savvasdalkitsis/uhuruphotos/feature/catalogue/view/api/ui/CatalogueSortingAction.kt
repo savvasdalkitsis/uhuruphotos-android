@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.Catal
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSorting.DATE_ASC
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSorting.DATE_DESC
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.DropDownActionIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.DropDownActionIcon
 
 @Composable
 internal fun CatalogueSortingAction(

@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state
 
 import androidx.compose.runtime.Immutable
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SelectionMode
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkable.SelectionMode
 
 @Immutable
 data class CelState(

@@ -34,7 +34,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.R
 import com.savvasdalkitsis.uhuruphotos.foundation.permissions.api.ui.PermissionsState
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.DynamicIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.DynamicIcon
 
 @Composable
 fun BoxScope.PortfolioMissingPermissions(

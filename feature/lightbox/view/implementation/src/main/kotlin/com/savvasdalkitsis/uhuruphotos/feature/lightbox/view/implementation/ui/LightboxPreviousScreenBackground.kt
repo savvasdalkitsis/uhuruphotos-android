@@ -45,9 +45,9 @@ import androidx.core.graphics.drawable.toBitmapOrNull
 import com.savvasdalkitsis.uhuruphotos.foundation.dismiss.api.ui.PullToDismissState
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.LocalThumbnailImageLoader
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.toRequest
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.LocalScreenshotState
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.LocalSharedElementTransitionContentProvider
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.LocalSharedElementTransitionProvider
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.shared.LocalScreenshotState
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.shared.LocalSharedElementTransitionContentProvider
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.shared.LocalSharedElementTransitionProvider
 
 @Composable
 internal fun LightboxPreviousScreenBackground(

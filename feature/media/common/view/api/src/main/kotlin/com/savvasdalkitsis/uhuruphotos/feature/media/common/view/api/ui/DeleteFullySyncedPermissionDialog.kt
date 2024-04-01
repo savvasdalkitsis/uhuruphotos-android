@@ -26,9 +26,9 @@ import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.CustomColors
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CancelDialog
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.IconOutlineButton
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.IconText
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.dialogs.CancelDialog
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.IconOutlineButton
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.IconText
 
 @Composable
 fun DeleteFullySyncedPermissionDialog(

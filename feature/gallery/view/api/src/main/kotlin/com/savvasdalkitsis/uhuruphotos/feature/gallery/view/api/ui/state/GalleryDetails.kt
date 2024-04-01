@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state
 
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.state.Title
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
 
 data class GalleryDetails(
     val title: Title = Title.Text(""),

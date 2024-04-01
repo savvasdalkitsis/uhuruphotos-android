@@ -42,9 +42,9 @@ import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.LocalNavigator
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.LocalThemeMode
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CollageShape
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.LocalScreenshotState
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.LocalSharedElementTransitionContentProvider
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.LocalSharedElementTransitionProvider
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.shared.LocalScreenshotState
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.shared.LocalSharedElementTransitionContentProvider
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.shared.LocalSharedElementTransitionProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.ExoplayerProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.LocalExoPlayerProvider
 import com.smarttoolfactory.screenshot.ScreenshotBox

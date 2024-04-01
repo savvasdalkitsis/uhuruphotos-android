@@ -53,9 +53,9 @@ import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlight
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.toColor
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Thumbnail
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.Checkable
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.DynamicIcon
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SelectionMode
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkable.Checkable
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.DynamicIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkable.SelectionMode
 
 @Composable
 fun Cel(

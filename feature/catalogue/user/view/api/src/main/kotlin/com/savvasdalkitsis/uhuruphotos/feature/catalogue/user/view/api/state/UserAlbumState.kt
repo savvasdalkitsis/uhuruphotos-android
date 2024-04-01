@@ -23,8 +23,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.Ce
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.VitrineState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.state.Title
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.state.toTitleOr
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.toTitleOr
 
 data class UserAlbumState(
     val id: Int,

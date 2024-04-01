@@ -62,8 +62,8 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.SmartGridItemSc
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.SmartGridScrollbarThumb
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.SmartGridState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.rememberSmartGridState
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.state.rememberSharedElementTransitionState
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.state.sharedElementTransition
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.shared.state.rememberSharedElementTransitionState
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.shared.state.sharedElementTransition
 import kotlinx.collections.immutable.ImmutableList
 
 @Composable

@@ -59,7 +59,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlight
 import com.savvasdalkitsis.uhuruphotos.foundation.dismiss.api.ui.PullToDismissSpacer
 import com.savvasdalkitsis.uhuruphotos.foundation.dismiss.api.ui.PullToDismissState
 import com.savvasdalkitsis.uhuruphotos.foundation.dismiss.api.ui.pullToDismiss
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UpsellDialog
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.dialogs.UpsellDialog
 import dev.shreyaspatil.permissionflow.compose.rememberPermissionFlowRequestLauncher
 import me.saket.telephoto.zoomable.ZoomableState
 

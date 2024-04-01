@@ -35,7 +35,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.ui.st
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.permissions.api.ui.PermissionsState
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.IconOutlineButton
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.IconOutlineButton
 
 @Composable
 internal fun WelcomeLoadedContent(

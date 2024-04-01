@@ -36,9 +36,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.view.api.ui.LocalMedi
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewState
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.insets.insetsTop
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SheetHandle
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SheetSize
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.adjustingSheetSize
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.sheet.SheetHandle
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.sheet.SheetSize
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.sheet.adjustingSheetSize
 
 @Composable
 fun BottomPanelHeatMap(

@@ -26,7 +26,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.seam.act
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.seam.actions.SelectCropRatio
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.ui.state.CropRatio
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ActionIconWithText
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIconWithText
 
 @Composable
 internal fun EditCropOptions(

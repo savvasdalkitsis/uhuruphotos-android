@@ -28,7 +28,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.seam.act
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.ui.state.EditState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ActionIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
 import io.moyuru.cropify.CropifyState
 
 @Composable
