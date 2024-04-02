@@ -18,11 +18,14 @@ package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
@@ -34,10 +37,12 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.DynamicIcon
 fun TextWithIcon(
     modifier: Modifier = Modifier,
     iconModifier: Modifier = Modifier
-        .size(16.dp),
+        .size(24.dp),
     textModifier: Modifier = Modifier,
     icon: Int,
     tint: Color? = null,
+    style: TextStyle = LocalTextStyle.current,
+    verticalAlignment: Alignment.Vertical = CenterVertically,
     animateIfAvailable: Boolean = true,
     text: String,
 ) {
@@ -46,11 +51,11 @@ fun TextWithIcon(
             .recomposeHighlighter()
         ,
         horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalAlignment = verticalAlignment,
     ) {
         DynamicIcon(
             modifier = iconModifier
-                .recomposeHighlighter()
-                .align(CenterVertically),
+                .recomposeHighlighter(),
             icon = icon,
             tint = tint,
             animateIfAvailable = animateIfAvailable,
@@ -58,9 +63,9 @@ fun TextWithIcon(
         )
         Text(
             modifier = textModifier
-                .recomposeHighlighter()
-                .align(CenterVertically),
-            text = text
+                .recomposeHighlighter(),
+            text = text,
+            style = style,
         )
     }
 }

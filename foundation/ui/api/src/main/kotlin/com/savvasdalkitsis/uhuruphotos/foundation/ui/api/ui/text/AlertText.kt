@@ -31,7 +31,7 @@ fun AlertText(
     text: String,
     style: TextStyle = LocalTextStyle.current,
 ) {
-    IconText(
+    TextWithIcon(
         modifier = modifier,
         icon = R.drawable.ic_alert,
         text = text,

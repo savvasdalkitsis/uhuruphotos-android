@@ -36,7 +36,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.StaggeredGridScope
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.staggered.StaggeredGridScope
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.group.state.CollapsibleGroupState
 
 @Composable

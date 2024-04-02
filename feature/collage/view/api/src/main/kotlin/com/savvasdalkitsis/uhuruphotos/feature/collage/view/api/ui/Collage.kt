@@ -35,12 +35,12 @@ import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlight
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.LocalAnimatedVideoThumbnails
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window.LocalWindowSize
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.DynamicIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.NoContent
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.SmartGridItemScope
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.SmartGridState
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.rememberSmartGridState
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.smart.SmartGridItemScope
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.smart.SmartGridState
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.smart.rememberSmartGridState
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.DynamicIcon
 import kotlinx.collections.immutable.ImmutableList
 
 @Composable

@@ -13,15 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid
+package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.smart
 
-import androidx.compose.runtime.Composable
-
-interface SmartGridScope {
-    fun item(
-        key: Any? = null,
-        contentType: Any? = null,
-        fullLine: Boolean = false,
-        content: @Composable SmartGridItemScope.() -> Unit
-    )
+interface SmartLayoutInfo {
+    val visibleItemsInfo: List<SmartLayoutItemInfo>
+    val totalItemsCount: Int
 }

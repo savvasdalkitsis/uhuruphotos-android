@@ -13,15 +13,15 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.simple
+package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.smart.staggered
 
-import androidx.compose.foundation.lazy.grid.LazyGridItemInfo
+import androidx.compose.foundation.lazy.staggeredgrid.LazyStaggeredGridItemInfo
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.SmartLayoutItemInfo
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.smart.SmartLayoutItemInfo
 
-class SmartSimpleGridLayoutItemInfo(
-    private val itemInfo: LazyGridItemInfo,
+class SmartStaggeredLayoutItemInfo(
+    private val itemInfo: LazyStaggeredGridItemInfo,
 ) : SmartLayoutItemInfo {
     override val key: Any
         get() = itemInfo.key

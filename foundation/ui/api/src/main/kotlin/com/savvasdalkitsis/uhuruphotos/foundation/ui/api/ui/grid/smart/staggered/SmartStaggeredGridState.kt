@@ -13,11 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.staggered
+package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.smart.staggered
 
 import androidx.compose.foundation.lazy.staggeredgrid.LazyStaggeredGridState
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.SmartGridState
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.SmartLayoutInfo
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.smart.SmartGridState
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.smart.SmartLayoutInfo
 
 class SmartStaggeredGridState(
     val lazyStaggeredGridState: LazyStaggeredGridState,

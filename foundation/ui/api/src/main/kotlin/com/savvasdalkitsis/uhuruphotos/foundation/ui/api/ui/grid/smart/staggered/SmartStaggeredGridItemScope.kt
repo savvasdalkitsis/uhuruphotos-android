@@ -13,21 +13,23 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.simple
+package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.smart.staggered
 
-import androidx.compose.foundation.lazy.grid.LazyGridItemScope
+import androidx.compose.foundation.lazy.staggeredgrid.LazyStaggeredGridItemScope
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.SmartGridItemScope
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.smart.SmartGridItemScope
 
 @Stable
-class SmartSimpleGridItemScope: SmartGridItemScope {
-    val lazyGridItemScope: MutableState<LazyGridItemScope?> = mutableStateOf(null)
+class SmartStaggeredGridItemScope(
+): SmartGridItemScope {
+    val lazyStaggeredGridItemScope: MutableState<LazyStaggeredGridItemScope?> = mutableStateOf(null)
+
     override fun Modifier.animateItemPlacement(): Modifier =
-        lazyGridItemScope.value?.let {
-            with(it) {
+        lazyStaggeredGridItemScope.value?.let {
+            with (it) {
                 animateItemPlacement()
             }
         } ?: this

@@ -16,7 +16,6 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui
 
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -24,11 +23,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.CustomColors
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.dialogs.CancelDialog
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.IconOutlineButton
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.IconText
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.dialogs.CancelDialog
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.AlertText
 
 @Composable
 fun DeleteFullySyncedPermissionDialog(
@@ -55,12 +53,7 @@ fun DeleteFullySyncedPermissionDialog(
                 text = stringResource(string.delete_fully_synced_media_both),
                 onClick = onDeleteLocalTrashRemote,
             )
-            IconText(
-                icon = drawable.ic_alert,
-                text = stringResource(string.operation_irreverisble),
-                style = MaterialTheme.typography.subtitle2,
-                tint = CustomColors.alert,
-            )
+            AlertText(text = stringResource(string.operation_irreverisble))
         },
     )
 }

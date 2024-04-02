@@ -57,11 +57,11 @@ import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlight
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CollageShape.RECTANGLE
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CollageShape.ROUNDED_RECTANGLE
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.SmartGrid
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.SmartGridItemScope
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.SmartGridScrollbarThumb
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.SmartGridState
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.rememberSmartGridState
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.smart.SmartGrid
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.smart.SmartGridItemScope
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.smart.SmartGridScrollbarThumb
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.smart.SmartGridState
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.smart.rememberSmartGridState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.shared.state.rememberSharedElementTransitionState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.shared.state.sharedElementTransition
 import kotlinx.collections.immutable.ImmutableList

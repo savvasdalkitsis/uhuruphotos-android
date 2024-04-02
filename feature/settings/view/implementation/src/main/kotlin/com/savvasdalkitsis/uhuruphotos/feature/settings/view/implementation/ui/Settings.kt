@@ -38,11 +38,11 @@ import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window.LocalWindowSize
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.group.CollapsibleGroup
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.StaggeredGrid
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.staggered.StaggeredGrid
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.group.CollapsibleGroup
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UpNavButton
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow

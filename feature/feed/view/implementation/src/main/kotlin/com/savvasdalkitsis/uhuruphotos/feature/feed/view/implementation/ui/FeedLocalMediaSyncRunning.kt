@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.IconText
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.TextWithIcon
 
 @Composable
 internal fun FeedLocalMediaSyncRunning() {
@@ -45,7 +45,7 @@ internal fun FeedLocalMediaSyncRunning() {
                 .padding(vertical = 24.dp),
             horizontalArrangement = spacedBy(8.dp),
         ) {
-            IconText(
+            TextWithIcon(
                 icon = R.drawable.ic_folder,
                 text = stringResource(string.scanning_local_media),
             )

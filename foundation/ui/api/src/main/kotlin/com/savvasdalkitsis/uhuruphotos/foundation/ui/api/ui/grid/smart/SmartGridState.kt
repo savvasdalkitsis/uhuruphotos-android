@@ -13,14 +13,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid
+package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.smart
 
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.simple.SmartSimpleGridState
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.staggered.SmartStaggeredGridState
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.smart.simple.SmartSimpleGridState
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.smart.staggered.SmartStaggeredGridState
 
 interface SmartGridState {
     suspend fun animateScrollToItem(index: Int, scrollOffset: Int = 0)

@@ -54,9 +54,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.Ce
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.blurIf
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.smart.SmartGridState
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.smart.rememberSmartGridState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.refresh.SwipeRefresh
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.SmartGridState
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.rememberSmartGridState
 import dev.shreyaspatil.permissionflow.compose.rememberPermissionFlowRequestLauncher
 import kotlinx.coroutines.launch
 

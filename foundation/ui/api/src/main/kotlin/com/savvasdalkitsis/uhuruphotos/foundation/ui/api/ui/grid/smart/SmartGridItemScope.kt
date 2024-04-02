@@ -13,13 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid
+package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.smart
 
-import androidx.compose.ui.unit.IntOffset
-import androidx.compose.ui.unit.IntSize
+import androidx.compose.runtime.Stable
+import androidx.compose.ui.Modifier
 
-interface SmartLayoutItemInfo {
-    val key: Any
-    val offset: IntOffset
-    val size: IntSize
+@Stable
+interface SmartGridItemScope {
+    fun Modifier.animateItemPlacement(): Modifier
 }

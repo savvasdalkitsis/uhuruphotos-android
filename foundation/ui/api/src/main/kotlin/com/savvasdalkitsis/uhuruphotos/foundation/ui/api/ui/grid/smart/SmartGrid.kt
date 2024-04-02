@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid
+package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.smart
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -25,10 +25,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.simple.SmartSimpleGridScope
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.simple.SmartSimpleGridState
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.staggered.SmartStaggeredGridScope
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.staggered.SmartStaggeredGridState
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.smart.simple.SmartSimpleGridScope
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.smart.simple.SmartSimpleGridState
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.smart.staggered.SmartStaggeredGridScope
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.smart.staggered.SmartStaggeredGridState
 
 @Composable
 fun SmartGrid(
