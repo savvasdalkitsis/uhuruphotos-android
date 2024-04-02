@@ -178,7 +178,7 @@
     <string name="nothing_here_yet">Todavía no hay nada aquí</string>
     <string name="use_as">Usar como</string>
     <string name="local_albums">Álbumes locales</string>
-    <string name="scanning_local_media">Sincronización de medios locales</string>
+    <string name="scanning_local_media">Sincronización de medios locales…</string>
     <plurals name="delete_media_confirmation">
         <item quantity="one">¿Estás seguro de que quieres eliminar este %d elemento multimedia\?</item>
         <item quantity="many">¿Estás seguro de que quieres borrar estos %d elementos multimedia\?</item>
@@ -264,7 +264,7 @@
     <string name="search_for_something">Encontrar algo</string>
     <string name="search_icon">Buscar un icono</string>
     <string name="full_feed_sync">Sincronización del Feed completa</string>
-    <string name="are_you_sure_you_want_to_start_local_scan">¿Estás seguro de que quieres empezar a sincronizar los medios locales\?</string>
+    <string name="are_you_sure_you_want_to_start_local_scan">¿Estás seguro de que quieres empezar a sincronizar los medios locales?</string>
     <string name="scan_local_media">Sincronizar los medios locales</string>
     <string name="start">Empezar</string>
     <string name="close">Cerrar</string>
@@ -410,4 +410,15 @@
 \nA diferencia de los servicios comerciales que almacenan, escanean e indexan sus fotografías en la nube y las utilizan para entrenar modelos de aprendizaje automático y recopilar datos publicitarios dirigidos a usted, LibrePhotos guarda todas sus fotografías y metadatos en su máquina local.
 \n
 \nSus datos nunca se envían ni se almacenan en un servidor de terceros. Obtenga las mismas funciones potentes que esos servicios comerciales sin renunciar a sus datos personales y su privacidad.</string>
+    <string name="collage">Collage</string>
+    <string name="collage_spacing">Espacio entre elementos del collage: %d</string>
+    <string name="collage_spacing_include_edges">Incluir espaciado en los bordes</string>
+    <string name="collage_shape">Forma de los elementos del collage</string>
+    <string name="rectangle">Rectángulo</string>
+    <string name="rounded_rectangle">Rectángulo redondeado</string>
+    <string name="disable">Desactivar</string>
+    <string name="disable_battery_optimizations">Desactivar las optimizaciones de batería
+\n
+\nSi las optimizaciones de batería están activadas, es posible que las tareas en segundo plano de esta aplicación, como la sincronización multimedia, no se ejecuten correctamente</string>
+    <string name="battery_optimizations_warning">Esto puede hacer que la aplicación consuma más batería</string>
 </resources>

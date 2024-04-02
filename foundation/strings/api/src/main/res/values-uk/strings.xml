@@ -279,7 +279,7 @@
     <string name="search_for_something">Шукати щось</string>
     <string name="search_icon">Значок пошуку</string>
     <string name="close">Закрити</string>
-    <string name="are_you_sure_you_want_to_start_local_scan">Ви впевнені, що хочете почати синхронізацію локальних медіа\?</string>
+    <string name="are_you_sure_you_want_to_start_local_scan">Ви впевнені, що хочете почати синхронізацію локальних медіа?</string>
     <string name="start">Почати</string>
     <string name="full_feed_sync">Повна синхронізація стрічки</string>
     <string name="scan_local_media">Синхронізація локальних медіа</string>
