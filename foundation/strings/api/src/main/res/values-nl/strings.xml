@@ -251,7 +251,7 @@
     <string name="start">Starten</string>
     <string name="full_feed_sync">Feed volledig synchroniseren</string>
     <string name="scan_local_media">Lokale media synchroniseren</string>
-    <string name="are_you_sure_you_want_to_start_local_scan">Weet je zeker dat je alle lokale media wilt synchroniseren\?</string>
+    <string name="are_you_sure_you_want_to_start_local_scan">Weet je zeker dat je alle lokale media wilt synchroniseren?</string>
     <string name="close">Sluiten</string>
     <string name="about">Over</string>
     <string name="edit">Bewerken</string>
