@@ -16,8 +16,8 @@ android {
         applicationId "com.savvasdalkitsis.uhuruphotos"
         minSdk 24
         targetSdk 34
-        versionCode 205
-        versionName "0.0.205"
+        versionCode 206
+        versionName "0.0.206"
 
         vectorDrawables {
             useSupportLibrary true

@@ -1,0 +1,2 @@
+* Fixing wrong shared element animation running from opening a memory
+* Enabling minifying and shrinking on release build to reduce app size
