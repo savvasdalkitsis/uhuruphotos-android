@@ -72,9 +72,9 @@ jobs:
 #        KEYSTORE_ALIAS: ${{ secrets.KEYSTORE_ALIAS }}
 #        MAPBOX_DOWNLOADS_TOKEN: ${{ secrets.MAPBOX_DOWNLOADS_TOKEN }}
 #
-#    - name: Archive release bundle
-#      uses: actions/upload-artifact@v3
-#      with:
-#        name: bundle
-#        path: |
-#          app/build/outputs/bundle/release
+    - name: Archive extra files
+      uses: actions/upload-artifact@v3
+      with:
+        name: bundle
+        path: |
+          app/build/outputs/mapping/release/missing_rules.txt
