@@ -83,13 +83,14 @@ androidx-tracing = "androidx.tracing:tracing-ktx:1.2.0"
 androidx-window = "androidx.window:window:1.2.0"
 androidx-work = "androidx.work:work-runtime-ktx:2.9.0"
 androidx-work-hilt = "androidx.hilt:hilt-work:1.2.0"
-appcenter-crashes= "com.microsoft.appcenter:appcenter-crashes:5.0.4"
 appyx = "com.bumble.appyx:core:1.4.0"
 assure = "com.afollestad.assure:coroutines:0.2.0"
 autodagger-core = { module = "se.ansman.dagger.auto:android", version.ref = "autodagger" }
 autodagger-kapt = { module = "se.ansman.dagger.auto:compiler", version.ref = "autodagger" }
 autodagger-retrofit = { module = "se.ansman.dagger.auto:retrofit", version.ref = "autodagger" }
 bubble-navigation = "com.github.savvasdalkitsis:BubbleNavigationBarCompose:1.0.2"
+bugsnag = "com.bugsnag:bugsnag-android:6.3.0"
+bugsnag-plugin = "com.bugsnag:bugsnag-android-gradle-plugin:8.1.0"
 capturable = "com.github.SmartToolFactory:Compose-Screenshot:1.0.3"
 coil-base = { module = "io.coil-kt:coil-base", version.ref = "coil" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }

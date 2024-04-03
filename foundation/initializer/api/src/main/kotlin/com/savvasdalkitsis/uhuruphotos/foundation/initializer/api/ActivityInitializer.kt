@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.initializer.api
 
-import androidx.activity.ComponentActivity
+import androidx.fragment.app.FragmentActivity
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import javax.inject.Inject
 
@@ -24,11 +24,11 @@ class ActivityInitializer @Inject constructor(
     private val listeners: Set<@JvmSuppressWildcards ActivityCreated>,
 ) {
 
-    fun onCreated(activity: ComponentActivity) {
+    fun onCreated(activity: FragmentActivity) {
         forEach { it.onActivityCreated(activity) }
     }
 
-    fun onDestroyed(activity: ComponentActivity) {
+    fun onDestroyed(activity: FragmentActivity) {
         forEach { it.onActivityDestroyed(activity) }
     }
 

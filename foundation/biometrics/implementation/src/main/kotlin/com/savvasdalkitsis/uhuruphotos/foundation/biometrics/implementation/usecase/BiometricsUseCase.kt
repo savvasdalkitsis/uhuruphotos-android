@@ -32,6 +32,12 @@ import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simple
 import dagger.hilt.android.scopes.ActivityRetainedScoped
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.isActive
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 import kotlin.coroutines.resume
@@ -44,6 +50,13 @@ internal class BiometricsUseCase @Inject constructor(
     private val biometricManager: BiometricManager,
     private val currentActivityHolder: CurrentActivityHolder,
 ) : BiometricsUseCase {
+
+    override fun observeBiometrics(): Flow<Biometrics> = flow {
+        do {
+            emit(getBiometrics())
+            delay(2000)
+        } while (currentCoroutineContext().isActive)
+    }.distinctUntilChanged()
 
     override fun getBiometrics(): Biometrics = when (biometricManager.canAuthenticate()) {
         BIOMETRIC_SUCCESS -> Enrolled

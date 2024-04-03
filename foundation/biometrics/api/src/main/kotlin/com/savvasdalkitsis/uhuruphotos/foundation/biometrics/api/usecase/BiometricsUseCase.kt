@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.usecase
 
 import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.model.Biometrics
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
+import kotlinx.coroutines.flow.Flow
 
 interface BiometricsUseCase {
     fun getBiometrics(): Biometrics
@@ -26,4 +27,6 @@ interface BiometricsUseCase {
         description: Int,
         confirmRequired: Boolean,
     ): SimpleResult
+
+    fun observeBiometrics(): Flow<Biometrics>
 }

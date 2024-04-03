@@ -67,7 +67,7 @@ fun FullSizeImage(
     }
 
     ZoomableAsyncImage(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize(),
         imageLoader = LocalFullImageLoader.current,
         state = zoomableState,

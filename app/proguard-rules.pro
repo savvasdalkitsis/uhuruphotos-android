@@ -20,6 +20,8 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
+# Automatic rules from gradle plugin
+
 -dontwarn com.fasterxml.jackson.dataformat.xml.JacksonXmlModule
 -dontwarn com.fasterxml.jackson.dataformat.xml.XmlMapper
 -dontwarn com.sun.org.apache.xml.internal.utils.PrefixResolver
@@ -101,3 +103,7 @@
 -dontwarn org.zeroturnaround.javarebel.ClassEventListener
 -dontwarn org.zeroturnaround.javarebel.Reloader
 -dontwarn org.zeroturnaround.javarebel.ReloaderFactory
+
+# Gson
+
+-keep class kotlin.** { *; }

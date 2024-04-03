@@ -19,8 +19,8 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import androidx.activity.ComponentActivity
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentActivity
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.worker.LocalMediaWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ActivityCreated
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
@@ -41,13 +41,13 @@ class DownloadActivityInitializer @Inject constructor(
         }
     }
 
-    override fun onActivityCreated(activity: ComponentActivity) {
+    override fun onActivityCreated(activity: FragmentActivity) {
         ContextCompat.registerReceiver(activity, receiver,
             IntentFilter("android.intent.action.DOWNLOAD_COMPLETE"),
             ContextCompat.RECEIVER_NOT_EXPORTED,
         )
     }
-    override fun onActivityDestroyed(activity: ComponentActivity) {
+    override fun onActivityDestroyed(activity: FragmentActivity) {
         activity.unregisterReceiver(receiver)
     }
 }

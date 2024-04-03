@@ -9,6 +9,7 @@ dependencies {
     implementation(
             libs.bundles.autodagger,
             libs.hilt,
+            project(":foundation:initializer:api"),
     )
     kapt libs.autodagger.kapt
 }

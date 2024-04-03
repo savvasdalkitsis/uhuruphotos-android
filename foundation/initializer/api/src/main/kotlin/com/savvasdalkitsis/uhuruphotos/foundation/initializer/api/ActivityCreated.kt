@@ -15,12 +15,12 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.initializer.api
 
-import androidx.activity.ComponentActivity
+import androidx.fragment.app.FragmentActivity
 
 interface ActivityCreated {
 
-    fun onActivityCreated(activity: ComponentActivity)
-    fun onActivityDestroyed(activity: ComponentActivity)
+    fun onActivityCreated(activity: FragmentActivity)
+    fun onActivityDestroyed(activity: FragmentActivity)
 
     fun priority(): Int = 0
 }

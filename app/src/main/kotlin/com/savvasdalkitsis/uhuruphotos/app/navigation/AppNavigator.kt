@@ -38,12 +38,17 @@ class AppNavigator @Inject constructor(
 
     @Composable
     fun NavigationTargets(integrationPoint: ActivityIntegrationPoint) {
-        with(uiUseCase) {
-            keyboardController = LocalSoftwareKeyboardController.current!!
-            systemUiController = LocalSystemUiController.current
-            haptics = LocalHapticFeedback.current
-        }
         compositionLocalProviders.Provide {
+            val currentKeyboardController = LocalSoftwareKeyboardController.current!!
+            val currentSystemUiController = LocalSystemUiController.current
+            val currentHapticFeedback = LocalHapticFeedback.current
+            LaunchedEffect(currentKeyboardController, currentSystemUiController, currentHapticFeedback) {
+                with(uiUseCase) {
+                    keyboardController = currentKeyboardController
+                    systemUiController = currentSystemUiController
+                    haptics = currentHapticFeedback
+                }
+            }
             NodeHost(
                 integrationPoint = integrationPoint,
             ) { buildContext ->

@@ -17,25 +17,26 @@ package com.savvasdalkitsis.uhuruphotos.foundation.activity.implementation.holde
 
 import androidx.fragment.app.FragmentActivity
 import com.savvasdalkitsis.uhuruphotos.foundation.activity.api.holder.CurrentActivityHolder
-import dagger.hilt.android.scopes.ActivityRetainedScoped
-import se.ansman.dagger.auto.AutoBind
+import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ActivityCreated
 import java.lang.ref.WeakReference
 import javax.inject.Inject
+import javax.inject.Singleton
 
-@AutoBind
-@ActivityRetainedScoped
-class CurrentActivityHolder @Inject constructor() : CurrentActivityHolder {
+@Singleton
+class CurrentActivityHolder @Inject constructor() : CurrentActivityHolder, ActivityCreated {
 
-    private var activity: WeakReference<FragmentActivity> = WeakReference(null)
+    override fun priority(): Int = Int.MIN_VALUE
+
+    private var _activity: WeakReference<FragmentActivity> = WeakReference(null)
 
     override val currentActivity: FragmentActivity?
-        get() = activity.get()
+        get() = _activity.get()
 
-    override fun onCreated(activity: FragmentActivity) {
-        this.activity = WeakReference(activity)
+    override fun onActivityCreated(activity: FragmentActivity) {
+        _activity = WeakReference(activity)
     }
 
-    override fun onDestroy() {
-        activity.clear()
+    override fun onActivityDestroyed(activity: FragmentActivity) {
+        _activity.clear()
     }
 }

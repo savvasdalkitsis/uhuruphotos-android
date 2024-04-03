@@ -23,6 +23,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.geometry.Rect
 import coil.ImageLoader
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.api.navigation.LocalServerUrl
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.LocalCollageShapeProvider
@@ -37,10 +38,17 @@ import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.LocalThumbnail
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.ThumbnailImage
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.ThumbnailImageWithNetworkCacheSupport
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LocalMapProvider
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LocalMapViewFactoryProvider
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LocalMapViewStateFactory
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.CompositeMapViewFactoryProvider
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.CompositeMapViewStateFactory
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewFactoryProvider
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewStateFactory
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.LocalNavigator
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.LocalThemeMode
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window.LocalSystemUiController
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CollageShape
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.shared.LocalScreenshotState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.shared.LocalSharedElementTransitionContentProvider
@@ -62,6 +70,8 @@ class CompositionLocalProviders @Inject constructor(
     @ThumbnailImageWithNetworkCacheSupport
     private val thumbnailImageWithNetworkCacheSupportLoader: ImageLoader,
     private val serverUseCase: ServerUseCase,
+    private val mapViewFactoryProviders: Set<@JvmSuppressWildcards MapViewFactoryProvider>,
+    private val mapViewStateFactories: Set<@JvmSuppressWildcards MapViewStateFactory>,
 ) {
     @Composable
     fun Provide(
@@ -82,6 +92,7 @@ class CompositionLocalProviders @Inject constructor(
         val sharedElementTransitionContent = remember {
             mutableStateOf<String?>(null)
         }
+        val systemUiController = rememberSystemUiController()
         CompositionLocalProvider(
             LocalExoPlayerProvider provides exoplayerProvider,
             LocalAnimatedVideoThumbnails provides animateVideoThumbnails.value,
@@ -98,6 +109,9 @@ class CompositionLocalProviders @Inject constructor(
             LocalCollageSpacingEdgesProvider provides collageSpacingEdges,
             LocalSharedElementTransitionProvider provides sharedElementTransitionBounds,
             LocalSharedElementTransitionContentProvider provides sharedElementTransitionContent,
+            LocalMapViewStateFactory provides CompositeMapViewStateFactory(mapViewStateFactories),
+            LocalMapViewFactoryProvider provides CompositeMapViewFactoryProvider(mapViewFactoryProviders),
+            LocalSystemUiController provides systemUiController,
         ) {
             ScreenshotBox(screenshotState = screenshotState, content = content)
         }

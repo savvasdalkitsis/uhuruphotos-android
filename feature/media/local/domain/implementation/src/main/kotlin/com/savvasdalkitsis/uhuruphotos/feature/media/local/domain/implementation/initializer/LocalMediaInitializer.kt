@@ -20,7 +20,7 @@ import android.database.ContentObserver
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
-import androidx.activity.ComponentActivity
+import androidx.fragment.app.FragmentActivity
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.worker.LocalMediaWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.model.LocalMediaPhotoColumns
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.model.LocalMediaVideoColumns
@@ -42,13 +42,13 @@ internal class LocalMediaInitializer @Inject constructor(
         }
     }
 
-    override fun onActivityCreated(activity: ComponentActivity) {
+    override fun onActivityCreated(activity: FragmentActivity) {
         localMediaWorkScheduler.scheduleLocalMediaSyncNowIfNotRunning()
         registerObserver(LocalMediaPhotoColumns.collection)
         registerObserver(LocalMediaVideoColumns.collection)
     }
 
-    override fun onActivityDestroyed(activity: ComponentActivity) {
+    override fun onActivityDestroyed(activity: FragmentActivity) {
         contentResolver.unregisterContentObserver(mediaObserver)
     }
 

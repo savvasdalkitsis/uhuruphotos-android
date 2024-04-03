@@ -69,6 +69,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.s
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.BiometricsSetting.NotEnrolled
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.model.Biometrics
+import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.model.Biometrics.*
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
@@ -118,8 +119,9 @@ data object LoadSettings : SettingsAction() {
                 observeBiometricsRequiredForAppAccess(),
                 observeBiometricsRequiredForHiddenPhotosAccess(),
                 observeBiometricsRequiredForTrashAccess(),
-            ) { app, hiddenPhotos, trash ->
-                DisplayBiometrics(enrollment(app, hiddenPhotos, trash))
+                biometricsUseCase.observeBiometrics(),
+            ) { app, hiddenPhotos, trash, biometrics ->
+                DisplayBiometrics(biometrics.enrollment(app, hiddenPhotos, trash))
             },
             observeShouldShowFeedSyncProgress().map(::SetFullSyncProgressVisibility),
             observeShouldShowFeedDetailsSyncProgress().map(::SetFeedDetailsSyncProgressVisibility),
@@ -152,13 +154,13 @@ data object LoadSettings : SettingsAction() {
     }}
 
     context(SettingsActionsContext)
-    private fun enrollment(
+    private fun Biometrics.enrollment(
         app: Boolean,
         hiddenPhotos: Boolean,
         trash: Boolean,
-    ) = when (biometricsUseCase.getBiometrics()) {
-        Biometrics.Enrolled -> Enrolled(app, hiddenPhotos, trash)
+    ) = when (this) {
+        Enrolled -> Enrolled(app, hiddenPhotos, trash)
         Biometrics.NotEnrolled -> NotEnrolled
-        Biometrics.NoHardware -> null
+        NoHardware -> null
     }
 }

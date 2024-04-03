@@ -2,6 +2,7 @@ plugins {
     id 'dagger.hilt.android.plugin'
     alias(libs.plugins.google.services)
     alias(libs.plugins.about)
+    id 'com.bugsnag.android.gradle'
 }
 
 android {
@@ -65,8 +66,8 @@ dependencies {
             libs.androidx.compose.ui,
             libs.androidx.splash,
             libs.androidx.work.hilt,
-            libs.appcenter.crashes,
             libs.bundles.autodagger,
+            libs.bugsnag,
             libs.hilt,
             libs.permissions.base,
             project(":feature:auth:domain:api"),

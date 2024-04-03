@@ -15,9 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.notifications.domain.implementation.initializer
 
-import androidx.activity.ComponentActivity
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.FragmentActivity
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.domain.implementation.model.NotificationRequest
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.domain.implementation.model.NotificationRequest.ACCEPTED
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.domain.implementation.model.NotificationRequest.DENIED
@@ -39,13 +39,13 @@ class NotificationActivityInitializer @Inject constructor(
 
     override fun priority(): Int = -1
 
-    override fun onActivityCreated(activity: ComponentActivity) {
+    override fun onActivityCreated(activity: FragmentActivity) {
         launcher = activity.registerForActivityResult(ActivityResultContracts.RequestPermission()) { accepted ->
             notificationRequestState.tryEmit(if (accepted) ACCEPTED else DENIED)
         }
     }
 
-    override fun onActivityDestroyed(activity: ComponentActivity) {}
+    override fun onActivityDestroyed(activity: FragmentActivity) {}
 
     suspend fun askForPermission(permission: String): NotificationRequest {
         launcher.launch(permission)

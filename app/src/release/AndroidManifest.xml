@@ -3,5 +3,10 @@
 
     <application
         android:icon="@mipmap/ic_launcher"
-        android:roundIcon="@mipmap/ic_launcher_round"/>
+        android:roundIcon="@mipmap/ic_launcher_round">
+
+        <meta-data
+            android:name="com.bugsnag.android.API_KEY"
+            android:value="21cd8568a8202c8e986bd1f74fae6016"/>
+    </application>
 </manifest>

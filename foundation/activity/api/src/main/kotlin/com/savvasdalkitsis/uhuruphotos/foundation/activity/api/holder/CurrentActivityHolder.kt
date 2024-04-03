@@ -20,6 +20,4 @@ import androidx.fragment.app.FragmentActivity
 interface CurrentActivityHolder {
 
     val currentActivity: FragmentActivity?
-    fun onCreated(activity: FragmentActivity)
-    fun onDestroy()
 }
