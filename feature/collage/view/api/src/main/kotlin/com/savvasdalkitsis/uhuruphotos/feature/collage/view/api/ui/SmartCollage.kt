@@ -199,7 +199,6 @@ internal fun SmartCollage(
                                         onCelSelected(cel)
                                     }
                                 } else {
-                                    sharedElementTransitionState.clearElementTransition()
                                     onCelSelected(cel)
                                 }
                             },

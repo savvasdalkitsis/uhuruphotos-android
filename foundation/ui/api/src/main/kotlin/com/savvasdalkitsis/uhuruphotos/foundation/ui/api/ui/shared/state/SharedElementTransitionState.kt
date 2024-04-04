@@ -22,24 +22,18 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.composed
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.layout.LayoutCoordinates
 import androidx.compose.ui.layout.boundsInRoot
 import androidx.compose.ui.layout.onGloballyPositioned
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.shared.LocalScreenshotState
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.shared.LocalSharedElementTransitionContentProvider
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.shared.LocalSharedElementTransitionProvider
-import com.smarttoolfactory.screenshot.ScreenshotState
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.shared.LocalSharedElementTransition
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 class SharedElementTransitionState(
     private val elementBounds: MutableState<Rect?>,
     private val scope: CoroutineScope,
-    private val screenshotState: ScreenshotState,
-    private val sharedElement: MutableState<Rect?>,
-    private val sharedElementContent: MutableState<String?>,
+    private val sharedElementTransition: SharedElementTransition,
     private val aspectRatio: Float,
     private val contentUrl: String,
 ) {
@@ -59,27 +53,19 @@ class SharedElementTransitionState(
 
     fun startElementTransition(action: () -> Unit) {
         scope.launch {
-            screenshotState.capture()
-            sharedElement.value = elementBounds.value
-            sharedElementContent.value = contentUrl
+            sharedElementTransition.screenshotState.capture()
+            sharedElementTransition.bounds = elementBounds.value
+            sharedElementTransition.contents = contentUrl
             action()
         }
-    }
-
-    fun clearElementTransition() {
-        screenshotState.bitmapState.value = null
-        sharedElement.value = null
-        sharedElementContent.value = null
     }
 }
 
 @Stable
 fun Modifier.sharedElementTransition(
     sharedElementTransitionState: SharedElementTransitionState,
-) = composed {
-    onGloballyPositioned { layoutCoordinates ->
-        sharedElementTransitionState.trackPosition(layoutCoordinates)
-    }
+) = onGloballyPositioned { layoutCoordinates ->
+    sharedElementTransitionState.trackPosition(layoutCoordinates)
 }
 
 @Composable
@@ -88,20 +74,16 @@ fun rememberSharedElementTransitionState(
     contentUrl: String,
     aspectRatio: Float
 ): SharedElementTransitionState {
-    val screenshotState = LocalScreenshotState.current
+    val sharedElementTransition = LocalSharedElementTransition.current
     val elementBounds = remember(key, aspectRatio) {
         mutableStateOf<Rect?>(null)
     }
-    val sharedElement = LocalSharedElementTransitionProvider.current
-    val sharedElementContent = LocalSharedElementTransitionContentProvider.current
     val scope = rememberCoroutineScope()
     return remember {
         SharedElementTransitionState(
             elementBounds,
             scope,
-            screenshotState,
-            sharedElement,
-            sharedElementContent,
+            sharedElementTransition,
             aspectRatio,
             contentUrl,
         )

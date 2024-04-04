@@ -3,5 +3,10 @@
 
     <application
         android:icon="@mipmap/ic_launcher_debug"
-        android:roundIcon="@mipmap/ic_launcher_debug_round"/>
+        android:roundIcon="@mipmap/ic_launcher_debug_round">
+
+        <meta-data
+            android:name="com.bugsnag.android.API_KEY"
+            android:value="DUMMY_KEY"/>
+    </application>
 </manifest>

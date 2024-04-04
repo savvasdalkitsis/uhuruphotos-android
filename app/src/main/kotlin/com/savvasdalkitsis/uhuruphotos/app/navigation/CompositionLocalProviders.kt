@@ -19,9 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.geometry.Rect
 import coil.ImageLoader
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
@@ -50,9 +48,8 @@ import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.LocalThemeMode
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window.LocalSystemUiController
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CollageShape
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.shared.LocalScreenshotState
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.shared.LocalSharedElementTransitionContentProvider
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.shared.LocalSharedElementTransitionProvider
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.shared.LocalSharedElementTransition
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.shared.state.SharedElementTransition
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.ExoplayerProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.LocalExoPlayerProvider
 import com.smarttoolfactory.screenshot.ScreenshotBox
@@ -86,11 +83,8 @@ class CompositionLocalProviders @Inject constructor(
         val collageShape by settingsUIUseCase.observeCollageShape().collectAsState(CollageShape.default)
         val collageSpacing by settingsUIUseCase.observeCollageSpacing().collectAsState(2)
         val collageSpacingEdges by settingsUIUseCase.observeCollageSpacingIncludeEdges().collectAsState(false)
-        val sharedElementTransitionBounds = remember {
-            mutableStateOf<Rect?>(null)
-        }
-        val sharedElementTransitionContent = remember {
-            mutableStateOf<String?>(null)
+        val sharedElementTransition = remember(screenshotState) {
+            SharedElementTransition(screenshotState)
         }
         val systemUiController = rememberSystemUiController()
         CompositionLocalProvider(
@@ -102,13 +96,11 @@ class CompositionLocalProviders @Inject constructor(
             LocalThumbnailWithNetworkCacheImageLoader provides thumbnailImageWithNetworkCacheSupportLoader,
             LocalNavigator provides navigator,
             LocalServerUrl provides serverUseCase.getServerUrl(),
-            LocalScreenshotState provides screenshotState,
             LocalThemeMode provides themeMode,
             LocalCollageShapeProvider provides collageShape,
             LocalCollageSpacingProvider provides collageSpacing,
             LocalCollageSpacingEdgesProvider provides collageSpacingEdges,
-            LocalSharedElementTransitionProvider provides sharedElementTransitionBounds,
-            LocalSharedElementTransitionContentProvider provides sharedElementTransitionContent,
+            LocalSharedElementTransition provides sharedElementTransition,
             LocalMapViewStateFactory provides CompositeMapViewStateFactory(mapViewStateFactories),
             LocalMapViewFactoryProvider provides CompositeMapViewFactoryProvider(mapViewFactoryProviders),
             LocalSystemUiController provides systemUiController,

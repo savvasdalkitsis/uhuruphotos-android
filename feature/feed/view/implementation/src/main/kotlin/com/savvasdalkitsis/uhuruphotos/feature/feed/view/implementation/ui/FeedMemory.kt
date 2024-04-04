@@ -54,7 +54,6 @@ import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.shared.LocalScreenshotState
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
@@ -101,11 +100,9 @@ internal fun FeedMemory(
                         }
                     },
                 ) {
-                    val screenshot = LocalScreenshotState.current
                     Cel(
                         state = celState,
                         onSelected = {
-                            screenshot.bitmapState.value = null
                             onMemorySelected(cel, memory.yearsAgo)
                         },
                         aspectRatio = 0.7f,

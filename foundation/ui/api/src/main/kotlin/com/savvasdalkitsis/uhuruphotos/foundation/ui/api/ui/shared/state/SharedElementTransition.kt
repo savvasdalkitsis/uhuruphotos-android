@@ -13,21 +13,20 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.shared
+package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.shared.state
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.geometry.Rect
 import com.smarttoolfactory.screenshot.ScreenshotState
 
-val LocalScreenshotState = compositionLocalOf<ScreenshotState> {
-    TODO("Not Implemented")
-}
+class SharedElementTransition(
+    val screenshotState: ScreenshotState,
+    var bounds: Rect? = null,
+    var contents: String? = null,
+) {
 
-val LocalSharedElementTransitionProvider = compositionLocalOf<MutableState<Rect?>> {
-    TODO("Not Implemented")
-}
-
-val LocalSharedElementTransitionContentProvider = compositionLocalOf<MutableState<String?>> {
-    TODO("Not Implemented")
+    fun clear() {
+        screenshotState.bitmapState.value = null
+        bounds = null
+        contents = null
+    }
 }

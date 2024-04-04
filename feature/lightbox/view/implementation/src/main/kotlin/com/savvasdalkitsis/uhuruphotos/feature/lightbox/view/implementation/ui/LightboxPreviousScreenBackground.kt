@@ -45,17 +45,16 @@ import androidx.core.graphics.drawable.toBitmapOrNull
 import com.savvasdalkitsis.uhuruphotos.foundation.dismiss.api.ui.PullToDismissState
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.LocalThumbnailImageLoader
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.toRequest
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.shared.LocalScreenshotState
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.shared.LocalSharedElementTransitionContentProvider
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.shared.LocalSharedElementTransitionProvider
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.shared.LocalSharedElementTransition
 
 @Composable
 internal fun LightboxPreviousScreenBackground(
     dismissState: PullToDismissState,
     content: @Composable () -> Unit,
 ) {
+    val sharedElementTransition = LocalSharedElementTransition.current
     var finishedSharedTransitionAlready by LocalAnimatedSharedTransitionFinished.current
-    val previousScreen = LocalScreenshotState.current.bitmapState.value
+    val previousScreen = sharedElementTransition.screenshotState.bitmap
     var animatingSharedElement by remember {
         mutableStateOf(true)
     }
@@ -79,8 +78,8 @@ internal fun LightboxPreviousScreenBackground(
                 )
             }
 
-            val startPosition = LocalSharedElementTransitionProvider.current.value
-            val subImage = LocalSharedElementTransitionContentProvider.current.value
+            val startPosition = sharedElementTransition.bounds
+            val subImage = sharedElementTransition.contents
             if (!finishedSharedTransitionAlready && subImage != null && startPosition != null && (!transition.isIdle || animatingSharedElement)) {
                 var subImageBitmap by remember {
                     mutableStateOf<ImageBitmap?>(null)
