@@ -1,0 +1,2 @@
+* Fixing shared element animations in all screens
+* Fixing bug in older versions of Android not loading feed
