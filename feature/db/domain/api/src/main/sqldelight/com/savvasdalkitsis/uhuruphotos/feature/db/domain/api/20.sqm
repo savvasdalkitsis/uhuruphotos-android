@@ -15,7 +15,7 @@ CREATE TABLE uploadingMediaItems (
     uploadId TEXT NOT NULL
 );
 
-INSERT INTO uploadingMediaItems SELECT id, contentUri, 0, FALSE, '' FROM uploadingMediaItemsBackup;
+INSERT INTO uploadingMediaItems SELECT id, contentUri, 0, 0, '' FROM uploadingMediaItemsBackup;
 
 DROP TABLE uploadingMediaItemsBackup;
 

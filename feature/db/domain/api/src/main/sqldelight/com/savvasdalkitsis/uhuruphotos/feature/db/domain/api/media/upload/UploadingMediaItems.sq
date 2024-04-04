@@ -30,7 +30,7 @@ isCompleted:
 SELECT completed FROM uploadingMediaItems WHERE id = :id;
 
 setCompleted:
-UPDATE uploadingMediaItems SET completed = TRUE WHERE id = :id;
+UPDATE uploadingMediaItems SET completed = 1 WHERE id = :id;
 
 getUploadId:
 SELECT uploadId FROM uploadingMediaItems WHERE id = :id;

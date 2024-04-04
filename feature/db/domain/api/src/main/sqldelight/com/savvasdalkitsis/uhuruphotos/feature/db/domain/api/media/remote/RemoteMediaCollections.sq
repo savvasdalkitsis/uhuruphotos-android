@@ -27,18 +27,18 @@ LEFT JOIN remoteMediaItemSummary AS summary ON remoteMediaCollections.id = summa
 LEFT JOIN remoteMediaItemDetails AS details ON summary.id = details.imageHash
 WHERE
     CASE WHEN :includeNoDates
-        THEN TRUE
+        THEN 1
         ELSE albumDate NOT NULL
     END
     AND
     CASE WHEN :includeDates
-        THEN TRUE
+        THEN 1
         ELSE albumDate IS NULL
     END
     AND
     CASE WHEN :onlyVideos
         THEN summary.type == 'video'
-        ELSE TRUE
+        ELSE 1
     END
 GROUP BY summary.id
 ORDER BY summary.date DESC
