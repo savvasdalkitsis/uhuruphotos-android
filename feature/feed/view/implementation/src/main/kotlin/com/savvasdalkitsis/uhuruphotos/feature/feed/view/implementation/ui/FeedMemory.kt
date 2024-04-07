@@ -77,60 +77,61 @@ internal fun FeedMemory(
             modifier = Modifier
                 .width(130.dp)
         ) {
-            val cel = memory.cels[index]
-            Crossfade(
-                targetState = cel,
-                animationSpec = tween(1000),
-                label = "memoryCrossFade",
-            ) { celState ->
-                Box(modifier = Modifier
-                    .drawWithCache {
-                        onDrawWithContent {
-                            drawContent()
-                            drawRect(
-                                brush = Brush.verticalGradient(
-                                    0f to Color.Transparent,
-                                    0.5f to Color.Transparent,
-                                    1f to Color.Black.copy(alpha = 0.8f),
-                                    startY = 0f,
-                                    endY = Float.POSITIVE_INFINITY,
-                                    tileMode = TileMode.Clamp,
+            memory.cels.getOrNull(index)?.let { cel ->
+                Crossfade(
+                    targetState = cel,
+                    animationSpec = tween(1000),
+                    label = "memoryCrossFade",
+                ) { celState ->
+                    Box(modifier = Modifier
+                        .drawWithCache {
+                            onDrawWithContent {
+                                drawContent()
+                                drawRect(
+                                    brush = Brush.verticalGradient(
+                                        0f to Color.Transparent,
+                                        0.5f to Color.Transparent,
+                                        1f to Color.Black.copy(alpha = 0.8f),
+                                        startY = 0f,
+                                        endY = Float.POSITIVE_INFINITY,
+                                        tileMode = TileMode.Clamp,
+                                    )
                                 )
-                            )
-                        }
-                    },
-                ) {
-                    Cel(
-                        state = celState,
-                        onSelected = {
-                            onMemorySelected(cel, memory.yearsAgo)
+                            }
                         },
-                        aspectRatio = 0.7f,
-                        contentScale = ContentScale.Crop,
+                    ) {
+                        Cel(
+                            state = celState,
+                            onSelected = {
+                                onMemorySelected(cel, memory.yearsAgo)
+                            },
+                            aspectRatio = 0.7f,
+                            contentScale = ContentScale.Crop,
+                        )
+                    }
+                }
+                Box(modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .padding(2.dp),
+                ) {
+                    ActionIcon(
+                        modifier = Modifier
+                            .clip(CircleShape)
+                            .background(MaterialTheme.colors.background.copy(alpha = 0.4f)),
+                        onClick = { onScrollToMemory(cel) },
+                        icon = drawable.ic_down_arrow,
                     )
                 }
-            }
-            Box(modifier = Modifier
-                .align(Alignment.TopEnd)
-                .padding(2.dp),
-            ) {
-                ActionIcon(
+                Text(
                     modifier = Modifier
-                        .clip(CircleShape)
-                        .background(MaterialTheme.colors.background.copy(alpha = 0.4f)),
-                    onClick = { onScrollToMemory(cel) },
-                    icon = drawable.ic_down_arrow,
+                        .align(Alignment.BottomCenter)
+                        .padding(4.dp),
+                    text = stringResource(string.years_ago, memory.yearsAgo),
+                    color = Color.White,
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold,
                 )
             }
-            Text(
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .padding(4.dp),
-                text = stringResource(string.years_ago, memory.yearsAgo),
-                color = Color.White,
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold,
-            )
         }
     }
     LaunchedEffect(memory) {
