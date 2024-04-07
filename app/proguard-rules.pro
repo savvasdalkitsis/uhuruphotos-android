@@ -24,6 +24,20 @@
 
 -dontwarn com.fasterxml.jackson.dataformat.xml.JacksonXmlModule
 -dontwarn com.fasterxml.jackson.dataformat.xml.XmlMapper
+-dontwarn com.google.android.gms.location.ActivityRecognition
+-dontwarn com.google.android.gms.location.ActivityRecognitionClient
+-dontwarn com.google.android.gms.location.ActivityRecognitionResult
+-dontwarn com.google.android.gms.location.ActivityTransition$Builder
+-dontwarn com.google.android.gms.location.ActivityTransition
+-dontwarn com.google.android.gms.location.ActivityTransitionEvent
+-dontwarn com.google.android.gms.location.ActivityTransitionRequest
+-dontwarn com.google.android.gms.location.ActivityTransitionResult
+-dontwarn com.google.android.gms.location.DetectedActivity
+-dontwarn com.google.android.gms.location.FusedLocationProviderClient
+-dontwarn com.google.android.gms.location.LocationCallback
+-dontwarn com.google.android.gms.location.LocationRequest
+-dontwarn com.google.android.gms.location.LocationResult
+-dontwarn com.google.android.gms.location.LocationServices
 -dontwarn com.sun.org.apache.xml.internal.utils.PrefixResolver
 -dontwarn java.beans.BeanInfo
 -dontwarn java.beans.IndexedPropertyDescriptor
