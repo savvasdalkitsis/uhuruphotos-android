@@ -1,0 +1,4 @@
+* Adding time to lightbox details that were taken 'Today'
+* Potential fix for theme not updating
+* Removing direct references to api keys from the codebase
+* Various bug fixes
