@@ -39,6 +39,9 @@ class DateModule {
     @Qualifier
     @Retention(AnnotationRetention.BINARY)
     annotation class DisplayingDateTimeFormat
+    @Qualifier
+    @Retention(AnnotationRetention.BINARY)
+    annotation class DisplayingTimeFormat
 
     @Provides
     @ParsingDateFormat
@@ -55,5 +58,9 @@ class DateModule {
     @Provides
     @DisplayingDateTimeFormat
     fun displayingDateTimeFormat(): DateTimeFormatter = DateTimeFormat.fullDateTime()
+
+    @Provides
+    @DisplayingTimeFormat
+    fun displayingTimeFormat(): DateTimeFormatter = DateTimeFormat.fullTime()
 
 }

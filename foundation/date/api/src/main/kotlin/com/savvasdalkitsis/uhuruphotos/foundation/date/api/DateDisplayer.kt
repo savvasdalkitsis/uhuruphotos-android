@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.foundation.date.api
 import android.content.Context
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule.DisplayingDateFormat
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule.DisplayingDateTimeFormat
+import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule.DisplayingTimeFormat
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import dagger.hilt.android.qualifiers.ApplicationContext
 import net.danlew.android.joda.DateUtils
@@ -31,22 +32,29 @@ class DateDisplayer @Inject constructor(
     private val displayingDateFormat: DateTimeFormatter,
     @DisplayingDateTimeFormat
     private val displayingDateTimeFormat: DateTimeFormatter,
+    @DisplayingTimeFormat
+    private val displayingTimeFormat: DateTimeFormatter,
     @ApplicationContext
     private val context: Context,
 ) {
 
-    fun dateString(date: String?): String = format(date, displayingDateFormat)
+    fun dateString(date: String?): String = format(date, displayingDateFormat, appendTimeIfToday = false)
 
-    fun dateTimeString(date: String?): String = format(date, displayingDateTimeFormat)
+    fun dateTimeString(date: String?): String = format(date, displayingDateTimeFormat, appendTimeIfToday = true)
 
-    private fun format(date: String?, formatter: DateTimeFormatter) =
+    private fun format(date: String?, formatter: DateTimeFormatter, appendTimeIfToday: Boolean) =
         dateParser.parseDateOrTimeString(date)?.let {
-            format(it, formatter)
+            format(it, formatter, appendTimeIfToday)
         } ?: ""
 
-    private fun format(date: DateTime, formatter: DateTimeFormatter): String = if (DateUtils.isToday(date)) {
-        context.getString(string.today)
-    } else {
-        formatter.print(date.toLocalDateTime())
-    }
+    private fun format(date: DateTime, formatter: DateTimeFormatter, appendTimeIfToday: Boolean): String =
+        if (DateUtils.isToday(date)) {
+            context.getString(string.today) + if (appendTimeIfToday) {
+                " " + displayingTimeFormat.print(date.toLocalDateTime())
+            } else {
+                ""
+            }
+        } else {
+            formatter.print(date.toLocalDateTime())
+        }
 }
