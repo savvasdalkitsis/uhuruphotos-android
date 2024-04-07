@@ -46,6 +46,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewStateFactory
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.LocalNavigator
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.LocalThemeMode
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window.LocalSystemUiController
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CollageShape
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.shared.LocalSharedElementTransition
@@ -79,7 +80,7 @@ class CompositionLocalProviders @Inject constructor(
             initial = true
         )
         val screenshotState = rememberScreenshotState()
-        val themeMode by settingsUIUseCase.observeThemeModeState().collectAsState()
+        val themeMode by settingsUIUseCase.observeThemeMode().collectAsState(ThemeMode.default)
         val collageShape by settingsUIUseCase.observeCollageShape().collectAsState(CollageShape.default)
         val collageSpacing by settingsUIUseCase.observeCollageSpacing().collectAsState(2)
         val collageSpacingEdges by settingsUIUseCase.observeCollageSpacingIncludeEdges().collectAsState(false)

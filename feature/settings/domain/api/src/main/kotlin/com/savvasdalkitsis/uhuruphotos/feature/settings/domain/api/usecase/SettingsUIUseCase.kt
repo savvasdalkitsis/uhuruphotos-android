@@ -5,7 +5,6 @@ import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CollageShape
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.StateFlow
 
 interface SettingsUIUseCase {
 
@@ -32,7 +31,6 @@ interface SettingsUIUseCase {
     fun observeThemeMode(): Flow<ThemeMode>
     fun observeSearchSuggestionsEnabledMode(): Flow<Boolean>
     fun observeShowLibrary(): Flow<Boolean>
-    fun observeThemeModeState(): StateFlow<ThemeMode>
     fun observeMapProvider(): Flow<MapProvider>
     fun observeMemoriesEnabled(): Flow<Boolean>
     fun observeAnimateVideoThumbnails(): Flow<Boolean>
