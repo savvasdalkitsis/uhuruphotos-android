@@ -229,7 +229,7 @@ internal fun SmartCollage(
         val scrollText by remember(state) {
             derivedStateOf {
                 firstOffscreenCluster
-                    ?.let { state[it] }
+                    ?.let { state.getOrNull(it) }
                     ?.cels
                     ?.firstOrNull()
                     ?.mediaItem
