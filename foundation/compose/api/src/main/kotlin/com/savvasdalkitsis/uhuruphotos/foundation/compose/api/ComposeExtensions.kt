@@ -32,8 +32,8 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 
-@Composable fun String?.toColor(): Color = when (this) {
-    null -> MaterialTheme.colors.background
+@Composable fun String?.toColor(): Color = when {
+    isNullOrBlank() -> MaterialTheme.colors.background
     else -> try {
         Color(android.graphics.Color.parseColor(this))
     } catch (e: Exception) {
