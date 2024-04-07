@@ -34,7 +34,7 @@ internal class LogModule {
     @Provides
     @Singleton
     fun loggerSetup(@ApplicationContext context: Context): FileLoggerSetup =
-        FileLoggerSetup.Daily(
+        FileLoggerSetup.Daily.create(
             context = context,
             filesToKeep = 1,
         )
