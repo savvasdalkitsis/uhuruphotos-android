@@ -37,7 +37,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.composed
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.RectangleShape
@@ -185,13 +184,13 @@ internal fun SmartCollage(
                             modifier = Modifier
                                 .animateItemPlacement()
                                 .clip(shape)
-                                .composed {
+                                .then(
                                     if (maintainAspectRatio) {
-                                        sharedElementTransition(sharedElementTransitionState)
+                                        Modifier.sharedElementTransition(sharedElementTransitionState)
                                     } else {
-                                        this
+                                        Modifier
                                     }
-                                },
+                                ),
                             state = cel,
                             onSelected = {
                                 if (maintainAspectRatio) {
