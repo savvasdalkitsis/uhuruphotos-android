@@ -38,11 +38,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.isActive
+import kotlinx.coroutines.suspendCancellableCoroutine
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
-import kotlin.coroutines.suspendCoroutine
 
 @AutoBind
 @ActivityRetainedScoped
@@ -75,7 +75,7 @@ internal class BiometricsUseCase @Inject constructor(
     ): SimpleResult = runCatchingWithLog {
         with(currentActivityHolder.currentActivity!!) {
             awaitOnMain {
-                suspendCoroutine { continuation ->
+                suspendCancellableCoroutine { continuation ->
                     authenticate(
                         Prompt(
                             title = title,
@@ -85,9 +85,11 @@ internal class BiometricsUseCase @Inject constructor(
                             deviceCredentialsAllowed = true,
                         )
                     ) { exception ->
-                        when(exception) {
-                            null -> continuation.resume(Unit)
-                            else -> continuation.resumeWithException(exception)
+                        if (continuation.isActive) {
+                            when (exception) {
+                                null -> continuation.resume(Unit)
+                                else -> continuation.resumeWithException(exception)
+                            }
                         }
                     }
                 }
