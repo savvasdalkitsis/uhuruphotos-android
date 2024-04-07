@@ -31,7 +31,7 @@ internal class MapBoxMapViewState(
 ) : MapViewState {
 
     var mapView: MapView? = null
-    private val map get() = mapView?.getMapboxMap()
+    private val map get() = mapView?.mapboxMap
     private var bounds: Pair<Point, Point>? = null
     private var onStoppedMoving: (Viewport) -> Unit = {}
 

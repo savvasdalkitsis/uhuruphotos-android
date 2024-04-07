@@ -1,5 +1,5 @@
 /*
-Copyright 2024 Savvas Dalkitsis
+Copyright 2023 Savvas Dalkitsis
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,15 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.foundation.{{cookiecutter.project_slug}}.implementation.usecase
+package com.savvasdalkitsis.uhuruphotos.foundation.map.implementation.maplibre.api
 
-import com.savvasdalkitsis.uhuruphotos.foundation.{{cookiecutter.project_slug}}.api.usecase.{{cookiecutter.project_slug.capitalize()}}UseCase
-import se.ansman.dagger.auto.AutoBind
-import javax.inject.Inject
+import android.content.Context
+import com.savvasdalkitsis.uhuruphotos.foundation.android.api.extensions.getMetadata
 
-@AutoBind
-class {{cookiecutter.project_slug.capitalize()}}UseCase @Inject constructor(
+object MapLibreApi {
 
-) : {{cookiecutter.project_slug.capitalize()}}UseCase {
-
+    fun getApiKey(context: Context) = context.getMetadata("com.maplibre.API_KEY", "DUMMY-KEY")
 }

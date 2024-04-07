@@ -7,6 +7,6 @@
 
         <meta-data
             android:name="com.bugsnag.android.API_KEY"
-            android:value="21cd8568a8202c8e986bd1f74fae6016"/>
+            android:value="${bugSnagApiKey}"/>
     </application>
 </manifest>

@@ -32,7 +32,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import coil.ImageLoader
-import com.savvasdalkitsis.uhuruphotos.foundation.image.api.hdr.setHDR
+import com.savvasdalkitsis.uhuruphotos.foundation.activity.api.extensions.setHDR
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.LocalFullImageLoader
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.LocalThumbnailImageLoader
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.LocalThumbnailWithNetworkCacheImageLoader

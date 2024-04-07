@@ -38,9 +38,6 @@ jobs:
     - name: Create local properties
       run: touch local.properties
 
-    - name: Create maps api key
-      run: echo "MAPS_API_KEY=${{ secrets.MAPS_API_KEY }}" > secrets.properties
-
     - name: Decode Keystore
       env:
         ENCODED_STRING: ${{ secrets.KEYSTORE }}
@@ -59,10 +56,14 @@ jobs:
     - name: Build & deploy Android release
       run: bundle exec fastlane android deploy
       env:
+        BUGSNAG_API_KEY: ${{ secrets.BUGSNAG_API_KEY }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         KEYSTORE_PASS: ${{ secrets.KEYSTORE_PASS }}
         KEYSTORE_ALIAS: ${{ secrets.KEYSTORE_ALIAS }}
         MAPBOX_DOWNLOADS_TOKEN: ${{ secrets.MAPBOX_DOWNLOADS_TOKEN }}
+        MAPBOX_API_KEY: ${{ secrets.MAPBOX_API_KEY }}
+        MAPS_API_KEY: ${{ secrets.MAPS_API_KEY }}
+        MAPLIBRE_API_KEY: ${{ secrets.MAPLIBRE_API_KEY }}
         ANDROID_JSON_KEY_FILE: ${{ steps.service_account_json_file.outputs.filePath }}
 
 #    - name: Build with Gradle

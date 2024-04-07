@@ -22,5 +22,6 @@ dependencies {
             libs.hilt,
             libs.telephoto,
             libs.videocache,
+            project(":foundation:activity:api"),
     )
 }

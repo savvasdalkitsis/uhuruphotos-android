@@ -4,6 +4,7 @@ android {
 
 dependencies {
     implementation(
+            libs.bundles.autodagger,
             libs.hilt,
             project(":foundation:{{cookiecutter.project_slug}}:api"),
     )

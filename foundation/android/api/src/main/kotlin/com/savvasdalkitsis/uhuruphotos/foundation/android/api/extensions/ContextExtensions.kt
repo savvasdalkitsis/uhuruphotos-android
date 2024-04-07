@@ -1,5 +1,5 @@
 /*
-Copyright 2023 Savvas Dalkitsis
+Copyright 2024 Savvas Dalkitsis
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,9 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.foundation.map.implementation.maplibre
+package com.savvasdalkitsis.uhuruphotos.foundation.android.api.extensions
 
-object MapLibreApi {
+import android.content.Context
+import android.content.pm.PackageManager
 
-    const val API_KEY = "OKhTHBkjkbF0SQvzCJ0d"
-}
+fun Context.getMetadata(metadataName: String, fallback: String): String = packageManager
+    .getApplicationInfo(packageName, PackageManager.GET_META_DATA)
+    .metaData.getString(metadataName) ?: fallback

@@ -43,7 +43,7 @@ internal fun MapBoxMapView(
         modifier = modifier,
         factory = { context ->
             MapView(context).apply {
-                getMapboxMap().apply {
+                mapboxMap.apply {
                     with(mapOptions(MapOptions())) {
                         gestures.doubleTouchToZoomOutEnabled = zoomGesturesEnabled
                         gestures.pinchToZoomEnabled = zoomGesturesEnabled
@@ -55,10 +55,7 @@ internal fun MapBoxMapView(
                         colors.isLight -> Style.MAPBOX_STREETS
                         else -> Style.DARK
                     }
-                    loadStyleUri(style)
-                    scalebar.enabled = false
-                    compass.enabled = false
-                    addOnStyleLoadedListener {
+                    loadStyle(style) {
                         setCamera(
                             CameraOptions.Builder()
                                 .center(mapViewState.initialPosition.toPoint)
@@ -70,6 +67,8 @@ internal fun MapBoxMapView(
                             pulsingEnabled = true
                         }
                     }
+                    scalebar.enabled = false
+                    compass.enabled = false
                     bindTo(mapViewState)
                     addOnMapClickListener {
                         onMapClick()

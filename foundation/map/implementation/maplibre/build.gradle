@@ -17,6 +17,8 @@ dependencies {
             libs.androidx.startup,
             libs.bundles.autodagger,
             libs.hilt,
+            project(":foundation:activity:api"),
+            project(":foundation:android:api"),
             project(":foundation:icons:api"),
             project(":foundation:initializer:api"),
             project(":foundation:log:api"),

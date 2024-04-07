@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.map.implementation.maplibre.ui
 
-import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
@@ -29,9 +28,10 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.mapbox.mapboxsdk.camera.CameraPosition
 import com.mapbox.mapboxsdk.maps.MapView
 import com.mapbox.mapboxsdk.utils.BitmapUtils
+import com.savvasdalkitsis.uhuruphotos.foundation.activity.api.extensions.getActivity
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapOptions
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewScope
-import com.savvasdalkitsis.uhuruphotos.foundation.map.implementation.maplibre.MapLibreApi
+import com.savvasdalkitsis.uhuruphotos.foundation.map.implementation.maplibre.api.MapLibreApi
 
 @Composable
 fun MapLibreMapView(
@@ -63,7 +63,7 @@ fun MapLibreMapView(
         factory = { context ->
             MapView(context).apply {
                 bindTo(mapViewState)
-                (context as ComponentActivity).lifecycle.addObserver(this.lifecycleObserver())
+                context.getActivity()!!.lifecycle.addObserver(this.lifecycleObserver())
                 getMapAsync { map ->
                     with(mapOptions(MapOptions())) {
                         with(map.uiSettings) {
@@ -80,7 +80,7 @@ fun MapLibreMapView(
                         when {
                             colors.isLight -> "https://api.maptiler.com/maps/basic-v2/style.json?key="
                             else -> "https://api.maptiler.com/maps/basic-v2-dark/style.json?key="
-                        } + MapLibreApi.API_KEY
+                        } + MapLibreApi.getApiKey(context)
                     )
                     map.getStyle { style ->
                         Markers.entries.forEach { marker ->

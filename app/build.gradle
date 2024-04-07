@@ -20,6 +20,13 @@ android {
         versionCode 214
         versionName "0.0.214"
 
+        manifestPlaceholders = [
+                bugSnagApiKey: System.getenv("BUGSNAG_API_KEY") ?: "DUMMY-KEY",
+                mapsApiKey: System.getenv("MAPS_API_KEY") ?: "DUMMY-KEY",
+                mapBoxApiKey: System.getenv("MAPBOX_API_KEY") ?: "DUMMY-KEY",
+                mapLibreApiKey: System.getenv("MAPLIBRE_API_KEY") ?: "DUMMY-KEY",
+        ]
+
         vectorDrawables {
             useSupportLibrary true
         }

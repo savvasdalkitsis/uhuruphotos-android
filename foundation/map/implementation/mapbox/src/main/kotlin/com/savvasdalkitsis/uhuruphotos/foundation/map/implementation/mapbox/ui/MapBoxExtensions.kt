@@ -42,7 +42,7 @@ internal fun MapView.addMarker(marker: LatLon) {
 }
 
 internal fun MapView.showHeatMap(points: Set<LatLon>) {
-    getMapboxMap().getStyle {
+    mapboxMap.getStyle {
         with(it) {
             removeStyleLayer("heatMap")
             removeStyleLayer("heatMapCircles")
@@ -68,7 +68,7 @@ internal fun MapView.showHeatMap(points: Set<LatLon>) {
 
 internal fun MapView.bindTo(mapViewState: MapBoxMapViewState) {
     mapViewState.mapView = this
-    getMapboxMap().apply {
+    mapboxMap.apply {
         addOnMoveListener(object : OnMoveListener {
             override fun onMove(detector: MoveGestureDetector) = false
 

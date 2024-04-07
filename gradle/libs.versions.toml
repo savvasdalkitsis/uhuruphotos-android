@@ -34,7 +34,6 @@ google-services = { id = "com.google.gms.google-services", version.ref = "google
 kotlin-android = { id = 'org.jetbrains.kotlin.android', version.ref = "kotlin" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 ksp = "com.google.devtools.ksp:1.9.22-1.0.17"
-mapsSecrets = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:2.0.1"
 moduleGraph = "com.savvasdalkitsis.module-dependency-graph:0.12"
 powerassert = "com.bnorm.power.kotlin-power-assert:0.13.0"
 redacted = "dev.zacsweers.redacted:1.7.1"
@@ -125,7 +124,7 @@ lumberjack-logger-file = { module = "com.github.MFlisar.Lumberjack:logger-file",
 lumberjack-extension-feedback = { module = "com.github.MFlisar.Lumberjack:extension-feedback", version.ref = "lumberjack" }
 lumberjack-extension-notification = { module = "com.github.MFlisar.Lumberjack:extension-notification", version.ref = "lumberjack" }
 lumberjack-extension-viewer = { module = "com.github.MFlisar.Lumberjack:extension-viewer", version.ref = "lumberjack" }
-mapbox = "com.mapbox.maps:android:10.9.1"
+mapbox = "com.mapbox.maps:android:11.2.2"
 maplibre = "org.maplibre.gl:android-sdk:10.3.0"
 maplibre-annotations = "org.maplibre.gl:android-plugin-annotation-v9:2.0.2"
 maps = { module = "com.google.android.gms:play-services-maps", version.ref = "gms" }

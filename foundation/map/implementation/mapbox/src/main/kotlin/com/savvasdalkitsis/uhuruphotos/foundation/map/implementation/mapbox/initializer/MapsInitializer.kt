@@ -17,7 +17,9 @@ package com.savvasdalkitsis.uhuruphotos.foundation.map.implementation.mapbox.ini
 
 import android.app.Application
 import androidx.startup.AppInitializer
+import com.mapbox.common.MapboxOptions
 import com.mapbox.maps.loader.MapboxMapsInitializer
+import com.savvasdalkitsis.uhuruphotos.foundation.android.api.extensions.getMetadata
 import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
 import se.ansman.dagger.auto.AutoBindIntoSet
 import javax.inject.Inject
@@ -29,5 +31,6 @@ internal class MapsInitializer @Inject constructor(
     override fun onAppCreated(app: Application) {
         AppInitializer.getInstance(app)
             .initializeComponent(MapboxMapsInitializer::class.java)
+        MapboxOptions.accessToken = app.getMetadata("com.mapbox.API_KEY", "DUMMY_KEY")
     }
 }

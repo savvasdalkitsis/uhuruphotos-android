@@ -13,27 +13,24 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-
-package com.savvasdalkitsis.uhuruphotos.foundation.image.api.hdr
+package com.savvasdalkitsis.uhuruphotos.foundation.activity.api.extensions
 
 import android.content.Context
 import android.content.ContextWrapper
-import android.content.pm.ActivityInfo.COLOR_MODE_DEFAULT
-import android.content.pm.ActivityInfo.COLOR_MODE_HDR
-import android.os.Build.VERSION.SDK_INT
-import android.os.Build.VERSION_CODES.UPSIDE_DOWN_CAKE
+import android.content.pm.ActivityInfo
+import android.os.Build
 import androidx.activity.ComponentActivity
 
 fun Context.setHDR(enable: Boolean) {
-    if (SDK_INT >= UPSIDE_DOWN_CAKE) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
         getActivity()?.window?.colorMode = when {
-            enable -> COLOR_MODE_HDR
-            else -> COLOR_MODE_DEFAULT
+            enable -> ActivityInfo.COLOR_MODE_HDR
+            else -> ActivityInfo.COLOR_MODE_DEFAULT
         }
     }
 }
 
-private tailrec fun Context.getActivity(): ComponentActivity? = when (this) {
+tailrec fun Context.getActivity(): ComponentActivity? = when (this) {
     is ComponentActivity -> this
     is ContextWrapper -> baseContext.getActivity()
     else -> null
