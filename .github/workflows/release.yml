@@ -80,3 +80,4 @@ jobs:
         name: bundle
         path: |
           app/build/outputs/mapping/release/missing_rules.txt
+          app/build/outputs/mapping/**
