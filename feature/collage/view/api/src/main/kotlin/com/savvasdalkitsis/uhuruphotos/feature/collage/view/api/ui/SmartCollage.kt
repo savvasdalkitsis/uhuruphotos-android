@@ -170,7 +170,7 @@ internal fun SmartCollage(
 
                 for (cel in cluster.cels) {
                     val id = cel.mediaItem.id
-                    item("item:$clusterIndex:" + id.value) {
+                    item("item:$clusterIndex:${id.serializableId}") {
                         val aspectRatio = remember(maintainAspectRatio) {
                             when {
                                 maintainAspectRatio -> cel.mediaItem.ratio

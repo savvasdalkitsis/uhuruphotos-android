@@ -44,6 +44,7 @@ sealed class MediaId<T : Serializable> private constructor(
     abstract val findRemote: Remote?
     abstract val preferLocal: MediaId<*>
     abstract val findLocals: Set<Local>
+    abstract val serializableId: String
 
     val isBothRemoteAndLocal: Boolean get() = findLocals.isNotEmpty() && findRemote != null
 
@@ -64,6 +65,9 @@ sealed class MediaId<T : Serializable> private constructor(
         @IgnoredOnParcel
         @Transient
         override val findLocals: Set<Local> = emptySet()
+        @IgnoredOnParcel
+        @Transient
+        override val serializableId: String = "remote:$value"
 
         @IgnoredOnParcel
         override val syncState: MediaItemSyncState = REMOTE_ONLY
@@ -97,6 +101,10 @@ sealed class MediaId<T : Serializable> private constructor(
         override val findLocals: Set<Local> = emptySet()
 
         @IgnoredOnParcel
+        @Transient
+        override val serializableId: String = "downloading:$value"
+
+        @IgnoredOnParcel
         override val syncState: MediaItemSyncState = DOWNLOADING
         override fun fullResUri(serverUrl: String?): String = remote.fullResUri(serverUrl)
         override fun thumbnailUri(serverUrl: String?): String = remote.thumbnailUri(serverUrl)
@@ -125,6 +133,9 @@ sealed class MediaId<T : Serializable> private constructor(
         @IgnoredOnParcel
         @Transient
         override val findLocals: Set<Local> = setOf(local)
+        @IgnoredOnParcel
+        @Transient
+        override val serializableId: String = "uploading:$value"
 
         @IgnoredOnParcel
         override val syncState: MediaItemSyncState = UPLOADING
@@ -156,6 +167,9 @@ sealed class MediaId<T : Serializable> private constructor(
         @IgnoredOnParcel
         @Transient
         override val findLocals: Set<Local> = setOf(local)
+        @IgnoredOnParcel
+        @Transient
+        override val serializableId: String = "processing:$value"
 
         @IgnoredOnParcel
         override val syncState: MediaItemSyncState = PROCESSING
@@ -184,6 +198,9 @@ sealed class MediaId<T : Serializable> private constructor(
         @IgnoredOnParcel
         @Transient
         override val findLocals: Set<Local> = setOf(this)
+        @IgnoredOnParcel
+        @Transient
+        override val serializableId: String = "local:$value"
 
         @IgnoredOnParcel
         override val syncState: MediaItemSyncState = LOCAL_ONLY
@@ -212,6 +229,9 @@ sealed class MediaId<T : Serializable> private constructor(
         @IgnoredOnParcel
         @Transient
         override val preferLocal: MediaId<*> = findLocals.firstOrNull() ?: value.first()
+        @IgnoredOnParcel
+        @Transient
+        override val serializableId: String = "group:${value.joinToString(",") { it.serializableId }}"
 
         @IgnoredOnParcel
         override val syncState: MediaItemSyncState = when {
