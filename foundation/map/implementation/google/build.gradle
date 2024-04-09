@@ -6,6 +6,12 @@ android {
         kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
     }
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.map.implementation.google'
+
+    defaultConfig {
+        manifestPlaceholders = [
+                mapsApiKey: System.getenv("MAPS_API_KEY") ?: "DUMMY-KEY",
+        ]
+    }
 }
 
 dependencies {

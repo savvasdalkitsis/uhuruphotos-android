@@ -6,6 +6,12 @@ android {
         kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
     }
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.map.implementation.maplibre'
+
+    defaultConfig {
+        manifestPlaceholders = [
+                mapLibreApiKey: System.getenv("MAPLIBRE_API_KEY") ?: "DUMMY-KEY",
+        ]
+    }
 }
 
 dependencies {

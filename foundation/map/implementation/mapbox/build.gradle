@@ -6,6 +6,12 @@ android {
         kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
     }
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.map.implementation.mapbox'
+
+    defaultConfig {
+        manifestPlaceholders = [
+                mapBoxApiKey: System.getenv("MAPBOX_API_KEY") ?: "DUMMY-KEY",
+        ]
+    }
 }
 
 dependencies {

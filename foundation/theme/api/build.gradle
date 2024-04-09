@@ -9,12 +9,14 @@ android {
 }
 
 dependencies {
+    api(
+            project(":foundation:activity:api"),
+    )
     implementation(
             libs.accompanist.systemui,
             libs.androidx.compose.material,
             libs.androidx.compose.material.windowsize,
             libs.androidx.compose.ui,
-            project(":foundation:activity:api"),
             project(":foundation:icons:api"),
             project(":foundation:image:api"),
     )
