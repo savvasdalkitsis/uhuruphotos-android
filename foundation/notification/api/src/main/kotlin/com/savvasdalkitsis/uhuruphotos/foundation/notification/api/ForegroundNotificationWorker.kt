@@ -59,10 +59,14 @@ abstract class ForegroundNotificationWorker<BR>(
             log(e)
             Result.failure()
         } finally {
-            notificationManager.cancel(notificationId)
+            ifNotificationsEnabled {
+                notificationManager.cancel(notificationId)
+            }
         }.also {
-            getFinishedNotification(it)?.let { (id, notification) ->
-                notificationManager.notify(id, notification)
+            ifNotificationsEnabled {
+                getFinishedNotification(it)?.let { (id, notification) ->
+                    notificationManager.notify(id, notification)
+                }
             }
         }
     }
@@ -88,15 +92,24 @@ abstract class ForegroundNotificationWorker<BR>(
     @SuppressLint("MissingPermission")
     suspend fun updateProgress(progress: Int, text: String? = null) {
         setProgress(workDataOf(Progress to progress))
+        ifNotificationsEnabled {
+            notificationManager.notify(
+                notificationId, foregroundInfoBuilder.buildNotification(
+                    context = applicationContext,
+                    title = notificationTitle,
+                    channel = notificationChannelId,
+                    progress = progress,
+                    text = text,
+                    cancelBroadcastReceiver = cancelBroadcastReceiver,
+                )
+            )
+        }
+    }
 
-        notificationManager.notify(notificationId, foregroundInfoBuilder.buildNotification(
-            context = applicationContext,
-            title = notificationTitle,
-            channel = notificationChannelId,
-            progress = progress,
-            text = text,
-            cancelBroadcastReceiver = cancelBroadcastReceiver,
-        ))
+    private fun ifNotificationsEnabled(block: () -> Unit) {
+        if (notificationManager.areNotificationsEnabled()) {
+            block()
+        }
     }
 
     override suspend fun getForegroundInfo(): ForegroundInfo = foregroundInfoBuilder.build(
