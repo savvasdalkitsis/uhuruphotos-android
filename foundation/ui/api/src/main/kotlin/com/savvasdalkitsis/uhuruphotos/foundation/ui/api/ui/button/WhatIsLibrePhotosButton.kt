@@ -31,10 +31,11 @@ import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 
 @Composable
 fun WhatIsLibrePhotosButton(
+    modifier: Modifier = Modifier,
     onClick: () -> Unit,
 ) {
     OutlinedButton(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth(),
         onClick = onClick,
     ) {
