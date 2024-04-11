@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Checkbox
 import androidx.compose.material.OutlinedButton
 import androidx.compose.runtime.Composable
@@ -27,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.copy
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.TextWithIcon
@@ -42,8 +44,13 @@ fun ToggleableButtonWithIcon(
     checked: Boolean,
     onCheckedChange: (Boolean) -> Unit,
 ) {
-    OutlinedButton(modifier = modifier, onClick = { onCheckedChange(!checked) }) {
+    OutlinedButton(
+        modifier = modifier,
+        onClick = { onCheckedChange(!checked) },
+        contentPadding = ButtonDefaults.ContentPadding.copy(top = 0.dp, bottom = 0.dp, end = 0.dp),
+    ) {
         Row(
+            modifier = Modifier.padding(0.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             TextWithIcon(

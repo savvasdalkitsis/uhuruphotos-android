@@ -57,16 +57,16 @@ import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.layout.plus
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.group.CollapsibleGroup
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.IconOutlineButton
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.dialogs.OkDialog
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.ToggleableButtonWithIcon
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UpNavButton
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.WhatIsLibrePhotosButton
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.dialogs.OkDialog
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.group.CollapsibleGroup
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.group.state.rememberCollapsibleGroupState
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.CommonScaffold
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UpNavButton
 
 @Composable
 internal fun Server(
@@ -129,7 +129,13 @@ internal fun Server(
                             action(UrlTyped(it))
                         },
                     )
-                    WhatIsLibrePhotosButton {
+                    WhatIsLibrePhotosButton(
+                        modifier = Modifier.padding(
+                            start = 8.dp,
+                            end = 8.dp,
+                            bottom = 8.dp,
+                        )
+                    ) {
                         action(ShowHelp)
                     }
                 }
@@ -147,7 +153,7 @@ internal fun Server(
                     PasswordField(state, action)
                     ToggleableButtonWithIcon(
                         modifier = Modifier
-                            .padding(vertical = 4.dp),
+                            .padding(vertical = 8.dp),
                         icon = drawable.ic_lock_add,
                         text = stringResource(string.remember_credentials),
                         checked = state.rememberCredentials,
