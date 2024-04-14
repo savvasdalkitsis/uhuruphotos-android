@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.people.domain.implementation.service.model
 
 import com.savvasdalkitsis.uhuruphotos.feature.people.domain.api.service.model.PersonResult
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
 
-@JsonClass(generateAdapter = true)
+@Serializable
 data class PeopleResult(val results: List<PersonResult>)

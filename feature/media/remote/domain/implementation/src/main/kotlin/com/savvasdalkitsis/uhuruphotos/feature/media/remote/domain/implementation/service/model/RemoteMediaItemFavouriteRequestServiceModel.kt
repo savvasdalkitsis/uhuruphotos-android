@@ -15,11 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.model
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-@JsonClass(generateAdapter = true)
+@Serializable
 data class RemoteMediaItemFavouriteRequestServiceModel(
-    @field:Json(name = "image_hashes") val mediaHashes: List<String>,
-    @field:Json(name = "favorite") val favourite: Boolean
+    @SerialName("image_hashes") val mediaHashes: List<String>,
+    @SerialName("favorite") val favourite: Boolean
 )

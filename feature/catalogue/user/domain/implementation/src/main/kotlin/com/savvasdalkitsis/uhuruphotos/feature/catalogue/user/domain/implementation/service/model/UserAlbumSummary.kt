@@ -16,21 +16,21 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.domain.implementation.service.model
 
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbums
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-@JsonClass(generateAdapter = true)
+@Serializable
 data class UserAlbumSummary(
-    @field:Json(name = "favorited")
+    @SerialName("favorited")
     val isFavorite: Boolean,
     val id: Int,
-    @field:Json(name = "photo_count")
+    @SerialName("photo_count")
     val photoCount: Int,
-    @field:Json(name = "cover_photos")
+    @SerialName("cover_photos")
     val coverPhotos: List<UserAlbumCoverPhoto>?,
-    @field:Json(name = "cover_photo")
+    @SerialName("cover_photo")
     val coverPhoto: UserAlbumCoverPhoto?,
-    @field:Json(name = "created_on")
+    @SerialName("created_on")
     val createdOn: String,
     val title: String,
 )

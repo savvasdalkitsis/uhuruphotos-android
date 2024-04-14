@@ -16,8 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.domain.implementation.service
 
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.domain.implementation.service.model.AutoAlbums
-import retrofit2.http.GET
-import se.ansman.dagger.auto.retrofit.AutoProvideService
+import de.jensklingenberg.ktorfit.http.GET
+import se.ansman.dagger.auto.ktorfit.AutoProvideService
 import javax.inject.Singleton
 
 @AutoProvideService

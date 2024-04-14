@@ -16,12 +16,12 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.service
 
 import com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.service.model.UploadChunkResult
+import de.jensklingenberg.ktorfit.http.Header
+import de.jensklingenberg.ktorfit.http.Multipart
+import de.jensklingenberg.ktorfit.http.POST
+import de.jensklingenberg.ktorfit.http.Part
 import okhttp3.MultipartBody
-import retrofit2.http.Header
-import retrofit2.http.Multipart
-import retrofit2.http.POST
-import retrofit2.http.Part
-import se.ansman.dagger.auto.retrofit.AutoProvideService
+import se.ansman.dagger.auto.ktorfit.AutoProvideService
 import javax.inject.Singleton
 
 @AutoProvideService
@@ -29,7 +29,7 @@ import javax.inject.Singleton
 interface UploadService {
 
     @Multipart
-    @POST("/api/upload/")
+    @POST("api/upload/")
     suspend fun uploadChunk(
         @Header("Content-Range") range: String,
         @Part uploadId: MultipartBody.Part,
@@ -40,7 +40,7 @@ interface UploadService {
     ): UploadChunkResult
 
     @Multipart
-    @POST("/api/upload/complete/")
+    @POST("api/upload/complete/")
     suspend fun completeUpload(
         @Part uploadId: MultipartBody.Part,
         @Part user: MultipartBody.Part,

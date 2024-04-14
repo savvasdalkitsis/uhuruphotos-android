@@ -108,8 +108,8 @@ class AuthenticationUseCase @Inject constructor(
                 }
                 Authenticated
             }
-            response.code() >= 500 || response.code() == 404 -> ServerDown
-            else -> Unauthenticated(response.code())
+            response.code >= 500 || response.code == 404 -> ServerDown
+            else -> Unauthenticated(response.code)
         }
     } catch (e: IOException) {
         log(e)

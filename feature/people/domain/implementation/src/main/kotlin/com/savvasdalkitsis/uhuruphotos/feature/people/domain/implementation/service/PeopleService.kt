@@ -17,19 +17,19 @@ package com.savvasdalkitsis.uhuruphotos.feature.people.domain.implementation.ser
 
 import com.savvasdalkitsis.uhuruphotos.feature.people.domain.api.service.model.PersonResult
 import com.savvasdalkitsis.uhuruphotos.feature.people.domain.implementation.service.model.PeopleResult
-import retrofit2.http.GET
-import retrofit2.http.Path
-import se.ansman.dagger.auto.retrofit.AutoProvideService
+import de.jensklingenberg.ktorfit.http.GET
+import de.jensklingenberg.ktorfit.http.Path
+import se.ansman.dagger.auto.ktorfit.AutoProvideService
 import javax.inject.Singleton
 
 @AutoProvideService
 @Singleton
 interface PeopleService {
 
-    @GET("/api/persons/")
+    @GET("api/persons/")
     suspend fun getPeople(): PeopleResult
 
-    @GET("/api/persons/{id}/")
+    @GET("api/persons/{id}/")
     suspend fun getPerson(@Path("id") id: Int): PersonResult
 
 }

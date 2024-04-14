@@ -1,3 +1,7 @@
+plugins {
+    alias(libs.plugins.kotlinx.serialization)
+    alias(libs.plugins.ktorfit)
+}
 android {
     buildFeatures {
         compose true
@@ -17,12 +21,12 @@ dependencies {
     implementation(
             libs.androidx.compose.hilt.navigation,
             libs.androidx.compose.ui,
-            libs.bundles.autodagger,
             libs.gson,
             libs.hilt,
+            libs.ktor.content,
+            libs.ktor.okhttp,
+            libs.ktor.serialization,
             libs.jwt,
-            libs.moshi,
-            libs.retrofit.moshi,
             libs.sqldelight.coroutines,
             project(":feature:db:domain:api"),
             project(":feature:settings:domain:api"),
@@ -39,6 +43,8 @@ dependencies {
             project(":foundation:worker:api"),
             project(":foundation:video:api"),
     )
-    ksp libs.moshi.ksp
-    kapt libs.autodagger.kapt
+    ksp(
+            libs.autodagger.ksp,
+            libs.ktorfit.ksp,
+    )
 }

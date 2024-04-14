@@ -16,15 +16,15 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.implementation.service
 
 import com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.implementation.service.model.UserAlbumServiceModel
-import retrofit2.http.GET
-import retrofit2.http.Path
-import se.ansman.dagger.auto.retrofit.AutoProvideService
+import de.jensklingenberg.ktorfit.http.GET
+import de.jensklingenberg.ktorfit.http.Path
+import se.ansman.dagger.auto.ktorfit.AutoProvideService
 import javax.inject.Singleton
 
 @AutoProvideService
 @Singleton
-fun interface UserAlbumService {
+interface UserAlbumService {
 
-    @GET("/api/albums/user/{id}/")
+    @GET("api/albums/user/{id}/")
     suspend fun getUserAlbum(@Path("id") id: String): UserAlbumServiceModel
 }

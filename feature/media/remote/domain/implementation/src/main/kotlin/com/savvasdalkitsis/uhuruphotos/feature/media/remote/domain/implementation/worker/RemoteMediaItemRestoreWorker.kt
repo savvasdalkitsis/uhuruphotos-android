@@ -29,7 +29,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.NotificationC
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import retrofit2.Response
+import de.jensklingenberg.ktorfit.Response
 
 @HiltWorker
 class RemoteMediaItemRestoreWorker @AssistedInject constructor(
@@ -61,7 +61,7 @@ class RemoteMediaItemRestoreWorker @AssistedInject constructor(
         }
 
     private fun shouldRestoreLocally(response: Response<RemoteMediaOperationResponseServiceModel>) =
-        response.code() in 200..299 && response.body()?.status == true
+        response.code in 200..299 && response.body()?.status == true
 
     private fun failOrRetry() = if (params.runAttemptCount < 4) {
         Result.retry()

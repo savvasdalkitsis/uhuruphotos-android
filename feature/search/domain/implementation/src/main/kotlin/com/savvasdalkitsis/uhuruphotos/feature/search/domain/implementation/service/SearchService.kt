@@ -17,18 +17,18 @@ package com.savvasdalkitsis.uhuruphotos.feature.search.domain.implementation.ser
 
 import com.savvasdalkitsis.uhuruphotos.feature.search.domain.implementation.service.model.SearchResults
 import com.savvasdalkitsis.uhuruphotos.feature.search.domain.implementation.service.model.SearchSuggestions
-import retrofit2.http.GET
-import retrofit2.http.Query
-import se.ansman.dagger.auto.retrofit.AutoProvideService
+import de.jensklingenberg.ktorfit.http.GET
+import de.jensklingenberg.ktorfit.http.Query
+import se.ansman.dagger.auto.ktorfit.AutoProvideService
 import javax.inject.Singleton
 
 @AutoProvideService
 @Singleton
 interface SearchService {
 
-    @GET("/api/photos/searchlist/")
+    @GET("api/photos/searchlist/")
     suspend fun search(@Query("search") query: String): SearchResults
 
-    @GET("/api/searchtermexamples/")
+    @GET("api/searchtermexamples/")
     suspend fun getSearchSuggestions(): SearchSuggestions
 }

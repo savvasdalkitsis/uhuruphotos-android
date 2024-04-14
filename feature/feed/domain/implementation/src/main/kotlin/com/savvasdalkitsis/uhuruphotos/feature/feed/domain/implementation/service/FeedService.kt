@@ -17,19 +17,19 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.servi
 
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollectionById
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollectionsByDate
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
-import se.ansman.dagger.auto.retrofit.AutoProvideService
+import de.jensklingenberg.ktorfit.http.GET
+import de.jensklingenberg.ktorfit.http.Path
+import de.jensklingenberg.ktorfit.http.Query
+import se.ansman.dagger.auto.ktorfit.AutoProvideService
 import javax.inject.Singleton
 
 @AutoProvideService
 @Singleton
 interface FeedService {
 
-    @GET("/api/albums/date/list/")
+    @GET("api/albums/date/list/")
     suspend fun getRemoteMediaCollectionsByDate(): RemoteMediaCollectionsByDate
 
-    @GET("/api/albums/date/{id}/")
+    @GET("api/albums/date/{id}/")
     suspend fun getRemoteMediaCollection(@Path("id") id: String, @Query("page") page: Int): RemoteMediaCollectionById
 }

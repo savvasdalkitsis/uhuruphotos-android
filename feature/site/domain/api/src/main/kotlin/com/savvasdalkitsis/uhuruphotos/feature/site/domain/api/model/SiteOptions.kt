@@ -15,11 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.site.domain.api.model
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-@JsonClass(generateAdapter = true)
+@Serializable
 data class SiteOptions(
-    @field:Json(name = "allow_upload")
+    @SerialName("allow_upload")
     val allowUpload: Boolean,
 )

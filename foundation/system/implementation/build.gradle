@@ -8,5 +8,5 @@ dependencies {
             libs.hilt,
             project(":foundation:system:api"),
     )
-    kapt libs.autodagger.kapt
+    ksp libs.autodagger.ksp
 }

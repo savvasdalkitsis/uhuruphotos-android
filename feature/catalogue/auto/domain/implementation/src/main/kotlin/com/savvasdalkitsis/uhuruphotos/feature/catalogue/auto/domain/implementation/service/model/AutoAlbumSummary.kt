@@ -16,17 +16,17 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.domain.implementation.service.model
 
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.AutoAlbums
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-@JsonClass(generateAdapter = true)
+@Serializable
 data class AutoAlbumSummary(
-    @field:Json(name = "favorited")
+    @SerialName("favorited")
     val isFavorite: Boolean,
     val id: Int,
-    @field:Json(name = "photo_count")
+    @SerialName("photo_count")
     val photoCount: Int,
-    @field:Json(name = "photos")
+    @SerialName("photos")
     val coverPhoto: AutoAlbumPhoto,
     val timestamp: String,
     val title: String,

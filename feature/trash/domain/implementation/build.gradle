@@ -1,13 +1,15 @@
+plugins {
+    alias(libs.plugins.kotlinx.serialization)
+    alias(libs.plugins.ktorfit)
+}
+
 android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.trash.domain.implementation'
 }
 
 dependencies {
     implementation(
-            libs.bundles.autodagger,
             libs.hilt,
-            libs.moshi,
-            libs.retrofit.core,
             libs.sqldelight.coroutines,
             project(":feature:collage:view:api"),
             project(":feature:media:common:domain:api"),
@@ -15,8 +17,11 @@ dependencies {
             project(":feature:trash:domain:api"),
             project(":foundation:group:api"),
             project(":foundation:log:api"),
+            project(":foundation:network:api"),
             project(":foundation:preferences:api"),
     )
-    kapt libs.autodagger.kapt
-    ksp libs.moshi.ksp
+    ksp(
+            libs.autodagger.ksp,
+            libs.ktorfit.ksp,
+    )
 }

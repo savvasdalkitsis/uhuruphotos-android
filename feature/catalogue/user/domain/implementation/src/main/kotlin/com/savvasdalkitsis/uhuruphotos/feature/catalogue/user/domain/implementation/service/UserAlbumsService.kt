@@ -16,13 +16,13 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.domain.implementation.service
 
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.domain.implementation.service.model.UserAlbums
-import retrofit2.http.GET
-import se.ansman.dagger.auto.retrofit.AutoProvideService
+import de.jensklingenberg.ktorfit.http.GET
+import se.ansman.dagger.auto.ktorfit.AutoProvideService
 import javax.inject.Singleton
 
 @AutoProvideService
 @Singleton
-fun interface UserAlbumsService {
+interface UserAlbumsService {
 
     @GET("api/albums/user/list/")
     suspend fun getUserAlbums(): UserAlbums

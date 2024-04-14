@@ -17,18 +17,18 @@ package com.savvasdalkitsis.uhuruphotos.feature.album.auto.domain.implementation
 
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.people.domain.api.service.model.PersonResult
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-@JsonClass(generateAdapter = true)
+@Serializable
 data class AutoAlbum(
-    @field:Json(name = "created_on")
+    @SerialName("created_on")
     val createdOn: String,
-    @field:Json(name = "favorited")
+    @SerialName("favorited")
     val isFavorite: Boolean,
-    @field:Json(name = "gps_lat")
+    @SerialName("gps_lat")
     val gpsLat: Double?,
-    @field:Json(name = "gps_lon")
+    @SerialName("gps_lon")
     val gpsLon: Double?,
     val id: Int,
     val timestamp: String,

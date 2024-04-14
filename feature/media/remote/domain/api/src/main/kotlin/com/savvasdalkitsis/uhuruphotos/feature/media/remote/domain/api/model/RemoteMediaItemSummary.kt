@@ -17,10 +17,10 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model
 
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbTrash
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-@JsonClass(generateAdapter = true)
+@Serializable
 data class RemoteMediaItemSummary(
     val id: String,
     val dominantColor: String,
@@ -30,7 +30,7 @@ data class RemoteMediaItemSummary(
     val birthTime: String,
     val aspectRatio: Float? = null,
     val type: String,
-    @Json(name = "video_length") val videoLength: String,
+    @SerialName("video_length") val videoLength: String,
     val rating: Int
 )
 

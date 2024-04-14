@@ -12,7 +12,6 @@ dependencies {
     implementation(
             libs.androidx.compose.foundation,
             libs.androidx.compose.material,
-            libs.retrofit.core,
             project(":feature:collage:view:api"),
             project(":feature:lightbox:view:api"),
             project(":feature:media:common:domain:api"),

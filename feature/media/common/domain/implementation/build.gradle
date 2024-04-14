@@ -21,9 +21,6 @@ dependencies {
             libs.coil.base,
             libs.exif,
             libs.infobar,
-            libs.moshi,
-            libs.retrofit.core,
-            libs.retrofit.moshi,
             libs.sqldelight.coroutines,
             libs.zoomable,
             project(":feature:auth:domain:api"),
@@ -56,6 +53,5 @@ dependencies {
             project(":foundation:video:api"),
             project(":foundation:worker:api"),
     )
-    kapt libs.autodagger.kapt
-    ksp libs.moshi.ksp
+    ksp libs.autodagger.ksp
 }

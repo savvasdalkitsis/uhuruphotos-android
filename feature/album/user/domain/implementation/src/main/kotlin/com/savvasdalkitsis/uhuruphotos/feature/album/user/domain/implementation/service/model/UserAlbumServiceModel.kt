@@ -15,15 +15,15 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.implementation.service.model
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-@JsonClass(generateAdapter = true)
+@Serializable
 data class UserAlbumServiceModel(
     val id: Int,
     val title: String,
     val date: String,
     val location: String,
-    @field:Json(name = "grouped_photos")
+    @SerialName("grouped_photos")
     val groups: List<UserAlbumPhotoGroup>,
 )

@@ -15,11 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.model
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-@JsonClass(generateAdapter = true)
+@Serializable
 data class RemoteMediaHashOperationResponseServiceModel(
-    @field:Json(name = "status") val status: Boolean,
-    @field:Json(name = "results") val results: List<String>,
+    @SerialName("status") val status: Boolean,
+    @SerialName("results") val results: List<String>,
 )

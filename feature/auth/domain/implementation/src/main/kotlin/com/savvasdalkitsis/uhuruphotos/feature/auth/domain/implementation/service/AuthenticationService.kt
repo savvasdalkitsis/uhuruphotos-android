@@ -19,16 +19,16 @@ import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.servic
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.service.model.AuthenticationObtainResponse
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.service.model.AuthenticationRefreshRequest
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.service.model.AuthenticationRefreshResponse
-import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.POST
+import de.jensklingenberg.ktorfit.Response
+import de.jensklingenberg.ktorfit.http.Body
+import de.jensklingenberg.ktorfit.http.POST
 
 interface AuthenticationService {
 
-    @POST("/api/auth/token/obtain/")
+    @POST("api/auth/token/obtain/")
     suspend fun login(@Body credentials: AuthenticationCredentials): AuthenticationObtainResponse
 
-    @POST("/api/auth/token/refresh/")
+    @POST("api/auth/token/refresh/")
     suspend fun refreshToken(@Body refreshToken: AuthenticationRefreshRequest): Response<AuthenticationRefreshResponse>
 
 }

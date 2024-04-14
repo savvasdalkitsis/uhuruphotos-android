@@ -25,52 +25,52 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementatio
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.model.RemoteMediaItemDeletedRequestServiceModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.model.RemoteMediaItemFavouriteRequestServiceModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.model.RemoteMediaOperationResponseServiceModel
-import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.HTTP
-import retrofit2.http.POST
-import retrofit2.http.Path
-import se.ansman.dagger.auto.retrofit.AutoProvideService
+import de.jensklingenberg.ktorfit.Response
+import de.jensklingenberg.ktorfit.http.Body
+import de.jensklingenberg.ktorfit.http.GET
+import de.jensklingenberg.ktorfit.http.HTTP
+import de.jensklingenberg.ktorfit.http.POST
+import de.jensklingenberg.ktorfit.http.Path
+import se.ansman.dagger.auto.ktorfit.AutoProvideService
 import javax.inject.Singleton
 
 @AutoProvideService
 @Singleton
 interface RemoteMediaService {
 
-    @GET("/api/photos/{id}/")
+    @GET("api/photos/{id}/")
     suspend fun getMediaItem(@Path("id") id: String): RemoteMediaItem
 
-    @GET("/api/photos/{id}/summary/")
+    @GET("api/photos/{id}/summary/")
     suspend fun getMediaItemSummary(@Path("id") id: String): RemoteMediaItemSummaryContainer
 
-    @POST("/api/photosedit/favorite/")
+    @POST("api/photosedit/favorite/")
     suspend fun setMediaItemFavourite(
         @Body favouriteRequest: RemoteMediaItemFavouriteRequestServiceModel
     ): RemoteMediaOperationResponseServiceModel
 
-    @POST("/api/photosedit/setdeleted/")
+    @POST("api/photosedit/setdeleted/")
     suspend fun setMediaItemDeleted(
         @Body setDeletedRequest: RemoteMediaItemDeletedRequestServiceModel
     ): Response<RemoteMediaOperationResponseServiceModel>
 
-    @HTTP(method = "DELETE", path = "/api/photosedit/delete/", hasBody = true)
+    @HTTP(method = "DELETE", path = "api/photosedit/delete/", hasBody = true)
     suspend fun deleteMediaItemPermanently(
         @Body deleteRequest: RemoteMediaItemDeleteRequestServiceModel
     ): Response<RemoteMediaHashOperationResponseServiceModel>
 
-    @GET("/api/albums/date/list/?favorite=true")
+    @GET("api/albums/date/list/?favorite=true")
     suspend fun getFavouriteMedia(): RemoteMediaCollectionsByDate
 
-    @GET("/api/albums/date/{id}/?favorite=true")
+    @GET("api/albums/date/{id}/?favorite=true")
     suspend fun getFavouriteMediaCollection(@Path("id") id: String): RemoteMediaCollectionById
 
-    @GET("/api/albums/date/list/?hidden=true")
+    @GET("api/albums/date/list/?hidden=true")
     suspend fun getHiddenMedia(): RemoteMediaCollectionsByDate
 
-    @GET("/api/albums/date/{id}/?hidden=true")
+    @GET("api/albums/date/{id}/?hidden=true")
     suspend fun getHiddenMediaCollection(@Path("id") id: String): RemoteMediaCollectionById
 
-    @GET("/api/exists/{hash}/")
+    @GET("api/exists/{hash}/")
     suspend fun exists(@Path("hash") hash: String): RemoteMediaExistsResponse
 }

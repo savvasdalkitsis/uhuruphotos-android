@@ -17,19 +17,19 @@ package com.savvasdalkitsis.uhuruphotos.feature.trash.domain.implementation.serv
 
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollectionById
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollectionsByDate
-import retrofit2.http.GET
-import retrofit2.http.Path
-import se.ansman.dagger.auto.retrofit.AutoProvideService
+import de.jensklingenberg.ktorfit.http.GET
+import de.jensklingenberg.ktorfit.http.Path
+import se.ansman.dagger.auto.ktorfit.AutoProvideService
 import javax.inject.Singleton
 
 @AutoProvideService
 @Singleton
 interface TrashService {
 
-    @GET("/api/albums/date/list/?deleted=true")
+    @GET("api/albums/date/list/?deleted=true")
     suspend fun getTrash(): RemoteMediaCollectionsByDate
 
-    @GET("/api/albums/date/{id}/?deleted=true")
+    @GET("api/albums/date/{id}/?deleted=true")
     suspend fun getTrashMediaCollection(@Path("id") id: String): RemoteMediaCollectionById
 
 }

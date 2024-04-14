@@ -33,5 +33,5 @@ dependencies {
             project(":foundation:toaster:api"),
             project(":foundation:strings:api"),
     )
-    kapt libs.autodagger.kapt
+    ksp libs.autodagger.ksp
 }

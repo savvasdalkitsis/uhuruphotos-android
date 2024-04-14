@@ -15,11 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.model
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-@JsonClass(generateAdapter = true)
+@Serializable
 data class RemoteMediaItemDeletedRequestServiceModel(
-    @field:Json(name = "image_hashes") val mediaHashes: List<String>,
-    @field:Json(name = "deleted") val deleted: Boolean
+    @SerialName("image_hashes") val mediaHashes: List<String>,
+    @SerialName("deleted") val deleted: Boolean
 )

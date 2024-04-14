@@ -4,7 +4,11 @@ android {
 
 dependencies {
     api(
+            libs.autodagger.core,
+            libs.autodagger.ktorfit,
             libs.okhttp,
+            libs.kotlinx.serialization,
+            libs.ktorfit.core,
     )
     implementation(
             libs.hilt,

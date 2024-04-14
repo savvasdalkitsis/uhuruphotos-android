@@ -18,16 +18,14 @@ package com.savvasdalkitsis.uhuruphotos.foundation.network.implementation.module
 import android.content.Context
 import com.savvasdalkitsis.uhuruphotos.foundation.network.implementation.BasicOkHttpClient
 import com.savvasdalkitsis.uhuruphotos.foundation.network.implementation.interceptors.UserAgentInterceptor
-import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import de.jensklingenberg.ktorfit.Ktorfit
 import okhttp3.Cache
 import okhttp3.OkHttpClient
-import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
 import java.io.File
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
@@ -59,10 +57,6 @@ internal class NetworkModule {
 
     @Provides
     @Singleton
-    fun retrofitBuilder(): Retrofit.Builder = Retrofit.Builder()
+    fun ktorfitBuilder(): Ktorfit.Builder = Ktorfit.Builder()
         .baseUrl("https://localhost/")
-        .addConverterFactory(MoshiConverterFactory.create())
-
-    @Provides
-    fun moshi(): Moshi = Moshi.Builder().build()
 }

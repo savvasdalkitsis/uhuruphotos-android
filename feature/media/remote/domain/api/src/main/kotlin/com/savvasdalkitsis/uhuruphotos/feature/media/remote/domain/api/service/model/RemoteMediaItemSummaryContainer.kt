@@ -16,12 +16,12 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model
 
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummary
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-@JsonClass(generateAdapter = true)
+@Serializable
 data class RemoteMediaItemSummaryContainer(
-    @Json(name = "album_date_id") val albumDateId: String? = null,
-    @Json(name = "photo_summary") val photoSummary: RemoteMediaItemSummary,
-    @Json(name = "processing") val processing: Boolean? = null,
+    @SerialName("album_date_id") val albumDateId: String? = null,
+    @SerialName("photo_summary") val photoSummary: RemoteMediaItemSummary,
+    @SerialName("processing") val processing: Boolean? = null,
 )

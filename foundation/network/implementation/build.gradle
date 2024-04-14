@@ -1,3 +1,7 @@
+plugins {
+    alias(libs.plugins.ktorfit)
+}
+
 android {
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.network.implementation'
 }
@@ -5,8 +9,6 @@ android {
 dependencies {
 
     api(
-            libs.moshi,
-            libs.retrofit.core,
             project(":foundation:network:api"),
     )
     implementation(
@@ -15,11 +17,12 @@ dependencies {
             libs.okhttp,
             libs.okhttp.logging,
             libs.okhttp.url,
-            libs.retrofit.moshi,
             project(":foundation:initializer:api"),
             project(":foundation:log:api"),
             project(":foundation:system:api"),
     )
-    kapt libs.autodagger.kapt
-    ksp libs.moshi.ksp
+    ksp(
+            libs.autodagger.ksp,
+            libs.ktorfit.ksp,
+    )
 }

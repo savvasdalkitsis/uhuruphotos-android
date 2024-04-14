@@ -17,9 +17,6 @@ dependencies {
             libs.androidx.compose.ui.tooling.preview,
             libs.androidx.lifecycle,
             libs.bundles.autodagger,
-            libs.moshi,
-            libs.retrofit.core,
-            libs.retrofit.moshi,
             libs.sqldelight.coroutines,
             project(":feature:account:view:api"),
             project(":feature:auth:domain:api"),
@@ -59,6 +56,5 @@ dependencies {
     debugImplementation(
             libs.androidx.compose.ui.tooling,
     )
-    kapt libs.autodagger.kapt
-    ksp libs.moshi.ksp
+    ksp libs.autodagger.ksp
 }

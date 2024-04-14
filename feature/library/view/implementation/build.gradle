@@ -16,7 +16,6 @@ dependencies {
             libs.bundles.autodagger,
             libs.bundles.permissions,
             libs.reorder,
-            libs.retrofit.core,
             project(":feature:account:view:api"),
             project(":feature:album:auto:view:api"),
             project(":feature:album:user:view:api"),
@@ -56,5 +55,5 @@ dependencies {
     debugImplementation(
             libs.androidx.compose.ui.tooling,
     )
-    kapt libs.autodagger.kapt
+    ksp libs.autodagger.ksp
 }

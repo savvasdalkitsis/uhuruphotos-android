@@ -21,7 +21,6 @@ dependencies {
     implementation(
             libs.androidx.compose.material,
             libs.androidx.compose.ui.tooling.preview,
-            libs.moshi,
             project(":feature:media:common:domain:api"),
             project(":feature:people:view:api"),
             project(":foundation:compose:api"),
@@ -33,5 +32,4 @@ dependencies {
     debugImplementation(
             libs.androidx.compose.ui.tooling,
     )
-    ksp libs.moshi.ksp
 }

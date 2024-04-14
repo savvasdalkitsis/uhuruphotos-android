@@ -1,9 +1,12 @@
+plugins {
+    alias(libs.plugins.kotlinx.serialization)
+}
+
 android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.site.domain.api'
 }
 dependencies {
     implementation(
-            libs.moshi,
+            libs.kotlinx.serialization,
     )
-    ksp libs.moshi.ksp
 }

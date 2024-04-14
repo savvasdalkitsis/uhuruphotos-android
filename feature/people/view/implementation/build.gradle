@@ -16,8 +16,6 @@ dependencies {
             libs.bundles.autodagger,
             libs.hilt,
             libs.kotlinx.coroutines,
-            libs.moshi,
-            libs.retrofit.core,
             libs.sqldelight.coroutines,
             project(":feature:auth:domain:api"),
             project(":feature:db:domain:api"),
@@ -36,6 +34,5 @@ dependencies {
             project(":foundation:toaster:api"),
             project(":foundation:ui:api"),
     )
-    kapt libs.autodagger.kapt
-    ksp libs.moshi.ksp
+    ksp libs.autodagger.ksp
 }

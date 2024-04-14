@@ -29,9 +29,18 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import de.jensklingenberg.ktorfit.Ktorfit
+import io.ktor.client.HttpClient
+import io.ktor.client.engine.okhttp.OkHttp
+import io.ktor.client.plugins.DefaultRequest
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.http.ContentType.Application
+import io.ktor.http.contentType
+import io.ktor.serialization.kotlinx.serialization
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.json.Json
 import okhttp3.Cache
 import okhttp3.OkHttpClient
-import retrofit2.Retrofit
 import javax.inject.Qualifier
 import javax.inject.Singleton
 
@@ -60,19 +69,20 @@ class AuthModule {
 
     @Provides
     @Singleton
-    fun retrofit(
-        retrofitBuilder: Retrofit.Builder,
+    fun ktorfit(
+        ktorfitBuilder: Ktorfit.Builder,
         httpCache: Cache,
         tokenRefreshInterceptor: TokenRefreshInterceptor,
         @AuthenticatedOkHttpClient
         okHttpBuilder: OkHttpClient.Builder,
-    ): Retrofit = retrofitBuilder
-        .client(okHttpBuilder
-            .cache(httpCache)
-            .addInterceptor(tokenRefreshInterceptor)
+    ): Ktorfit {
+        return ktorfitBuilder
+            .httpClient(fromOkHttp(
+                okHttpBuilder.addInterceptor(tokenRefreshInterceptor),
+                httpCache)
+            )
             .build()
-        )
-        .build()
+    }
 
     @Provides
     @Singleton
@@ -87,25 +97,50 @@ class AuthModule {
 
     @Qualifier
     @Retention(AnnotationRetention.BINARY)
-    internal annotation class RetrofitWithoutTokenRefresh
+    internal annotation class KtorfitWithoutTokenRefresh
 
     @Provides
     @Singleton
     fun authenticationService(
-        @RetrofitWithoutTokenRefresh retrofit: Retrofit,
-    ): AuthenticationService = retrofit.create(AuthenticationService::class.java)
+        @KtorfitWithoutTokenRefresh ktorfit: Ktorfit,
+    ): AuthenticationService = ktorfit.create()
 
     @Provides
     @Singleton
-    @RetrofitWithoutTokenRefresh
-    fun retrofitWithoutTokenRefresh(
+    @KtorfitWithoutTokenRefresh
+    fun ktorfitWithoutTokenRefresh(
         httpCache: Cache,
-        retrofitBuilder: Retrofit.Builder,
+        ktorfitBuilder: Ktorfit.Builder,
         @AuthenticatedOkHttpClient
         okHttpBuilder: OkHttpClient.Builder,
-    ): Retrofit = retrofitBuilder
-        .client(okHttpBuilder
-            .cache(httpCache)
-            .build())
+    ): Ktorfit = ktorfitBuilder
+        .httpClient(fromOkHttp(okHttpBuilder, httpCache))
         .build()
+
+    @OptIn(ExperimentalSerializationApi::class)
+    private fun fromOkHttp(okHttpBuilder: OkHttpClient.Builder, httpCache: Cache): HttpClient =
+        HttpClient(OkHttp) {
+            val json = Json {
+                encodeDefaults = true
+                isLenient = true
+                allowSpecialFloatingPointValues = true
+                allowStructuredMapKeys = true
+                prettyPrint = false
+                useArrayPolymorphism = false
+                ignoreUnknownKeys = true
+                explicitNulls = false
+            }
+            install(DefaultRequest) {
+                contentType(Application.Json)
+            }
+            install(ContentNegotiation) {
+                serialization(Application.Any, json)
+                serialization(Application.Json, json)
+            }
+            engine {
+                preconfigured = okHttpBuilder
+                    .cache(httpCache)
+                    .build()
+            }
+        }
 }

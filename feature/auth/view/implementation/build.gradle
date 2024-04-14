@@ -19,5 +19,5 @@ dependencies {
             project(":foundation:launchers:api"),
             project(":foundation:navigation:api"),
     )
-    kapt libs.autodagger.kapt
+    ksp libs.autodagger.ksp
 }

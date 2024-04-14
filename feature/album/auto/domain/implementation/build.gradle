@@ -1,19 +1,23 @@
+plugins {
+    alias(libs.plugins.kotlinx.serialization)
+    alias(libs.plugins.ktorfit)
+}
 android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.album.auto.domain.implementation'
 }
 
 dependencies {
     implementation(
-            libs.bundles.autodagger,
             libs.hilt,
-            libs.moshi,
-            libs.retrofit.core,
             libs.sqldelight.coroutines,
             project(":feature:album:auto:domain:api"),
             project(":feature:media:remote:domain:api"),
-            project(":foundation:log:api"),
             project(":feature:people:domain:api"),
+            project(":foundation:log:api"),
+            project(":foundation:network:api"),
     )
-    kapt libs.autodagger.kapt
-    ksp libs.moshi.ksp
+    ksp(
+            libs.autodagger.ksp,
+            libs.ktorfit.ksp,
+    )
 }

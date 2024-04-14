@@ -16,42 +16,42 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model
 
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemDetails
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-@JsonClass(generateAdapter = true)
+@Serializable
 data class RemoteMediaItem(
-    @field:Json(name = "exif_gps_lat") val gpsLat: String?,
-    @field:Json(name = "exif_gps_lon") val gpsLon: String?,
-    @field:Json(name = "exif_timestamp") val timestamp: String?,
-    @field:Json(name = "search_captions") val captions: String?,
-    @field:Json(name = "search_location") val location: String?,
-    @field:Json(name = "thumbnail_url") val thumbnailUrl: String?,
-    @field:Json(name = "thumbnail_height") val thumbnailHeight: String?,
-    @field:Json(name = "thumbnail_width") val thumbnailWidth: String?,
-    @field:Json(name = "big_thumbnail_url") val bigThumbnailUrl: String?,
-    @field:Json(name = "small_thumbnail_url") val smallThumbnailUrl: String?,
-    @field:Json(name = "square_thumbnail_url") val squareThumbnailUrl: String?,
-    @field:Json(name = "big_square_thumbnail_url") val bigSquareThumbnailUrl: String?,
-    @field:Json(name = "small_square_thumbnail_url") val smallSquareThumbnailUrl: String?,
-    @field:Json(name = "tiny_square_thumbnail_url") val tinySquareThumbnailUrl: String?,
-    @field:Json(name = "image_hash") val imageHash: String,
-    @field:Json(name = "image_path") val imagePath: List<String>?,
-    @field:Json(name = "video") val video: Boolean,
-    @field:Json(name = "rating") val rating: Int,
-    @field:Json(name = "people") val people: List<RemoteMediaItemPeople>?,
-    @field:Json(name = "size") val size: Long?,
-    @field:Json(name = "height") val height: Int?,
-    @field:Json(name = "width") val width: Int?,
-    @field:Json(name = "focal_length") val focalLength: Double?,
-    @field:Json(name = "fstop") val fStop: Double?,
-    @field:Json(name = "iso") val iso: String?,
-    @field:Json(name = "shutter_speed") val shutterSpeed: String?,
-    @field:Json(name = "lens") val lens: String?,
-    @field:Json(name = "camera") val camera: String?,
-    @field:Json(name = "focalLength35Equivalent") val focalLength35Equivalent: String?,
-    @field:Json(name = "digitalZoomRatio") val digitalZoomRatio: String?,
-    @field:Json(name = "subjectDistance") val subjectDistance: String?,
+    @SerialName("exif_gps_lat") val gpsLat: String?,
+    @SerialName("exif_gps_lon") val gpsLon: String?,
+    @SerialName("exif_timestamp") val timestamp: String?,
+    @SerialName("search_captions") val captions: String?,
+    @SerialName("search_location") val location: String?,
+    @SerialName("thumbnail_url") val thumbnailUrl: String?,
+    @SerialName("thumbnail_height") val thumbnailHeight: String?,
+    @SerialName("thumbnail_width") val thumbnailWidth: String?,
+    @SerialName("big_thumbnail_url") val bigThumbnailUrl: String?,
+    @SerialName("small_thumbnail_url") val smallThumbnailUrl: String?,
+    @SerialName("square_thumbnail_url") val squareThumbnailUrl: String?,
+    @SerialName("big_square_thumbnail_url") val bigSquareThumbnailUrl: String?,
+    @SerialName("small_square_thumbnail_url") val smallSquareThumbnailUrl: String?,
+    @SerialName("tiny_square_thumbnail_url") val tinySquareThumbnailUrl: String?,
+    @SerialName("image_hash") val imageHash: String,
+    @SerialName("image_path") val imagePath: List<String>?,
+    @SerialName("video") val video: Boolean,
+    @SerialName("rating") val rating: Int,
+    @SerialName("people") val people: List<RemoteMediaItemPeople>?,
+    @SerialName("size") val size: Long?,
+    @SerialName("height") val height: Int?,
+    @SerialName("width") val width: Int?,
+    @SerialName("focal_length") val focalLength: Double?,
+    @SerialName("fstop") val fStop: Double?,
+    @SerialName("iso") val iso: String?,
+    @SerialName("shutter_speed") val shutterSpeed: String?,
+    @SerialName("lens") val lens: String?,
+    @SerialName("camera") val camera: String?,
+    @SerialName("focalLength35Equivalent") val focalLength35Equivalent: String?,
+    @SerialName("digitalZoomRatio") val digitalZoomRatio: String?,
+    @SerialName("subjectDistance") val subjectDistance: String?,
 )
 
 private val RemoteMediaItem.serializePeople: String?

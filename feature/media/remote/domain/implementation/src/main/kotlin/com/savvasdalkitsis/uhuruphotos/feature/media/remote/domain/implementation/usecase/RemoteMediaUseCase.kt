@@ -46,11 +46,11 @@ import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.mapToResultFlow
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simple
+import de.jensklingenberg.ktorfit.Response
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
-import retrofit2.Response
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 
@@ -175,10 +175,10 @@ class RemoteMediaUseCase @Inject constructor(
     }
 
     private fun shouldTrashLocally(response: Response<RemoteMediaOperationResponseServiceModel>) =
-        response.code() in 200..299 && response.body()?.status == true
+        response.code in 200..299 && response.body()?.status == true
 
     private fun shouldDeleteLocally(response: Response<RemoteMediaOperationResponseServiceModel>) =
-        response.code() == 404
+        response.code == 404
 
     override fun deleteMediaItems(vararg ids: String) {
         for (id in ids) {
@@ -200,8 +200,8 @@ class RemoteMediaUseCase @Inject constructor(
     }
 
     private fun shouldDeleteLocallyHashed(response: Response<RemoteMediaHashOperationResponseServiceModel>) =
-        response.code() == 404 ||
-                (response.code() in 200..299 && response.body()?.status == true)
+        response.code == 404 ||
+                (response.code in 200..299 && response.body()?.status == true)
 
 
     override fun restoreMediaItem(id: String) {

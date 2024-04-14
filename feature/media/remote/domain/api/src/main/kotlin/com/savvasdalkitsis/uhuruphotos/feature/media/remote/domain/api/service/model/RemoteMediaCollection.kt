@@ -17,26 +17,26 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.
 
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaCollections
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummary
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
 
-sealed class RemoteMediaCollection(
-    open val id: String,
-    open val date: String?,
-    open val location: String,
-    open val incomplete: Boolean,
-    open val numberOfItems: Int,
-) {
+sealed class RemoteMediaCollection {
 
-    @JsonClass(generateAdapter = true)
+    abstract val id: String
+    abstract val date: String?
+    abstract val location: String
+    abstract val incomplete: Boolean
+    abstract val numberOfItems: Int
+
+    @Serializable
     data class Incomplete(
         override val id: String,
         override val date: String?,
         override val location: String,
         override val incomplete: Boolean,
         override val numberOfItems: Int,
-    ) : RemoteMediaCollection(id, date, location, incomplete, numberOfItems)
+    ) : RemoteMediaCollection()
 
-    @JsonClass(generateAdapter = true)
+    @Serializable
     data class Complete(
         override val id: String,
         override val date: String?,
@@ -45,7 +45,7 @@ sealed class RemoteMediaCollection(
         override val numberOfItems: Int,
         val rating: Int?,
         val items: List<RemoteMediaItemSummary>,
-    ) : RemoteMediaCollection(id, date, location, incomplete, numberOfItems) {
+    ) : RemoteMediaCollection() {
         fun toIncomplete() = Incomplete(
             id, date, location, incomplete, numberOfItems
         )

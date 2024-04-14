@@ -23,12 +23,10 @@ dependencies {
             libs.androidx.compose.material,
             libs.hilt,
             libs.kotlinx.immutable,
-            libs.moshi,
             libs.sqldelight.coroutines,
             project(":foundation:icons:api"),
             project(":foundation:image:api"),
             project(":foundation:strings:api"),
             project(":foundation:ui:api"),
     )
-    ksp libs.moshi.ksp
 }

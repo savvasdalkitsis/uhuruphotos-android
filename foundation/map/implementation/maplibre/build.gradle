@@ -30,7 +30,7 @@ dependencies {
             project(":foundation:log:api"),
             project(":foundation:map:api"),
     )
-    kapt libs.autodagger.kapt
+    ksp libs.autodagger.ksp
     implementation(libs.maplibre) {
         exclude group: 'org.maplibre.gl', module: 'android-sdk-geojson'
     }

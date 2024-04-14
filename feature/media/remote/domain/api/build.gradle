@@ -1,3 +1,7 @@
+plugins {
+    alias(libs.plugins.kotlinx.serialization)
+}
+
 android {
     buildFeatures {
         compose true
@@ -20,13 +24,12 @@ dependencies {
     )
     implementation(
             libs.androidx.compose.material,
-            libs.moshi,
             project(":feature:people:view:api"),
             project(":foundation:compose:api"),
             project(":foundation:icons:api"),
             project(":foundation:image:api"),
+            project(":foundation:network:api"),
             project(":foundation:strings:api"),
             project(":foundation:ui:api"),
     )
-    ksp libs.moshi.ksp
 }
