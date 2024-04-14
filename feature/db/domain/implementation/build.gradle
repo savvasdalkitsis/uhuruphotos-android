@@ -2,11 +2,21 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.db.domain.implementation'
 }
 
-dependencies {
-    implementation(
-            libs.hilt,
-            libs.sqldelight.adapters,
-            libs.sqldelight.android,
-            project(":feature:db:domain:api"),
-    )
+sourceSets {
+    androidMain {
+        dependencies {
+            implementation(
+                    libs.hilt,
+                    libs.sqldelight.adapters,
+                    libs.sqldelight.android,
+            )
+        }
+    }
+    commonMain {
+        dependencies {
+            implementation(
+                    project(":feature:db:domain:api"),
+            )
+        }
+    }
 }

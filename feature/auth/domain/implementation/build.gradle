@@ -1,14 +1,10 @@
 plugins {
+    alias(libs.plugins.compose)
     alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.ktorfit)
 }
+
 android {
-    buildFeatures {
-        compose true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
-    }
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation'
 }
 

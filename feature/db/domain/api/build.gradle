@@ -14,12 +14,15 @@ sqldelight {
     }
 }
 
-dependencies {
-
-    implementation(
-            libs.hilt,
-            libs.sqldelight.android,
-            libs.sqldelight.coroutines,
-            project(":foundation:lang:api"),
-    )
+sourceSets {
+    commonMain {
+        dependencies {
+            implementation(
+                    libs.sqldelight.coroutines,
+                    libs.sqldelight.runtime,
+                    project(":foundation:lang:api"),
+            )
+        }
+    }
 }
+

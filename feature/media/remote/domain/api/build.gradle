@@ -1,14 +1,9 @@
 plugins {
+    alias(libs.plugins.compose)
     alias(libs.plugins.kotlinx.serialization)
 }
 
 android {
-    buildFeatures {
-        compose true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
-    }
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api'
 }
 

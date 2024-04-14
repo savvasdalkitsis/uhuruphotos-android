@@ -1,14 +1,9 @@
 plugins {
+    alias(libs.plugins.compose)
     id 'kotlin-parcelize'
 }
 
 android {
-    buildFeatures {
-        compose true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
-    }
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.processing.view.api'
 }
 

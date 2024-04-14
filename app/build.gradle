@@ -1,18 +1,12 @@
 plugins {
-    id 'dagger.hilt.android.plugin'
-    alias(libs.plugins.google.services)
     alias(libs.plugins.about)
+    alias(libs.plugins.compose)
+    alias(libs.plugins.google.services)
     id 'com.bugsnag.android.gradle'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
-    buildFeatures {
-        compose true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
-    }
-
     defaultConfig {
         applicationId "com.savvasdalkitsis.uhuruphotos"
         minSdk 24
@@ -61,6 +55,9 @@ android {
         }
     }
     namespace 'com.savvasdalkitsis.uhuruphotos'
+    kotlinOptions {
+        jvmTarget = '17'
+    }
 }
 
 dependencies {
@@ -72,10 +69,11 @@ dependencies {
             libs.androidx.compose.ui,
             libs.androidx.splash,
             libs.androidx.work.hilt,
-            libs.bundles.autodagger,
             libs.bugsnag,
+            libs.bundles.autodagger,
             libs.hilt,
             libs.permissions.base,
+            project(":app:implementation"),
             project(":feature:auth:domain:api"),
             project(":feature:auth:view:api"),
             project(":feature:download:domain:api"),
@@ -90,7 +88,6 @@ dependencies {
             project(":foundation:ui:api"),
             project(":foundation:ui:implementation"),
             project(":foundation:video:api"),
-            project(":app:implementation"),
     )
     debugImplementation(
             libs.leaks,

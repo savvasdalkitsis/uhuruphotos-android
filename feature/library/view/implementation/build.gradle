@@ -1,10 +1,8 @@
+plugins {
+    alias(libs.plugins.compose)
+}
+
 android {
-    buildFeatures {
-        compose true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
-    }
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation'
 }
 

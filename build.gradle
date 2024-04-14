@@ -18,8 +18,9 @@ plugins {
     alias(libs.plugins.about) apply false
     alias(libs.plugins.android.app) apply false
     alias(libs.plugins.android.library) apply false
+    alias(libs.plugins.compose) apply false
     alias(libs.plugins.google.services) apply false
-    alias(libs.plugins.kotlin.android) apply false
+    alias(libs.plugins.kotlin.multiplatform) apply false
     alias(libs.plugins.ksp) apply false
     alias(libs.plugins.powerassert) apply false
     alias(libs.plugins.redacted) apply false
@@ -41,11 +42,22 @@ sonarqube {
 subprojects {
     if (name == "app") {
         apply plugin: libs.plugins.android.app.get().pluginId
+        apply plugin: libs.plugins.kotlin.android.get().pluginId
     } else {
         apply plugin: libs.plugins.android.library.get().pluginId
+        apply plugin: libs.plugins.kotlin.multiplatform.get().pluginId
+
+        kotlin {
+            androidTarget  {
+                compilations.all {
+                    kotlinOptions {
+                        jvmTarget = '17'
+                    }
+                }
+            }
+        }
     }
     apply plugin: libs.plugins.powerassert.get().pluginId
-    apply plugin: libs.plugins.kotlin.android.get().pluginId
     apply plugin: libs.plugins.kotlin.kapt.get().pluginId
     apply plugin: libs.plugins.redacted.get().pluginId
     apply plugin: libs.plugins.ksp.get().pluginId
@@ -60,9 +72,6 @@ subprojects {
         compileOptions {
             sourceCompatibility JavaVersion.VERSION_17
             targetCompatibility JavaVersion.VERSION_17
-        }
-        kotlinOptions {
-            jvmTarget = '17'
         }
     }
 
