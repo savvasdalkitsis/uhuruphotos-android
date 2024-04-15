@@ -99,6 +99,7 @@ subprojects {
                     "-opt-in=kotlinx.ExperimentalStdlibApi",
                     "-opt-in=kotlin.ExperimentalStdlibApi",
                     "-Xcontext-receivers",
+                    "-Xexpect-actual-classes",
             )
         }
     }

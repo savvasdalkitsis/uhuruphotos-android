@@ -1,5 +1,6 @@
+@file:JvmName("LogJvm")
 /*
-Copyright 2022 Savvas Dalkitsis
+Copyright 2024 Savvas Dalkitsis
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,13 +16,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.log.api
 
-import com.github.michaelbull.result.Err
-import com.github.michaelbull.result.Ok
-import com.github.michaelbull.result.Result
-import com.github.michaelbull.result.andThen
 import com.michaelflisar.lumberjack.core.L
 
-fun log(tag: String = "", msg: () -> String) {
+actual fun log(tag: String, msg: () -> String) {
     tryIgnore {
         if (tag.isNotEmpty()) {
             L.tag(tag).v(msg)
@@ -31,7 +28,7 @@ fun log(tag: String = "", msg: () -> String) {
     }
 }
 
-fun log(t: Throwable) {
+actual fun log(t: Throwable) {
     try {
         tempEnable {
             L.w(t)
@@ -41,7 +38,7 @@ fun log(t: Throwable) {
     }
 }
 
-fun log(t: Throwable, msg: () -> String) {
+actual fun log(t: Throwable, msg: () -> String) {
     try {
         tempEnable {
             L.w(t, msg)
@@ -52,7 +49,7 @@ fun log(t: Throwable, msg: () -> String) {
     }
 }
 
-fun logError(t: Throwable) {
+actual fun logError(t: Throwable) {
     try {
         tempEnable {
             L.e(t)
@@ -62,8 +59,8 @@ fun logError(t: Throwable) {
     }
 }
 
-data object Log {
-    var enabled: Boolean
+actual object Log {
+    actual var enabled: Boolean
         get() = L.isEnabled()
         set(value) {
             L.enable(value)
@@ -77,20 +74,10 @@ private inline fun tryIgnore(block: () -> Unit) {
     }
 }
 
-suspend fun <V, U> Result<V, Throwable>.andThenTry(transform: suspend (V) -> U): Result<U, Throwable> = andThen {
-    runCatchingWithLog { transform(it) }
-}
-
-inline fun <T, R> T.runCatchingWithLog(block: T.() -> R): Result<R, Throwable> = try {
-    Ok(block())
-} catch (e: Throwable) {
-    log(e)
-    Err(e)
-}
-
 private inline fun tempEnable(log: () -> Unit) {
     val old = Log.enabled
     Log.enabled = true
     log()
     Log.enabled = old
 }
+

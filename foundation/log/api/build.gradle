@@ -1,16 +1,18 @@
-plugins {
-    alias(libs.plugins.compose)
-}
-
 android {
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.log.api'
 }
 
-dependencies {
-    api project(":foundation:result:api")
-    implementation(
-            libs.androidx.compose.foundation.layout,
-            libs.bundles.lumberjack,
-            project(":foundation:strings:api"),
-    )
+sourceSets {
+    commonMain {
+        dependencies {
+            api project(":foundation:result:api")
+        }
+    }
+    androidMain {
+        dependencies {
+            implementation(
+                    libs.bundles.lumberjack,
+            )
+        }
+    }
 }
