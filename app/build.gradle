@@ -1,16 +1,20 @@
 plugins {
+    id "android.app"
     alias(libs.plugins.about)
-    alias(libs.plugins.compose)
     alias(libs.plugins.google.services)
+
     id 'com.bugsnag.android.gradle'
-    id 'dagger.hilt.android.plugin'
 }
 
 android {
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
+    }
     defaultConfig {
         applicationId "com.savvasdalkitsis.uhuruphotos"
-        minSdk 24
-        targetSdk 34
         versionCode 219
         versionName "0.0.219"
 
@@ -55,9 +59,6 @@ android {
         }
     }
     namespace 'com.savvasdalkitsis.uhuruphotos'
-    kotlinOptions {
-        jvmTarget = '17'
-    }
 }
 
 dependencies {

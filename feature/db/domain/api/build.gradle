@@ -1,5 +1,10 @@
 plugins {
+    id "android.library"
     alias(libs.plugins.sqldelight)
+}
+
+kotlin {
+    androidTarget()
 }
 
 android {

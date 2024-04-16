@@ -1,3 +1,7 @@
+plugins {
+    id "android.library"
+}
+
 android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api'
 }

@@ -1,7 +1,9 @@
 plugins {
+    id "android.library"
     alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.ktorfit)
 }
+
 android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.album.auto.domain.implementation'
 }

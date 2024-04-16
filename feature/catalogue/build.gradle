@@ -1,3 +1,0 @@
-android {
-    namespace 'com.savvasdalkitsis.uhuruphotos.feature.catalogue'
-}

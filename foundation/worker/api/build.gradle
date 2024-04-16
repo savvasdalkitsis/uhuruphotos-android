@@ -1,3 +1,7 @@
+plugins {
+    id "android.library"
+}
+
 android {
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.worker.api'
 }

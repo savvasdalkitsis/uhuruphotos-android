@@ -1,0 +1,19 @@
+plugins {
+    id "com.android.application"
+    id "org.jetbrains.kotlin.android"
+    id "android.common"
+}
+
+android {
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+}
+
+dependencies {
+    implementation(
+            libs.hilt
+    )
+    kapt libs.hilt.dagger.compiler
+    kapt libs.androidx.hilt.compiler
+}
