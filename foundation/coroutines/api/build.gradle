@@ -6,13 +6,15 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api'
 }
 
-sourceSets {
-    commonMain {
-        dependencies {
-            api(
-                    libs.kotlinx.coroutines.core,
-            )
-            implementation project(":foundation:log:api")
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                api(
+                        libs.kotlinx.coroutines.core,
+                )
+                implementation project(":foundation:log:api")
+            }
         }
     }
 }

@@ -6,13 +6,13 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.seam.api'
 }
 
-sourceSets {
-    commonMain {
-        dependencies {
-            implementation(
-                    project(":foundation:launchers:api"),
-                    project(":foundation:log:api"),
-            )
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation(project(":foundation:launchers:api"))
+                implementation(project(":foundation:log:api"))
+            }
         }
     }
 }

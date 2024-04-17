@@ -3,10 +3,6 @@ plugins {
     alias(libs.plugins.sqldelight)
 }
 
-kotlin {
-    androidTarget()
-}
-
 android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.db.domain.api'
 }
@@ -19,14 +15,14 @@ sqldelight {
     }
 }
 
-sourceSets {
-    commonMain {
-        dependencies {
-            implementation(
-                    libs.sqldelight.coroutines,
-                    libs.sqldelight.runtime,
-                    project(":foundation:lang:api"),
-            )
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation(libs.sqldelight.coroutines)
+                implementation(libs.sqldelight.runtime)
+                implementation(project(":foundation:lang:api"))
+            }
         }
     }
 }

@@ -8,12 +8,10 @@ android {
 
 dependencies {
     api(
-        libs.androidx.work.hilt,
+            libs.androidx.work.hilt,
     )
-    implementation(
-            libs.androidx.work,
-            project(":foundation:log:api"),
-            project(":foundation:math:api"),
-            project(":foundation:strings:api"),
-    )
+    implementation(libs.androidx.work)
+    implementation(project(":foundation:log:api"))
+    implementation(project(":foundation:math:api"))
+    implementation(project(":foundation:strings:api"))
 }

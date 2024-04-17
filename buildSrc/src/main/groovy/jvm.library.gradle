@@ -1,20 +1,17 @@
 plugins {
-    id "com.android.library"
+    id 'java-library'
     id "org.jetbrains.kotlin.multiplatform"
-    id "android.common"
 }
 
+sourceCompatibility = 17
+targetCompatibility = 17
+
 kotlin {
-    androidTarget {
+    jvm {
         compilations.all {
             kotlinOptions {
                 jvmTarget = '17'
             }
         }
     }
-}
-
-dependencies {
-    implementation(libs.hilt)
-    kapt(libs.hilt.dagger.compiler)
 }

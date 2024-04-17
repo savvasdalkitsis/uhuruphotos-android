@@ -11,7 +11,4 @@ dependencies {
             libs.androidx.activity,
             project(":foundation:result:api"),
     )
-    implementation(
-            libs.hilt,
-    )
 }

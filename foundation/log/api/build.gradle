@@ -6,17 +6,19 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.log.api'
 }
 
-sourceSets {
-    commonMain {
-        dependencies {
-            api project(":foundation:result:api")
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                api project(":foundation:result:api")
+            }
         }
-    }
-    androidMain {
-        dependencies {
-            implementation(
-                    libs.bundles.lumberjack,
-            )
+        androidMain {
+            dependencies {
+                implementation(
+                        libs.bundles.lumberjack,
+                )
+            }
         }
     }
 }

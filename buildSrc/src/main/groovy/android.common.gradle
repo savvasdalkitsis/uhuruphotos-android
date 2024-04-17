@@ -1,5 +1,5 @@
 plugins {
-    id "org.jetbrains.kotlin.kapt"
+    id "kotlin-kapt"
     id "com.google.dagger.hilt.android"
 }
 
@@ -14,4 +14,8 @@ android {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
+}
+
+kapt {
+    correctErrorTypes true
 }

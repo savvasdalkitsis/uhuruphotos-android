@@ -11,9 +11,6 @@ android {
 }
 
 dependencies {
-    implementation(
-            libs.hilt
-    )
-    kapt libs.hilt.dagger.compiler
-    kapt libs.androidx.hilt.compiler
+    implementation(libs.hilt)
+    kapt(libs.hilt.dagger.compiler)
 }

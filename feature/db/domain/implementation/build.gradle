@@ -6,21 +6,18 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.db.domain.implementation'
 }
 
-sourceSets {
-    androidMain {
-        dependencies {
-            implementation(
-                    libs.hilt,
-                    libs.sqldelight.adapters,
-                    libs.sqldelight.android,
-            )
+kotlin {
+    sourceSets {
+        androidMain {
+            dependencies {
+                implementation(libs.sqldelight.adapters)
+                implementation(libs.sqldelight.android)
+            }
         }
-    }
-    commonMain {
-        dependencies {
-            implementation(
-                    project(":feature:db:domain:api"),
-            )
+        commonMain {
+            dependencies {
+                implementation(project(":feature:db:domain:api"))
+            }
         }
     }
 }

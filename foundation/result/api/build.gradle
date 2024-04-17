@@ -6,13 +6,13 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.result.api'
 }
 
-sourceSets {
-    commonMain {
-        dependencies {
-            api(
-                    libs.kotlinx.coroutines,
-                    libs.bundles.result,
-            )
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                api(libs.kotlinx.coroutines)
+                api(libs.bundles.result)
+            }
         }
     }
 }
