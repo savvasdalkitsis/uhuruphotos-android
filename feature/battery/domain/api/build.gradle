@@ -1,13 +1,15 @@
 plugins {
-    id "android.library"
+    id "jvm.library"
 }
 
-android {
-    namespace 'com.savvasdalkitsis.uhuruphotos.feature.battery.domain.api'
-}
-
-dependencies {
-    api(
-            libs.kotlinx.coroutines
-    )
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                api(
+                        libs.kotlinx.coroutines
+                )
+            }
+        }
+    }
 }
