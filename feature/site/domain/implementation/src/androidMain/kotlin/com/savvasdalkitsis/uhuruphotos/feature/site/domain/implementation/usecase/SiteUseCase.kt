@@ -18,8 +18,10 @@ package com.savvasdalkitsis.uhuruphotos.feature.site.domain.implementation.useca
 import com.savvasdalkitsis.uhuruphotos.feature.site.domain.api.model.SiteOptions
 import com.savvasdalkitsis.uhuruphotos.feature.site.domain.api.usecase.SiteUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.site.domain.implementation.service.SiteService
+import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 
+@AutoBind
 class SiteUseCase @Inject constructor(
     private val siteService: SiteService,
 ) : SiteUseCase {

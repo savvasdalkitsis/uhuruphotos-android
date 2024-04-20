@@ -1,13 +1,17 @@
 plugins {
-    id "android.library"
+    id "jvm.library"
     alias(libs.plugins.kotlinx.serialization)
 }
 
-android {
-    namespace 'com.savvasdalkitsis.uhuruphotos.feature.site.domain.api'
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation(
+                        libs.kotlinx.serialization,
+                )
+            }
+        }
+    }
 }
-dependencies {
-    implementation(
-            libs.kotlinx.serialization,
-    )
-}
+
