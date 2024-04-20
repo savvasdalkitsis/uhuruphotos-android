@@ -16,11 +16,11 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.avatar.domain.implementation.usecase
 
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.avatar.domain.api.model.AvatarState
+import com.savvasdalkitsis.uhuruphotos.feature.avatar.domain.api.model.SyncState.BAD
+import com.savvasdalkitsis.uhuruphotos.feature.avatar.domain.api.model.SyncState.GOOD
+import com.savvasdalkitsis.uhuruphotos.feature.avatar.domain.api.model.SyncState.IN_PROGRESS
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.domain.api.usecase.AvatarUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.AvatarState
-import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.SyncState.BAD
-import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.SyncState.GOOD
-import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.SyncState.IN_PROGRESS
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus.Failed
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus.InProgress
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobsStatus

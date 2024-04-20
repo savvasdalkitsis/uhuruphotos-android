@@ -10,7 +10,7 @@ android {
 
 dependencies {
     api(
-            project(":feature:avatar:view:api"),
+            project(":feature:avatar:domain:api"),
             project(":feature:jobs:domain:api"),
     )
     implementation(
@@ -19,7 +19,6 @@ dependencies {
             libs.androidx.compose.ui,
             libs.androidx.compose.ui.tooling.preview,
             project(":feature:about:view:api"),
-            project(":feature:avatar:domain:api"),
             project(":feature:home:view:api"),
             project(":feature:jobs:view:api"),
             project(":feature:portfolio:view:api"),

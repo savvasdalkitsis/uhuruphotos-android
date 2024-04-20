@@ -51,10 +51,10 @@ import androidx.constraintlayout.compose.ConstrainedLayoutReference
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintLayoutScope
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.AccountOverviewState
+import com.savvasdalkitsis.uhuruphotos.feature.avatar.domain.api.model.AvatarState
+import com.savvasdalkitsis.uhuruphotos.feature.avatar.domain.api.model.SyncState
+import com.savvasdalkitsis.uhuruphotos.feature.avatar.domain.api.model.previewAvatarState
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.Avatar
-import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.AvatarState
-import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.SyncState
-import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.previewAvatarState
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus.Blocked
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus.Idle

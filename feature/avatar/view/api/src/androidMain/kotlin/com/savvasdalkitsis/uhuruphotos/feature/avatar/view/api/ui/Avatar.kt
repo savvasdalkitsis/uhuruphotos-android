@@ -43,10 +43,10 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.AvatarState
-import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.SyncState.BAD
-import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.SyncState.GOOD
-import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.SyncState.IN_PROGRESS
+import com.savvasdalkitsis.uhuruphotos.feature.avatar.domain.api.model.AvatarState
+import com.savvasdalkitsis.uhuruphotos.feature.avatar.domain.api.model.SyncState.BAD
+import com.savvasdalkitsis.uhuruphotos.feature.avatar.domain.api.model.SyncState.GOOD
+import com.savvasdalkitsis.uhuruphotos.feature.avatar.domain.api.model.SyncState.IN_PROGRESS
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Thumbnail
