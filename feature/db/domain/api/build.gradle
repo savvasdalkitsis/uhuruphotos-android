@@ -1,10 +1,6 @@
 plugins {
-    id "android.library"
+    id "jvm.library"
     alias(libs.plugins.sqldelight)
-}
-
-android {
-    namespace 'com.savvasdalkitsis.uhuruphotos.feature.db.domain.api'
 }
 
 sqldelight {
