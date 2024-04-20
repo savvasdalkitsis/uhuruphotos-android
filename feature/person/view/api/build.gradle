@@ -10,7 +10,6 @@ android {
 dependencies {
     api project(":foundation:navigation:api")
     implementation(
-            libs.hilt,
             project(":foundation:navigation:api"),
     )
 }

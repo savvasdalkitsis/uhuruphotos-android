@@ -14,7 +14,4 @@ dependencies {
             libs.kotlinx.serialization,
             libs.ktorfit.core,
     )
-    implementation(
-            libs.hilt,
-    )
 }

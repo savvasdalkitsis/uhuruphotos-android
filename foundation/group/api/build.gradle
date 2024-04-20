@@ -1,18 +1,12 @@
 plugins {
-    id "android.library"
-}
-
-android {
-    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.group.api'
+    id "jvm.library"
 }
 
 kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                api(
-                        libs.kotlinx.coroutines.core,
-                )
+                api(libs.kotlinx.coroutines.core)
             }
         }
     }

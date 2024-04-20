@@ -1,5 +1,6 @@
 plugins {
     id "android.library"
+    id "hilt"
     alias(libs.plugins.compose)
 }
 
@@ -20,8 +21,6 @@ dependencies {
             libs.androidx.compose.material,
             libs.androidx.compose.ui,
             libs.androidx.startup,
-            libs.bundles.autodagger,
-            libs.hilt,
             libs.maps,
             libs.maps.compose,
             libs.maps.utils,
@@ -29,5 +28,4 @@ dependencies {
             project(":foundation:launchers:api"),
             project(":foundation:map:api"),
     )
-    ksp libs.autodagger.ksp
 }

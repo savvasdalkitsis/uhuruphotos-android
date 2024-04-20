@@ -1,5 +1,6 @@
 plugins {
     id "android.library"
+    id "hilt"
     alias(libs.plugins.compose)
 }
 
@@ -20,8 +21,6 @@ dependencies {
             libs.androidx.compose.material,
             libs.androidx.compose.ui,
             libs.androidx.startup,
-            libs.bundles.autodagger,
-            libs.hilt,
             project(":foundation:activity:api"),
             project(":foundation:android:api"),
             project(":foundation:icons:api"),
@@ -29,7 +28,6 @@ dependencies {
             project(":foundation:log:api"),
             project(":foundation:map:api"),
     )
-    ksp libs.autodagger.ksp
     implementation(libs.maplibre) {
         exclude group: 'org.maplibre.gl', module: 'android-sdk-geojson'
     }

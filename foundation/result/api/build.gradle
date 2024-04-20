@@ -1,9 +1,5 @@
 plugins {
-    id "android.library"
-}
-
-android {
-    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.result.api'
+    id "jvm.library"
 }
 
 kotlin {

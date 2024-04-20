@@ -1,5 +1,6 @@
 plugins {
     id "android.library"
+    id "hilt"
     alias(libs.plugins.compose)
 }
 
@@ -15,7 +16,6 @@ dependencies {
     implementation(
             libs.androidx.compose.material,
             libs.androidx.media3.ui,
-            libs.hilt,
             project(":foundation:image:api"),
     )
 }

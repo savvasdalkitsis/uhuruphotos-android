@@ -1,11 +1,6 @@
 plugins {
     id "android.library"
-}
-
-dependencies {
-    implementation(
-        libs.hilt,
-    )
+    id "hilt"
 }
 
 android {

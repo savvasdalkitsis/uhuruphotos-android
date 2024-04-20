@@ -1,5 +1,6 @@
 plugins {
     id "android.library"
+    id "hilt"
 }
 
 android {
@@ -10,12 +11,9 @@ dependencies {
 
     implementation(
             libs.assure,
-            libs.bundles.autodagger,
-            libs.hilt,
             project(":foundation:activity:api"),
             project(":foundation:biometrics:api"),
             project(":foundation:launchers:api"),
             project(":foundation:log:api"),
     )
-    ksp libs.autodagger.ksp
 }

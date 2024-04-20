@@ -13,7 +13,6 @@ dependencies {
             libs.androidx.compose.material,
             libs.androidx.compose.ui.tooling.preview,
             libs.androidx.work,
-            libs.hilt,
             project(":foundation:compose:api"),
             project(":foundation:icons:api"),
             project(":foundation:image:api"),

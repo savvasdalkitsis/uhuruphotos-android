@@ -1,5 +1,6 @@
 plugins {
     id "android.library"
+    id "hilt"
 }
 
 android {
@@ -8,8 +9,6 @@ android {
 
 dependencies {
     implementation(
-            libs.bundles.autodagger,
-            libs.hilt,
             libs.kotlinx.coroutines,
             libs.sqldelight.coroutines,
             project(":feature:auth:domain:api"),
@@ -21,5 +20,4 @@ dependencies {
             project(":foundation:initializer:api"),
             project(":foundation:log:api"),
     )
-    ksp libs.autodagger.ksp
 }

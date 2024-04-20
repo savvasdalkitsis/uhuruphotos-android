@@ -1,13 +1,13 @@
 plugins {
-    id "android.library"
+    id "jvm.library"
 }
 
-android {
-    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.http.api'
-}
-
-dependencies {
-    implementation(
-            libs.urlvalidator,
-    )
+kotlin {
+    sourceSets {
+        jvmMain {
+            dependencies {
+                implementation(libs.urlvalidator)
+            }
+        }
+    }
 }

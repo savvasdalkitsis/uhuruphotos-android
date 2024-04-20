@@ -1,5 +1,6 @@
 plugins {
     id "android.library"
+    id "hilt"
     alias(libs.plugins.compose)
     id 'kotlin-parcelize'
 }
@@ -14,7 +15,6 @@ dependencies {
             libs.androidx.compose.hilt.navigation,
             libs.androidx.compose.material,
             libs.androidx.compose.ui.tooling.preview,
-            libs.bundles.autodagger,
             libs.okhttp,
             libs.urlvalidator,
             project(":feature:auth:domain:api"),
@@ -32,5 +32,4 @@ dependencies {
     debugImplementation(
             libs.androidx.compose.ui.tooling,
     )
-    ksp libs.autodagger.ksp
 }

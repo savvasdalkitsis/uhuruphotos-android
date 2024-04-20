@@ -1,5 +1,6 @@
 plugins {
     id "android.library"
+    id "hilt"
     alias(libs.plugins.ktorfit)
 }
 
@@ -13,8 +14,6 @@ dependencies {
             project(":foundation:network:api"),
     )
     implementation(
-            libs.bundles.autodagger,
-            libs.hilt,
             libs.okhttp,
             libs.okhttp.logging,
             libs.okhttp.url,
@@ -23,7 +22,6 @@ dependencies {
             project(":foundation:system:api"),
     )
     ksp(
-            libs.autodagger.ksp,
             libs.ktorfit.ksp,
     )
 }

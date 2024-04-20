@@ -1,4 +1,4 @@
-@file:JvmName("LogJvm")
+@file:JvmName("LogAndroid")
 /*
 Copyright 2024 Savvas Dalkitsis
 

@@ -1,5 +1,6 @@
 plugins {
     id "android.library"
+    id "hilt"
     alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.ktorfit)
 }
@@ -10,12 +11,10 @@ android {
 
 dependencies {
     implementation(
-            libs.hilt,
             project(":feature:site:domain:api"),
             project(":foundation:network:api"),
     )
     ksp(
-            libs.autodagger.ksp,
             libs.ktorfit.ksp,
     )
 }

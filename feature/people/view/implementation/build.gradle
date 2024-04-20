@@ -1,5 +1,6 @@
 plugins {
     id "android.library"
+    id "hilt"
     alias(libs.plugins.compose)
 }
 
@@ -12,8 +13,6 @@ dependencies {
             libs.androidx.compose.foundation,
             libs.androidx.compose.material,
             libs.androidx.compose.material.windowsize,
-            libs.bundles.autodagger,
-            libs.hilt,
             libs.kotlinx.coroutines,
             libs.sqldelight.coroutines,
             project(":feature:auth:domain:api"),
@@ -33,5 +32,4 @@ dependencies {
             project(":foundation:toaster:api"),
             project(":foundation:ui:api"),
     )
-    ksp libs.autodagger.ksp
 }

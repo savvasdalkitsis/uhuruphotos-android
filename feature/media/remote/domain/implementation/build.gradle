@@ -1,5 +1,6 @@
 plugins {
     id "android.library"
+    id "hilt"
     alias(libs.plugins.compose)
     alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.ktorfit)
@@ -18,7 +19,6 @@ dependencies {
             libs.androidx.compose.material.windowsize,
             libs.androidx.work,
             libs.androidx.work.hilt,
-            libs.bundles.autodagger,
             libs.coil.base,
             libs.exif,
             libs.infobar,
@@ -53,7 +53,6 @@ dependencies {
             project(":foundation:worker:api"),
     )
     ksp(
-            libs.autodagger.ksp,
             libs.ktorfit.ksp,
     )
 }

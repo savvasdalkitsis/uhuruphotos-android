@@ -17,7 +17,6 @@ dependencies {
     implementation(
             libs.androidx.compose.foundation,
             libs.androidx.compose.material,
-            libs.hilt,
             libs.kotlinx.immutable,
             libs.sqldelight.coroutines,
             project(":foundation:icons:api"),

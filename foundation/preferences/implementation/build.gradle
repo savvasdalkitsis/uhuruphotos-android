@@ -1,5 +1,6 @@
 plugins {
     id "android.library"
+    id "hilt"
 }
 
 android {
@@ -11,10 +12,7 @@ dependencies {
             libs.androidx.datastore.preferences,
             libs.androidx.preference,
             libs.bundles.androidx.security.crypto,
-            libs.bundles.autodagger,
             libs.flowpreferences,
-            libs.hilt,
             project(":foundation:preferences:api"),
     )
-    ksp libs.autodagger.ksp
 }

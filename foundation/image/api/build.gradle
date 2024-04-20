@@ -1,5 +1,6 @@
 plugins {
     id "android.library"
+    id "hilt"
     alias(libs.plugins.compose)
 }
 
@@ -18,7 +19,6 @@ dependencies {
             libs.coil.compose,
             libs.coil.gif,
             libs.coil.video,
-            libs.hilt,
             libs.telephoto,
             libs.videocache,
             project(":foundation:activity:api"),

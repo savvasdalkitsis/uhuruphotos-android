@@ -1,5 +1,6 @@
 plugins {
     id "android.library"
+    id "hilt"
     alias(libs.plugins.compose)
 }
 
@@ -13,7 +14,6 @@ dependencies {
             libs.androidx.compose.hilt.navigation,
             libs.androidx.compose.material,
             libs.androidx.compose.ui.tooling.preview,
-            libs.bundles.autodagger,
             libs.kotlinx.immutable,
             project(":feature:local:view:api"),
             project(":feature:portfolio:domain:api"),
@@ -28,5 +28,4 @@ dependencies {
     debugImplementation(
             libs.androidx.compose.ui.tooling,
     )
-    ksp libs.autodagger.ksp
 }

@@ -71,8 +71,6 @@ dependencies {
             libs.androidx.splash,
             libs.androidx.work.hilt,
             libs.bugsnag,
-            libs.bundles.autodagger,
-            libs.hilt,
             libs.permissions.base,
             project(":app:implementation"),
             project(":feature:auth:domain:api"),

@@ -1,5 +1,6 @@
 plugins {
     id "android.library"
+    id "hilt"
     alias(libs.plugins.compose)
 }
 
@@ -10,7 +11,6 @@ android {
 dependencies {
     implementation(
             libs.androidx.compose.material,
-            libs.bundles.autodagger,
             libs.sqldelight.coroutines,
             project(":feature:collage:view:api"),
             project(":feature:gallery:view:api"),
@@ -30,5 +30,4 @@ dependencies {
             project(":foundation:strings:api"),
             project(":foundation:ui:api"),
     )
-    ksp libs.autodagger.ksp
 }

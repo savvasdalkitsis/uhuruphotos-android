@@ -1,5 +1,6 @@
 plugins {
     id "android.library"
+    id "hilt"
     alias(libs.plugins.compose)
 }
 
@@ -10,7 +11,6 @@ android {
 dependencies {
     implementation(
             libs.androidx.compose.hilt.navigation,
-            libs.bundles.autodagger,
             project(":feature:album:user:domain:api"),
             project(":feature:album:user:view:api"),
             project(":feature:collage:view:api"),
@@ -27,5 +27,4 @@ dependencies {
             project(":foundation:navigation:api"),
             project(":foundation:preferences:api"),
     )
-    ksp libs.autodagger.ksp
 }

@@ -11,7 +11,6 @@ dependencies {
             libs.androidx.compose.hilt.navigation,
             libs.androidx.compose.material,
             libs.androidx.compose.ui.tooling.preview,
-            libs.bundles.autodagger,
             libs.kotlinx.immutable,
             project(":feature:settings:domain:api"),
             project(":feature:{{cookiecutter.project_slug}}:domain:api"),
@@ -23,5 +22,4 @@ dependencies {
     debugImplementation(
             libs.androidx.compose.ui.tooling,
     )
-    ksp libs.autodagger.ksp
 }

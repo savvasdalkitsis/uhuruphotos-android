@@ -1,5 +1,6 @@
 plugins {
     id "android.library"
+    id "hilt"
 }
 
 android {
@@ -10,10 +11,7 @@ dependencies {
 
     implementation(
             libs.androidx.startup,
-            libs.hilt,
-            libs.bundles.autodagger,
             project(":foundation:date:api"),
             project(":foundation:initializer:api"),
     )
-    ksp libs.autodagger.ksp
 }

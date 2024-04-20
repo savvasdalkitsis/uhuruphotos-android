@@ -9,6 +9,7 @@ android {
 dependencies {
     api(
             libs.androidx.activity,
+            libs.androidx.fragment,
             project(":foundation:result:api"),
     )
 }

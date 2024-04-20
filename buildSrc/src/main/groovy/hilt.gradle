@@ -1,0 +1,22 @@
+plugins {
+    id "com.google.dagger.hilt.android"
+    id "kotlin-kapt"
+}
+
+hilt {
+    enableAggregatingTask = true
+}
+
+kapt {
+    correctErrorTypes true
+}
+
+dependencies {
+    implementation(
+            libs.hilt,
+            libs.autodagger.core,
+    )
+    kapt(libs.hilt.dagger.compiler)
+    kapt(libs.androidx.hilt.compiler)
+    ksp(libs.autodagger.ksp)
+}

@@ -1,5 +1,6 @@
 plugins {
     id "android.library"
+    id "hilt"
     alias(libs.plugins.compose)
 }
 
@@ -15,7 +16,6 @@ dependencies {
             libs.androidx.compose.material.windowsize,
             libs.androidx.compose.ui.tooling.preview,
             libs.androidx.lifecycle,
-            libs.bundles.autodagger,
             libs.sqldelight.coroutines,
             project(":feature:account:view:api"),
             project(":feature:auth:domain:api"),
@@ -55,5 +55,4 @@ dependencies {
     debugImplementation(
             libs.androidx.compose.ui.tooling,
     )
-    ksp libs.autodagger.ksp
 }

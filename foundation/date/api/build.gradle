@@ -1,5 +1,6 @@
 plugins {
     id "android.library"
+    id "hilt"
 }
 
 android {
@@ -12,7 +13,6 @@ dependencies {
             libs.joda.time,
     )
     implementation(
-            libs.hilt,
             project(":foundation:log:api"),
             project(":foundation:strings:api"),
     )

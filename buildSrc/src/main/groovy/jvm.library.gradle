@@ -1,14 +1,10 @@
 plugins {
-    id 'java-library'
     id "org.jetbrains.kotlin.multiplatform"
 }
 
-sourceCompatibility = 17
-targetCompatibility = 17
-
 kotlin {
     jvm {
-        compilations.all {
+        compilations.configureEach {
             kotlinOptions {
                 jvmTarget = '17'
             }

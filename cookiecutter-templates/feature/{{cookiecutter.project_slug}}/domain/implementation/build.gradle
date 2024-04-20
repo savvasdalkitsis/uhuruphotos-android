@@ -4,9 +4,6 @@ android {
 
 dependencies {
     implementation(
-            libs.bundles.autodagger,
-            libs.hilt,
             project(":feature:{{cookiecutter.project_slug}}:domain:api"),
     )
-    ksp libs.autodagger.ksp
 }
