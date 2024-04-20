@@ -15,7 +15,6 @@ dependencies {
             libs.androidx.compose.material,
             libs.androidx.compose.ui.tooling.preview,
             libs.scrollbar,
-            project(":feature:about:domain:api"),
             project(":feature:about:view:api"),
             project(":feature:settings:domain:api"),
             project(":foundation:compose:api"),

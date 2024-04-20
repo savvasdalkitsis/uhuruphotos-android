@@ -1,7 +1,0 @@
-plugins {
-    id "android.library"
-}
-
-android {
-    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.about.domain.api'
-}

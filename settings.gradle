@@ -31,8 +31,6 @@ dependencyResolutionManagement {
 rootProject.name = "uhuruphotos-android"
 include ':app'
 include ':app:implementation'
-include ':feature:about:domain:api'
-include ':feature:about:domain:implementation'
 include ':feature:about:view:api'
 include ':feature:about:view:implementation'
 include ':feature:album:auto:domain:api'
