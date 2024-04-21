@@ -87,7 +87,7 @@ androidx-tracing = "androidx.tracing:tracing-ktx:1.2.0"
 androidx-window = "androidx.window:window:1.2.0"
 androidx-work = "androidx.work:work-runtime-ktx:2.9.0"
 androidx-work-hilt = "androidx.hilt:hilt-work:1.2.0"
-appyx = "com.bumble.appyx:core:1.4.0"
+appyx = "com.bumble.appyx:core:1.5.0"
 assure = "com.afollestad.assure:coroutines:0.2.0"
 autodagger-core = { module = "se.ansman.dagger.auto:android", version.ref = "autodagger" }
 autodagger-ksp = { module = "se.ansman.dagger.auto:compiler", version.ref = "autodagger" }
