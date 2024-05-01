@@ -9,7 +9,7 @@ android {
 
 dependencies {
     implementation(
-            libs.androidx.compose.material,
+            compose.material,
             libs.bundles.permissions,
             project(":feature:album:auto:view:api"),
             project(":feature:collage:view:api"),

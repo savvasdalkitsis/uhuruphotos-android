@@ -10,7 +10,7 @@ android {
 dependencies {
     implementation(
             libs.androidx.compose.foundation,
-            libs.androidx.compose.material,
+            compose.material,
             libs.androidx.compose.material.windowsize,
             libs.kotlinx.coroutines.android,
             libs.sqldelight.coroutines,

@@ -13,7 +13,7 @@ dependencies {
             libs.androidx.media3.core,
     )
     implementation(
-            libs.androidx.compose.material,
+            compose.material,
             libs.androidx.media3.ui,
             project(":foundation:image:api"),
     )

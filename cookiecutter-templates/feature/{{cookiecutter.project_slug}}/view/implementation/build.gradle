@@ -8,7 +8,7 @@ android {
 
 dependencies {
     implementation(
-            libs.androidx.compose.material,
+            compose.material,
             libs.androidx.compose.ui.tooling.preview,
             libs.kotlinx.immutable,
             project(":feature:settings:domain:api"),

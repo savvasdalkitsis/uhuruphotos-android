@@ -7,12 +7,15 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.dismiss.api'
 }
 
-dependencies {
-
-    implementation(
-            libs.androidx.core,
-            libs.androidx.compose.animation.base,
-            libs.androidx.compose.foundation,
-            libs.androidx.compose.ui,
-    )
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation compose.animation
+                implementation compose.foundation
+                implementation compose.ui
+                implementation project(":foundation:math:api")
+            }
+        }
+    }
 }

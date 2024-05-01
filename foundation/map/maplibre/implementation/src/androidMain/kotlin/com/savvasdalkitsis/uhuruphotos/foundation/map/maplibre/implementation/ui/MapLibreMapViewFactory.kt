@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewFactory
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewScope
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewState
 
-class MapLibreMapViewFactory: MapViewFactory{
+class MapLibreMapViewFactory: MapViewFactory {
 
     @Composable
     override fun CreateMapView(

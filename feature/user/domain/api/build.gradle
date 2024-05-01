@@ -1,15 +1,16 @@
 plugins {
-    id "android.library"
+    id "jvm.library"
 }
 
-android {
-    namespace 'com.savvasdalkitsis.uhuruphotos.feature.user.domain.api'
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                api libs.kotlinx.coroutines.core
+                api project(":feature:db:domain:api")
+                api project(":foundation:result:api")
+            }
+        }
+    }
 }
 
-dependencies {
-    api(
-            libs.kotlinx.coroutines.android,
-            project(":feature:db:domain:api"),
-            project(":foundation:result:api"),
-    )
-}

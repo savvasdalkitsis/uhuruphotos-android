@@ -18,11 +18,9 @@ package com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.na
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.api.navigation.PortfolioNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui.Portfolio
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.viewmodel.PortfolioViewModel
-import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.auto.AutoInitialize
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
 
-@AutoInitialize
 object PortfolioNavigationTarget : NavigationTarget<PortfolioNavigationRoute> by ViewModelNavigationTarget(
     PortfolioViewModel::class,
     PortfolioNavigationRoute::class,

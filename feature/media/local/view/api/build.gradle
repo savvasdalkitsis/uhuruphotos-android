@@ -11,7 +11,7 @@ dependencies {
 
     implementation(
             libs.androidx.compose.foundation.layout,
-            libs.androidx.compose.material,
+            compose.material,
             libs.androidx.compose.ui,
             libs.bundles.permissions,
             project(":feature:media:common:domain:api"),

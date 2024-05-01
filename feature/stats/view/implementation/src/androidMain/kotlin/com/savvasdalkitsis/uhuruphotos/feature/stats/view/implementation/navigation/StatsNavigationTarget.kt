@@ -20,9 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.ui.Stat
 import com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.viewmodel.StatsViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.auto.AutoInitialize
 
-@AutoInitialize
 object StatsNavigationTarget : NavigationTarget<StatsNavigationRoute> by ViewModelNavigationTarget(
     StatsViewModel::class,
     StatsNavigationRoute::class,

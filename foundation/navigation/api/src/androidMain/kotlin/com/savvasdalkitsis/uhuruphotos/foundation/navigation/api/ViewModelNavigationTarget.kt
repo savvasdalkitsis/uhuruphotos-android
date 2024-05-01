@@ -18,7 +18,6 @@ package com.savvasdalkitsis.uhuruphotos.foundation.navigation.api
 import android.app.Application
 import androidx.compose.runtime.Composable
 import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
-import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.auto.AutoInitialize
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.AppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.LocalThemeMode

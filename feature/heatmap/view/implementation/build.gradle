@@ -12,7 +12,7 @@ dependencies {
     implementation(
             libs.accompanist.permissions,
             libs.androidx.compose.foundation.layout,
-            libs.androidx.compose.material,
+            compose.material,
             libs.androidx.compose.ui,
             project(":feature:collage:view:api"),
             project(":feature:db:domain:api"),

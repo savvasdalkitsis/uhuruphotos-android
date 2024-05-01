@@ -1,7 +1,3 @@
 plugins {
-    id "android.library"
-}
-
-android {
-    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.exif.api'
+    id "jvm.library"
 }

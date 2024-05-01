@@ -14,7 +14,7 @@ dependencies {
     )
     implementation(
             libs.androidx.compose.foundation.layout,
-            libs.androidx.compose.material,
+            compose.material,
             libs.androidx.compose.ui,
             libs.androidx.compose.ui.tooling.preview,
             project(":feature:auth:domain:api:module"),

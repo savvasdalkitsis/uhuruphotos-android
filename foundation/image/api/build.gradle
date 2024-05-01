@@ -7,6 +7,17 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.image.api'
 }
 
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                api libs.coil.base
+                implementation compose.ui
+            }
+        }
+    }
+}
+
 dependencies {
 
     api(

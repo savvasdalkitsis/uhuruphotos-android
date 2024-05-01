@@ -13,15 +13,15 @@ dependencies {
             libs.kotlinx.immutable,
     )
     implementation(
-            libs.androidx.compose.constraintlayout,
             libs.androidx.compose.foundation,
             libs.androidx.compose.foundation.layout,
-            libs.androidx.compose.material,
+            compose.material,
             libs.androidx.compose.material.windowsize,
             libs.androidx.compose.ui,
             libs.androidx.compose.ui.tooling.preview,
             libs.androidx.compose.ui.util,
             libs.androidx.core,
+            libs.compose.constraint,
             project(":foundation:compose:api"),
             project(":foundation:icons:api"),
             project(":foundation:strings:api"),

@@ -9,7 +9,7 @@ android {
 
 dependencies {
     implementation(
-            libs.androidx.compose.material,
+            compose.material,
             project(":feature:feed:domain:api:module"),
             project(":feature:gallery:view:api"),
             project(":feature:lightbox:view:api"),

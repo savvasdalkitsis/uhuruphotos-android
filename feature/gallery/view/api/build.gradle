@@ -10,7 +10,7 @@ android {
 dependencies {
     implementation(
             libs.androidx.compose.foundation,
-            libs.androidx.compose.material,
+            compose.material,
             project(":feature:collage:view:api"),
             project(":feature:lightbox:view:api"),
             project(":feature:media:common:domain:api"),

@@ -1,5 +1,6 @@
 plugins {
     id "android.library"
+    alias(libs.plugins.compose)
 }
 
 android {
@@ -9,7 +10,6 @@ android {
 dependencies {
     implementation(
             libs.accompanist.systemui,
-            libs.androidx.compose.ui,
             project(":foundation:launchers:api"),
             project(":foundation:ui:api"),
     )

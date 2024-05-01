@@ -10,7 +10,7 @@ android {
 dependencies {
     implementation(
             libs.androidx.compose.foundation,
-            libs.androidx.compose.material,
+            compose.material,
             libs.kotlinx.coroutines.android,
             project(":feature:auth:domain:api:module"),
             project(":feature:collage:view:api"),

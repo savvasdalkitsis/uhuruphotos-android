@@ -17,5 +17,4 @@ dependencies {
         }
     }
     implementation project(":foundation:inject:api")
-//    ksp project(":foundation:initializer:processor")
 }

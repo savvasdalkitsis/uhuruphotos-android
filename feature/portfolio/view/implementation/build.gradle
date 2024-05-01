@@ -10,7 +10,7 @@ android {
 dependencies {
     implementation(
             libs.accompanist.permissions,
-            libs.androidx.compose.material,
+            compose.material,
             libs.androidx.compose.ui.tooling.preview,
             libs.kotlinx.immutable,
             project(":feature:local:view:api"),

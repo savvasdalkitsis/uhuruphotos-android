@@ -36,7 +36,7 @@ dependencies {
             project(":foundation:navigation:api")
     )
     implementation(
-            libs.androidx.compose.material,
+            compose.material,
             libs.androidx.compose.material.windowsize,
             libs.bubble.navigation,
             project(":foundation:icons:api"),

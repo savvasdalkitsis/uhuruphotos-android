@@ -7,13 +7,15 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.compose.api'
 }
 
-dependencies {
-    api(
-            libs.androidx.compose.foundation.layout,
-            libs.androidx.compose.ui,
-    )
-    implementation(
-            libs.androidx.compose.material,
-            project(":foundation:log:api"),
-    )
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                api compose.foundation
+                api compose.material
+                api compose.ui
+                implementation project(":foundation:log:api")
+            }
+        }
+    }
 }

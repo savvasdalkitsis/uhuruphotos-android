@@ -1,6 +1,7 @@
 plugins {
     id "android.library"
     id 'kotlin-parcelize'
+    alias(libs.plugins.compose)
 }
 
 android {
@@ -19,7 +20,7 @@ dependencies {
             project(":foundation:result:api"),
     )
     implementation(
-            libs.androidx.compose.material,
+            compose.material,
             project(":feature:people:view:api"),
             project(":foundation:compose:api"),
             project(":foundation:icons:api"),

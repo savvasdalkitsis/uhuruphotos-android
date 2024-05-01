@@ -65,4 +65,8 @@ subprojects {
             )
         }
     }
+
+    configurations.configureEach {
+        exclude group: "androidx.constraintlayout", module: "constraintlayout-compose"
+    }
 }

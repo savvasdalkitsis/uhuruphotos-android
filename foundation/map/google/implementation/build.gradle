@@ -17,7 +17,7 @@ dependencies {
 
     implementation(
             libs.androidx.compose.foundation.layout,
-            libs.androidx.compose.material,
+            compose.material,
             libs.androidx.compose.ui,
             libs.androidx.startup,
             libs.maps,

@@ -11,7 +11,7 @@ dependencies {
 
     implementation(
             libs.accompanist.systemui,
-            libs.androidx.compose.material,
+            compose.material,
             libs.androidx.compose.material.windowsize,
             libs.androidx.compose.ui.tooling.preview,
             libs.androidx.work,

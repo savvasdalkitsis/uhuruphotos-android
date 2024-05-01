@@ -6,8 +6,13 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api'
 }
 
-dependencies {
-    api(
-            project(":foundation:result:api"),
-    )
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                api project(":foundation:result:api")
+            }
+        }
+    }
 }
+

@@ -19,7 +19,7 @@ dependencies {
             project(":foundation:map:api"),
     )
     implementation(
-            libs.androidx.compose.material,
+            compose.material,
             libs.androidx.compose.ui.tooling.preview,
             project(":feature:media:common:domain:api"),
             project(":feature:people:view:api"),

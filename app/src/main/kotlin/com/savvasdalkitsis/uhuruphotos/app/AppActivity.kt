@@ -55,7 +55,7 @@ class AppActivity : FragmentNodeActivity() {
             LaunchedEffect(logging) {
                 Log.enabled = logging
             }
-            val windowSizeClass = calculateWindowSizeClass(this)
+            val windowSizeClass = calculateWindowSizeClass()
             CompositionLocalProvider(
                 LocalWindowSize provides windowSizeClass,
             ) {

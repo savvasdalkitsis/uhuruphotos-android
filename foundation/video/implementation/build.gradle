@@ -11,7 +11,7 @@ dependencies {
 
     implementation(
             libs.androidx.compose.foundation,
-            libs.androidx.compose.material,
+            compose.material,
             libs.androidx.compose.ui,
             libs.bundles.androidx.media3,
             project(":feature:auth:domain:api"),

@@ -10,7 +10,7 @@ android {
 dependencies {
 
     implementation(
-            libs.androidx.compose.material,
+            compose.material,
             libs.androidx.work,
             project(":feature:auth:domain:api"),
             project(":feature:avatar:domain:api"),

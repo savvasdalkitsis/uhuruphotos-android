@@ -9,7 +9,7 @@ android {
 
 dependencies {
     implementation(
-            libs.androidx.compose.material,
+            compose.material,
             libs.sqldelight.coroutines,
             project(":feature:collage:view:api"),
             project(":feature:gallery:view:api"),

@@ -11,7 +11,7 @@ android {
 dependencies {
     api project(":foundation:navigation:api")
     implementation(
-            libs.androidx.compose.material,
+            compose.material,
             libs.androidx.compose.ui,
             project(":foundation:strings:api"),
     )
