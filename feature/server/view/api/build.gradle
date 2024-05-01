@@ -7,9 +7,12 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.server.view.api'
 }
 
-dependencies {
-    api project(":foundation:navigation:api")
-    implementation(
-            libs.androidx.compose.navigation,
-    )
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                api project(":foundation:navigation:api")
+            }
+        }
+    }
 }

@@ -14,6 +14,7 @@ dependencies {
             libs.androidx.compose.ui.tooling.preview,
             libs.kotlinx.immutable,
             project(":feature:local:view:api"),
+            project(":feature:media:common:view:api"),
             project(":feature:media:local:domain:api:module"),
             project(":feature:portfolio:domain:api:module"),
             project(":feature:portfolio:view:api"),

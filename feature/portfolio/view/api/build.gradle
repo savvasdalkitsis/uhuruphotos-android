@@ -7,10 +7,12 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.api'
 }
 
-dependencies {
-    api(
-            project(":foundation:navigation:api"),
-            project(":feature:media:common:view:api"),
-            project(":feature:media:local:domain:api"),
-    )
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                api project(":foundation:navigation:api")
+            }
+        }
+    }
 }

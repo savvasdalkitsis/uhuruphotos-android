@@ -7,6 +7,12 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.favourites.view.api'
 }
 
-dependencies {
-    api project(":foundation:navigation:api")
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                api project(":foundation:navigation:api")
+            }
+        }
+    }
 }
