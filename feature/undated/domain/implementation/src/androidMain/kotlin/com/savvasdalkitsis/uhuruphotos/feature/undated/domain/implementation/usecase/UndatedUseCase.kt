@@ -17,16 +17,11 @@ package com.savvasdalkitsis.uhuruphotos.feature.undated.domain.implementation.us
 
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.undated.domain.api.usecase.UndatedUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.get
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
-import se.ansman.dagger.auto.AutoBind
-import javax.inject.Inject
 
-@AutoBind
-class UndatedUseCase @Inject constructor(
-    @PlainTextPreferences
+class UndatedUseCase(
     private val preferences: Preferences,
 ) : UndatedUseCase {
     private val key = "undatedGalleryDisplay"

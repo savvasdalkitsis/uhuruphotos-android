@@ -21,11 +21,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.Setti
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.usecase.FeedbackUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
-import dagger.hilt.android.scopes.ActivityRetainedScoped
-import javax.inject.Inject
 
-@ActivityRetainedScoped
-internal class ServerActionsContext @Inject constructor(
+internal class ServerActionsContext(
     val serverUseCase: ServerUseCase,
     val authenticationLoginUseCase: AuthenticationLoginUseCase,
     val settingsUseCase: SettingsUseCase,

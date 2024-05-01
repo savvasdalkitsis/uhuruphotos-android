@@ -9,7 +9,7 @@ android {
 
 dependencies {
     api(
-            project(":foundation:activity:api"),
+            project(":foundation:android:api"),
     )
     implementation(
             libs.accompanist.systemui,

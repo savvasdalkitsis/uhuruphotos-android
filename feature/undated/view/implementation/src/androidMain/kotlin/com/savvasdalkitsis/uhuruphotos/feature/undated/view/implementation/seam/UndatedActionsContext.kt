@@ -27,9 +27,8 @@ import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.map
-import javax.inject.Inject
 
-internal class UndatedActionsContext @Inject constructor(
+internal class UndatedActionsContext(
     undatedUseCase: UndatedUseCase,
     feedUseCase: FeedUseCase,
     galleryActionsContextFactory: GalleryActionsContextFactory,

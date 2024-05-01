@@ -16,18 +16,16 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.viewmodel
 
 import com.savvasdalkitsis.uhuruphotos.feature.processing.view.api.navigation.ProcessingNavigationRoute
+import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.module.ProcessingModule
 import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.seam.ProcessingActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.seam.actions.Load
 import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.seam.actions.ProcessingAction
 import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.ui.state.ProcessingState
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 
-@HiltViewModel
-internal class ProcessingViewModel @Inject constructor(
-    actionsContext: ProcessingActionsContext,
+internal class ProcessingViewModel(
+    actionsContext: ProcessingActionsContext = ProcessingModule.processingActionsContext,
 ) : NavigationViewModel<ProcessingState, ProcessingAction, ProcessingNavigationRoute>(
     ActionHandlerWithContext(actionsContext),
     ProcessingState(),

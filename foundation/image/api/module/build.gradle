@@ -1,0 +1,21 @@
+plugins {
+    id "android.library"
+}
+
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.image.api.module'
+}
+
+dependencies {
+    api project(":foundation:image:api")
+    api libs.coil.gif
+    api libs.coil.video
+    api libs.gif
+    api libs.videocache
+    implementation project(":feature:auth:domain:api:module")
+    implementation project(":foundation:android:api:module")
+    implementation project(":foundation:initializer:api")
+    implementation project(":foundation:inject:api")
+    implementation project(":foundation:image:api:module:cache")
+    implementation project(":foundation:image:implementation")
+}

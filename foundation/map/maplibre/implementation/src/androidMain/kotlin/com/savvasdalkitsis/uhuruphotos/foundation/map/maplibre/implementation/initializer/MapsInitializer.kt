@@ -20,12 +20,8 @@ import com.mapbox.mapboxsdk.Mapbox
 import com.mapbox.mapboxsdk.WellKnownTileServer
 import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
 import com.savvasdalkitsis.uhuruphotos.foundation.map.maplibre.implementation.api.MapLibreApi
-import se.ansman.dagger.auto.AutoBindIntoSet
-import javax.inject.Inject
 
-@AutoBindIntoSet
-internal class MapsInitializer @Inject constructor(
-) : ApplicationCreated {
+class MapsInitializer : ApplicationCreated {
 
     override fun onAppCreated(app: Application) {
         Mapbox.getInstance(app, MapLibreApi.getApiKey(app), WellKnownTileServer.MapTiler)

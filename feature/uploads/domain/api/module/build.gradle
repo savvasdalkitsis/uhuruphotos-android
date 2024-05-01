@@ -1,0 +1,15 @@
+plugins {
+    id "android.library"
+}
+
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.uploads.domain.api.module'
+}
+
+dependencies {
+    api project(":feature:uploads:domain:api")
+    implementation project(":foundation:inject:api")
+    implementation project(":feature:media:local:domain:api:module")
+    implementation project(":feature:upload:domain:api:module")
+    implementation project(":feature:uploads:domain:implementation")
+}

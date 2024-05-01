@@ -32,7 +32,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import coil.request.ImageRequest
 import coil.request.SuccessResult
-import com.savvasdalkitsis.uhuruphotos.foundation.activity.api.extensions.setHDR
+import com.savvasdalkitsis.uhuruphotos.foundation.android.api.extensions.setHDR
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.LocalFullImageLoader
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.LocalThumbnailImageLoader
 import me.saket.telephoto.zoomable.ZoomableImageState

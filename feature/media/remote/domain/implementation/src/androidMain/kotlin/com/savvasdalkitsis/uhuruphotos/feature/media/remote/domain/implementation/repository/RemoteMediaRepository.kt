@@ -47,9 +47,8 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.take
-import javax.inject.Inject
 
-class RemoteMediaRepository @Inject constructor(
+class RemoteMediaRepository(
     private val remoteMediaCollectionsQueries: RemoteMediaCollectionsQueries,
     private val remoteMediaItemDetailsQueries: RemoteMediaItemDetailsQueries,
     private val remoteMediaItemSummaryQueries: RemoteMediaItemSummaryQueries,

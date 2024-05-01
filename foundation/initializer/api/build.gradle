@@ -1,8 +1,12 @@
 plugins {
     id "android.library"
-    id "hilt"
 }
 
 android {
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.initializer.api'
+}
+
+dependencies {
+    api libs.androidx.fragment
+    implementation libs.kotlin.reflect
 }

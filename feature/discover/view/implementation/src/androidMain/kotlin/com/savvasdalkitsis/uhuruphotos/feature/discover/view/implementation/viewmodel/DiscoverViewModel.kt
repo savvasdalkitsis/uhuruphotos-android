@@ -15,11 +15,13 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.viewmodel
 
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.module.AccountModule
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.AccountOverviewAction
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.Load
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.AccountOverviewState
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.api.navigation.DiscoverNavigationRoute
+import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.module.DiscoverModule
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.DiscoverActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.DiscoverAction
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.Initialise
@@ -28,16 +30,13 @@ import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.Navig
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeActionHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 
 typealias DiscoverCompositeState = Pair<DiscoverState, AccountOverviewState>
 typealias DiscoverCompositeAction = Either<DiscoverAction, AccountOverviewAction>
 
-@HiltViewModel
-class DiscoverViewModel @Inject constructor(
-    discoverActionsContext: DiscoverActionsContext,
-    accountOverviewActionsContext: AccountOverviewActionsContext,
+class DiscoverViewModel(
+    discoverActionsContext: DiscoverActionsContext = DiscoverModule.discoverActionsContext,
+    accountOverviewActionsContext: AccountOverviewActionsContext = AccountModule.accountOverviewActionsContext,
 ) : NavigationViewModel<DiscoverCompositeState, DiscoverCompositeAction, DiscoverNavigationRoute>(
     CompositeActionHandler(
         ActionHandlerWithContext(discoverActionsContext),

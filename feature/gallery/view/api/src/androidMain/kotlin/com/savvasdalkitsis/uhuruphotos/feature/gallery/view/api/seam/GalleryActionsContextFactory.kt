@@ -19,12 +19,17 @@ import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Collage
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetails
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
-import dagger.assisted.AssistedFactory
+import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
 import kotlinx.coroutines.flow.Flow
 
-@AssistedFactory
-interface GalleryActionsContextFactory {
+class GalleryActionsContextFactory(
+    private val preferences: Preferences,
+    private val toasterUseCase: ToasterUseCase,
+    private val navigator: Navigator,
+) {
 
     fun create(
         galleryRefresher: suspend (Int) -> SimpleResult,
@@ -34,5 +39,17 @@ interface GalleryActionsContextFactory {
         initialCollageDisplay: (galleryId: Int) -> CollageDisplay,
         collageDisplayPersistence: suspend (galleryId: Int, PredefinedCollageDisplay) -> Unit,
         shouldShowSortingAction: Boolean = true,
-    ): GalleryActionsContext
+    ): GalleryActionsContext =
+        GalleryActionsContext(
+            galleryRefresher,
+            galleryDetailsFlow,
+            shouldRefreshOnLoad,
+            lightboxSequenceDataSource,
+            initialCollageDisplay,
+            collageDisplayPersistence,
+            shouldShowSortingAction,
+            preferences,
+            toasterUseCase,
+            navigator,
+        )
 }

@@ -19,9 +19,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUse
 import com.savvasdalkitsis.uhuruphotos.feature.people.domain.api.usecase.PeopleUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.person.domain.api.usecase.PersonUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
-import javax.inject.Inject
 
-class PersonActionsContext @Inject constructor(
+class PersonActionsContext(
     val personUseCase: PersonUseCase,
     val peopleUseCase: PeopleUseCase,
     val serverUseCase: ServerUseCase,

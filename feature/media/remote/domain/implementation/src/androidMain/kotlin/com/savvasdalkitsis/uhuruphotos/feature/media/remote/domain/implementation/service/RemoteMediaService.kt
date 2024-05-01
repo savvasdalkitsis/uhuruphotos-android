@@ -31,11 +31,7 @@ import de.jensklingenberg.ktorfit.http.GET
 import de.jensklingenberg.ktorfit.http.HTTP
 import de.jensklingenberg.ktorfit.http.POST
 import de.jensklingenberg.ktorfit.http.Path
-import se.ansman.dagger.auto.ktorfit.AutoProvideService
-import javax.inject.Singleton
 
-@AutoProvideService
-@Singleton
 interface RemoteMediaService {
 
     @GET("api/photos/{id}/")

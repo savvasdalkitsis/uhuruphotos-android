@@ -1,0 +1,26 @@
+plugins {
+    id "android.library"
+    alias(libs.plugins.ktorfit)
+}
+
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.module'
+}
+
+dependencies {
+    api project(":feature:auth:domain:api")
+    api libs.okhttp
+    api libs.ktorfit.core
+    implementation libs.ktor.content
+    implementation libs.ktor.okhttp
+    implementation libs.ktor.serialization
+    implementation project(":feature:auth:domain:implementation")
+    implementation project(":feature:db:domain:api:module")
+    implementation project(":foundation:inject:api")
+    implementation project(":foundation:image:api:module:cache")
+    implementation project(":foundation:navigation:api:module")
+    implementation project(":foundation:network:api:module")
+    implementation project(":foundation:preferences:api:module")
+    implementation project(":foundation:video:api:module:cache")
+    implementation project(":foundation:worker:api:module")
+}

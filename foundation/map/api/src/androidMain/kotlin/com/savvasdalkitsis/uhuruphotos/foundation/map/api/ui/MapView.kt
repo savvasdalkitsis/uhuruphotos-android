@@ -33,8 +33,7 @@ fun MapView(
 ) {
     val viewFactoryProvider = LocalMapViewFactoryProvider.current
     val mapProvider = LocalMapProvider.current
-    viewFactoryProvider.getFactory(mapProvider)
-        .CreateMapView(
+    viewFactoryProvider.getFactory(mapProvider)?.CreateMapView(
             modifier = modifier,
             mapViewState = mapViewState,
             mapOptions = mapOptions,

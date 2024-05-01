@@ -20,13 +20,11 @@ import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.Authentic
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.WelcomeUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
-import dagger.hilt.android.qualifiers.ApplicationContext
-import javax.inject.Inject
 
-internal class WelcomeActionsContext @Inject constructor(
+internal class WelcomeActionsContext(
     val welcomeUseCase: WelcomeUseCase,
     val authenticationLoginUseCase: AuthenticationLoginUseCase,
     val navigator: Navigator,
     val localMediaUseCase: LocalMediaUseCase,
-    @ApplicationContext val context: Context,
+    val context: Context,
 )

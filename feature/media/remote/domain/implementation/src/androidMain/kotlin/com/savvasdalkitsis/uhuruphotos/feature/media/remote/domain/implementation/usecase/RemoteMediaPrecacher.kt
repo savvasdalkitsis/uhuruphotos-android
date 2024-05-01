@@ -31,16 +31,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResult.CHANGED
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResult.SKIPPED
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaPrecacher
-import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.ThumbnailImage
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
-import dagger.hilt.android.qualifiers.ApplicationContext
-import se.ansman.dagger.auto.AutoBind
-import javax.inject.Inject
 
-@AutoBind
-class RemoteMediaPrecacher @Inject constructor(
-    @ApplicationContext val context: Context,
-    @ThumbnailImage
+class RemoteMediaPrecacher(
+    val context: Context,
     private val imageLoader: ImageLoader,
 ) : RemoteMediaPrecacher {
 

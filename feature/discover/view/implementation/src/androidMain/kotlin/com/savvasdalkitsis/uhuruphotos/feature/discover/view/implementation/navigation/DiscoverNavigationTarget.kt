@@ -20,14 +20,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.D
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.viewmodel.DiscoverViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
-import se.ansman.dagger.auto.AutoInitialize
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@AutoInitialize
-@Singleton
-class DiscoverNavigationTarget @Inject constructor(
-) : NavigationTarget<DiscoverNavigationRoute> by ViewModelNavigationTarget(
+object DiscoverNavigationTarget : NavigationTarget<DiscoverNavigationRoute> by ViewModelNavigationTarget(
     DiscoverViewModel::class,
     DiscoverNavigationRoute::class,
     view = { state, action ->

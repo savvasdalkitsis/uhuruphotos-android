@@ -15,16 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.date.api
 
-import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule.ParsingDateFormat
-import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule.ParsingDateTimeFormat
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormatter
-import javax.inject.Inject
 
-class DateParser @Inject constructor(
-    @ParsingDateFormat
+class DateParser(
     private val parsingDateFormat: DateTimeFormatter,
-    @ParsingDateTimeFormat
     private val parsingDateTimeFormat: DateTimeFormatter,
 ) {
 

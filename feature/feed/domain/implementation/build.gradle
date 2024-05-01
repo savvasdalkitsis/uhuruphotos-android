@@ -1,6 +1,5 @@
 plugins {
     id "android.library"
-    id "hilt"
     alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.ktorfit)
 }
@@ -12,28 +11,30 @@ android {
 dependencies {
     implementation(
             libs.androidx.work,
-            libs.androidx.work.hilt,
             libs.sqldelight.coroutines,
-            project(":feature:auth:domain:api"),
+            project(":feature:auth:domain:api:module"),
             project(":feature:collage:view:api"),
-            project(":feature:download:domain:api"),
+            project(":feature:db:domain:api:module"),
+            project(":feature:download:domain:api:module"),
             project(":feature:feed:domain:api"),
-            project(":feature:media:remote:domain:api"),
-            project(":feature:portfolio:domain:api"),
-            project(":feature:settings:domain:api"),
-            project(":feature:upload:domain:api"),
-            project(":feature:welcome:domain:api"),
+            project(":feature:media:common:domain:api:module"),
+            project(":feature:media:remote:domain:api:module"),
+            project(":feature:portfolio:domain:api:module"),
+            project(":feature:settings:domain:api:module"),
+            project(":feature:upload:domain:api:module"),
+            project(":feature:welcome:domain:api:module"),
             project(":foundation:coroutines:api"),
             project(":foundation:initializer:api"),
+            project(":foundation:inject:api"),
             project(":foundation:launchers:api"),
             project(":foundation:log:api"),
             project(":foundation:math:api"),
             project(":foundation:network:api"),
-            project(":foundation:notification:api"),
-            project(":foundation:preferences:api"),
+            project(":foundation:notification:api:module"),
+            project(":foundation:preferences:api:module"),
             project(":foundation:result:api"),
             project(":foundation:strings:api"),
-            project(":foundation:worker:api"),
+            project(":foundation:worker:api:module"),
     )
     testImplementation(
             libs.bundles.test,

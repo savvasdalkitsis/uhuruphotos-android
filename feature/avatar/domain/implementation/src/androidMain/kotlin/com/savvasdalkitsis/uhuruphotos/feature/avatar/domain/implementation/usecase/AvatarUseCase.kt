@@ -29,17 +29,12 @@ import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.model.User
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.WelcomeUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.flow
-import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.map
-import se.ansman.dagger.auto.AutoBind
-import javax.inject.Inject
 
-@AutoBind
-@ActivityRetainedScoped
-class AvatarUseCase @Inject constructor(
+class AvatarUseCase(
     private val userUseCase: UserUseCase,
     private val serverUseCase: ServerUseCase,
     private val jobsUseCase: JobsUseCase,

@@ -19,13 +19,9 @@ import android.content.Context
 import android.content.pm.PackageManager.PackageInfoFlags
 import android.os.Build
 import com.savvasdalkitsis.uhuruphotos.foundation.system.api.usecase.ApplicationUseCase
-import dagger.hilt.android.qualifiers.ApplicationContext
-import se.ansman.dagger.auto.AutoBind
-import javax.inject.Inject
 
-@AutoBind
-class ApplicationUseCase @Inject constructor(
-    @ApplicationContext private val context: Context,
+class ApplicationUseCase(
+    context: Context,
 ) : ApplicationUseCase {
     private val pm = context.packageManager
     private val packageName = context.packageName

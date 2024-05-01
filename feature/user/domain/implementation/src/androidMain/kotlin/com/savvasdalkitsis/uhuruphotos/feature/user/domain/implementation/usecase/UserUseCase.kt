@@ -34,11 +34,8 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
-import se.ansman.dagger.auto.AutoBind
-import javax.inject.Inject
 
-@AutoBind
-internal class UserUseCase @Inject constructor(
+class UserUseCase(
     private val userRepository: UserRepository,
     private val welcomeUseCase: WelcomeUseCase,
 ) : UserUseCase {

@@ -1,7 +1,6 @@
 plugins {
     id "android.library"
-    id "hilt"
-}
+    }
 
 android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.download.domain.implementation'
@@ -9,7 +8,7 @@ android {
 
 dependencies {
     implementation(
-            libs.kotlinx.coroutines,
+            libs.kotlinx.coroutines.android,
             libs.sqldelight.coroutines,
             project(":feature:auth:domain:api"),
             project(":feature:db:domain:api"),
@@ -17,7 +16,9 @@ dependencies {
             project(":feature:media:common:domain:api"),
             project(":feature:media:local:domain:api"),
             project(":feature:media:remote:domain:api"),
+            project(":foundation:android:api:module"),
             project(":foundation:initializer:api"),
+            project(":foundation:inject:api"),
             project(":foundation:log:api"),
     )
 }

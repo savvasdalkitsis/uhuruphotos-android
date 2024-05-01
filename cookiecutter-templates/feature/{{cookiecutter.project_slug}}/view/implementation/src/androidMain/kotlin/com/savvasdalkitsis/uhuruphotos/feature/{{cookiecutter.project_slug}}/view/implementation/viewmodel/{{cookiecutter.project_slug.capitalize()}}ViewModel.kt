@@ -21,11 +21,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.{{cookiecutter.project_slug}}.vie
 import com.savvasdalkitsis.uhuruphotos.feature.{{cookiecutter.project_slug}}.view.implementation.ui.state.{{cookiecutter.project_slug.capitalize()}}State
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 
-@HiltViewModel
-internal class {{cookiecutter.project_slug.capitalize()}}ViewModel @Inject constructor(
+internal class {{cookiecutter.project_slug.capitalize()}}ViewModel(
     actionsContext: {{cookiecutter.project_slug.capitalize()}}ActionsContext,
 ) : NavigationViewModel<{{cookiecutter.project_slug.capitalize()}}State, {{cookiecutter.project_slug.capitalize()}}Action, {{cookiecutter.project_slug.capitalize()}}NavigationRoute>(
     ActionHandlerWithContext(actionsContext),

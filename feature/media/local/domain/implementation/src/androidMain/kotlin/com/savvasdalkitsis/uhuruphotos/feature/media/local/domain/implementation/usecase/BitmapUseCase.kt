@@ -20,13 +20,10 @@ import android.graphics.Bitmap
 import android.net.Uri
 import com.savvasdalkitsis.uhuruphotos.foundation.exif.api.usecase.ExifUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
-import dagger.hilt.android.qualifiers.ApplicationContext
 import java.io.ByteArrayOutputStream
 import java.io.IOException
-import javax.inject.Inject
 
-class BitmapUseCase @Inject constructor(
-    @ApplicationContext
+class BitmapUseCase(
     private val context: Context,
     private val exifUseCase: ExifUseCase,
 ) {

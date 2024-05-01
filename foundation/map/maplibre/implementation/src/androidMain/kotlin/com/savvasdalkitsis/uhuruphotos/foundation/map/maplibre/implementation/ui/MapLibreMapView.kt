@@ -28,7 +28,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.mapbox.mapboxsdk.camera.CameraPosition
 import com.mapbox.mapboxsdk.maps.MapView
 import com.mapbox.mapboxsdk.utils.BitmapUtils
-import com.savvasdalkitsis.uhuruphotos.foundation.activity.api.extensions.getActivity
+import com.savvasdalkitsis.uhuruphotos.foundation.android.api.extensions.getActivity
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapOptions
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewScope
 import com.savvasdalkitsis.uhuruphotos.foundation.map.maplibre.implementation.api.MapLibreApi

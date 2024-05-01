@@ -62,7 +62,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.portfolio.domain.api.usecase.Port
 import com.savvasdalkitsis.uhuruphotos.feature.search.domain.api.usecase.SearchUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.trash.domain.api.usecase.TrashUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
@@ -71,15 +70,13 @@ import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.usecase.UiUseCase
 import com.savvasdalktsis.uhuruphotos.feature.download.domain.api.usecase.DownloadUseCase
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.flow
 import org.joda.time.format.DateTimeFormatter
-import javax.inject.Inject
 import kotlin.random.Random
 
-internal class LightboxActionsContext @Inject constructor(
+internal class LightboxActionsContext(
     val mediaUseCase: MediaUseCase,
     val downloadUseCase: DownloadUseCase,
     val uploadUseCase: UploadUseCase,
@@ -95,9 +92,7 @@ internal class LightboxActionsContext @Inject constructor(
     val remoteMediaUseCase: RemoteMediaUseCase,
     val portfolioUseCase: PortfolioUseCase,
     val localMediaUseCase: LocalMediaUseCase,
-    @DateModule.DisplayingDateTimeFormat
     val displayingDateTimeFormat: DateTimeFormatter,
-    @ApplicationContext
     val context: Context,
     val uiUseCase: UiUseCase,
     val shareUseCase: ShareUseCase,

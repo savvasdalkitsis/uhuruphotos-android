@@ -22,11 +22,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemMetadata
 import kotlinx.coroutines.flow.Flow
-import se.ansman.dagger.auto.AutoBind
-import javax.inject.Inject
 
-@AutoBind
-class LightboxUseCase @Inject constructor(
+class LightboxUseCase(
     private val lightboxRepository: LightboxRepository,
 ) : LightboxUseCase {
 

@@ -17,22 +17,17 @@ package com.savvasdalkitsis.uhuruphotos.foundation.navigation.implementation
 
 import android.content.Intent
 import android.net.Uri
-import com.bumble.appyx.navmodel.backstack.BackStack
-import com.bumble.appyx.navmodel.backstack.operation.newRoot
-import com.bumble.appyx.navmodel.backstack.operation.pop
-import com.bumble.appyx.navmodel.backstack.operation.push
+import com.bumble.appyx.components.backstack.BackStack
+import com.bumble.appyx.components.backstack.operation.newRoot
+import com.bumble.appyx.components.backstack.operation.pop
+import com.bumble.appyx.components.backstack.operation.push
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.navigation.HomeNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.launchers.api.onMain
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
-import se.ansman.dagger.auto.AutoBind
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@AutoBind
-@Singleton
-class Navigator @Inject internal constructor(
+class Navigator(
     private val intentLauncher: IntentLauncher,
 ) : Navigator {
 
@@ -69,7 +64,7 @@ class Navigator @Inject internal constructor(
 
     override fun navigateUp() {
         onMain {
-            if (backStack.elements.value.size > 1) {
+            if (backStack.elements.value.all.size > 1) {
                 navigateBack()
             } else {
                 clearBackStack()

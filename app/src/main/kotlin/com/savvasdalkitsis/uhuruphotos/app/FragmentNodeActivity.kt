@@ -18,8 +18,8 @@ package com.savvasdalkitsis.uhuruphotos.app
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
-import com.bumble.appyx.core.integrationpoint.ActivityIntegrationPoint
-import com.bumble.appyx.core.integrationpoint.IntegrationPointProvider
+import com.bumble.appyx.navigation.integration.ActivityIntegrationPoint
+import com.bumble.appyx.navigation.integration.IntegrationPointProvider
 
 open class FragmentNodeActivity : FragmentActivity(), IntegrationPointProvider {
 

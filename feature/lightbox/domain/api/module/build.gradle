@@ -1,0 +1,19 @@
+plugins {
+    id "android.library"
+}
+
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.lightbox.domain.api.module'
+}
+
+dependencies {
+    api project(":feature:lightbox:domain:api")
+    implementation project(":feature:db:domain:api:module")
+    implementation project(":feature:lightbox:domain:implementation")
+    implementation project(":feature:media:remote:domain:api:module")
+    implementation project(":feature:media:local:domain:api:module")
+    implementation project(":feature:people:domain:api:module")
+    implementation project(":feature:user:domain:api:module")
+    implementation project(":foundation:date:api:module")
+    implementation project(":foundation:inject:api")
+}

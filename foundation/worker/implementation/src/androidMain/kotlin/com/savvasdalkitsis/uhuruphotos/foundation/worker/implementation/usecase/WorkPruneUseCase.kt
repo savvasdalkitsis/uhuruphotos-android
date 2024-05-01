@@ -17,11 +17,8 @@ package com.savvasdalkitsis.uhuruphotos.foundation.worker.implementation.usecase
 
 import androidx.work.WorkManager
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkPruneUseCase
-import se.ansman.dagger.auto.AutoBind
-import javax.inject.Inject
 
-@AutoBind
-class WorkPruneUseCase @Inject constructor(
+class WorkPruneUseCase(
     private val workManager: WorkManager,
 ) : WorkPruneUseCase {
     override fun pruneAllWork() {

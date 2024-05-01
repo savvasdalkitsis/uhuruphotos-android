@@ -1,0 +1,17 @@
+plugins {
+    id "android.library"
+}
+
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.avatar.domain.api.module'
+}
+
+dependencies {
+    api project(":feature:avatar:domain:api")
+    implementation project(":feature:auth:domain:api:module")
+    implementation project(":feature:avatar:domain:implementation")
+    implementation project(":feature:jobs:domain:api:module")
+    implementation project(":feature:user:domain:api:module")
+    implementation project(":feature:welcome:domain:api:module")
+    implementation project(":foundation:inject:api")
+}

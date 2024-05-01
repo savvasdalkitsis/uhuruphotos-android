@@ -23,9 +23,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.uploads.domain.api.usecase.Upload
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.WelcomeUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
-import javax.inject.Inject
 
-class AccountOverviewActionsContext @Inject constructor(
+class AccountOverviewActionsContext(
     val authenticationLoginUseCase: AuthenticationLoginUseCase,
     val avatarUseCase: AvatarUseCase,
     val jobsUseCase: JobsUseCase,

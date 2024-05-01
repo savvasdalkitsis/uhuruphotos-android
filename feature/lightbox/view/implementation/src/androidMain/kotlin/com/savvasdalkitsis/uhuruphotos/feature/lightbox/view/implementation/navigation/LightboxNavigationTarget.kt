@@ -21,14 +21,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.view
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode
-import se.ansman.dagger.auto.AutoInitialize
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@AutoInitialize
-@Singleton
-class LightboxNavigationTarget @Inject constructor(
-) : NavigationTarget<LightboxNavigationRoute> by ViewModelNavigationTarget(
+object LightboxNavigationTarget : NavigationTarget<LightboxNavigationRoute> by ViewModelNavigationTarget(
     LightboxViewModel::class,
     LightboxNavigationRoute::class,
     theme = { ThemeMode.DARK_MODE },

@@ -18,11 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.implementation
 import com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.implementation.service.model.UserAlbumServiceModel
 import de.jensklingenberg.ktorfit.http.GET
 import de.jensklingenberg.ktorfit.http.Path
-import se.ansman.dagger.auto.ktorfit.AutoProvideService
-import javax.inject.Singleton
 
-@AutoProvideService
-@Singleton
 interface UserAlbumService {
 
     @GET("api/albums/user/{id}/")

@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.viewmodel
 
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.api.navigation.AutoAlbumNavigationRoute
+import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.module.AutoAlbumModule
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.seam.AutoAlbumActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.state.AutoAlbumCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
@@ -25,12 +26,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.Load
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 
-@HiltViewModel
-internal class AutoAlbumViewModel @Inject constructor(
-    autoAlbumActionsContext: AutoAlbumActionsContext,
+internal class AutoAlbumViewModel(
+    autoAlbumActionsContext: AutoAlbumActionsContext = AutoAlbumModule.autoAlbumActionsContext,
 ) : NavigationViewModel<GalleryState, GalleryAction, AutoAlbumNavigationRoute>(
     ActionHandlerWithContext(autoAlbumActionsContext.galleryActionsContext),
     GalleryState(collageState = CollageState(collageDisplay = AutoAlbumCollageDisplay))

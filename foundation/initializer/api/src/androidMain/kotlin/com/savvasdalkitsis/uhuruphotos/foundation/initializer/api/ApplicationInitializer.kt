@@ -16,18 +16,21 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.foundation.initializer.api
 
 import android.app.Application
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class ApplicationInitializer @Inject constructor(
-    private val listeners: Set<@JvmSuppressWildcards ApplicationCreated>,
-) {
+class ApplicationInitializer(
+    private vararg val delegates : ApplicationCreated,
+) : ApplicationCreated {
+    private var app: Application? = null
 
-    fun onCreated(app: Application) {
+    override fun onAppCreated(app: Application) {
+        this.app = app
         forEach { it.onAppCreated(app) }
     }
 
+    operator fun plusAssign(listener: ApplicationCreated) {
+//        delegates.add(listener)
+    }
+
     private fun forEach(action: (ApplicationCreated) -> Unit) =
-        listeners.sortedBy { it.priority() }.forEach(action)
+        delegates.sortedBy { it.priority() }.forEach(action)
 }

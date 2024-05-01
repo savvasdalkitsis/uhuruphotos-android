@@ -16,18 +16,16 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.viewmodel
 
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.api.navigation.ServerNavigationRoute
+import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.module.ServerModule
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.Load
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.ServerAction
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.ui.ServerState
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 
-@HiltViewModel
-internal class ServerViewModel @Inject constructor(
-    serverActionsContext: ServerActionsContext,
+internal class ServerViewModel(
+    serverActionsContext: ServerActionsContext = ServerModule.serverActionsContext,
 ) : NavigationViewModel<ServerState, ServerAction, ServerNavigationRoute>(
     ActionHandlerWithContext(serverActionsContext),
     ServerState()

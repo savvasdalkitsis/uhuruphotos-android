@@ -30,7 +30,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 
 data class LoadCollage(val id: GalleryId) : GalleryAction() {
-    context(GalleryActionsContext) override fun handle(
+    context(com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContext) override fun handle(
         state: GalleryState
     ) : Flow<GalleryMutation> {
         galleryId = id

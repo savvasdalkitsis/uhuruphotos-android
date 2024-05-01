@@ -25,27 +25,30 @@ import androidx.compose.runtime.getValue
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import com.bugsnag.android.Bugsnag
+import com.savvasdalkitsis.uhuruphotos.app.implementation.Initialization
+import com.savvasdalkitsis.uhuruphotos.app.module.AppModule
 import com.savvasdalkitsis.uhuruphotos.app.navigation.AppNavigator
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.module.SettingsModule
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ActivityInitializer
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.Log
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window.LocalWindowSize
-import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
+import kotlin.LazyThreadSafetyMode.NONE
 
-@AndroidEntryPoint
 class AppActivity : FragmentNodeActivity() {
 
-    @Inject lateinit var activityInitializer: ActivityInitializer
-    @Inject lateinit var navigator: AppNavigator
-    @Inject lateinit var settingsUseCase: SettingsUseCase
+    private val navigator: AppNavigator by lazy(NONE) {
+        AppModule.appNavigator
+    }
+    private val settingsUseCase: SettingsUseCase by lazy(NONE) {
+        SettingsModule.settingsUseCase
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.enabled = true
         super.onCreate(savedInstanceState)
         installSplashScreen()
         Bugsnag.start(this)
-        activityInitializer.onCreated(this)
+        Initialization.activityInitializer.onActivityCreated(this)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
             val logging by settingsUseCase.observeLoggingEnabled().collectAsState(initial = false)
@@ -63,6 +66,6 @@ class AppActivity : FragmentNodeActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        activityInitializer.onDestroyed(this)
+        Initialization.activityInitializer.onActivityDestroyed(this)
     }
 }

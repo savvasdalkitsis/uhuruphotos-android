@@ -1,7 +1,6 @@
 plugins {
     id "android.library"
-    id "hilt"
-}
+    }
 
 android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.portfolio.domain.implementation'

@@ -29,9 +29,8 @@ import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simple
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
-import javax.inject.Inject
 
-class PeopleRepository @Inject constructor(
+class PeopleRepository(
     private val peopleQueries: PeopleQueries,
     private val peopleService: PeopleService,
 ) {

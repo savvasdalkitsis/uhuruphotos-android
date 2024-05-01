@@ -20,9 +20,8 @@ import okhttp3.HttpUrl
 import okhttp3.Interceptor
 import okhttp3.Response
 import java.io.IOException
-import javax.inject.Inject
 
-class DynamicDomainInterceptor @Inject constructor(
+class DynamicDomainInterceptor(
     private val serverUseCase: ServerUseCase,
 ) : Interceptor {
 

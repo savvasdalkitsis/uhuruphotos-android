@@ -1,6 +1,6 @@
 plugins {
     id "android.library"
-    id "hilt"
+    id "kotlin-parcelize"
     alias(libs.plugins.compose)
 }
 
@@ -8,14 +8,33 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.navigation.api'
 }
 
-dependencies {
+kotlin {
+    sourceSets {
+        androidMain {
+            dependencies {
+                api libs.appyx.backstack
+                api libs.appyx.navigation
+            }
+        }
+        commonMain {
+            dependencies {
+                api libs.appyx.backstack
+                api libs.appyx.navigation
+            }
+        }
+    }
+}
 
+dependencies {
     api(
             libs.androidx.compose.navigation,
-            libs.appyx,
             libs.bundles.resaca,
+            libs.kotlin.reflect,
+            libs.appyx.backstack,
+            libs.appyx.navigation,
             project(":foundation:log:api"),
             project(":foundation:seam:api"),
             project(":foundation:theme:api"),
+            project(':foundation:initializer:api')
     )
 }

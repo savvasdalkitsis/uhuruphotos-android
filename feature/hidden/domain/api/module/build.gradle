@@ -1,0 +1,14 @@
+plugins {
+    id "android.library"
+}
+
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.hidden.domain.api.module'
+}
+
+dependencies {
+    api project(":feature:hidden:domain:api")
+    implementation project(":feature:hidden:domain:implementation")
+    implementation project(":foundation:inject:api")
+    implementation project(":foundation:preferences:api:module")
+}

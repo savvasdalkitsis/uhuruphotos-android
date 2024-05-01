@@ -26,16 +26,11 @@ import com.savvasdalkitsis.uhuruphotos.feature.person.domain.api.usecase.PersonU
 import com.savvasdalkitsis.uhuruphotos.feature.person.domain.implementation.repository.PersonRepository
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.mapValues
-import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
-import se.ansman.dagger.auto.AutoBind
-import javax.inject.Inject
 
-@AutoBind
-@ActivityRetainedScoped
-class PersonUseCase @Inject constructor(
+class PersonUseCase(
     private val personRepository: PersonRepository,
     private val mediaUseCase: MediaUseCase,
     private val feedUseCase: FeedUseCase,

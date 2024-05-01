@@ -24,9 +24,8 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
 import java.nio.charset.Charset
-import javax.inject.Inject
 
-class JwtUseCase @Inject constructor() {
+class JwtUseCase() {
 
     fun String.expired(): Boolean = JWT(this).isExpired(0)
 

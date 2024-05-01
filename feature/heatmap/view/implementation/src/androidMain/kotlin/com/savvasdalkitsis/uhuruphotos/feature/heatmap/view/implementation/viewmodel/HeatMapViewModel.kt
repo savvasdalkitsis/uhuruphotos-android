@@ -16,18 +16,16 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.viewmodel
 
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.api.navigation.HeatMapNavigationRoute
+import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.module.HeatMapModule
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.actions.HeatMapAction
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.actions.Load
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state.HeatMapState
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 
-@HiltViewModel
-internal class HeatMapViewModel @Inject constructor(
-    heatMapActionsContext: HeatMapActionsContext,
+internal class HeatMapViewModel(
+    heatMapActionsContext: HeatMapActionsContext = HeatMapModule.heatMapActionsContext,
 ) : NavigationViewModel<HeatMapState, HeatMapAction, HeatMapNavigationRoute>(
     ActionHandlerWithContext(heatMapActionsContext),
     HeatMapState()

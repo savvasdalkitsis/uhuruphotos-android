@@ -22,9 +22,8 @@ import com.fredporciuncula.flow.preferences.Serializer
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import javax.inject.Inject
 
-class Preferences @Inject constructor(
+class Preferences(
     private val flowSharedPreferences: FlowSharedPreferences,
 ) : Preferences {
     override fun remove(key: String) {

@@ -42,10 +42,10 @@ import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.bumble.appyx.navmodel.backstack.BackStack
-import com.bumble.appyx.navmodel.backstack.activeElement
-import com.bumble.appyx.navmodel.backstack.operation.push
-import com.bumble.appyx.navmodel.backstack.operation.singleTop
+import com.bumble.appyx.components.backstack.BackStack
+import com.bumble.appyx.components.backstack.activeElement
+import com.bumble.appyx.components.backstack.operation.push
+import com.bumble.appyx.interactions.model.Element
 import com.commandiron.bubble_navigation_bar_compose.BubbleNavigationBar
 import com.commandiron.bubble_navigation_bar_compose.BubbleNavigationBarItem
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
@@ -57,6 +57,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.library.view.api.navigation.Libra
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.LocalBackStack
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.singleTop
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.CustomColors
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window.LocalWindowSize
@@ -175,7 +176,7 @@ private fun <R: NavigationRoute> BottomNavItem(
 ) {
     val backStack = LocalBackStack.current
     val activeRoute by remember {
-        derivedStateOf { backStack().activeElement }
+        derivedStateOf { backStack().model.activeElement }
     }
     with(rowScope) {
         BubbleNavigationBarItem(
@@ -204,7 +205,7 @@ private fun <R: NavigationRoute> NavRailNavItem(
 ) {
     val backStack = LocalBackStack.current
     val activeRoute by remember {
-        derivedStateOf { backStack().activeElement }
+        derivedStateOf { backStack().model.activeElement }
     }
     NavigationRailItem(
         selectedContentColor = LocalContentColor.current,
@@ -216,7 +217,7 @@ private fun <R: NavigationRoute> NavRailNavItem(
 }
 
 private fun <R: NavigationRoute> selectNavigationItem(
-    activeRoute: NavigationRoute?,
+    activeRoute: Element<NavigationRoute>,
     route: R,
     backStack: () -> BackStack<NavigationRoute>,
     onReselected: () -> Unit,

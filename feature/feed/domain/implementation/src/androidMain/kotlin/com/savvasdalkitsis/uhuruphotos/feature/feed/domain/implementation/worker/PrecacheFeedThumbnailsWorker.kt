@@ -16,40 +16,46 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.worker
 
 import android.content.Context
-import androidx.hilt.work.HiltWorker
 import androidx.work.WorkerParameters
 import com.github.michaelbull.result.onSuccess
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.module.AuthModule
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.isVideo
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.broadcast.CancelPrecacheWorkBroadcastReceiver
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.module.FeedModule
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.FeedRepository
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResult.CHANGED
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.module.RemoteMediaModule
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaPrecacher
-import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNotificationWorker
+import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.module.NotificationModule
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedInject
 import kotlinx.coroutines.delay
+import kotlin.LazyThreadSafetyMode.NONE
 
-@HiltWorker
-internal class PrecacheFeedThumbnailsWorker @AssistedInject constructor(
-    @Assisted context: Context,
-    @Assisted private val params: WorkerParameters,
-    private val feedRepository: FeedRepository,
-    private val remoteMediaPrecacher: RemoteMediaPrecacher,
-    private val serverUseCase: ServerUseCase,
-    foregroundInfoBuilder: ForegroundInfoBuilder,
+internal class PrecacheFeedThumbnailsWorker(
+    context: Context,
+    params: WorkerParameters,
 ) : ForegroundNotificationWorker<CancelPrecacheWorkBroadcastReceiver>(
     context,
     params,
-    foregroundInfoBuilder,
     notificationTitle = R.string.precaching_thumbnails,
     notificationId = NOTIFICATION_ID,
+    foregroundInfoBuilder = NotificationModule.foregroundInfoBuilder,
     cancelBroadcastReceiver = CancelPrecacheWorkBroadcastReceiver::class.java,
 ) {
+
+    private val feedRepository: FeedRepository by lazy(NONE) {
+        FeedModule.feedRepository
+    }
+    private val remoteMediaPrecacher: RemoteMediaPrecacher by lazy(NONE) {
+        RemoteMediaModule.remoteMediaPrecacher
+    }
+    private val serverUseCase: ServerUseCase by lazy(NONE) {
+        AuthModule.serverUseCase
+    }
 
     override suspend fun work(): Result {
         updateProgress(0)

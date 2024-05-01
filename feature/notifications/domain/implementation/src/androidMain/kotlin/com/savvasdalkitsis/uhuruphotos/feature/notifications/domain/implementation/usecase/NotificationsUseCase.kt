@@ -23,20 +23,13 @@ import androidx.core.app.NotificationManagerCompat
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.domain.api.usecase.NotificationsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.domain.implementation.initializer.NotificationActivityInitializer
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.domain.implementation.model.NotificationRequest.ACCEPTED
-import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.get
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
-import dagger.hilt.android.scopes.ActivityRetainedScoped
-import se.ansman.dagger.auto.AutoBind
-import javax.inject.Inject
 
-@AutoBind
-@ActivityRetainedScoped
-class NotificationsUseCase @Inject constructor(
+class NotificationsUseCase(
     private val notificationManager: NotificationManagerCompat,
     private val notificationActivityInitializer: NotificationActivityInitializer,
-    @PlainTextPreferences
     private val preferences: Preferences,
 ) : NotificationsUseCase {
 

@@ -13,7 +13,7 @@ dependencies {
             project(":foundation:result:api"),
     )
     implementation(
-            libs.kotlinx.coroutines,
+            libs.kotlinx.coroutines.android,
             project(":foundation:network:api")
     )
 }

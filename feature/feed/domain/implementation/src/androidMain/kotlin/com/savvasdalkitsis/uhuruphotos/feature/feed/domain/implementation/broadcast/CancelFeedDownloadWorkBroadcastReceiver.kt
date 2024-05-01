@@ -19,14 +19,14 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkScheduler
-import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.module.FeedModule
+import kotlin.LazyThreadSafetyMode.NONE
 
-@AndroidEntryPoint
 class CancelFeedDownloadWorkBroadcastReceiver : BroadcastReceiver() {
 
-    @Inject
-    lateinit var feedWorkScheduler: FeedWorkScheduler
+    private val feedWorkScheduler: FeedWorkScheduler by lazy(NONE) {
+        FeedModule.feedWorkScheduler
+    }
 
     override fun onReceive(context: Context?, intent: Intent?) {
         feedWorkScheduler.cancelFullFeedSync()

@@ -32,11 +32,8 @@ import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.VideoCacheUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkScheduleUseCase
 import kotlinx.coroutines.coroutineScope
-import se.ansman.dagger.auto.AutoBind
-import javax.inject.Inject
 
-@AutoBind
-class AuthenticationLoginUseCase @Inject constructor(
+class AuthenticationLoginUseCase(
     private val authenticationService: AuthenticationService,
     private val authenticationRepository: AuthenticationRepository,
     private val db: Database,

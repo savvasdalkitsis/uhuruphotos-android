@@ -1,0 +1,17 @@
+plugins {
+    id "android.library"
+}
+
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.module'
+}
+
+dependencies {
+    api project(":feature:jobs:domain:api")
+    implementation project(":feature:feed:domain:api:module")
+    implementation project(":feature:jobs:domain:implementation")
+    implementation project(":feature:media:local:domain:api:module")
+    implementation project(":feature:settings:domain:api:module:ui")
+    implementation project(":feature:welcome:domain:api:module")
+    implementation project(":foundation:inject:api")
+}

@@ -20,14 +20,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.notifications.view.implementation
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.view.implementation.viewmodel.NotificationsViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
-import se.ansman.dagger.auto.AutoInitialize
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@AutoInitialize
-@Singleton
-class NotificationsNavigationTarget @Inject constructor(
-) : NavigationTarget<NotificationsNavigationRoute> by ViewModelNavigationTarget(
+object NotificationsNavigationTarget : NavigationTarget<NotificationsNavigationRoute> by ViewModelNavigationTarget(
     NotificationsViewModel::class,
     NotificationsNavigationRoute::class,
     view = { state, action ->

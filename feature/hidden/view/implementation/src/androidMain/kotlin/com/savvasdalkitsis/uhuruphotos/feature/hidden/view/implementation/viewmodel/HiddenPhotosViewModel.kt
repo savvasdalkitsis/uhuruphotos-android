@@ -21,6 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.Gall
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.LoadCollage
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.api.HiddenPhotosNavigationRoute
+import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.module.HiddenModule
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.HiddenPhotosActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.HiddenPhotosAlbumPageActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.HiddenPhotosState
@@ -30,16 +31,13 @@ import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.Navig
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeActionHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 
 private typealias HiddenPhotosCompositeState = Pair<GalleryState, HiddenPhotosState>
 private typealias HiddenPhotosCompositeAction = Either<GalleryAction, HiddenPhotosAction>
 
-@HiltViewModel
-internal class HiddenPhotosViewModel @Inject constructor(
-    hiddenPhotosAlbumPageActionsContext: HiddenPhotosAlbumPageActionsContext,
-    hiddenPhotosActionsContext: HiddenPhotosActionsContext,
+internal class HiddenPhotosViewModel(
+    hiddenPhotosAlbumPageActionsContext: HiddenPhotosAlbumPageActionsContext = HiddenModule.hiddenPhotosAlbumPageActionsContext,
+    hiddenPhotosActionsContext: HiddenPhotosActionsContext = HiddenModule.hiddenPhotosActionsContext,
 ) : NavigationViewModel<HiddenPhotosCompositeState, HiddenPhotosCompositeAction, HiddenPhotosNavigationRoute>(
     CompositeActionHandler(
         ActionHandlerWithContext(hiddenPhotosAlbumPageActionsContext.galleryActionsContext),

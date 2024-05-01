@@ -63,23 +63,19 @@ import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simple
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simpleOk
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import org.joda.time.DateTime
-import se.ansman.dagger.auto.AutoBind
-import javax.inject.Inject
 
-@AutoBind
-class MediaUseCase @Inject constructor(
+class MediaUseCase(
     private val localMediaUseCase: LocalMediaUseCase,
     private val remoteMediaUseCase: RemoteMediaUseCase,
     private val userUseCase: UserUseCase,
     private val dateDisplayer: DateDisplayer,
     private val dateParser: DateParser,
-    @ApplicationContext private val context: Context,
+    private val context: Context,
 ) : MediaUseCase {
 
     override fun observeLocalMedia(): Flow<MediaItemsOnDevice> =

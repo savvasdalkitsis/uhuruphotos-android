@@ -18,31 +18,31 @@ package com.savvasdalkitsis.uhuruphotos.app.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
-import com.bumble.appyx.core.composable.Children
-import com.bumble.appyx.core.modality.BuildContext
-import com.bumble.appyx.core.node.Node
-import com.bumble.appyx.core.node.ParentNode
-import com.bumble.appyx.core.node.node
-import com.bumble.appyx.navmodel.backstack.BackStack
+import com.bumble.appyx.components.backstack.BackStack
+import com.bumble.appyx.navigation.composable.AppyxNavigationContainer
+import com.bumble.appyx.navigation.modality.NodeContext
+import com.bumble.appyx.navigation.node.Node
+import com.bumble.appyx.navigation.node.node
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.LocalBackStack
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetRegistry
 
 class NavigationTree(
-    buildContext: BuildContext,
+    nodeContext: NodeContext,
     private val backStack: BackStack<NavigationRoute>,
-) : ParentNode<NavigationRoute>(
-    navModel = backStack,
-    buildContext = buildContext,
+) : Node<NavigationRoute>(
+    nodeContext = nodeContext,
+    appyxComponent = backStack,
 ) {
-
     @Composable
-    override fun View(modifier: Modifier) {
-        Children(navModel = backStack, transitionHandler = rememberNavigationRouteAwareBackstackFader())
+    override fun Content(modifier: Modifier) {
+        AppyxNavigationContainer(
+            appyxComponent = backStack,
+        )
     }
 
-    override fun resolve(navTarget: NavigationRoute, buildContext: BuildContext): Node =
-        node(buildContext) {
+    override fun buildChildNode(navTarget: NavigationRoute, nodeContext: NodeContext): Node<*> =
+        node(nodeContext) {
             CompositionLocalProvider(
                 LocalBackStack provides { backStack }
             ) {

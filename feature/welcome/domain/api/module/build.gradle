@@ -1,0 +1,16 @@
+plugins {
+    id "android.library"
+}
+
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.welcome.domain.api.module'
+}
+
+dependencies {
+    api project(":feature:welcome:domain:api")
+    implementation project(":feature:auth:domain:api:module")
+    implementation project(":feature:media:local:domain:api:module")
+    implementation project(":feature:welcome:domain:implementation")
+    implementation project(":foundation:inject:api")
+    implementation project(":foundation:preferences:api:module")
+}

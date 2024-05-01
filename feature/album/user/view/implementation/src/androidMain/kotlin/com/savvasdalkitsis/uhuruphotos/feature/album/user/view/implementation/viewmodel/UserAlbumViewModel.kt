@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.album.user.view.implementation.viewmodel
 
 import com.savvasdalkitsis.uhuruphotos.feature.album.user.view.api.navigation.UserAlbumNavigationRoute
+import com.savvasdalkitsis.uhuruphotos.feature.album.user.view.implementation.module.UserAlbumModule
 import com.savvasdalkitsis.uhuruphotos.feature.album.user.view.implementation.seam.UserAlbumActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryId
@@ -24,12 +25,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.Load
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 
-@HiltViewModel
-internal class UserAlbumViewModel @Inject constructor(
-    userAlbumActionsContext: UserAlbumActionsContext,
+internal class UserAlbumViewModel(
+    userAlbumActionsContext: UserAlbumActionsContext = UserAlbumModule.userAlbumActionsContext,
 ) : NavigationViewModel<GalleryState, GalleryAction, UserAlbumNavigationRoute>(
     ActionHandlerWithContext(userAlbumActionsContext.galleryActionsContext),
     GalleryState(collageState = CollageState())

@@ -15,38 +15,30 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.app.module
 
-import android.content.ClipboardManager
-import android.content.ContentResolver
-import android.content.Context
-import androidx.core.app.NotificationManagerCompat
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.components.SingletonComponent
-import dev.shreyaspatil.permissionFlow.PermissionFlow
-import javax.inject.Singleton
+import com.savvasdalkitsis.uhuruphotos.app.navigation.AppNavigator
+import com.savvasdalkitsis.uhuruphotos.app.navigation.CompositionLocalProviders
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.module.AuthModule
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.module.ui.SettingsUiModule
+import com.savvasdalkitsis.uhuruphotos.foundation.image.api.module.ImageModule
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.module.MapModule
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.module.NavigationModule
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.module.UiModule
+import com.savvasdalkitsis.uhuruphotos.foundation.video.api.module.VideoModule
 
-@Module
-@InstallIn(SingletonComponent::class)
-class AppModule {
+object AppModule {
 
-    @Provides
-    fun clipboardManager(@ApplicationContext context: Context): ClipboardManager =
-        context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+    val appNavigator get() =
+        AppNavigator(NavigationModule.navigator, UiModule.uiUseCase, compositionLocalProviders)
 
-    @Provides
-    fun notificationManager(@ApplicationContext context: Context): NotificationManagerCompat =
-        NotificationManagerCompat.from(context)
-
-    @Provides
-    fun contentResolver(@ApplicationContext context: Context): ContentResolver =
-        context.contentResolver
-
-    @Provides
-    @Singleton
-    fun permissionFlow(@ApplicationContext context: Context): PermissionFlow {
-        PermissionFlow.init(context)
-        return PermissionFlow.getInstance()
-    }
+    private val compositionLocalProviders get() = CompositionLocalProviders(
+        navigator = NavigationModule.navigator,
+        exoplayerProvider = VideoModule.exoPlayerProvider,
+        settingsUIUseCase = SettingsUiModule.settingsUiUseCase,
+        fullImageLoader = ImageModule.fullImageLoader,
+        thumbnailImageLoader = ImageModule.thumbnailImageLoader,
+        thumbnailImageWithNetworkCacheSupportLoader = ImageModule.thumbnailImageWithNetworkCacheSupportLoader,
+        serverUseCase = AuthModule.serverUseCase,
+        mapViewFactoryProvider = MapModule.mapViewFactoryProvider,
+        mapViewStateFactory = MapModule.mapViewStateFactory,
+    )
 }

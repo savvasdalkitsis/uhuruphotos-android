@@ -20,14 +20,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.Sea
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.viewmodel.SearchViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
-import se.ansman.dagger.auto.AutoInitialize
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@AutoInitialize
-@Singleton
-class SearchNavigationTarget @Inject constructor(
-) : NavigationTarget<SearchNavigationRoute> by ViewModelNavigationTarget(
+object SearchNavigationTarget : NavigationTarget<SearchNavigationRoute> by ViewModelNavigationTarget(
     SearchViewModel::class,
     SearchNavigationRoute::class,
     view = { state, action ->

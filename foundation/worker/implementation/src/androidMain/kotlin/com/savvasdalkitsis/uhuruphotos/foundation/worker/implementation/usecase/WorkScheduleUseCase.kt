@@ -26,13 +26,10 @@ import androidx.work.OneTimeWorkRequest
 import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkScheduleUseCase
-import se.ansman.dagger.auto.AutoBind
 import java.util.concurrent.TimeUnit
-import javax.inject.Inject
 import kotlin.reflect.KClass
 
-@AutoBind
-class WorkScheduleUseCase @Inject constructor(
+class WorkScheduleUseCase(
     private val workManager: WorkManager,
 ) : WorkScheduleUseCase {
 

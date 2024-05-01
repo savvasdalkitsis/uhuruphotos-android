@@ -1,15 +1,13 @@
 plugins {
     id "android.library"
-}
+    }
 
 android {
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.notification.api'
 }
 
 dependencies {
-    api(
-            libs.androidx.work.hilt,
-    )
+    implementation(libs.androidx.core)
     implementation(libs.androidx.work)
     implementation(project(":foundation:log:api"))
     implementation(project(":foundation:math:api"))

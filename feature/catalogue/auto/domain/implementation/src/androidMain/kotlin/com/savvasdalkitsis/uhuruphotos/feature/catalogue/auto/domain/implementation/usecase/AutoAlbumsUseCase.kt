@@ -28,26 +28,20 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstance
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.model.RemoteUserModel
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.get
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.observe
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNotNull
-import se.ansman.dagger.auto.AutoBind
-import javax.inject.Inject
 
-@AutoBind
-class AutoAlbumsUseCase @Inject constructor(
+class AutoAlbumsUseCase(
     private val autoAlbumsRepository: AutoAlbumsRepository,
-    @PlainTextPreferences
     private val preferences: Preferences,
     private val userUseCase: UserUseCase,
-    @ApplicationContext private val context: Context,
+    private val context: Context,
 ) : AutoAlbumsUseCase {
 
     private val key = "autoAlbumsSorting"
@@ -63,7 +57,7 @@ class AutoAlbumsUseCase @Inject constructor(
         combine(
             autoAlbumsRepository.observeAutoAlbums(),
             observeAutoAlbumsSorting(),
-        ) { albums, sorting ->
+        ) { albums: List<AutoAlbums>, sorting: CatalogueSorting ->
             userUseCase.getRemoteUserOrRefresh().mapOr(null) { user ->
                 albums.toAutoAlbums(sorting, user)
             }

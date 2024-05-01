@@ -19,18 +19,13 @@ import com.savvasdalkitsis.uhuruphotos.feature.heatmap.domain.api.usecase.HeatMa
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.Locations.TRAFALGAR_SQUARE
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.Viewport
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.toLatLon
-import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.observe
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
-import se.ansman.dagger.auto.AutoBind
-import javax.inject.Inject
 
-@AutoBind
-class HeatMapUseCase @Inject constructor(
-    @PlainTextPreferences
+class HeatMapUseCase(
     private val preferences: Preferences,
 ) : HeatMapUseCase {
 

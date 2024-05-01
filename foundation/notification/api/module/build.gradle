@@ -1,0 +1,15 @@
+plugins {
+    id "android.library"
+}
+
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.notification.api.module'
+}
+
+dependencies {
+    api project(":foundation:notification:api")
+    implementation project(":foundation:android:api:module")
+    implementation project(":foundation:initializer:api")
+    implementation project(":foundation:inject:api")
+    implementation project(":foundation:notification:implementation")
+}

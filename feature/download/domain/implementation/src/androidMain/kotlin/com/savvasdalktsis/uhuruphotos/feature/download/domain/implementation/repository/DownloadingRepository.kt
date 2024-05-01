@@ -19,9 +19,8 @@ import app.cash.sqldelight.Query
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.download.DownloadingMediaItems
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.download.DownloadingMediaItemsQueries
-import javax.inject.Inject
 
-internal class DownloadingRepository @Inject constructor(
+class DownloadingRepository(
     private val downloadingMediaItemQueries: DownloadingMediaItemsQueries,
 ) {
 
@@ -49,6 +48,6 @@ internal class DownloadingRepository @Inject constructor(
 }
 
 @JvmInline
-internal value class MediaId(val id: String)
+value class MediaId(val id: String)
 @JvmInline
-internal value class DownloadId(val id: Long)
+value class DownloadId(val id: Long)

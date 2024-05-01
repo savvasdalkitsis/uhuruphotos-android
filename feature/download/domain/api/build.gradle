@@ -8,7 +8,7 @@ android {
 
 dependencies {
     api(
-            libs.kotlinx.coroutines,
+            libs.kotlinx.coroutines.android,
             project(":feature:media:common:domain:api"),
     )
     implementation(

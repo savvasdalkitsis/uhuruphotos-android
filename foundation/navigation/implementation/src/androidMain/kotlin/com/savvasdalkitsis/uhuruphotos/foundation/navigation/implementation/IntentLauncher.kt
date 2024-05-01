@@ -21,11 +21,9 @@ import android.content.Intent
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string.could_not_find_app_to_open
 import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
-import dagger.hilt.android.qualifiers.ApplicationContext
-import javax.inject.Inject
 
-internal class IntentLauncher @Inject constructor(
-    @ApplicationContext private val context: Context,
+class IntentLauncher(
+    private val context: Context,
     private val toasterUseCase: ToasterUseCase,
 ) {
 

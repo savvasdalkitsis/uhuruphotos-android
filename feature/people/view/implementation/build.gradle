@@ -1,6 +1,5 @@
 plugins {
     id "android.library"
-    id "hilt"
     alias(libs.plugins.compose)
 }
 
@@ -13,12 +12,12 @@ dependencies {
             libs.androidx.compose.foundation,
             libs.androidx.compose.material,
             libs.androidx.compose.material.windowsize,
-            libs.kotlinx.coroutines,
+            libs.kotlinx.coroutines.android,
             libs.sqldelight.coroutines,
-            project(":feature:auth:domain:api"),
+            project(":feature:auth:domain:api:module"),
             project(":feature:db:domain:api"),
             project(":feature:media:remote:domain:api"),
-            project(":feature:people:domain:api"),
+            project(":feature:people:domain:api:module"),
             project(":feature:people:view:api"),
             project(":feature:person:view:api"),
             project(":feature:settings:domain:api"),
@@ -26,10 +25,10 @@ dependencies {
             project(":foundation:icons:api"),
             project(":foundation:image:api"),
             project(":foundation:log:api"),
-            project(":foundation:navigation:api"),
+            project(":foundation:navigation:api:module"),
             project(":foundation:network:api"),
             project(":foundation:strings:api"),
-            project(":foundation:toaster:api"),
+            project(":foundation:toaster:api:module"),
             project(":foundation:ui:api"),
     )
 }

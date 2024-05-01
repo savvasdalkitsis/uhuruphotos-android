@@ -11,7 +11,7 @@ dependencies {
     api(
             libs.androidx.compose.navigation,
             libs.androidx.work,
-            libs.kotlinx.coroutines,
+            libs.kotlinx.coroutines.android,
             project(":feature:auth:view:api"),
             project(":feature:db:domain:api"),
             project(":feature:media:local:domain:api"),

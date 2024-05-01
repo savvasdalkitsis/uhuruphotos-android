@@ -40,12 +40,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import se.ansman.dagger.auto.AutoBind
 import java.io.IOException
-import javax.inject.Inject
 
-@AutoBind
-class AuthenticationUseCase @Inject constructor(
+class AuthenticationUseCase(
     private val authenticationService: AuthenticationService,
     private val jwtUseCase: JwtUseCase,
     private val authenticationRepository: AuthenticationRepository,

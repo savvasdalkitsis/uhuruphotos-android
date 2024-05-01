@@ -18,9 +18,8 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import javax.inject.Inject
 
-internal class SelectionList @Inject constructor() {
+internal class SelectionList() {
 
     private var selectedIds = MutableStateFlow(emptySet<String>())
 

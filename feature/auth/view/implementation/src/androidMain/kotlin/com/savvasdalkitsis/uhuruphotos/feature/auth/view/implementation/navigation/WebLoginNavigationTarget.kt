@@ -20,14 +20,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.ui.WebLo
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.viewmodel.WebLoginViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
-import se.ansman.dagger.auto.AutoInitialize
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@AutoInitialize
-@Singleton
-class WebLoginNavigationTarget @Inject constructor(
-) : NavigationTarget<WebLoginNavigationRoute> by ViewModelNavigationTarget(
+object WebLoginNavigationTarget : NavigationTarget<WebLoginNavigationRoute> by ViewModelNavigationTarget(
     WebLoginViewModel::class,
     WebLoginNavigationRoute::class,
     view = { state, _ ->

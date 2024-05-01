@@ -1,0 +1,13 @@
+plugins {
+    id "android.library"
+}
+
+android {
+    namespace "com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.module"
+}
+
+dependencies {
+    api(project(":foundation:toaster:api"))
+    implementation(project(":foundation:toaster:implementation"))
+    implementation(project(":foundation:android:api:module"))
+}

@@ -21,17 +21,12 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.memories.domain.api.model.MemoryCollection
 import com.savvasdalkitsis.uhuruphotos.feature.memories.domain.api.usecase.MemoriesUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateParser
-import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import org.joda.time.DateTime
-import se.ansman.dagger.auto.AutoBind
-import javax.inject.Inject
 
-@AutoBind
-@ActivityRetainedScoped
-class MemoriesUseCase @Inject constructor(
+class MemoriesUseCase(
     private val feedUseCase: FeedUseCase,
     private val dateParser: DateParser,
 ) : MemoriesUseCase {

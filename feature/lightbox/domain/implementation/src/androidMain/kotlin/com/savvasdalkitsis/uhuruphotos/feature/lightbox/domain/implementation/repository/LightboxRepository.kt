@@ -45,11 +45,10 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import javax.inject.Inject
 
 typealias DbLightboxDetails = com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.lightbox.LightboxDetails
 
-class LightboxRepository @Inject constructor(
+class LightboxRepository(
     private val remoteMediaUseCase: RemoteMediaUseCase,
     private val localMediaUseCase: LocalMediaUseCase,
     private val userUseCase: UserUseCase,

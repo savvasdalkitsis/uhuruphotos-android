@@ -1,0 +1,20 @@
+plugins {
+    id "jvm.library"
+}
+
+kotlin {
+    sourceSets {
+        jvmMain {
+            dependencies {
+                implementation libs.ksp
+                implementation project(':foundation:initializer:api')
+            }
+            kotlin.srcDir("src/main/kotlin")
+            resources.srcDir("src/main/resources")
+        }
+    }
+}
+
+dependencies {
+}
+

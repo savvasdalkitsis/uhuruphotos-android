@@ -1,7 +1,6 @@
 plugins {
     id "android.library"
-    id "hilt"
-}
+    }
 
 android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation'
@@ -10,21 +9,21 @@ android {
 dependencies {
     implementation(
             libs.androidx.work,
-            libs.androidx.work.hilt,
             libs.bundles.permissions,
             libs.palette,
             libs.sqldelight.coroutines,
-            project(":feature:db:domain:api"),
+            project(":feature:db:domain:api:module"),
             project(":feature:media:local:domain:api"),
-            project(":foundation:activity:api"),
-            project(":foundation:date:api"),
-            project(":foundation:exif:api"),
+            project(":foundation:android:api:module"),
+            project(":foundation:date:api:module"),
+            project(":foundation:exif:api:module"),
             project(":foundation:initializer:api"),
             project(":foundation:log:api"),
             project(":foundation:math:api"),
-            project(":foundation:notification:api"),
-            project(":foundation:preferences:api"),
+            project(":foundation:notification:api:module"),
+            project(":foundation:permissions:api:module"),
+            project(":foundation:preferences:api:module"),
             project(":foundation:strings:api"),
-            project(":foundation:worker:api"),
+            project(":foundation:worker:api:module"),
     )
 }

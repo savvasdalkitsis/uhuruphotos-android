@@ -22,22 +22,17 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.auth.Token
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.auth.TokenQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.auth.TokenType
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingleOrNull
-import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.EncryptedPreferences
-import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.get
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
 import kotlinx.coroutines.Dispatchers
-import javax.inject.Inject
 
 internal const val EXPIRED = "EXPIRED"
 
-class AuthenticationRepository @Inject constructor(
+class AuthenticationRepository(
     private val tokenQueries: TokenQueries,
     private val jwtUseCase: JwtUseCase,
-    @PlainTextPreferences
     private val preferences: Preferences,
-    @EncryptedPreferences
     private val encryptedPreferences: Preferences,
 ) {
     private val userKey = "userIdFromToken"

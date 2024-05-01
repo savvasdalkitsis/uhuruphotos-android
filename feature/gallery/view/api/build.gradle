@@ -1,6 +1,5 @@
 plugins {
     id "android.library"
-    id "hilt"
     alias(libs.plugins.compose)
 }
 
@@ -21,10 +20,10 @@ dependencies {
             project(":foundation:coroutines:api"),
             project(":foundation:icons:api"),
             project(":foundation:log:api"),
-            project(":foundation:navigation:api"),
-            project(":foundation:preferences:api"),
+            project(":foundation:navigation:api:module"),
+            project(":foundation:preferences:api:module"),
             project(":foundation:strings:api"),
-            project(":foundation:toaster:api"),
+            project(":foundation:toaster:api:module"),
             project(":foundation:ui:api"),
     )
 }

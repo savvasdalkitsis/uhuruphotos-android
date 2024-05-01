@@ -34,9 +34,8 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
-import javax.inject.Inject
 
-internal class HiddenPhotosAlbumPageActionsContext @Inject constructor(
+internal class HiddenPhotosAlbumPageActionsContext(
     mediaUseCase: MediaUseCase,
     hiddenMediaUseCase: HiddenMediaUseCase,
     settingsUseCase: SettingsUseCase,

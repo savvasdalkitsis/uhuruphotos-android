@@ -26,12 +26,8 @@ import androidx.work.ForegroundInfo
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import se.ansman.dagger.auto.AutoBind
-import javax.inject.Inject
 
-@AutoBind
-internal class ForegroundInfoBuilder @Inject constructor(
-) : ForegroundInfoBuilder {
+class ForegroundInfoBuilder : ForegroundInfoBuilder {
 
     override fun build(
         context: Context,

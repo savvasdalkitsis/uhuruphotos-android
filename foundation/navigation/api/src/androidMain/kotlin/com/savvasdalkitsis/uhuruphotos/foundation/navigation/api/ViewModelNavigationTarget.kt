@@ -15,7 +15,10 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.navigation.api
 
+import android.app.Application
 import androidx.compose.runtime.Composable
+import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
+import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.auto.AutoInitialize
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.AppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.LocalThemeMode
@@ -25,13 +28,13 @@ import kotlin.reflect.KClass
 @Suppress("UNCHECKED_CAST")
 class ViewModelNavigationTarget<S : Any, A : Any, VM : NavigationViewModel<S, A, R>, R: NavigationRoute>(
     private val viewModelClass: KClass<VM>,
-    route: KClass<R>,
+    private val route: KClass<R>,
     private val viewModelScopedToComposable: Boolean = true,
     private val theme: @Composable () -> ThemeMode = { LocalThemeMode.current },
     private val view: @Composable (S, (A) -> Unit) -> Unit,
-) : NavigationTarget<R> {
+) : NavigationTarget<R>, ApplicationCreated {
 
-    init {
+    override fun onAppCreated(app: Application) {
         NavigationTargetRegistry.register(route, this as NavigationTarget<NavigationRoute>)
     }
 

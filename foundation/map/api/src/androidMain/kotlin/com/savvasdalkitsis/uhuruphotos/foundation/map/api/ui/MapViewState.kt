@@ -39,6 +39,6 @@ fun rememberMapViewState(
     val mapProvider = LocalMapProvider.current
     val mapViewStateFactory = LocalMapViewStateFactory.current
     return remember {
-        mapViewStateFactory.create(mapProvider, initialPosition, initialZoom)
+        mapViewStateFactory.create(mapProvider, initialPosition, initialZoom)!!
     }
 }

@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider
 
-fun interface MapViewStateFactory {
+interface MapViewStateFactory {
 
     fun create(
         mapProvider: MapProvider,

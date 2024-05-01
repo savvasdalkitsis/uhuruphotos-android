@@ -16,18 +16,16 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.viewmodel
 
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.api.navigation.WebLoginNavigationRoute
+import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.module.WebLoginModule
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.seam.WebLoginActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.seam.actions.LoadPage
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.seam.actions.WebLoginAction
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.ui.WebLoginState
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 
-@HiltViewModel
-class WebLoginViewModel @Inject constructor(
-    webLoginActionsContext: WebLoginActionsContext,
+class WebLoginViewModel(
+    webLoginActionsContext: WebLoginActionsContext = WebLoginModule.webLoginActionsContext,
 ) : NavigationViewModel<WebLoginState, WebLoginAction, WebLoginNavigationRoute>(
     ActionHandlerWithContext(webLoginActionsContext),
     WebLoginState("")

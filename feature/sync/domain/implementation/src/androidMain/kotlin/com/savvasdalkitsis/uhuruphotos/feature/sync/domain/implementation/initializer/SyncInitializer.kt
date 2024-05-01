@@ -31,17 +31,15 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import se.ansman.dagger.auto.AutoBindIntoSet
-import javax.inject.Inject
 
 @OptIn(DelicateCoroutinesApi::class)
-@AutoBindIntoSet
-class SyncInitializer @Inject constructor(
+class SyncInitializer(
     private val syncUseCase: SyncUseCase,
     private val uploadUseCase: UploadUseCase,
     private val uploadsUseCase: UploadsUseCase,
     private val settingsUseCase: SettingsUseCase,
 ) : ApplicationCreated {
+
     override fun onAppCreated(app: Application) {
         GlobalScope.launch(Dispatchers.Default) {
             combine(

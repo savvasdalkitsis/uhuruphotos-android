@@ -22,9 +22,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxS
 import com.savvasdalkitsis.uhuruphotos.feature.local.domain.api.usecase.LocalAlbumUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
 import kotlinx.coroutines.flow.map
-import javax.inject.Inject
 
-internal class LocalAlbumPageActionsContext @Inject constructor(
+internal class LocalAlbumPageActionsContext(
     localAlbumUseCase: LocalAlbumUseCase,
     galleryActionsContextFactory: GalleryActionsContextFactory,
 ) {

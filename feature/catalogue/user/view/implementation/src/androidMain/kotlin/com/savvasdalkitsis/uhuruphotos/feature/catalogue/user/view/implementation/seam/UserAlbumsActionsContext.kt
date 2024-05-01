@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam
 
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.domain.api.usecase.UserAlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
@@ -23,11 +22,9 @@ import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUse
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
-import javax.inject.Inject
 
-class UserAlbumsActionsContext @Inject constructor(
+class UserAlbumsActionsContext(
     val userAlbumsUseCase: UserAlbumsUseCase,
-    val serverUseCase: ServerUseCase,
     val toaster: ToasterUseCase,
     val navigator: Navigator,
 ) {

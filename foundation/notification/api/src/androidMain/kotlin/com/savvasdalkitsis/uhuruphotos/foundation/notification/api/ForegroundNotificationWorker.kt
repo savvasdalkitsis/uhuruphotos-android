@@ -37,10 +37,10 @@ import kotlinx.coroutines.withContext
 abstract class ForegroundNotificationWorker<BR>(
     context: Context,
     params: WorkerParameters,
-    private val foregroundInfoBuilder: ForegroundInfoBuilder,
     @StringRes private val notificationTitle: Int,
     private val notificationId: Int,
     private val notificationChannelId: String = NotificationChannels.Jobs.id,
+    protected val foregroundInfoBuilder: ForegroundInfoBuilder,
     private val cancelBroadcastReceiver: Class<BR>? = null,
 ) : CoroutineWorker(context, params) where BR : BroadcastReceiver {
 

@@ -18,9 +18,8 @@ package com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
-import javax.inject.Inject
 
-internal class EditActionsContext @Inject constructor(
+internal class EditActionsContext(
     val toaster: ToasterUseCase,
     val localMediaUseCase: LocalMediaUseCase,
     val navigator: Navigator,

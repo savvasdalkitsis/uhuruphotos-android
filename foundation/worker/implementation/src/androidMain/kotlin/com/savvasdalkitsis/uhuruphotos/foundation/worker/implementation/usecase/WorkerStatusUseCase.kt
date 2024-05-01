@@ -29,11 +29,8 @@ import kotlinx.coroutines.flow.cancellable
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import se.ansman.dagger.auto.AutoBind
-import javax.inject.Inject
 
-@AutoBind
-class WorkerStatusUseCase @Inject constructor(
+class WorkerStatusUseCase(
     private val workManager: WorkManager,
 ) : WorkerStatusUseCase {
 

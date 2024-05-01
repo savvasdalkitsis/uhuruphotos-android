@@ -29,4 +29,5 @@ class CompositeMapViewStateFactory(
     ): MapViewState = factories.firstNotNullOf {
         it.create(mapProvider, initialPosition, initialZoom)
     }
+
 }

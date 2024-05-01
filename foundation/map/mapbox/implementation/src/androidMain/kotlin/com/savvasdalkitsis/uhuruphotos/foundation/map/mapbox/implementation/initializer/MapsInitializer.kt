@@ -21,12 +21,8 @@ import com.mapbox.common.MapboxOptions
 import com.mapbox.maps.loader.MapboxMapsInitializer
 import com.savvasdalkitsis.uhuruphotos.foundation.android.api.extensions.getMetadata
 import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
-import se.ansman.dagger.auto.AutoBindIntoSet
-import javax.inject.Inject
 
-@AutoBindIntoSet
-internal class MapsInitializer @Inject constructor(
-) : ApplicationCreated {
+class MapsInitializer : ApplicationCreated {
 
     override fun onAppCreated(app: Application) {
         AppInitializer.getInstance(app)

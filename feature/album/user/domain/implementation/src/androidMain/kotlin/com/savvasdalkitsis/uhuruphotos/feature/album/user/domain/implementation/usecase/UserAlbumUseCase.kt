@@ -25,11 +25,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.M
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
-import se.ansman.dagger.auto.AutoBind
-import javax.inject.Inject
 
-@AutoBind
-class UserAlbumUseCase @Inject constructor(
+class UserAlbumUseCase(
     private val userAlbumRepository: UserAlbumRepository,
     private val mediaUseCase: MediaUseCase,
 ) : UserAlbumUseCase {

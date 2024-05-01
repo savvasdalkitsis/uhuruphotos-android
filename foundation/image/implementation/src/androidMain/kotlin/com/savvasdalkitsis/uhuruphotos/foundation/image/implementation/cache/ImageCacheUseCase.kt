@@ -18,26 +18,17 @@ package com.savvasdalkitsis.uhuruphotos.foundation.image.implementation.cache
 import coil.disk.DiskCache
 import coil.memory.MemoryCache
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.cache.ImageCacheUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.FullImage
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.Location
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.Location.DISK
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.Location.MEMORY
-import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.ThumbnailImage
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.Type
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.Type.FULL
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.Type.THUMB
-import se.ansman.dagger.auto.AutoBind
-import javax.inject.Inject
 
-@AutoBind
-class ImageCacheUseCase @Inject constructor(
-    @FullImage
+class ImageCacheUseCase(
     private val fullMemoryCache: MemoryCache,
-    @FullImage
     private val fullDiskCache: DiskCache,
-    @ThumbnailImage
     private val thumbnailMemoryCache: MemoryCache,
-    @ThumbnailImage
     private val thumbnailDiskCache: DiskCache,
 ) : ImageCacheUseCase {
 

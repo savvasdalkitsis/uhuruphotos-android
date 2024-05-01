@@ -1,6 +1,5 @@
 plugins {
     id "android.library"
-    id "hilt"
     alias(libs.plugins.compose)
 }
 
@@ -11,16 +10,17 @@ android {
 dependencies {
     implementation(
             libs.accompanist.permissions,
-            libs.androidx.compose.hilt.navigation,
             libs.androidx.compose.material,
             libs.androidx.compose.ui.tooling.preview,
             libs.kotlinx.immutable,
             project(":feature:local:view:api"),
-            project(":feature:portfolio:domain:api"),
+            project(":feature:media:local:domain:api:module"),
+            project(":feature:portfolio:domain:api:module"),
             project(":feature:portfolio:view:api"),
             project(":feature:settings:domain:api"),
             project(":foundation:icons:api"),
-            project(":foundation:navigation:api"),
+            project(":foundation:initializer:api"),
+            project(":foundation:navigation:api:module"),
             project(":foundation:permissions:api"),
             project(":foundation:strings:api"),
             project(":foundation:ui:api"),

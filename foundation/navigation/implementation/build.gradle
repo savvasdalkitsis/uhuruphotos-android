@@ -1,6 +1,5 @@
 plugins {
     id "android.library"
-    id "hilt"
     alias(libs.plugins.compose)
     id 'kotlin-parcelize'
 }
@@ -13,7 +12,6 @@ dependencies {
 
     api(
             libs.accompanist.navigation,
-            libs.androidx.compose.hilt.navigation,
             libs.kotlin.reflect,
             project(":foundation:navigation:api"),
     )
@@ -22,7 +20,7 @@ dependencies {
             libs.androidx.compose.foundation,
             libs.gson,
             project(":feature:home:view:api"),
-            project(":foundation:activity:api"),
+            project(":foundation:android:api"),
             project(":foundation:launchers:api"),
             project(":foundation:log:api"),
             project(":foundation:strings:api"),

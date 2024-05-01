@@ -15,11 +15,13 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.viewmodel
 
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.module.AccountModule
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.AccountOverviewAction
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.Load
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.AccountOverviewState
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.navigation.FeedNavigationRoute
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.module.FeedModule
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.FeedAction
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.LoadFeed
@@ -28,16 +30,13 @@ import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.Navig
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeActionHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 
 typealias FeedCompositeState = Pair<FeedState, AccountOverviewState>
 typealias FeedCompositeAction = Either<FeedAction, AccountOverviewAction>
 
-@HiltViewModel
-internal class FeedViewModel @Inject constructor(
-    feedActionsContext: FeedActionsContext,
-    accountOverviewActionsContext: AccountOverviewActionsContext,
+internal class FeedViewModel(
+    feedActionsContext: FeedActionsContext = FeedModule.feedActionsContext,
+    accountOverviewActionsContext: AccountOverviewActionsContext = AccountModule.accountOverviewActionsContext,
 ) : NavigationViewModel<FeedCompositeState, FeedCompositeAction, FeedNavigationRoute>(
     CompositeActionHandler(
         ActionHandlerWithContext(feedActionsContext),

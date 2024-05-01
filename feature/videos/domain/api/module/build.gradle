@@ -1,0 +1,14 @@
+plugins {
+    id "android.library"
+}
+
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.videos.domain.api.module'
+}
+
+dependencies {
+    api project(":feature:videos:domain:api")
+    implementation project(":feature:videos:domain:implementation")
+    implementation project(":foundation:inject:api")
+    implementation project(":foundation:preferences:api:module")
+}

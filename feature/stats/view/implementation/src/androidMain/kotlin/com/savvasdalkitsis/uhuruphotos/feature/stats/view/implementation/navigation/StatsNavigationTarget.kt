@@ -20,14 +20,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.ui.Stat
 import com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.viewmodel.StatsViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
-import se.ansman.dagger.auto.AutoInitialize
-import javax.inject.Inject
-import javax.inject.Singleton
+import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.auto.AutoInitialize
 
 @AutoInitialize
-@Singleton
-class StatsNavigationTarget @Inject constructor(
-) : NavigationTarget<StatsNavigationRoute> by ViewModelNavigationTarget(
+object StatsNavigationTarget : NavigationTarget<StatsNavigationRoute> by ViewModelNavigationTarget(
     StatsViewModel::class,
     StatsNavigationRoute::class,
     view = { state, _ ->

@@ -31,23 +31,19 @@ import com.savvasdalkitsis.uhuruphotos.foundation.log.api.Log
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.logError
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.usecase.FeedbackUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.NotificationChannels
-import dagger.hilt.android.qualifiers.ApplicationContext
-import se.ansman.dagger.auto.AutoBindIntoSet
-import javax.inject.Inject
 
-@AutoBindIntoSet
-internal class LogInitializer @Inject constructor(
-    private val trees: Set<@JvmSuppressWildcards ILumberjackLogger>,
-    @ApplicationContext private val context: Context,
+class LogInitializer(
+    private val fileLogger: ILumberjackLogger,
+    private val consoleLogger: ILumberjackLogger,
+    private val context: Context,
     private val fileLoggerSetup: FileLoggerSetup,
     private val settingsUseCase: SettingsUseCase,
 ) : ApplicationCreated {
 
     override fun onAppCreated(app: Application) {
         L.init(LumberjackLogger)
-        for (tree in trees) {
-            L.plant(tree)
-        }
+        L.plant(fileLogger)
+        L.plant(consoleLogger)
         Log.enabled = settingsUseCase.getLoggingEnabled()
         val default = Thread.getDefaultUncaughtExceptionHandler()
         Thread.setDefaultUncaughtExceptionHandler { t, e ->

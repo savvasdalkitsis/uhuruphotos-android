@@ -20,14 +20,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.undated.view.implementation.ui.Un
 import com.savvasdalkitsis.uhuruphotos.feature.undated.view.implementation.viewmodel.UndatedViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
-import se.ansman.dagger.auto.AutoInitialize
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@AutoInitialize
-@Singleton
-class UndatedNavigationTarget @Inject constructor(
-) : NavigationTarget<UndatedNavigationRoute> by ViewModelNavigationTarget(
+object UndatedNavigationTarget : NavigationTarget<UndatedNavigationRoute> by ViewModelNavigationTarget(
     UndatedViewModel::class,
     UndatedNavigationRoute::class,
     view = { state, action ->

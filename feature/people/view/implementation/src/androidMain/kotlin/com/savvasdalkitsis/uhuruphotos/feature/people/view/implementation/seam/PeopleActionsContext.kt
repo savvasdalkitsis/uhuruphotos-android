@@ -24,9 +24,8 @@ import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import javax.inject.Inject
 
-class PeopleActionsContext @Inject constructor(
+class PeopleActionsContext(
     val peopleUseCase: PeopleUseCase,
     val serverUseCase: ServerUseCase,
     val toaster: ToasterUseCase,

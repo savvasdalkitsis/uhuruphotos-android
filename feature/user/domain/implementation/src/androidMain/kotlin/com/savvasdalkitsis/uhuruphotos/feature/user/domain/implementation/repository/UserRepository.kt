@@ -29,9 +29,8 @@ import com.savvasdalkitsis.uhuruphotos.foundation.log.api.andThenTry
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
-import javax.inject.Inject
 
-internal class UserRepository @Inject constructor(
+class UserRepository(
     private val userService: UserService,
     private val userQueries: UserQueries,
     private val authenticationUseCase: AuthenticationUseCase,

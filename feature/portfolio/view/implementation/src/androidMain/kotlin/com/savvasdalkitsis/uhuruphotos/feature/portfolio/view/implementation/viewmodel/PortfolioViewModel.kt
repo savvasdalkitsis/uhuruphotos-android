@@ -16,18 +16,16 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.viewmodel
 
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.api.navigation.PortfolioNavigationRoute
+import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.module.PortfolioModule
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.seam.PortfolioActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.seam.actions.Load
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.seam.actions.PortfolioAction
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui.state.PortfolioState
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 
-@HiltViewModel
-internal class PortfolioViewModel @Inject constructor(
-    actionsContext: PortfolioActionsContext,
+internal class PortfolioViewModel(
+    actionsContext: PortfolioActionsContext = PortfolioModule.portfolioActionsContext,
 ) : NavigationViewModel<PortfolioState, PortfolioAction, PortfolioNavigationRoute>(
     ActionHandlerWithContext(actionsContext),
     PortfolioState(),

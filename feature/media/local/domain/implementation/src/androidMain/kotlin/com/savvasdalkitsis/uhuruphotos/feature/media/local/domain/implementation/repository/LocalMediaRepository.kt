@@ -35,7 +35,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.download.Down
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.local.LocalMediaItemDetails
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.local.LocalMediaItemDetailsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaDeletionException
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.module.LocalMediaModule
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.LocalMediaService
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.model.LocalMediaStoreServiceItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.model.LocalMediaStoreServiceItem.Photo
@@ -44,12 +43,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation
 import com.savvasdalkitsis.uhuruphotos.foundation.exif.api.usecase.ExifUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
-import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.get
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simple
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -57,23 +54,23 @@ import org.joda.time.format.DateTimeFormatter
 import java.io.File
 import java.math.BigInteger
 import java.security.MessageDigest
-import javax.inject.Inject
 
-class LocalMediaRepository @Inject constructor(
+class LocalMediaRepository(
     private val database: Database,
-    private val localMediaItemDetailsQueries: LocalMediaItemDetailsQueries,
-    private val downloadingMediaItemsQueries: DownloadingMediaItemsQueries,
     private val localMediaService: LocalMediaService,
     private val localMediaFolderRepository: LocalMediaFolderRepository,
     private val contentResolver: ContentResolver,
-    @ApplicationContext private val context: Context,
+    private val context: Context,
     private val exifUseCase: ExifUseCase,
-    @LocalMediaModule.LocalMediaDateTimeFormat
     private val dateTimeFormat: DateTimeFormatter,
     private val bitmapUseCase: BitmapUseCase,
-    @PlainTextPreferences
     private val preferences: Preferences,
 ) {
+
+    private val localMediaItemDetailsQueries: LocalMediaItemDetailsQueries =
+        database.localMediaItemDetailsQueries
+    private val downloadingMediaItemsQueries: DownloadingMediaItemsQueries =
+        database.downloadingMediaItemsQueries
 
     private val keyLocalSyncedBefore = "keyLocalSyncedBefore"
 

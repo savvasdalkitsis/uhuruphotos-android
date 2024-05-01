@@ -18,15 +18,13 @@ package com.savvasdalkitsis.uhuruphotos.foundation.map.maplibre.implementation.u
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewFactory
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewFactoryProvider
-import se.ansman.dagger.auto.AutoBindIntoSet
-import javax.inject.Inject
 
-@AutoBindIntoSet
-class MapLibreMapViewFactoryProvider @Inject constructor(
+class MapLibreMapViewFactoryProvider(
     private val mapLibreMapViewFactory: MapLibreMapViewFactory,
 ) : MapViewFactoryProvider {
+
     override fun getFactory(mapProvider: MapProvider): MapViewFactory? = when(mapProvider) {
-        MapProvider.MapLibre ->  mapLibreMapViewFactory
+        MapProvider.MapLibre -> mapLibreMapViewFactory
         else -> null
     }
 }

@@ -16,18 +16,16 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.notifications.view.implementation.viewmodel
 
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.view.api.navigation.NotificationsNavigationRoute
+import com.savvasdalkitsis.uhuruphotos.feature.notifications.view.implementation.module.NotificationsModule
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.view.implementation.seam.NotificationsActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.view.implementation.seam.actions.Load
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.view.implementation.seam.actions.NotificationsAction
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.view.implementation.ui.state.NotificationsState
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 
-@HiltViewModel
-internal class NotificationsViewModel @Inject constructor(
-    actionsContext: NotificationsActionsContext,
+internal class NotificationsViewModel(
+    actionsContext: NotificationsActionsContext = NotificationsModule.notificationsActionsContext,
 ) : NavigationViewModel<NotificationsState, NotificationsAction, NotificationsNavigationRoute>(
     ActionHandlerWithContext(actionsContext),
     NotificationsState(),

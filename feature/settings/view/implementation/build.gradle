@@ -1,6 +1,5 @@
 plugins {
     id "android.library"
-    id "hilt"
     alias(libs.plugins.compose)
 }
 
@@ -19,26 +18,30 @@ dependencies {
             libs.androidx.work,
             libs.bundles.androidx.compose.animation,
             project(":feature:about:view:api"),
-            project(":feature:avatar:domain:api"),
+            project(":feature:avatar:domain:api:module"),
             project(":feature:avatar:view:api"),
-            project(":feature:feed:domain:api"),
-            project(":feature:jobs:domain:api"),
+            project(":feature:feed:domain:api:module"),
+            project(":feature:jobs:domain:api:module"),
             project(":feature:jobs:view:api"),
-            project(":feature:search:domain:api"),
-            project(":feature:settings:domain:api"),
+            project(":feature:media:local:domain:api:module"),
+            project(":feature:search:domain:api:module"),
+            project(":feature:settings:domain:api:module"),
+            project(":feature:settings:domain:api:module:cache"),
+            project(":feature:settings:domain:api:module:ui"),
             project(":feature:settings:view:api"),
-            project(":feature:uploads:domain:api"),
+            project(":feature:uploads:domain:api:module"),
             project(":feature:uploads:view:api"),
-            project(":feature:welcome:domain:api"),
-            project(":foundation:biometrics:api"),
+            project(":feature:welcome:domain:api:module"),
+            project(":foundation:biometrics:api:module"),
             project(":foundation:icons:api"),
             project(":foundation:initializer:api"),
-            project(":foundation:log:api"),
-            project(":foundation:navigation:api"),
-            project(":foundation:preferences:api"),
+            project(":foundation:inject:api"),
+            project(":foundation:log:api:module"),
+            project(":foundation:navigation:api:module"),
+            project(":foundation:preferences:api:module"),
             project(":foundation:strings:api"),
-            project(":foundation:system:api"),
-            project(":foundation:toaster:api"),
+            project(":foundation:system:api:module"),
+            project(":foundation:toaster:api:module"),
             project(":foundation:ui:api"),
     )
     debugImplementation(

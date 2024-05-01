@@ -21,9 +21,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.Setti
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.WelcomeUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.usecase.BiometricsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
-import javax.inject.Inject
 
-internal class HomeActionsContext @Inject constructor(
+internal class HomeActionsContext(
     val authenticationUseCase: AuthenticationUseCase,
     val settingsUseCase: SettingsUseCase,
     val biometricsUseCase: BiometricsUseCase,

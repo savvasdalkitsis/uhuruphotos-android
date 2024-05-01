@@ -18,15 +18,10 @@ package com.savvasdalkitsis.uhuruphotos.foundation.video.implementation
 import androidx.annotation.OptIn
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.datasource.cache.SimpleCache
-import com.savvasdalkitsis.uhuruphotos.foundation.video.api.VideoCache
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.VideoCacheUseCase
-import se.ansman.dagger.auto.AutoBind
-import javax.inject.Inject
 
 @OptIn(UnstableApi::class)
-@AutoBind
-class VideoCacheUseCase @Inject constructor(
-    @VideoCache
+class VideoCacheUseCase(
     private val videoCache: SimpleCache,
 ): VideoCacheUseCase {
 
@@ -36,7 +31,7 @@ class VideoCacheUseCase @Inject constructor(
         }
     }
 
-    @OptIn(UnstableApi::class) override fun cacheSpace(): Int =
+    override fun cacheSpace(): Int =
         videoCache.cacheSpace.mb
 
     private val Number.mb: Int get() = toInt() / 1024 / 1024

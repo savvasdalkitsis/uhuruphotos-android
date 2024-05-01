@@ -1,6 +1,5 @@
 plugins {
     id "android.library"
-    id "hilt"
     alias(libs.plugins.compose)
 }
 
@@ -12,7 +11,6 @@ dependencies {
 
     implementation(
             libs.androidx.compose.foundation.layout,
-            libs.androidx.compose.hilt.navigation,
             libs.androidx.compose.material,
             libs.androidx.compose.navigation,
             libs.androidx.compose.ui,
@@ -20,35 +18,38 @@ dependencies {
             libs.androidx.lifecycle,
             libs.bundles.permissions,
             libs.infobar,
+            project(":feature:auth:domain:api:module"),
             project(":feature:account:view:api"),
-            project(":feature:avatar:domain:api"),
+            project(":feature:avatar:domain:api:module"),
             project(":feature:avatar:view:api"),
-            project(":feature:battery:domain:api"),
+            project(":feature:battery:domain:api:module"),
             project(":feature:collage:view:api"),
-            project(":feature:download:domain:api"),
-            project(":feature:feed:domain:api"),
+            project(":feature:download:domain:api:module"),
+            project(":feature:feed:domain:api:module"),
             project(":feature:feed:view:api"),
+            project(":feature:jobs:domain:api:module"),
             project(":feature:home:view:api"),
             project(":feature:lightbox:view:api"),
-            project(":feature:media:common:domain:api"),
+            project(":feature:media:common:domain:api:module"),
             project(":feature:media:common:view:api"),
+            project(":feature:media:local:domain:api:module"),
             project(":feature:media:local:view:api"),
-            project(":feature:memories:domain:api"),
+            project(":feature:memories:domain:api:module"),
             project(":feature:server:view:api"),
-            project(":feature:settings:domain:api"),
-            project(":feature:sync:domain:api"),
-            project(":feature:upload:domain:api"),
-            project(":feature:welcome:domain:api"),
+            project(":feature:settings:domain:api:module:ui"),
+            project(":feature:sync:domain:api:module"),
+            project(":feature:upload:domain:api:module"),
+            project(":feature:welcome:domain:api:module"),
             project(":foundation:compose:api"),
             project(":foundation:icons:api"),
             project(":foundation:log:api"),
-            project(":foundation:navigation:api"),
+            project(":foundation:navigation:api:module"),
             project(":foundation:preferences:api"),
             project(":foundation:seam:api"),
-            project(":foundation:share:api"),
+            project(":foundation:share:api:module"),
             project(":foundation:strings:api"),
-            project(":foundation:toaster:api"),
-            project(":foundation:ui:api"),
+            project(":foundation:toaster:api:module"),
+            project(":foundation:ui:api:module"),
     )
     debugImplementation(
             libs.androidx.compose.ui.tooling,

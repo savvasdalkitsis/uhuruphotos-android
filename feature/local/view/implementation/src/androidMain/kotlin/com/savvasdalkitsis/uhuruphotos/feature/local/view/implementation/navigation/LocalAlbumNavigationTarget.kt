@@ -20,14 +20,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.ui.Loca
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.viewmodel.LocalAlbumViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
-import se.ansman.dagger.auto.AutoInitialize
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@AutoInitialize
-@Singleton
-class LocalAlbumNavigationTarget @Inject constructor(
-) : NavigationTarget<LocalAlbumNavigationRoute> by ViewModelNavigationTarget(
+object LocalAlbumNavigationTarget : NavigationTarget<LocalAlbumNavigationRoute> by ViewModelNavigationTarget(
     LocalAlbumViewModel::class,
     LocalAlbumNavigationRoute::class,
     view = { state, action ->

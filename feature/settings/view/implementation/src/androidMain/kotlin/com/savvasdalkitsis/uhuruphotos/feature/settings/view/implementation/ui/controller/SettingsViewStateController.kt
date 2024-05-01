@@ -18,16 +18,13 @@ package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.
 import androidx.annotation.StringRes
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.get
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.group.state.CollapsibleGroupState
-import javax.inject.Inject
 
-class SettingsViewStateController @Inject constructor(
-    @PlainTextPreferences
+class SettingsViewStateController(
     private val preferences: Preferences,
 ) {
     private val allGroups = mutableSetOf<CollapsibleGroupState>()

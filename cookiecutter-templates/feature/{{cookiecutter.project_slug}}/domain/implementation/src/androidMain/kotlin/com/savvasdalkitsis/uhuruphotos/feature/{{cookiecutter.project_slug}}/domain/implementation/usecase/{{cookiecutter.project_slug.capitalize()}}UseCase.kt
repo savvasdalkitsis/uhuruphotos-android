@@ -16,11 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.{{cookiecutter.project_slug}}.domain.implementation.usecase
 
 import com.savvasdalkitsis.uhuruphotos.feature.{{cookiecutter.project_slug}}.domain.api.usecase.{{cookiecutter.project_slug.capitalize()}}UseCase
-import se.ansman.dagger.auto.AutoBind
-import javax.inject.Inject
 
-@AutoBind
-class {{cookiecutter.project_slug.capitalize()}}UseCase @Inject constructor(
+class {{cookiecutter.project_slug.capitalize()}}UseCase(
 
 ) : {{cookiecutter.project_slug.capitalize()}}UseCase {
 

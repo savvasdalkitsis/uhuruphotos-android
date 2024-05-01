@@ -22,9 +22,8 @@ import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUse
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
-import javax.inject.Inject
 
-internal class AutoAlbumsActionsContext @Inject constructor(
+internal class AutoAlbumsActionsContext(
     val autoAlbumsUseCase: AutoAlbumsUseCase,
     val toaster: ToasterUseCase,
     val navigator: Navigator,

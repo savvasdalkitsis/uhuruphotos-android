@@ -1,6 +1,5 @@
 plugins {
     id "android.library"
-    id "hilt"
     alias(libs.plugins.compose)
 }
 
@@ -12,10 +11,10 @@ dependencies {
     implementation(
             libs.accompanist.webview,
             libs.androidx.compose.navigation,
-            project(":feature:auth:domain:api"),
+            project(":feature:auth:domain:api:module"),
             project(":feature:auth:view:api"),
             project(":feature:settings:domain:api"),
             project(":foundation:launchers:api"),
-            project(":foundation:navigation:api"),
+            project(":foundation:navigation:api:module"),
     )
 }

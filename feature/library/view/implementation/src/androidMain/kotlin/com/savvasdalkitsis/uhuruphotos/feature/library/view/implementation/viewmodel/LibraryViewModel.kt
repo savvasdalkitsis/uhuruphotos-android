@@ -15,10 +15,12 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.viewmodel
 
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.module.AccountModule
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.AccountOverviewAction
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.AccountOverviewState
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.api.navigation.LibraryNavigationRoute
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.module.LibraryModule
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.LibraryAction
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryState
@@ -26,18 +28,15 @@ import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.Navig
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeActionHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.Load as LoadAccount
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.Load as LoadLibrary
 
 internal typealias LibraryCompositeState = Pair<LibraryState, AccountOverviewState>
 internal typealias LibraryCompositeAction = Either<LibraryAction, AccountOverviewAction>
 
-@HiltViewModel
-internal class LibraryViewModel @Inject constructor(
-    libraryActionsContext: LibraryActionsContext,
-    accountOverviewActionsContext: AccountOverviewActionsContext,
+internal class LibraryViewModel(
+    libraryActionsContext: LibraryActionsContext = LibraryModule.libraryActionsContext,
+    accountOverviewActionsContext: AccountOverviewActionsContext = AccountModule.accountOverviewActionsContext,
 ) : NavigationViewModel<LibraryCompositeState, LibraryCompositeAction, LibraryNavigationRoute>(
     CompositeActionHandler(
         ActionHandlerWithContext(libraryActionsContext),

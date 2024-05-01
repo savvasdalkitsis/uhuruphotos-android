@@ -21,13 +21,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.c
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.viewmodel.SettingsViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
-import se.ansman.dagger.auto.AutoInitialize
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@AutoInitialize
-@Singleton
-class SettingsNavigationTarget @Inject constructor(
+class SettingsNavigationTarget(
     settingsViewStateController: SettingsViewStateController,
 ) : NavigationTarget<SettingsNavigationRoute> by ViewModelNavigationTarget(
     SettingsViewModel::class,

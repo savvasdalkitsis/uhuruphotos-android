@@ -16,18 +16,16 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.viewmodel
 
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.api.navigation.WelcomeNavigationRoute
+import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.module.WelcomeModule
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam.WelcomeActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam.actions.Load
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam.actions.WelcomeAction
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.ui.state.WelcomeState
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 
-@HiltViewModel
-internal class WelcomeViewModel @Inject constructor(
-    actionsContext: WelcomeActionsContext,
+internal class WelcomeViewModel(
+    actionsContext: WelcomeActionsContext = WelcomeModule.welcomeActionsContext,
 ) : NavigationViewModel<WelcomeState, WelcomeAction, WelcomeNavigationRoute>(
     ActionHandlerWithContext(actionsContext),
     WelcomeState(),

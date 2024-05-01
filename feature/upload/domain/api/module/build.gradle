@@ -1,0 +1,15 @@
+plugins {
+    id "android.library"
+    alias(libs.plugins.ktorfit)
+}
+
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.module'
+}
+
+dependencies {
+    api project(":feature:upload:domain:api")
+
+    implementation project(":feature:db:domain:api:module")
+    implementation project(":feature:upload:domain:implementation")
+}

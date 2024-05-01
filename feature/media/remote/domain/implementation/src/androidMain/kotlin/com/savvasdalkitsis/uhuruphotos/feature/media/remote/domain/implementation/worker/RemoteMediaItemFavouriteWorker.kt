@@ -16,28 +16,34 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.worker
 
 import android.content.Context
-import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.toDbModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.module.RemoteMediaModule
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.repository.RemoteMediaRepository
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.RemoteMediaService
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.model.RemoteMediaItemFavouriteRequestServiceModel
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.NotificationChannels
+import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.module.NotificationModule
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedInject
+import kotlin.LazyThreadSafetyMode.NONE
 
-@HiltWorker
-class RemoteMediaItemFavouriteWorker @AssistedInject constructor(
-    @Assisted context: Context,
-    @Assisted val params: WorkerParameters,
-    private val remoteMediaService: RemoteMediaService,
-    private val remoteMediaRepository: RemoteMediaRepository,
-    private val foregroundInfoBuilder: ForegroundInfoBuilder,
+class RemoteMediaItemFavouriteWorker(
+    context: Context,
+    private val params: WorkerParameters,
 ) : CoroutineWorker(context, params) {
+
+    private val remoteMediaService: RemoteMediaService by lazy(NONE) {
+        RemoteMediaModule.remoteMediaService
+    }
+    private val remoteMediaRepository: RemoteMediaRepository by lazy(NONE) {
+        RemoteMediaModule.remoteMediaRepository
+    }
+    private val foregroundInfoBuilder: ForegroundInfoBuilder by lazy(NONE) {
+        NotificationModule.foregroundInfoBuilder
+    }
 
     override suspend fun doWork(): Result =
         try {

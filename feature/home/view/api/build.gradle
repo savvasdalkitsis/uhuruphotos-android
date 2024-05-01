@@ -8,6 +8,20 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.home.view.api'
 }
 
+kotlin {
+    sourceSets {
+        androidMain {
+            dependencies {
+                implementation project(":foundation:navigation:api")
+            }
+        }
+        commonMain {
+            dependencies {
+                implementation project(":foundation:navigation:api")
+            }
+        }
+    }
+}
 
 dependencies {
     api(
@@ -19,7 +33,7 @@ dependencies {
             project(":feature:feed:domain:api"),
             project(":feature:feed:view:api"),
             project(":feature:library:view:api"),
-            project(":foundation:navigation:api"),
+            project(":foundation:navigation:api")
     )
     implementation(
             libs.androidx.compose.material,

@@ -19,9 +19,8 @@ import android.webkit.CookieManager
 import okhttp3.Cookie
 import okhttp3.CookieJar
 import okhttp3.HttpUrl
-import javax.inject.Inject
 
-class WebkitCookieManager @Inject constructor(
+class WebkitCookieManager(
     private val cookieManager: CookieManager,
 ) : CookieJar {
 

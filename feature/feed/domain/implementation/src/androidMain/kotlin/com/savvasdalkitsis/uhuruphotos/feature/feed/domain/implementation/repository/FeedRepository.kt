@@ -38,9 +38,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
-import javax.inject.Inject
 
-class FeedRepository @Inject constructor(
+class FeedRepository(
     private val database: Database,
     private val remoteMediaCollectionsQueries: RemoteMediaCollectionsQueries,
     private val remoteMediaUseCase: RemoteMediaUseCase,

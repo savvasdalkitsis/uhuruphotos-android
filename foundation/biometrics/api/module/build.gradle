@@ -1,0 +1,15 @@
+plugins {
+    id "android.library"
+}
+
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.module'
+}
+
+dependencies {
+    api project(":foundation:biometrics:api")
+    implementation libs.assure
+    implementation project(":foundation:android:api:module")
+    implementation project(":foundation:inject:api")
+    implementation project(":foundation:biometrics:implementation")
+}

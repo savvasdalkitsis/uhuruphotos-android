@@ -24,14 +24,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import se.ansman.dagger.auto.AutoBind
-import javax.inject.Inject
-import javax.inject.Singleton
 import kotlin.coroutines.CoroutineContext
 
-@AutoBind
-@Singleton
-class CookieMonitor @Inject constructor(
+class CookieMonitor(
     private val serverUseCase: ServerUseCase,
 ) : CookieMonitor {
 

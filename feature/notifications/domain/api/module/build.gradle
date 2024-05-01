@@ -1,0 +1,15 @@
+plugins {
+    id "android.library"
+}
+
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.notifications.domain.api.module'
+}
+
+dependencies {
+    api project(":feature:notifications:domain:api")
+    implementation project(":foundation:android:api:module")
+    implementation project(":foundation:inject:api")
+    implementation project(":foundation:preferences:api:module")
+    implementation project(":feature:notifications:domain:implementation")
+}

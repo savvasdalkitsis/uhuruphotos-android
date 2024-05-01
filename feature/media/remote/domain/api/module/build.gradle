@@ -1,0 +1,19 @@
+plugins {
+    id "android.library"
+    alias(libs.plugins.ktorfit)
+}
+
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.module'
+}
+
+dependencies {
+    api project(":feature:media:remote:domain:api")
+
+    implementation project(":feature:media:common:domain:implementation")
+    implementation project(":feature:media:local:domain:api:module")
+    implementation project(":feature:media:remote:domain:implementation")
+    implementation project(":foundation:android:api:module")
+    implementation project(":foundation:date:api:module")
+    implementation project(":foundation:image:api:module")
+}

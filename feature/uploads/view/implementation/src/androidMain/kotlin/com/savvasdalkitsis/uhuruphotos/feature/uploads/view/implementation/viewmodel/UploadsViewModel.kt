@@ -16,18 +16,16 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.uploads.view.implementation.viewmodel
 
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.view.api.navigation.UploadsNavigationRoute
+import com.savvasdalkitsis.uhuruphotos.feature.uploads.view.implementation.module.UploadsModule
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.view.implementation.seam.UploadsActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.view.implementation.seam.actions.Load
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.view.implementation.seam.actions.UploadsAction
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.view.implementation.ui.state.UploadsState
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 
-@HiltViewModel
-internal class UploadsViewModel @Inject constructor(
-    actionsContext: UploadsActionsContext,
+internal class UploadsViewModel(
+    actionsContext: UploadsActionsContext = UploadsModule.uploadsActionsContext,
 ) : NavigationViewModel<UploadsState, UploadsAction, UploadsNavigationRoute>(
     ActionHandlerWithContext(actionsContext),
     UploadsState(),

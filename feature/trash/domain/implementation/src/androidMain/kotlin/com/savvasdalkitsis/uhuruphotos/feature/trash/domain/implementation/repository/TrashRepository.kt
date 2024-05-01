@@ -30,9 +30,8 @@ import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
-import javax.inject.Inject
 
-class TrashRepository @Inject constructor(
+class TrashRepository(
     private val remoteMediaTrashQueries: RemoteMediaTrashQueries,
     private val remoteMediaUseCase: RemoteMediaUseCase,
     private val trashService: TrashService,

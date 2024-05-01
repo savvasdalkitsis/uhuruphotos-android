@@ -19,5 +19,5 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.compositionLocalOf
 
 val LocalAnimatedSharedTransitionFinished = compositionLocalOf<MutableState<Boolean>> {
-    TODO()
+    throw NotImplementedError()
 }

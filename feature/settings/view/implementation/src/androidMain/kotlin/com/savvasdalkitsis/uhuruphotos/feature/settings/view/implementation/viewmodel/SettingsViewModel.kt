@@ -16,18 +16,16 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.viewmodel
 
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.api.navigation.SettingsNavigationRoute
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.module.SettingsModule
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.LoadSettings
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 
-@HiltViewModel
-internal class SettingsViewModel @Inject constructor(
-    settingsActionsContext: SettingsActionsContext,
+internal class SettingsViewModel(
+    settingsActionsContext: SettingsActionsContext = SettingsModule.settingsActionsContext,
 ) : NavigationViewModel<SettingsState, SettingsAction, SettingsNavigationRoute>(
     ActionHandlerWithContext(settingsActionsContext),
     SettingsState()

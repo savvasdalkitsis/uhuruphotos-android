@@ -45,7 +45,6 @@ import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.andThenSwitchTo
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.mapValues
-import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.observe
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
@@ -58,19 +57,15 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.onEach
-import se.ansman.dagger.auto.AutoBind
 import java.io.Serializable
-import javax.inject.Inject
 
-@AutoBind
-internal class FeedUseCase @Inject constructor(
+class FeedUseCase(
     private val feedRepository: FeedRepository,
     private val feedCache: FeedCache,
     private val mediaUseCase: MediaUseCase,
     private val feedWorkScheduler: FeedWorkScheduler,
     private val downloadUseCase: DownloadUseCase,
     private val uploadUseCase: UploadUseCase,
-    @PlainTextPreferences
     private val preferences: Preferences,
     private val welcomeUseCase: WelcomeUseCase,
     private val portfolioUseCase: PortfolioUseCase,

@@ -22,35 +22,24 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.Gallery
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GallerySorting
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
-import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.observe
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlin.properties.Delegates
 
-class GalleryActionsContext @AssistedInject constructor(
-    @Assisted
+class GalleryActionsContext(
     val galleryRefresher: suspend (Int) -> SimpleResult,
-    @Assisted
     val galleryDetailsFlow: (galleryId: Int) -> Flow<GalleryDetails>,
-    @Assisted
     val shouldRefreshOnLoad: suspend (galleryId: Int) -> Boolean,
-    @Assisted
     val lightboxSequenceDataSource: (galleryId: Int) -> LightboxSequenceDataSource,
-    @Assisted
     val initialCollageDisplay: (galleryId: Int) -> CollageDisplay,
-    @Assisted
     val collageDisplayPersistence: suspend (galleryId: Int, PredefinedCollageDisplay) -> Unit,
-    @Assisted
     val shouldShowSortingAction: Boolean = true,
-    @PlainTextPreferences
     val preferences: Preferences,
     val toaster: ToasterUseCase,
     val navigator: Navigator,
@@ -58,7 +47,7 @@ class GalleryActionsContext @AssistedInject constructor(
 
     private val _loading = MutableSharedFlow<GalleryMutation>()
     val loading: Flow<GalleryMutation> get() = _loading
-    var galleryId by Delegates.notNull<GalleryId>()
+    var galleryId: GalleryId by Delegates.notNull<GalleryId>()
     private val sortingKey get() = "gallerySorting::${galleryId.serializationUniqueId}"
 
     fun observeSorting(): Flow<GallerySorting> =

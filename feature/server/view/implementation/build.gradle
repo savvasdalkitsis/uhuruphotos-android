@@ -1,6 +1,5 @@
 plugins {
     id "android.library"
-    id "hilt"
     alias(libs.plugins.compose)
     id 'kotlin-parcelize'
 }
@@ -12,21 +11,20 @@ android {
 dependencies {
 
     implementation(
-            libs.androidx.compose.hilt.navigation,
             libs.androidx.compose.material,
             libs.androidx.compose.ui.tooling.preview,
             libs.okhttp,
             libs.urlvalidator,
-            project(":feature:auth:domain:api"),
+            project(":feature:auth:domain:api:module"),
             project(":feature:db:domain:api"),
             project(":feature:server:view:api"),
-            project(":feature:settings:domain:api"),
+            project(":feature:settings:domain:api:module"),
             project(":foundation:http:api"),
             project(":foundation:icons:api"),
-            project(":foundation:log:api"),
-            project(":foundation:navigation:api"),
+            project(":foundation:log:api:module"),
+            project(":foundation:navigation:api:module"),
             project(":foundation:strings:api"),
-            project(":foundation:toaster:api"),
+            project(":foundation:toaster:api:module"),
             project(":foundation:ui:api"),
     )
     debugImplementation(

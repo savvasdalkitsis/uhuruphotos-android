@@ -1,0 +1,18 @@
+plugins {
+    id "android.library"
+}
+
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.share.api.module'
+}
+
+dependencies {
+    api project(":foundation:share:api")
+    implementation project(":feature:settings:domain:api:module")
+    implementation project(":foundation:android:api:module")
+    implementation project(":foundation:inject:api")
+    implementation project(":foundation:image:api:module")
+    implementation project(":foundation:image:api:module:cache")
+    implementation project(":foundation:navigation:api:module")
+    implementation project(":foundation:share:implementation")
+}

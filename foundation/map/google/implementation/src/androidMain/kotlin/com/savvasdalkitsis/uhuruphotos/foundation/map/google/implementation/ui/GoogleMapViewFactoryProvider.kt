@@ -18,11 +18,8 @@ package com.savvasdalkitsis.uhuruphotos.foundation.map.google.implementation.ui
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewFactory
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewFactoryProvider
-import se.ansman.dagger.auto.AutoBindIntoSet
-import javax.inject.Inject
 
-@AutoBindIntoSet
-class GoogleMapViewFactoryProvider @Inject constructor(
+class GoogleMapViewFactoryProvider(
     private val googleMapViewFactory: GoogleMapViewFactory,
 ): MapViewFactoryProvider {
 

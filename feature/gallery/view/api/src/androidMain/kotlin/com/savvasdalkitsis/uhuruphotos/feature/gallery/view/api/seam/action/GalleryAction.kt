@@ -19,4 +19,4 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActi
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Action
 
-sealed class GalleryAction : Action<GalleryState, GalleryActionsContext>
+sealed class GalleryAction : Action<GalleryState, com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContext>

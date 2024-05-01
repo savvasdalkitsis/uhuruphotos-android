@@ -29,26 +29,20 @@ import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.flow
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider.Google
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider.MapBox
-import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.get
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.observe
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CollageShape
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
-import se.ansman.dagger.auto.AutoBind
-import javax.inject.Inject
 
-@AutoBind
-internal class SettingsUIUseCase @Inject constructor(
-    @PlainTextPreferences
+class SettingsUIUseCase(
     private val preferences: Preferences,
     private val welcomeUseCase: WelcomeUseCase,
-    @ApplicationContext private val context: Context,
+    private val context: Context,
 ) : SettingsUIUseCase {
 
     private val themeMode = "themeMode"

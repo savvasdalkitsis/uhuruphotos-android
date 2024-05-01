@@ -20,14 +20,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.ui.Hid
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.viewmodel.HiddenPhotosViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
-import se.ansman.dagger.auto.AutoInitialize
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@AutoInitialize
-@Singleton
-class HiddenPhotosNavigationTarget @Inject constructor(
-) : NavigationTarget<HiddenPhotosNavigationRoute> by ViewModelNavigationTarget(
+object HiddenPhotosNavigationTarget : NavigationTarget<HiddenPhotosNavigationRoute> by ViewModelNavigationTarget(
     HiddenPhotosViewModel::class,
     HiddenPhotosNavigationRoute::class,
     view = { state, action ->

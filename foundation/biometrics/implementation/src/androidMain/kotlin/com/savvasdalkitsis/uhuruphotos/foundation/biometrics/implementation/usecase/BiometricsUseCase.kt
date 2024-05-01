@@ -21,7 +21,7 @@ import androidx.biometric.BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE
 import androidx.biometric.BiometricManager.BIOMETRIC_SUCCESS
 import com.afollestad.assure.Prompt
 import com.afollestad.assure.authenticate
-import com.savvasdalkitsis.uhuruphotos.foundation.activity.api.holder.CurrentActivityHolder
+import com.savvasdalkitsis.uhuruphotos.foundation.android.api.holder.CurrentActivityHolder
 import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.model.Biometrics
 import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.model.Biometrics.Enrolled
 import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.model.Biometrics.NoHardware
@@ -31,7 +31,6 @@ import com.savvasdalkitsis.uhuruphotos.foundation.launchers.api.awaitOnMain
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simple
-import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -39,14 +38,10 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.suspendCancellableCoroutine
-import se.ansman.dagger.auto.AutoBind
-import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 
-@AutoBind
-@ActivityRetainedScoped
-internal class BiometricsUseCase @Inject constructor(
+class BiometricsUseCase(
     private val biometricManager: BiometricManager,
     private val currentActivityHolder: CurrentActivityHolder,
 ) : BiometricsUseCase {

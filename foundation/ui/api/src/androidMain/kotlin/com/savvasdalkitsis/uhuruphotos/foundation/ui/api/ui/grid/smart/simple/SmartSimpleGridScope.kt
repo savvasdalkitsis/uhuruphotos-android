@@ -23,8 +23,7 @@ import androidx.compose.runtime.mutableStateOf
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.smart.SmartGridItemScope
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.smart.SmartGridScope
 
-class SmartSimpleGridScope(
-) : SmartGridScope {
+class SmartSimpleGridScope : SmartGridScope {
     val lazyGridScope: MutableState<LazyGridScope?> = mutableStateOf(null)
     private val itemScope = SmartSimpleGridItemScope()
     override fun item(

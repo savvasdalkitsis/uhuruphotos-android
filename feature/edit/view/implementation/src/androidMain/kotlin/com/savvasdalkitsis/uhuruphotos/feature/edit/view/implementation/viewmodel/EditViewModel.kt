@@ -17,18 +17,16 @@ package com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.viewmod
 
 import android.net.Uri
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.api.navigation.EditNavigationRoute
+import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.module.EditModule
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.seam.EditActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.seam.actions.EditAction
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.seam.actions.Load
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.ui.state.EditState
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 
-@HiltViewModel
-internal class EditViewModel @Inject constructor(
-    actionsContext: EditActionsContext,
+internal class EditViewModel(
+    actionsContext: EditActionsContext = EditModule.editActionsContext,
 ) : NavigationViewModel<EditState, EditAction, EditNavigationRoute>(
     ActionHandlerWithContext(actionsContext),
     EditState(),

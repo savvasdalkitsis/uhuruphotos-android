@@ -1,6 +1,5 @@
 plugins {
     id "android.library"
-    id "hilt"
     alias(libs.plugins.compose)
 }
 
@@ -10,18 +9,17 @@ android {
 
 dependencies {
     implementation(
-            libs.androidx.compose.hilt.navigation,
             libs.androidx.compose.material,
             project(":feature:collage:view:api"),
             project(":feature:lightbox:view:api"),
             project(":feature:media:common:view:api"),
-            project(":feature:search:domain:api"),
+            project(":feature:search:domain:api:module"),
             project(":feature:search:view:api"),
             project(":feature:settings:domain:api"),
             project(":foundation:compose:api"),
-            project(":foundation:navigation:api"),
+            project(":foundation:navigation:api:module"),
             project(":foundation:strings:api"),
-            project(":foundation:toaster:api"),
+            project(":foundation:toaster:api:module"),
             project(":foundation:ui:api"),
     )
 }

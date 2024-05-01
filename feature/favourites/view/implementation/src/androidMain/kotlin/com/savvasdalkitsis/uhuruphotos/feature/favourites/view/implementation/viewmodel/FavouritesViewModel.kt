@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.favourites.view.implementation.v
 
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
 import com.savvasdalkitsis.uhuruphotos.feature.favourites.view.api.navigation.FavouritesNavigationRoute
+import com.savvasdalkitsis.uhuruphotos.feature.favourites.view.implementation.module.FavouritesModule
 import com.savvasdalkitsis.uhuruphotos.feature.favourites.view.implementation.seam.FavouritesActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryId
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.GalleryAction
@@ -24,12 +25,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.Load
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 
-@HiltViewModel
-internal class FavouritesViewModel @Inject constructor(
-    favouritesActionsContext: FavouritesActionsContext,
+internal class FavouritesViewModel(
+    favouritesActionsContext: FavouritesActionsContext = FavouritesModule.favouritesActionsContext,
 ) : NavigationViewModel<GalleryState, GalleryAction, FavouritesNavigationRoute>(
     ActionHandlerWithContext(favouritesActionsContext.galleryActionsContext),
     GalleryState(collageState = CollageState())

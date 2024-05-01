@@ -35,12 +35,9 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.isActive
-import se.ansman.dagger.auto.AutoBind
-import javax.inject.Inject
 import kotlin.random.Random
 
-@AutoBind
-class SearchUseCase @Inject constructor(
+class SearchUseCase(
     private val searchRepository: SearchRepository,
     private val dateDisplayer: DateDisplayer,
     private val mediaUseCase: MediaUseCase,

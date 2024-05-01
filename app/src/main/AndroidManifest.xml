@@ -21,11 +21,11 @@
         tools:targetApi="s"
         tools:ignore="MissingApplicationIcon">
 
-        <provider
-            android:name="androidx.startup.InitializationProvider"
-            android:authorities="${applicationId}.androidx-startup"
-            tools:node="remove">
-        </provider>
+<!--        <provider-->
+<!--            android:name="androidx.startup.InitializationProvider"-->
+<!--            android:authorities="${applicationId}.androidx-startup"-->
+<!--            tools:node="remove">-->
+<!--        </provider>-->
 
         <activity
             android:name="com.savvasdalkitsis.uhuruphotos.app.AppActivity"

@@ -5,3 +5,9 @@ plugins {
 android {
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.android.api'
 }
+
+dependencies {
+    api libs.androidx.activity
+    api libs.androidx.fragment
+    api project(":foundation:result:api")
+}

@@ -33,9 +33,8 @@ import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.mapNotNull
-import javax.inject.Inject
 
-internal class AutoAlbumActionsContext @Inject constructor(
+internal class AutoAlbumActionsContext(
     autoAlbumUseCase: AutoAlbumUseCase,
     serverUseCase: ServerUseCase,
     dateDisplayer: DateDisplayer,

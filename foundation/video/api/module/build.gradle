@@ -1,0 +1,19 @@
+plugins {
+    id "android.library"
+}
+
+android {
+    namespace "com.savvasdalkitsis.uhuruphotos.foundation.video.api.module"
+}
+
+dependencies {
+    api project(":foundation:video:api")
+    implementation libs.okhttp
+    implementation libs.bundles.androidx.media3
+    implementation project(":feature:auth:domain:api:module")
+    implementation project(":feature:settings:domain:api:module")
+    implementation project(":foundation:android:api:module")
+    implementation project(":foundation:inject:api")
+    implementation project(":foundation:video:implementation")
+    implementation project(":foundation:video:api:module:cache")
+}

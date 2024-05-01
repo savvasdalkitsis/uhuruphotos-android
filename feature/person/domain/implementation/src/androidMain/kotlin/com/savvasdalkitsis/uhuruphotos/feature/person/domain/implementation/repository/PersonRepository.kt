@@ -30,9 +30,8 @@ import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.groupBy
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
-import javax.inject.Inject
 
-class PersonRepository @Inject constructor(
+class PersonRepository(
     private val personQueries: PersonQueries,
     private val personService: PersonService,
     private val remoteMediaCollectionsQueries: RemoteMediaCollectionsQueries,

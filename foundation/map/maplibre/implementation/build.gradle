@@ -1,6 +1,5 @@
 plugins {
     id "android.library"
-    id "hilt"
     alias(libs.plugins.compose)
 }
 
@@ -21,7 +20,7 @@ dependencies {
             libs.androidx.compose.material,
             libs.androidx.compose.ui,
             libs.androidx.startup,
-            project(":foundation:activity:api"),
+            project(":foundation:android:api"),
             project(":foundation:android:api"),
             project(":foundation:icons:api"),
             project(":foundation:initializer:api"),

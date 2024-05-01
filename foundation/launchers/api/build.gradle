@@ -4,11 +4,19 @@ plugins {
 
 kotlin {
     sourceSets {
+        androidMain {
+            dependencies {
+                api libs.kotlinx.coroutines.android
+            }
+        }
         commonMain {
             dependencies {
-                implementation(
-                        libs.kotlinx.coroutines.core,
-                )
+                api libs.kotlinx.coroutines.core
+            }
+        }
+        jvmMain {
+            dependencies {
+                api libs.kotlinx.coroutines.core
             }
         }
     }

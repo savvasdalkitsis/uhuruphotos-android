@@ -16,13 +16,12 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.service
 
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.AuthStatus.Unauthenticated
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.usecase.AuthenticationUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.AuthenticationUseCase
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.Response
-import javax.inject.Inject
 
-class TokenRefreshInterceptor @Inject constructor(
+class TokenRefreshInterceptor(
     private val authenticationUseCase: AuthenticationUseCase,
     private val authenticationHeaderInjector: AuthenticationHeaderInjector,
 ) : Interceptor {

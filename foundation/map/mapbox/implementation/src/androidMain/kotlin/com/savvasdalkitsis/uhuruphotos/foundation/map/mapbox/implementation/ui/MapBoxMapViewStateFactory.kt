@@ -19,12 +19,9 @@ import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewState
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewStateFactory
-import se.ansman.dagger.auto.AutoBindIntoSet
-import javax.inject.Inject
 
-@AutoBindIntoSet
-class MapBoxMapViewStateFactory @Inject constructor(
-): MapViewStateFactory {
+class MapBoxMapViewStateFactory : MapViewStateFactory {
+
     override fun create(
         mapProvider: MapProvider,
         initialPosition: LatLon,

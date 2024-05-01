@@ -1,0 +1,17 @@
+plugins {
+    id "android.library"
+}
+
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.log.api.module'
+}
+
+dependencies {
+    api libs.bundles.lumberjack
+    api project(":foundation:log:api")
+    implementation project(":feature:settings:domain:api:module")
+    implementation project(":feature:settings:domain:api:module:ui")
+    implementation project(":foundation:android:api:module")
+    implementation project(":foundation:inject:api")
+    implementation project(":foundation:log:implementation")
+}

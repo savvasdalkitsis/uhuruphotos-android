@@ -1,0 +1,8 @@
+plugins {
+    id "android.library"
+    id "kotlin-parcelize"
+}
+
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.parcel.api'
+}

@@ -1,0 +1,19 @@
+plugins {
+    id "android.library"
+}
+
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.sync.api.domain.module'
+}
+
+dependencies {
+    api project(":feature:sync:domain:api")
+    implementation project(":feature:feed:domain:api:module")
+    implementation project(":feature:settings:domain:api:module")
+    implementation project(":feature:welcome:domain:api:module")
+    implementation project(":feature:upload:domain:api:module")
+    implementation project(":feature:uploads:domain:api:module")
+    implementation project(":feature:sync:domain:implementation")
+    implementation project(":foundation:inject:api")
+    implementation project(":foundation:preferences:api:module")
+}

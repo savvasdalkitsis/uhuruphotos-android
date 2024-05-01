@@ -21,7 +21,7 @@ object NavigationTargetRegistry {
 
     val registry: Map<KClass<NavigationRoute>, NavigationTarget<NavigationRoute>> get() = targets
 
-    private val targets: MutableMap<KClass<NavigationRoute>, NavigationTarget< NavigationRoute>> =
+    private val targets: MutableMap<KClass<NavigationRoute>, NavigationTarget<NavigationRoute>> =
         mutableMapOf()
 
     @Suppress("UNCHECKED_CAST")

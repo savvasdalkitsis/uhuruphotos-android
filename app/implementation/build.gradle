@@ -8,8 +8,14 @@ android {
 
 dependencies {
     for (p in rootProject.subprojects) {
-        if (p.path.endsWith(":implementation") && p != project) {
+        if (p != project && (
+                p.path.endsWith(":implementation") ||
+                p.path.endsWith(":module")
+            )
+        ) {
             implementation p
         }
     }
+    implementation project(":foundation:inject:api")
+//    ksp project(":foundation:initializer:processor")
 }

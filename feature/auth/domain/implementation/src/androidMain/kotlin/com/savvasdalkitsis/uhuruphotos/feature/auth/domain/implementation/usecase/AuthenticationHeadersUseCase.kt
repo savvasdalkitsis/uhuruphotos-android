@@ -19,11 +19,8 @@ import android.webkit.CookieManager
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.AuthenticationHeadersUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.repository.AuthenticationRepository
 import kotlinx.coroutines.runBlocking
-import se.ansman.dagger.auto.AutoBind
-import javax.inject.Inject
 
-@AutoBind
-class AuthenticationHeadersUseCase @Inject constructor(
+class AuthenticationHeadersUseCase(
     private val authenticationRepository: AuthenticationRepository,
     private val cookieManager: CookieManager,
 ) : AuthenticationHeadersUseCase {

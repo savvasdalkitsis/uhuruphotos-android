@@ -34,12 +34,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.model.LocalMediaStoreServiceItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.model.LocalMediaVideoColumns
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.suspendCancellableCoroutine
-import javax.inject.Inject
 
-class LocalMediaService @Inject constructor(
-    @ApplicationContext
+class LocalMediaService(
     private val context: Context,
     private val contentResolver: ContentResolver,
 ) {

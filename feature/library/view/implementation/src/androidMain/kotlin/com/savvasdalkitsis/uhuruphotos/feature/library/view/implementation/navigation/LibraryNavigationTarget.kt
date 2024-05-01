@@ -20,14 +20,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.Li
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.viewmodel.LibraryViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
-import se.ansman.dagger.auto.AutoInitialize
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@AutoInitialize
-@Singleton
-class LibraryNavigationTarget @Inject constructor(
-) : NavigationTarget<LibraryNavigationRoute> by ViewModelNavigationTarget(
+object LibraryNavigationTarget : NavigationTarget<LibraryNavigationRoute> by ViewModelNavigationTarget(
     LibraryViewModel::class,
     LibraryNavigationRoute::class,
     view = { state, action ->

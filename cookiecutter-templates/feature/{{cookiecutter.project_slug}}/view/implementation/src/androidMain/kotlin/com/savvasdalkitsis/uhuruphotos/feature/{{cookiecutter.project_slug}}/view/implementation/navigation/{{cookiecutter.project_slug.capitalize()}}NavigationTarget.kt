@@ -20,14 +20,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.{{cookiecutter.project_slug}}.vie
 import com.savvasdalkitsis.uhuruphotos.feature.{{cookiecutter.project_slug}}.view.implementation.viewmodel.{{cookiecutter.project_slug.capitalize()}}ViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
-import se.ansman.dagger.auto.AutoInitialize
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@AutoInitialize
-@Singleton
-class {{cookiecutter.project_slug.capitalize()}}NavigationTarget @Inject constructor(
-) : NavigationTarget<{{cookiecutter.project_slug.capitalize()}}NavigationRoute> by ViewModelNavigationTarget(
+
+object {{cookiecutter.project_slug.capitalize()}}NavigationTarget : NavigationTarget<{{cookiecutter.project_slug.capitalize()}}NavigationRoute> by ViewModelNavigationTarget(
     {{cookiecutter.project_slug.capitalize()}}ViewModel::class,
     {{cookiecutter.project_slug.capitalize()}}NavigationRoute::class,
     view = { state, action ->

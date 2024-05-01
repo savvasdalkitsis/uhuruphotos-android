@@ -21,14 +21,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.viewmode
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode
-import se.ansman.dagger.auto.AutoInitialize
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@AutoInitialize
-@Singleton
-class EditNavigationTarget @Inject constructor(
-) : NavigationTarget<EditNavigationRoute> by ViewModelNavigationTarget(
+object EditNavigationTarget : NavigationTarget<EditNavigationRoute> by ViewModelNavigationTarget(
     EditViewModel::class,
     EditNavigationRoute::class,
     theme = { ThemeMode.DARK_MODE },

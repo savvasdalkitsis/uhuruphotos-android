@@ -29,18 +29,13 @@ import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.LocalCollageS
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.LocalCollageSpacingProvider
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUIUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.LocalAnimatedVideoThumbnails
-import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.FullImage
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.LocalFullImageLoader
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.LocalThumbnailImageLoader
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.LocalThumbnailWithNetworkCacheImageLoader
-import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.ThumbnailImage
-import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.ThumbnailImageWithNetworkCacheSupport
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LocalMapProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LocalMapViewFactoryProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LocalMapViewStateFactory
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider
-import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.CompositeMapViewFactoryProvider
-import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.CompositeMapViewStateFactory
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewFactoryProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewStateFactory
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.LocalNavigator
@@ -55,21 +50,17 @@ import com.savvasdalkitsis.uhuruphotos.foundation.video.api.ExoplayerProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.LocalExoPlayerProvider
 import com.smarttoolfactory.screenshot.ScreenshotBox
 import com.smarttoolfactory.screenshot.rememberScreenshotState
-import javax.inject.Inject
 
-class CompositionLocalProviders @Inject constructor(
+class CompositionLocalProviders(
     private val navigator: Navigator,
     private val exoplayerProvider: ExoplayerProvider,
     private val settingsUIUseCase: SettingsUIUseCase,
-    @FullImage
     private val fullImageLoader: ImageLoader,
-    @ThumbnailImage
     private val thumbnailImageLoader: ImageLoader,
-    @ThumbnailImageWithNetworkCacheSupport
     private val thumbnailImageWithNetworkCacheSupportLoader: ImageLoader,
     private val serverUseCase: ServerUseCase,
-    private val mapViewFactoryProviders: Set<@JvmSuppressWildcards MapViewFactoryProvider>,
-    private val mapViewStateFactories: Set<@JvmSuppressWildcards MapViewStateFactory>,
+    private val mapViewFactoryProvider: MapViewFactoryProvider,
+    private val mapViewStateFactory: MapViewStateFactory,
 ) {
     @Composable
     fun Provide(
@@ -102,8 +93,8 @@ class CompositionLocalProviders @Inject constructor(
             LocalCollageSpacingProvider provides collageSpacing,
             LocalCollageSpacingEdgesProvider provides collageSpacingEdges,
             LocalSharedElementTransition provides sharedElementTransition,
-            LocalMapViewStateFactory provides CompositeMapViewStateFactory(mapViewStateFactories),
-            LocalMapViewFactoryProvider provides CompositeMapViewFactoryProvider(mapViewFactoryProviders),
+            LocalMapViewStateFactory provides mapViewStateFactory,
+            LocalMapViewFactoryProvider provides mapViewFactoryProvider,
             LocalSystemUiController provides systemUiController,
         ) {
             ScreenshotBox(screenshotState = screenshotState, content = content)

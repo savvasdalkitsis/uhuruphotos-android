@@ -27,13 +27,9 @@ import com.savvasdalkitsis.uhuruphotos.foundation.system.api.usecase.BatteryOpti
 import com.savvasdalkitsis.uhuruphotos.foundation.system.api.usecase.BatteryOptimization.NotSupported
 import com.savvasdalkitsis.uhuruphotos.foundation.system.api.usecase.BatteryOptimization.Supported
 import com.savvasdalkitsis.uhuruphotos.foundation.system.api.usecase.SystemUseCase
-import dagger.hilt.android.qualifiers.ApplicationContext
-import se.ansman.dagger.auto.AutoBind
-import javax.inject.Inject
 
-@AutoBind
-class SystemUseCase @Inject constructor(
-    @ApplicationContext private val context: Context,
+class SystemUseCase(
+    private val context: Context,
 ) : SystemUseCase {
 
     override fun getAvailableSystemMemoryInMb(): Int =

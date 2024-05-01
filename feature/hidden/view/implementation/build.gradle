@@ -1,6 +1,5 @@
 plugins {
     id "android.library"
-    id "hilt"
     alias(libs.plugins.compose)
 }
 
@@ -10,21 +9,20 @@ android {
 
 dependencies {
     implementation(
-            libs.androidx.compose.hilt.navigation,
             project(":feature:collage:view:api"),
             project(":feature:db:domain:api"),
             project(":feature:gallery:view:api"),
-            project(":feature:hidden:domain:api"),
+            project(":feature:hidden:domain:api:module"),
             project(":feature:hidden:view:api"),
             project(":feature:lightbox:view:api"),
-            project(":feature:media:common:domain:api"),
+            project(":feature:media:common:domain:api:module"),
             project(":feature:media:common:view:api"),
-            project(":feature:settings:domain:api"),
+            project(":feature:settings:domain:api:module"),
             project(":feature:settings:view:api"),
-            project(":foundation:biometrics:api"),
+            project(":foundation:biometrics:api:module"),
             project(":foundation:date:api"),
             project(":foundation:icons:api"),
-            project(":foundation:navigation:api"),
+            project(":foundation:navigation:api:module"),
             project(":foundation:preferences:api"),
             project(":foundation:strings:api"),
     )

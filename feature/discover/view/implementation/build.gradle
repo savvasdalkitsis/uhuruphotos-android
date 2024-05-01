@@ -1,6 +1,5 @@
 plugins {
     id "android.library"
-    id "hilt"
     alias(libs.plugins.compose)
 }
 
@@ -11,46 +10,45 @@ android {
 dependencies {
 
     implementation(
-            libs.androidx.compose.hilt.navigation,
             libs.androidx.compose.material,
             libs.androidx.compose.material.windowsize,
             libs.androidx.compose.ui.tooling.preview,
             libs.androidx.lifecycle,
             libs.sqldelight.coroutines,
             project(":feature:account:view:api"),
-            project(":feature:auth:domain:api"),
+            project(":feature:auth:domain:api:module"),
             project(":feature:collage:view:api"),
             project(":feature:db:domain:api"),
             project(":feature:discover:view:api"),
-            project(":feature:feed:domain:api"),
-            project(":feature:heatmap:domain:api"),
+            project(":feature:feed:domain:api:module"),
+            project(":feature:heatmap:domain:api:module"),
             project(":feature:heatmap:view:api"),
             project(":feature:home:view:api"),
             project(":feature:lightbox:view:api"),
             project(":feature:media:common:view:api"),
             project(":feature:media:remote:domain:api"),
-            project(":feature:people:domain:api"),
+            project(":feature:people:domain:api:module"),
             project(":feature:people:view:api"),
             project(":feature:person:view:api"),
-            project(":feature:search:domain:api"),
+            project(":feature:search:domain:api:module"),
             project(":feature:search:view:api"),
             project(":feature:server:view:api"),
-            project(":feature:settings:domain:api"),
+            project(":feature:settings:domain:api:module:ui"),
             project(":feature:stats:view:api"),
             project(":feature:undated:view:api"),
             project(":feature:videos:view:api"),
-            project(":feature:welcome:domain:api"),
+            project(":feature:welcome:domain:api:module"),
             project(":foundation:compose:api"),
             project(":foundation:coroutines:api"),
             project(":foundation:date:api"),
             project(":foundation:icons:api"),
             project(":foundation:log:api"),
             project(":foundation:map:api"),
-            project(":foundation:navigation:api"),
-            project(":foundation:preferences:api"),
+            project(":foundation:navigation:api:module"),
+            project(":foundation:preferences:api:module"),
             project(":foundation:strings:api"),
-            project(":foundation:toaster:api"),
-            project(":foundation:ui:api"),
+            project(":foundation:toaster:api:module"),
+            project(":foundation:ui:api:module"),
     )
     debugImplementation(
             libs.androidx.compose.ui.tooling,

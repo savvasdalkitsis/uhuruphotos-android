@@ -1,6 +1,5 @@
 plugins {
     id "android.library"
-    id "hilt"
     alias(libs.plugins.compose)
 }
 
@@ -10,17 +9,17 @@ android {
 
 dependencies {
     implementation(
-            libs.androidx.compose.hilt.navigation,
             libs.androidx.compose.material,
             libs.androidx.compose.ui.tooling.preview,
             libs.heatmap,
             libs.jetlime,
             libs.timeline,
             libs.vico,
-            project(":feature:feed:domain:api"),
+            project(":feature:feed:domain:api:module"),
             project(":feature:settings:domain:api"),
-            project(":feature:stats:domain:api"),
+            project(":feature:stats:domain:api:module"),
             project(":feature:stats:view:api"),
+            project(":foundation:initializer:api"),
             project(":foundation:navigation:api"),
             project(":foundation:strings:api"),
             project(":foundation:ui:api"),

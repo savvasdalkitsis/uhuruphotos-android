@@ -17,7 +17,6 @@ package com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.useca
 
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.http.api.prefixedWithHttpsIfNeeded
-import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.get
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.observe
@@ -26,12 +25,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
-import se.ansman.dagger.auto.AutoBind
-import javax.inject.Inject
 
-@AutoBind
-class ServerUseCase @Inject constructor(
-    @PlainTextPreferences
+class ServerUseCase(
     private val preferences: Preferences,
 ) : ServerUseCase {
     private val key = "serverUrl"

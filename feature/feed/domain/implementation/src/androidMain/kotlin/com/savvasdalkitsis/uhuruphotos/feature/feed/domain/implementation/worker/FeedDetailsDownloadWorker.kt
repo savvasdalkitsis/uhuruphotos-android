@@ -16,37 +16,40 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.worker
 
 import android.content.Context
-import androidx.hilt.work.HiltWorker
 import androidx.work.WorkerParameters
 import com.github.michaelbull.result.coroutines.coroutineBinding
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.broadcast.CancelFeedDetailsDownloadWorkBroadcastReceiver
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.module.FeedModule
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResult.CHANGED
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.module.CommonMediaModule
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNotificationWorker
+import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.module.NotificationModule
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedInject
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
+import kotlin.LazyThreadSafetyMode.NONE
 
-@HiltWorker
-internal class FeedDetailsDownloadWorker @AssistedInject constructor(
-    @Assisted context: Context,
-    @Assisted private val params: WorkerParameters,
-    private val feedUseCase: FeedUseCase,
-    private val mediaUseCase: MediaUseCase,
-    foregroundInfoBuilder: ForegroundInfoBuilder,
+internal class FeedDetailsDownloadWorker(
+    context: Context,
+    private val params: WorkerParameters,
 ) : ForegroundNotificationWorker<CancelFeedDetailsDownloadWorkBroadcastReceiver>(
     context,
     params,
-    foregroundInfoBuilder,
     notificationTitle = R.string.refreshing_feed_details,
     notificationId = NOTIFICATION_ID,
+    foregroundInfoBuilder = NotificationModule.foregroundInfoBuilder,
     cancelBroadcastReceiver = CancelFeedDetailsDownloadWorkBroadcastReceiver::class.java,
 ) {
+
+    private val feedUseCase: FeedUseCase by lazy(NONE) {
+        FeedModule.feedUseCase
+    }
+    private val mediaUseCase: MediaUseCase by lazy(NONE) {
+        CommonMediaModule.mediaUseCase
+    }
 
     override suspend fun work(): Result {
         updateProgress(0)

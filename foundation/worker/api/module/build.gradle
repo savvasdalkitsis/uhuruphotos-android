@@ -1,0 +1,15 @@
+plugins {
+    id "android.library"
+}
+
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.worker.api.module'
+}
+
+dependencies {
+    api project(":foundation:worker:api")
+    implementation libs.androidx.work
+    implementation project(":foundation:android:api:module")
+    implementation project(":foundation:inject:api")
+    implementation project(":foundation:worker:implementation")
+}

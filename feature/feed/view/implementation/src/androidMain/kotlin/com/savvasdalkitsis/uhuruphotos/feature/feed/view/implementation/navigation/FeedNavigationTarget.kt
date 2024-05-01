@@ -20,14 +20,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.Feed
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.viewmodel.FeedViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
-import se.ansman.dagger.auto.AutoInitialize
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@AutoInitialize
-@Singleton
-class FeedNavigationTarget @Inject constructor(
-) : NavigationTarget<FeedNavigationRoute> by ViewModelNavigationTarget(
+object FeedNavigationTarget : NavigationTarget<FeedNavigationRoute> by ViewModelNavigationTarget(
     FeedViewModel::class,
     FeedNavigationRoute::class,
     viewModelScopedToComposable = false,

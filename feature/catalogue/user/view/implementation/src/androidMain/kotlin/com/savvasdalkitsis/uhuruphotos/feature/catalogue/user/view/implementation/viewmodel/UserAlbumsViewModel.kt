@@ -16,18 +16,16 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.viewmodel
 
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.navigation.UserAlbumsNavigationRoute
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.module.UserAlbumsModule
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsState
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.action.Load
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.action.UserAlbumsAction
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 
-@HiltViewModel
-class UserAlbumsViewModel @Inject constructor(
-    userAlbumsActionsContext: UserAlbumsActionsContext,
+class UserAlbumsViewModel(
+    userAlbumsActionsContext: UserAlbumsActionsContext = UserAlbumsModule.userAlbumsActionsContext,
 ) : NavigationViewModel<UserAlbumsState, UserAlbumsAction, UserAlbumsNavigationRoute>(
     ActionHandlerWithContext(userAlbumsActionsContext),
     UserAlbumsState()

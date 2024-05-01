@@ -15,58 +15,58 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.app.navigation
 
-import android.annotation.SuppressLint
-import androidx.compose.animation.core.Transition
-import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.SpringSpec
 import androidx.compose.animation.core.spring
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.composed
-import androidx.compose.ui.draw.alpha
-import com.bumble.appyx.core.navigation.transition.ModifierTransitionHandler
-import com.bumble.appyx.core.navigation.transition.TransitionDescriptor
-import com.bumble.appyx.core.navigation.transition.TransitionSpec
-import com.bumble.appyx.navmodel.backstack.BackStack
-import com.bumble.appyx.navmodel.backstack.operation.Pop
+import com.bumble.appyx.components.backstack.BackStackModel
+import com.bumble.appyx.components.backstack.ui.fader.MutableUiState
+import com.bumble.appyx.components.backstack.ui.fader.TargetUiState
+import com.bumble.appyx.components.backstack.ui.fader.toMutableUiState
+import com.bumble.appyx.interactions.ui.DefaultAnimationSpec
+import com.bumble.appyx.interactions.ui.context.UiContext
+import com.bumble.appyx.interactions.ui.property.impl.Alpha
+import com.bumble.appyx.interactions.ui.state.MatchedTargetUiState
+import com.bumble.appyx.transitionmodel.BaseVisualisation
+//import com.bumble.appyx.core.navigation.transition.ModifierTransitionHandler
+//import com.bumble.appyx.core.navigation.transition.TransitionDescriptor
+//import com.bumble.appyx.core.navigation.transition.TransitionSpec
+//import com.bumble.appyx.navmodel.backstack.BackStack
+//import com.bumble.appyx.navmodel.backstack.operation.Pop
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
 
-@Suppress("TransitionPropertiesLabel")
-class NavigationRouteAwareBackStackFader(
-    private val transitionSpec: TransitionSpec<BackStack.State, Float> = { spring() }
-) : ModifierTransitionHandler<NavigationRoute, BackStack.State>() {
+class NavigationRouteAwareBackStackFader<NavTarget : NavigationRoute>(
+    uiContext: UiContext,
+    defaultAnimationSpec: SpringSpec<Float> = DefaultAnimationSpec
+) : BaseVisualisation<NavTarget, BackStackModel.State<NavTarget>, TargetUiState, MutableUiState>(
+    uiContext = uiContext,
+    defaultAnimationSpec = defaultAnimationSpec,
+) {
+    private val visible = TargetUiState(
+        alpha = Alpha.Target(1f)
+    )
 
-    @SuppressLint("ModifierFactoryExtensionFunction")
-    override fun createModifier(
-        modifier: Modifier,
-        transition: Transition<BackStack.State>,
-        descriptor: TransitionDescriptor<NavigationRoute, BackStack.State>
-    ): Modifier = modifier.composed {
-        val animate = if (descriptor.operation is Pop<NavigationRoute>) {
-            descriptor.element.animatePopTransitionTo
-        } else {
-            descriptor.element.animateTransitionTo
+    private val visibleImmediately = TargetUiState(
+        alpha = Alpha.Target(1f, easing = { if (it == 0f) 0f else 1f })
+    )
+
+    private val hidden = TargetUiState(
+        alpha = Alpha.Target(0f)
+    )
+
+    override fun BackStackModel.State<NavTarget>.toUiTargets():
+            List<MatchedTargetUiState<NavTarget, TargetUiState>> =
+        listOf(
+            MatchedTargetUiState(active, if (
+                active.interactionTarget.animateTransitionTo &&
+                active.interactionTarget.animatePopTransitionTo
+            )
+                visible
+            else
+                visibleImmediately
+            )
+        ) + (created + stashed + destroyed).map {
+            MatchedTargetUiState(it, hidden)
         }
-        if (animate) {
-            val alpha = transition.animateFloat(
-                transitionSpec = transitionSpec,
-                targetValueByState = {
-                    when (it) {
-                        BackStack.State.ACTIVE -> 1f
-                        else -> 0f
-                    }
-                })
 
-            alpha(alpha.value)
-        } else {
-            this
-        }
-    }
-}
-
-@Composable
-fun rememberNavigationRouteAwareBackstackFader(
-    transitionSpec: TransitionSpec<BackStack.State, Float> = { spring() }
-): ModifierTransitionHandler<NavigationRoute, BackStack.State> = remember {
-    NavigationRouteAwareBackStackFader(transitionSpec = transitionSpec)
+    override fun mutableUiStateFor(uiContext: UiContext, targetUiState: TargetUiState): MutableUiState =
+        targetUiState.toMutableUiState(uiContext)
 }

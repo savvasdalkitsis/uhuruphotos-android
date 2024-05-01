@@ -19,31 +19,32 @@ import android.annotation.SuppressLint
 import android.app.Notification
 import android.content.BroadcastReceiver
 import android.content.Context
-import androidx.hilt.work.HiltWorker
 import androidx.work.WorkerParameters
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.module.LocalMediaModule
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNotificationWorker
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.NotificationChannels
+import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.module.NotificationModule
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedInject
 import kotlinx.coroutines.delay
+import kotlin.LazyThreadSafetyMode.NONE
 
-@HiltWorker
-internal class LocalMediaSyncWorker @AssistedInject constructor(
-    @Assisted private val context: Context,
-    @Assisted private val params: WorkerParameters,
-    private val localMediaUseCase: LocalMediaUseCase,
-    private val foregroundInfoBuilder: ForegroundInfoBuilder,
+internal class LocalMediaSyncWorker(
+    private val context: Context,
+    params: WorkerParameters,
 ) : ForegroundNotificationWorker<BroadcastReceiver>(
     context,
     params,
-    foregroundInfoBuilder,
     notificationTitle = string.scanning_local_media,
     notificationId = NOTIFICATION_ID,
+    foregroundInfoBuilder = NotificationModule.foregroundInfoBuilder,
 ) {
+
+    private val localMediaUseCase: LocalMediaUseCase by lazy(NONE) {
+        LocalMediaModule.localMediaUseCase
+    }
 
     override suspend fun work(): Result {
         log { "Starting local media sync" }

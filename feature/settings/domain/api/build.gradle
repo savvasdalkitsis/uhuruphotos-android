@@ -1,7 +1,6 @@
 plugins {
     id "android.library"
-    id "hilt"
-}
+    }
 
 android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api'
@@ -10,7 +9,7 @@ android {
 dependencies {
     api(
             libs.androidx.work,
-            libs.kotlinx.coroutines,
+            libs.kotlinx.coroutines.android,
             project(":feature:feed:view:api"),
             project(":foundation:map:api"),
             project(":foundation:ui:api"),

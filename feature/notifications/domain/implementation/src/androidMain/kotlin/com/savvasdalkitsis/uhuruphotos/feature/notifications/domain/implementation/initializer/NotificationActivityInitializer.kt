@@ -23,16 +23,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.notifications.domain.implementati
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.domain.implementation.model.NotificationRequest.DENIED
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.domain.implementation.model.NotificationRequest.IDLE
 import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ActivityCreated
-import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
-import se.ansman.dagger.auto.AutoBindIntoSet
-import javax.inject.Inject
 
-@AutoBindIntoSet
-@ActivityRetainedScoped
-class NotificationActivityInitializer @Inject constructor(
-) : ActivityCreated {
+class NotificationActivityInitializer : ActivityCreated {
 
     private var notificationRequestState = MutableStateFlow(IDLE)
     private lateinit var launcher: ActivityResultLauncher<String>

@@ -1,0 +1,15 @@
+plugins {
+    id "android.library"
+}
+
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.battery.domain.api.module'
+}
+
+dependencies {
+    api project(":feature:battery:domain:api")
+    implementation project(":foundation:inject:api")
+    implementation project(":foundation:preferences:api:module")
+    implementation project(":foundation:system:api:module")
+    implementation project(":feature:battery:domain:implementation")
+}

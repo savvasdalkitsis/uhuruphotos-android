@@ -31,9 +31,8 @@ import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
-import javax.inject.Inject
 
-internal class TrashAlbumPageActionsContext @Inject constructor(
+internal class TrashAlbumPageActionsContext(
     trashUseCase: TrashUseCase,
     settingsUseCase: SettingsUseCase,
     biometricsUseCase: BiometricsUseCase,

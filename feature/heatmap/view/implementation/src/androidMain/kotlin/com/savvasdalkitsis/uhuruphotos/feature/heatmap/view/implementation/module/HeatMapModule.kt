@@ -15,21 +15,28 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.module
 
-import android.content.Context
-import android.location.LocationManager
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.components.SingletonComponent
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.module.FeedModule
+import com.savvasdalkitsis.uhuruphotos.feature.heatmap.domain.api.module.HeatmapModule
+import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapActionsContext
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.module.CommonMediaModule
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.module.LocalMediaModule
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.module.ui.SettingsUiModule
+import com.savvasdalkitsis.uhuruphotos.foundation.android.api.module.AndroidModule
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.module.NavigationModule
+import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.module.ToasterModule
 
-@Module
-@InstallIn(SingletonComponent::class)
-class HeatMapModule {
+internal object HeatMapModule {
 
-    @Provides
-    fun locationManager(
-        @ApplicationContext context: Context
-    ) = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-
+    val heatMapActionsContext: HeatMapActionsContext
+        get() = HeatMapActionsContext(
+            FeedModule.feedUseCase,
+            FeedModule.feedWorkScheduler,
+            CommonMediaModule.mediaUseCase,
+            SettingsUiModule.settingsUiUseCase,
+            LocalMediaModule.localMediaWorkScheduler,
+            AndroidModule.locationManager,
+            HeatmapModule.heatmapUseCase,
+            ToasterModule.toasterUseCase,
+            NavigationModule.navigator,
+        )
 }

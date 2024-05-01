@@ -30,12 +30,9 @@ import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkSchedul
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkerStatusUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import se.ansman.dagger.auto.AutoBind
 import java.util.concurrent.TimeUnit
-import javax.inject.Inject
 
-@AutoBind
-internal class FeedWorkScheduler @Inject constructor(
+class FeedWorkScheduler(
     private val workScheduleUseCase: WorkScheduleUseCase,
     private val workerStatusUseCase: WorkerStatusUseCase,
     private val settingsUseCase: SettingsUseCase

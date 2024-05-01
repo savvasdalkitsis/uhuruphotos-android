@@ -16,31 +16,31 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.worker
 
 import android.content.Context
-import androidx.hilt.work.HiltWorker
 import androidx.work.WorkerParameters
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.broadcast.CancelFeedDownloadWorkBroadcastReceiver
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.module.FeedModule
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.FeedRepository
-import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNotificationWorker
+import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.module.NotificationModule
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedInject
 import kotlinx.coroutines.delay
+import kotlin.LazyThreadSafetyMode.NONE
 
-@HiltWorker
-internal class FeedDownloadWorker @AssistedInject constructor(
-    @Assisted context: Context,
-    @Assisted private val params: WorkerParameters,
-    private val feedRepository: FeedRepository,
-    foregroundInfoBuilder: ForegroundInfoBuilder,
+internal class FeedDownloadWorker(
+    context: Context,
+    private val params: WorkerParameters,
 ) : ForegroundNotificationWorker<CancelFeedDownloadWorkBroadcastReceiver>(
     context,
     params,
-    foregroundInfoBuilder,
     notificationTitle = R.string.refreshing_feed,
     notificationId = NOTIFICATION_ID,
+    foregroundInfoBuilder = NotificationModule.foregroundInfoBuilder,
     cancelBroadcastReceiver = CancelFeedDownloadWorkBroadcastReceiver::class.java,
 ) {
+
+    private val feedRepository: FeedRepository by lazy(NONE) {
+        FeedModule.feedRepository
+    }
 
     override suspend fun work(): Result {
         val shallow = params.inputData.getBoolean(KEY_SHALLOW, false)

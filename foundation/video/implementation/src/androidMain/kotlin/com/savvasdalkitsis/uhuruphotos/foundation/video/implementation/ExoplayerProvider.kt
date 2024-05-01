@@ -16,9 +16,11 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.foundation.video.implementation
 
 import android.content.Context
+import androidx.annotation.OptIn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.remember
+import androidx.media3.common.util.UnstableApi
 import androidx.media3.datasource.cache.CacheDataSource
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
@@ -26,15 +28,10 @@ import com.savvasdalkitsis.uhuruphotos.foundation.video.api.ExoplayerProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.ExoplayerType
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.ExoplayerType.Local
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.ExoplayerType.Remote
-import dagger.hilt.android.qualifiers.ApplicationContext
-import se.ansman.dagger.auto.AutoBind
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@AutoBind
-@Singleton
-class ExoplayerProvider @Inject constructor(
-    @ApplicationContext private val context: Context,
+@OptIn(UnstableApi::class)
+class ExoplayerProvider(
+    private val context: Context,
     private val cacheDataSourceFactory: CacheDataSource.Factory,
 ) : ExoplayerProvider {
 

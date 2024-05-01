@@ -20,14 +20,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.favourites.view.implementation.vi
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.Gallery
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
-import se.ansman.dagger.auto.AutoInitialize
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@AutoInitialize
-@Singleton
-class FavouritesNavigationTarget @Inject constructor(
-) : NavigationTarget<FavouritesNavigationRoute> by ViewModelNavigationTarget(
+object FavouritesNavigationTarget : NavigationTarget<FavouritesNavigationRoute> by ViewModelNavigationTarget(
     FavouritesViewModel::class,
     FavouritesNavigationRoute::class,
     view = { state, action ->

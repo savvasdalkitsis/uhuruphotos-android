@@ -1,0 +1,15 @@
+plugins {
+    id "android.library"
+}
+
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.memories.domain.api.module'
+}
+
+dependencies {
+    api project(":feature:memories:domain:api")
+    implementation project(":feature:feed:domain:api:module")
+    implementation project(":feature:memories:domain:implementation")
+    implementation project(":foundation:date:api:module")
+    implementation project(":foundation:inject:api")
+}

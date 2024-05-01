@@ -20,6 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.Gall
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.LoadCollage
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.api.navigation.TrashNavigationRoute
+import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.module.TrashModule
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.TrashActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.TrashAlbumPageActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.actions.Load
@@ -29,16 +30,13 @@ import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.Navig
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeActionHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 
 private typealias TrashCompositeState = Pair<GalleryState, TrashState>
 private typealias TrashCompositeAction = Either<GalleryAction, TrashAction>
 
-@HiltViewModel
-internal class TrashViewModel @Inject constructor(
-    trashActionsContext: TrashActionsContext,
-    trashAlbumPageActionsContext: TrashAlbumPageActionsContext,
+internal class TrashViewModel(
+    trashActionsContext: TrashActionsContext = TrashModule.trashActionsContext,
+    trashAlbumPageActionsContext: TrashAlbumPageActionsContext = TrashModule.trashPageActionsContext,
 ) : NavigationViewModel<TrashCompositeState, TrashCompositeAction, TrashNavigationRoute>(
     CompositeActionHandler(
         ActionHandlerWithContext(trashAlbumPageActionsContext.galleryActionsContext),

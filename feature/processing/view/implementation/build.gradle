@@ -1,6 +1,5 @@
 plugins {
     id "android.library"
-    id "hilt"
     alias(libs.plugins.compose)
 }
 
@@ -10,17 +9,16 @@ android {
 
 dependencies {
     implementation(
-            libs.androidx.compose.hilt.navigation,
             libs.androidx.compose.material,
             libs.androidx.compose.ui.tooling.preview,
             libs.kotlinx.immutable,
             libs.seeker,
-            project(":feature:media:remote:domain:api"),
-            project(":feature:processing:domain:api"),
+            project(":feature:media:remote:domain:api:module"),
+            project(":feature:processing:domain:api:module"),
             project(":feature:processing:view:api"),
             project(":feature:settings:domain:api"),
-            project(":feature:upload:domain:api"),
-            project(":feature:user:domain:api"),
+            project(":feature:upload:domain:api:module"),
+            project(":feature:user:domain:api:module"),
             project(":foundation:icons:api"),
             project(":foundation:image:api"),
             project(":foundation:navigation:api"),

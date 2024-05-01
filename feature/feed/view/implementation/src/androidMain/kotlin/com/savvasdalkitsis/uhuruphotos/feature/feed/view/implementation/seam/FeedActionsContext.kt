@@ -45,9 +45,8 @@ import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUse
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.usecase.UiUseCase
 import com.savvasdalktsis.uhuruphotos.feature.download.domain.api.usecase.DownloadUseCase
 import kotlinx.coroutines.flow.FlowCollector
-import javax.inject.Inject
 
-internal class FeedActionsContext @Inject constructor(
+internal class FeedActionsContext(
     val avatarUseCase: AvatarUseCase,
     val downloadUseCase: DownloadUseCase,
     val uploadUseCase: UploadUseCase,

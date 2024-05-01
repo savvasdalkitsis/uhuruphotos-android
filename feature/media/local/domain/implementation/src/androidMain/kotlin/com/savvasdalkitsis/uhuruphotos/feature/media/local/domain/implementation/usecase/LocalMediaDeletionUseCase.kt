@@ -41,16 +41,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Loca
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaDeletionUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.repository.LocalMediaRepository
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.LocalMediaService
-import com.savvasdalkitsis.uhuruphotos.foundation.activity.api.request.ActivityRequestLauncher
-import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.android.scopes.ActivityRetainedScoped
-import se.ansman.dagger.auto.AutoBind
-import javax.inject.Inject
+import com.savvasdalkitsis.uhuruphotos.foundation.android.api.request.ActivityRequestLauncher
 
-@AutoBind
-@ActivityRetainedScoped
-class LocalMediaDeletionUseCase @Inject constructor(
-    @ApplicationContext
+class LocalMediaDeletionUseCase(
     private val context: Context,
     private val localMediaRepository: LocalMediaRepository,
     private val localMediaService: LocalMediaService,

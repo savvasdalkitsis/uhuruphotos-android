@@ -19,9 +19,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.R
 import com.savvasdalkitsis.uhuruphotos.feature.processing.domain.api.usecase.ProcessingUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
-import javax.inject.Inject
 
-internal class ProcessingActionsContext @Inject constructor(
+internal class ProcessingActionsContext(
     val processingUseCase: ProcessingUseCase,
     val uploadUseCase: UploadUseCase,
     val remoteMediaUseCase: RemoteMediaUseCase,

@@ -20,6 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.Gall
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.LoadCollage
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.api.navigation.LocalAlbumNavigationRoute
+import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.module.LocalAlbumModule
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam.LocalAlbumActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam.LocalAlbumPageActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam.actions.Load
@@ -29,16 +30,13 @@ import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.Navig
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeActionHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 
 private typealias LocalAlbumCompositeState = Pair<GalleryState, LocalAlbumState>
 private typealias LocalAlbumCompositeAction = Either<GalleryAction, LocalAlbumAction>
 
-@HiltViewModel
-internal class LocalAlbumViewModel @Inject constructor(
-    localAlbumActionsContext: LocalAlbumActionsContext,
-    localAlbumPageActionsContext: LocalAlbumPageActionsContext,
+internal class LocalAlbumViewModel(
+    localAlbumActionsContext: LocalAlbumActionsContext = LocalAlbumModule.localAlbumActionsContext,
+    localAlbumPageActionsContext: LocalAlbumPageActionsContext = LocalAlbumModule.localAlbumPageActionsContext,
 ) : NavigationViewModel<LocalAlbumCompositeState, LocalAlbumCompositeAction, LocalAlbumNavigationRoute>(
     CompositeActionHandler(
         ActionHandlerWithContext(localAlbumPageActionsContext.galleryActionsContext),

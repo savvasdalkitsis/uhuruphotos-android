@@ -22,11 +22,9 @@ import android.os.Build
 import android.os.Looper
 import androidx.tracing.Trace
 import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
-import se.ansman.dagger.auto.AutoBindIntoSet
-import javax.inject.Inject
 
-@AutoBindIntoSet
-class TracingInitializer @Inject constructor() : ApplicationCreated {
+object TracingInitializer : ApplicationCreated {
+
     override fun onAppCreated(app: Application) {
         val debuggable = (app.applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE) != 0
         val profileable = Build.VERSION.SDK_INT >= 29 && app.applicationInfo.isProfileableByShell

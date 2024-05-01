@@ -15,14 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.battery.domain.implementation.repository
 
-import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.get
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
-import javax.inject.Inject
 
-class BatteryRepository @Inject constructor(
-    @PlainTextPreferences
+class BatteryRepository(
     private val preferences: Preferences,
 ) {
 

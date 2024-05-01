@@ -19,11 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.search.domain.implementation.serv
 import com.savvasdalkitsis.uhuruphotos.feature.search.domain.implementation.service.model.SearchSuggestions
 import de.jensklingenberg.ktorfit.http.GET
 import de.jensklingenberg.ktorfit.http.Query
-import se.ansman.dagger.auto.ktorfit.AutoProvideService
-import javax.inject.Singleton
 
-@AutoProvideService
-@Singleton
 interface SearchService {
 
     @GET("api/photos/searchlist/")

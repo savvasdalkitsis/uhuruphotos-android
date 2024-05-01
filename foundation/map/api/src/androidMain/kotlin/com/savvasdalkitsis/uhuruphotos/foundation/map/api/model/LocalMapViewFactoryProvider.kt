@@ -16,8 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.foundation.map.api.model
 
 import androidx.compose.runtime.compositionLocalOf
-import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.CompositeMapViewFactoryProvider
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewFactoryProvider
 
-val LocalMapViewFactoryProvider = compositionLocalOf<CompositeMapViewFactoryProvider> {
+val LocalMapViewFactoryProvider = compositionLocalOf<MapViewFactoryProvider> {
     throw IllegalStateException("Not initialized")
 }

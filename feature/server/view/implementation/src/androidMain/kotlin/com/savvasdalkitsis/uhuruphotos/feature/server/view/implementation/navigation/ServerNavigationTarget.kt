@@ -20,14 +20,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.ui.Ser
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.viewmodel.ServerViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
-import se.ansman.dagger.auto.AutoInitialize
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@AutoInitialize
-@Singleton
-class ServerNavigationTarget @Inject constructor(
-) : NavigationTarget<ServerNavigationRoute> by ViewModelNavigationTarget(
+object ServerNavigationTarget : NavigationTarget<ServerNavigationRoute> by ViewModelNavigationTarget(
     ServerViewModel::class,
     ServerNavigationRoute::class,
     view = { state, action ->

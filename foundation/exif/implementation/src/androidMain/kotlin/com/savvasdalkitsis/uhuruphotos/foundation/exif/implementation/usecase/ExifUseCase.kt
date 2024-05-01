@@ -36,18 +36,14 @@ import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import org.apache.commons.imaging.Imaging
 import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata
 import org.apache.commons.imaging.formats.jpeg.exif.ExifRewriter
-import se.ansman.dagger.auto.AutoBind
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.InputStream
-import javax.inject.Inject
 import kotlin.math.exp
 import kotlin.math.ln
 import kotlin.math.pow
 
-@AutoBind
-class ExifUseCase @Inject constructor(
-) : ExifUseCase {
+class ExifUseCase : ExifUseCase {
 
     override fun extractFrom(file: File) = ExifInterface(file).metadata()
     override fun extractFrom(stream: InputStream) = ExifInterface(stream).metadata()

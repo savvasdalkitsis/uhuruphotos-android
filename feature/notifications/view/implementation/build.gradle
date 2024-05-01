@@ -1,6 +1,5 @@
 plugins {
     id "android.library"
-    id "hilt"
     alias(libs.plugins.compose)
 }
 
@@ -10,15 +9,14 @@ android {
 
 dependencies {
     implementation(
-            libs.androidx.compose.hilt.navigation,
             libs.androidx.compose.material,
             libs.androidx.compose.ui.tooling.preview,
             project(":feature:feed:view:api"),
-            project(":feature:notifications:domain:api"),
+            project(":feature:notifications:domain:api:module"),
             project(":feature:notifications:view:api"),
             project(":feature:settings:domain:api"),
             project(":foundation:icons:api"),
-            project(":foundation:navigation:api"),
+            project(":foundation:navigation:api:module"),
             project(":foundation:strings:api"),
             project(":foundation:ui:api"),
     )

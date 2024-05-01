@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.foundation.initializer.api
 
 import android.app.Application
 
-fun interface ApplicationCreated {
+interface ApplicationCreated {
 
     fun onAppCreated(app: Application)
 

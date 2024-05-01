@@ -1,15 +1,21 @@
 plugins {
     id "android.library"
-    id "hilt"
 }
 
 android {
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.toaster.implementation'
 }
 
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation project(":foundation:launchers:api")
+            }
+        }
+    }
+}
+
 dependencies {
     api project(":foundation:toaster:api")
-    implementation(
-            project(":foundation:launchers:api"),
-    )
 }

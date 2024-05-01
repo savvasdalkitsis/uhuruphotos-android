@@ -1,0 +1,14 @@
+plugins {
+    id "android.library"
+}
+
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.module'
+}
+
+dependencies {
+    api project(":feature:media:local:domain:api")
+    implementation project(":feature:media:local:domain:implementation")
+    implementation project(":foundation:android:api:module")
+    implementation project(":foundation:inject:api")
+}

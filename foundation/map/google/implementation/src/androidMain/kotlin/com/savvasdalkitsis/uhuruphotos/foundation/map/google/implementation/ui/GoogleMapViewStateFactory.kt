@@ -22,12 +22,8 @@ import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider.Google
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewState
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewStateFactory
-import se.ansman.dagger.auto.AutoBindIntoSet
-import javax.inject.Inject
 
-@AutoBindIntoSet
-class GoogleMapViewStateFactory @Inject constructor(
-) : MapViewStateFactory {
+class GoogleMapViewStateFactory : MapViewStateFactory {
 
     override fun create(
         mapProvider: MapProvider,

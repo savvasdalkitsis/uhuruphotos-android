@@ -20,14 +20,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.ui.Per
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.viewmodel.PersonViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
-import se.ansman.dagger.auto.AutoInitialize
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@AutoInitialize
-@Singleton
-class PersonNavigationTarget @Inject constructor(
-) : NavigationTarget<PersonNavigationRoute> by ViewModelNavigationTarget(
+object PersonNavigationTarget : NavigationTarget<PersonNavigationRoute> by ViewModelNavigationTarget(
     PersonViewModel::class,
     PersonNavigationRoute::class,
     view = { state, action ->

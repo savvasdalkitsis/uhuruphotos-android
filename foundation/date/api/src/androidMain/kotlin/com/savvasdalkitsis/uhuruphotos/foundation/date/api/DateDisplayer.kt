@@ -16,25 +16,16 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.foundation.date.api
 
 import android.content.Context
-import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule.DisplayingDateFormat
-import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule.DisplayingDateTimeFormat
-import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule.DisplayingTimeFormat
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import dagger.hilt.android.qualifiers.ApplicationContext
 import net.danlew.android.joda.DateUtils
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormatter
-import javax.inject.Inject
 
-class DateDisplayer @Inject constructor(
+class DateDisplayer(
     private val dateParser: DateParser,
-    @DisplayingDateFormat
     private val displayingDateFormat: DateTimeFormatter,
-    @DisplayingDateTimeFormat
     private val displayingDateTimeFormat: DateTimeFormatter,
-    @DisplayingTimeFormat
     private val displayingTimeFormat: DateTimeFormatter,
-    @ApplicationContext
     private val context: Context,
 ) {
 

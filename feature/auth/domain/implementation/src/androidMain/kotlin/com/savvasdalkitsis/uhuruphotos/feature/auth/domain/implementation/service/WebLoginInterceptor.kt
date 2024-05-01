@@ -24,9 +24,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import okhttp3.Interceptor
 import okhttp3.Response
-import javax.inject.Inject
 
-class WebLoginInterceptor @Inject constructor(
+class WebLoginInterceptor(
     private val navigator: Navigator,
     private val serverUseCase: ServerUseCase,
     private val cookieManager: CookieManager,

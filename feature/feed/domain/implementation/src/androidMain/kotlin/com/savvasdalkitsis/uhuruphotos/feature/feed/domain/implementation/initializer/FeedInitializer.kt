@@ -17,17 +17,18 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.initi
 
 import android.app.Application
 import androidx.work.ExistingPeriodicWorkPolicy
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
-import se.ansman.dagger.auto.AutoBindIntoSet
-import javax.inject.Inject
+import com.savvasdalkitsis.uhuruphotos.foundation.inject.api.ServiceLocator
 
-@AutoBindIntoSet
-internal class FeedInitializer @Inject constructor(
+class FeedInitializer(
     private val feedWorkScheduler: FeedWorkScheduler,
+    private val feedUseCase: FeedUseCase,
 ): ApplicationCreated {
 
     override fun onAppCreated(app: Application) {
+        ServiceLocator.register(FeedUseCase::class, feedUseCase)
         feedWorkScheduler.scheduleFeedRefreshPeriodic(
             existingPeriodicWorkPolicy = ExistingPeriodicWorkPolicy.KEEP
         )

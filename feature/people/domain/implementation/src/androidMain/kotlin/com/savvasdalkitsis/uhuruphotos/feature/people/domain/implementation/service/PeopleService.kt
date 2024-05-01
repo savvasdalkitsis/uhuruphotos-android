@@ -19,11 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.people.domain.api.service.model.P
 import com.savvasdalkitsis.uhuruphotos.feature.people.domain.implementation.service.model.PeopleResult
 import de.jensklingenberg.ktorfit.http.GET
 import de.jensklingenberg.ktorfit.http.Path
-import se.ansman.dagger.auto.ktorfit.AutoProvideService
-import javax.inject.Singleton
 
-@AutoProvideService
-@Singleton
 interface PeopleService {
 
     @GET("api/persons/")

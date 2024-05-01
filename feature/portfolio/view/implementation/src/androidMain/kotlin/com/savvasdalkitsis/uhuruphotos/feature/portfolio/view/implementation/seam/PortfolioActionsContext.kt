@@ -18,9 +18,8 @@ package com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.se
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.domain.api.usecase.PortfolioUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
-import javax.inject.Inject
 
-internal class PortfolioActionsContext @Inject constructor(
+internal class PortfolioActionsContext(
     val portfolioUseCase: PortfolioUseCase,
     val localMediaUseCase: LocalMediaUseCase,
     val navigator: Navigator,

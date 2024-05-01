@@ -18,9 +18,8 @@ package com.savvasdalkitsis.uhuruphotos.foundation.network.implementation.interc
 import com.savvasdalkitsis.uhuruphotos.foundation.system.api.usecase.ApplicationUseCase
 import okhttp3.Interceptor
 import okhttp3.Response
-import javax.inject.Inject
 
-internal class UserAgentInterceptor @Inject constructor(
+class UserAgentInterceptor(
     applicationUseCase: ApplicationUseCase,
 ): Interceptor {
 

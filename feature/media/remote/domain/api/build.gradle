@@ -12,7 +12,7 @@ dependencies {
     api(
             libs.androidx.compose.navigation,
             libs.androidx.work,
-            libs.kotlinx.coroutines,
+            libs.kotlinx.coroutines.android,
             project(":feature:db:domain:api"),
             project(":feature:media:common:domain:api"),
             project(":foundation:map:api"),

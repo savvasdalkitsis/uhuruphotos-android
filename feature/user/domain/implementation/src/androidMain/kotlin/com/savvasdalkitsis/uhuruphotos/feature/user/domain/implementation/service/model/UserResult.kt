@@ -20,7 +20,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class UserResult(
+data class UserResult(
     val id: Int,
     val username: String,
     val email: String,

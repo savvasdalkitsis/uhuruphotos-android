@@ -2,8 +2,7 @@
 about = "11.1.0"
 accompanist = "0.34.0"
 agp = "8.3.2"
-androidx-hilt = "1.2.0"
-autodagger = "1.1.0"
+appyx = "2.0.1"
 coil = "2.6.0"
 compose = "1.6.5"
 compose-compiler = "1.5.11"
@@ -11,10 +10,10 @@ crypto = "1.1.0-alpha06"
 datastore = "1.1.0-rc01"
 gms = "18.2.0"
 google-services = "4.4.1"
-hilt = "2.51.1"
-hilt-compiler = "1.2.0"
+koject = "1.3.0"
 kotlin = "1.9.23"
 kotlinx = "1.8.0"
+ksp = "1.9.23-1.0.20"
 ktor = "2.3.6"
 ktorfit = "1.12.0"
 lumberjack = "6.0.6"
@@ -37,7 +36,7 @@ kotlin-android = { id = 'org.jetbrains.kotlin.android', version.ref = "kotlin" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 kotlin-multiplatform = { id = 'org.jetbrains.kotlin.multiplatform', version.ref = "kotlin" }
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-ksp = "com.google.devtools.ksp:1.9.23-1.0.20"
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 ktorfit = { id = "de.jensklingenberg.ktorfit", version.ref = "ktorfit" }
 moduleGraph = "com.savvasdalkitsis.module-dependency-graph:0.12"
 powerassert = "com.bnorm.power.kotlin-power-assert:0.13.0"
@@ -61,7 +60,6 @@ androidx-compose-animation-graphics = { module = "androidx.compose.animation:ani
 androidx-compose-constraintlayout = "androidx.constraintlayout:constraintlayout-compose:1.1.0-alpha13"
 androidx-compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose" }
 androidx-compose-foundation-layout = { module = "androidx.compose.foundation:foundation-layout", version.ref = "compose" }
-androidx-compose-hilt-navigation = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "androidx-hilt" }
 androidx-compose-material = { module = "androidx.compose.material:material", version.ref = "compose" }
 androidx-compose-material-windowsize = "androidx.compose.material3:material3-window-size-class:1.2.1"
 androidx-compose-navigation = "androidx.navigation:navigation-compose:2.7.7"
@@ -72,7 +70,6 @@ androidx-compose-ui-util = { module = "androidx.compose.ui:ui-util", version.ref
 androidx-constraint = "androidx.constraintlayout:constraintlayout-compose:1.1.0-alpha13"
 androidx-core = "androidx.core:core-ktx:1.12.0"
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
-androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hilt-compiler" }
 androidx-lifecycle = "androidx.lifecycle:lifecycle-runtime-ktx:2.7.0"
 androidx-media3-core = { module = "androidx.media3:media3-exoplayer", version.ref = "media3" }
 androidx-media3-database = { module = "androidx.media3:media3-database", version.ref = "media3" }
@@ -87,12 +84,9 @@ androidx-startup = "androidx.startup:startup-runtime:1.2.0-alpha02"
 androidx-tracing = "androidx.tracing:tracing-ktx:1.2.0"
 androidx-window = "androidx.window:window:1.2.0"
 androidx-work = "androidx.work:work-runtime-ktx:2.9.0"
-androidx-work-hilt = "androidx.hilt:hilt-work:1.2.0"
-appyx = "com.bumble.appyx:core:1.4.0"
+appyx-backstack = { module = "com.bumble.appyx:backstack", version.ref = "appyx" }
+appyx-navigation = { module = "com.bumble.appyx:appyx-navigation", version.ref = "appyx" }
 assure = "com.afollestad.assure:coroutines:0.2.0"
-autodagger-core = { module = "se.ansman.dagger.auto:android", version.ref = "autodagger" }
-autodagger-ksp = { module = "se.ansman.dagger.auto:compiler", version.ref = "autodagger" }
-autodagger-ktorfit = { module = "se.ansman.dagger.auto:ktorfit", version.ref = "autodagger" }
 bubble-navigation = "com.github.savvasdalkitsis:BubbleNavigationBarCompose:1.0.2"
 bugsnag = "com.bugsnag:bugsnag-android:6.3.0"
 bugsnag-plugin = "com.bugsnag:bugsnag-android-gradle-plugin:8.1.0"
@@ -108,21 +102,27 @@ gif = "com.squareup:gifencoder:0.10.1"
 google-services = { module = "com.google.gms:google-services", version.ref = "google-services" }
 gson = "com.google.code.gson:gson:2.10.1"
 heatmap = "com.github.k-surtel:heat-map:1.0.1"
-hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
-hilt-android-gradle-plugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hilt" }
-hilt-dagger-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
 imaging = "org.apache.commons:commons-imaging:1.0-alpha3"
 infobar = "com.radusalagean:info-bar-compose:1.0.0"
 jetlime = "io.github.pushpalroy:jetlime:2.1.1"
 joda-time = "net.danlew:android.joda:2.12.7"
 junit = "junit:junit:4.13.2"
 jwt = "com.auth0.android:jwtdecode:2.0.2"
+koject-android-core = { module = "com.moriatsushi.koject:koject-android-core", version.ref = "koject" }
+koject-android-activity = { module = "com.moriatsushi.koject:koject-android-activity", version.ref = "koject" }
+koject-android-viewmodel = { module = "com.moriatsushi.koject:koject-android-viewmodel", version.ref = "koject" }
+koject-compose-core = { module = "com.moriatsushi.koject:koject-compose-core", version.ref = "koject" }
+koject-compose-viewmodel = { module = "com.moriatsushi.koject:koject-compose-viewmodel", version.ref = "koject" }
+koject-core = { module = "com.moriatsushi.koject:koject-core", version.ref = "koject" }
+koject-compiler-app = { module = "com.moriatsushi.koject:koject-processor-app", version.ref = "koject" }
+koject-compiler-lib = { module = "com.moriatsushi.koject:koject-processor-lib", version.ref = "koject" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx" }
-kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx" }
+kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx" }
 kotlinx-immutable = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.7"
 kotlinx-serialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3"
+ksp = { module = "com.google.devtools.ksp:symbol-processing-api", version.ref = "ksp" }
 ktor-content = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-serialization = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 ktor-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
@@ -155,7 +155,6 @@ play = "com.google.android.gms:play-services-base:18.3.0"
 remember = "dev.burnoo:compose-remember-preference:1.0.2"
 reorder = "org.burnoutcrew.composereorderable:reorderable:0.9.6"
 resaca-core = { module = "io.github.sebaslogen:resaca", version.ref = "resaca" }
-resaca-hilt = { module = "io.github.sebaslogen:resacahilt", version.ref = "resaca" }
 result = { module = "com.michael-bull.kotlin-result:kotlin-result", version.ref = "result" }
 result-coroutines = { module = "com.michael-bull.kotlin-result:kotlin-result-coroutines", version.ref = "result" }
 scrollbar = "com.github.nanihadesuka:LazyColumnScrollbar:1.9.0"
@@ -190,10 +189,6 @@ androidx-security-crypto = [
     "androidx-security-crypto-core",
     "androidx-security-crypto-ktx",
 ]
-autodagger = [
-    "autodagger-core",
-    "autodagger-ktorfit",
-]
 lumberjack = [
     "lumberjack-core",
     "lumberjack-implementation",
@@ -209,7 +204,6 @@ permissions = [
 ]
 resaca = [
     "resaca-core",
-    "resaca-hilt",
 ]
 result = [
     "result",

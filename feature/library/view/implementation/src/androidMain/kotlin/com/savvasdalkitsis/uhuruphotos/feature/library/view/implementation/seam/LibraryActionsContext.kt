@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam
 
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.domain.api.usecase.AutoAlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.domain.api.usecase.UserAlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItem
@@ -25,7 +24,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.Lo
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.worker.LocalMediaWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.WelcomeUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
-import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.observe
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
@@ -35,18 +33,15 @@ import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUse
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
-import javax.inject.Inject
 
-internal class LibraryActionsContext @Inject constructor(
+class LibraryActionsContext(
     val autoAlbumsUseCase: AutoAlbumsUseCase,
     val userAlbumsUseCase: UserAlbumsUseCase,
     val mediaUseCase: MediaUseCase,
-    val serverUseCase: ServerUseCase,
     val localMediaUseCase: LocalMediaUseCase,
     val libraryUseCase: LibraryUseCase,
     val navigator: Navigator,
     val welcomeUseCase: WelcomeUseCase,
-    @PlainTextPreferences
     private val preferences: Preferences,
     private val toaster: ToasterUseCase,
     private val localMediaWorkScheduler: LocalMediaWorkScheduler,
@@ -54,8 +49,6 @@ internal class LibraryActionsContext @Inject constructor(
 
     private val _loading = MutableSharedFlow<Boolean>()
     val loading: Flow<Boolean> get() = _loading
-
-    private val upsellSourceKey = "libraryUpsellSource"
 
     suspend fun refreshAutoAlbums() {
         refresh {

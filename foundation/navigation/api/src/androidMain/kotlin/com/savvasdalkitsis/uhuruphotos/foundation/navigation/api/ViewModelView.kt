@@ -21,18 +21,13 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.lifecycle.HasDefaultViewModelProviderFactory
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.CreationExtras
-import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.sebaslogen.resaca.ScopedViewModelContainer
 import com.sebaslogen.resaca.generateKeysAndObserveLifecycle
-import com.sebaslogen.resaca.hilt.createHiltViewModelFactory
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancelChildren
 import kotlin.reflect.KClass
@@ -45,9 +40,9 @@ fun <S : Any, A : Any, VM : NavigationViewModel<S, A, R>, R : NavigationRoute> V
     content: @Composable (state: S, action: (A) -> Unit) -> Unit,
 ) {
     val viewModel: VM = if (viewModelScopedToComposable) {
-        hiltViewModelScoped(route.toString(), viewModelClass)
+        viewModelScoped(clazz = viewModelClass)
     } else {
-        hiltViewModel(route.toString(), viewModelClass)
+        viewModel(viewModelClass.java)
     }
 
     val keyboard = LocalSoftwareKeyboardController.current
@@ -64,54 +59,14 @@ fun <S : Any, A : Any, VM : NavigationViewModel<S, A, R>, R : NavigationRoute> V
 }
 
 @Composable
-private fun <VM : ViewModel> hiltViewModel(
-    key: String? = null,
-    clazz: KClass<VM>,
-    viewModelStoreOwner: ViewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current) {
-        "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-    },
-): VM {
-    val factory = createHiltViewModelFactory(viewModelStoreOwner)
-    return viewModel(key, factory, clazz)
-}
-
-@Composable
-private fun <VM : ViewModel> viewModel(
-    key: String? = null,
-    factory: ViewModelProvider.Factory? = null,
-    clazz: KClass<VM>,
-    viewModelStoreOwner: ViewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current) {
-        "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-    },
-    extras: CreationExtras = if (viewModelStoreOwner is HasDefaultViewModelProviderFactory) {
-        viewModelStoreOwner.defaultViewModelCreationExtras
-    } else {
-        CreationExtras.Empty
-    }
-): VM = androidx.lifecycle.viewmodel.compose.viewModel(
-    clazz.java,
-    viewModelStoreOwner,
-    key,
-    factory,
-    extras
-)
-
-@Composable
-private fun <T : ViewModel> hiltViewModelScoped(key: Any? = null, clazz: KClass<T>, defaultArguments: Bundle = Bundle.EMPTY): T {
+private fun <T : ViewModel> viewModelScoped(key: Any? = null, clazz: KClass<T>, defaultArguments: Bundle = Bundle.EMPTY): T {
     val (scopedViewModelContainer: ScopedViewModelContainer, positionalMemoizationKey: ScopedViewModelContainer.InternalKey, externalKey: ScopedViewModelContainer.ExternalKey) =
         generateKeysAndObserveLifecycle(key = key)
-
-    val viewModelStoreOwner: ViewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current) {
-        "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-    }
-
     // The object will be built the first time and retrieved in next calls or recompositions
     return scopedViewModelContainer.getOrBuildViewModel(
         modelClass = clazz.java,
         positionalMemoizationKey = positionalMemoizationKey,
         externalKey = externalKey,
-        factory = createHiltViewModelFactory(viewModelStoreOwner),
-        viewModelStoreOwner = viewModelStoreOwner,
-        defaultArguments = defaultArguments
+        defaultArguments = defaultArguments,
     )
 }

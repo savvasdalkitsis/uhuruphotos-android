@@ -1,0 +1,17 @@
+plugins {
+    id "android.library"
+}
+
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.android.implementation'
+}
+
+dependencies {
+    api(
+            project(":foundation:android:api"),
+            project(":foundation:initializer:api"),
+    )
+    implementation(
+            project(":foundation:inject:api"),
+    )
+}

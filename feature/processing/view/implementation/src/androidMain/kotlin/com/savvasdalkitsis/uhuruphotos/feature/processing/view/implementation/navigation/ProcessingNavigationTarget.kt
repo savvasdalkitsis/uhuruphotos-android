@@ -20,14 +20,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.ui
 import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.viewmodel.ProcessingViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
-import se.ansman.dagger.auto.AutoInitialize
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@AutoInitialize
-@Singleton
-class ProcessingNavigationTarget @Inject constructor(
-) : NavigationTarget<ProcessingNavigationRoute> by ViewModelNavigationTarget(
+object ProcessingNavigationTarget : NavigationTarget<ProcessingNavigationRoute> by ViewModelNavigationTarget(
     ProcessingViewModel::class,
     ProcessingNavigationRoute::class,
     view = { state, action ->

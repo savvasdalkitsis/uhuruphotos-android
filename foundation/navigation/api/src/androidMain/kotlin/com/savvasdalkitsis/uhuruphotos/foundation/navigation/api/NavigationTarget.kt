@@ -16,8 +16,9 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.foundation.navigation.api
 
 import androidx.compose.runtime.Composable
+import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
 
-interface NavigationTarget<R : NavigationRoute> {
+interface NavigationTarget<R : NavigationRoute> : ApplicationCreated {
 
     @Composable
     fun NavigationRootView(route: R)

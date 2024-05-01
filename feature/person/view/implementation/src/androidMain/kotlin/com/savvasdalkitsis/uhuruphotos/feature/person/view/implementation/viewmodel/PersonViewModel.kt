@@ -16,18 +16,16 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.viewmodel
 
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.api.navigation.PersonNavigationRoute
+import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.module.PersonModule
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.actions.LoadPerson
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.actions.PersonAction
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.ui.state.PersonState
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 
-@HiltViewModel
-class PersonViewModel @Inject constructor(
-    personActionsContext: PersonActionsContext,
+class PersonViewModel(
+    personActionsContext: PersonActionsContext = PersonModule.personActionsContext,
 ) : NavigationViewModel<PersonState, PersonAction, PersonNavigationRoute>(
     ActionHandlerWithContext(personActionsContext),
     PersonState()

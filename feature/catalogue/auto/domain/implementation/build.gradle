@@ -1,6 +1,5 @@
 plugins {
     id "android.library"
-    id "hilt"
     alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.ktorfit)
 }
@@ -20,6 +19,7 @@ dependencies {
             project(":foundation:log:api"),
             project(":foundation:network:api"),
             project(":foundation:preferences:api"),
+            project(":foundation:result:api"),
             project(":foundation:strings:api"),
     )
     ksp(

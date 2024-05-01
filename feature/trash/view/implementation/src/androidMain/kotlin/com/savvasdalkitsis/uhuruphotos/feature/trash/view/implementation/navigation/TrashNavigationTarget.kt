@@ -19,14 +19,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.trash.view.api.navigation.TrashNa
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.viewmodel.TrashViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
-import se.ansman.dagger.auto.AutoInitialize
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@AutoInitialize
-@Singleton
-class TrashNavigationTarget @Inject constructor(
-) : NavigationTarget<TrashNavigationRoute> by ViewModelNavigationTarget(
+object TrashNavigationTarget : NavigationTarget<TrashNavigationRoute> by ViewModelNavigationTarget(
     TrashViewModel::class,
     TrashNavigationRoute::class,
     view = { state, action ->

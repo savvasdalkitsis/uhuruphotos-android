@@ -28,9 +28,8 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
-import javax.inject.Inject
 
-internal class FavouritesActionsContext @Inject constructor(
+internal class FavouritesActionsContext(
     mediaUseCase: MediaUseCase,
     favouritesUseCase: FavouritesUseCase,
     galleryActionsContextFactory: GalleryActionsContextFactory,

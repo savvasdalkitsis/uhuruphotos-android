@@ -19,6 +19,6 @@ import androidx.compose.runtime.compositionLocalOf
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.shared.state.SharedElementTransition
 
 val LocalSharedElementTransition = compositionLocalOf<SharedElementTransition> {
-    TODO("Not Implemented")
+    throw NotImplementedError()
 }
 

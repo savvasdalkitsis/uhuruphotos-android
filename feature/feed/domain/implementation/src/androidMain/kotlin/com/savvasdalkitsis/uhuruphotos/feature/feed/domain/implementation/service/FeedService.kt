@@ -20,11 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.m
 import de.jensklingenberg.ktorfit.http.GET
 import de.jensklingenberg.ktorfit.http.Path
 import de.jensklingenberg.ktorfit.http.Query
-import se.ansman.dagger.auto.ktorfit.AutoProvideService
-import javax.inject.Singleton
 
-@AutoProvideService
-@Singleton
 interface FeedService {
 
     @GET("api/albums/date/list/")

@@ -22,11 +22,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.processing.domain.api.usecase.Pro
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import se.ansman.dagger.auto.AutoBind
-import javax.inject.Inject
 
-@AutoBind
-class ProcessingUseCase @Inject constructor(
+class ProcessingUseCase(
     private val localMediaUseCase: LocalMediaUseCase,
     private val uploadUseCase: UploadUseCase,
 ) : ProcessingUseCase {

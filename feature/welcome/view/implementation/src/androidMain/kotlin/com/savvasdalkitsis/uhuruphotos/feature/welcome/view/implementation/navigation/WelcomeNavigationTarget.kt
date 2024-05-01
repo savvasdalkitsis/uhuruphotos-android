@@ -20,14 +20,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.ui.We
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.viewmodel.WelcomeViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
-import se.ansman.dagger.auto.AutoInitialize
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@AutoInitialize
-@Singleton
-class WelcomeNavigationTarget @Inject constructor(
-) : NavigationTarget<WelcomeNavigationRoute> by ViewModelNavigationTarget(
+object WelcomeNavigationTarget : NavigationTarget<WelcomeNavigationRoute> by ViewModelNavigationTarget(
     WelcomeViewModel::class,
     WelcomeNavigationRoute::class,
     view = { state, action ->

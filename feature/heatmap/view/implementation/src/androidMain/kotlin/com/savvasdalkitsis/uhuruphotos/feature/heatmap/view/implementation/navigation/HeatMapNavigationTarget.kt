@@ -20,14 +20,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.He
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.viewmodel.HeatMapViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
-import se.ansman.dagger.auto.AutoInitialize
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@AutoInitialize
-@Singleton
-class HeatMapNavigationTarget @Inject constructor(
-) : NavigationTarget<HeatMapNavigationRoute> by ViewModelNavigationTarget(
+object HeatMapNavigationTarget : NavigationTarget<HeatMapNavigationRoute> by ViewModelNavigationTarget(
     HeatMapViewModel::class,
     HeatMapNavigationRoute::class,
     view = { state, action ->

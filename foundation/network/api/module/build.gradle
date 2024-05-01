@@ -1,0 +1,19 @@
+plugins {
+    id "android.library"
+}
+
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.network.api.module'
+}
+
+dependencies {
+    api project(":foundation:network:api")
+
+    implementation libs.okhttp
+    implementation libs.okhttp.logging
+    implementation libs.okhttp.url
+    implementation project(":foundation:android:api:module")
+    implementation project(":foundation:inject:api")
+    implementation project(":foundation:network:implementation")
+    implementation project(":foundation:system:api:module")
+}

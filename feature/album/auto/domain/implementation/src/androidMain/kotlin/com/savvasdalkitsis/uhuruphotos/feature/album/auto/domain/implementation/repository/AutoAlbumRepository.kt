@@ -36,9 +36,8 @@ import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simple
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
-import javax.inject.Inject
 
-class AutoAlbumRepository @Inject constructor(
+class AutoAlbumRepository(
     private val db: Database,
     private val autoAlbumQueries: AutoAlbumQueries,
     private val autoAlbumPeopleQueries: AutoAlbumPeopleQueries,

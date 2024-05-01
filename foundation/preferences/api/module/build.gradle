@@ -1,0 +1,17 @@
+plugins {
+    id "android.library"
+}
+
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.module'
+}
+
+dependencies {
+    api project(":foundation:preferences:api")
+    implementation libs.androidx.preference
+    implementation libs.bundles.androidx.security.crypto
+    implementation libs.flowpreferences
+    implementation project(":foundation:android:api:module")
+    implementation project(":foundation:inject:api")
+    implementation project(":foundation:preferences:implementation")
+}

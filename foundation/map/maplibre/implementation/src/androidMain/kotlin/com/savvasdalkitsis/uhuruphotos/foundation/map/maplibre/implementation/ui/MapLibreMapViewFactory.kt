@@ -22,10 +22,8 @@ import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapOptions
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewFactory
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewScope
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewState
-import javax.inject.Inject
 
-class MapLibreMapViewFactory @Inject constructor(
-): MapViewFactory{
+class MapLibreMapViewFactory: MapViewFactory{
 
     @Composable
     override fun CreateMapView(

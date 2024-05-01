@@ -20,14 +20,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementatio
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.viewmodel.UserAlbumsViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
-import se.ansman.dagger.auto.AutoInitialize
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@AutoInitialize
-@Singleton
-class UserAlbumsNavigationTarget @Inject constructor(
-) : NavigationTarget<UserAlbumsNavigationRoute> by ViewModelNavigationTarget(
+object UserAlbumsNavigationTarget : NavigationTarget<UserAlbumsNavigationRoute> by ViewModelNavigationTarget(
     UserAlbumsViewModel::class,
     UserAlbumsNavigationRoute::class,
     view = { state, action ->

@@ -31,11 +31,8 @@ import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNot
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.model.isFailed
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import se.ansman.dagger.auto.AutoBind
-import javax.inject.Inject
 
-@AutoBind
-class UploadsUseCase @Inject constructor(
+class UploadsUseCase(
     private val uploadWorkScheduler: UploadWorkScheduler,
     private val localMediaUseCase: LocalMediaUseCase,
     private val uploadUseCase: UploadUseCase,

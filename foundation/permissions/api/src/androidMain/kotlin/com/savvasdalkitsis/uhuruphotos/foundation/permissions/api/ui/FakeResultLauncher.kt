@@ -27,6 +27,6 @@ internal object FakeResultLauncher : ActivityResultLauncher<Array<String>>() {
     }
 
     override fun getContract(): ActivityResultContract<Array<String>, *> {
-        TODO("Not yet implemented")
+        throw NotImplementedError()
     }
 }

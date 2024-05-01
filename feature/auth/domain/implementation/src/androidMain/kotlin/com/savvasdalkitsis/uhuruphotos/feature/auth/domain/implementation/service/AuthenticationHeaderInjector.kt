@@ -18,11 +18,8 @@ package com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.servi
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.AuthenticationHeadersUseCase
 import okhttp3.Interceptor
 import okhttp3.Request
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class AuthenticationHeaderInjector @Inject constructor(
+class AuthenticationHeaderInjector(
     private val authenticationHeadersUseCase: AuthenticationHeadersUseCase,
 ) {
 

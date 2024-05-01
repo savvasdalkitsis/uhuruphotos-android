@@ -28,8 +28,7 @@ import kotlinx.parcelize.Parcelize
 import java.io.Serializable
 
 @Immutable
-sealed class MediaId<T : Serializable> private constructor(
-) : Parcelable {
+sealed class MediaId<T : Serializable> : Parcelable {
 
     fun matches(id: MediaId<*>) =
         this == id || preferLocal == id.preferLocal || preferRemote == id.preferRemote

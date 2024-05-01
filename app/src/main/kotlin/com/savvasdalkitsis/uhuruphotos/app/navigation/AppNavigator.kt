@@ -18,19 +18,23 @@ package com.savvasdalkitsis.uhuruphotos.app.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import com.bumble.appyx.core.integration.NodeHost
-import com.bumble.appyx.core.integrationpoint.ActivityIntegrationPoint
-import com.bumble.appyx.navmodel.backstack.BackStack
+import com.bumble.appyx.components.backstack.BackStack
+import com.bumble.appyx.components.backstack.BackStackModel
+import com.bumble.appyx.components.backstack.ui.fader.BackStackFader
+import com.bumble.appyx.components.backstack.ui.parallax.BackStackParallax
+import com.bumble.appyx.navigation.integration.ActivityIntegrationPoint
+import com.bumble.appyx.navigation.integration.NodeHost
+import com.bumble.appyx.navigation.platform.AndroidLifecycle
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.navigation.HomeNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window.LocalSystemUiController
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.implementation.usecase.UiUseCase
-import javax.inject.Inject
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.usecase.UiUseCase
 
-class AppNavigator @Inject constructor(
+class AppNavigator(
     private val navigator: Navigator,
     private val uiUseCase: UiUseCase,
     private val compositionLocalProviders: CompositionLocalProviders,
@@ -50,19 +54,26 @@ class AppNavigator @Inject constructor(
                 }
             }
             NodeHost(
+                lifecycle = AndroidLifecycle(LocalLifecycleOwner.current.lifecycle),
                 integrationPoint = integrationPoint,
-            ) { buildContext ->
+            ) { nodeContext ->
                 val backStack: BackStack<NavigationRoute> = BackStack(
-                    initialElement = HomeNavigationRoute,
-                    savedStateMap = buildContext.savedStateMap,
+                    model = BackStackModel(
+                        initialTarget = HomeNavigationRoute,
+                        savedStateMap = nodeContext.savedStateMap,
+                    ),
+                    visualisation = {
+                        NavigationRouteAwareBackStackFader(it)
+                    }
                 )
+
                 navigator.backStack = backStack
-                NavigationTree(buildContext, backStack)
+                NavigationTree(nodeContext, backStack)
             }
         }
         LaunchedEffect(Unit) {
             navigator.backStack.elements.collect { stack ->
-                log { "NavigationStack: " + stack.joinToString(">>") { it.key.navTarget.toString() } }
+                log { "NavigationStack: " + stack.all.joinToString(">>") { it.id } }
             }
         }
     }

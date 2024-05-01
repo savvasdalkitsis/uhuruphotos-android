@@ -32,13 +32,9 @@ import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode.DARK_MODE
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode.FOLLOW_SYSTEM
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode.LIGHT_MODE
-import dagger.hilt.android.qualifiers.ApplicationContext
-import se.ansman.dagger.auto.AutoBind
-import javax.inject.Inject
 
-@AutoBind
-internal class FeedbackUseCase @Inject constructor(
-    @ApplicationContext private val context: Context,
+class FeedbackUseCase(
+    private val context: Context,
     private val loggerSetup: FileLoggerSetup,
     private val settingsUseCase: SettingsUseCase,
     private val settingsUIUseCase: SettingsUIUseCase,

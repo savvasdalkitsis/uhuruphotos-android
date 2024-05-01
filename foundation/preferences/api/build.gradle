@@ -1,6 +1,5 @@
 plugins {
     id "android.library"
-    id "hilt"
 }
 
 android {
@@ -9,6 +8,6 @@ android {
 
 dependencies {
     api(
-            libs.kotlinx.coroutines,
+            libs.kotlinx.coroutines.android
     )
 }

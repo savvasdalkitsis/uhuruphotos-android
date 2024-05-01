@@ -1,0 +1,15 @@
+plugins {
+    id "android.library"
+}
+
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.module.cache'
+}
+
+dependencies {
+    api project(":feature:settings:domain:api")
+    implementation project(":feature:settings:domain:implementation")
+    implementation project(":foundation:inject:api")
+    implementation project(":foundation:image:api:module:cache")
+    implementation project(":foundation:video:api:module:cache")
+}

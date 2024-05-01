@@ -1,0 +1,24 @@
+plugins {
+    id "android.library"
+}
+
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.module'
+}
+
+kotlin {
+    sourceSets {
+        androidMain {
+            dependencies {
+                implementation(libs.sqldelight.adapters)
+                implementation(libs.sqldelight.android)
+            }
+        }
+    }
+}
+
+dependencies {
+    api project(":feature:db:domain:api")
+    implementation project(":foundation:android:api:module")
+    implementation project(":foundation:inject:api")
+}

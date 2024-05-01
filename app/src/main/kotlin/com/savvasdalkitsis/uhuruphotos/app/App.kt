@@ -16,33 +16,14 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.app
 
 import android.app.Application
-import androidx.hilt.work.HiltWorkerFactory
-import androidx.work.Configuration
-import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationInitializer
-import dagger.hilt.android.HiltAndroidApp
-import se.ansman.dagger.auto.AutoDaggerInitializer
-import javax.inject.Inject
+import com.savvasdalkitsis.uhuruphotos.app.implementation.Initialization
+import com.savvasdalkitsis.uhuruphotos.foundation.android.api.module.AndroidModule
 
-@HiltAndroidApp
-class App :
-    Application(),
-    Configuration.Provider {
-
-    @Inject
-    lateinit var initializer: AutoDaggerInitializer
-    @Inject
-    lateinit var workerFactory: HiltWorkerFactory
-    @Inject
-    lateinit var applicationInitializer: ApplicationInitializer
+class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        initializer.initialize()
-        applicationInitializer.onCreated(this)
+        AndroidModule.applicationContext = this
+        Initialization.applicationInitializer.onAppCreated(this)
     }
-
-    override val workManagerConfiguration: Configuration
-        get()  = Configuration.Builder()
-            .setWorkerFactory(workerFactory)
-            .build()
 }

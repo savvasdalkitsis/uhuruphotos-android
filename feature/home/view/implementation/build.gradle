@@ -1,6 +1,5 @@
 plugins {
     id "android.library"
-    id "hilt"
     alias(libs.plugins.compose)
 }
 
@@ -12,22 +11,21 @@ dependencies {
 
     implementation(
             libs.androidx.compose.foundation.layout,
-            libs.androidx.compose.hilt.navigation,
             libs.androidx.compose.material,
             libs.androidx.compose.material.windowsize,
             libs.androidx.compose.ui,
             libs.androidx.lifecycle,
-            project(":feature:auth:domain:api"),
+            project(":feature:auth:domain:api:module"),
             project(":feature:feed:view:api"),
             project(":feature:home:view:api"),
-            project(":feature:notifications:domain:api"),
+            project(":feature:notifications:domain:api:module"),
             project(":feature:notifications:view:api"),
             project(":feature:server:view:api"),
-            project(":feature:settings:domain:api"),
-            project(":feature:welcome:domain:api"),
+            project(":feature:settings:domain:api:module"),
+            project(":feature:welcome:domain:api:module"),
             project(":feature:welcome:view:api"),
-            project(":foundation:biometrics:api"),
-            project(":foundation:navigation:api"),
+            project(":foundation:biometrics:api:module"),
+            project(":foundation:navigation:api:module"),
             project(":foundation:strings:api"),
             project(":foundation:ui:api"),
     )

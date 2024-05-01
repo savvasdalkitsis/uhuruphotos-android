@@ -23,27 +23,22 @@ import coil.ImageLoader
 import coil.disk.DiskCache
 import coil.request.ImageRequest
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.FullImage
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.share.api.usecase.ShareUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.share.implementation.removeGpsData
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.withContext
 import java.io.File
-import javax.inject.Inject
 
 private const val imageMimeType = "image/jpeg"
 
-internal class ShareUseCase @Inject constructor(
-    @FullImage
+class ShareUseCase(
     private val diskCache: DiskCache,
     private val navigator: Navigator,
-    @FullImage
     private val imageLoader: ImageLoader,
     private val settingsUseCase: SettingsUseCase,
-    @ApplicationContext private val context: Context,
+    private val context: Context,
 ) : ShareUseCase {
     private val shareDir = File(context.cacheDir, "share_cache")
     private fun shareFile(postfix: String = "") = File(shareDir, "Photo$postfix.jpg")

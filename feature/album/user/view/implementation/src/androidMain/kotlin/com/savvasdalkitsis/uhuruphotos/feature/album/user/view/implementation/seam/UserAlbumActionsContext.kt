@@ -22,9 +22,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.Gallery
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.UserAlbum
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
 import kotlinx.coroutines.flow.map
-import javax.inject.Inject
 
-internal class UserAlbumActionsContext @Inject constructor(
+internal class UserAlbumActionsContext(
     userAlbumDisplay: UserAlbumDisplay,
     userAlbumUseCase: UserAlbumUseCase,
     galleryActionsContextFactory: GalleryActionsContextFactory,

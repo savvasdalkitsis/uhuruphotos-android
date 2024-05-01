@@ -15,18 +15,10 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.seam
 
-import android.content.Context
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.usecase.StatsUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
-import dagger.hilt.android.qualifiers.ApplicationContext
-import javax.inject.Inject
 
-internal class StatsActionsContext @Inject constructor(
+internal class StatsActionsContext(
     val statsUseCase: StatsUseCase,
-    val settingsUseCase: SettingsUseCase,
-    val navigator: Navigator,
     val feedUseCase: FeedUseCase,
-    @ApplicationContext val context: Context
 )

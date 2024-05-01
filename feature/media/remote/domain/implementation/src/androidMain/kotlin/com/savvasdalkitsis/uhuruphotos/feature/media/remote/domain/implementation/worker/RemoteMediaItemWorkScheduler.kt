@@ -18,9 +18,8 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementati
 import androidx.work.BackoffPolicy
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkScheduleUseCase
 import java.util.concurrent.TimeUnit
-import javax.inject.Inject
 
-class RemoteMediaItemWorkScheduler @Inject constructor(
+class RemoteMediaItemWorkScheduler(
     private val workScheduleUseCase: WorkScheduleUseCase,
 ) {
 

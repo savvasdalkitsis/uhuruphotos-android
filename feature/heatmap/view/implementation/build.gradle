@@ -1,6 +1,5 @@
 plugins {
     id "android.library"
-    id "hilt"
     alias(libs.plugins.compose)
 }
 
@@ -17,22 +16,24 @@ dependencies {
             libs.androidx.compose.ui,
             project(":feature:collage:view:api"),
             project(":feature:db:domain:api"),
-            project(":feature:feed:domain:api"),
-            project(":feature:heatmap:domain:api"),
+            project(":feature:feed:domain:api:module"),
+            project(":feature:heatmap:domain:api:module"),
             project(":feature:heatmap:view:api"),
             project(":feature:lightbox:view:api"),
-            project(":feature:settings:domain:api"),
+            project(":feature:media:common:domain:api:module"),
+            project(":feature:media:common:view:api"),
+            project(":feature:media:local:domain:api:module"),
+            project(":feature:media:local:view:api"),
+            project(":feature:media:remote:domain:api"),
+            project(":feature:settings:domain:api:module:ui"),
+            project(":foundation:android:api:module"),
             project(":foundation:coroutines:api"),
             project(":foundation:date:api"),
             project(":foundation:icons:api"),
             project(":foundation:map:api"),
-            project(":foundation:navigation:api"),
+            project(":foundation:navigation:api:module"),
             project(":foundation:strings:api"),
-            project(":foundation:toaster:api"),
+            project(":foundation:toaster:api:module"),
             project(":foundation:ui:api"),
-            project(":feature:media:common:domain:api"),
-            project(":feature:media:common:view:api"),
-            project(":feature:media:local:view:api"),
-            project(":feature:media:remote:domain:api"),
     )
 }

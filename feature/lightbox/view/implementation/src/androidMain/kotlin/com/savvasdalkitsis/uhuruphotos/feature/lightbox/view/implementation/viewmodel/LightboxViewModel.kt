@@ -16,18 +16,16 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.viewmodel
 
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation.LightboxNavigationRoute
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.module.LightboxModule
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.LightboxAction
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.LoadMediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 
-@HiltViewModel
-internal class LightboxViewModel @Inject constructor(
-    lightboxActionsContext: LightboxActionsContext,
+internal class LightboxViewModel(
+    lightboxActionsContext: LightboxActionsContext = LightboxModule.lightboxActionsContext,
 ) : NavigationViewModel<LightboxState, LightboxAction, LightboxNavigationRoute>(
     ActionHandlerWithContext(lightboxActionsContext),
     LightboxState()

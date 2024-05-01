@@ -22,11 +22,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.foundation.launchers.api.onIO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class FeedCache @Inject constructor() {
+class FeedCache {
 
     private val caches: Map<Pair<FeedFetchType, Boolean>, MutableSharedFlow<List<MediaCollection>>?> = mapOf(
         (ALL to true) to MutableSharedFlow(replay = 1),

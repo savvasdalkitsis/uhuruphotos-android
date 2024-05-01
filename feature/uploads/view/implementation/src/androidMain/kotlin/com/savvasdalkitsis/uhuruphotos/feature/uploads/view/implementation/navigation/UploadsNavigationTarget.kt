@@ -20,14 +20,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.uploads.view.implementation.ui.Up
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.view.implementation.viewmodel.UploadsViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
-import se.ansman.dagger.auto.AutoInitialize
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@AutoInitialize
-@Singleton
-class UploadsNavigationTarget @Inject constructor(
-) : NavigationTarget<UploadsNavigationRoute> by ViewModelNavigationTarget(
+object UploadsNavigationTarget : NavigationTarget<UploadsNavigationRoute> by ViewModelNavigationTarget(
     UploadsViewModel::class,
     UploadsNavigationRoute::class,
     view = { state, action ->

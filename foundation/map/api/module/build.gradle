@@ -1,0 +1,16 @@
+plugins {
+    id "android.library"
+}
+
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.map.api.module'
+}
+
+dependencies {
+    api project(":foundation:map:api")
+    implementation project(":foundation:initializer:api")
+    implementation project(":foundation:inject:api")
+    implementation project(":foundation:map:google:implementation")
+    implementation project(":foundation:map:mapbox:implementation")
+    implementation project(":foundation:map:maplibre:implementation")
+}

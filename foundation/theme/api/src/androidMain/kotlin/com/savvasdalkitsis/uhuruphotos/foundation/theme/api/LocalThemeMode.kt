@@ -18,5 +18,5 @@ package com.savvasdalkitsis.uhuruphotos.foundation.theme.api
 import androidx.compose.runtime.compositionLocalOf
 
 val LocalThemeMode = compositionLocalOf<ThemeMode> {
-    TODO("Not Implemented")
+    throw NotImplementedError()
 }

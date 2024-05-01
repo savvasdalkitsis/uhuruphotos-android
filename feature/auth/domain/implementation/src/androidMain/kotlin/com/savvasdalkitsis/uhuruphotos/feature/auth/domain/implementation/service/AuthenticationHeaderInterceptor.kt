@@ -17,9 +17,8 @@ package com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.servi
 
 import okhttp3.Interceptor
 import okhttp3.Response
-import javax.inject.Inject
 
-class AuthenticationHeaderInterceptor @Inject constructor(
+class AuthenticationHeaderInterceptor(
     private val authenticationHeaderInjector: AuthenticationHeaderInjector,
 ): Interceptor {
 
