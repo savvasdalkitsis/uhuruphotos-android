@@ -1,0 +1,83 @@
+/*
+Copyright 2023 Savvas Dalkitsis
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+ */
+@file:OptIn(ExperimentalLayoutApi::class)
+
+package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.dialogs
+
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material.OutlinedButton
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.strings
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.LoginButton
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.WhatIsLibrePhotosButton
+import dev.icerock.moko.resources.compose.stringResource
+
+@Composable
+fun UpsellDialog(
+    onDismiss: () -> Unit,
+    onNeverAgain: (() -> Unit)? = null,
+    onLogin: () -> Unit,
+) {
+    var showHelpDialog by remember {
+        mutableStateOf(false)
+    }
+    MultiButtonDialog(
+        title = stringResource(strings.advanced_feature_title),
+        dismissButton = {
+            OutlinedButton(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .recomposeHighlighter(),
+                onClick = onDismiss,
+            ) {
+                Text(stringResource(strings.ok))
+            }
+        },
+        onDismiss = onDismiss,
+        extraButtons = {
+            WhatIsLibrePhotosButton {
+                showHelpDialog = true
+            }
+            if (onNeverAgain != null) {
+                OutlinedButton(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .recomposeHighlighter(),
+                    onClick = onNeverAgain
+                ) {
+                    Text(stringResource(strings.do_not_show_again))
+                }
+            }
+        },
+        confirmButton = { LoginButton(onLogin = onLogin) },
+    ) {
+        Text(stringResource(strings.advanced_feature_body))
+    }
+    if (showHelpDialog) {
+        WhatIsLibrePhotosDialog {
+            showHelpDialog = false
+            onDismiss()
+        }
+    }
+}

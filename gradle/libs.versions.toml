@@ -23,6 +23,7 @@ okhttp = "5.0.0-alpha.11"
 permissions = "1.2.0"
 resaca = "3.2.0"
 result = "2.0.0"
+resources = "0.23.0"
 sqldelight = "2.0.2"
 
 [plugins]
@@ -41,6 +42,7 @@ ktorfit = { id = "de.jensklingenberg.ktorfit", version.ref = "ktorfit" }
 moduleGraph = "com.savvasdalkitsis.module-dependency-graph:0.12"
 powerassert = "com.bnorm.power.kotlin-power-assert:0.13.0"
 redacted = "dev.zacsweers.redacted:1.7.1"
+resources = { id = "dev.icerock.mobile.multiplatform-resources", version.ref = "resources" }
 sonarqube = "org.sonarqube:4.4.1.3373"
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
 
@@ -127,7 +129,7 @@ ktor-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
 ktorfit-core = { module = "de.jensklingenberg.ktorfit:ktorfit-lib", version.ref = "ktorfit" }
 ktorfit-ksp = { module = "de.jensklingenberg.ktorfit:ktorfit-ksp", version.ref = "ktorfit" }
 leaks = "com.squareup.leakcanary:leakcanary-android:2.13"
-lottie = "com.airbnb.android:lottie-compose:6.3.0"
+lottie = "io.github.alexzhirkevich:compottie:1.1.2"
 lumberjack-core = { module = "com.github.MFlisar.Lumberjack:core", version.ref = "lumberjack" }
 lumberjack-implementation = { module = "com.github.MFlisar.Lumberjack:implementation-lumberjack", version.ref = "lumberjack" }
 lumberjack-logger-console = { module = "com.github.MFlisar.Lumberjack:logger-console", version.ref = "lumberjack" }
@@ -155,6 +157,8 @@ reorder = "org.burnoutcrew.composereorderable:reorderable:0.9.6"
 resaca-core = { module = "io.github.sebaslogen:resaca", version.ref = "resaca" }
 result = { module = "com.michael-bull.kotlin-result:kotlin-result", version.ref = "result" }
 result-coroutines = { module = "com.michael-bull.kotlin-result:kotlin-result-coroutines", version.ref = "result" }
+resources-core = { module = "dev.icerock.moko:resources", version.ref = "resources" }
+resources-compose = { module = "dev.icerock.moko:resources-compose", version.ref = "resources" }
 scrollbar = "com.github.nanihadesuka:LazyColumnScrollbar:1.9.0"
 seeker = "io.github.2307vivek:seeker:1.2.2"
 shazamcrest = "com.shazam:shazamcrest:0.11"
@@ -206,6 +210,10 @@ resaca = [
 result = [
     "result",
     "result-coroutines",
+]
+resources = [
+    "resources-core",
+    "resources-compose",
 ]
 test = [
     "junit",

@@ -29,6 +29,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.DynamicIcon
+import dev.icerock.moko.resources.ImageResource
 
 @Composable
 fun TextWithIcon(
@@ -36,7 +37,7 @@ fun TextWithIcon(
     iconModifier: Modifier = Modifier
         .size(24.dp),
     textModifier: Modifier = Modifier,
-    icon: Int,
+    icon: ImageResource,
     tint: Color? = null,
     style: TextStyle = LocalTextStyle.current,
     verticalAlignment: Alignment.Vertical = CenterVertically,

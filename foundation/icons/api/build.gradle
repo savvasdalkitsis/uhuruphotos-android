@@ -1,7 +1,23 @@
 plugins {
+    alias(libs.plugins.resources)
     id "android.library"
 }
 
 android {
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.icons.api'
+}
+
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                api libs.bundles.resources
+            }
+        }
+    }
+}
+
+multiplatformResources {
+    multiplatformResourcesPackage = "com.savvasdalkitsis.uhuruphotos.foundation.icons.api"
+    multiplatformResourcesClassName = "R"
 }
