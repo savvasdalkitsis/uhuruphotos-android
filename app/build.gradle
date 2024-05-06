@@ -17,8 +17,8 @@ android {
         applicationId "com.savvasdalkitsis.uhuruphotos"
         minSdk 24
         targetSdk 34
-        versionCode 219
-        versionName "0.0.219"
+        versionCode 220
+        versionName "0.0.220"
 
         manifestPlaceholders = [
                 bugSnagApiKey: System.getenv("BUGSNAG_API_KEY") ?: "DUMMY-KEY",
@@ -45,8 +45,8 @@ android {
             debuggable true
         }
         release {
-            minifyEnabled true
-            shrinkResources true
+            minifyEnabled false
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             proguardFiles fileTree(dir: "proguards", include: ["*.pro"]).asList().toArray()
 
