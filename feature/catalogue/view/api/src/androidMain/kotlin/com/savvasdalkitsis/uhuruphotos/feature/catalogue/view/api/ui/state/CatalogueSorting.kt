@@ -15,15 +15,15 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state
 
-import androidx.annotation.DrawableRes
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
+import dev.icerock.moko.resources.ImageResource
 
-enum class CatalogueSorting(@DrawableRes val icon: Int) {
+enum class CatalogueSorting(val icon: ImageResource) {
 
-    DATE_DESC(drawable.ic_sort_date_descending),
-    DATE_ASC(drawable.ic_sort_date_ascending),
-    ALPHABETICAL_ASC(drawable.ic_sort_az_ascending),
-    ALPHABETICAL_DESC(drawable.ic_sort_az_descending);
+    DATE_DESC(images.ic_sort_date_descending),
+    DATE_ASC(images.ic_sort_date_ascending),
+    ALPHABETICAL_ASC(images.ic_sort_az_ascending),
+    ALPHABETICAL_DESC(images.ic_sort_az_descending);
 
     companion object {
         val default = DATE_DESC

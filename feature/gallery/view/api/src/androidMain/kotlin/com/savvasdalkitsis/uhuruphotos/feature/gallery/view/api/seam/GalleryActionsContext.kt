@@ -26,7 +26,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.observe
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -61,7 +61,7 @@ class GalleryActionsContext(
         _loading.emit(Loading(true))
         val result = galleryRefresher(galleryId.id)
         if (result.isErr) {
-            toaster.show(R.string.error_loading_album)
+            toaster.show(strings.error_loading_album)
         }
         _loading.emit(Loading(false))
     }

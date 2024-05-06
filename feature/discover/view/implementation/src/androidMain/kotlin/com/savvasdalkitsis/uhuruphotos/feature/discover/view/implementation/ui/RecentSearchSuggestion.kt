@@ -20,11 +20,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material.Icon
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import dev.icerock.moko.resources.compose.painterResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.DiscoverAction
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.RemoveFromRecentSearches
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
 
 internal fun LazyListScope.recentSearchSuggestion(
@@ -42,14 +42,14 @@ internal fun LazyListScope.recentSearchSuggestion(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(4.dp),
-                    painter = painterResource(id = drawable.ic_history),
+                    painter = painterResource(images.ic_history),
                     contentDescription = null
                 )
             },
             trailingContent = {
                 ActionIcon(
                     onClick = { action(RemoveFromRecentSearches(suggestion)) },
-                    icon = drawable.ic_clear
+                    icon = images.ic_clear
                 )
             }
         )

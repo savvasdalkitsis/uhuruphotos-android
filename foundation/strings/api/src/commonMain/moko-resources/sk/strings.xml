@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="people">Ľudia</string>
+    <string name="view_all">Zobraziť všetky</string>
+    <string name="error_changing_photo_favourite">Pri zmene stavu obľúbenej fotografie sa vyskytla chyba</string>
+    <string name="error_searching">Pri vyhľadávaní sa vyskytla chyba</string>
+    <string name="logs_cleared">Záznamy vymazané</string>
+    <string name="recent_searches_cleared">Nedávne vyhľadávania boli vymazané</string>
+    <string name="downloading_photos_sharing">Sťahujú sa fotografie a čoskoro sa budú zdieľať…</string>
+    <string name="copied_to_clipboard">Skopírované do schránky</string>
+    <string name="could_not_find_app_to_open">Nepodarilo sa nájsť aplikáciu na otvorenie</string>
+    <string name="feed_sync_freq">Frekvencia úplnej synchronizácie kanálu fotiek</string>
+    <string name="error_logging_in">Pri prihlasovaní sa vyskytla chyba</string>
+    <string name="photo_map">Mapa fotografií</string>
+    <string name="search">Vyhľadávanie</string>
+    <string name="big">Veľký</string>
+    <string name="requires_charging">Vyžaduje nabíjanie</string>
+    <string name="perform_full_feed_sync">Vykonaj úplnú synchronizáciu kanála</string>
+    <string name="jobs">Úlohy</string>
+    <string name="never">nikdy</string>
+    <string name="yes">Áno</string>
+    <string name="no">Nie</string>
+    <string name="clear">Vyčisti</string>
+    <string name="currently_used">Aktuálne využité: %dMB</string>
+    <string name="error_refreshing_people">Pri obnovovaní ľudí sa vyskytla chyba</string>
+    <string name="error_loading_photo_details">Pri načítavaní podrobností fotografie sa vyskytla chyba</string>
+    <string name="gallery_size">Veľkosť galérie</string>
+    <string name="photo">Fotka</string>
+    <string name="tiny">Maličký</string>
+    <string name="changes_effect_after_restart">(zmeny sa prejavia po reštarte)</string>
+    <string name="media">Média</string>
+    <string name="yearly">Ročne</string>
+    <string name="compact">Kompaktný</string>
+    <string name="comfortable">Pohodlný</string>
+    <string name="max_limit">Maximálny limit: %dMB</string>
+    <string name="full">Plný</string>
+    <string name="perform_full_sync">Vykonaj úplnú synchronizáciu</string>
+    <string name="settings">Nastavenia</string>
+    <string name="feed_sync_freq_changed">Frekvencia synchronizácie kanálu zmenená</string>
+    <string name="feed_sync_network_changed">Požiadavka siete na synchronizáciu kanála sa zmenila</string>
+    <string name="feed">Dávka</string>
+    <string name="feed_sync_progress">Stav úplnej synchronizácie kanálu fotiek</string>
+    <string name="feed_size">Veľkosť kanálu</string>
+</resources>

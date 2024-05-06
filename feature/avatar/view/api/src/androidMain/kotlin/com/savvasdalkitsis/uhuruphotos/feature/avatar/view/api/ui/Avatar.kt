@@ -36,7 +36,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -48,11 +47,12 @@ import com.savvasdalkitsis.uhuruphotos.feature.avatar.domain.api.model.SyncState
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.domain.api.model.SyncState.GOOD
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.domain.api.model.SyncState.IN_PROGRESS
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Thumbnail
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.CustomColors
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode
+import dev.icerock.moko.resources.compose.painterResource
 
 @Composable
 fun Avatar(
@@ -111,7 +111,7 @@ fun Avatar(
                     .clip(CircleShape)
                     .background(Color.White)
                     .align(Alignment.Center),
-                painter = painterResource(drawable.ic_logo_small),
+                painter = painterResource(images.ic_logo_small),
                 tint = Color.Black,
                 contentDescription = "profileIcon"
             )

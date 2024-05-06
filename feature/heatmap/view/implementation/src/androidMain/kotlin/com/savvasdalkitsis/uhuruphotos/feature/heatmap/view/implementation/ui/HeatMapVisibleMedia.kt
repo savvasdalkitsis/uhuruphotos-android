@@ -20,7 +20,6 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.Collage
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
@@ -28,7 +27,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.actions.SelectedCel
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state.HeatMapCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state.HeatMapState
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
+import dev.icerock.moko.resources.compose.stringResource
 import kotlinx.collections.immutable.persistentListOf
 
 @Composable
@@ -43,7 +43,7 @@ fun HeatMapVisibleMedia(
         CircularProgressIndicator(modifier = loadingModifier)
     } else {
         val displayTitle = stringResource(
-            string.media_on_map,
+            strings.media_on_map,
             state.photosOnVisibleMap.size,
             state.allMedia.size
         )

@@ -23,11 +23,10 @@ data object HeatMapCollageDisplay : CollageDisplay {
     override val compactColumnsLandscape = 3
     override val wideColumnsPortrait = 7
     override val wideColumnsLandscape = 3
-    override val iconResource: Int
-        get() = throw IllegalStateException("This is not used")
+    override val iconResource = null
     override val maintainAspectRatio = false
     override val allowsAnimatedVideoThumbnails = false
-    override val friendlyName = 0
+    override val friendlyName = null
     override val zoomIn get() = HeatMapCollageDisplay
     override val zoomOut get() = HeatMapCollageDisplay
     override val allowsPinchGestures = false

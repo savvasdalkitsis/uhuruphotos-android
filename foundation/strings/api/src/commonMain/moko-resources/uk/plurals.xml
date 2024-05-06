@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plural name="delete_media_confirmation">
+        <item quantity="one">Ви дійсно хочете видалити цей %d медіафайл\?</item>
+        <item quantity="few">Ви дійсно хочете видалити ці %d медіафайли\?</item>
+        <item quantity="many">Ви дійсно хочете видалити цих %d медіафайлів\?</item>
+        <item quantity="other">Ви дійсно хочете видалити цих %d медіафайлів\?</item>
+    </plural>
+    <plural name="delete_photos">
+        <item quantity="one">Видалити %d фотографію</item>
+        <item quantity="few">Видалити %d фотографії</item>
+        <item quantity="many">Видалити %d фотографій</item>
+        <item quantity="other">Видалити %d фотографій</item>
+    </plural>
+    <plural name="delete_media">
+        <item quantity="one">Видалити %d медіафайл</item>
+        <item quantity="few">Видалити %d медіафайли</item>
+        <item quantity="many">Видалити %d медіафайлів</item>
+        <item quantity="other">Видалити %d медіафайлів</item>
+    </plural>
+    <plural name="restore_photos">
+        <item quantity="one">Відновити %d фотографію</item>
+        <item quantity="few">Відновити %d фотографії</item>
+        <item quantity="many">Відновити %d фотографій</item>
+        <item quantity="other">Відновити %d фотографій</item>
+    </plural>
+    <plural name="restore_media">
+        <item quantity="one">Відновити %d медіафайл</item>
+        <item quantity="few">Відновити %d медіафайли</item>
+        <item quantity="many">Відновити %d медіафайлів</item>
+        <item quantity="other">Відновити %d медіафайлів</item>
+    </plural>
+    <plural name="trash_photos">
+        <item quantity="one">Надіслати %d фотографію до кошика</item>
+        <item quantity="few">Надіслати %d фотографії до кошика</item>
+        <item quantity="many">Надіслати %d фотографій до кошика</item>
+        <item quantity="other">Надіслати %d фотографій до кошика</item>
+    </plural>
+    <plural name="trash_media">
+        <item quantity="one">Надіслати %d медіафайл до кошика</item>
+        <item quantity="few">Надіслати %d медіафайли до кошика</item>
+        <item quantity="many">Надіслати %d медіафайлів до кошика</item>
+        <item quantity="other">Надіслати %d медіафайлів до кошика</item>
+    </plural>
+    <plural name="restore_media_confirmation">
+        <item quantity="one">Відновити %d медіа елемент?</item>
+        <item quantity="few">Відновити %d медіа елементи?</item>
+        <item quantity="many">Відновити %d медіа елементів?</item>
+        <item quantity="other">Відновити %d медіа елементів?</item>
+    </plural>
+    <plural name="trash_photos_confirmation">
+        <item quantity="one">Надіслати це фото до кошика?</item>
+        <item quantity="few">Надіслати %d фото до кошика?</item>
+        <item quantity="many">Надіслати %d фото до кошика?</item>
+        <item quantity="other">Надіслати %d фото до кошика?</item>
+    </plural>
+    <plural name="restore_photos_confirmation">
+        <item quantity="one">Відновити %d фотографію?</item>
+        <item quantity="few">Відновити %d фотографії?</item>
+        <item quantity="many">Відновити %d фотографій?</item>
+        <item quantity="other">Відновити %d фотографій?</item>
+    </plural>
+    <plural name="delete_photos_confirmation">
+        <item quantity="one">Ви дійсно хочете видалити цю %d фотографію\?</item>
+        <item quantity="few">Ви дійсно хочете видалити ці %d фотографії\?</item>
+        <item quantity="many">Ви дійсно хочете видалити цих %d фотографій\?</item>
+        <item quantity="other">Ви дійсно хочете видалити цих %d фотографій\?</item>
+    </plural>
+    <plural name="trash_media_confirmation">
+        <item quantity="one">Надіслати %d медіа елемент до кошика?</item>
+        <item quantity="few">Надіслати %d медіа елементи до кошика?</item>
+        <item quantity="many">Надіслати %d медіа елементів до кошика?</item>
+        <item quantity="other">Надіслати %d медіа елементів до кошика?</item>
+    </plural>
+    <plural name="hours">
+        <item quantity="one">%d година</item>
+        <item quantity="few">%d години</item>
+        <item quantity="many">%d годин</item>
+        <item quantity="other">%d годин</item>
+    </plural>
+    <plural name="days">
+        <item quantity="one">%d день</item>
+        <item quantity="few">%d дні</item>
+        <item quantity="many">%d днів</item>
+        <item quantity="other">%d днів</item>
+    </plural>
+    <plural name="item_count">
+        <item quantity="one">%d елемент</item>
+        <item quantity="few">%d елементи</item>
+        <item quantity="many">%d елементів</item>
+        <item quantity="other">%d елементів</item>
+    </plural>
+</resources>

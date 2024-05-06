@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadU
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.implementation.module.UploadModule
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNotificationWorker
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.module.NotificationModule
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import kotlin.LazyThreadSafetyMode.NONE
 
 @Deprecated("This class is no longer used. Left for backwards compatibility")
@@ -32,7 +32,7 @@ class InitiateUploadWorker(
 ) : ForegroundNotificationWorker<Nothing>(
     context,
     params,
-    notificationTitle = string.media_sync_status_uploading,
+    notificationTitle = strings.media_sync_status_uploading,
     notificationId = NOTIFICATION_ID,
     foregroundInfoBuilder = NotificationModule.foregroundInfoBuilder,
     cancelBroadcastReceiver = null,

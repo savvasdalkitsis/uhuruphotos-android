@@ -29,7 +29,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
@@ -41,15 +40,16 @@ import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.ui.co
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.ui.components.WelcomeLibrePhotosHelpDialog
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.ui.components.WelcomeLoadedContent
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.ui.state.WelcomeState
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
 import com.savvasdalkitsis.uhuruphotos.foundation.permissions.api.ui.PermissionsState
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.Logo
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.CommonScaffold
+import dev.icerock.moko.resources.compose.stringResource
 
 @Composable
 internal fun Welcome(
@@ -61,7 +61,7 @@ internal fun Welcome(
         actionBarContent = {
             ActionIcon(
                 onClick = { action(Help) },
-                icon = drawable.ic_help,
+                icon = images.ic_help,
             )
         }
     ) { contentPadding ->
@@ -87,7 +87,7 @@ internal fun Welcome(
                 }
             }
             Text(
-                text = stringResource(string.welcome_footnote),
+                text = stringResource(strings.welcome_footnote),
                 style = MaterialTheme.typography.caption,
             )
             Button(
@@ -95,7 +95,7 @@ internal fun Welcome(
                 enabled = state.isSaveEnabled,
                 onClick = { action(Save) }
             ) {
-                Text(text = stringResource(string.save))
+                Text(text = stringResource(strings.save))
             }
         }
         if (state.showLibrePhotosHelp) {

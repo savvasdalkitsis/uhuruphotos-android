@@ -22,13 +22,13 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.actions.HomeAction
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.actions.Load
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.ui.state.HomeState
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.CommonScaffold
+import dev.icerock.moko.resources.compose.stringResource
 
 @Composable
 internal fun Home(
@@ -46,7 +46,7 @@ internal fun Home(
                     modifier = Modifier.align(Alignment.Center),
                     onClick = { action(Load) },
                 ) {
-                    Text(stringResource(string.authenticate))
+                    Text(stringResource(strings.authenticate))
                 }
             }
         }

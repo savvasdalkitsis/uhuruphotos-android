@@ -31,7 +31,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -44,10 +43,11 @@ import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.DayOfWeek
 import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.Month
 import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.Year
 import com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.ui.state.StatsState
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UpNavButton
+import dev.icerock.moko.resources.compose.stringResource
 import java.time.LocalDate
 
 @Composable
@@ -55,7 +55,7 @@ internal fun Stats(
     state: StatsState,
 ) {
     CommonScaffold(
-        title = { Text(stringResource(string.stats)) },
+        title = { Text(stringResource(strings.stats)) },
         navigationIcon = { UpNavButton() }
     ) { contentPadding ->
         Column(
@@ -70,35 +70,35 @@ internal fun Stats(
             StatsMediaPerPeriod(
                 isLoading = state.isLoadingMediaByYear,
                 mediaByPeriod = state.mediaByYear,
-                title = string.media_per_year,
+                title = strings.media_per_year,
                 uniqueId = "year",
-                bottomAxisLabel = string.year,
+                bottomAxisLabel = strings.year,
             )
             StatsMediaPerPeriod(
                 isLoading = state.isLoadingMediaByMonth,
                 mediaByPeriod = state.mediaByMonth,
-                title = string.media_per_month,
+                title = strings.media_per_month,
                 uniqueId = "month",
-                bottomAxisLabel = string.month,
+                bottomAxisLabel = strings.month,
             )
             StatsMediaPerPeriod(
                 isLoading = state.isLoadingMediaByDayOfMonth,
                 mediaByPeriod = state.mediaByDayOfMonth,
-                title = string.media_per_day_of_month,
+                title = strings.media_per_day_of_month,
                 uniqueId = "day_of_month",
-                bottomAxisLabel = string.day,
+                bottomAxisLabel = strings.day,
             )
             StatsMediaPerPeriod(
                 isLoading = state.isLoadingMediaByDayOfWeek,
                 mediaByPeriod = state.mediaByDayOfWeek,
-                title = string.media_per_day_of_week,
+                title = strings.media_per_day_of_week,
                 uniqueId = "day_of_week",
-                bottomAxisLabel = string.day,
+                bottomAxisLabel = strings.day,
             )
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 StatsGroup(
                     isLoading = state.isLoadingMediaHeatMap,
-                    title = string.media_heatmap,
+                    title = strings.media_heatmap,
                     uniqueId = "heatmap",
                 ) {
                     HeatMap(
@@ -134,7 +134,7 @@ private fun StatsHeader(state: StatsState) {
             Text(
                 modifier = Modifier
                     .fillMaxWidth(),
-                text = stringResource(string.photos),
+                text = stringResource(strings.photos),
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.h5,
             )
@@ -154,7 +154,7 @@ private fun StatsHeader(state: StatsState) {
             Text(
                 modifier = Modifier
                     .fillMaxWidth(),
-                text = stringResource(string.videos),
+                text = stringResource(strings.videos),
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.h5,
             )

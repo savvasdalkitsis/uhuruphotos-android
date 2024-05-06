@@ -21,14 +21,14 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ChangeMapProvider
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.MapProviderState
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
+import dev.icerock.moko.resources.compose.painterResource
+import dev.icerock.moko.resources.compose.stringResource
 
 @Composable
 internal fun SettingsMaps(
@@ -41,11 +41,11 @@ internal fun SettingsMaps(
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Icon(painter = painterResource(drawable.ic_map), contentDescription = null)
-                Text("${stringResource(string.map_provider)}: ${mapProviderState.current.name}",)
+                Icon(painter = painterResource(images.ic_map), contentDescription = null)
+                Text("${stringResource(strings.map_provider)}: ${mapProviderState.current.name}",)
             }
         },
-        buttonText = stringResource(string.change),
+        buttonText = stringResource(strings.change),
         action = action,
     ) {
         mapProviderState.available.forEach { provider ->

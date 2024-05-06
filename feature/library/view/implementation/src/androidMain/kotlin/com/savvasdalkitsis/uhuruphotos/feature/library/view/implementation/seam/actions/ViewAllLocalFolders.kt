@@ -19,13 +19,17 @@ import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryState
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.api.navigation.PortfolioNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
+import dev.icerock.moko.resources.desc.desc
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 data object ViewAllLocalFolders : LibraryAction() {
     context(LibraryActionsContext)
     override fun handle(state: LibraryState): Flow<Mutation<LibraryState>> = flow {
-        navigator.navigateTo(PortfolioNavigationRoute(editMode = false, title = string.local_albums))
+        navigator.navigateTo(PortfolioNavigationRoute(
+            editMode = false,
+            title = strings.local_albums.desc().toString(context),
+        ))
     }
 }

@@ -26,7 +26,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.implementation.repo
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNotificationWorker
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.module.NotificationModule
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import kotlin.LazyThreadSafetyMode.NONE
 
 @Deprecated("This class is no longer used. Left for backwards compatibility")
@@ -36,7 +36,7 @@ class UploadCompletionWorker(
 ) : ForegroundNotificationWorker<Nothing>(
     context,
     params,
-    notificationTitle = string.finalizing_upload,
+    notificationTitle = strings.finalizing_upload,
     notificationId = NOTIFICATION_ID,
     foregroundInfoBuilder = NotificationModule.foregroundInfoBuilder,
     cancelBroadcastReceiver = null,

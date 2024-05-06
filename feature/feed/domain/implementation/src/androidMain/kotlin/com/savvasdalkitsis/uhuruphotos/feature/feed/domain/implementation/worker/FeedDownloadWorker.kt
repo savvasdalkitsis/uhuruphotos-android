@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.module
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.FeedRepository
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNotificationWorker
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.module.NotificationModule
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import kotlinx.coroutines.delay
 import kotlin.LazyThreadSafetyMode.NONE
 
@@ -32,7 +32,7 @@ internal class FeedDownloadWorker(
 ) : ForegroundNotificationWorker<CancelFeedDownloadWorkBroadcastReceiver>(
     context,
     params,
-    notificationTitle = R.string.refreshing_feed,
+    notificationTitle = strings.refreshing_feed,
     notificationId = NOTIFICATION_ID,
     foregroundInfoBuilder = NotificationModule.foregroundInfoBuilder,
     cancelBroadcastReceiver = CancelFeedDownloadWorkBroadcastReceiver::class.java,

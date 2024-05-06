@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementati
 
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.domain.api.usecase.UserAlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -36,7 +36,7 @@ class UserAlbumsActionsContext(
         _loading.emit(true)
         val result = userAlbumsUseCase.refreshUserAlbums()
         if (result.isErr) {
-            toaster.show(R.string.error_loading_user_albums)
+            toaster.show(strings.error_loading_user_albums)
         }
         // delaying to give ui time to receive the new albums before
         // dismissing the loading bar since no albums logic relies on that

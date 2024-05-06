@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.Gallery
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource
 import com.savvasdalkitsis.uhuruphotos.feature.videos.domain.api.usecase.VideosUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simpleOk
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.map
@@ -43,7 +43,7 @@ internal class VideosActionsContext(
             feedUseCase.observeFeed(FeedFetchType.VIDEOS)
                 .map {
                     GalleryDetails(
-                        title = Title.Resource(string.videos),
+                        title = Title.Resource(strings.videos),
                         clusters = it.map { collection -> collection.toCluster() }
                     )
                 }

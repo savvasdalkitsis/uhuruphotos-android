@@ -5,6 +5,11 @@ plugins {
 
 android {
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.strings.api'
+    defaultConfig {
+        vectorDrawables {
+            useSupportLibrary = true
+        }
+    }
 }
 
 kotlin {
@@ -18,7 +23,7 @@ kotlin {
 }
 
 multiplatformResources {
-    multiplatformResourcesPackage = "com.savvasdalkitsis.uhuruphotos.foundation.strings.api"
-    multiplatformResourcesClassName = "R"
+    resourcesPackage = "com.savvasdalkitsis.uhuruphotos.foundation.strings.api"
+    resourcesClassName = "Res"
     iosBaseLocalizationRegion = "en"
 }

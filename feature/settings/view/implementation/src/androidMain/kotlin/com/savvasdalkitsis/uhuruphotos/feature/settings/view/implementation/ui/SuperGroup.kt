@@ -33,7 +33,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
+import dev.icerock.moko.resources.compose.stringResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.staggered.StaggeredGridScope
@@ -65,6 +65,7 @@ internal fun StaggeredGridScope.SuperGroup(
                             text = stringResource(groupState.title),
                             style = MaterialTheme.typography.h6,
                         )
+                        if (groupState.isCollapsed)
                         Icon(
                             painter = rememberAnimatedVectorPainter(
                                 animatedImageVector = AnimatedImageVector.animatedVectorResource(

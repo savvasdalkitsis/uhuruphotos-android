@@ -15,18 +15,18 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.ui.state
 
-import androidx.annotation.DrawableRes
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
+import dev.icerock.moko.resources.ImageResource
 
 enum class CropRatio(
     val ratio: Float,
-    @DrawableRes val icon: Int,
+    val icon: ImageResource,
     val label: String,
     val rotation: Float = 0f,
 ) {
-    Ratio_16x9(16/9f, drawable.ic_crop_16_9, "16:9"),
-    Ratio_9x16(9/16f, drawable.ic_crop_16_9, "9:16", 90f),
-    Ratio_3x2(3/2f, drawable.ic_crop_3_2, "3:2"),
-    Ratio_2x3(2/3f, drawable.ic_crop_3_2, "2:3", 90f),
-    Ratio_Square(1f, drawable.ic_crop_square, "1:1"),
+    Ratio_16x9(16/9f, images.ic_crop_16_9, "16:9"),
+    Ratio_9x16(9/16f, images.ic_crop_16_9, "9:16", 90f),
+    Ratio_3x2(3/2f, images.ic_crop_3_2, "3:2"),
+    Ratio_2x3(2/3f, images.ic_crop_3_2, "2:3", 90f),
+    Ratio_Square(1f, images.ic_crop_square, "1:1"),
 }

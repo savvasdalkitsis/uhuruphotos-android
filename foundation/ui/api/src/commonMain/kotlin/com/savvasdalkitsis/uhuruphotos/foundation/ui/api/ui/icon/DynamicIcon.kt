@@ -23,14 +23,30 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.IconResource
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.IconResource.*
 import dev.icerock.moko.resources.FileResource
 import dev.icerock.moko.resources.ImageResource
 import dev.icerock.moko.resources.compose.painterResource
+import dev.icerock.moko.resources.compose.readTextAsState
 import io.github.alexzhirkevich.compottie.LottieAnimation
 import io.github.alexzhirkevich.compottie.LottieCompositionSpec
 import io.github.alexzhirkevich.compottie.LottieConstants
 import io.github.alexzhirkevich.compottie.rememberLottieComposition
 
+@Composable
+fun DynamicIcon(
+    modifier: Modifier = Modifier,
+    icon: IconResource,
+    contentDescription: String? = null,
+    tint: Color? = null,
+    animateIfAvailable: Boolean = true,
+) {
+    when (icon) {
+        is Image -> DynamicIcon(modifier, icon.resource, contentDescription, tint, animateIfAvailable)
+        is Json -> DynamicIcon(modifier, icon.resource, contentDescription, tint, animateIfAvailable)
+    }
+}
 @Composable
 fun DynamicIcon(
     modifier: Modifier = Modifier,
@@ -40,7 +56,14 @@ fun DynamicIcon(
     animateIfAvailable: Boolean = true,
 ) {
 
-    val composition by rememberLottieComposition(LottieCompositionSpec.JsonString(icon.readText()))
+    val iconContent by icon.readTextAsState()
+
+    iconContent?.let {
+        val composition by rememberLottieComposition(
+            LottieCompositionSpec.JsonString(
+                it
+            )
+        )
 
 //            val dynamicProperties = tint?.let {
 //                rememberLottieDynamicProperties(
@@ -53,15 +76,15 @@ fun DynamicIcon(
 //                    ),
 //                )
 //            }
-    LottieAnimation(
-        modifier = modifier
-            .recomposeHighlighter()
-        ,
-        isPlaying = animateIfAvailable,
-        composition = composition,
+        LottieAnimation(
+            modifier = modifier
+                .recomposeHighlighter(),
+            isPlaying = animateIfAvailable,
+            composition = composition,
 //                dynamicProperties = dynamicProperties,
-        iterations = LottieConstants.IterateForever,
-    )
+            iterations = LottieConstants.IterateForever,
+        )
+    }
 }
 
 @Composable

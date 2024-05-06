@@ -32,7 +32,8 @@ import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.get
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.observe
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
+import dev.icerock.moko.resources.desc.desc
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNotNull
@@ -93,7 +94,7 @@ class AutoAlbumsUseCase(
                     sortableDate = it.timestamp,
                     ratio = 1f,
                 ),
-                title = it.title ?: context.getString(string.missing_album_title),
+                title = it.title ?: strings.missing_album_title.desc().toString(context),
                 photoCount = it.photoCount,
             )
         }

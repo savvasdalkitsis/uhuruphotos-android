@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.biometrics.implementation.usecase
 
-import androidx.annotation.StringRes
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE
 import androidx.biometric.BiometricManager.BIOMETRIC_SUCCESS
@@ -31,6 +30,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.launchers.api.awaitOnMain
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simple
+import dev.icerock.moko.resources.StringResource
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -60,12 +60,9 @@ class BiometricsUseCase(
     }
 
     override suspend fun authenticate(
-        @StringRes
-        title: Int,
-        @StringRes
-        subtitle: Int,
-        @StringRes
-        description: Int,
+        title: StringResource,
+        subtitle: StringResource,
+        description: StringResource,
         confirmRequired: Boolean,
     ): SimpleResult = runCatchingWithLog {
         with(currentActivityHolder.currentActivity!!) {
@@ -73,9 +70,9 @@ class BiometricsUseCase(
                 suspendCancellableCoroutine { continuation ->
                     authenticate(
                         Prompt(
-                            title = title,
-                            subtitle = subtitle,
-                            description = description,
+                            title = title.resourceId,
+                            subtitle = subtitle.resourceId,
+                            description = description.resourceId,
                             confirmRequired = confirmRequired,
                             deviceCredentialsAllowed = true,
                         )

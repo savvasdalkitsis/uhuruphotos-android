@@ -16,7 +16,6 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ChangeBiometricsAppAccessRequirement
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ChangeBiometricsHiddenPhotosAccessRequirement
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ChangeBiometricsTrashAccessRequirement
@@ -25,8 +24,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.BiometricsSetting
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.BiometricsSetting.Enrolled
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.BiometricsSetting.NotEnrolled
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
+import dev.icerock.moko.resources.compose.stringResource
 
 @Composable
 internal fun SettingsBiometrics(
@@ -35,17 +35,17 @@ internal fun SettingsBiometrics(
 ) {
     when (biometrics) {
         NotEnrolled -> SettingsButtonRow(
-            buttonText = stringResource(string.biometrics_enroll)
+            buttonText = stringResource(strings.biometrics_enroll)
         ) {
             action(EnrollToBiometrics)
         }
         is Enrolled -> {
             SettingsEntryWithSubtext(
-                subtext = string.changes_effect_after_restart
+                subtext = strings.changes_effect_after_restart
             ) {
                 SettingsCheckBox(
-                    text = stringResource(string.require_biometrics_for_app_access),
-                    icon = drawable.ic_fingerprint,
+                    text = stringResource(strings.require_biometrics_for_app_access),
+                    icon = images.ic_fingerprint,
                     isChecked = biometrics.requiredForAppAccess,
                     onCheckedChange = {
                         action(ChangeBiometricsAppAccessRequirement(!biometrics.requiredForAppAccess))
@@ -53,16 +53,16 @@ internal fun SettingsBiometrics(
                 )
             }
             SettingsCheckBox(
-                text = stringResource(string.require_biometrics_for_hidden_media_access),
-                icon = drawable.ic_invisible,
+                text = stringResource(strings.require_biometrics_for_hidden_media_access),
+                icon = images.ic_invisible,
                 isChecked = biometrics.requiredForHiddenPhotosAccess,
                 onCheckedChange = {
                     action(ChangeBiometricsHiddenPhotosAccessRequirement(!biometrics.requiredForHiddenPhotosAccess))
                 }
             )
             SettingsCheckBox(
-                text = stringResource(string.require_biometrics_for_trash_access),
-                icon = drawable.ic_delete,
+                text = stringResource(strings.require_biometrics_for_trash_access),
+                icon = images.ic_delete,
                 isChecked = biometrics.requiredForTrashAccess,
                 onCheckedChange = {
                     action(ChangeBiometricsTrashAccessRequirement(!biometrics.requiredForTrashAccess))

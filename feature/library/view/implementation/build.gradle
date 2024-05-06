@@ -40,6 +40,7 @@ dependencies {
             project(":feature:settings:domain:api"),
             project(":feature:trash:view:api"),
             project(":feature:welcome:domain:api:module"),
+            project(":foundation:android:api:module"),
             project(":foundation:compose:api"),
             project(":foundation:coroutines:api"),
             project(":foundation:icons:api"),

@@ -15,9 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state
 
-import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
 import androidx.compose.runtime.Immutable
+import dev.icerock.moko.resources.ImageResource
+import dev.icerock.moko.resources.StringResource
 
 @Immutable
 interface CollageDisplay {
@@ -26,10 +26,10 @@ interface CollageDisplay {
     val compactColumnsLandscape: Int
     val wideColumnsPortrait: Int
     val wideColumnsLandscape: Int
-    @get:DrawableRes val iconResource: Int
+    val iconResource: ImageResource?
     val maintainAspectRatio: Boolean
     val allowsAnimatedVideoThumbnails: Boolean
-    @get:StringRes val friendlyName: Int
+    val friendlyName: StringResource?
     val zoomIn: CollageDisplay
     val zoomOut: CollageDisplay
     val allowsPinchGestures: Boolean

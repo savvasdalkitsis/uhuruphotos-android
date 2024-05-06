@@ -30,7 +30,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.strings
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.layout.ReverseDirection
 import dev.icerock.moko.resources.compose.stringResource
 

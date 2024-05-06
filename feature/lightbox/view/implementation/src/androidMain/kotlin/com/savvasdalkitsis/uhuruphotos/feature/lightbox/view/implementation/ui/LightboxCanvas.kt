@@ -117,7 +117,7 @@ fun LightboxCanvas(
         Column {
             Spacer(modifier = Modifier.height(contentPadding.calculateTopPadding()))
             InfoBar(offeredMessage = state.errorMessage?.let {
-                InfoBarMessage(textStringResId = it)
+                InfoBarMessage(textStringResId = it.resourceId)
             }) {
                 action(DismissErrorMessage)
             }

@@ -27,7 +27,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.to
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.usecase.BiometricsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.flatMapLatest
@@ -55,9 +55,9 @@ internal class HiddenPhotosAlbumPageActionsContext(
                 .flatMapLatest { biometricsRequired ->
                     val proceed = when {
                         biometricsRequired -> biometricsUseCase.authenticate(
-                            string.authenticate,
-                            string.authenticate_for_access_to_hidden,
-                            string.authenticate_for_access_to_hidden_description,
+                            strings.authenticate,
+                            strings.authenticate_for_access_to_hidden,
+                            strings.authenticate_for_access_to_hidden_description,
                             true,
                         )
 
@@ -72,7 +72,7 @@ internal class HiddenPhotosAlbumPageActionsContext(
                             .mapNotNull { it.getOr(null) }
                             .map { photoEntries ->
                                 GalleryDetails(
-                                    title = Title.Resource(string.hidden_media),
+                                    title = Title.Resource(strings.hidden_media),
                                     clusters = listOf(
                                         Cluster(
                                             id = "hidden",

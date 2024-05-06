@@ -36,8 +36,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mikepenz.aboutlibraries.ui.compose.LibrariesContainer
@@ -48,13 +46,15 @@ import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.ac
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.actions.SendFeedback
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.ui.state.AboutState
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.IconOutlineButton
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UpNavButton
+import dev.icerock.moko.resources.compose.painterResource
+import dev.icerock.moko.resources.compose.stringResource
 import my.nanihadesuka.compose.InternalLazyColumnScrollbar
 import my.nanihadesuka.compose.ScrollbarSelectionMode
 
@@ -64,7 +64,7 @@ internal fun About(
     action: (AboutAction) -> Unit,
 ) {
     CommonScaffold(
-        title = { Text(stringResource(string.about)) },
+        title = { Text(stringResource(strings.about)) },
         navigationIcon = { UpNavButton() },
     ) { contentPadding ->
         val listState = rememberLazyListState()
@@ -115,7 +115,7 @@ private fun AboutHeader(
                 .size(80.dp)
                 .background(Color.White, CircleShape),
             tint = Color.Black,
-            painter = painterResource(drawable.ic_logo),
+            painter = painterResource(images.ic_logo),
             contentDescription = null,
         )
         Text(
@@ -139,7 +139,7 @@ private fun AboutHeader(
                 onClick = { action(NavigateToGithub )},
             ) {
                 Icon(
-                    painter = painterResource(drawable.ic_github),
+                    painter = painterResource(images.ic_github),
                     contentDescription = null
                 )
                 Spacer(modifier = Modifier
@@ -154,13 +154,13 @@ private fun AboutHeader(
                 onClick = { action(Donate) },
             ) {
                 Icon(
-                    painter = painterResource(drawable.ic_money),
+                    painter = painterResource(images.ic_money),
                     contentDescription = null
                 )
                 Spacer(modifier = Modifier
                     .recomposeHighlighter()
                     .width(8.dp))
-                Text(text = stringResource(string.donate))
+                Text(text = stringResource(strings.donate))
             }
         }
         Row(
@@ -176,7 +176,7 @@ private fun AboutHeader(
                 onClick = { action(SendFeedback) },
             ) {
                 Icon(
-                    painter = painterResource(drawable.ic_feedback),
+                    painter = painterResource(images.ic_feedback),
                     contentDescription = null
                 )
                 Spacer(
@@ -184,13 +184,13 @@ private fun AboutHeader(
                         .recomposeHighlighter()
                         .width(8.dp)
                 )
-                Text(text = stringResource(string.feedback))
+                Text(text = stringResource(strings.feedback))
             }
             IconOutlineButton(
                 modifier = Modifier.weight(1f),
-                icon = drawable.ic_book_open,
+                icon = images.ic_book_open,
                 onClick = { action(NavigateToPrivacyPolicy) },
-                text = stringResource(string.privacy_policy)
+                text = stringResource(strings.privacy_policy)
             )
         }
     }

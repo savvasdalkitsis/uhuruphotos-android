@@ -31,7 +31,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job
@@ -42,9 +41,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus.I
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus.InProgress
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus.Queued
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.state.JobState
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
+import dev.icerock.moko.resources.compose.stringResource
 
 @Composable
 fun JobRow(
@@ -79,8 +79,8 @@ fun JobRow(
             Text(
                 modifier = Modifier.animateContentSize(),
                 text = when (state.status) {
-                    Queued, Blocked, Idle, Failed -> stringResource(string.start)
-                    is InProgress -> stringResource(string.cancel)
+                    Queued, Blocked, Idle, Failed -> stringResource(strings.start)
+                    is InProgress -> stringResource(strings.cancel)
                 }
             )
         }

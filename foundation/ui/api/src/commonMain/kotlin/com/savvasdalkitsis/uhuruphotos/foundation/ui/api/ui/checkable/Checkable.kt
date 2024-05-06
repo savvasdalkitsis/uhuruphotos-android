@@ -43,7 +43,7 @@ import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.images
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.CustomColors
 import dev.icerock.moko.resources.compose.painterResource
 

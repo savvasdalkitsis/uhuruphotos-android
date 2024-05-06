@@ -28,7 +28,7 @@ import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
+import dev.icerock.moko.resources.compose.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.LibraryAction
@@ -43,8 +43,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.NamedVit
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.VitrineState
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaFolder
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SectionHeader
@@ -65,7 +65,7 @@ internal fun LocalFolders(
             title = title,
             endContent = {
                 TextButton(onClick = { action(ViewAllLocalFolders) }) {
-                    Text(stringResource(string.view_all))
+                    Text(stringResource(strings.view_all))
                 }
             },
         )
@@ -80,7 +80,7 @@ internal fun LocalFolders(
                         state = vitrineState,
                         photoGridModifier = Modifier.width(120.dp),
                         title = bucket.displayName,
-                        iconFallback = -1,
+                        iconFallback = null,
                     ) {
                         action(LocalBucketSelected(bucket))
                     }
@@ -94,7 +94,7 @@ internal fun LocalFolders(
                             .padding(bottom = 38.dp)
                             .heightIn(min = 72.dp)
                         ,
-                        icon = drawable.ic_folder,
+                        icon = images.ic_folder,
                         text = "Scan other device folders",
                     ) {
                         action(StartScanningOtherFolders)
@@ -123,7 +123,7 @@ private fun LocalFoldersPreviewDark() {
 
 @Composable
 private fun LocalFoldersAll() {
-    LocalFolders(title = stringResource(string.local_albums), media = LibraryLocalMedia.Found(listOf(
+    LocalFolders(title = stringResource(strings.local_albums), media = LibraryLocalMedia.Found(listOf(
         LocalMediaFolder(0, "Folder 1") to VitrineState(
             celState("#ff0000"),
             celState("#00ff00"),
@@ -171,7 +171,7 @@ private fun LocalFoldersPreviewWithoutOtherDark() {
 
 @Composable
 private fun LocalFoldersWithoutOther() {
-    LocalFolders(title = stringResource(string.local_albums), media = LibraryLocalMedia.Found(listOf(
+    LocalFolders(title = stringResource(strings.local_albums), media = LibraryLocalMedia.Found(listOf(
         LocalMediaFolder(0, "Folder 1") to VitrineState(
             celState("#ff0000"),
             celState("#00ff00"),

@@ -27,14 +27,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.R
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.files
 import com.savvasdalkitsis.uhuruphotos.foundation.permissions.api.ui.PermissionsState
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.DynamicIcon
+import dev.icerock.moko.resources.compose.stringResource
 
 @Composable
 fun BoxScope.PortfolioMissingPermissions(
@@ -48,13 +48,13 @@ fun BoxScope.PortfolioMissingPermissions(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = spacedBy(8.dp),
     ) {
-        DynamicIcon(icon = R.raw.animation_media_file)
+        DynamicIcon(icon = files.animation_media_file_json)
         Text(
-            text = stringResource(string.missing_permissions),
+            text = stringResource(strings.missing_permissions),
             style = MaterialTheme.typography.h5,
         )
         Button(onClick = { permissionsState.askForPermissions() }) {
-            Text(text = stringResource(string.grant_permissions))
+            Text(text = stringResource(strings.grant_permissions))
         }
     }
 }

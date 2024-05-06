@@ -16,13 +16,13 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
+import dev.icerock.moko.resources.compose.stringResource
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ChangeSearchSuggestionsEnabled
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ClearRecentSearches
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 
 @Composable
 internal fun SettingsSearch(
@@ -31,17 +31,17 @@ internal fun SettingsSearch(
 ) {
     val checked = state.searchSuggestionsEnabled
     SettingsCheckBox(
-        text = stringResource(string.enable_suggestions),
+        text = stringResource(strings.enable_suggestions),
         icon = when {
-            checked -> drawable.ic_lightbulb
-            else -> drawable.ic_lightbulb_off
+            checked -> images.ic_lightbulb
+            else -> images.ic_lightbulb_off
         },
         isChecked = checked,
         onCheckedChange = { action(ChangeSearchSuggestionsEnabled(it)) }
     )
     SettingsOutlineButtonRow(
-        buttonText = stringResource(string.clear_recent_searches),
-        icon = drawable.ic_clear_all,
+        buttonText = stringResource(strings.clear_recent_searches),
+        icon = images.ic_clear_all,
     ) {
         action(ClearRecentSearches)
     }

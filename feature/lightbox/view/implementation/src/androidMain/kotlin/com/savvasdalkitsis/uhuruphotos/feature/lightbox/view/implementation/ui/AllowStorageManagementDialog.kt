@@ -17,8 +17,8 @@ package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui
 
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import dev.icerock.moko.resources.compose.stringResource
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.dialogs.YesNoDialog
 
 @Composable
@@ -27,11 +27,11 @@ internal fun AllowStorageManagementDialog(
     onAllow: () -> Unit,
 ) {
     YesNoDialog(
-        title = stringResource(string.allow_storage_management_title),
+        title = stringResource(strings.allow_storage_management_title),
         onDismiss = onDismiss,
         onYes = onAllow,
         body = {
-            Text(stringResource(string.allow_storage_management_description))
-            Text(stringResource(string.allow_storage_management_details))
+            Text(stringResource(strings.allow_storage_management_description))
+            Text(stringResource(strings.allow_storage_management_details))
         })
 }

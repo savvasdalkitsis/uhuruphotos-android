@@ -27,7 +27,7 @@ import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.strings
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import dev.icerock.moko.resources.compose.stringResource
 
 @Composable

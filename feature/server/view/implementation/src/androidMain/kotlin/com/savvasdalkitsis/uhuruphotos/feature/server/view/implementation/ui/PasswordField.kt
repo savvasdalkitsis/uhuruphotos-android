@@ -29,7 +29,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -38,9 +37,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.a
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.ServerAction
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.TogglePasswordVisibility
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.UserPasswordChangedTo
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
+import dev.icerock.moko.resources.compose.stringResource
 
 @Composable
 internal fun PasswordField(
@@ -80,12 +80,12 @@ internal fun PasswordField(
             ActionIcon(
                 onClick = { action(TogglePasswordVisibility) },
                 icon = when {
-                    state.passwordVisible -> drawable.ic_visible
-                    else -> drawable.ic_invisible
+                    state.passwordVisible -> images.ic_visible
+                    else -> images.ic_invisible
                 }
             )
         },
-        label = { Text(stringResource(string.password)) },
+        label = { Text(stringResource(strings.password)) },
         value = password,
         onValueChange = {
             password = it

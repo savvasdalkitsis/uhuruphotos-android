@@ -32,13 +32,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
+import dev.icerock.moko.resources.compose.painterResource
+import dev.icerock.moko.resources.compose.stringResource
 
 @Composable
 fun CollageDisplayActionButton(
@@ -46,31 +46,33 @@ fun CollageDisplayActionButton(
     currentCollageDisplay: CollageDisplay,
 ) {
     var isOpen by remember { mutableStateOf(false) }
-    Box {
-        ActionIcon(
-            modifier = Modifier
-                .pointerInput(currentCollageDisplay) {
-                    detectVerticalDragGestures { _, dragAmount ->
-                        onChange(
-                            when {
-                                dragAmount > 0 -> currentCollageDisplay.zoomIn
-                                else -> currentCollageDisplay.zoomOut
-                            }
-                        )
+    currentCollageDisplay.iconResource?.let {iconResource ->
+        Box {
+            ActionIcon(
+                modifier = Modifier
+                    .pointerInput(currentCollageDisplay) {
+                        detectVerticalDragGestures { _, dragAmount ->
+                            onChange(
+                                when {
+                                    dragAmount > 0 -> currentCollageDisplay.zoomIn
+                                    else -> currentCollageDisplay.zoomOut
+                                }
+                            )
+                        }
+                    },
+                onClick = { isOpen = true },
+                icon = iconResource,
+                contentDescription = stringResource(strings.gallery_size),
+            )
+            DropdownMenu(
+                expanded = isOpen,
+                onDismissRequest = { isOpen = false },
+            ) {
+                PredefinedCollageDisplay.entries.toTypedArray().reversedArray().forEach { display ->
+                    CollageDisplayDropDownItem(display, currentCollageDisplay) {
+                        isOpen = false
+                        onChange(it)
                     }
-                },
-            onClick = { isOpen = true },
-            icon = currentCollageDisplay.iconResource,
-            contentDescription = stringResource(string.gallery_size),
-        )
-        DropdownMenu(
-            expanded = isOpen,
-            onDismissRequest = { isOpen = false },
-        ) {
-            PredefinedCollageDisplay.entries.toTypedArray().reversedArray().forEach { display ->
-                CollageDisplayDropDownItem(display, currentCollageDisplay) {
-                    isOpen = false
-                    onChange(it)
                 }
             }
         }
@@ -101,7 +103,7 @@ private fun CollageDisplayDropDownItem(
                 modifier = Modifier
                     .align(Alignment.CenterVertically)
                     .padding(8.dp),
-                painter = painterResource(id = display.iconResource),
+                painter = painterResource(display.iconResource),
                 contentDescription = null
             )
         }

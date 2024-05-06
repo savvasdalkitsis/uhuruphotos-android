@@ -15,9 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase
 
-import androidx.annotation.StringRes
+import dev.icerock.moko.resources.StringResource
 
 fun interface ToasterUseCase {
 
-    fun show(@StringRes message: Int)
+    fun show(message: StringResource)
 }

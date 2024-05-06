@@ -15,18 +15,18 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state
 
-import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
+import dev.icerock.moko.resources.ImageResource
+import dev.icerock.moko.resources.StringResource
 
 enum class FeedMediaItemSyncDisplay(
-    @StringRes val friendlyName: Int,
-    @DrawableRes val icon: Int,
+    val friendlyName: StringResource,
+    val icon: ImageResource,
 ) {
-    SHOW_ON_SCROLL(string.show_on_scroll, drawable.ic_swipe_vertical),
-    ALWAYS_ON(string.show_always, drawable.ic_visible),
-    ALWAYS_OFF(string.show_never, drawable.ic_invisible);
+    SHOW_ON_SCROLL(strings.show_on_scroll, images.ic_swipe_vertical),
+    ALWAYS_ON(strings.show_always, images.ic_visible),
+    ALWAYS_OFF(strings.show_never, images.ic_invisible);
 
     companion object {
         val default = SHOW_ON_SCROLL

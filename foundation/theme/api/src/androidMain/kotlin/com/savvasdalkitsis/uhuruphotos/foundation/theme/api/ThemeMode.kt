@@ -15,17 +15,17 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.theme.api
 
-import androidx.annotation.DrawableRes
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
+import dev.icerock.moko.resources.ImageResource
 
 enum class ThemeMode(
     val friendlyName: String,
-    @DrawableRes val icon: Int,
+    val icon: ImageResource,
 ) {
 
-    FOLLOW_SYSTEM("Follow system", drawable.ic_brightness_auto),
-    DARK_MODE("Dark mode", drawable.ic_dark_mode),
-    LIGHT_MODE("Light mode", drawable.ic_light_mode);
+    FOLLOW_SYSTEM("Follow system", images.ic_brightness_auto),
+    DARK_MODE("Dark mode", images.ic_dark_mode),
+    LIGHT_MODE("Light mode", images.ic_light_mode);
 
     companion object {
         val default = FOLLOW_SYSTEM

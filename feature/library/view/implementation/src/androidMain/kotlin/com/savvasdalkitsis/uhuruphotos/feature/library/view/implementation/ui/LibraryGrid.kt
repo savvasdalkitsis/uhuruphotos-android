@@ -31,7 +31,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
-import androidx.compose.ui.res.stringResource
+import dev.icerock.moko.resources.compose.stringResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.R
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.AutoAlbumsSelected
@@ -53,7 +53,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.st
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.NamedVitrine
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.VitrineState
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
+import dev.icerock.moko.resources.ImageResource
 import dev.shreyaspatil.permissionflow.compose.rememberPermissionFlowRequestLauncher
 import org.burnoutcrew.reorderable.ReorderableItem
 import org.burnoutcrew.reorderable.ReorderableLazyGridState
@@ -93,35 +94,35 @@ internal fun LibraryGrid(
         for (item in data.value) {
             when (item) {
                 TRASH -> if (state.showTrash) {
-                    pillItem(reordering, item, drawable.ic_delete, { GridItemSpan(maxCurrentLineSpan / 2) }) {
+                    pillItem(reordering, item, images.ic_delete, { GridItemSpan(maxCurrentLineSpan / 2) }) {
                         action(TrashSelected)
                     }
                 }
                 HIDDEN -> if (state.showHidden){
-                    pillItem(reordering, item, drawable.ic_invisible, { GridItemSpan(maxCurrentLineSpan) }) {
+                    pillItem(reordering, item, images.ic_invisible, { GridItemSpan(maxCurrentLineSpan) }) {
                         action(HiddenPhotosSelected)
                     }
                 }
-                LOCAL -> item(item.title, { GridItemSpan(maxLineSpan) }) {
-                    ReorderableItem(reordering, item.title) { isDragging ->
+                LOCAL -> item(item.title.resourceId, { GridItemSpan(maxLineSpan) }) {
+                    ReorderableItem(reordering, item.title.resourceId) { isDragging ->
                         Vibrate(isDragging)
                         val title = stringResource(item.title)
                         when (val media = state.localMedia) {
                             is Found -> LocalFolders(title, media, action)
-                            is RequiresPermissions -> LibraryPillItem(title, drawable.ic_folder) {
+                            is RequiresPermissions -> LibraryPillItem(title, images.ic_folder) {
                                 permissionLauncher.launch(media.deniedPermissions.toTypedArray<String>())
                             }
                             null -> {}
                         }
                     }
                 }
-                AUTO -> libraryItem(reordering, state.autoAlbums, item, R.drawable.ic_album_auto) {
+                AUTO -> libraryItem(reordering, state.autoAlbums, item, images.ic_album_auto) {
                     action(AutoAlbumsSelected)
                 }
-                USER -> libraryItem(reordering, state.userAlbums, item, R.drawable.ic_album_user) {
+                USER -> libraryItem(reordering, state.userAlbums, item, images.ic_album_user) {
                     action(UserAlbumsSelected)
                 }
-                FAVOURITE -> libraryItem(reordering, state.favouritePhotos, item, R.drawable.ic_album_favourites) {
+                FAVOURITE -> libraryItem(reordering, state.favouritePhotos, item, images.ic_album_favourites) {
                     action(FavouritePhotosSelected)
                 }
             }
@@ -132,11 +133,11 @@ internal fun LibraryGrid(
 internal fun LazyGridScope.pillItem(
     reorder: ReorderableLazyGridState,
     item: LibraryItem,
-    @DrawableRes icon: Int,
+    icon: ImageResource,
     span: (LazyGridItemSpanScope.() -> GridItemSpan)? = null,
     onSelected: () -> Unit,
 ) {
-    item(item.title, span) {
+    item(item.title.resourceId, span) {
         val title = stringResource(item.title)
         ReorderableItem(reorder, item.title) { isDragging ->
             Vibrate(isDragging)
@@ -149,11 +150,11 @@ internal fun LazyGridScope.libraryItem(
     reordering: ReorderableLazyGridState,
     vitrineState: VitrineState?,
     item: LibraryItem,
-    iconFallback: Int,
+    iconFallback: ImageResource,
     onSelected: () -> Unit,
 ) {
     vitrineState?.let {
-        item(item.title) {
+        item(item.title.resourceId) {
             val title = stringResource(item.title)
             ReorderableItem(reordering, item.title) { isDragging ->
                 Vibrate(isDragging)

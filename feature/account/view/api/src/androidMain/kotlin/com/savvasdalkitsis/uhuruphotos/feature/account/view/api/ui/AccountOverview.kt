@@ -40,8 +40,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -64,16 +62,18 @@ import com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.Jobs
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.state.JobState
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.view.api.ui.UploadsRow
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.raw
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.IconResource.Json
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.files
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.ToggleableButtonWithIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.group.CollapsibleGroup
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.group.state.rememberCollapsibleGroupState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
+import dev.icerock.moko.resources.compose.painterResource
+import dev.icerock.moko.resources.compose.stringResource
 import kotlinx.collections.immutable.persistentListOf
 
 @Composable
@@ -165,8 +165,8 @@ private fun ConstraintLayoutScope.Header(
         }
         ActionIcon(
             onClick = onClose,
-            icon = drawable.ic_close,
-            contentDescription = stringResource(string.close)
+            icon = images.ic_close,
+            contentDescription = stringResource(strings.close)
         )
     }
 }
@@ -202,7 +202,7 @@ private fun ConstraintLayoutScope.Content(
             CollapsibleGroup(
                 modifier = Modifier,
                 groupState = rememberCollapsibleGroupState(
-                    title = string.jobs,
+                    title = strings.jobs,
                     uniqueKey = "accountOverviewJobs",
                 )
             ) {
@@ -223,12 +223,13 @@ private fun ConstraintLayoutScope.Content(
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp),
                 iconModifier = Modifier.size(48.dp),
-                icon = if (MaterialTheme.colors.isLight)
-                    raw.animation_syncing
+                icon = Json(if (MaterialTheme.colors.isLight)
+                    files.animation_syncing_json
                 else
-                    raw.animation_syncing_dark,
+                    files.animation_syncing_dark_json
+                ),
                 animateIfAvailable = state.cloudBackUpEnabled,
-                text = stringResource(string.cloud_sync),
+                text = stringResource(strings.cloud_sync),
                 checked = state.cloudBackUpEnabled,
                 onCheckedChange = onCloudSyncChanged,
             )
@@ -248,11 +249,11 @@ private fun ConstraintLayoutScope.Content(
                 onClick = onFoldersClicked,
             ) {
                 Icon(
-                    painter = painterResource(id = drawable.ic_folder),
+                    painter = painterResource(images.ic_folder),
                     contentDescription = null
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text(text = stringResource(string.feed_folders))
+                Text(text = stringResource(strings.feed_folders))
             }
             OutlinedButton(
                 modifier = Modifier
@@ -262,11 +263,11 @@ private fun ConstraintLayoutScope.Content(
                 onClick = onAboutClicked,
             ) {
                 Icon(
-                    painter = painterResource(id = drawable.ic_info),
+                    painter = painterResource(images.ic_info),
                     contentDescription = null
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text(text = stringResource(string.about))
+                Text(text = stringResource(strings.about))
             }
         }
     }
@@ -305,19 +306,19 @@ private fun ConstraintLayoutScope.Footer(
         ) {
             Icon(
                 painter = painterResource(
-                    id = if (state.showLogIn)
-                        drawable.ic_login
+                    if (state.showLogIn)
+                        images.ic_login
                     else
-                        drawable.ic_logout
+                        images.ic_logout
                 ),
                 contentDescription = null
             )
             Spacer(modifier = Modifier.width(8.dp))
             Text(
                 text = if (state.showLogIn)
-                    stringResource(string.login)
+                    stringResource(strings.login)
                 else
-                    stringResource(string.log_out)
+                    stringResource(strings.log_out)
             )
         }
         OutlinedButton(
@@ -328,7 +329,7 @@ private fun ConstraintLayoutScope.Footer(
         ) {
             Icon(Icons.Default.Settings, contentDescription = null)
             Spacer(modifier = Modifier.width(8.dp))
-            Text(text = stringResource(string.settings))
+            Text(text = stringResource(strings.settings))
         }
     }
 }
@@ -346,10 +347,10 @@ private fun AccountOverviewPreview() {
                 showCloudSync = true,
                 avatarState = previewAvatarState,
                 jobs = persistentListOf(
-                    JobState(Title.Text("Feed"), Job.FEED_SYNC, Idle),
-                    JobState(Title.Text("Precache"), Job.FEED_SYNC, Blocked),
-                    JobState(Title.Text("Local"), Job.FEED_SYNC, InProgress(25)),
-                    JobState(Title.Text("Queued"), Job.FEED_SYNC, Queued),
+                    JobState(com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title.Text("Feed"), Job.FEED_SYNC, Idle),
+                    JobState(com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title.Text("Precache"), Job.FEED_SYNC, Blocked),
+                    JobState(com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title.Text("Local"), Job.FEED_SYNC, InProgress(25)),
+                    JobState(com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title.Text("Queued"), Job.FEED_SYNC, Queued),
                 )
             ),
         )
@@ -369,10 +370,10 @@ private fun AccountOverviewDarkPreview() {
                 showCloudSync = true,
                 avatarState = previewAvatarState,
                 jobs = persistentListOf(
-                    JobState(Title.Text("Feed"), Job.FEED_SYNC, Idle),
-                    JobState(Title.Text("Precache"), Job.FEED_SYNC, Blocked),
-                    JobState(Title.Text("Local"), Job.FEED_SYNC, InProgress(25)),
-                    JobState(Title.Text("Queued"), Job.FEED_SYNC, Queued),
+                    JobState(com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title.Text("Feed"), Job.FEED_SYNC, Idle),
+                    JobState(com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title.Text("Precache"), Job.FEED_SYNC, Blocked),
+                    JobState(com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title.Text("Local"), Job.FEED_SYNC, InProgress(25)),
+                    JobState(com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title.Text("Queued"), Job.FEED_SYNC, Queued),
                 )
             ),
         )
@@ -390,7 +391,7 @@ private fun AccountOverviewPreviewLoggedOut() {
                 showUserAndServerDetails = false,
                 avatarState = AvatarState(syncState = SyncState.GOOD),
                 jobs = persistentListOf(
-                    JobState(Title.Text("Local"), Job.FEED_SYNC, InProgress(25)),
+                    JobState(com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title.Text("Local"), Job.FEED_SYNC, InProgress(25)),
                 )
             ),
         )
@@ -411,10 +412,10 @@ private fun AccountOverviewPreviewSmall() {
                     showCloudSync = true,
                     avatarState = previewAvatarState,
                     jobs = persistentListOf(
-                        JobState(Title.Text("Feed"), Job.FEED_SYNC, Idle),
-                        JobState(Title.Text("Precache"), Job.FEED_SYNC, Blocked),
-                        JobState(Title.Text("Local"), Job.FEED_SYNC, InProgress(25)),
-                        JobState(Title.Text("Queued"), Job.FEED_SYNC, Queued),
+                        JobState(com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title.Text("Feed"), Job.FEED_SYNC, Idle),
+                        JobState(com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title.Text("Precache"), Job.FEED_SYNC, Blocked),
+                        JobState(com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title.Text("Local"), Job.FEED_SYNC, InProgress(25)),
+                        JobState(com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title.Text("Queued"), Job.FEED_SYNC, Queued),
                     )
                 ),
             )

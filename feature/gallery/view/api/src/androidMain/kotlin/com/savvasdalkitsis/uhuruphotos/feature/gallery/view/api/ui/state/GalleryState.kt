@@ -26,7 +26,7 @@ data class GalleryState(
     val collageState: CollageState = CollageState(),
     @get:StringRes
     val error: Int? = null,
-    val title: Title = Title.Text(""),
+    val title: com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title = com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title.Text(""),
     val people: ImmutableList<Person> = persistentListOf(),
     val sorting: GallerySorting? = null,
 )

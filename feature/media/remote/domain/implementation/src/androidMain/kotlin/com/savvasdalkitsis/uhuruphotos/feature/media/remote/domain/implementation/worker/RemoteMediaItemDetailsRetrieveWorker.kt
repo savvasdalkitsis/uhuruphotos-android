@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementatio
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.NotificationChannels
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.module.NotificationModule
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import kotlin.LazyThreadSafetyMode.NONE
 
 class RemoteMediaItemDetailsRetrieveWorker(
@@ -52,7 +52,7 @@ class RemoteMediaItemDetailsRetrieveWorker(
 
     override suspend fun getForegroundInfo() = foregroundInfoBuilder.build(
         applicationContext,
-        string.downloading_media_details,
+        strings.downloading_media_details,
         NOTIFICATION_ID,
         NotificationChannels.Jobs.id
     )

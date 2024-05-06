@@ -19,13 +19,14 @@ import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
+import dev.icerock.moko.resources.StringResource
 import dev.shreyaspatil.permissionflow.compose.rememberPermissionFlowRequestLauncher
 
 @Composable
 fun LocalMediaAccessRequestBanner(
     modifier: Modifier = Modifier,
     missingPermissions: MediaItemsOnDevice.RequiresPermissions,
-    @StringRes description: Int,
+    description: StringResource,
     onNeverRemindMeAgain: () -> Unit,
 ) {
     val permissionLauncher = rememberPermissionFlowRequestLauncher()

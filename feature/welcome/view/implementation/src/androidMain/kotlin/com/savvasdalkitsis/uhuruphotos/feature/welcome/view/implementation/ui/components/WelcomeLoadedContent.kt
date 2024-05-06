@@ -24,18 +24,18 @@ import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.R.raw
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam.actions.LogOut
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam.actions.NavigateToPrivacyPolicy
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam.actions.ShowLibrePhotosHelp
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam.actions.WelcomeAction
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.ui.state.WelcomeState
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.files
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
 import com.savvasdalkitsis.uhuruphotos.foundation.permissions.api.ui.PermissionsState
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.IconOutlineButton
+import dev.icerock.moko.resources.compose.stringResource
 
 @Composable
 internal fun WelcomeLoadedContent(
@@ -52,16 +52,16 @@ internal fun WelcomeLoadedContent(
         ) {
             IconOutlineButton(
                 modifier = Modifier.weight(1f),
-                icon = drawable.ic_book_open,
+                icon = images.ic_book_open,
                 onClick = { action(NavigateToPrivacyPolicy) },
-                text = stringResource(string.privacy_policy)
+                text = stringResource(strings.privacy_policy)
             )
             if (state.cloudMediaSelected) {
                 OutlinedButton(
                     modifier = Modifier.weight(1f),
                     onClick = { action(LogOut) }
                 ) {
-                    Text(stringResource(string.log_out))
+                    Text(stringResource(strings.log_out))
                 }
             }
         }
@@ -70,15 +70,15 @@ internal fun WelcomeLoadedContent(
             horizontalArrangement = Arrangement.spacedBy(32.dp),
         ) {
             WelcomeUseCase(
-                raw.animation_local_media,
-                string.manage_media_on_device,
+                files.animation_local_media_json,
+                strings.manage_media_on_device,
                 state.localMediaSelected,
             ) {
                 permissionState.askForPermissions()
             }
             WelcomeUseCase(
-                if (state.localMediaSelected) raw.animation_cloud_backup else raw.animation_cloud,
-                if (state.localMediaSelected) string.backup_media_on_cloud else string.manage_media_on_cloud,
+                if (state.localMediaSelected) files.animation_cloud_backup_json else files.animation_cloud_json,
+                if (state.localMediaSelected) strings.backup_media_on_cloud else strings.manage_media_on_cloud,
                 state.cloudMediaSelected,
             ) {
                 action(ShowLibrePhotosHelp)

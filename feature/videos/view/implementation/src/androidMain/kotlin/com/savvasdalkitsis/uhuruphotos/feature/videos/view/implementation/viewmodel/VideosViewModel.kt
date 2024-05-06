@@ -24,14 +24,14 @@ import com.savvasdalkitsis.uhuruphotos.feature.videos.view.implementation.module
 import com.savvasdalkitsis.uhuruphotos.feature.videos.view.implementation.seam.VideosActionsContext
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
 
 internal class VideosViewModel(
     actionsContext: VideosActionsContext = VideosModule.videosActionsContext,
 ) : NavigationViewModel<GalleryState, GalleryAction, VideosNavigationRoute>(
     ActionHandlerWithContext(actionsContext.galleryActionsContext),
-    GalleryState(title = Title.Resource(string.videos)),
+    GalleryState(title = Title.Resource(strings.videos)),
 ) {
 
     override fun onRouteSet(route: VideosNavigationRoute) {

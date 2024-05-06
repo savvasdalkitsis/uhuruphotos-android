@@ -18,7 +18,6 @@ package com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.Collage
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.CollageDisplayActionButton
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
@@ -27,11 +26,14 @@ import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.a
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.actions.SearchFor
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.actions.SelectedCel
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchState
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.files
 import com.savvasdalkitsis.uhuruphotos.foundation.search.view.implementation.R
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.NoContent
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UpNavButton
+import dev.icerock.moko.resources.compose.stringResource
 
 @Composable
 fun Search(
@@ -39,7 +41,7 @@ fun Search(
     action: (SearchAction) -> Unit
 ) {
     CommonScaffold(
-        title = { Text(state.query.ifEmpty { stringResource(string.searching) }) },
+        title = { Text(state.query.ifEmpty { stringResource(strings.searching) }) },
         actionBarContent = {
             CollageDisplayActionButton(
                 onChange = { action(ChangeDisplay(it)) },
@@ -49,9 +51,9 @@ fun Search(
         navigationIcon = { UpNavButton() }
     ) { contentPadding ->
         if (state.isError) {
-            NoContent(string.error_searching) {
+            NoContent(strings.error_searching) {
                 Button(onClick = { action(SearchFor(state.query)) }) {
-                    Text(text = stringResource(string.retry))
+                    Text(text = stringResource(strings.retry))
                 }
             }
         } else {
@@ -62,7 +64,7 @@ fun Search(
                     clusters = state.clusters,
                     collageDisplay = state.searchDisplay,
                 ),
-                loadingAnimation = R.raw.animation_searching,
+                loadingAnimation = files.animation_searching_json,
                 onCelSelected = { cel ->
                     action(SelectedCel(cel))
                 },

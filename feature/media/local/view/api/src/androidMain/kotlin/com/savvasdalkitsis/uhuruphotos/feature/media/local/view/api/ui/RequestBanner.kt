@@ -28,19 +28,21 @@ import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
+import dev.icerock.moko.resources.compose.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.AlertText
+import dev.icerock.moko.resources.StringResource
+import dev.icerock.moko.resources.compose.stringResource
 
 @Composable
 fun RequestBanner(
     modifier: Modifier = Modifier,
-    @StringRes description: Int,
-    @StringRes warning: Int? = null,
-    @StringRes grantText: Int = string.grant_permissions,
+    description: StringResource,
+    warning: StringResource? = null,
+    grantText: StringResource = strings.grant_permissions,
     onAccessGranted: () -> Unit,
     onNeverRemindMeAgain: () -> Unit,
 ) {
@@ -67,7 +69,7 @@ fun RequestBanner(
                     .weight(1f),
                 onClick = onNeverRemindMeAgain
             ) {
-                Text(stringResource(string.do_not_ask_again))
+                Text(stringResource(strings.do_not_ask_again))
             }
         },
     )
@@ -78,8 +80,8 @@ fun RequestBanner(
 @Composable
 fun RequestBanner(
     modifier: Modifier = Modifier,
-    @StringRes description: Int,
-    @StringRes warning: Int? = null,
+    description: StringResource,
+    warning: StringResource? = null,
     grantButton: @Composable() (RowScope.() -> Unit),
     denyButton: @Composable() (RowScope.() -> Unit),
 ){

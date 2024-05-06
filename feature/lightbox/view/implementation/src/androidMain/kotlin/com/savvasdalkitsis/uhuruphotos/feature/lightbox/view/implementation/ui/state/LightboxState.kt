@@ -21,6 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Md5Hash
+import dev.icerock.moko.resources.StringResource
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
@@ -28,7 +29,7 @@ data class LightboxState(
     private val _currentIndex: Int = 0,
     val media: ImmutableList<SingleMediaItemState> = persistentListOf(),
     val isLoading: Boolean = false,
-    @StringRes val errorMessage: Int? = null,
+    val errorMessage: StringResource? = null,
     val showUI: Boolean = true,
     val showDeleteConfirmationDialog: Boolean = false,
     val showTrashingConfirmationDialog: Boolean = false,

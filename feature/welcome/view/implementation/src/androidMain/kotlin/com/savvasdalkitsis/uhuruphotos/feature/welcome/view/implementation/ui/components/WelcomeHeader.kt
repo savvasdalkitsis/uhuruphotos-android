@@ -22,10 +22,10 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
+import dev.icerock.moko.resources.compose.stringResource
 
 @Composable
 internal fun WelcomeHeader() {
@@ -33,27 +33,27 @@ internal fun WelcomeHeader() {
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         Text(
-            text = stringResource(R.string.welcome_to_uhuruphotos),
+            text = stringResource(strings.welcome_to_uhuruphotos),
             style = MaterialTheme.typography.h4,
         )
         Text(
-            text = stringResource(R.string.welcome_description),
+            text = stringResource(strings.welcome_description),
             style = MaterialTheme.typography.body1,
         )
         Text(
-            text = stringResource(R.string.welcome_description_2),
+            text = stringResource(strings.welcome_description_2),
             style = MaterialTheme.typography.body2,
         )
         Text(
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center,
-            text = stringResource(R.string.what_would_like_to_do),
+            text = stringResource(strings.what_would_like_to_do),
             style = MaterialTheme.typography.h5,
         )
         Text(
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center,
-            text = stringResource(R.string.more_than_one),
+            text = stringResource(strings.more_than_one),
             style = MaterialTheme.typography.subtitle2,
         )
     }

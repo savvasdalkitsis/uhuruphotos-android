@@ -22,14 +22,13 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.VitrineState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.toTitleOr
 
 data class UserAlbumState(
     val id: Int,
     val cover: VitrineState,
-    val title: Title,
+    val title: com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title,
     val photoCount: Int?,
 )
 
@@ -53,7 +52,7 @@ fun UserAlbums.toUserAlbumState() = UserAlbumState(
             coverPhoto4IsVideo,
         ),
     ),
-    title = title.toTitleOr(string.missing_album_title),
+    title = title.toTitleOr(strings.missing_album_title),
     photoCount = photoCount,
 )
 

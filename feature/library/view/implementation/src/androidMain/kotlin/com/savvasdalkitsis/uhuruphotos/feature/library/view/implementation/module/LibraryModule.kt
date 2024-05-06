@@ -22,6 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.useca
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.module.CommonMediaModule
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.module.LocalMediaModule
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.module.WelcomeModule
+import com.savvasdalkitsis.uhuruphotos.foundation.android.api.module.AndroidModule
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.module.NavigationModule
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.module.PreferencesModule
 import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.module.ToasterModule
@@ -29,6 +30,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.module.ToasterModu
 object LibraryModule {
 
     val libraryActionsContext get() = LibraryActionsContext(
+        AndroidModule.applicationContext,
         AutoAlbumsModule.autoAlbumsUseCase,
         UserAlbumsModule.userAlbumsUseCase,
         CommonMediaModule.mediaUseCase,

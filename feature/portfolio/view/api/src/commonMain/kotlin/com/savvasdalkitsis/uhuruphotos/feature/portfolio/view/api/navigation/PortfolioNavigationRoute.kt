@@ -21,5 +21,5 @@ import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
 @Parcelize
 data class PortfolioNavigationRoute(
     val editMode: Boolean,
-    val title: Int,
+    val title: String,
 ) : NavigationRoute

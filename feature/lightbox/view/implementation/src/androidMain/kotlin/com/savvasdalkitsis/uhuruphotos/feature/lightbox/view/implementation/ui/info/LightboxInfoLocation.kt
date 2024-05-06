@@ -18,13 +18,13 @@ package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.SingleMediaItemState
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
 
 @Composable
 internal fun LightboxInfoLocation(mediaItem: SingleMediaItemState) {
     if (!mediaItem.details.location.isNullOrBlank()) {
         LightboxInfoIconEntry(
-            icon = drawable.ic_location_place,
+            icon = images.ic_location_place,
         ) {
             Text(mediaItem.details.location)
         }

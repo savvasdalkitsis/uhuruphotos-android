@@ -23,15 +23,17 @@ import android.content.pm.ServiceInfo
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.work.ForegroundInfo
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
+import dev.icerock.moko.resources.StringResource
+import dev.icerock.moko.resources.desc.desc
 
 class ForegroundInfoBuilder : ForegroundInfoBuilder {
 
     override fun build(
         context: Context,
-        title: Int,
+        title: StringResource,
         notificationId: Int,
         channel: String,
         progress: Int?,
@@ -58,7 +60,7 @@ class ForegroundInfoBuilder : ForegroundInfoBuilder {
 
     override fun <BR: BroadcastReceiver> buildNotification(
         context: Context,
-        title: Int,
+        title: StringResource,
         channel: String,
         progress: Int?,
         showProgress: Boolean,
@@ -66,7 +68,7 @@ class ForegroundInfoBuilder : ForegroundInfoBuilder {
         text: String?,
         cancelBroadcastReceiver: Class<BR>?,
     ) = NotificationCompat.Builder(context, channel)
-        .setContentTitle(context.getString(title))
+        .setContentTitle(title.desc().toString(context))
         .setContentText(text)
         .setContentIntent(PendingIntent.getActivity(
             context,
@@ -74,7 +76,7 @@ class ForegroundInfoBuilder : ForegroundInfoBuilder {
             context.packageManager.getLaunchIntentForPackage(context.packageName),
             PendingIntent.FLAG_IMMUTABLE,
         ))
-        .setSmallIcon(drawable.ic_notification)
+        .setSmallIcon(images.ic_notification.drawableResId)
         .setPriority(NotificationCompat.PRIORITY_LOW)
         .setAutoCancel(autoCancel)
         .run {
@@ -86,7 +88,7 @@ class ForegroundInfoBuilder : ForegroundInfoBuilder {
         }
         .run {
             if (cancelBroadcastReceiver != null) {
-                addAction(drawable.ic_cancel, context.getString(string.cancel),
+                addAction(images.ic_cancel.drawableResId, strings.cancel.desc().toString(context),
                     PendingIntent.getBroadcast(
                         context,
                         1,

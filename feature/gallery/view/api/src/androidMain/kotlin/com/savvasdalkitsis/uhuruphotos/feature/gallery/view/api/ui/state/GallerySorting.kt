@@ -15,13 +15,13 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state
 
-import androidx.annotation.DrawableRes
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
+import dev.icerock.moko.resources.ImageResource
 
-enum class GallerySorting(@DrawableRes val icon: Int) {
+enum class GallerySorting(val icon: ImageResource) {
 
-    DATE_DESC(drawable.ic_sort_date_descending),
-    DATE_ASC(drawable.ic_sort_date_ascending);
+    DATE_DESC(images.ic_sort_date_descending),
+    DATE_ASC(images.ic_sort_date_ascending);
 
     fun toggle() = when (this) {
         DATE_DESC -> DATE_ASC

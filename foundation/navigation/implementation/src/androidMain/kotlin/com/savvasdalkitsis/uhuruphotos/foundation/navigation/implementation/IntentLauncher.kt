@@ -19,7 +19,7 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string.could_not_find_app_to_open
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
 
 class IntentLauncher(
@@ -34,7 +34,7 @@ class IntentLauncher(
             })
         } catch (e: ActivityNotFoundException) {
             log(e)
-            toasterUseCase.show(could_not_find_app_to_open)
+            toasterUseCase.show(strings.could_not_find_app_to_open)
         }
     }
     fun launch(intent: Intent, fallbackIntent: Intent) {

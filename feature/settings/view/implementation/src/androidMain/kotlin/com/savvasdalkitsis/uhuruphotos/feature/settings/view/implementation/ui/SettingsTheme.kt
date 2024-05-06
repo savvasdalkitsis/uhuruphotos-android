@@ -16,11 +16,11 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
+import dev.icerock.moko.resources.compose.stringResource
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ChangeThemeMode
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode.DARK_MODE
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode.FOLLOW_SYSTEM
@@ -35,7 +35,7 @@ internal fun SettingsTheme(
         content = {
             ThemeRow(state.themeMode)
         },
-        buttonText = stringResource(string.change),
+        buttonText = stringResource(strings.change),
         action = action,
     ) {
         @Composable

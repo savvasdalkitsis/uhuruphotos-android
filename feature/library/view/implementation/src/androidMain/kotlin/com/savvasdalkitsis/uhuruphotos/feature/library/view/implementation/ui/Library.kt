@@ -21,7 +21,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
+import dev.icerock.moko.resources.compose.stringResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.AccountOverviewActionBar
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.AccountOverviewContent
@@ -38,7 +38,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.viewm
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.viewmodel.LibraryCompositeState
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.blurIf
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.Logo
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.refresh.SwipeRefresh
@@ -83,7 +83,7 @@ private fun Library(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Logo()
-                Text(stringResource(string.library))
+                Text(stringResource(strings.library))
             }
         },
         homeFeedDisplay = homeFeedDisplay,

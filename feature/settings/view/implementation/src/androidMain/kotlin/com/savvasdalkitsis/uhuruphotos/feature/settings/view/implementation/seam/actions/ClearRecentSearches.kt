@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.sea
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import kotlinx.coroutines.flow.flow
 
 data object ClearRecentSearches : SettingsAction() {
@@ -26,6 +26,6 @@ data object ClearRecentSearches : SettingsAction() {
         state: SettingsState
     ) = flow<SettingsMutation> {
         searchUseCase.clearRecentSearchSuggestions()
-        toaster.show(R.string.recent_searches_cleared)
+        toaster.show(strings.recent_searches_cleared)
     }
 }

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plural name="delete_photos">
+        <item quantity="one">Delete %d photo</item>
+        <item quantity="other">Delete %d photos</item>
+    </plural>
+    <plural name="delete_media">
+        <item quantity="one">Delete %d media item</item>
+        <item quantity="other">Delete %d media items</item>
+    </plural>
+    <plural name="restore_photos">
+        <item quantity="one">Restore %d photo</item>
+        <item quantity="other">Restore %d photos</item>
+    </plural>
+    <plural name="restore_media">
+        <item quantity="one">Restore %d media item</item>
+        <item quantity="other">Restore %d media items</item>
+    </plural>
+    <plural name="trash_photos">
+        <item quantity="one">Send %d photo to trash</item>
+        <item quantity="other">Send %d photos to trash</item>
+    </plural>
+    <plural name="trash_media">
+        <item quantity="one">Send %d media item to trash</item>
+        <item quantity="other">Send %d media items to trash</item>
+    </plural>
+    <plural name="delete_photos_confirmation">
+        <item quantity="one">Are you sure you want to delete this %d photo?</item>
+        <item quantity="other">Are you sure you want to delete these %d photos?</item>
+    </plural>
+    <plural name="delete_media_confirmation">
+        <item quantity="one">Are you sure you want to delete this %d media item?</item>
+        <item quantity="other">Are you sure you want to delete these %d media items?</item>
+    </plural>
+    <plural name="restore_photos_confirmation">
+        <item quantity="one">Restore this %d photo\?</item>
+        <item quantity="other">Restore these %d photos\?</item>
+    </plural>
+    <plural name="restore_media_confirmation">
+        <item quantity="one">Restore this %d media item\?</item>
+        <item quantity="other">Restore these %d media items\?</item>
+    </plural>
+    <plural name="trash_photos_confirmation">
+        <item quantity="one">Send this one photo to trash\?</item>
+        <item quantity="other">Send these %d photos to the trash\?</item>
+    </plural>
+    <plural name="trash_media_confirmation">
+        <item quantity="one">Send this %d media item to the trash\?</item>
+        <item quantity="other">Send these %d media items to trash\?</item>
+    </plural>
+    <plural name="hours">
+        <item quantity="one">%d hour</item>
+        <item quantity="other">%d hours</item>
+    </plural>
+    <plural name="days">
+        <item quantity="one">%d day</item>
+        <item quantity="other">%d days</item>
+    </plural>
+    <plural name="item_count">
+        <item quantity="one">%d item</item>
+        <item quantity="other">%d items</item>
+    </plural>
+</resources>

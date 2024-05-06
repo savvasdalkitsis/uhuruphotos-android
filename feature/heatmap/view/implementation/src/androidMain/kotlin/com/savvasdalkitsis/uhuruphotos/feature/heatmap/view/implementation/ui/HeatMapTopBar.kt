@@ -29,18 +29,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.permissions.PermissionState
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.actions.HeatMapAction
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.actions.MyLocationPressed
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state.HeatMapState
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewState
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.CommonTopBar
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UpNavButton
+import dev.icerock.moko.resources.compose.stringResource
 
 @Composable
 fun HeatMapTopBar(
@@ -63,7 +63,7 @@ fun HeatMapTopBar(
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Text(stringResource(string.media_map))
+                Text(stringResource(strings.media_map))
                 if (actionsInTitle) {
                     Actions(state, action, locationPermissionState, mapViewState)
                 }
@@ -91,6 +91,6 @@ private fun RowScope.Actions(
     }
     ActionIcon(
         onClick = { action(MyLocationPressed(locationPermissionState, mapViewState)) },
-        icon = drawable.ic_my_location,
+        icon = images.ic_my_location,
     )
 }

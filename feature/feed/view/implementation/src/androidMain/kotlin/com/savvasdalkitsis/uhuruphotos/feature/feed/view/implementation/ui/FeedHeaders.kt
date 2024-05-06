@@ -24,7 +24,7 @@ import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
+import dev.icerock.moko.resources.compose.stringResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.DisableBatteryOptimizations
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.EnableCloudSync
@@ -40,7 +40,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.Ce
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.view.api.ui.LocalMediaAccessRequestBanner
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.view.api.ui.RequestBanner
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.LoginButton
 
 @Composable
@@ -66,7 +66,7 @@ fun FeedHeaders(
                 LocalMediaAccessRequestBanner(
                     modifier = Modifier.padding(4.dp),
                     missingPermissions = missingPermissions,
-                    description = string.missing_local_media_permissions,
+                    description = strings.missing_local_media_permissions,
                 ) {
                     action(NeverAskForLocalMediaAccessPermissionRequest)
                 }
@@ -74,8 +74,8 @@ fun FeedHeaders(
             if (state.showRequestForCloudSync) {
                 RequestBanner(
                     modifier = Modifier.padding(4.dp),
-                    description = string.enable_cloud_sync,
-                    grantText = string.enable,
+                    description = strings.enable_cloud_sync,
+                    grantText = strings.enable,
                     onAccessGranted = { action(EnableCloudSync) },
                     onNeverRemindMeAgain = { action(NeverAskForCloudSyncRequest) },
                 )
@@ -83,9 +83,9 @@ fun FeedHeaders(
             if (state.showBatteryOptimizationBanner) {
                 RequestBanner(
                     modifier = Modifier.padding(4.dp),
-                    description = string.disable_battery_optimizations,
-                    warning = string.battery_optimizations_warning,
-                    grantText = string.disable,
+                    description = strings.disable_battery_optimizations,
+                    warning = strings.battery_optimizations_warning,
+                    grantText = strings.disable,
                     onAccessGranted = { action(DisableBatteryOptimizations) },
                     onNeverRemindMeAgain = { action(NeverAskForDisablingBatteryOptimizations) },
                 )
@@ -93,7 +93,7 @@ fun FeedHeaders(
             if (state.showLoginBanner) {
                 RequestBanner(
                     modifier = Modifier.padding(4.dp),
-                    description = string.connection_to_server_lost,
+                    description = strings.connection_to_server_lost,
                     grantButton = {
                         LoginButton(
                             modifier = Modifier
@@ -112,7 +112,7 @@ fun FeedHeaders(
                                 .weight(1f),
                             onClick = { action(LogOut) },
                         ) {
-                            Text(stringResource(string.forget_server))
+                            Text(stringResource(strings.forget_server))
                         }
                     },
                 )

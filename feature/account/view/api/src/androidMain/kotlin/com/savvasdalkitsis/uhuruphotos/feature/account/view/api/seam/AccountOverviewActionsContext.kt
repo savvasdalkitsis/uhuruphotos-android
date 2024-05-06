@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam
 
+import android.content.Context
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.AuthenticationLoginUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.domain.api.usecase.AvatarUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.usecase.JobsUseCase
@@ -25,6 +26,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.Welcom
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 
 class AccountOverviewActionsContext(
+    val context: Context,
     val authenticationLoginUseCase: AuthenticationLoginUseCase,
     val avatarUseCase: AvatarUseCase,
     val jobsUseCase: JobsUseCase,

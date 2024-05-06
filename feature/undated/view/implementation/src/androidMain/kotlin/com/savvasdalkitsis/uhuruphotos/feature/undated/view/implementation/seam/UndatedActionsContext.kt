@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.Gallery
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource
 import com.savvasdalkitsis.uhuruphotos.feature.undated.domain.api.usecase.UndatedUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simpleOk
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.map
@@ -43,7 +43,7 @@ internal class UndatedActionsContext(
             feedUseCase.observeFeed(FeedFetchType.ONLY_WITHOUT_DATES)
                 .map {
                     GalleryDetails(
-                        title = Title.Resource(string.media_without_date),
+                        title = Title.Resource(strings.media_without_date),
                         clusters = it.map { collection -> collection.toCluster() }
                     )
                 }

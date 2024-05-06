@@ -21,7 +21,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.patrykandpatrick.vico.compose.axis.axisLabelComponent
@@ -40,14 +39,16 @@ import com.patrykandpatrick.vico.core.entry.ChartEntryModelProducer
 import com.patrykandpatrick.vico.core.entry.FloatEntry
 import com.patrykandpatrick.vico.core.scroll.InitialScroll
 import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.Period
+import dev.icerock.moko.resources.StringResource
+import dev.icerock.moko.resources.compose.stringResource
 
 @Composable
 internal fun StatsMediaPerPeriod(
     isLoading: Boolean,
     mediaByPeriod: Map<out Period, Int>,
-    title: Int,
+    title: StringResource,
     uniqueId: String,
-    bottomAxisLabel: Int,
+    bottomAxisLabel: StringResource,
 ) {
     val model = remember(mediaByPeriod) {
         ChartEntryModelProducer(mediaByPeriod.map { FloatEntry(it.key.value.toFloat(), it.value.toFloat()) })

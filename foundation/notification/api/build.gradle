@@ -6,10 +6,20 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.notification.api'
 }
 
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation project(":foundation:strings:api")
+            }
+        }
+    }
+}
+
 dependencies {
     implementation(libs.androidx.core)
     implementation(libs.androidx.work)
     implementation(project(":foundation:log:api"))
     implementation(project(":foundation:math:api"))
-    implementation(project(":foundation:strings:api"))
+    implementation project(":foundation:strings:api")
 }

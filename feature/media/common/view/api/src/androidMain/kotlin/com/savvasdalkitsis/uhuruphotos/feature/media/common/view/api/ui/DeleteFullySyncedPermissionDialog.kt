@@ -19,14 +19,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.IconOutlineButton
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.dialogs.CancelDialog
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.AlertText
+import dev.icerock.moko.resources.compose.stringResource
 
 @Composable
 fun DeleteFullySyncedPermissionDialog(
@@ -35,25 +35,25 @@ fun DeleteFullySyncedPermissionDialog(
     onDeleteLocal: () -> Unit,
 ) {
     CancelDialog(
-        title = stringResource(string.media_sync_status_fully_synced),
+        title = stringResource(strings.media_sync_status_fully_synced),
         onDismiss = onDismiss,
         body = {
-            Text(stringResource(string.what_would_like_to_do))
+            Text(stringResource(strings.what_would_like_to_do))
             IconOutlineButton(
                 modifier = Modifier
                     .fillMaxWidth(),
-                icon = drawable.ic_delete,
-                text = stringResource(string.delete_fully_synced_media_local),
+                icon = images.ic_delete,
+                text = stringResource(strings.delete_fully_synced_media_local),
                 onClick = onDeleteLocal,
             )
             IconOutlineButton(
                 modifier = Modifier
                     .fillMaxWidth(),
-                icon = drawable.ic_folder_network,
-                text = stringResource(string.delete_fully_synced_media_both),
+                icon = images.ic_folder_network,
+                text = stringResource(strings.delete_fully_synced_media_both),
                 onClick = onDeleteLocalTrashRemote,
             )
-            AlertText(text = stringResource(string.operation_irreverisble))
+            AlertText(text = stringResource(strings.operation_irreverisble))
         },
     )
 }

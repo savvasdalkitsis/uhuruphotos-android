@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.st
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.onErrors
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStart
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
@@ -54,7 +54,7 @@ data object Load : HeatMapAction() {
             }
             .debounce(500)
             .distinctUntilChanged()
-            .onErrors { toaster.show(R.string.error_loading_photo_details) }
+            .onErrors { toaster.show(strings.error_loading_photo_details) }
             .flatMapLatest { media ->
                 flowOf(HeatMapMutation.UpdateAllMedia(media), updateDisplay(media))
             },

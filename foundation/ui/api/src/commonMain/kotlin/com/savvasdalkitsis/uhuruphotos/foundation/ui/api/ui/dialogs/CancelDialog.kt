@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.dialogs
 
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.strings
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import dev.icerock.moko.resources.compose.stringResource
 
 @Composable

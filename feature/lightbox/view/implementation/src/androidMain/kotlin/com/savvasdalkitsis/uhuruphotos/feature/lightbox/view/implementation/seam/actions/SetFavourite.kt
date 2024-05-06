@@ -21,7 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ShowErrorMessage
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ShowMediaItemFavourite
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import kotlinx.coroutines.flow.flow
 
 data class SetFavourite(val favourite: Boolean) : LightboxAction() {
@@ -31,7 +31,7 @@ data class SetFavourite(val favourite: Boolean) : LightboxAction() {
     ) = flow {
         mediaUseCase.setMediaItemFavourite(state.currentMediaItem.id, favourite)
             .onFailure {
-                emit(ShowErrorMessage(R.string.error_changing_photo_favourite))
+                emit(ShowErrorMessage(strings.error_changing_photo_favourite))
             }
             .onSuccess {
                 emit(ShowMediaItemFavourite(state.currentMediaItem.id, favourite))

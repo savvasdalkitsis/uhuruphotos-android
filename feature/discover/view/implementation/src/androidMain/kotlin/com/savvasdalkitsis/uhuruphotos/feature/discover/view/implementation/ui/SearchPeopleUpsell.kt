@@ -18,20 +18,20 @@ package com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.compose.ui.res.stringResource
+import dev.icerock.moko.resources.compose.stringResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.DiscoverAction
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.UpsellLoginFromPeople
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.PeopleBanner
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import kotlinx.collections.immutable.toPersistentList
 
 @Composable
 fun SearchPeopleUpsell(
     action: (DiscoverAction) -> Unit,
 ) {
-    val name = stringResource(string.person)
+    val name = stringResource(strings.person)
     PeopleBanner(
         people = remember {
             List(5) {

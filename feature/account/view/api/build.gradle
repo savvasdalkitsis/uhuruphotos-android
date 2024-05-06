@@ -32,7 +32,7 @@ dependencies {
             project(":feature:user:domain:api:module"),
             project(":feature:welcome:domain:api:module"),
             project(":feature:welcome:view:api"),
-            project(":foundation:android:api"),
+            project(":foundation:android:api:module"),
             project(":foundation:compose:api"),
             project(":foundation:launchers:api"),
             project(":foundation:icons:api"),

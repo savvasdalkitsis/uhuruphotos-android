@@ -21,14 +21,14 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.seam.actions.EditAction
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.seam.actions.ToggleCropOptions
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.ui.state.EditState
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
+import dev.icerock.moko.resources.compose.stringResource
 import io.moyuru.cropify.CropifyState
 
 @Composable
@@ -48,13 +48,13 @@ internal  fun RowScope.EditActionBar(
     ActionIcon(
         onClick = { action(ToggleCropOptions) },
         enabled = state.actionBarActionsEnabled,
-        icon = R.drawable.ic_crop_free,
-        contentDescription = stringResource(string.crop_options),
+        icon = images.ic_crop_free,
+        contentDescription = stringResource(strings.crop_options),
     )
     ActionIcon(
         onClick = { cropState.crop() },
         enabled = state.actionBarActionsEnabled,
-        icon = R.drawable.ic_crop,
-        contentDescription = stringResource(string.crop),
+        icon = images.ic_crop,
+        contentDescription = stringResource(strings.crop),
     )
 }

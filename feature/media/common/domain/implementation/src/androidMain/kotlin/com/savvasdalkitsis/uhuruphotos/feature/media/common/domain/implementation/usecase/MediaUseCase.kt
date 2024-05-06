@@ -62,7 +62,8 @@ import com.savvasdalkitsis.uhuruphotos.foundation.log.api.andThenTry
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simple
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simpleOk
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
+import dev.icerock.moko.resources.desc.desc
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -352,19 +353,19 @@ class MediaUseCase(
         dayOfWeek = dayOfWeek,
         month = monthOfYear,
         year = year,
-        monthText = context.getString(when (monthOfYear) {
-            1 -> string.month_january_short
-            2 -> string.month_february_short
-            3 -> string.month_march_short
-            4 -> string.month_april_short
-            5 -> string.month_may_short
-            6 -> string.month_june_short
-            7 -> string.month_july_short
-            8 -> string.month_august_short
-            9 -> string.month_september_short
-            10 -> string.month_october_short
-            11 -> string.month_november_short
-            else -> string.month_december_short
-        })
+        monthText = when (monthOfYear) {
+            1 -> strings.month_january_short
+            2 -> strings.month_february_short
+            3 -> strings.month_march_short
+            4 -> strings.month_april_short
+            5 -> strings.month_may_short
+            6 -> strings.month_june_short
+            7 -> strings.month_july_short
+            8 -> strings.month_august_short
+            9 -> strings.month_september_short
+            10 -> strings.month_october_short
+            11 -> strings.month_november_short
+            else -> strings.month_december_short
+        }.desc().toString(context)
     )
 }

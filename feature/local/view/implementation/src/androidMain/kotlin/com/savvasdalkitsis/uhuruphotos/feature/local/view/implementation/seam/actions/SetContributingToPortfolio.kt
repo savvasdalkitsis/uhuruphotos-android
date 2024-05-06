@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam.a
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam.LocalAlbumActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.ui.state.LocalAlbumState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
@@ -29,8 +29,8 @@ data class SetContributingToPortfolio(val contributing: Boolean) : LocalAlbumAct
         portfolioUseCase.setPortfolioFolderPublished(galleryId, contributing)
         toaster.show(
             when {
-                contributing -> string.contributing_to_feed
-                else -> string.not_contributing_to_feed
+                contributing -> strings.contributing_to_feed
+                else -> strings.not_contributing_to_feed
             }
         )
     }

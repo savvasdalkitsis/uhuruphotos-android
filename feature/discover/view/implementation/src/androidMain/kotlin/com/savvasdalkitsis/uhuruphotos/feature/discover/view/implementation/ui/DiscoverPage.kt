@@ -22,7 +22,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
+import dev.icerock.moko.resources.compose.stringResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.AccountOverviewActionBar
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.AccountOverviewContent
@@ -33,7 +33,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.view
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.ui.HomeScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.blurIf
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.Logo
 
 @Composable
@@ -77,7 +77,7 @@ private fun DiscoverPage(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Logo()
-                Text(stringResource(string.discover))
+                Text(stringResource(strings.discover))
             }
         },
         homeFeedDisplay = state.collageDisplay,

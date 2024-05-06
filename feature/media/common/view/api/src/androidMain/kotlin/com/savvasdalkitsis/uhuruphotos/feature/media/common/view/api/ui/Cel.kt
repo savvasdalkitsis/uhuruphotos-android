@@ -40,7 +40,6 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.api.navigation.LocalServerUrl
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
@@ -51,11 +50,14 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.Ce
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.toColor
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.IconResource
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.IconResource.Image
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Thumbnail
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkable.Checkable
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkable.SelectionMode
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.DynamicIcon
+import dev.icerock.moko.resources.compose.painterResource
 
 @Composable
 fun Cel(
@@ -176,7 +178,7 @@ private fun Cel(
                 modifier = Modifier
                     .size(size)
                     .align(alignment),
-                painter = painterResource(id = drawable.ic_play_filled),
+                painter = painterResource(images.ic_play_filled),
                 tint = Color.White,
                 contentDescription = null
             )
@@ -187,7 +189,7 @@ private fun Cel(
                     .size(iconSize)
                     .align(TopEnd)
                     .padding(2.dp),
-                painter = painterResource(id = drawable.ic_favourite),
+                painter = painterResource(images.ic_favourite),
                 tint = Color.White,
                 contentDescription = null
             )
@@ -205,7 +207,7 @@ private fun Cel(
                     .padding(2.dp)
                     .alpha(0.7f),
             ) {
-                DynamicIcon(icon = id.syncState.icon, tint = Color.White)
+                DynamicIcon(icon = Image(id.syncState.icon), tint = Color.White)
             }
         }
     }

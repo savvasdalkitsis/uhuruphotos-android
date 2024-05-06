@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam
 
+import android.content.Context
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.domain.api.usecase.AutoAlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.domain.api.usecase.UserAlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItem
@@ -29,12 +30,15 @@ import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.observe
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 
 class LibraryActionsContext(
+    val context: Context,
     val autoAlbumsUseCase: AutoAlbumsUseCase,
     val userAlbumsUseCase: UserAlbumsUseCase,
     val mediaUseCase: MediaUseCase,
@@ -91,7 +95,7 @@ class LibraryActionsContext(
         _loading.emit(true)
         val result = refresh()
         if (result.isErr) {
-            toaster.show(R.string.error_loading_albums)
+            toaster.show(strings.error_loading_albums)
         }
         // delaying to give ui time to receive the new albums before
         // dismissing the loading bar since no albums logic relies on that

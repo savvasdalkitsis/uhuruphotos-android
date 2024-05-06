@@ -17,14 +17,15 @@ package com.savvasdalkitsis.uhuruphotos.feature.upload.view.api.ui
 
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
+import dev.icerock.moko.resources.compose.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.savvasdalkitsis.uhuruphotos.feature.upload.view.api.ui.state.UploadErrorDialogMode
 import com.savvasdalkitsis.uhuruphotos.feature.upload.view.api.ui.state.UploadErrorDialogMode.ERROR_CHECKING
 import com.savvasdalkitsis.uhuruphotos.feature.upload.view.api.ui.state.UploadErrorDialogMode.NOT_ALLOWED
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.dialogs.OkDialog
+import dev.icerock.moko.resources.compose.stringResource
 
 @Composable
 fun UploadErrorDialog(
@@ -32,13 +33,13 @@ fun UploadErrorDialog(
     onDismiss: () -> Unit = {},
 ) {
     OkDialog(
-        title = stringResource(string.cannot_upload),
+        title = stringResource(strings.cannot_upload),
         onDismiss = onDismiss,
     ) {
         Text(
             stringResource(when (mode) {
-                NOT_ALLOWED -> string.upload_not_allowed
-                ERROR_CHECKING -> string.upload_error_checking
+                NOT_ALLOWED -> strings.upload_not_allowed
+                ERROR_CHECKING -> strings.upload_error_checking
             })
         )
     }

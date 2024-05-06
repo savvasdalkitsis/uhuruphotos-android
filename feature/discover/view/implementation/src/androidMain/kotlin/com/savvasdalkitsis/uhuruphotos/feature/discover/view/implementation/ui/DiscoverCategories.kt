@@ -21,15 +21,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
+import dev.icerock.moko.resources.compose.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.DiscoverAction
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.MediaWithoutDateCategorySelected
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.StatsCategorySelected
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.VideoCategorySelected
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SectionHeader
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.ActionRowWithIcon
@@ -48,25 +48,25 @@ fun DiscoverCategories(
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         SectionHeader(
-            title = stringResource(string.categories),
+            title = stringResource(strings.categories),
         ) {}
         ActionRowWithIcon(
-            icon = drawable.ic_play_filled,
-            text = stringResource(string.videos),
+            icon = images.ic_play_filled,
+            text = stringResource(strings.videos),
         ) {
             action(VideoCategorySelected)
         }
         Divider(startIndent = 48.dp)
         ActionRowWithIcon(
-            icon = drawable.ic_calendar_remove,
-            text = stringResource(string.media_without_date),
+            icon = images.ic_calendar_remove,
+            text = stringResource(strings.media_without_date),
         ) {
             action(MediaWithoutDateCategorySelected)
         }
         Divider(startIndent = 48.dp)
         ActionRowWithIcon(
-            icon = drawable.ic_chart,
-            text = stringResource(string.stats),
+            icon = images.ic_chart,
+            text = stringResource(strings.stats),
         ) {
             action(StatsCategorySelected)
         }

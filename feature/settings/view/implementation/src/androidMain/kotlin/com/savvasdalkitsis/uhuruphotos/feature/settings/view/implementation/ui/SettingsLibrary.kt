@@ -16,12 +16,12 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
+import dev.icerock.moko.resources.compose.stringResource
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ChangeShowLibrary
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 
 @Composable
 internal fun SettingsLibrary(
@@ -29,8 +29,8 @@ internal fun SettingsLibrary(
     action: (SettingsAction) -> Unit,
 ) {
     SettingsCheckBox(
-        text = stringResource(string.show_library_on_home),
-        icon = drawable.ic_photo_album,
+        text = stringResource(strings.show_library_on_home),
+        icon = images.ic_photo_album,
         isChecked = state.showLibrary,
     ) {
         action(ChangeShowLibrary(it))

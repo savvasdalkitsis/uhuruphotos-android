@@ -28,13 +28,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.painterResource
+import dev.icerock.moko.resources.compose.painterResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.VitrineSubtitle
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.CustomColors
+import dev.icerock.moko.resources.ImageResource
 
 @Composable
-internal fun LibraryPillItem(title: String, icon: Int, onSelected: () -> Unit) {
+internal fun LibraryPillItem(title: String, icon: ImageResource, onSelected: () -> Unit) {
     Column(
         modifier = Modifier
             .padding(8.dp)

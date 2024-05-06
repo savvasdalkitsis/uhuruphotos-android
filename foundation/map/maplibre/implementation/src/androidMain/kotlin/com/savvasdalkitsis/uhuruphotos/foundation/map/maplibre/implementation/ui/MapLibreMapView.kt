@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.map.maplibre.implementation.ui
 
+import android.graphics.drawable.Drawable
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
@@ -86,7 +87,7 @@ fun MapLibreMapView(
                         Markers.entries.forEach { marker ->
                             style.addImage(
                                 marker.id,
-                                BitmapUtils.getDrawableFromRes(context, marker.drawable, marker.tint)!!,
+                                TODO() as Drawable,//BitmapUtils.getDrawableFromRes(context, marker.drawable, marker.tint)!!,
                             )
                         }
                     }

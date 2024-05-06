@@ -34,8 +34,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
+import dev.icerock.moko.resources.compose.painterResource
+import dev.icerock.moko.resources.compose.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -46,10 +46,11 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.i
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxDetailsState
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.SingleMediaItemState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SectionHeader
+import dev.icerock.moko.resources.ImageResource
 import kotlinx.collections.immutable.toPersistentSet
 
 @Composable
@@ -62,7 +63,7 @@ fun LightboxSearchCaptions(
             verticalArrangement = spacedBy(16.dp)
         ) {
             SectionHeader(
-                title = stringResource(string.search_captions)
+                title = stringResource(strings.search_captions)
             ) {}
             FlowRow(
                 horizontalArrangement = spacedBy(8.dp),
@@ -79,7 +80,7 @@ fun LightboxSearchCaptions(
 @Composable
 private fun LightboxSearchCaption(
     caption: String,
-    icon: Int?,
+    icon: ImageResource?,
     action: (LightboxAction) -> Unit
 ) {
     Row(

@@ -66,7 +66,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import com.savvasdalkitsis.uhuruphotos.foundation.share.api.usecase.ShareUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.usecase.UiUseCase
 import com.savvasdalktsis.uhuruphotos.feature.download.domain.api.usecase.DownloadUseCase
@@ -169,7 +169,7 @@ internal class LightboxActionsContext(
             emit(Loading)
             emit(LoadingDetails(mediaId))
             lightboxUseCase.refreshMediaDetails(mediaId, item.mediaHash).onFailure {
-                emit(ShowErrorMessage(string.error_loading_photo_details))
+                emit(ShowErrorMessage(strings.error_loading_photo_details))
             }
         }
     }

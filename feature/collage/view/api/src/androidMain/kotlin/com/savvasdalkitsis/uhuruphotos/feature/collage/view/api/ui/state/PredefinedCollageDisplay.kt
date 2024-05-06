@@ -16,10 +16,10 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state
 
 
-import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
+import dev.icerock.moko.resources.ImageResource
+import dev.icerock.moko.resources.StringResource
 import kotlin.math.max
 import kotlin.math.min
 
@@ -29,10 +29,10 @@ enum class PredefinedCollageDisplay(
     override val compactColumnsLandscape: Int,
     override val wideColumnsPortrait: Int,
     override val wideColumnsLandscape: Int,
-    @DrawableRes override val iconResource: Int,
+    override val iconResource: ImageResource,
     override val maintainAspectRatio: Boolean,
     override val allowsAnimatedVideoThumbnails: Boolean = true,
-    @StringRes override val friendlyName: Int,
+    override val friendlyName: StringResource,
     override val usingStaggeredGrid: Boolean = true,
 ) : CollageDisplay {
     YEARLY(
@@ -41,10 +41,10 @@ enum class PredefinedCollageDisplay(
         compactColumnsLandscape = 12,
         wideColumnsPortrait = 16,
         wideColumnsLandscape = 18,
-        iconResource = drawable.ic_month,
+        iconResource = images.ic_month,
         maintainAspectRatio = false,
         allowsAnimatedVideoThumbnails = false,
-        friendlyName = string.yearly,
+        friendlyName = strings.yearly,
     ),
     TINY(
         miniIcons = false,
@@ -52,9 +52,9 @@ enum class PredefinedCollageDisplay(
         compactColumnsLandscape = 8,
         wideColumnsPortrait = 8,
         wideColumnsLandscape = 9,
-        iconResource = drawable.ic_collage_tiny,
+        iconResource = images.ic_collage_tiny,
         maintainAspectRatio = false,
-        friendlyName = string.tiny,
+        friendlyName = strings.tiny,
     ),
     COMPACT(
         miniIcons = false,
@@ -62,9 +62,9 @@ enum class PredefinedCollageDisplay(
         compactColumnsLandscape = 7,
         wideColumnsPortrait = 7,
         wideColumnsLandscape = 8,
-        iconResource = drawable.ic_collage_compact,
+        iconResource = images.ic_collage_compact,
         maintainAspectRatio = true,
-        friendlyName = string.compact,
+        friendlyName = strings.compact,
     ),
     COMFORTABLE(
         miniIcons = false,
@@ -72,9 +72,9 @@ enum class PredefinedCollageDisplay(
         compactColumnsLandscape = 4,
         wideColumnsPortrait = 4,
         wideColumnsLandscape = 6,
-        iconResource = drawable.ic_collage_comfortable,
+        iconResource = images.ic_collage_comfortable,
         maintainAspectRatio = true,
-        friendlyName = string.comfortable,
+        friendlyName = strings.comfortable,
     ),
     BIG(
         miniIcons = false,
@@ -82,9 +82,9 @@ enum class PredefinedCollageDisplay(
         compactColumnsLandscape = 3,
         wideColumnsPortrait = 3,
         wideColumnsLandscape = 5,
-        iconResource = drawable.ic_collage_big,
+        iconResource = images.ic_collage_big,
         maintainAspectRatio = true,
-        friendlyName = string.big,
+        friendlyName = strings.big,
     ),
     FULL(
         miniIcons = false,
@@ -92,9 +92,9 @@ enum class PredefinedCollageDisplay(
         compactColumnsLandscape = 2,
         wideColumnsPortrait = 2,
         wideColumnsLandscape = 4,
-        iconResource = drawable.ic_collage_full,
+        iconResource = images.ic_collage_full,
         maintainAspectRatio = true,
-        friendlyName = string.full,
+        friendlyName = strings.full,
     );
 
     override val zoomIn: CollageDisplay get() = entries[min(ordinal + 1, entries.size - 1)]

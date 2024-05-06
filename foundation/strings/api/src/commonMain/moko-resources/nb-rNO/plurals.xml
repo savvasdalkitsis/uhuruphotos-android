@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plural name="delete_photos">
+        <item quantity="one">Slett %d bilde</item>
+        <item quantity="other">Slett %d bilder</item>
+    </plural>
+    <plural name="hours">
+        <item quantity="one">%d time</item>
+        <item quantity="other">%d timer</item>
+    </plural>
+    <plural name="delete_photos_confirmation">
+        <item quantity="one">Slett dette ene bildet\?</item>
+        <item quantity="other">Slett disse %d bildene\?</item>
+    </plural>
+    <plural name="restore_photos">
+        <item quantity="one">Gjenopprett %d bilde</item>
+        <item quantity="other">Gjenopprett %d bilder</item>
+    </plural>
+    <plural name="trash_photos">
+        <item quantity="one">Send %d bilde til papirkurven</item>
+        <item quantity="other">Send %d bilder til papirkurven</item>
+    </plural>
+    <plural name="trash_media">
+        <item quantity="one">Send %d medieelement til papirkurven</item>
+        <item quantity="other">Send %d medieelementer til papirkurven</item>
+    </plural>
+    <plural name="restore_media">
+        <item quantity="one">Gjenopprett %d mediaelement</item>
+        <item quantity="other">Gjenopprett %d mediaelementer</item>
+    </plural>
+    <plural name="delete_media">
+        <item quantity="one">Slett %d medieelement</item>
+        <item quantity="other">Slett %d medieelementer</item>
+    </plural>
+    <plural name="delete_media_confirmation">
+        <item quantity="one">Slett dette %d-medieelementet?</item>
+        <item quantity="other">Slett disse %d-medieelementene?</item>
+    </plural>
+    <plural name="restore_photos_confirmation">
+        <item quantity="one">Gjenopprett dette bildet?</item>
+        <item quantity="other">Gjenopprett disse %d bildene?</item>
+    </plural>
+    <plural name="days">
+        <item quantity="one">%d dag</item>
+        <item quantity="other">%d dager</item>
+    </plural>
+    <plural name="restore_media_confirmation">
+        <item quantity="one">Gjenopprett dette medieelementet?</item>
+        <item quantity="other">Gjenopprett disse %d medieelementene?</item>
+    </plural>
+    <plural name="item_count">
+        <item quantity="one">%d element</item>
+        <item quantity="other">%d elementer</item>
+    </plural>
+    <plural name="trash_photos_confirmation">
+        <item quantity="one">Send dette bildet til papirkurven?</item>
+        <item quantity="other">Send disse %d bildene til papirkurven?</item>
+    </plural>
+    <plural name="trash_media_confirmation">
+        <item quantity="one">Send dette medieelementet til papirkurven?</item>
+        <item quantity="other">Send disse %d medieelementene til papirkurven?</item>
+    </plural>
+</resources>

@@ -16,14 +16,14 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSorting
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSorting.ALPHABETICAL_ASC
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSorting.ALPHABETICAL_DESC
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSorting.DATE_ASC
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSorting.DATE_DESC
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.DropDownActionIcon
+import dev.icerock.moko.resources.compose.stringResource
 
 @Composable
 internal fun CatalogueSortingAction(
@@ -32,7 +32,7 @@ internal fun CatalogueSortingAction(
 ) {
     DropDownActionIcon(
         icon = sorting.icon,
-        contentDescription = stringResource(string.sorting),
+        contentDescription = stringResource(strings.sorting),
     ) {
         item("Date descending") {
             sortingChanged(DATE_DESC)

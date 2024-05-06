@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plural name="delete_photos">
+        <item quantity="one">Удалить %d фото</item>
+        <item quantity="few">Удалить %d фотографии</item>
+        <item quantity="many"></item>
+        <item quantity="other"></item>
+    </plural>
+    <plural name="restore_media">
+        <item quantity="one">Восстановить %d медиа файл</item>
+        <item quantity="few">Восстановить %d медиа файлы</item>
+        <item quantity="many"></item>
+        <item quantity="other"></item>
+    </plural>
+    <plural name="delete_photos_confirmation">
+        <item quantity="one">Вы уверены что хотите удалить это %d фото\?</item>
+        <item quantity="few">Вы уверены что хотите удалить эти %d фотографии\?</item>
+        <item quantity="many"></item>
+        <item quantity="other"></item>
+    </plural>
+    <plural name="delete_media">
+        <item quantity="one">Удалить %d медиа файл</item>
+        <item quantity="few">Удалить %d медиа файлы</item>
+        <item quantity="many"></item>
+        <item quantity="other"></item>
+    </plural>
+    <plural name="restore_photos">
+        <item quantity="one">Восстановить %d фото</item>
+        <item quantity="few">Восстановить %d фотографии</item>
+        <item quantity="many"></item>
+        <item quantity="other"></item>
+    </plural>
+</resources>

@@ -20,9 +20,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material.Icon
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import dev.icerock.moko.resources.compose.painterResource
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
 
 internal fun LazyListScope.serverSearchSuggestion(
     suggestion: String,
@@ -38,7 +38,7 @@ internal fun LazyListScope.serverSearchSuggestion(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(4.dp),
-                    painter = painterResource(id = drawable.ic_assistant),
+                    painter = painterResource(images.ic_assistant),
                     contentDescription = null
                 )
             }

@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -28,14 +27,15 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import dev.icerock.moko.resources.ImageResource
+import dev.icerock.moko.resources.compose.painterResource
 
 @Composable
 internal fun SettingsOutlineButtonRow(
     enabled: Boolean = true,
     buttonText: String,
-    @DrawableRes icon: Int? = null,
+    icon: ImageResource? = null,
     onClick: (() -> Unit),
 ) {
     Box(
@@ -52,7 +52,7 @@ internal fun SettingsOutlineButtonRow(
             onClick = onClick
         ) {
             icon?.let {
-                Icon(painter = painterResource(id = it), contentDescription = null)
+                Icon(painter = painterResource(it), contentDescription = null)
                 Spacer(modifier = Modifier.width(8.dp))
             }
             Text(buttonText)

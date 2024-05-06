@@ -9,5 +9,6 @@ android {
 dependencies {
     api(
             libs.androidx.annotation,
+            libs.resources.core,
     )
 }

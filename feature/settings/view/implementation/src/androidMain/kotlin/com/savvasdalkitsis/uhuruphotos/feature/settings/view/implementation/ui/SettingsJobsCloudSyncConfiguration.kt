@@ -17,13 +17,13 @@ package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui
 
 import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ChangeCloudSyncChargingRequirements
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ChangeCloudSyncNetworkRequirements
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
+import dev.icerock.moko.resources.compose.stringResource
 
 @Composable
 internal fun SettingsJobsCloudSyncConfiguration(
@@ -31,8 +31,8 @@ internal fun SettingsJobsCloudSyncConfiguration(
     action: (SettingsAction) -> Unit,
 ) {
     SettingsCheckBox(
-        text = stringResource(string.requires_charging),
-        icon = drawable.ic_power,
+        text = stringResource(strings.requires_charging),
+        icon = images.ic_power,
         isChecked = state.cloudSyncRequiresCharging,
     ) { selected ->
         action(ChangeCloudSyncChargingRequirements(selected))

@@ -26,14 +26,14 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.stringResource
+import dev.icerock.moko.resources.compose.stringResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.ClickedOnMap
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.LightboxAction
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.SingleMediaItemState
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapView
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.rememberMapViewState
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SectionHeader
 
 @Composable
@@ -45,11 +45,11 @@ internal fun LightboxInfoMap(
         Column(
             verticalArrangement = spacedBy(8.dp)
         ) {
-            SectionHeader(title = stringResource(string.location)) {
+            SectionHeader(title = stringResource(strings.location)) {
                 OutlinedButton(
                     onClick = { action(ClickedOnMap(gps)) }
                 ) {
-                    Text(stringResource(string.open_in_maps))
+                    Text(stringResource(strings.open_in_maps))
                 }
             }
             MapView(

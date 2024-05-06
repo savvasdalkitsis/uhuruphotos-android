@@ -18,14 +18,14 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.ac
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import kotlinx.coroutines.flow.flow
 
 data object DownloadSelectedCels : FeedAction() {
     context(FeedActionsContext) override fun handle(
         state: FeedState
     ) = flow<FeedMutation> {
-        toaster.show(R.string.downloading_original_files)
+        toaster.show(strings.downloading_original_files)
         selectionList.clear()
         downloadUseCase.scheduleMediaDownload(state.selectedCels.mapNotNull {
             it.mediaItem.id.findRemote

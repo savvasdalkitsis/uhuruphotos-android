@@ -27,10 +27,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.group.CollapsibleGroup
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.group.state.rememberCollapsibleGroupState
+import dev.icerock.moko.resources.StringResource
 
 @Composable
 fun StatsGroup(
-    title: Int,
+    title: StringResource,
     uniqueId: String,
     isLoading: Boolean,
     content: @Composable () -> Unit,

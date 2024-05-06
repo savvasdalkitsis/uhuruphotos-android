@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.home.view.api.ui
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
@@ -39,8 +38,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
+import dev.icerock.moko.resources.compose.stringResource
 import androidx.compose.ui.unit.dp
 import com.bumble.appyx.components.backstack.BackStack
 import com.bumble.appyx.components.backstack.activeElement
@@ -54,13 +52,16 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.navigation.FeedNavi
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.ui.NavigationStyle.BOTTOM_BAR
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.ui.NavigationStyle.NAVIGATION_RAIL
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.api.navigation.LibraryNavigationRoute
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.LocalBackStack
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.singleTop
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.CustomColors
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window.LocalWindowSize
+import dev.icerock.moko.resources.StringResource
+import dev.icerock.moko.resources.compose.painterResource
+import dev.icerock.moko.resources.compose.stringResource
 
 @Composable
 fun homeNavigationStyle() = when (LocalWindowSize.current.widthSizeClass) {
@@ -116,14 +117,14 @@ private fun Items(
     rowScope: RowScope? = null,
 ) {
     NavItem(
-        label = string.feed,
+        label = strings.feed,
         route = FeedNavigationRoute,
-        painterResource(id = homeFeedDisplay.iconResource),
+        painterResource(homeFeedDisplay.iconResource!!),
         onReselected,
         rowScope,
     )
     NavItem(
-        label = string.discover,
+        label = strings.discover,
         route = DiscoverNavigationRoute,
         icon = rememberVectorPainter(Icons.Filled.Search),
         onReselected = onReselected,
@@ -131,9 +132,9 @@ private fun Items(
     )
     if (showLibrary) {
         NavItem(
-            label = string.library,
+            label = strings.library,
             route = LibraryNavigationRoute,
-            icon = painterResource(drawable.ic_photo_album),
+            icon = painterResource(images.ic_photo_album),
             onReselected = onReselected,
             rowScope = rowScope,
         )
@@ -142,7 +143,7 @@ private fun Items(
 
 @Composable
 private fun <R: NavigationRoute> NavItem(
-    @StringRes label: Int,
+    label: StringResource,
     route: R,
     icon: Painter,
     onReselected: () -> Unit,
@@ -169,7 +170,7 @@ private fun <R: NavigationRoute> NavItem(
 @Composable
 private fun <R: NavigationRoute> BottomNavItem(
     rowScope: RowScope,
-    @StringRes label: Int,
+    label: StringResource,
     route: R,
     icon: Painter,
     onReselected: () -> Unit,
@@ -198,7 +199,7 @@ private fun <R: NavigationRoute> BottomNavItem(
 
 @Composable
 private fun <R: NavigationRoute> NavRailNavItem(
-    @StringRes label: Int,
+    label: StringResource,
     route: R,
     icon: Painter,
     onReselected: () -> Unit,

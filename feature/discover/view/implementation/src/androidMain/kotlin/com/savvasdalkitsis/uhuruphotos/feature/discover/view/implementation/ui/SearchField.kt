@@ -44,7 +44,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
+import dev.icerock.moko.resources.compose.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -54,7 +54,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.SearchFor
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.UpsellLoginFromSearch
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.DiscoverState
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window.LocalWindowSize
 
 @Composable
@@ -108,7 +108,7 @@ fun SearchField(
                         }) {
                             Icon(
                                 imageVector = Icons.Filled.Close,
-                                contentDescription = stringResource(string.clear)
+                                contentDescription = stringResource(strings.clear)
                             )
                         }
                     }
@@ -119,7 +119,7 @@ fun SearchField(
                     ) {
                         Icon(
                             imageVector = Icons.Default.Search,
-                            contentDescription = stringResource(string.search_icon)
+                            contentDescription = stringResource(strings.search_icon)
                         )
                     }
                 }
@@ -132,7 +132,7 @@ fun SearchField(
             keyboardActions = KeyboardActions(
                 onSearch = { action(SearchFor(query)) }
             ),
-            placeholder = { Text(stringResource(string.search_for_something)) },
+            placeholder = { Text(stringResource(strings.search_for_something)) },
             value = query,
             onValueChange = ::changeQuery
         )

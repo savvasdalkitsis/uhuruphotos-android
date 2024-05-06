@@ -39,8 +39,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -53,8 +51,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.a
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.ShowHelp
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.TakeUserToLibrePhotosWebsite
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.UrlTyped
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.layout.plus
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
@@ -67,6 +65,8 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.group.state.remember
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UpNavButton
+import dev.icerock.moko.resources.compose.painterResource
+import dev.icerock.moko.resources.compose.stringResource
 
 @Composable
 internal fun Server(
@@ -76,13 +76,13 @@ internal fun Server(
     CommonScaffold(
         modifier = Modifier
             .imeNestedScroll(),
-        title = { Text(stringResource(string.libre_photos_server))},
+        title = { Text(stringResource(strings.libre_photos_server))},
         navigationIcon = { UpNavButton() },
         actionBarContent = {
             ActionIcon(
                 onClick = { action(ShowHelp) },
-                icon = drawable.ic_help,
-                contentDescription = stringResource(string.help)
+                icon = images.ic_help,
+                contentDescription = stringResource(strings.help)
             )
         }
     ) { contentPadding ->
@@ -100,7 +100,7 @@ internal fun Server(
             ) {
                 CollapsibleGroup(
                     groupState = rememberCollapsibleGroupState(
-                        title = string.server_url,
+                        title = strings.server_url,
                         uniqueKey = "serverUrl",
                         initiallyCollapsed = false,
                     )
@@ -121,7 +121,7 @@ internal fun Server(
                                 contentDescription = "serverIcon"
                             )
                         },
-                        label = { Text(stringResource(string.server_url)) },
+                        label = { Text(stringResource(strings.server_url)) },
                         value = serverTextFieldValue,
                         isError = !state.isUrlValid,
                         onValueChange = {
@@ -147,15 +147,15 @@ internal fun Server(
                 ) {
                     Text(
                         modifier = Modifier.padding(bottom = 8.dp),
-                        text = stringResource(string.login_to_server)
+                        text = stringResource(strings.login_to_server)
                     )
                     UsernameField(state, action)
                     PasswordField(state, action)
                     ToggleableButtonWithIcon(
                         modifier = Modifier
                             .padding(vertical = 8.dp),
-                        icon = drawable.ic_lock_add,
-                        text = stringResource(string.remember_credentials),
+                        icon = images.ic_lock_add,
+                        text = stringResource(strings.remember_credentials),
                         checked = state.rememberCredentials,
                     ) {
                         action(ChangeRememberCredentials(it))
@@ -168,7 +168,7 @@ internal fun Server(
                             rememberCredentials = state.rememberCredentials,
                         )) }
                     ) {
-                        Text(stringResource(string.login))
+                        Text(stringResource(strings.login))
                     }
                 }
                 Spacer(modifier = Modifier.weight(1f))
@@ -184,11 +184,11 @@ internal fun Server(
                         onClick = { action(SendLogsClick) }
                     ) {
                         Icon(
-                            painter = painterResource(id = drawable.ic_feedback),
+                            painter = painterResource(images.ic_feedback),
                             contentDescription = null
                         )
                         Spacer(modifier = Modifier.width(8.dp))
-                        Text(text = stringResource(string.send_feedback_with_logs))
+                        Text(text = stringResource(strings.send_feedback_with_logs))
                     }
                 }
             }
@@ -197,16 +197,16 @@ internal fun Server(
             }
             if (state.showHelpDialog) {
                 OkDialog(
-                    title = stringResource(string.help),
+                    title = stringResource(strings.help),
                     onDismiss = { action(DismissHelpDialog) },
                 ) {
-                    Text(stringResource(string.libre_photos_description))
+                    Text(stringResource(strings.libre_photos_description))
                     IconOutlineButton(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(8.dp),
-                        icon = drawable.ic_help,
-                        text = stringResource(string.take_me_to_website),
+                        icon = images.ic_help,
+                        text = stringResource(strings.take_me_to_website),
                     ) {
                         action(TakeUserToLibrePhotosWebsite)
                     }

@@ -15,8 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui
 
-import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -28,15 +26,14 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.CollageShapeChanged
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.CollageSpacingChanged
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.CollageSpacingEdgeChanged
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CollageShape
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CollageShape.RECTANGLE
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CollageShape.ROUNDED_RECTANGLE
@@ -44,6 +41,9 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkable.Checkable
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkable.SelectionMode.SELECTED
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkable.SelectionMode.UNSELECTED
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.TextWithIcon
+import dev.icerock.moko.resources.ImageResource
+import dev.icerock.moko.resources.StringResource
+import dev.icerock.moko.resources.compose.stringResource
 
 @Composable
 internal fun SettingsCollageUI(
@@ -52,7 +52,7 @@ internal fun SettingsCollageUI(
 ) {
     SettingsSliderRow(
         text = {
-            stringResource(string.collage_spacing, it.toInt())
+            stringResource(strings.collage_spacing, it.toInt())
         },
         initialValue = state.collageSpacing.toFloat(),
         range = 0f..5f,
@@ -60,12 +60,12 @@ internal fun SettingsCollageUI(
         onValueChanged = { action(CollageSpacingChanged(it.toInt())) }
     )
     SettingsCheckBox(
-        text = stringResource(string.collage_spacing_include_edges),
-        icon = drawable.ic_border_outside,
+        text = stringResource(strings.collage_spacing_include_edges),
+        icon = images.ic_border_outside,
         isChecked = state.collageSpacingIncludeEdges,
         onCheckedChange = { action(CollageSpacingEdgeChanged(it)) },
     )
-    SettingsTextRow(stringResource(string.collage_shape))
+    SettingsTextRow(stringResource(strings.collage_shape))
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -74,15 +74,15 @@ internal fun SettingsCollageUI(
     ) {
         ShapeButton(
             shape = RECTANGLE,
-            icon = drawable.ic_rectangle,
-            text = string.rectangle,
+            icon = images.ic_rectangle,
+            text = strings.rectangle,
             state = state,
             action = action
         )
         ShapeButton(
             shape = ROUNDED_RECTANGLE,
-            icon = drawable.ic_rounded_rectangle,
-            text = string.rounded_rectangle,
+            icon = images.ic_rounded_rectangle,
+            text = strings.rounded_rectangle,
             state = state,
             action = action
         )
@@ -92,8 +92,8 @@ internal fun SettingsCollageUI(
 @Composable
 private fun RowScope.ShapeButton(
     shape: CollageShape,
-    @DrawableRes icon: Int,
-    @StringRes text: Int,
+    icon: ImageResource,
+    text: StringResource,
     state: SettingsState,
     action: (SettingsAction) -> Unit
 ) {

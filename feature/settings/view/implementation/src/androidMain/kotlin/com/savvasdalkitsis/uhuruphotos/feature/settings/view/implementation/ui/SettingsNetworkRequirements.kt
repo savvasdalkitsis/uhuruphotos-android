@@ -16,10 +16,12 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
+import dev.icerock.moko.resources.compose.stringResource
 import androidx.work.NetworkType
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 
 @Composable
 internal fun SettingsNetworkRequirements(
@@ -29,10 +31,10 @@ internal fun SettingsNetworkRequirements(
 ) {
     SettingsTextDropDownButtonRow(
         text = stringResource(
-            R.string.network_requirements,
+            strings.network_requirements,
             networkType.friendlyName()
         ),
-        buttonText = stringResource(R.string.change),
+        buttonText = stringResource(strings.change),
         action = action,
     ) {
         @Composable

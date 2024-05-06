@@ -21,7 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementatio
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam.actions.ChangeSorting
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam.actions.Refresh
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.Catalogue
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 
 @Composable
 internal fun AutoAlbums(
@@ -29,11 +29,11 @@ internal fun AutoAlbums(
     action: (AutoAlbumsAction) -> Unit,
 ) {
     Catalogue(
-        title = string.auto_generated_albums,
+        title = strings.auto_generated_albums,
         onRefresh = { action(Refresh) },
         isRefreshing = state.isLoading,
         isEmpty = state.albums.isEmpty(),
-        emptyContentMessage = string.no_auto_albums,
+        emptyContentMessage = strings.no_auto_albums,
         sorting = state.sorting,
         onChangeSorting = { action(ChangeSorting(it)) },
     ) {

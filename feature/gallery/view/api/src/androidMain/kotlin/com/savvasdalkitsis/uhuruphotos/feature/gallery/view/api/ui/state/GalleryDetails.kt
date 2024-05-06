@@ -20,7 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
 
 data class GalleryDetails(
-    val title: Title = Title.Text(""),
+    val title: com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title = com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title.Text(""),
     val clusters: List<Cluster> = emptyList(),
     val people: List<Person> = emptyList(),
 )

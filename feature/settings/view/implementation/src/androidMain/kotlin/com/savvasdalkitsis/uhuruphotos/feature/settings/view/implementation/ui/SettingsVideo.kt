@@ -17,12 +17,12 @@ package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui
 
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
+import dev.icerock.moko.resources.compose.stringResource
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ChangeAnimateVideoThumbnails
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 
 @Composable
 internal fun ColumnScope.SettingsVideo(
@@ -30,8 +30,8 @@ internal fun ColumnScope.SettingsVideo(
     action: (SettingsAction) -> Unit,
 ) {
     SettingsCheckBox(
-        text = stringResource(string.animate_video_thumbnails),
-        icon = drawable.ic_play_filled,
+        text = stringResource(strings.animate_video_thumbnails),
+        icon = images.ic_play_filled,
         isChecked = state.animateVideoThumbnails,
     ) {
         action(ChangeAnimateVideoThumbnails(it))

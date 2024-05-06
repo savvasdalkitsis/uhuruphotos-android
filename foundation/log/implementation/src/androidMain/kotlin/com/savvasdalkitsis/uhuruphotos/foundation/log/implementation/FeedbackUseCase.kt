@@ -28,10 +28,11 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.Setti
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.usecase.FeedbackUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.usecase.FeedbackUseCase.Companion.EMAIL
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode.DARK_MODE
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode.FOLLOW_SYSTEM
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode.LIGHT_MODE
+import dev.icerock.moko.resources.desc.desc
 
 class FeedbackUseCase(
     private val context: Context,
@@ -65,7 +66,7 @@ class FeedbackUseCase(
             fileLoggingSetup = loggerSetup,
             receiver = EMAIL,
             theme = R.style.AppTheme,
-            title = context.getString(string.logs)
+            title = strings.logs.desc().toString(context)
         )
 
     }

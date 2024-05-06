@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Slider
 import androidx.compose.runtime.Composable
@@ -24,11 +23,12 @@ import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import dev.icerock.moko.resources.StringResource
 
 @Composable
 internal fun SettingsSliderRow(
     text: @Composable (Float) -> String,
-    @StringRes subtext: Int? = null,
+    subtext: StringResource? = null,
     initialValue: Float,
     range: ClosedFloatingPointRange<Float>,
     steps: Int = 0,

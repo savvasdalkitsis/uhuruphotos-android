@@ -28,12 +28,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.ServerAction
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.UsernameChangedTo
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
+import dev.icerock.moko.resources.compose.stringResource
 
 @Composable
 internal fun UsernameField(
@@ -57,7 +57,7 @@ internal fun UsernameField(
                 contentDescription = "usernameIcon"
             )
         },
-        label = { Text(stringResource(string.username)) },
+        label = { Text(stringResource(strings.username)) },
         value = username,
         onValueChange = {
             username = it

@@ -27,7 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
+import dev.icerock.moko.resources.compose.stringResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.AskForMediaItemRestoration
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.AskForMediaItemTrashing
@@ -40,10 +40,12 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.UseMediaItemAs
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.SingleMediaItemState
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIconWithText
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.android.ActionIconWithText
+import dev.icerock.moko.resources.ImageResource
 
 @Composable
 fun LightboxBottomActionBar(
@@ -87,16 +89,16 @@ fun LightboxBottomActionBarEdit(
         item("dismiss") {
             ActionIcon(
                 onClick = { action(HideEditOptions) },
-                icon = drawable.ic_arrow_up,
+                icon = images.ic_arrow_up,
                 iconModifier = Modifier.rotate(180f),
-                contentDescription = stringResource(string.dismiss),
+                contentDescription = stringResource(strings.dismiss),
             )
         }
         item("crop") {
             ActionIconWithText(
                 onClick = { action(CropMediaItem) },
-                icon = drawable.ic_crop,
-                text = stringResource(string.crop),
+                icon = images.ic_crop,
+                text = stringResource(strings.crop),
             )
         }
         mediaItem.showEditApps.forEach { app ->
@@ -132,8 +134,8 @@ fun LightboxBottomActionBarOptions(
                 ActionIconWithText(
                     modifier = Modifier.animateItemPlacement(),
                     onClick = { action(ShareMediaItem) },
-                    icon = drawable.ic_share,
-                    text = stringResource(string.share),
+                    icon = images.ic_share,
+                    text = stringResource(strings.share),
                 )
             }
         }
@@ -142,8 +144,8 @@ fun LightboxBottomActionBarOptions(
                 ActionIconWithText(
                     modifier = Modifier.animateItemPlacement(),
                     onClick = { action(UseMediaItemAs) },
-                    icon = drawable.ic_open_in_new,
-                    text = stringResource(string.use_as),
+                    icon = images.ic_open_in_new,
+                    text = stringResource(strings.use_as),
                 )
             }
         }
@@ -152,8 +154,8 @@ fun LightboxBottomActionBarOptions(
                 ActionIconWithText(
                     modifier = Modifier.animateItemPlacement(),
                     onClick = { action(EditMediaItem) },
-                    icon = drawable.ic_edit,
-                    text = stringResource(string.edit),
+                    icon = images.ic_edit,
+                    text = stringResource(strings.edit),
                 )
             }
         }
@@ -162,8 +164,8 @@ fun LightboxBottomActionBarOptions(
                 ActionIconWithText(
                     modifier = Modifier.animateItemPlacement(),
                     onClick = { action(AskForMediaItemRestoration) },
-                    icon = drawable.ic_restore_from_trash,
-                    text = stringResource(string.restore),
+                    icon = images.ic_restore_from_trash,
+                    text = stringResource(strings.restore),
                 )
             }
         }
@@ -172,8 +174,8 @@ fun LightboxBottomActionBarOptions(
                 ActionIconWithText(
                     modifier = Modifier.animateItemPlacement(),
                     onClick = { action(AskForMediaItemTrashing) },
-                    icon = drawable.ic_delete,
-                    text = stringResource(string.delete),
+                    icon = images.ic_delete,
+                    text = stringResource(strings.delete),
                 )
             }
         }

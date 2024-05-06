@@ -24,14 +24,14 @@ import com.savvasdalkitsis.uhuruphotos.feature.undated.view.implementation.modul
 import com.savvasdalkitsis.uhuruphotos.feature.undated.view.implementation.seam.UndatedActionsContext
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
 
 internal class UndatedViewModel(
     actionsContext: UndatedActionsContext = UndatedModule.undatedActionsContext,
 ) : NavigationViewModel<GalleryState, GalleryAction, UndatedNavigationRoute>(
     ActionHandlerWithContext(actionsContext.galleryActionsContext),
-    GalleryState(title = Title.Resource(string.media_without_date)),
+    GalleryState(title = Title.Resource(strings.media_without_date)),
 ) {
 
     override fun onRouteSet(route: UndatedNavigationRoute) {

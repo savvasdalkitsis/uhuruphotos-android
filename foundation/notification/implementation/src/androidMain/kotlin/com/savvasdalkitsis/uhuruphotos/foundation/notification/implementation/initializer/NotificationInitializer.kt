@@ -20,6 +20,7 @@ import androidx.core.app.NotificationChannelCompat.Builder
 import androidx.core.app.NotificationManagerCompat
 import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.NotificationChannels
+import dev.icerock.moko.resources.desc.desc
 
 class NotificationInitializer(
     private val notificationManager: NotificationManagerCompat,
@@ -31,8 +32,8 @@ class NotificationInitializer(
         NotificationChannels.entries.forEach { channel ->
             notificationManager.createNotificationChannel(
                 Builder(channel.id, channel.importance)
-                    .setName(app.getString(channel.label))
-                    .setDescription(app.getString(channel.description))
+                    .setName(channel.label.desc().toString(app))
+                    .setDescription(channel.description.desc().toString(app))
                     .build()
             )
         }

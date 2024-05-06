@@ -55,7 +55,7 @@ internal class AutoAlbumActionsContext(
                     userUseCase.getRemoteUserOrRefresh()
                         .mapOr(null) { user ->
                             GalleryDetails(
-                                title = Title.Text(photoEntries.firstOrNull()?.title ?: ""),
+                                title = com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title.Text(photoEntries.firstOrNull()?.title ?: ""),
                                 people = people.map { person ->
                                     person.toPerson { "$serverUrl$it" }
                                 },

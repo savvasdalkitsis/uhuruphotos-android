@@ -36,7 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.previewClusterEmpty
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkable.SelectionMode.UNSELECTED
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
@@ -60,8 +60,8 @@ internal fun ClusterHeader(
                 derivedStateOf {
                     when {
                         state.cels.any { it.selectionMode == UNSELECTED } ->
-                            drawable.ic_check_circle
-                        else -> drawable.ic_clear
+                            images.ic_check_circle
+                        else -> images.ic_clear
                     }
                 }
             }
@@ -108,7 +108,7 @@ internal fun ClusterHeader(
             ActionIcon(
                 iconModifier = Modifier.alpha(0.6f),
                 onClick = onRefreshClicked,
-                icon = drawable.ic_refresh,
+                icon = images.ic_refresh,
             )
         }
     }

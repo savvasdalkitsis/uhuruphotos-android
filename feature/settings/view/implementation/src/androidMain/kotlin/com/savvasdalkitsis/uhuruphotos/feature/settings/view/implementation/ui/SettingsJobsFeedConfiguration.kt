@@ -17,17 +17,17 @@ package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui
 
 import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.pluralStringResource
-import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ChangeFullSyncChargingRequirements
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ChangeFullSyncNetworkRequirements
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.FeedRefreshChanged
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.FeedSyncFrequencyChanged
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R as Strings
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.plurals
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
+import dev.icerock.moko.resources.compose.pluralStringResource
+import dev.icerock.moko.resources.compose.stringResource
 
 @Composable
 internal fun SettingsJobsFeedConfiguration(
@@ -37,8 +37,8 @@ internal fun SettingsJobsFeedConfiguration(
     val daysUpperLimit = 31
     SettingsSliderRow(
         text = {
-            val days = pluralStringResource(Strings.plurals.days, it.toInt(), it.toInt())
-            "${stringResource(string.feed_refresh_days)}: $days"
+            val days = pluralStringResource(plurals.days, it.toInt(), it.toInt())
+            "${stringResource(strings.feed_refresh_days)}: $days"
         },
         initialValue = state.feedDaysToRefresh.toFloat(),
         range = 1f..daysUpperLimit.toFloat(),
@@ -52,10 +52,10 @@ internal fun SettingsJobsFeedConfiguration(
     SettingsSliderRow(
         text = {
             val frequency = when (it) {
-                frequencyUpperLimit -> stringResource(string.never)
-                else -> pluralStringResource(Strings.plurals.hours, it.toInt(), it.toInt())
+                frequencyUpperLimit -> stringResource(strings.never)
+                else -> pluralStringResource(plurals.hours, it.toInt(), it.toInt())
             }
-            "${stringResource(string.feed_sync_freq)}: $frequency"
+            "${stringResource(strings.feed_sync_freq)}: $frequency"
         },
         initialValue = initialValue,
         range = 1f..frequencyUpperLimit,
@@ -64,8 +64,8 @@ internal fun SettingsJobsFeedConfiguration(
     )
     Divider()
     SettingsCheckBox(
-        text = stringResource(string.requires_charging),
-        icon = drawable.ic_power,
+        text = stringResource(strings.requires_charging),
+        icon = images.ic_power,
         isChecked = state.fullSyncRequiresCharging,
     ) { selected ->
         action(ChangeFullSyncChargingRequirements(selected))

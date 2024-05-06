@@ -25,7 +25,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.Setti
 import com.savvasdalkitsis.uhuruphotos.feature.trash.domain.api.usecase.TrashUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.usecase.BiometricsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.flatMapLatest
@@ -53,9 +53,9 @@ internal class TrashAlbumPageActionsContext(
                 .flatMapLatest { biometricsRequired ->
                     val proceed = when {
                         biometricsRequired -> biometricsUseCase.authenticate(
-                            string.authenticate,
-                            string.authenticate_for_access_to_trash,
-                            string.authenticate_for_access_to_trash_description,
+                            strings.authenticate,
+                            strings.authenticate_for_access_to_trash,
+                            strings.authenticate_for_access_to_trash_description,
                             true,
                         )
 
@@ -69,7 +69,7 @@ internal class TrashAlbumPageActionsContext(
                         trashUseCase.observeTrashAlbums()
                             .map { mediaCollections ->
                                 GalleryDetails(
-                                    title = Title.Resource(string.trash),
+                                    title = Title.Resource(strings.trash),
                                     clusters = mediaCollections.map { mediaCollection ->
                                         Cluster(
                                             id = mediaCollection.id,

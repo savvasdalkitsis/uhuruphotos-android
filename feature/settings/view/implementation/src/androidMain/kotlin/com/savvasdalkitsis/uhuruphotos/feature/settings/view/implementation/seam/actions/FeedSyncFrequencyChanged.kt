@@ -19,7 +19,7 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import kotlinx.coroutines.flow.flow
 
 data class FeedSyncFrequencyChanged(val frequency: Float, val upperLimit: Float) : SettingsAction() {
@@ -29,6 +29,6 @@ data class FeedSyncFrequencyChanged(val frequency: Float, val upperLimit: Float)
         settingsUseCase.setFeedSyncFrequency(frequency.toInt())
         settingsUseCase.setShouldPerformPeriodicFullSync(frequency != upperLimit)
         feedWorkScheduler.scheduleFeedRefreshPeriodic(ExistingPeriodicWorkPolicy.CANCEL_AND_REENQUEUE)
-        toaster.show(R.string.feed_sync_freq_changed)
+        toaster.show(strings.feed_sync_freq_changed)
     }
 }

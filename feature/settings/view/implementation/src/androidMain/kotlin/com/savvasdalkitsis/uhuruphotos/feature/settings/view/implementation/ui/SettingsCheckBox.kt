@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Row
@@ -29,14 +28,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.DynamicIcon
+import dev.icerock.moko.resources.ImageResource
 
 @Composable
 internal fun SettingsCheckBox(
     text: String,
-    @DrawableRes icon: Int,
+    icon: ImageResource,
     isChecked: Boolean,
     onCheckedChange: (Boolean) -> Unit
 ) {
@@ -62,6 +62,6 @@ internal fun SettingsCheckBox(
 @Composable
 private fun SettingsCheckBoxPreview() {
     PreviewAppTheme {
-        SettingsCheckBox(text = "Setting", icon = drawable.ic_info, isChecked = true) {}
+        SettingsCheckBox(text = "Setting", icon = images.ic_info, isChecked = true) {}
     }
 }

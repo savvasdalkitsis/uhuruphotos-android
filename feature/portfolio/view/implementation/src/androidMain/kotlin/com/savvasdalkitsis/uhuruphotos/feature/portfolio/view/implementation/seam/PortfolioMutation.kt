@@ -37,7 +37,7 @@ sealed class PortfolioMutation(
         it.copy(localMedia = PortfolioItems.Found(states.toPersistentList()), showScanOther = !scanningOther)
     })
 
-    data class ChangeTitle(val title: Int) : PortfolioMutation({
+    data class ChangeTitle(val title: String) : PortfolioMutation({
         it.copy(title = title)
     })
 }

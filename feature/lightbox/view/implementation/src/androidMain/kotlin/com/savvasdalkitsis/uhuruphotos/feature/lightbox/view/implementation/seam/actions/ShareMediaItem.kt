@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import kotlinx.coroutines.flow.flow
 
 data object ShareMediaItem : LightboxAction() {
@@ -34,10 +34,10 @@ data object ShareMediaItem : LightboxAction() {
                 if (serverUrl != null) {
                     share(id, serverUrl)
                 } else {
-                    toaster.show(string.general_error)
+                    toaster.show(strings.general_error)
                 }
             }
-            else -> toaster.show(string.general_error)
+            else -> toaster.show(strings.general_error)
         }
     }
 

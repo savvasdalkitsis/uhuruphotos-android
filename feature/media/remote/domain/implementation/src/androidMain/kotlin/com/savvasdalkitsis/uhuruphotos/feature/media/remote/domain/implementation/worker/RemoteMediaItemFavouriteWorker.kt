@@ -27,7 +27,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.NotificationChannels
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.module.NotificationModule
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import kotlin.LazyThreadSafetyMode.NONE
 
 class RemoteMediaItemFavouriteWorker(
@@ -72,7 +72,7 @@ class RemoteMediaItemFavouriteWorker(
 
     override suspend fun getForegroundInfo() = foregroundInfoBuilder.build(
         applicationContext,
-        string.setting_media_favourite,
+        strings.setting_media_favourite,
         NOTIFICATION_ID,
         NotificationChannels.Jobs.id
     )

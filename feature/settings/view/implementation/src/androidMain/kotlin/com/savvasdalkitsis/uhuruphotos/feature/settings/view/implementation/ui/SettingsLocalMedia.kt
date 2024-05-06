@@ -16,19 +16,19 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
+import dev.icerock.moko.resources.compose.stringResource
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ReScanLocalMedia
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.SettingsAction
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 
 @Composable
 internal fun SettingsLocalMedia(
     action: (SettingsAction) -> Unit
 ) {
     SettingsOutlineButtonRow(
-        buttonText = stringResource(string.local_media_rescan),
-        icon = drawable.ic_folder,
+        buttonText = stringResource(strings.local_media_rescan),
+        icon = images.ic_folder,
     ) {
         action(ReScanLocalMedia)
     }

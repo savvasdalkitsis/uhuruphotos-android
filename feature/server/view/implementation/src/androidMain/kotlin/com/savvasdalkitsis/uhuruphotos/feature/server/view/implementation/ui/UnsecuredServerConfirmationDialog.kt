@@ -19,13 +19,13 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.DismissUnsecuredServerDialog
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.Login
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.ServerAction
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.dialogs.YesNoDialog
+import dev.icerock.moko.resources.compose.stringResource
 
 @Composable
 internal fun UnsecuredServerConfirmationDialog(
@@ -34,7 +34,7 @@ internal fun UnsecuredServerConfirmationDialog(
     state: ServerState
 ) {
     YesNoDialog(
-        title = stringResource(string.unsecured_server),
+        title = stringResource(strings.unsecured_server),
         onDismiss = { action(DismissUnsecuredServerDialog) },
         onYes = {
             action(DismissUnsecuredServerDialog)
@@ -47,8 +47,8 @@ internal fun UnsecuredServerConfirmationDialog(
         Column(
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            Text(stringResource(string.unsecured_server_are_you_sure))
-            Text(stringResource(string.unsecured_server_not_encrypted, currentUrl))
+            Text(stringResource(strings.unsecured_server_are_you_sure))
+            Text(stringResource(strings.unsecured_server_not_encrypted, currentUrl))
         }
     }
 }

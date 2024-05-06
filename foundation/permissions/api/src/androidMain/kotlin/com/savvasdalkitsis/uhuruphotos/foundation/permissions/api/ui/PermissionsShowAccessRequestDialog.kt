@@ -30,19 +30,19 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.LocalNavigator
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.dialogs.YesNoDialog
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.group.CollapsibleGroup
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.group.state.rememberCollapsibleGroupState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.AlertText
+import dev.icerock.moko.resources.compose.painterResource
+import dev.icerock.moko.resources.compose.stringResource
 import dev.shreyaspatil.permissionflow.compose.rememberPermissionFlowRequestLauncher
 
 @Composable
@@ -53,7 +53,7 @@ internal fun PermissionsShowAccessRequestDialog(
     val navigator = LocalNavigator.current
     val context = LocalContext.current
     YesNoDialog(
-        title = stringResource(string.missing_permissions),
+        title = stringResource(strings.missing_permissions),
         onNo = { state.showAccessRequest?.value = false },
         onYes = {
             state.showAccessRequest?.value = false
@@ -61,13 +61,13 @@ internal fun PermissionsShowAccessRequestDialog(
                 permissionLauncher.launch(it.toTypedArray())
             }
         },
-        yes = stringResource(string.ok),
-        no = stringResource(string.cancel),
+        yes = stringResource(strings.ok),
+        no = stringResource(strings.cancel),
     ) {
-        Text(stringResource(string.need_permissions_to_manage_gallery))
+        Text(stringResource(strings.need_permissions_to_manage_gallery))
         CollapsibleGroup(
             groupState = rememberCollapsibleGroupState(
-                title = string.having_problems,
+                title = strings.having_problems,
                 uniqueKey = "welcomeNeedsAccessSettings",
                 initiallyCollapsed = true,
             )
@@ -82,15 +82,15 @@ internal fun PermissionsShowAccessRequestDialog(
                 }
             ) {
                 Icon(
-                    painter = painterResource(id = drawable.ic_settings),
+                    painter = painterResource(images.ic_settings),
                     contentDescription = null
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text(stringResource(string.navigate_to_settings))
+                Text(stringResource(strings.navigate_to_settings))
             }
         }
         AlertText(
-            text = stringResource(string.local_media_scan_warning)
+            text = stringResource(strings.local_media_scan_warning)
         )
     }
 }

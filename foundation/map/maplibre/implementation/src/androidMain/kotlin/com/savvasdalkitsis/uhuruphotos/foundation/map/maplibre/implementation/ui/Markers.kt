@@ -17,15 +17,14 @@ package com.savvasdalkitsis.uhuruphotos.foundation.map.maplibre.implementation.u
 
 import android.graphics.Color
 import androidx.annotation.ColorInt
-import androidx.annotation.DrawableRes
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
+import dev.icerock.moko.resources.ImageResource
 
 enum class Markers(
     val id: String,
-    @DrawableRes
-    val drawable: Int,
+    val drawable: ImageResource,
     @ColorInt
     val tint: Int,
 ) {
-    Pin("pin", drawable.ic_pin, Color.RED)
+    Pin("pin", images.ic_pin, Color.RED)
 }

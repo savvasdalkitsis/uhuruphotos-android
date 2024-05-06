@@ -30,7 +30,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.Welcom
 import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.usecase.BiometricsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.usecase.FeedbackUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.system.api.usecase.SystemUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
 import kotlinx.coroutines.flow.flow
@@ -61,9 +61,9 @@ internal class SettingsActionsContext(
         val proceed = when {
             required -> Ok(Unit)
             else -> biometricsUseCase.authenticate(
-                string.authenticate,
-                string.authenticate_to_change,
-                string.authenticate_to_change_description,
+                strings.authenticate,
+                strings.authenticate_to_change,
+                strings.authenticate_to_change_description,
                 true,
             )
         }

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plural name="delete_photos">
+        <item quantity="one">Eliminar %d foto</item>
+        <item quantity="many"/>
+        <item quantity="other">Eliminar %d fotos</item>
+    </plural>
+    <plural name="delete_photos_confirmation">
+        <item quantity="one">¿Estás seguro de que quieres borrar esta %d foto\?</item>
+        <item quantity="many">¿Estás seguro de que quieres borrar estas %d fotos\?</item>
+        <item quantity="other">¿Estás seguro de que quieres borrar estas %d fotos\?</item>
+    </plural>
+    <plural name="hours">
+        <item quantity="one">%d hora</item>
+        <item quantity="many">%d horas</item>
+        <item quantity="other">%d horas</item>
+    </plural>
+    <plural name="days">
+        <item quantity="one">%d día</item>
+        <item quantity="many">%d días</item>
+        <item quantity="other">%d días</item>
+    </plural>
+    <plural name="trash_photos">
+        <item quantity="one">Enviar %d foto a la papelera</item>
+        <item quantity="many">Enviar las %d fotos a la papelera</item>
+        <item quantity="other">Enviar las %d fotos a la papelera</item>
+    </plural>
+    <plural name="trash_photos_confirmation">
+        <item quantity="one">¿Enviar esta foto a la papelera?</item>
+        <item quantity="many">¿Enviar estas %d fotos a la papelera?</item>
+        <item quantity="other">¿Enviar estas %d fotos a la papelera?</item>
+    </plural>
+    <plural name="item_count">
+        <item quantity="one">%d elemento</item>
+        <item quantity="many">%d elementos</item>
+        <item quantity="other">%d elementos</item>
+    </plural>
+    <plural name="restore_photos">
+        <item quantity="one">Restaurar %d foto</item>
+        <item quantity="many">Restaurar las %d fotos</item>
+        <item quantity="other">Restaurar las %d fotos</item>
+    </plural>
+    <plural name="restore_photos_confirmation">
+        <item quantity="one">¿Restaurar esta foto %d?</item>
+        <item quantity="many">¿Restaurar estas fotos %d?</item>
+        <item quantity="other">¿Restaurar estas fotos %d?</item>
+    </plural>
+    <plural name="delete_media_confirmation">
+        <item quantity="one">¿Estás seguro de que quieres eliminar este %d elemento multimedia\?</item>
+        <item quantity="many">¿Estás seguro de que quieres borrar estos %d elementos multimedia\?</item>
+        <item quantity="other">¿Estás seguro de que quieres borrar estos %d elementos multimedia\?</item>
+    </plural>
+    <plural name="restore_media">
+        <item quantity="one">Restaurar %d elemento multimedia</item>
+        <item quantity="many">Restaurar los %d elementos multimedia</item>
+        <item quantity="other">Restaurar los %d elementos multimedia</item>
+    </plural>
+    <plural name="trash_media">
+        <item quantity="one">Enviar a la papelera el %d elemento multimedia</item>
+        <item quantity="many">Enviar a la papelera los %d elementos multimedia</item>
+        <item quantity="other">Enviar a la papelera los %d elementos multimedia</item>
+    </plural>
+    <plural name="delete_media">
+        <item quantity="one">Borrar %d elemento multimedia</item>
+        <item quantity="many">Borrar los %d elementos multimedia</item>
+        <item quantity="other">Borrar los %d elementos multimedia</item>
+    </plural>
+    <plural name="restore_media_confirmation">
+        <item quantity="one">¿Restaurar este elemento multimedia %d?</item>
+        <item quantity="many">¿Restaurar estos elementos multimedia %d?</item>
+        <item quantity="other">¿Restaurar estos elementos multimedia %d?</item>
+    </plural>
+    <plural name="trash_media_confirmation">
+        <item quantity="one">¿Enviar este elemento multimedia %d a la papelera?</item>
+        <item quantity="many">¿Enviar estos %d elementos multimedia a la papelera?</item>
+        <item quantity="other">¿Enviar estos %d elementos multimedia a la papelera?</item>
+    </plural>
+</resources>

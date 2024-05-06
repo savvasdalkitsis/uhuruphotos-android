@@ -23,7 +23,7 @@ import androidx.compose.ui.Modifier
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.ClickedOnGps
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.LightboxAction
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.SingleMediaItemState
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
 
 @Composable
 internal fun LightboxInfoGps(
@@ -35,7 +35,7 @@ internal fun LightboxInfoGps(
             modifier = Modifier.clickable { action(ClickedOnGps(gps)) },
         ) {
             LightboxInfoIconEntry(
-                icon = drawable.ic_location_pin,
+                icon = images.ic_location_pin,
             ) {
                 Text("${gps.lat.round(2)}:${gps.lon.round(2)}")
             }

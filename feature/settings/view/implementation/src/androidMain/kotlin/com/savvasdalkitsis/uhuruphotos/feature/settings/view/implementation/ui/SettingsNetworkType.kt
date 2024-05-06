@@ -16,15 +16,15 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
+import dev.icerock.moko.resources.compose.stringResource
 import androidx.work.NetworkType
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 
 @Composable
 internal fun NetworkType?.friendlyName(): String =  when (this) {
-    NetworkType.CONNECTED -> stringResource(string.any_connected)
-    NetworkType.UNMETERED -> stringResource(string.unmetered)
-    NetworkType.NOT_ROAMING -> stringResource(string.not_roaming)
-    NetworkType.METERED -> stringResource(string.metered)
+    NetworkType.CONNECTED -> stringResource(strings.any_connected)
+    NetworkType.UNMETERED -> stringResource(strings.unmetered)
+    NetworkType.NOT_ROAMING -> stringResource(strings.not_roaming)
+    NetworkType.METERED -> stringResource(strings.metered)
     else -> "-"
 }

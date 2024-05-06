@@ -17,14 +17,15 @@ package com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.usecase
 
 import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.model.Biometrics
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
+import dev.icerock.moko.resources.StringResource
 import kotlinx.coroutines.flow.Flow
 
 interface BiometricsUseCase {
     fun getBiometrics(): Biometrics
     suspend fun authenticate(
-        title: Int,
-        subtitle: Int,
-        description: Int,
+        title: StringResource,
+        subtitle: StringResource,
+        description: StringResource,
         confirmRequired: Boolean,
     ): SimpleResult
 

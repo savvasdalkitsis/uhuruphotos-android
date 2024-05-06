@@ -33,14 +33,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
+import dev.icerock.moko.resources.compose.stringResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.DiscoverAction
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.LoadHeatMap
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.DiscoverState
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapView
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.rememberMapViewState
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SectionHeader
 
 @Composable
@@ -58,7 +58,7 @@ fun DiscoverLocations(
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         SectionHeader(
-            title = stringResource(string.locations)
+            title = stringResource(strings.locations)
         ) {}
         Box(
             modifier = Modifier
@@ -85,7 +85,7 @@ fun DiscoverLocations(
             Text(
                 modifier = Modifier
                     .align(Alignment.Center),
-                text = stringResource(string.media_map),
+                text = stringResource(strings.media_map),
                 style = MaterialTheme.typography.h4,
                 color = Color.White,
             )

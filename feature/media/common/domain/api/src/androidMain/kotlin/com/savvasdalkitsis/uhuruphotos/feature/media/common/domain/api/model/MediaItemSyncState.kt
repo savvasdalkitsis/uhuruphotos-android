@@ -15,54 +15,56 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model
 
-import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.IconResource
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.IconResource.Image
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.IconResource.Json
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.raw
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.files
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
+import dev.icerock.moko.resources.ImageResource
+import dev.icerock.moko.resources.StringResource
 
 enum class MediaItemSyncState(
-    @DrawableRes
-    val icon: Int,
-    @DrawableRes
-    val lightBoxIcon: Int,
+    val icon: ImageResource,
+    val lightBoxIcon: IconResource,
     val lightBoxIconAlpha: Float = 0.7f,
-    @StringRes
-    val contentDescription: Int,
+    val contentDescription: StringResource,
     val enabled: Boolean = false,
 ) {
     LOCAL_ONLY(
-        icon = drawable.ic_cloud_off,
-        lightBoxIcon = drawable.ic_cloud_upload,
+        icon = images.ic_cloud_off,
+        lightBoxIcon = Image(images.ic_cloud_upload),
         lightBoxIconAlpha = 1f,
-        contentDescription = string.media_sync_status_local_only,
+        contentDescription = strings.media_sync_status_local_only,
         enabled = true,
     ),
     REMOTE_ONLY(
-        icon = drawable.ic_cloud,
-        lightBoxIcon = drawable.ic_cloud_download,
+        icon = images.ic_cloud,
+        lightBoxIcon = Image(images.ic_cloud_download),
         lightBoxIconAlpha = 1f,
-        contentDescription = string.media_sync_status_remote_only,
+        contentDescription = strings.media_sync_status_remote_only,
         enabled = true,
     ),
     DOWNLOADING(
-        icon = drawable.ic_cloud_download,
-        lightBoxIcon = raw.ic_animated_cloud_download,
-        contentDescription = string.media_sync_status_downloading,
+        icon = images.ic_cloud_download,
+        lightBoxIcon = Json(files.ic_animated_cloud_download_json),
+        contentDescription = strings.media_sync_status_downloading,
     ),
     UPLOADING(
-        icon = drawable.ic_cloud_upload,
-        lightBoxIcon = raw.ic_animated_cloud_upload,
-        contentDescription = string.media_sync_status_uploading,
+        icon = images.ic_cloud_upload,
+        lightBoxIcon = Json(files.ic_animated_cloud_upload_json),
+        contentDescription = strings.media_sync_status_uploading,
     ),
     PROCESSING(
-        icon = drawable.ic_cloud_in_progress,
-        lightBoxIcon = drawable.ic_cloud_in_progress,
-        contentDescription = string.media_sync_status_processing,
+        icon = images.ic_cloud_in_progress,
+        lightBoxIcon = Image(images.ic_cloud_in_progress),
+        contentDescription = strings.media_sync_status_processing,
     ),
     SYNCED(
-        icon = drawable.ic_cloud_done,
-        lightBoxIcon = drawable.ic_cloud_done,
-        contentDescription = string.media_sync_status_fully_synced,
+        icon = images.ic_cloud_done,
+        lightBoxIcon = Image(images.ic_cloud_done),
+        contentDescription = strings.media_sync_status_fully_synced,
     );
 }

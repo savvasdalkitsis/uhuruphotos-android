@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.Gallery
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.HiddenPhotosState
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.actions.FingerPrintActionPressed
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.actions.HiddenPhotosAction
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either.Left
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either.Right
@@ -41,7 +41,7 @@ fun HiddenPhotosAlbumPage(
                     onClick = {
                         action(Right(FingerPrintActionPressed))
                     },
-                    icon = drawable.ic_fingerprint,
+                    icon = images.ic_fingerprint,
                 )
             }
         },

@@ -23,6 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.s
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.toLightboxDetailsState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
+import dev.icerock.moko.resources.StringResource
 import kotlinx.collections.immutable.toPersistentList
 import kotlin.math.min
 
@@ -42,7 +43,7 @@ sealed class LightboxMutation(
         it.copy(errorMessage = null)
     })
 
-    data class ShowErrorMessage(@StringRes val message: Int) : LightboxMutation({
+    data class ShowErrorMessage(val message: StringResource) : LightboxMutation({
         it.copy(
             isLoading = false,
             errorMessage = message,

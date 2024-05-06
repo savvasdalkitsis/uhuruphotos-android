@@ -39,7 +39,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.stringResource
+import dev.icerock.moko.resources.compose.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -50,8 +50,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstance
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.Cel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
 import kotlinx.collections.immutable.persistentListOf
@@ -119,14 +119,14 @@ internal fun FeedMemory(
                             .clip(CircleShape)
                             .background(MaterialTheme.colors.background.copy(alpha = 0.4f)),
                         onClick = { onScrollToMemory(cel) },
-                        icon = drawable.ic_down_arrow,
+                        icon = images.ic_down_arrow,
                     )
                 }
                 Text(
                     modifier = Modifier
                         .align(Alignment.BottomCenter)
                         .padding(4.dp),
-                    text = stringResource(string.years_ago, memory.yearsAgo),
+                    text = stringResource(strings.years_ago, memory.yearsAgo),
                     color = Color.White,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,

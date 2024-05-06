@@ -31,7 +31,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.module.Re
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaPrecacher
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNotificationWorker
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.module.NotificationModule
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import kotlinx.coroutines.delay
 import kotlin.LazyThreadSafetyMode.NONE
 
@@ -41,7 +41,7 @@ internal class PrecacheFeedThumbnailsWorker(
 ) : ForegroundNotificationWorker<CancelPrecacheWorkBroadcastReceiver>(
     context,
     params,
-    notificationTitle = R.string.precaching_thumbnails,
+    notificationTitle = strings.precaching_thumbnails,
     notificationId = NOTIFICATION_ID,
     foregroundInfoBuilder = NotificationModule.foregroundInfoBuilder,
     cancelBroadcastReceiver = CancelPrecacheWorkBroadcastReceiver::class.java,

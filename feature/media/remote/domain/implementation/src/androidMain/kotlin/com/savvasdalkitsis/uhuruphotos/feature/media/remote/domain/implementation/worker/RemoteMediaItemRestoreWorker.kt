@@ -27,7 +27,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.NotificationChannels
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.module.NotificationModule
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import de.jensklingenberg.ktorfit.Response
 import kotlin.LazyThreadSafetyMode.NONE
 
@@ -78,7 +78,7 @@ class RemoteMediaItemRestoreWorker(
 
     override suspend fun getForegroundInfo() = foregroundInfoBuilder.build(
         applicationContext,
-        string.restoring_media,
+        strings.restoring_media,
         NOTIFICATION_ID,
         NotificationChannels.Jobs.id
     )

@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.sea
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import kotlinx.coroutines.flow.flow
 
 data object ClearLogFileClicked : SettingsAction() {
@@ -26,7 +26,7 @@ data object ClearLogFileClicked : SettingsAction() {
         state: SettingsState
     ) = flow<SettingsMutation> {
         feedbackUseCase.clearLogs()
-        toaster.show(R.string.logs_cleared)
+        toaster.show(strings.logs_cleared)
     }
 
 }

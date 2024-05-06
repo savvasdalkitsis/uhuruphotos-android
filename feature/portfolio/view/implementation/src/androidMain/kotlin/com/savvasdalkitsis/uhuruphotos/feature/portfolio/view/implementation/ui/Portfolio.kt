@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui
 
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
+import dev.icerock.moko.resources.compose.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.VitrineState
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaFolder
@@ -42,7 +42,7 @@ internal fun Portfolio(
     action: (PortfolioAction) -> Unit = {},
 ) {
     CommonScaffold(
-        title = { Text(text = state.title?.let { stringResource(it) } ?: "") },
+        title = { Text(text = state.title ?: "") },
         navigationIcon = { UpNavButton() },
     ) { contentPadding ->
         when(state.localMedia) {

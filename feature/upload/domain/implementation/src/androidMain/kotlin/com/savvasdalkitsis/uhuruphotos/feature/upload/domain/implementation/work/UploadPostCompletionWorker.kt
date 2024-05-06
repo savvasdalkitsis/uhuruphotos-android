@@ -30,7 +30,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.implementation.modu
 import com.savvasdalkitsis.uhuruphotos.foundation.inject.api.ServiceLocator
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNotificationWorker
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.module.NotificationModule
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import java.util.concurrent.TimeUnit
 import kotlin.LazyThreadSafetyMode.NONE
 
@@ -40,7 +40,7 @@ class UploadPostCompletionWorker(
 ) : ForegroundNotificationWorker<Nothing>(
     context,
     params,
-    notificationTitle = string.finalizing_upload,
+    notificationTitle = strings.finalizing_upload,
     notificationId = NOTIFICATION_ID,
     foregroundInfoBuilder = NotificationModule.foregroundInfoBuilder,
     cancelBroadcastReceiver = null,

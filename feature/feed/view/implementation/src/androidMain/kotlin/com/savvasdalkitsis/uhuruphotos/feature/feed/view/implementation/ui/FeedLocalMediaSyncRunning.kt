@@ -26,13 +26,13 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.TextWithIcon
+import dev.icerock.moko.resources.compose.stringResource
 
 @Composable
 internal fun FeedLocalMediaSyncRunning() {
@@ -46,8 +46,8 @@ internal fun FeedLocalMediaSyncRunning() {
             horizontalArrangement = spacedBy(8.dp),
         ) {
             TextWithIcon(
-                icon = R.drawable.ic_folder,
-                text = stringResource(string.scanning_local_media),
+                icon = images.ic_folder,
+                text = stringResource(strings.scanning_local_media),
             )
             CircularProgressIndicator(modifier = Modifier.size(24.dp))
         }

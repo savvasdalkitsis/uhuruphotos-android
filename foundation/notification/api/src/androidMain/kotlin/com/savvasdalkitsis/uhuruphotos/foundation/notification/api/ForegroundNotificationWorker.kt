@@ -31,13 +31,14 @@ import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.math.toProgressPercent
+import dev.icerock.moko.resources.StringResource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 abstract class ForegroundNotificationWorker<BR>(
     context: Context,
     params: WorkerParameters,
-    @StringRes private val notificationTitle: Int,
+    private val notificationTitle: StringResource,
     private val notificationId: Int,
     private val notificationChannelId: String = NotificationChannels.Jobs.id,
     protected val foregroundInfoBuilder: ForegroundInfoBuilder,

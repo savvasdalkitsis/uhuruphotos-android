@@ -27,14 +27,14 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
+import dev.icerock.moko.resources.compose.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.MemoryCel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 
 @Composable
 internal fun FeedMemories(
@@ -52,7 +52,7 @@ internal fun FeedMemories(
                 top = 16.dp,
                 bottom = 16.dp,
             ),
-            text = stringResource(string.on_this_day),
+            text = stringResource(strings.on_this_day),
             style = TextStyle.Default.copy(
                 fontWeight = FontWeight.Bold,
                 fontSize = 14.sp

@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.info
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Box
@@ -28,29 +27,30 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.ClickedOnDetailsEntry
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.LightboxAction
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.Refresh
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.SingleMediaItemState
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_aspect_ratio
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_camera
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_camera_roll
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_file_tree
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_fingerprint
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_folder_network
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_image_aspect_ratio
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_iso
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_lens
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_refresh
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_save
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_shutter_speed
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_videocam
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images.ic_aspect_ratio
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images.ic_camera
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images.ic_camera_roll
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images.ic_file_tree
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images.ic_fingerprint
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images.ic_folder_network
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images.ic_image_aspect_ratio
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images.ic_iso
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images.ic_lens
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images.ic_refresh
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images.ic_save
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images.ic_shutter_speed
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images.ic_videocam
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SectionHeader
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
+import dev.icerock.moko.resources.ImageResource
+import dev.icerock.moko.resources.compose.stringResource
 
 @Composable
 internal fun LightboxInfoMetadata(
@@ -61,7 +61,7 @@ internal fun LightboxInfoMetadata(
         verticalArrangement = spacedBy(8.dp)
     ) {
         SectionHeader(
-            title = stringResource(string.details)
+            title = stringResource(strings.details)
         ) {
             Box(
                 modifier = Modifier
@@ -112,14 +112,14 @@ internal fun LightboxInfoMetadata(
             it.Entry(ic_file_tree, action)
         }
         if (mediaItem.details.isEmpty) {
-            Text(stringResource(string.nothing_here_yet))
+            Text(stringResource(strings.nothing_here_yet))
         }
     }
 }
 
 @Composable
 private fun String?.Entry(
-    @DrawableRes icon: Int,
+    icon: ImageResource,
     action: (LightboxAction) -> Unit
 ) {
     this?.let {

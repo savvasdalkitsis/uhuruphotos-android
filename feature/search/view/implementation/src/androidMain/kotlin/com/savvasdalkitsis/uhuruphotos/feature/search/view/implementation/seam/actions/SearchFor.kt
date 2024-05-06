@@ -24,7 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.S
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchMutation.ShowErrorScreen
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.flow.Flow
@@ -51,7 +51,7 @@ data class SearchFor(val query: String) : SearchAction() {
                     else -> {
                         currentCoroutineContext().cancel()
                         if (!state.clusters.isEmpty()) {
-                            toaster.show(R.string.error_searching)
+                            toaster.show(strings.error_searching)
                         }
                         null
                     }

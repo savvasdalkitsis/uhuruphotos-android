@@ -17,17 +17,18 @@ package com.savvasdalkitsis.uhuruphotos.foundation.toaster.implementation.usecas
 
 import android.content.Context
 import android.widget.Toast
-import androidx.annotation.StringRes
 import com.savvasdalkitsis.uhuruphotos.foundation.launchers.api.onMain
 import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
+import dev.icerock.moko.resources.StringResource
+import dev.icerock.moko.resources.desc.desc
 
 class ToasterUseCase(
     private val context: Context,
 ) : ToasterUseCase {
 
-    override fun show(@StringRes message: Int) {
+    override fun show(message: StringResource) {
         onMain {
-            Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+            Toast.makeText(context, message.desc().toString(context), Toast.LENGTH_LONG).show()
         }
     }
 }

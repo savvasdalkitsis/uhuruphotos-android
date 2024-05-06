@@ -27,12 +27,12 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
+import dev.icerock.moko.resources.compose.stringResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.ClearSelected
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.FeedAction
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.Logo
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
 
@@ -51,7 +51,7 @@ internal fun FeedTitle(
             onClick = { scrollToTop() }
         )
         if (!hasSelection) {
-            Text(stringResource(string.feed))
+            Text(stringResource(strings.feed))
         } else {
             OutlinedButton(
                 modifier = Modifier
@@ -67,7 +67,7 @@ internal fun FeedTitle(
                 ActionIcon(
                     modifier = Modifier.size(16.dp),
                     onClick = { action(ClearSelected) },
-                    icon = drawable.ic_clear
+                    icon = images.ic_clear
                 )
             }
         }

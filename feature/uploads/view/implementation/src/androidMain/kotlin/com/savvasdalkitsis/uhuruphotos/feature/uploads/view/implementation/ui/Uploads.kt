@@ -41,7 +41,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -59,19 +58,21 @@ import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadJob
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.view.implementation.seam.actions.ClearFinished
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.view.implementation.seam.actions.UploadsAction
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.view.implementation.ui.state.UploadsState
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.files
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.LocalThumbnailImageLoader
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Thumbnail
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.LocalNavigator
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.CustomColors
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.R
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.DynamicIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UpNavButton
+import dev.icerock.moko.resources.StringResource
+import dev.icerock.moko.resources.compose.stringResource
 import kotlinx.collections.immutable.persistentListOf
 
 
@@ -82,16 +83,16 @@ internal fun Uploads(
 ) {
     val navigator = LocalNavigator.current
     CommonScaffold(
-        title = { Text(text = stringResource(string.uploads)) },
+        title = { Text(text = stringResource(strings.uploads)) },
         navigationIcon = { UpNavButton() },
         actionBarContent = {
             ActionIcon(
-                icon = drawable.ic_cloud_in_progress,
+                icon = images.ic_cloud_in_progress,
                 onClick = { navigator?.navigateTo(ProcessingNavigationRoute) },
             )
             AnimatedVisibility(visible = !state.isLoading) {
                 ActionIcon(
-                    icon = drawable.ic_clear_all,
+                    icon = images.ic_clear_all,
                     onClick = { action(ClearFinished) },
                 )
             }
@@ -100,7 +101,7 @@ internal fun Uploads(
         when {
             state.isLoading -> FullLoading()
             state.jobs.isEmpty() -> FullLoading {
-                DynamicIcon(icon = R.raw.animation_empty)
+                DynamicIcon(icon = files.animation_empty_json)
             }
             else -> LazyColumn(
                 modifier = Modifier.padding(contentPadding),
@@ -160,7 +161,7 @@ fun UploadJobRow(job: UploadJob) {
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 Text(
-                    text = stringResource(string.uploading),
+                    text = stringResource(strings.uploading),
                     textAlign = TextAlign.End,
                     style = MaterialTheme.typography.body2,
                 )
@@ -296,13 +297,13 @@ private fun UploadsPreview() {
     }
 }
 
-private val WorkInfo.State.displayName: Int
+private val WorkInfo.State.displayName: StringResource
     @Stable
     get() = when (this) {
-        ENQUEUED -> string.queued
-        RUNNING -> string.running
-        SUCCEEDED -> string.succeeded
-        FAILED -> string.failed
-        BLOCKED -> string.blocked
-        CANCELLED -> string.canceled
+        ENQUEUED -> strings.queued
+        RUNNING -> strings.running
+        SUCCEEDED -> strings.succeeded
+        FAILED -> strings.failed
+        BLOCKED -> strings.blocked
+        CANCELLED -> strings.canceled
     }

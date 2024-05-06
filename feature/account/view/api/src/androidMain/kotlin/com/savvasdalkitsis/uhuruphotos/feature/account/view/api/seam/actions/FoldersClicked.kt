@@ -19,7 +19,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOver
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.AccountOverviewState
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.api.navigation.PortfolioNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
+import dev.icerock.moko.resources.desc.desc
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
@@ -27,7 +28,10 @@ data object FoldersClicked : AccountOverviewAction() {
     context(AccountOverviewActionsContext) override fun handle(
         state: AccountOverviewState
     ): Flow<Mutation<AccountOverviewState>> = flow {
-        navigator.navigateTo(PortfolioNavigationRoute(editMode = true, title = string.folders_on_feed))
+        navigator.navigateTo(PortfolioNavigationRoute(
+            editMode = true,
+            title = strings.folders_on_feed.desc().toString(context)
+        ))
     }
 
 }

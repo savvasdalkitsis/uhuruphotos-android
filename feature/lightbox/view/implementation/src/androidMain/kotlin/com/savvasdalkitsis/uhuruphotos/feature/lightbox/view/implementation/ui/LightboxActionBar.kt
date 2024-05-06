@@ -28,7 +28,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.stringResource
+import dev.icerock.moko.resources.compose.stringResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.ContributeToPortfolio
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.DownloadOriginal
@@ -39,8 +39,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.s
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.LOCAL_ONLY
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.REMOTE_ONLY
 import com.savvasdalkitsis.uhuruphotos.foundation.dismiss.api.ui.PullToDismissState
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ToggleableActionIcon
 import kotlinx.coroutines.launch
@@ -74,9 +74,9 @@ fun RowScope.LightboxActionBar(
                     action(ContributeToPortfolio(item, !item.inPortfolio))
                 },
                 enabled = item.addToPortfolioIconEnabled,
-                icon = drawable.ic_feed,
+                icon = images.ic_feed,
                 selected = item.inPortfolio,
-                contentDescription = stringResource(string.show_on_feed)
+                contentDescription = stringResource(strings.show_on_feed)
             )
         }
     }
@@ -103,11 +103,11 @@ fun RowScope.LightboxActionBar(
             LightboxDismissProgressAware(dismissState) {
                 ActionIcon(
                     onClick = { action(SetFavourite(!item.isFavourite)) },
-                    icon = if (item.isFavourite) drawable.ic_favourite else drawable.ic_not_favourite,
+                    icon = if (item.isFavourite) images.ic_favourite else images.ic_not_favourite,
                     contentDescription = stringResource(
                         when {
-                            item.isFavourite -> string.remove_favourite
-                            else -> string.favourite
+                            item.isFavourite -> strings.remove_favourite
+                            else -> strings.favourite
                         }
                     )
                 )
@@ -132,8 +132,8 @@ fun RowScope.LightboxActionBar(
                         scrollState.animateScrollTo(threshold + 1)
                     }
                 },
-                icon = drawable.ic_info,
-                contentDescription = stringResource(string.info),
+                icon = images.ic_info,
+                contentDescription = stringResource(strings.info),
             )
         }
     }

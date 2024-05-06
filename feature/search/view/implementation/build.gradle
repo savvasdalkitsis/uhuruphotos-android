@@ -18,6 +18,7 @@ dependencies {
             project(":feature:settings:domain:api"),
             project(":foundation:compose:api"),
             project(":foundation:navigation:api:module"),
+            project(":foundation:icons:api"),
             project(":foundation:strings:api"),
             project(":foundation:toaster:api:module"),
             project(":foundation:ui:api"),

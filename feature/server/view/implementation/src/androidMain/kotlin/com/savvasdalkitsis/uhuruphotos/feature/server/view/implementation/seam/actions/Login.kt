@@ -24,7 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.S
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.ui.ServerState
 import com.savvasdalkitsis.uhuruphotos.foundation.http.api.isHttpUrl
 import com.savvasdalkitsis.uhuruphotos.foundation.http.api.isValidUrlOrDomain
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import kotlinx.coroutines.flow.flow
 
 data class Login(
@@ -53,13 +53,13 @@ data class Login(
                             AuthStatus.Authenticated -> navigator.navigateUp()
                             else -> {
                                 emit(SetLoading(false))
-                                toaster.show(R.string.error_logging_in)
+                                toaster.show(strings.error_logging_in)
                             }
                         }
                     },
                     failure = {
                         emit(SetLoading(false))
-                        toaster.show(R.string.error_logging_in)
+                        toaster.show(strings.error_logging_in)
                     }
                 )
             }

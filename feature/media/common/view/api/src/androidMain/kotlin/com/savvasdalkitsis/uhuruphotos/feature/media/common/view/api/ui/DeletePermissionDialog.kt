@@ -17,11 +17,11 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui
 
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.pluralStringResource
-import androidx.compose.ui.res.stringResource
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.plurals
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.dialogs.YesNoDialog
+import dev.icerock.moko.resources.compose.pluralStringResource
+import dev.icerock.moko.resources.compose.stringResource
 
 @Composable
 fun DeletePermissionDialog(
@@ -31,7 +31,7 @@ fun DeletePermissionDialog(
 ) {
     YesNoDialog(
         title = pluralStringResource(
-            R.plurals.delete_media,
+            plurals.delete_media,
             mediaItemCount,
             mediaItemCount
         ),
@@ -40,11 +40,11 @@ fun DeletePermissionDialog(
         body = {
             Text(
                 pluralStringResource(
-                    R.plurals.delete_media_confirmation,
-                    count = mediaItemCount,
-                    mediaItemCount
+                    plurals.delete_media_confirmation,
+                    mediaItemCount,
+                    mediaItemCount,
                 )
             )
-            Text(stringResource(string.operation_irreverisble))
+            Text(stringResource(strings.operation_irreverisble))
         })
 }

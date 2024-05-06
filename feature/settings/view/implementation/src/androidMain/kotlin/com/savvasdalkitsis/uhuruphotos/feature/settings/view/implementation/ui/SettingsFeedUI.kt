@@ -17,7 +17,6 @@ package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui
 
 import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplay.ALWAYS_OFF
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplay.ALWAYS_ON
@@ -27,8 +26,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ChangeMemoriesEnabled
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
+import dev.icerock.moko.resources.compose.stringResource
 
 @Composable
 internal fun SettingsFeedUI(
@@ -36,27 +36,27 @@ internal fun SettingsFeedUI(
     action: (SettingsAction) -> Unit,
 ) {
     SettingsCheckBox(
-        text = stringResource(string.enable_memories),
-        icon = drawable.ic_thought_bubble,
+        text = stringResource(strings.enable_memories),
+        icon = images.ic_thought_bubble,
         isChecked = state.showMemories,
     ) {
         action(ChangeMemoriesEnabled(!state.showMemories))
     }
     SettingsCheckBox(
-        text = stringResource(string.auto_hide_nav_on_scroll),
-        icon = drawable.ic_swipe_vertical,
+        text = stringResource(strings.auto_hide_nav_on_scroll),
+        icon = images.ic_swipe_vertical,
         isChecked = state.autoHideFeedNavOnScroll,
     ) {
         action(ChangeAutoHideNavOnScrollEnabled(!state.autoHideFeedNavOnScroll))
     }
     if (state.hasRemoteAccess) {
         Divider()
-        SettingsTextRow(stringResource(string.show_media_sync_status))
+        SettingsTextRow(stringResource(strings.show_media_sync_status))
         SettingsTextDropDownButtonRow(
             content = {
                 SyncDisplayRow(state.feedMediaItemSyncDisplay)
             },
-            buttonText = stringResource(string.change),
+            buttonText = stringResource(strings.change),
             action = action,
         ) {
             @Composable

@@ -10,6 +10,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
+                api libs.resources.core
                 api project(":foundation:result:api")
             }
         }

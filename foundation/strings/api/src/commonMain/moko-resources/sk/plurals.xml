@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plural name="delete_media_confirmation">
+        <item quantity="one">Naozaj chcete odstrániť túto %d mediálnu položku\?</item>
+        <item quantity="few">Naozaj chcete odstrániť tieto %d mediálne položky\?</item>
+        <item quantity="other">Naozaj chcete odstrániť týchto %d mediálnych položiek\?</item>
+    </plural>
+    <plural name="delete_photos">
+        <item quantity="one">Odstrániť %d fotku</item>
+        <item quantity="few">Odstrániť %d fotky</item>
+        <item quantity="other">Odstrániť %d fotiek</item>
+    </plural>
+    <plural name="delete_media">
+        <item quantity="one">Odstrániť %d mediálnu položku</item>
+        <item quantity="few">Odstrániť %d mediálne položky</item>
+        <item quantity="other">Odstrániť %d mediálnych položiek</item>
+    </plural>
+    <plural name="restore_photos">
+        <item quantity="one">Obnoviť %d fotku</item>
+        <item quantity="few">Obnoviť %d fotky</item>
+        <item quantity="other">Obnoviť %d fotiek</item>
+    </plural>
+    <plural name="restore_media">
+        <item quantity="one">Obnoviť %d mediálnu položku</item>
+        <item quantity="few">Obnoviť %d mediálne položky</item>
+        <item quantity="other">Obnoviť %d mediálnych položiek</item>
+    </plural>
+    <plural name="trash_photos">
+        <item quantity="one">Presunúť %d fotku do koša</item>
+        <item quantity="few">Presunúť %d fotky do koša</item>
+        <item quantity="other">Presunúť %d fotiek do koša</item>
+    </plural>
+    <plural name="restore_photos_confirmation">
+        <item quantity="one">Naozaj chcete obnoviť túto %d fotku\?</item>
+        <item quantity="few">Naozaj chcete obnoviť tieto %d fotky\?</item>
+        <item quantity="other">Naozaj chcete obnoviť týchto %d fotiek\?</item>
+    </plural>
+    <plural name="trash_media_confirmation">
+        <item quantity="one">Naozaj chcete poslať túto %d mediálnu položku do koša\?</item>
+        <item quantity="few">Naozaj chcete poslať tieto %d mediálne položky do koša\?</item>
+        <item quantity="other">Naozaj chcete poslať týchto %d mediálnych položiek do koša\?</item>
+    </plural>
+    <plural name="delete_photos_confirmation">
+        <item quantity="one">Naozaj chcete odstrániť túto %d fotku\?</item>
+        <item quantity="few">Naozaj chcete odstrániť tieto %d fotky\?</item>
+        <item quantity="other">Naozaj chcete odstrániť týchto %d fotiek\?</item>
+    </plural>
+    <plural name="restore_media_confirmation">
+        <item quantity="one">Naozaj chcete obnoviť túto %d mediálnu položku\?</item>
+        <item quantity="few">Naozaj chcete obnoviť tieto %d mediálne položky\?</item>
+        <item quantity="other">Naozaj chcete obnoviť týchto %d mediálnych položiek\?</item>
+    </plural>
+    <plural name="trash_photos_confirmation">
+        <item quantity="one">Naozaj chcete poslať túto %d fotku do koša\?</item>
+        <item quantity="few">Naozaj chcete poslať tieto %d fotky do koša\?</item>
+        <item quantity="other">Naozaj chcete poslať týchto %d fotiek do koša\?</item>
+    </plural>
+    <plural name="trash_media">
+        <item quantity="one">Presunúť %d mediálnu položku do koša</item>
+        <item quantity="few">Presunúť %d mediálne položky do koša</item>
+        <item quantity="other">Presunúť %d mediálnych položiek do koša</item>
+    </plural>
+    <plural name="hours">
+        <item quantity="one">%d hodina</item>
+        <item quantity="few">%d hodiny</item>
+        <item quantity="other">%d hodín</item>
+    </plural>
+    <plural name="days">
+        <item quantity="one">%d deň</item>
+        <item quantity="few">%d dni</item>
+        <item quantity="other">%d dní</item>
+    </plural>
+</resources>

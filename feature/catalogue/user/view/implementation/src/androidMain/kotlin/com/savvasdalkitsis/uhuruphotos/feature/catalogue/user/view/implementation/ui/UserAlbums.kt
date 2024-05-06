@@ -21,7 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementatio
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.action.Refresh
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.action.UserAlbumsAction
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.Catalogue
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 
 @Composable
 internal fun UserAlbums(
@@ -29,11 +29,11 @@ internal fun UserAlbums(
     action: (UserAlbumsAction) -> Unit,
 ) {
     Catalogue(
-        title = string.user_albums,
+        title = strings.user_albums,
         onRefresh = { action(Refresh) },
         isRefreshing = state.isLoading,
         isEmpty = state.albums.isEmpty(),
-        emptyContentMessage = string.no_user_albums,
+        emptyContentMessage = strings.no_user_albums,
         sorting = state.sorting,
         onChangeSorting = { action(ChangeSorting(it)) },
     ) {

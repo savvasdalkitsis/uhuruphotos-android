@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUse
 import com.savvasdalkitsis.uhuruphotos.feature.people.domain.api.usecase.PeopleUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.state.SortOrder
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -41,7 +41,7 @@ class PeopleActionsContext(
         _loading.emit(true)
         val result = peopleUseCase.refreshPeople()
         if (result.isErr) {
-            toaster.show(R.string.error_refreshing_people)
+            toaster.show(strings.error_refreshing_people)
         }
         _loading.emit(false)
     }

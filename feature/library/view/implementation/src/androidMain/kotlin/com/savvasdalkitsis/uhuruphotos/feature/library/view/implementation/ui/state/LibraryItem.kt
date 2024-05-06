@@ -15,16 +15,16 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state
 
-import androidx.annotation.StringRes
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
+import dev.icerock.moko.resources.StringResource
 
 enum class LibraryItem(
-    @StringRes val title: Int,
+    val title: StringResource,
 ) {
-    TRASH(string.trash),
-    HIDDEN(string.hidden_media),
-    LOCAL(string.local_albums),
-    AUTO(string.auto_albums),
-    USER(string.user_albums),
-    FAVOURITE(string.favourite_photos);
+    TRASH(strings.trash),
+    HIDDEN(strings.hidden_media),
+    LOCAL(strings.local_albums),
+    AUTO(strings.auto_albums),
+    USER(strings.user_albums),
+    FAVOURITE(strings.favourite_photos);
 }

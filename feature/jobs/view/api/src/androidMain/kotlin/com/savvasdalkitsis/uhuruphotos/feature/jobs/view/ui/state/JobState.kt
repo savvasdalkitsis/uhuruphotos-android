@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.state
 
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
 
 data class JobState(
@@ -29,10 +29,10 @@ data class JobState(
 val Map<Job, JobStatus>.toJobState get() = map { (job, status) ->
     JobState(
         title = Title.Resource(when (job) {
-            Job.FEED_SYNC -> string.full_feed_sync
-            Job.PRECACHE_THUMBNAILS -> string.precache_thumbnails
-            Job.LOCAL_MEDIA_SYNC -> string.scan_local_media
-            Job.FEED_DETAILS_SYNC -> string.full_feed_details_sync
+            Job.FEED_SYNC -> strings.full_feed_sync
+            Job.PRECACHE_THUMBNAILS -> strings.precache_thumbnails
+            Job.LOCAL_MEDIA_SYNC -> strings.scan_local_media
+            Job.FEED_DETAILS_SYNC -> strings.full_feed_details_sync
         }),
         job = job,
         status = status,

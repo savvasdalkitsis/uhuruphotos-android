@@ -23,11 +23,13 @@ import com.savvasdalkitsis.uhuruphotos.feature.sync.domain.api.module.SyncModule
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.domain.api.module.UploadsModule
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.module.UserModule
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.module.WelcomeModule
+import com.savvasdalkitsis.uhuruphotos.foundation.android.api.module.AndroidModule
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.module.NavigationModule
 
 object AccountModule {
 
     val accountOverviewActionsContext get() = AccountOverviewActionsContext(
+        AndroidModule.applicationContext,
         AuthModule.authenticationLoginUseCase,
         AvatarModule.avatarUseCase,
         JobsModule.jobsUseCase,

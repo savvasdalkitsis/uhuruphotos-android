@@ -25,7 +25,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.GalleryAction
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.Gallery
@@ -33,11 +32,12 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.Gallery
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam.actions.LocalAlbumAction
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam.actions.SetContributingToPortfolio
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.ui.state.LocalAlbumState
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.NoContent
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ToggleableActionIcon
+import dev.icerock.moko.resources.compose.stringResource
 import dev.shreyaspatil.permissionflow.compose.rememberPermissionFlowRequestLauncher
 
 @Composable
@@ -57,7 +57,7 @@ fun LocalAlbumPage(
                     onClick = {
                         action(Either.Right(SetContributingToPortfolio(!contributing)))
                     },
-                    icon = drawable.ic_feed,
+                    icon = images.ic_feed,
                     selected = contributing,
                 )
             }
@@ -74,18 +74,18 @@ fun LocalAlbumPage(
                         verticalArrangement = spacedBy(16.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
-                        Text(text = stringResource(string.missing_permissions))
+                        Text(text = stringResource(strings.missing_permissions))
                         Button(
                             onClick = {
                                 permissionLauncher.launch(albumState.deniedPermissions.toTypedArray())
                             },
                         ) {
-                            Text(text = stringResource(string.grant_permissions))
+                            Text(text = stringResource(strings.grant_permissions))
                         }
                     }
                 }
             } else {
-                NoContent(string.no_media)
+                NoContent(strings.no_media)
             }
         }
     )

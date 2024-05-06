@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plural name="trash_photos">
+        <item quantity="other">将 %d 张照片移入回收站</item>
+    </plural>
+    <plural name="restore_photos">
+        <item quantity="other">恢复 %d 张照片</item>
+    </plural>
+    <plural name="restore_photos_confirmation">
+        <item quantity="other">恢复这 %d 张照片？</item>
+    </plural>
+    <plural name="trash_photos_confirmation">
+        <item quantity="other">将这 %d 张照片移入回收站？</item>
+    </plural>
+    <plural name="days">
+        <item quantity="other">%d 天</item>
+    </plural>
+    <plural name="delete_photos">
+        <item quantity="other">删除 %d 张照片</item>
+    </plural>
+    <plural name="delete_photos_confirmation">
+        <item quantity="other">您确定要删除这 %d 张照片吗？</item>
+    </plural>
+    <plural name="hours">
+        <item quantity="other">%d 小时</item>
+    </plural>
+    <plural name="item_count">
+        <item quantity="other">%d 项目</item>
+    </plural>
+    <plural name="trash_media">
+        <item quantity="other">将 %d 个影像移入回收站</item>
+    </plural>
+    <plural name="delete_media">
+        <item quantity="other">删除 %d 个影像</item>
+    </plural>
+    <plural name="restore_media">
+        <item quantity="other">恢复 %d 个影像</item>
+    </plural>
+    <plural name="delete_media_confirmation">
+        <item quantity="other">您确定要删除这 %d 个影像吗？</item>
+    </plural>
+    <plural name="restore_media_confirmation">
+        <item quantity="other">恢复这 %d 个影像？</item>
+    </plural>
+    <plural name="trash_media_confirmation">
+        <item quantity="other">将这 %d 个影像移入回收站？</item>
+    </plural>
+</resources>

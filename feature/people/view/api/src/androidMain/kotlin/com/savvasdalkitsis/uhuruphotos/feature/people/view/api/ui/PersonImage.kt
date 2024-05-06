@@ -24,9 +24,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
+import dev.icerock.moko.resources.compose.painterResource
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.R
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Thumbnail
 
 @Composable
@@ -47,12 +49,12 @@ fun PersonImage(
     } else {
         val avatars = remember {
             listOf(
-                R.drawable.ic_person_1,
-                R.drawable.ic_person_2,
-                R.drawable.ic_person_3,
-                R.drawable.ic_person_4,
-                R.drawable.ic_person_5,
-                R.drawable.ic_person_6,
+                images.ic_person_1,
+                images.ic_person_2,
+                images.ic_person_3,
+                images.ic_person_4,
+                images.ic_person_5,
+                images.ic_person_6,
             )
         }
         val icon = remember(person.id) {

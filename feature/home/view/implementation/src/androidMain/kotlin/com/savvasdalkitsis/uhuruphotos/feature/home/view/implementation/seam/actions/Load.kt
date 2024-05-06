@@ -23,6 +23,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.ui.state
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.view.api.navigation.NotificationsNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.api.navigation.WelcomeNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import kotlinx.coroutines.flow.flow
 
 data object Load : HomeAction() {
@@ -33,9 +35,9 @@ data object Load : HomeAction() {
         emit(HomeMutation.Loading)
         val proceed = when {
             settingsUseCase.getBiometricsRequiredForAppAccess() -> biometricsUseCase.authenticate(
-                R.string.authenticate,
-                R.string.authenticate_for_access,
-                R.string.authenticate_for_access_description,
+                strings.authenticate,
+                strings.authenticate_for_access,
+                strings.authenticate_for_access_description,
                 true,
             )
             else -> Ok(Unit)

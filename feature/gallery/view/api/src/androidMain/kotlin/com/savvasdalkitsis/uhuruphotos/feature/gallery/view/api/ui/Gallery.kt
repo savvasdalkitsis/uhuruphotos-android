@@ -20,7 +20,6 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.Collage
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.CollageDisplayActionButton
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.ChangeCollageDisplay
@@ -31,18 +30,19 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.Sele
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.SwipeToRefresh
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.PeopleBanner
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.NoContent
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.refresh.SwipeRefresh
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UpNavButton
+import dev.icerock.moko.resources.compose.stringResource
 
 @Composable
 fun Gallery(
     state: GalleryState,
     additionalActionBarContent: @Composable RowScope.() -> Unit = {},
-    emptyContent: @Composable () -> Unit = { NoContent(string.no_media) },
+    emptyContent: @Composable () -> Unit = { NoContent(strings.no_media) },
     action: (GalleryAction) -> Unit
 ) {
     CommonScaffold(
@@ -54,10 +54,10 @@ fun Gallery(
                 ActionIcon(
                     onClick = { action(ChangeGallerySorting(sorting.toggle())) },
                     icon = sorting.icon,
-                    contentDescription = stringResource(string.sorting)
+                    contentDescription = stringResource(strings.sorting)
                 )
             }
-            AnimatedVisibility(state.collageState.collageDisplay.iconResource != 0
+            AnimatedVisibility(state.collageState.collageDisplay.iconResource != null
                     && state.collageState.clusters.isNotEmpty()) {
                 CollageDisplayActionButton(
                     onChange = { action(ChangeCollageDisplay(it)) },

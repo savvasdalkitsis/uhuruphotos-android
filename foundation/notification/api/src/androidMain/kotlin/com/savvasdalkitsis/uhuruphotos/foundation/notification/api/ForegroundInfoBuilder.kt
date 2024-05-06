@@ -20,11 +20,12 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import androidx.annotation.StringRes
 import androidx.work.ForegroundInfo
+import dev.icerock.moko.resources.StringResource
 
 interface ForegroundInfoBuilder {
     fun build(
         context: Context,
-        @StringRes title: Int,
+        title: StringResource,
         notificationId: Int,
         channel: String,
         progress: Int? = null,
@@ -32,7 +33,7 @@ interface ForegroundInfoBuilder {
 
     fun <BR: BroadcastReceiver> buildNotification(
         context: Context,
-        title: Int,
+        title: StringResource,
         channel: String,
         progress: Int? = null,
         showProgress: Boolean = true,

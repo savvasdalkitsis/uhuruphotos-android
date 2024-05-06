@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plural name="delete_photos">
+        <item quantity="one">%d Foto löschen</item>
+        <item quantity="other">%d Fotos löschen</item>
+    </plural>
+    <plural name="delete_photos_confirmation">
+        <item quantity="one">Sind Sie sicher, dass Sie dieses %d Foto löschen wollen\?</item>
+        <item quantity="other">Sind Sie sicher, dass Sie diese %d Fotos löschen wollen\?</item>
+    </plural>
+    <plural name="hours">
+        <item quantity="one">%d Stunde</item>
+        <item quantity="other">%d Stunden</item>
+    </plural>
+    <plural name="trash_photos_confirmation">
+        <item quantity="one">Bist du dir sicher, dass du dieses %d Foto in den Papierkorb schieben willst\?</item>
+        <item quantity="other">Bist du dir sicher, dass du diese %d Fotos in den Papierkorb schieben willst\?</item>
+    </plural>
+    <plural name="restore_photos">
+        <item quantity="one">Stelle %d Foto wieder her</item>
+        <item quantity="other">Stelle %d Fotos wieder her</item>
+    </plural>
+    <plural name="trash_photos">
+        <item quantity="one">Schiebe %d Foto in den Papierkorb</item>
+        <item quantity="other">Schiebe %d Fotos in den Papierkorb</item>
+    </plural>
+    <plural name="restore_photos_confirmation">
+        <item quantity="one">Bist du dir sicher, dass du dieses %d Foto wieder herstellen willst\?</item>
+        <item quantity="other">Bist du dir sicher, dass du dieses %d Fotos wieder herstellen willst\?</item>
+    </plural>
+    <plural name="days">
+        <item quantity="one">%d Tag</item>
+        <item quantity="other">%d Tage</item>
+    </plural>
+    <plural name="restore_media_confirmation">
+        <item quantity="one">Sind Sie sicher, dass Sie den %d Medieninhalt wiederherstellen möchten\?</item>
+        <item quantity="other">Sind Sie sicher, dass Sie die %d Medieninhalte wiederherstellen möchten\?</item>
+    </plural>
+    <plural name="delete_media">
+        <item quantity="one">%d Medieninhalt löschen</item>
+        <item quantity="other">%d Medieninhalte löschen</item>
+    </plural>
+    <plural name="restore_media">
+        <item quantity="one">%d Medieninhalt wiederherstellen</item>
+        <item quantity="other">%d Medieninhalte wiederherstellen</item>
+    </plural>
+    <plural name="trash_media">
+        <item quantity="one">%d Medieninhalt in den Papierkorb senden</item>
+        <item quantity="other">%d Medieninhalte in den Papierkorb senden</item>
+    </plural>
+    <plural name="delete_media_confirmation">
+        <item quantity="one">Sind Sie sicher, dass Sie den %d Medieninhalt löschen möchten\?</item>
+        <item quantity="other">Sind Sie sicher, dass Sie die %d Medieninhalte löschen möchten\?</item>
+    </plural>
+    <plural name="trash_media_confirmation">
+        <item quantity="one">Sind Sie sicher, dass Sie den %d Medieninhalt in den Papierkorb senden möchten\?</item>
+        <item quantity="other">Sind Sie sicher, dass Sie die %d Medieninhalte in den Papierkorb senden möchten\?</item>
+    </plural>
+</resources>

@@ -20,6 +20,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import kotlinx.coroutines.flow.flow
 
 data class ClickedOnGps(val gps: LatLon) : LightboxAction() {
@@ -28,6 +30,6 @@ data class ClickedOnGps(val gps: LatLon) : LightboxAction() {
         state: LightboxState
     ) = flow<LightboxMutation> {
         copyToClipBoard(gps.toString())
-        toaster.show(R.string.copied_to_clipboard)
+        toaster.show(strings.copied_to_clipboard)
     }
 }

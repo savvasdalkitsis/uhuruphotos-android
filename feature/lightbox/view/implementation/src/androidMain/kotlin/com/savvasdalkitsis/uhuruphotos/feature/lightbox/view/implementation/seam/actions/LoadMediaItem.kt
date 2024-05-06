@@ -50,7 +50,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
 import com.savvasdalkitsis.uhuruphotos.foundation.launchers.api.onIO
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.combine
@@ -104,7 +104,7 @@ data class LoadMediaItem(
                     }.onStart {
                         onIO {
                             lightboxUseCase.refreshMediaDetails(id, item.mediaHash).onFailure {
-                                send(ShowErrorMessage(string.error_loading_photo_details))
+                                send(ShowErrorMessage(strings.error_loading_photo_details))
                             }
                         }
                     }.collect(this::send)

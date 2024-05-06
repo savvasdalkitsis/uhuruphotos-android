@@ -19,6 +19,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.seam.Edi
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.ui.state.EditState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
@@ -26,7 +28,7 @@ data object NotifyUserOfError : EditAction() {
     context(EditActionsContext) override fun handle(
         state: EditState
     ): Flow<Mutation<EditState>> = flow {
-        toaster.show(R.string.error_editing_photo)
+        toaster.show(strings.error_editing_photo)
         navigator.navigateUp()
     }
 }

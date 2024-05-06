@@ -20,6 +20,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import kotlinx.coroutines.flow.flow
 
 data object UseMediaItemAs : LightboxAction() {
@@ -34,10 +36,10 @@ data object UseMediaItemAs : LightboxAction() {
                 if (serverUrl != null) {
                     use(id, serverUrl)
                 } else {
-                    toaster.show(R.string.general_error)
+                    toaster.show(strings.general_error)
                 }
             }
-            else -> toaster.show(R.string.general_error)
+            else -> toaster.show(strings.general_error)
         }
     }
 

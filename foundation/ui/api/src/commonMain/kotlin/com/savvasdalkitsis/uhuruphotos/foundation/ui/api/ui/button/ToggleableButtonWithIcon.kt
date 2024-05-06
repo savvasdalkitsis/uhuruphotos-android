@@ -26,13 +26,83 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.copy
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.IconResource
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.TextWithIcon
+import dev.icerock.moko.resources.FileResource
 import dev.icerock.moko.resources.ImageResource
 
 @Composable
 fun ToggleableButtonWithIcon(
     modifier: Modifier = Modifier,
+    icon: IconResource,
+    iconModifier: Modifier = Modifier,
+    iconTint: Color? = null,
+    animateIfAvailable: Boolean = true,
+    text: String,
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit,
+) {
+    when (icon) {
+        is IconResource.Image -> ToggleableButtonWithIcon(
+            modifier,
+            icon.resource,
+            iconModifier,
+            iconTint,
+            animateIfAvailable,
+            text,
+            checked,
+            onCheckedChange
+        )
+        is IconResource.Json -> ToggleableButtonWithIcon(
+            modifier,
+            icon.resource,
+            iconModifier,
+            iconTint,
+            animateIfAvailable,
+            text,
+            checked,
+            onCheckedChange
+        )
+    }
+}
+
+@Composable
+fun ToggleableButtonWithIcon(
+    modifier: Modifier = Modifier,
     icon: ImageResource,
+    iconModifier: Modifier = Modifier,
+    iconTint: Color? = null,
+    animateIfAvailable: Boolean = true,
+    text: String,
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit,
+) {
+    OutlinedButton(
+        modifier = modifier,
+        onClick = { onCheckedChange(!checked) },
+        contentPadding = ButtonDefaults.ContentPadding.copy(top = 0.dp, bottom = 0.dp, end = 0.dp),
+    ) {
+        Row(
+            modifier = Modifier.padding(0.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            TextWithIcon(
+                modifier = Modifier.weight(1f),
+                iconModifier = iconModifier,
+                icon = icon,
+                tint = iconTint,
+                text = text,
+                animateIfAvailable = animateIfAvailable,
+            )
+            Checkbox(checked = checked, onCheckedChange = onCheckedChange)
+        }
+    }
+}
+
+@Composable
+fun ToggleableButtonWithIcon(
+    modifier: Modifier = Modifier,
+    icon: FileResource,
     iconModifier: Modifier = Modifier,
     iconTint: Color? = null,
     animateIfAvailable: Boolean = true,

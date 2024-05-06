@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.seam.actions.PortfolioAction
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.seam.actions.StartScanningOtherFolders
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui.state.PortfolioItems
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.layout.plus
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.IconOutlineButton
@@ -58,7 +58,7 @@ fun BoxScope.PortfolioGrid(
     if (showScanOther) {
         IconOutlineButton(
             modifier = Modifier.align(Alignment.Center),
-            icon = drawable.ic_folder,
+            icon = images.ic_folder,
             text = "Scan other device folders",
         ) {
             action(StartScanningOtherFolders)

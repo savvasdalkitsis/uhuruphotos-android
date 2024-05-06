@@ -30,7 +30,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.CountryVisit
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.group.CollapsibleGroup
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.group.state.rememberCollapsibleGroupState
 import com.yeocak.timelineview.TimelineView
@@ -41,7 +41,7 @@ import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 fun StatsTimeline(isLoading: Boolean, timeline: ImmutableList<CountryVisit>) {
-    val groupState = rememberCollapsibleGroupState(R.string.timeline, "stats_timeline")
+    val groupState = rememberCollapsibleGroupState(strings.timeline, "stats_timeline")
     CollapsibleGroup(groupState = groupState) {
         if (isLoading) {
             Box(

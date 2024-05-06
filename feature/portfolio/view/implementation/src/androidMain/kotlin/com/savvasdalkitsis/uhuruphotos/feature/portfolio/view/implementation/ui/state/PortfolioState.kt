@@ -17,6 +17,6 @@ package com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui
 
 data class PortfolioState(
     val localMedia: PortfolioItems = PortfolioItems.Loading,
-    val title: Int? = null,
+    val title: String? = null,
     val showScanOther: Boolean = false,
 )

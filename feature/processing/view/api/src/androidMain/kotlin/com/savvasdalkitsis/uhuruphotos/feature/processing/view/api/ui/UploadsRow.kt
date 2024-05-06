@@ -31,9 +31,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
+import dev.icerock.moko.resources.compose.stringResource
 
 @Composable
 fun UploadsRow(
@@ -62,7 +62,7 @@ fun UploadsRow(
         ) {
             Text(
                 modifier = Modifier.animateContentSize(),
-                text = stringResource(string.view_all),
+                text = stringResource(strings.view_all),
             )
         }
     }
@@ -77,7 +77,7 @@ private fun UploadsProgress(inProgress: Boolean) {
     ) {
         Text(modifier = Modifier
             .fillMaxWidth(),
-            text = stringResource(string.uploads)
+            text = stringResource(strings.uploads)
         )
         AnimatedVisibility(visible = inProgress) {
             LinearProgressIndicator(

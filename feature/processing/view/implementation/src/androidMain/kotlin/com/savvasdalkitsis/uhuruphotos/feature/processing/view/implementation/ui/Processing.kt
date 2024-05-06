@@ -41,7 +41,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -54,13 +53,13 @@ import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.se
 import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.seam.actions.SelectedProcessingItem
 import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.seam.actions.TappedProcessingItem
 import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.ui.state.ProcessingState
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.files
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.LocalThumbnailImageLoader
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Thumbnail
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.CustomColors
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.R
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkable.Checkable
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkable.SelectionMode
@@ -69,6 +68,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.DynamicIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UpNavButton
+import dev.icerock.moko.resources.compose.stringResource
 import kotlinx.collections.immutable.persistentListOf
 
 @Composable
@@ -78,13 +78,13 @@ internal fun Processing(
 ) {
     val showForceReUpload = state.showForceReUpload
     CommonScaffold(
-        title = { Text(text = stringResource(string.processing_media_on_server)) },
+        title = { Text(text = stringResource(strings.processing_media_on_server)) },
         navigationIcon = { UpNavButton() },
         actionBarContent = {
             AnimatedVisibility(visible = showForceReUpload) {
                 ActionIcon(
                     onClick = { action(ForceReUploadSelectedItems) },
-                    icon = drawable.ic_cloud_upload_progress
+                    icon = images.ic_cloud_upload_progress
                 )
             }
         }
@@ -92,7 +92,7 @@ internal fun Processing(
         when {
             state.isLoading -> FullLoading()
             state.items.isEmpty() -> FullLoading {
-                DynamicIcon(icon = R.raw.animation_empty)
+                DynamicIcon(icon = files.animation_empty_json)
             }
             else -> LazyColumn(
                 modifier = Modifier.padding(contentPadding),
@@ -133,9 +133,9 @@ internal fun Processing(
             OkDialog(
                 title = stringResource(
                     when {
-                        item.hasError -> string.last_error_processing
-                        item.hasResponse -> string.last_response_processing
-                        else -> string.processing
+                        item.hasError -> strings.last_error_processing
+                        item.hasResponse -> strings.last_response_processing
+                        else -> strings.processing
                     }
                 ),
                 onDismiss = { action(DismissMessageDialog) },
@@ -192,10 +192,10 @@ fun ProcessingItemRow(
             Row(
                 modifier = Modifier.fillMaxWidth()
             ) {
-                DynamicIcon(icon = drawable.ic_cloud_in_progress)
+                DynamicIcon(icon = images.ic_cloud_in_progress)
                 Spacer(modifier = Modifier.weight(1f))
                 Text(
-                    text = stringResource(string.processing),
+                    text = stringResource(strings.processing),
                     textAlign = TextAlign.End,
                     style = MaterialTheme.typography.body2,
                 )

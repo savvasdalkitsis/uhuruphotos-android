@@ -40,7 +40,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadU
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.WelcomeUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.share.api.usecase.ShareUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.usecase.UiUseCase
 import com.savvasdalktsis.uhuruphotos.feature.download.domain.api.usecase.DownloadUseCase
@@ -91,7 +91,7 @@ internal class FeedActionsContext(
             .flatMap { it.mediaItem.id.findLocals }
             .map { LocalMediaDeletionRequest(it.value, it.isVideo) }
         )) {
-            is Error -> toaster.show(R.string.error_deleting_media)
+            is Error -> toaster.show(strings.error_deleting_media)
             is RequiresPermissions -> emit(AskForPermissions(result.deniedPermissions))
             Success -> onSuccess()
         }

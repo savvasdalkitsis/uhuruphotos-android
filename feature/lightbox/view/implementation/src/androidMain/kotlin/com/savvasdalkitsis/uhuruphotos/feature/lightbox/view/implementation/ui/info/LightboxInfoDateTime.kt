@@ -18,12 +18,12 @@ package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.SingleMediaItemState
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
 
 @Composable
 internal fun LightboxInfoDateTime(mediaItem: SingleMediaItemState) {
     LightboxInfoIconEntry(
-        icon = drawable.ic_calendar,
+        icon = images.ic_calendar,
     ) {
         Text(mediaItem.details.formattedDateTime.orEmpty())
     }

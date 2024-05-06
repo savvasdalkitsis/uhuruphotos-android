@@ -19,14 +19,14 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.Fee
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import kotlinx.coroutines.flow.flow
 
 data object UploadSelectedCels : FeedAction() {
     context(FeedActionsContext) override fun handle(
         state: FeedState
     ) = flow<FeedMutation> {
-        toaster.show(R.string.media_sync_status_uploading)
+        toaster.show(strings.media_sync_status_uploading)
         selectionList.clear()
         uploadUseCase.scheduleUpload(items = (state.selectedCels.mapNotNull {
             it.mediaItem.id.findLocals.firstOrNull()

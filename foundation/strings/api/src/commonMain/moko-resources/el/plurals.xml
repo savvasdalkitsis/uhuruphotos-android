@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plural name="delete_photos">
+        <item quantity="one">Διαγραφή %d φωτογραφίας</item>
+        <item quantity="other">Διαγραφή %d φωτογραφιών</item>
+    </plural>
+    <plural name="delete_photos_confirmation">
+        <item quantity="one">Είστε σίγουροι για την διαγραφή αυτής της %d φωτογραφίας;</item>
+        <item quantity="other">Είστε σίγουροι για την διαγραφή αυτών των %d φωτογραφιών;</item>
+    </plural>
+    <plural name="hours">
+        <item quantity="one">%d ώρα</item>
+        <item quantity="other">%d ώρες</item>
+    </plural>
+    <plural name="item_count">
+        <item quantity="one">%d αντικείμενο</item>
+        <item quantity="other">%d αντικείμενα</item>
+    </plural>
+    <plural name="trash_photos_confirmation">
+        <item quantity="one">Είστε σίγουροι ότι θέλετε να στείλετε αυτήν την %d φωτογραφία στον κάδο ανακύκλωσης;</item>
+        <item quantity="other">Είστε σίγουροι ότι θέλετε να στείλετε αυτές τις %d φωτογραφίες στον κάδο ανακύκλωσης;</item>
+    </plural>
+    <plural name="restore_photos_confirmation">
+        <item quantity="one">Είστε σίγουροι ότι θέλετε να επαναφέρετε αυτή την %d φωτογραφία;</item>
+        <item quantity="other">Είστε σίγουροι ότι θέλετε να επαναφέρετε αυτές τις %d φωτογραφίες;</item>
+    </plural>
+    <plural name="restore_photos">
+        <item quantity="one">Επαναφορά %d φωτογραφίας</item>
+        <item quantity="other">Επαναφορά %d φωτογραφιών</item>
+    </plural>
+    <plural name="trash_photos">
+        <item quantity="one">Στείλτε %d φωτογραφία στον κάδο ανακύκλωσης</item>
+        <item quantity="other">Στείλτε %d φωτογραφίες στον κάδο ανακύκλωσης</item>
+    </plural>
+    <plural name="days">
+        <item quantity="one">%d ημέρα</item>
+        <item quantity="other">%d ημέρες</item>
+    </plural>
+    <plural name="delete_media">
+        <item quantity="one">Διαγραφή %d στοιχείου πολυμέσων</item>
+        <item quantity="other">Διαγραφή %d στοιχείων πολυμέσων</item>
+    </plural>
+    <plural name="trash_media">
+        <item quantity="one">Αποστολή %d στοιχείου πολυμέσων στον κάδο</item>
+        <item quantity="other">Αποστολή %d στοιχείων πολυμέσων στον κάδο</item>
+    </plural>
+    <plural name="delete_media_confirmation">
+        <item quantity="one">Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτό το %d στοιχείο;</item>
+        <item quantity="other">Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτά τα %d στοιχεία;</item>
+    </plural>
+    <plural name="restore_media">
+        <item quantity="one">Επαναφορά %d στοιχείου πολυμέσων</item>
+        <item quantity="other">Επαναφορά %d στοιχείων πολυμέσων</item>
+    </plural>
+    <plural name="trash_media_confirmation">
+        <item quantity="one">Είστε βέβαιοι ότι θέλετε να στείλεις αυτό το %d στοιχείο στον κάδο;</item>
+        <item quantity="other">Είστε βέβαιοι ότι θέλετε να στείλετε αυτά τα %d στοιχεία στον κάδο;</item>
+    </plural>
+    <plural name="restore_media_confirmation">
+        <item quantity="one">Είστε βέβαιοι ότι θέλετε να επαναφέρεις αυτό το %d στοιχείο;</item>
+        <item quantity="other">Είστε βέβαιοι ότι θέλετε να επαναφέρεται αυτά τα %d στοιχεία;</item>
+    </plural>
+</resources>

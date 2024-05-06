@@ -17,13 +17,13 @@ package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui
 
 import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.minCacheSize
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ChangeCache
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ClearCache
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.Cache
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
+import dev.icerock.moko.resources.compose.stringResource
 import kotlin.math.max
 
 @Composable
@@ -33,14 +33,14 @@ internal fun SettingsCache(
 ) {
     val initialMaxLimit = cache.max.toFloat()
     SettingsTextButtonRow(
-        text = stringResource(string.currently_used, cache.current),
-        buttonText = stringResource(string.clear),
+        text = stringResource(strings.currently_used, cache.current),
+        buttonText = stringResource(strings.clear),
         onClick = { action(ClearCache(cache.cacheType)) }
     )
     Divider()
     SettingsSliderRow(
-        text = { stringResource(string.max_limit, it.toInt()) },
-        subtext = string.changes_effect_after_restart,
+        text = { stringResource(strings.max_limit, it.toInt()) },
+        subtext = strings.changes_effect_after_restart,
         initialValue = initialMaxLimit,
         range = (minCacheSize.toFloat().. cache.limit.toFloat()).maybeExpandTo(initialMaxLimit),
         onValueChanged = { action(ChangeCache(cache.cacheType, it)) }

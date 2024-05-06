@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.Gallery
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.FavouriteMedia
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.map
@@ -46,7 +46,7 @@ internal class FavouritesActionsContext(
                 .mapNotNull { it.getOr(null) }
                 .map { mediaItems ->
                     GalleryDetails(
-                        title = Title.Resource(string.favourite_media),
+                        title = Title.Resource(strings.favourite_media),
                         clusters = listOf(
                             Cluster(
                                 id = "favourites",

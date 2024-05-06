@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plural name="delete_photos_confirmation">
+        <item quantity="one">Bent u zeker dat u foto %d wilt verwijderen\?</item>
+        <item quantity="other">Bent u zeker dat u deze foto\'s %d wilt verwijderen\?</item>
+    </plural>
+    <plural name="delete_photos">
+        <item quantity="one">Verwijder %d foto</item>
+        <item quantity="other">Verwijder %d foto\'s</item>
+    </plural>
+    <plural name="hours">
+        <item quantity="one">%d uur</item>
+        <item quantity="other">%d uur</item>
+    </plural>
+    <plural name="item_count">
+        <item quantity="one">%d item</item>
+        <item quantity="other">%d items</item>
+    </plural>
+    <plural name="days">
+        <item quantity="one">%d dag</item>
+        <item quantity="other">%d dagen</item>
+    </plural>
+    <plural name="trash_photos">
+        <item quantity="one">%d foto verplaatsen naar prullenbak</item>
+        <item quantity="other">%d foto\'s verplaatsen naar prullenbak</item>
+    </plural>
+    <plural name="trash_photos_confirmation">
+        <item quantity="one">Weet u zeker dat u %d foto naar de prullenbak wilt verplaatsen\?</item>
+        <item quantity="other">Weet u zeker dat u %d foto\'s naar de prullenbak wilt verplaatsen\?</item>
+    </plural>
+    <plural name="restore_photos">
+        <item quantity="one">%d foto herstellen</item>
+        <item quantity="other">%d foto\'s herstellen</item>
+    </plural>
+    <plural name="restore_photos_confirmation">
+        <item quantity="one">Weet u zeker dat %d foto wilt herstellen\?</item>
+        <item quantity="other">Weet u zeker dat %d foto\'s wilt herstellen\?</item>
+    </plural>
+    <plural name="delete_media">
+        <item quantity="one">%d media-item verwijderen</item>
+        <item quantity="other">%d media-items verwijderen</item>
+    </plural>
+    <plural name="restore_media">
+        <item quantity="one">%d media-item herstellen</item>
+        <item quantity="other">%d media-items herstellen</item>
+    </plural>
+    <plural name="trash_media">
+        <item quantity="one">%d media-item verplaatsen naar prullenbak</item>
+        <item quantity="other">%d media-items verplaatsen naar prullenbak</item>
+    </plural>
+    <plural name="delete_media_confirmation">
+        <item quantity="one">Weet je zeker dat je %d media-item wilt verwijderen\?</item>
+        <item quantity="other">Weet je zeker dat je %d media-items wilt verwijderen\?</item>
+    </plural>
+    <plural name="restore_media_confirmation">
+        <item quantity="one">Weet je zeker dat je %d media-item wilt herstellen\?</item>
+        <item quantity="other">Weet je zeker dat je %d media-items wilt herstellen\?</item>
+    </plural>
+    <plural name="trash_media_confirmation">
+        <item quantity="one">Dit %d media-item naar de prullenbak verplaatsen\?</item>
+        <item quantity="other">Deze %d media-items naar de prullenbak verplaatsen\?</item>
+    </plural>
+</resources>

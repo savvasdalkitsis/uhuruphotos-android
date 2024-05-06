@@ -23,11 +23,11 @@ import androidx.work.WorkerParameters
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.module.LocalMediaModule
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
-import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNotificationWorker
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.NotificationChannels
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.module.NotificationModule
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
+import dev.icerock.moko.resources.desc.desc
 import kotlinx.coroutines.delay
 import kotlin.LazyThreadSafetyMode.NONE
 
@@ -37,7 +37,7 @@ internal class LocalMediaSyncWorker(
 ) : ForegroundNotificationWorker<BroadcastReceiver>(
     context,
     params,
-    notificationTitle = string.scanning_local_media,
+    notificationTitle = strings.scanning_local_media,
     notificationId = NOTIFICATION_ID,
     foregroundInfoBuilder = NotificationModule.foregroundInfoBuilder,
 ) {
@@ -68,11 +68,11 @@ internal class LocalMediaSyncWorker(
             localMediaUseCase.markLocalMediaSyncedBefore(true)
             FINISHED_NOTIFICATION_ID to foregroundInfoBuilder.buildNotification<BroadcastReceiver>(
                 context = context,
-                title = string.local_media_scan_completed,
+                title = strings.local_media_scan_completed,
                 channel = NotificationChannels.Jobs.id,
                 showProgress = false,
                 autoCancel = true,
-                text = context.getString(string.local_media_scan_completed_description),
+                text = strings.local_media_scan_completed_description.desc().toString(context),
             )
         } else {
             null

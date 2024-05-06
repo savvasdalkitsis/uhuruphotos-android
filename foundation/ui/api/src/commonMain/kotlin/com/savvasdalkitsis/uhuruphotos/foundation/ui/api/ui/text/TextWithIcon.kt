@@ -28,7 +28,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.IconResource
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.IconResource.Image
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.IconResource.Json
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.DynamicIcon
+import dev.icerock.moko.resources.FileResource
 import dev.icerock.moko.resources.ImageResource
 
 @Composable
@@ -37,7 +41,7 @@ fun TextWithIcon(
     iconModifier: Modifier = Modifier
         .size(24.dp),
     textModifier: Modifier = Modifier,
-    icon: ImageResource,
+    icon: IconResource,
     tint: Color? = null,
     style: TextStyle = LocalTextStyle.current,
     verticalAlignment: Alignment.Vertical = CenterVertically,
@@ -66,4 +70,57 @@ fun TextWithIcon(
             style = style,
         )
     }
+}
+
+@Composable
+fun TextWithIcon(
+    modifier: Modifier = Modifier,
+    iconModifier: Modifier = Modifier
+        .size(24.dp),
+    textModifier: Modifier = Modifier,
+    icon: ImageResource,
+    tint: Color? = null,
+    style: TextStyle = LocalTextStyle.current,
+    verticalAlignment: Alignment.Vertical = CenterVertically,
+    animateIfAvailable: Boolean = true,
+    text: String,
+) {
+    TextWithIcon(
+        modifier,
+        iconModifier,
+        textModifier,
+        Image(icon),
+        tint,
+        style,
+        verticalAlignment,
+        animateIfAvailable,
+        text
+    )
+}
+
+@Composable
+fun TextWithIcon(
+    modifier: Modifier = Modifier,
+    iconModifier: Modifier = Modifier
+        .size(24.dp),
+    textModifier: Modifier = Modifier,
+    icon: FileResource,
+    tint: Color? = null,
+    style: TextStyle = LocalTextStyle.current,
+    verticalAlignment: Alignment.Vertical = CenterVertically,
+    animateIfAvailable: Boolean = true,
+    text: String,
+) {
+
+    TextWithIcon(
+        modifier,
+        iconModifier,
+        textModifier,
+        Json(icon),
+        tint,
+        style,
+        verticalAlignment,
+        animateIfAvailable,
+        text
+    )
 }

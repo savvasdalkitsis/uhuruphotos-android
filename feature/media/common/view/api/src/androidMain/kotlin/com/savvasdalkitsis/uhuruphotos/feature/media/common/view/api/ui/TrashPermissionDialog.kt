@@ -17,9 +17,9 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui
 
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.pluralStringResource
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.plurals
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.dialogs.YesNoDialog
+import dev.icerock.moko.resources.compose.pluralStringResource
 
 @Composable
 fun TrashPermissionDialog(
@@ -29,18 +29,16 @@ fun TrashPermissionDialog(
 ) {
     YesNoDialog(
         title = pluralStringResource(
-            R.plurals.trash_media,
+            plurals.trash_media,
             mediaItemCount,
-            mediaItemCount
         ),
         onDismiss = onDismiss,
         onYes = onDelete,
     ) {
         Text(
             pluralStringResource(
-                R.plurals.trash_media_confirmation,
-                count = mediaItemCount,
-                mediaItemCount
+                plurals.trash_media_confirmation,
+                mediaItemCount,
             )
         )
     }

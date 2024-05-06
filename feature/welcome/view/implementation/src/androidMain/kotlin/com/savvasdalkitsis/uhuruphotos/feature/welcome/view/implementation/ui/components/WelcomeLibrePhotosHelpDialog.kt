@@ -25,8 +25,6 @@ import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -34,26 +32,28 @@ import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam.
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam.actions.SelectCloudMedia
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam.actions.TakeUserToLibrePhotosWebsite
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam.actions.WelcomeAction
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.dialogs.YesNoDialog
+import dev.icerock.moko.resources.compose.painterResource
+import dev.icerock.moko.resources.compose.stringResource
 
 @Composable
 internal fun WelcomeLibrePhotosHelpDialog(action: (WelcomeAction) -> Unit) {
     YesNoDialog(
-        title = stringResource(string.enable_cloud_sync),
+        title = stringResource(strings.enable_cloud_sync),
         onYes = {
             action(SelectCloudMedia)
         },
         onDismiss = { action(HideLibrePhotosHelp) },
     ) {
-        Text(stringResource(string.need_a_libre_photos_server_1))
+        Text(stringResource(strings.need_a_libre_photos_server_1))
         Text(
-            stringResource(string.what_is_libre_photos),
+            stringResource(strings.what_is_libre_photos),
             style = MaterialTheme.typography.subtitle2.copy(fontWeight = FontWeight.Bold),
         )
-        Text(stringResource(string.libre_photos_description))
+        Text(stringResource(strings.libre_photos_description))
         OutlinedButton(
             modifier = Modifier
                 .fillMaxWidth()
@@ -61,14 +61,14 @@ internal fun WelcomeLibrePhotosHelpDialog(action: (WelcomeAction) -> Unit) {
             onClick = { action(TakeUserToLibrePhotosWebsite) }
         ) {
             Icon(
-                painter = painterResource(id = drawable.ic_help),
+                painter = painterResource(images.ic_help),
                 contentDescription = null
             )
             Spacer(modifier = Modifier.width(8.dp))
-            Text(stringResource(string.take_me_to_website))
+            Text(stringResource(strings.take_me_to_website))
         }
         Text(
-            stringResource(string.need_a_libre_photos_server_2),
+            stringResource(strings.need_a_libre_photos_server_2),
             style = MaterialTheme.typography.subtitle2.copy(fontWeight = FontWeight.Bold),
         )
     }

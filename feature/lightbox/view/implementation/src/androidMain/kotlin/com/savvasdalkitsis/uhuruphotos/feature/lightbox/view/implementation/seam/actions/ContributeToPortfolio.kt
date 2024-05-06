@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.SingleMediaItemState
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import kotlinx.coroutines.flow.flow
 
 data class ContributeToPortfolio(
@@ -33,7 +33,7 @@ data class ContributeToPortfolio(
         mediaItemState.id.findLocals.firstOrNull()?.let { id ->
             portfolioUseCase.publishItemToPortfolio(id.value, id.folderId, contribute)
             toaster.show(
-                if (contribute) string.contributing_to_feed else string.not_contributing_to_feed
+                if (contribute) strings.contributing_to_feed else strings.not_contributing_to_feed
             )
         }
     }

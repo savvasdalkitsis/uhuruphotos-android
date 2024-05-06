@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plural name="delete_photos">
+        <item quantity="one">Elimina %d foto</item>
+        <item quantity="many"/>
+        <item quantity="other">Elimina %d foto</item>
+    </plural>
+    <plural name="days">
+        <item quantity="one">%d giorno</item>
+        <item quantity="many"/>
+        <item quantity="other">%d giorni</item>
+    </plural>
+    <plural name="delete_photos_confirmation">
+        <item quantity="one">Sei sicuro di voler eliminare questa %d foto?</item>
+        <item quantity="many"/>
+        <item quantity="other">Sei sicuro di voler eliminare queste %d foto?</item>
+    </plural>
+    <plural name="hours">
+        <item quantity="one">%d ora</item>
+        <item quantity="many"/>
+        <item quantity="other">%d ore</item>
+    </plural>
+    <plural name="restore_photos">
+        <item quantity="one">Cancella la foto %d</item>
+        <item quantity="many"/>
+        <item quantity="other">Cancella le foto %d</item>
+    </plural>
+    <plural name="trash_photos">
+        <item quantity="one">Sposta la %d foto nel cestino</item>
+        <item quantity="many"/>
+        <item quantity="other">Sposta le %d foto nel cestino</item>
+    </plural>
+    <plural name="delete_media">
+        <item quantity="one">Cancella %d elemento multimediale</item>
+        <item quantity="many"/>
+        <item quantity="other">Cancella %d elementi multimediali</item>
+    </plural>
+    <plural name="trash_media">
+        <item quantity="one">Sposta %d elemento multimediale nel cestino</item>
+        <item quantity="many"/>
+        <item quantity="other">Sposta %d elementi multimediali nel cestino</item>
+    </plural>
+    <plural name="restore_media_confirmation">
+        <item quantity="one">Sei sicuro di voler ripristinare questo %d elemento multimediale\?</item>
+        <item quantity="other">Sei sicuro di voler ripristinare questi %d elementi multimediali\?</item>
+    </plural>
+    <plural name="trash_photos_confirmation">
+        <item quantity="one">Sei sicuro di voler spostare questa %d foto nel cestino\?</item>
+        <item quantity="other">Sei sicuro di voler spostare queste %d foto nel cestino\?</item>
+    </plural>
+    <plural name="trash_media_confirmation">
+        <item quantity="one">Sei sicuro di voler spostare questo %d elemento multimediale nel cestino\?</item>
+        <item quantity="other">Sei sicuro di voler spostare questi %d elementi multimediali nel cestino\?</item>
+    </plural>
+    <plural name="item_count">
+        <item quantity="one">%d oggetto</item>
+        <item quantity="many"/>
+        <item quantity="other">%d oggetti</item>
+    </plural>
+    <plural name="restore_photos_confirmation">
+        <item quantity="one">Sei sicuro di voler ripristinare questa %d foto\?</item>
+        <item quantity="other">Sei sicuro di voler ripristinare queste %d foto\?</item>
+    </plural>
+    <plural name="restore_media">
+        <item quantity="one">Ripristina l\'elemento multimediale %d</item>
+        <item quantity="many"/>
+        <item quantity="other">Ripristina gli elementi multimediali %d</item>
+    </plural>
+    <plural name="delete_media_confirmation">
+        <item quantity="one">Sei sicuro di voler eliminare questo %d elemento multimediale?</item>
+        <item quantity="many"/>
+        <item quantity="other">Sei sicuro di voler eliminare questi %d elementi multimediale?</item>
+    </plural>
+</resources>

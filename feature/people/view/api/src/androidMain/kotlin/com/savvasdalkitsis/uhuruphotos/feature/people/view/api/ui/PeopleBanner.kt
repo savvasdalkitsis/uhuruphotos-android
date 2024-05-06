@@ -27,11 +27,11 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SectionHeader
+import dev.icerock.moko.resources.compose.stringResource
 import kotlinx.collections.immutable.ImmutableList
 
 @Composable
@@ -49,11 +49,11 @@ fun PeopleBanner(
     ) {
         SectionHeader(
             modifier = Modifier.padding(headerPadding),
-            title = stringResource(string.people),
+            title = stringResource(strings.people),
         ) {
             if (onViewAllClicked != null) {
                 TextButton(onClick = onViewAllClicked) {
-                    Text(stringResource(string.view_all))
+                    Text(stringResource(strings.view_all))
                 }
             }
         }

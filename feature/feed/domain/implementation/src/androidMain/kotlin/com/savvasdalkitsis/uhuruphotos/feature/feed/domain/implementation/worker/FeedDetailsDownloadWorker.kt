@@ -27,7 +27,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.module.Co
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNotificationWorker
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.module.NotificationModule
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlin.LazyThreadSafetyMode.NONE
@@ -38,7 +38,7 @@ internal class FeedDetailsDownloadWorker(
 ) : ForegroundNotificationWorker<CancelFeedDetailsDownloadWorkBroadcastReceiver>(
     context,
     params,
-    notificationTitle = R.string.refreshing_feed_details,
+    notificationTitle = strings.refreshing_feed_details,
     notificationId = NOTIFICATION_ID,
     foregroundInfoBuilder = NotificationModule.foregroundInfoBuilder,
     cancelBroadcastReceiver = CancelFeedDetailsDownloadWorkBroadcastReceiver::class.java,

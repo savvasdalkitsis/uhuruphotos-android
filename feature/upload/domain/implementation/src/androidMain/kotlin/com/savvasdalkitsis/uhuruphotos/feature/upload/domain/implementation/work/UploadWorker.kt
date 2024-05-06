@@ -24,7 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNotificationWorker
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.module.NotificationModule
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import kotlin.LazyThreadSafetyMode.NONE
 
 class UploadWorker(
@@ -33,7 +33,7 @@ class UploadWorker(
 ) : ForegroundNotificationWorker<Nothing>(
     context,
     params,
-    notificationTitle = string.media_sync_status_uploading,
+    notificationTitle = strings.media_sync_status_uploading,
     notificationId = NOTIFICATION_ID,
     foregroundInfoBuilder = NotificationModule.foregroundInfoBuilder,
     cancelBroadcastReceiver = null,

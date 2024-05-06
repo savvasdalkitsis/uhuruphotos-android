@@ -21,7 +21,6 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass.Companion
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass.Companion.Medium
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.Avatar
@@ -33,9 +32,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.controller.SettingsViewStateController
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.MapProviderState.Selected
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window.LocalWindowSize
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
@@ -44,6 +43,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.group.CollapsibleGro
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UpNavButton
+import dev.icerock.moko.resources.compose.stringResource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flowOf
@@ -55,17 +55,17 @@ internal fun Settings(
     action: (SettingsAction) -> Unit,
 ) {
     CommonScaffold(
-        title = { Text(stringResource(string.settings)) },
+        title = { Text(stringResource(strings.settings)) },
         actionBarContent = {
             ActionIcon(
                 onClick = { controller.collapseAll() },
-                icon = drawable.ic_expand_all,
-                contentDescription = stringResource(string.expand_all),
+                icon = images.ic_expand_all,
+                contentDescription = stringResource(strings.expand_all),
             )
             ActionIcon(
                 onClick = { controller.expandAll() },
-                icon = drawable.ic_collapse_all,
-                contentDescription = stringResource(string.collapse_all),
+                icon = images.ic_collapse_all,
+                contentDescription = stringResource(strings.collapse_all),
             )
             Avatar(state = state.avatarState)
         },
@@ -167,8 +167,8 @@ internal fun Settings(
                         SettingsFeedback(state, action)
                     }
                     SettingsOutlineButtonRow(
-                        buttonText = stringResource(string.about),
-                        icon = drawable.ic_info,
+                        buttonText = stringResource(strings.about),
+                        icon = images.ic_info,
                     ) {
                         action(AboutPressed)
                     }

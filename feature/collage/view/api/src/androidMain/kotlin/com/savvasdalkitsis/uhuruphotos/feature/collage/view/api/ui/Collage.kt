@@ -16,7 +16,6 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui
 
 import android.content.res.Configuration
-import androidx.annotation.RawRes
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
@@ -32,8 +31,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.CelSelec
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelSelectionMode
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.IconResource
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.IconResource.Json
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.LocalAnimatedVideoThumbnails
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window.LocalWindowSize
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.NoContent
@@ -41,6 +42,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.smart.SmartGrid
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.smart.SmartGridState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.smart.rememberSmartGridState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.DynamicIcon
+import dev.icerock.moko.resources.FileResource
 import kotlinx.collections.immutable.ImmutableList
 
 @Composable
@@ -56,8 +58,8 @@ fun Collage(
     gridState: SmartGridState = rememberSmartGridState(state.collageDisplay.usingStaggeredGrid),
     collageHeader: @Composable (SmartGridItemScope.() -> Unit)? = null,
     collageFooter: @Composable (SmartGridItemScope.() -> Unit)? = null,
-    emptyContent: @Composable () -> Unit = { NoContent(string.no_media) },
-    @RawRes loadingAnimation: Int? = null,
+    emptyContent: @Composable () -> Unit = { NoContent(strings.no_media) },
+    loadingAnimation: FileResource? = null,
     onCelSelected: CelSelected = { _ -> },
     onChangeDisplay: (CollageDisplay) -> Unit = {},
     onCelLongPressed: (CelState) -> Unit = {},
@@ -67,7 +69,7 @@ fun Collage(
     isLoading(state.isLoading, state.clusters, state.isEmpty) -> {
         if (loadingAnimation != null) {
             FullLoading {
-                DynamicIcon(icon = loadingAnimation)
+                DynamicIcon(icon = Json(loadingAnimation))
             }
         } else {
             FullLoading()

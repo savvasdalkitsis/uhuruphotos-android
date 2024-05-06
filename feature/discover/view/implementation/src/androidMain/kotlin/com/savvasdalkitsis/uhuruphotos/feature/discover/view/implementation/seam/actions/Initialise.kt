@@ -32,7 +32,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.flow
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.onErrors
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.onErrorsIgnore
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.andThen
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -95,7 +95,7 @@ data object Initialise : DiscoverAction() {
     private fun showPeopleSuggestion() = welcomeUseCase.flow(
         withRemoteAccess = peopleUseCase.observePeopleByPhotoCount()
             .onErrors {
-                toaster.show(R.string.error_refreshing_people)
+                toaster.show(strings.error_refreshing_people)
             }
             .toPeople()
             .map { it.subList(0, max(0, min(10, it.size - 1))) }

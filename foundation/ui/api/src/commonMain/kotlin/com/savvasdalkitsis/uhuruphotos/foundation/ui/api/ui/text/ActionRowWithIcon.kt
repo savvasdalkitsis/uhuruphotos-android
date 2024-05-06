@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -24,11 +23,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import dev.icerock.moko.resources.ImageResource
 
 @Composable
 fun ActionRowWithIcon(
     modifier: Modifier = Modifier,
-    @DrawableRes icon: Int,
+    icon: ImageResource,
     text: String,
     onClick: () -> Unit,
 ) {
