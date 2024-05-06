@@ -18,9 +18,8 @@ package com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.module
 import com.savvasdalkitsis.uhuruphotos.foundation.android.api.module.AndroidModule
 import com.savvasdalkitsis.uhuruphotos.foundation.toaster.implementation.usecase.ToasterUseCase
 
+actual object ToasterModule {
 
-object ToasterModule {
-
-    val toasterUseCase: com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
+    actual val toasterUseCase: com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
         get() = ToasterUseCase(AndroidModule.applicationContext)
 }

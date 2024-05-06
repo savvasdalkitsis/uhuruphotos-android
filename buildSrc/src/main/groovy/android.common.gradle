@@ -10,3 +10,20 @@ android {
         targetCompatibility JavaVersion.VERSION_17
     }
 }
+
+kotlin {
+    androidTarget {
+        compilations.configureEach {
+            kotlinOptions {
+                jvmTarget = '17'
+            }
+        }
+    }
+    jvm {
+        compilations.configureEach {
+            kotlinOptions {
+                jvmTarget = '17'
+            }
+        }
+    }
+}

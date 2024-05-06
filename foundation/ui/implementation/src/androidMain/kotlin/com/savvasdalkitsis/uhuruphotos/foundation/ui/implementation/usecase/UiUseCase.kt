@@ -20,12 +20,13 @@ import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.SoftwareKeyboardController
 import com.google.accompanist.systemuicontroller.SystemUiController
 import com.savvasdalkitsis.uhuruphotos.foundation.launchers.api.onMain
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window.UiController
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.usecase.UiUseCase
 
 class UiUseCase : UiUseCase {
 
     override lateinit var keyboardController: SoftwareKeyboardController
-    override lateinit var systemUiController: SystemUiController
+    override lateinit var systemUiController: UiController
     override lateinit var haptics: HapticFeedback
 
     override fun hideKeyboard() {

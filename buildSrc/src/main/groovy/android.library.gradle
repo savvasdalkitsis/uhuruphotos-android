@@ -3,20 +3,3 @@ plugins {
     id "com.android.library"
     id "android.common"
 }
-
-kotlin {
-    androidTarget {
-        compilations.configureEach {
-            kotlinOptions {
-                jvmTarget = '17'
-            }
-        }
-    }
-    jvm {
-        compilations.configureEach {
-            kotlinOptions {
-                jvmTarget = '17'
-            }
-        }
-    }
-}

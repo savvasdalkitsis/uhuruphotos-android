@@ -1,9 +1,9 @@
 plugins {
     id "android.app"
+    id 'com.bugsnag.android.gradle'
     alias(libs.plugins.about)
     alias(libs.plugins.google.services)
-
-    id 'com.bugsnag.android.gradle'
+    alias(libs.plugins.compose)
 }
 
 android {
@@ -61,12 +61,25 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos'
 }
 
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation libs.compose.material.windowsize
+                implementation compose.ui
+                implementation project(":feature:home:view:api")
+                implementation project(":foundation:navigation:api:module")
+                implementation project(":foundation:log:api:module")
+                implementation project(":foundation:ui:api:module")
+            }
+        }
+    }
+}
+
 dependencies {
     implementation(
             libs.accompanist.systemui,
             libs.androidx.activity,
-            libs.androidx.compose.material.windowsize,
-            libs.androidx.compose.ui,
             libs.androidx.splash,
             libs.bugsnag,
             libs.permissions.base,
@@ -74,15 +87,11 @@ dependencies {
             project(":feature:auth:domain:api:module"),
             project(":feature:auth:view:api"),
             project(":feature:download:domain:api"),
-            project(":feature:home:view:api"),
             project(":feature:settings:domain:api:module"),
             project(":feature:settings:domain:api:module:ui"),
             project(":foundation:android:api:module"),
             project(":foundation:image:api:module"),
-            project(":foundation:log:api:module"),
             project(":foundation:map:api:module"),
-            project(":foundation:navigation:api:module"),
-            project(":foundation:ui:api:module"),
             project(":foundation:ui:implementation"),
             project(":foundation:video:api:module"),
     )

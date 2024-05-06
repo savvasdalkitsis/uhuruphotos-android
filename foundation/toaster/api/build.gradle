@@ -6,9 +6,13 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.toaster.api'
 }
 
-dependencies {
-    api(
-            libs.androidx.annotation,
-            libs.resources.core,
-    )
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                api libs.resources.core
+            }
+        }
+    }
 }
+

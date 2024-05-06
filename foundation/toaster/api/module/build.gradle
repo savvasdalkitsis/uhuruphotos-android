@@ -6,8 +6,17 @@ android {
     namespace "com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.module"
 }
 
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                api(project(":foundation:toaster:api"))
+                implementation(project(":foundation:toaster:implementation"))
+            }
+        }
+    }
+}
+
 dependencies {
-    api(project(":foundation:toaster:api"))
-    implementation(project(":foundation:toaster:implementation"))
     implementation(project(":foundation:android:api:module"))
 }

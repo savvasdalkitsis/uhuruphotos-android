@@ -12,7 +12,7 @@ dependencies {
     implementation(
             libs.accompanist.systemui,
             compose.material,
-            libs.androidx.compose.material.windowsize,
+            libs.compose.material.windowsize,
             libs.androidx.work,
             libs.coil.base,
             libs.exif,

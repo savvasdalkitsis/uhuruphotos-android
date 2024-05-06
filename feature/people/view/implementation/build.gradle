@@ -11,7 +11,7 @@ dependencies {
     implementation(
             libs.androidx.compose.foundation,
             compose.material,
-            libs.androidx.compose.material.windowsize,
+            libs.compose.material.windowsize,
             libs.kotlinx.coroutines.android,
             libs.sqldelight.coroutines,
             project(":feature:auth:domain:api:module"),

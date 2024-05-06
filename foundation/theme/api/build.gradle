@@ -14,7 +14,8 @@ kotlin {
                 implementation compose.material
                 implementation compose.material3
                 implementation compose.ui
-                implementation libs.androidx.compose.material.windowsize
+                implementation libs.compose.material.windowsize
+                implementation project(":foundation:icons:api")
             }
         }
     }
@@ -28,7 +29,6 @@ dependencies {
             libs.accompanist.systemui,
             compose.material,
             compose.ui,
-            project(":foundation:icons:api"),
             project(":foundation:image:api"),
     )
 }

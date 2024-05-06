@@ -27,8 +27,10 @@ import coil.ImageLoader
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.LocalFullImageLoader
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.LocalThumbnailImageLoader
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.LocalThumbnailWithNetworkCacheImageLoader
-import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window.LocalSystemUiController
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window.LocalUiController
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window.LocalWindowSize
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window.NoOpSystemUiController
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window.UiController
 
 @Composable
 fun PreviewAppTheme(
@@ -42,7 +44,7 @@ fun PreviewAppTheme(
         .fallback(drawable)
         .build()
     CompositionLocalProvider(
-        LocalSystemUiController provides NoOpSystemUiController,
+        LocalUiController provides UiController(LocalContext.current, NoOpSystemUiController),
         LocalWindowSize provides calculateWindowSizeClass(),
         LocalThumbnailImageLoader provides imageLoader,
         LocalThumbnailWithNetworkCacheImageLoader provides imageLoader,

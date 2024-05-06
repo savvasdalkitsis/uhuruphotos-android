@@ -11,7 +11,7 @@ dependencies {
 
     implementation(
             compose.material,
-            libs.androidx.compose.material.windowsize,
+            libs.compose.material.windowsize,
             libs.androidx.compose.ui.tooling.preview,
             libs.androidx.lifecycle,
             libs.sqldelight.coroutines,

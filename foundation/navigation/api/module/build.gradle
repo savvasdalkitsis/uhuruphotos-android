@@ -6,11 +6,20 @@ android {
     namespace "com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.module"
 }
 
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                api project(":foundation:navigation:api")
+                implementation project(":foundation:inject:api")
+                implementation project(":foundation:navigation:implementation")
+                implementation project(":foundation:toaster:api:module")
+            }
+        }
+    }
+}
+
 dependencies {
-    api project(":foundation:navigation:api")
     implementation libs.gson
     implementation project(":foundation:android:api:module")
-    implementation project(":foundation:inject:api")
-    implementation project(":foundation:navigation:implementation")
-    implementation project(":foundation:toaster:api:module")
 }
