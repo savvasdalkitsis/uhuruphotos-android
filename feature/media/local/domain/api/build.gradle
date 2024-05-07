@@ -7,6 +7,17 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api'
 }
 
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                api libs.appyx.navigation
+                api project(":foundation:result:api")
+            }
+        }
+    }
+}
+
 dependencies {
     api(
             libs.androidx.activity,

@@ -17,7 +17,6 @@ package com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui
 
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import dev.icerock.moko.resources.compose.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.VitrineState
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaFolder

@@ -18,8 +18,6 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.IconResource
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.IconResource.Image
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.IconResource.Json
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.raw
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.files
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings

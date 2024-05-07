@@ -11,5 +11,6 @@ dependencies {
             libs.kotlinx.coroutines.android,
             project(":feature:db:domain:api"),
             project(":feature:media:common:domain:api"),
+            project(":foundation:map:api")
     )
 }

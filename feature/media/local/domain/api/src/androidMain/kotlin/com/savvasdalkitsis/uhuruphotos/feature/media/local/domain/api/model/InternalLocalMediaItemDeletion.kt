@@ -19,7 +19,7 @@ import androidx.activity.result.IntentSenderRequest
 
 sealed class InternalLocalMediaItemDeletion {
 
-    object Success : InternalLocalMediaItemDeletion()
+    data object Success : InternalLocalMediaItemDeletion()
     data class Error(val e: Throwable?) : InternalLocalMediaItemDeletion()
     data class RequiresPermissions(val deniedPermissions: List<String>) : InternalLocalMediaItemDeletion()
     data class NeedsSystemApproval(val request: IntentSenderRequest) : InternalLocalMediaItemDeletion()

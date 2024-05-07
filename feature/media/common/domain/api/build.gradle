@@ -8,24 +8,19 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api'
 }
 
-dependencies {
-    api(
-            libs.androidx.compose.navigation,
-            libs.androidx.work,
-            libs.kotlinx.coroutines.android,
-            project(":feature:db:domain:api"),
-            project(":feature:media:local:domain:api"),
-            project(":foundation:group:api"),
-            project(":foundation:map:api"),
-            project(":foundation:result:api"),
-    )
-    implementation(
-            compose.material,
-            project(":feature:people:view:api"),
-            project(":foundation:compose:api"),
-            project(":foundation:icons:api"),
-            project(":foundation:image:api"),
-            project(":foundation:strings:api"),
-            project(":foundation:ui:api"),
-    )
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                api libs.appyx.navigation
+                api project(":feature:db:domain:api")
+                api project(":feature:media:local:domain:api")
+                api project(":foundation:group:api")
+                api project(":foundation:result:api")
+                implementation project(":foundation:compose:api")
+                implementation project(":foundation:icons:api")
+                implementation project(":foundation:strings:api")
+            }
+        }
+    }
 }

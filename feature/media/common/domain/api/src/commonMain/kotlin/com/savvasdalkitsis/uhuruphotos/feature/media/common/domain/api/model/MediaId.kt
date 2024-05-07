@@ -15,16 +15,15 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model
 
-import android.os.Parcelable
 import androidx.compose.runtime.Immutable
+import com.bumble.appyx.utils.multiplatform.Parcelable
+import com.bumble.appyx.utils.multiplatform.Parcelize
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.DOWNLOADING
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.LOCAL_ONLY
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.PROCESSING
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.REMOTE_ONLY
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.SYNCED
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.UPLOADING
-import kotlinx.parcelize.IgnoredOnParcel
-import kotlinx.parcelize.Parcelize
 import java.io.Serializable
 
 @Immutable
@@ -52,24 +51,13 @@ sealed class MediaId<T : Serializable> : Parcelable {
         override val value: String,
         override val isVideo: Boolean,
     ): MediaId<String>() {
-        @IgnoredOnParcel
-        @Transient
-        override val preferRemote = this
-        @IgnoredOnParcel
-        @Transient
-        override val preferLocal = this
-        @IgnoredOnParcel
-        @Transient
-        override val findRemote = this
-        @IgnoredOnParcel
-        @Transient
-        override val findLocals: Set<Local> = emptySet()
-        @IgnoredOnParcel
-        @Transient
-        override val serializableId: String = "remote:$value"
+        override val preferRemote get() = this
+        override val preferLocal get() = this
+        override val findRemote get() = this
+        override val findLocals: Set<Local> get() = emptySet()
+        override val serializableId: String get() = "remote:$value"
+        override val syncState: MediaItemSyncState get() = REMOTE_ONLY
 
-        @IgnoredOnParcel
-        override val syncState: MediaItemSyncState = REMOTE_ONLY
         override fun fullResUri(serverUrl: String?): String =
             serverUrl?.let { value.toFullSizeUrlFromId(isVideo, it) } ?: ""
         override fun thumbnailUri(serverUrl: String?): String =
@@ -83,28 +71,15 @@ sealed class MediaId<T : Serializable> : Parcelable {
         override val value: String,
         override val isVideo: Boolean,
     ): MediaId<String>() {
-        @IgnoredOnParcel
         val remote get() = Remote(value, isVideo)
 
-        @IgnoredOnParcel
-        @Transient
-        override val preferRemote = remote
-        @IgnoredOnParcel
-        @Transient
-        override val preferLocal = this
-        @IgnoredOnParcel
-        @Transient
-        override val findRemote = remote
-        @IgnoredOnParcel
-        @Transient
-        override val findLocals: Set<Local> = emptySet()
+        override val preferRemote get() = remote
+        override val preferLocal get() = this
+        override val findRemote get() = remote
+        override val findLocals: Set<Local> get() = emptySet()
+        override val serializableId: String get() = "downloading:$value"
+        override val syncState: MediaItemSyncState get() = DOWNLOADING
 
-        @IgnoredOnParcel
-        @Transient
-        override val serializableId: String = "downloading:$value"
-
-        @IgnoredOnParcel
-        override val syncState: MediaItemSyncState = DOWNLOADING
         override fun fullResUri(serverUrl: String?): String = remote.fullResUri(serverUrl)
         override fun thumbnailUri(serverUrl: String?): String = remote.thumbnailUri(serverUrl)
     }
@@ -117,27 +92,14 @@ sealed class MediaId<T : Serializable> : Parcelable {
         val contentUri: String,
         val thumbnailUri: String,
     ): MediaId<Long>() {
-        @IgnoredOnParcel
         val local get() = Local(value, folderId, isVideo, contentUri, thumbnailUri)
+        override val preferRemote get() = this
+        override val preferLocal get() = local
+        override val findRemote get() = null
+        override val findLocals: Set<Local> get() = setOf(local)
+        override val serializableId: String get() = "uploading:$value"
+        override val syncState: MediaItemSyncState get() = UPLOADING
 
-        @IgnoredOnParcel
-        @Transient
-        override val preferRemote = this
-        @IgnoredOnParcel
-        @Transient
-        override val preferLocal = local
-        @IgnoredOnParcel
-        @Transient
-        override val findRemote = null
-        @IgnoredOnParcel
-        @Transient
-        override val findLocals: Set<Local> = setOf(local)
-        @IgnoredOnParcel
-        @Transient
-        override val serializableId: String = "uploading:$value"
-
-        @IgnoredOnParcel
-        override val syncState: MediaItemSyncState = UPLOADING
         override fun fullResUri(serverUrl: String?): String = local.fullResUri(serverUrl)
         override fun thumbnailUri(serverUrl: String?): String = thumbnailUri
     }
@@ -151,27 +113,13 @@ sealed class MediaId<T : Serializable> : Parcelable {
         val contentUri: String,
         val thumbnailUri: String,
     ): MediaId<Long>() {
-        @IgnoredOnParcel
         val local get() = Local(value, folderId, isVideo, contentUri, thumbnailUri)
-
-        @IgnoredOnParcel
-        @Transient
-        override val preferRemote = this
-        @IgnoredOnParcel
-        @Transient
-        override val preferLocal = local
-        @IgnoredOnParcel
-        @Transient
-        override val findRemote = null
-        @IgnoredOnParcel
-        @Transient
-        override val findLocals: Set<Local> = setOf(local)
-        @IgnoredOnParcel
-        @Transient
-        override val serializableId: String = "processing:$value"
-
-        @IgnoredOnParcel
-        override val syncState: MediaItemSyncState = PROCESSING
+        override val preferRemote get() = this
+        override val preferLocal get() = local
+        override val findRemote get() = null
+        override val findLocals: Set<Local> get() = setOf(local)
+        override val serializableId: String get() = "processing:$value"
+        override val syncState: MediaItemSyncState get() = PROCESSING
 
         override fun fullResUri(serverUrl: String?): String = local.fullResUri(serverUrl)
         override fun thumbnailUri(serverUrl: String?): String = thumbnailUri
@@ -185,24 +133,13 @@ sealed class MediaId<T : Serializable> : Parcelable {
         val contentUri: String,
         val thumbnailUri: String,
     ): MediaId<Long>() {
-        @IgnoredOnParcel
-        @Transient
-        override val preferRemote = this
-        @IgnoredOnParcel
-        @Transient
-        override val preferLocal = this
-        @IgnoredOnParcel
-        @Transient
-        override val findRemote = null
-        @IgnoredOnParcel
-        @Transient
-        override val findLocals: Set<Local> = setOf(this)
-        @IgnoredOnParcel
-        @Transient
-        override val serializableId: String = "local:$value"
+        override val preferRemote get() = this
+        override val preferLocal get() = this
+        override val findRemote get() = null
+        override val findLocals: Set<Local> get() = setOf(this)
+        override val serializableId: String get() = "local:$value"
+        override val syncState: MediaItemSyncState get() = LOCAL_ONLY
 
-        @IgnoredOnParcel
-        override val syncState: MediaItemSyncState = LOCAL_ONLY
         override fun fullResUri(serverUrl: String?): String = contentUri
         override fun thumbnailUri(serverUrl: String?): String = thumbnailUri
 
@@ -216,24 +153,13 @@ sealed class MediaId<T : Serializable> : Parcelable {
         override val value: ArrayList<MediaId<*>>,
         override val isVideo: Boolean,
     ): MediaId<ArrayList<MediaId<*>>>() {
-        @IgnoredOnParcel
-        @Transient
-        override val findRemote: Remote? = value.firstNotNullOfOrNull { it.findRemote }
-        @IgnoredOnParcel
-        @Transient
-        override val findLocals: Set<Local> = value.flatMap { it.findLocals }.toSet()
-        @IgnoredOnParcel
-        @Transient
-        override val preferRemote: MediaId<*> = findRemote ?: value.first()
-        @IgnoredOnParcel
-        @Transient
-        override val preferLocal: MediaId<*> = findLocals.firstOrNull() ?: value.first()
-        @IgnoredOnParcel
-        @Transient
-        override val serializableId: String = "group:${value.joinToString(",") { it.serializableId }}"
-
-        @IgnoredOnParcel
-        override val syncState: MediaItemSyncState = when {
+        override val findRemote: Remote? get() = value.firstNotNullOfOrNull { it.findRemote }
+        override val findLocals: Set<Local> get() = value.flatMap { it.findLocals }.toSet()
+        override val preferRemote: MediaId<*> get() = findRemote ?: value.first()
+        override val preferLocal: MediaId<*> get() = findLocals.firstOrNull() ?: value.first()
+        override val serializableId: String get() =
+            "group:${value.joinToString(",") { it.serializableId }}"
+        override val syncState: MediaItemSyncState get() = when {
             value.any { it is Downloading } -> DOWNLOADING
             value.any { it is Uploading } -> UPLOADING
             findRemote == null -> LOCAL_ONLY

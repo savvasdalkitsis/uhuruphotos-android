@@ -15,10 +15,10 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model
 
-import android.os.Parcelable
 import androidx.compose.runtime.Immutable
+import com.bumble.appyx.utils.multiplatform.Parcelable
+import com.bumble.appyx.utils.multiplatform.Parcelize
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Md5Hash
-import kotlinx.parcelize.Parcelize
 
 @Parcelize
 @Immutable
