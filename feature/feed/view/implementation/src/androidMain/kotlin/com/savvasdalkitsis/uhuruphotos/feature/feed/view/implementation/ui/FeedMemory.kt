@@ -148,12 +148,14 @@ private fun FeedMemoryPreview() {
     PreviewAppTheme {
         FeedMemory(memory = MemoryCel(
             yearsAgo = 10,
-            cels = persistentListOf(CelState(
+            cels = persistentListOf(
+                CelState(
                 MediaItemInstance(
                     id = MediaId.Local(0L, 0, false, "", ""),
                     mediaHash = MediaItemHash.fromRemoteMediaHash("hash", 0),
                 )
-            )),
+            )
+            ),
         ), onMemorySelected = { _, _ -> }, onScrollToMemory = {})
     }
 

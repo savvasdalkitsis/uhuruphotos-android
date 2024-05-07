@@ -17,24 +17,22 @@ package com.savvasdalkitsis.uhuruphotos.foundation.system.implementation.usecase
 
 import android.app.ActivityManager
 import android.content.Context
-import android.content.Context.ACTIVITY_SERVICE
-import android.content.Context.POWER_SERVICE
-import android.os.Build
 import android.os.Environment
 import android.os.PowerManager
 import android.os.StatFs
 import com.savvasdalkitsis.uhuruphotos.foundation.system.api.usecase.BatteryOptimization
-import com.savvasdalkitsis.uhuruphotos.foundation.system.api.usecase.BatteryOptimization.NotSupported
 import com.savvasdalkitsis.uhuruphotos.foundation.system.api.usecase.BatteryOptimization.Supported
 import com.savvasdalkitsis.uhuruphotos.foundation.system.api.usecase.SystemUseCase
 
 class SystemUseCase(
     private val context: Context,
+    private val powerManager: PowerManager,
+    private val activityManager: ActivityManager,
 ) : SystemUseCase {
 
     override fun getAvailableSystemMemoryInMb(): Int =
         with(ActivityManager.MemoryInfo()) {
-            service<ActivityManager>(ACTIVITY_SERVICE).getMemoryInfo(this)
+            activityManager.getMemoryInfo(this)
             (availMem / (1024 * 1024)).toInt()
         }
 
@@ -43,13 +41,7 @@ class SystemUseCase(
             (blockSizeLong * blockCountLong / (1024 * 1024)).toInt()
         }
 
-    override fun isIgnoringBatteryOptimizations(): BatteryOptimization = when {
-        Build.VERSION.SDK_INT < Build.VERSION_CODES.M -> NotSupported
-        else -> Supported(
-            !service<PowerManager>(POWER_SERVICE).isIgnoringBatteryOptimizations(context.packageName)
-        )
-    }
-
-    @Suppress("UNCHECKED_CAST")
-    private fun <SERVICE> service(name: String): SERVICE = context.getSystemService(name) as SERVICE
+    override fun isIgnoringBatteryOptimizations(): BatteryOptimization = Supported(
+        !powerManager.isIgnoringBatteryOptimizations(context.packageName)
+    )
 }

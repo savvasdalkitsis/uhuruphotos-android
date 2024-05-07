@@ -50,7 +50,7 @@ class AppActivity : FragmentNodeActivity() {
         super.onCreate(savedInstanceState)
         installSplashScreen()
         Bugsnag.start(this)
-        Initialization.activityInitializer.onActivityCreated(this)
+        Initialization.applicationWindowInitializer.onApplicationWindowCreated(this)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
             val logging by settingsUseCase.observeLoggingEnabled().collectAsState(initial = false)
@@ -71,6 +71,6 @@ class AppActivity : FragmentNodeActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        Initialization.activityInitializer.onActivityDestroyed(this)
+        Initialization.applicationWindowInitializer.onApplicationWindowDestroyed(this)
     }
 }

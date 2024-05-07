@@ -18,10 +18,10 @@ package com.savvasdalkitsis.uhuruphotos.foundation.map.maplibre.implementation.i
 import android.app.Application
 import com.mapbox.mapboxsdk.Mapbox
 import com.mapbox.mapboxsdk.WellKnownTileServer
-import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
+import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCallbacks
 import com.savvasdalkitsis.uhuruphotos.foundation.map.maplibre.implementation.api.MapLibreApi
 
-class MapsInitializer : ApplicationCreated {
+class MapsInitializer : ApplicationCallbacks {
 
     override fun onAppCreated(app: Application) {
         Mapbox.getInstance(app, MapLibreApi.getApiKey(app), WellKnownTileServer.MapTiler)

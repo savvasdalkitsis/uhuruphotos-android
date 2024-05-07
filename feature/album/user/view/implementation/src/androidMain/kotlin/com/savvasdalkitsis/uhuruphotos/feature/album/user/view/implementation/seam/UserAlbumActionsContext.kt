@@ -41,7 +41,7 @@ internal class UserAlbumActionsContext(
             userAlbumUseCase.observeUserAlbum(albumId)
                 .map { album ->
                     GalleryDetails(
-                        title = com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title.Text(album.title),
+                        title = Title.Text(album.title),
                         clusters = album.mediaCollections.map { it.toCluster() }
                     )
                 }

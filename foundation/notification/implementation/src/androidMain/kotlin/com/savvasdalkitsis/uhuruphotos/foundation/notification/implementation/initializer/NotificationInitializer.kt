@@ -18,13 +18,13 @@ package com.savvasdalkitsis.uhuruphotos.foundation.notification.implementation.i
 import android.app.Application
 import androidx.core.app.NotificationChannelCompat.Builder
 import androidx.core.app.NotificationManagerCompat
-import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
+import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCallbacks
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.NotificationChannels
 import dev.icerock.moko.resources.desc.desc
 
 class NotificationInitializer(
     private val notificationManager: NotificationManagerCompat,
-): ApplicationCreated {
+): ApplicationCallbacks {
 
     override fun priority() = -1
 

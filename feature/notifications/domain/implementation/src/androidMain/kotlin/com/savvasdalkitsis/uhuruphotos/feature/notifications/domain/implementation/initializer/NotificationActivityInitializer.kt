@@ -22,24 +22,24 @@ import com.savvasdalkitsis.uhuruphotos.feature.notifications.domain.implementati
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.domain.implementation.model.NotificationRequest.ACCEPTED
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.domain.implementation.model.NotificationRequest.DENIED
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.domain.implementation.model.NotificationRequest.IDLE
-import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ActivityCreated
+import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationWindowCallbacks
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
 
-class NotificationActivityInitializer : ActivityCreated {
+class NotificationActivityInitializer : ApplicationWindowCallbacks {
 
     private var notificationRequestState = MutableStateFlow(IDLE)
     private lateinit var launcher: ActivityResultLauncher<String>
 
     override fun priority(): Int = -1
 
-    override fun onActivityCreated(activity: FragmentActivity) {
-        launcher = activity.registerForActivityResult(ActivityResultContracts.RequestPermission()) { accepted ->
+    override fun onApplicationWindowCreated(window: FragmentActivity) {
+        launcher = window.registerForActivityResult(ActivityResultContracts.RequestPermission()) { accepted ->
             notificationRequestState.tryEmit(if (accepted) ACCEPTED else DENIED)
         }
     }
 
-    override fun onActivityDestroyed(activity: FragmentActivity) {}
+    override fun onApplicationWindowDestroyed(window: FragmentActivity) {}
 
     suspend fun askForPermission(permission: String): NotificationRequest {
         launcher.launch(permission)

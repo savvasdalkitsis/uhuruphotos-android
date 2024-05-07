@@ -7,13 +7,15 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.people.domain.api'
 }
 
-dependencies {
-    api(
-            project(":feature:db:domain:api"),
-            project(":foundation:result:api"),
-    )
-    implementation(
-            libs.kotlinx.coroutines.android,
-            project(":foundation:network:api")
-    )
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                api project(":feature:db:domain:api")
+                api project(":foundation:result:api")
+                implementation libs.kotlinx.coroutines.core
+                implementation libs.kotlinx.serialization
+            }
+        }
+    }
 }

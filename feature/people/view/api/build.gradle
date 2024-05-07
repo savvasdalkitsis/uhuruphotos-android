@@ -8,20 +8,18 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.people.view.api'
 }
 
-
-dependencies {
-    api(
-            project(":feature:db:domain:api"),
-            project(":foundation:navigation:api"),
-    )
-    implementation(
-            libs.androidx.compose.foundation,
-            compose.material,
-            libs.kotlinx.immutable,
-            libs.sqldelight.coroutines,
-            project(":foundation:icons:api"),
-            project(":foundation:image:api"),
-            project(":foundation:strings:api"),
-            project(":foundation:ui:api"),
-    )
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                api libs.kotlinx.immutable
+                api project(":foundation:navigation:api")
+                api project(":feature:db:domain:api")
+                implementation project(":foundation:icons:api")
+                implementation project(":foundation:image:api")
+                implementation project(":foundation:strings:api")
+                implementation project(":foundation:ui:api")
+            }
+        }
+    }
 }

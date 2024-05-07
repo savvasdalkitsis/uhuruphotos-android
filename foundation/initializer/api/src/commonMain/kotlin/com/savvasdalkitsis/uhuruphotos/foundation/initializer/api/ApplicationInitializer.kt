@@ -16,8 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.foundation.initializer.api
 
 class ApplicationInitializer(
-    private vararg val delegates : ApplicationCreated,
-) : ApplicationCreated {
+    private vararg val callbacks : ApplicationCallbacks,
+) : ApplicationCallbacks {
     private var app: Application? = null
 
     override fun onAppCreated(app: Application) {
@@ -25,6 +25,6 @@ class ApplicationInitializer(
         forEach { it.onAppCreated(app) }
     }
 
-    private fun forEach(action: (ApplicationCreated) -> Unit) =
-        delegates.sortedBy { it.priority() }.forEach(action)
+    private fun forEach(action: (ApplicationCallbacks) -> Unit) =
+        callbacks.sortedBy { it.priority() }.forEach(action)
 }

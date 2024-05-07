@@ -29,7 +29,6 @@ import androidx.compose.material.NavigationRailItem
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass.Companion.Compact
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -38,7 +37,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
-import dev.icerock.moko.resources.compose.stringResource
 import androidx.compose.ui.unit.dp
 import com.bumble.appyx.components.backstack.BackStack
 import com.bumble.appyx.components.backstack.activeElement
@@ -58,25 +56,17 @@ import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.singleTop
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.CustomColors
-import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window.LocalWindowSize
 import dev.icerock.moko.resources.StringResource
 import dev.icerock.moko.resources.compose.painterResource
 import dev.icerock.moko.resources.compose.stringResource
 
 @Composable
-fun homeNavigationStyle() = when (LocalWindowSize.current.widthSizeClass) {
-    Compact -> BOTTOM_BAR
-    else -> NAVIGATION_RAIL
-}
-
-@Composable
-fun HomeNavigationBar(
-    contentPadding: PaddingValues = PaddingValues(0.dp),
+actual fun HomeNavigationBar(
+    contentPadding: PaddingValues,
     homeFeedDisplay: CollageDisplay,
     showLibrary: Boolean,
-    onReselected: () -> Unit = {},
+    onReselected: () -> Unit,
 ) {
-
     when (homeNavigationStyle()) {
         BOTTOM_BAR -> {
             BubbleNavigationBar(

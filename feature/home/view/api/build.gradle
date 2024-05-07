@@ -10,14 +10,16 @@ android {
 
 kotlin {
     sourceSets {
-        androidMain {
-            dependencies {
-                implementation project(":foundation:navigation:api")
-            }
-        }
         commonMain {
             dependencies {
+                implementation libs.compose.material.windowsize
+                implementation project(":feature:collage:view:api")
+                implementation project(":feature:library:view:api")
+                implementation project(":foundation:icons:api")
                 implementation project(":foundation:navigation:api")
+                implementation project(":foundation:strings:api")
+                implementation project(":foundation:theme:api")
+                implementation project(":foundation:ui:api")
             }
         }
     }
@@ -41,6 +43,5 @@ dependencies {
             libs.bubble.navigation,
             project(":foundation:icons:api"),
             project(":foundation:strings:api"),
-            project(":foundation:ui:api"),
     )
 }

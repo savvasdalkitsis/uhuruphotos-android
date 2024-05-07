@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.foundation.image.implementation.initiali
 import android.app.Application
 import coil.Coil
 import coil.ImageLoader
-import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
+import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCallbacks
 import crocodile8008.videoviewcache.lib.VideoViewCacheFacade
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -27,7 +27,7 @@ class ImageInitializer(
     private val imageLoader: ImageLoader,
     private val okHttpBuilder: OkHttpClient.Builder,
     private val tokenRefreshInterceptor: Interceptor,
-) : ApplicationCreated {
+) : ApplicationCallbacks {
 
     override fun onAppCreated(app: Application) {
         Coil.setImageLoader { imageLoader }

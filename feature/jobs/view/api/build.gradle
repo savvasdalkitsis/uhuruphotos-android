@@ -7,15 +7,15 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.jobs.view.api'
 }
 
-dependencies {
-    api project(":feature:jobs:domain:api")
-    implementation(
-            compose.material,
-            libs.androidx.compose.ui.tooling.preview,
-            project(":foundation:strings:api"),
-            project(":foundation:ui:api"),
-    )
-    debugImplementation(
-            libs.androidx.compose.ui.tooling,
-    )
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                api project(":feature:jobs:domain:api")
+                implementation compose.material
+                implementation project(":foundation:strings:api")
+                implementation project(":foundation:ui:api")
+            }
+        }
+    }
 }

@@ -21,14 +21,14 @@ import com.michaelflisar.lumberjack.loggers.file.FileLoggerSetup
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.module.SettingsModule
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.module.ui.SettingsUiModule
 import com.savvasdalkitsis.uhuruphotos.foundation.android.api.module.AndroidModule
-import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
+import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCallbacks
 import com.savvasdalkitsis.uhuruphotos.foundation.inject.api.singleInstance
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.usecase.FeedbackUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.implementation.initializer.LogInitializer
 
 object LogModule {
 
-    val logInitializer: ApplicationCreated by singleInstance {
+    val logInitializer: ApplicationCallbacks by singleInstance {
         LogInitializer(
             fileTree,
             LogExtraModule.consoleTree,

@@ -19,13 +19,13 @@ import android.app.Application
 import androidx.work.ExistingPeriodicWorkPolicy
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkScheduler
-import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
+import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCallbacks
 import com.savvasdalkitsis.uhuruphotos.foundation.inject.api.ServiceLocator
 
 class FeedInitializer(
     private val feedWorkScheduler: FeedWorkScheduler,
     private val feedUseCase: FeedUseCase,
-): ApplicationCreated {
+): ApplicationCallbacks {
 
     override fun onAppCreated(app: Application) {
         ServiceLocator.register(FeedUseCase::class, feedUseCase)

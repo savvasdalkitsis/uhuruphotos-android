@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalktsis.uhuruphotos.feature.download.domain.implementation.initializer
 
 import android.app.Application
-import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
+import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCallbacks
 import com.savvasdalktsis.uhuruphotos.feature.download.domain.api.usecase.DownloadUseCase
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
@@ -29,7 +29,7 @@ import kotlinx.coroutines.launch
 @OptIn(DelicateCoroutinesApi::class)
 class DownloadInitializer(
     private val downloadUseCase: DownloadUseCase,
-) : ApplicationCreated {
+) : ApplicationCallbacks {
 
     override fun onAppCreated(app: Application) {
         GlobalScope.launch(Dispatchers.Default) {

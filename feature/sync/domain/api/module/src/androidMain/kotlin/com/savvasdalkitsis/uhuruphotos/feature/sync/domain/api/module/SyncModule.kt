@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.sync.domain.implementation.initia
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.module.UploadModule
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.domain.api.module.UploadsModule
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.module.WelcomeModule
-import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
+import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCallbacks
 import com.savvasdalkitsis.uhuruphotos.foundation.inject.api.singleInstance
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.module.PreferencesModule
 
@@ -36,7 +36,7 @@ object SyncModule {
             UploadsModule.uploadsUseCase,
         )
 
-    val syncInitializer: ApplicationCreated by singleInstance {
+    val syncInitializer: ApplicationCallbacks by singleInstance {
         SyncInitializer(
             syncUseCase,
             UploadModule.uploadUseCase,

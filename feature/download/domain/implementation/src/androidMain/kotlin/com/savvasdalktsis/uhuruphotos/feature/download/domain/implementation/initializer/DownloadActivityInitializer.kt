@@ -22,12 +22,12 @@ import android.content.IntentFilter
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.worker.LocalMediaWorkScheduler
-import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ActivityCreated
+import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationWindowCallbacks
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 
 class DownloadActivityInitializer(
     private val localMediaWorkScheduler: LocalMediaWorkScheduler,
-): ActivityCreated {
+): ApplicationWindowCallbacks {
 
     private val receiver = object: BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
@@ -36,13 +36,14 @@ class DownloadActivityInitializer(
         }
     }
 
-    override fun onActivityCreated(activity: FragmentActivity) {
-        ContextCompat.registerReceiver(activity, receiver,
+    override fun onApplicationWindowCreated(window: FragmentActivity) {
+        ContextCompat.registerReceiver(
+            window, receiver,
             IntentFilter("android.intent.action.DOWNLOAD_COMPLETE"),
             ContextCompat.RECEIVER_NOT_EXPORTED,
         )
     }
-    override fun onActivityDestroyed(activity: FragmentActivity) {
-        activity.unregisterReceiver(receiver)
+    override fun onApplicationWindowDestroyed(window: FragmentActivity) {
+        window.unregisterReceiver(receiver)
     }
 }

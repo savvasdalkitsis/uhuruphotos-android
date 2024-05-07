@@ -6,9 +6,13 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.portfolio.domain.api'
 }
 
-dependencies {
-    api(
-            libs.kotlinx.coroutines.android,
-            project(":feature:media:common:domain:api"),
-    )
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                api libs.kotlinx.coroutines.android
+                api project(":feature:media:common:domain:api")
+            }
+        }
+    }
 }

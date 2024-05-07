@@ -21,7 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.sync.domain.api.usecase.SyncUseCa
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.domain.api.usecase.UploadsUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
+import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCallbacks
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -38,7 +38,7 @@ class SyncInitializer(
     private val uploadUseCase: UploadUseCase,
     private val uploadsUseCase: UploadsUseCase,
     private val settingsUseCase: SettingsUseCase,
-) : ApplicationCreated {
+) : ApplicationCallbacks {
 
     override fun onAppCreated(app: Application) {
         GlobalScope.launch(Dispatchers.Default) {

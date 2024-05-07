@@ -21,9 +21,9 @@ import android.content.pm.ApplicationInfo
 import android.os.Build
 import android.os.Looper
 import androidx.tracing.Trace
-import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
+import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCallbacks
 
-object TracingInitializer : ApplicationCreated {
+object TracingInitializer : ApplicationCallbacks {
 
     override fun onAppCreated(app: Application) {
         val debuggable = (app.applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE) != 0

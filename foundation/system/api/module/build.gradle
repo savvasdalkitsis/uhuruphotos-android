@@ -6,8 +6,17 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.system.api.module'
 }
 
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                api project(":foundation:system:api")
+            }
+        }
+    }
+}
+
 dependencies {
-    api project(":foundation:system:api")
     implementation project(":foundation:android:api:module")
     implementation project(":foundation:system:implementation")
 }

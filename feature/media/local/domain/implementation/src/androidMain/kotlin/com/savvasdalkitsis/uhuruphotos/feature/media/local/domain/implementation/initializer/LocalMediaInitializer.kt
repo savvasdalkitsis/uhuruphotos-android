@@ -24,12 +24,12 @@ import androidx.fragment.app.FragmentActivity
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.worker.LocalMediaWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.model.LocalMediaPhotoColumns
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.model.LocalMediaVideoColumns
-import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ActivityCreated
+import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationWindowCallbacks
 
 class LocalMediaInitializer(
     private val localMediaWorkScheduler: LocalMediaWorkScheduler,
     private val contentResolver: ContentResolver,
-) : ActivityCreated {
+) : ApplicationWindowCallbacks {
 
     private val mediaObserver = object : ContentObserver(Handler(Looper.getMainLooper())) {
         override fun onChange(selfChange: Boolean) {
@@ -37,13 +37,13 @@ class LocalMediaInitializer(
         }
     }
 
-    override fun onActivityCreated(activity: FragmentActivity) {
+    override fun onApplicationWindowCreated(window: FragmentActivity) {
         localMediaWorkScheduler.scheduleLocalMediaSyncNowIfNotRunning()
         registerObserver(LocalMediaPhotoColumns.collection)
         registerObserver(LocalMediaVideoColumns.collection)
     }
 
-    override fun onActivityDestroyed(activity: FragmentActivity) {
+    override fun onApplicationWindowDestroyed(window: FragmentActivity) {
         contentResolver.unregisterContentObserver(mediaObserver)
     }
 

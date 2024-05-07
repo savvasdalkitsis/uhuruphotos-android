@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.android.api.module.AndroidModu
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateParser
 import com.savvasdalkitsis.uhuruphotos.foundation.date.implementation.initializer.DateInitializer
-import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
+import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCallbacks
 import com.savvasdalkitsis.uhuruphotos.foundation.inject.api.singleInstance
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.format.DateTimeFormatter
@@ -51,7 +51,7 @@ object DateModule {
             context = AndroidModule.applicationContext
         )
 
-    val dateInitializer: ApplicationCreated by singleInstance {
+    val dateInitializer: ApplicationCallbacks by singleInstance {
         DateInitializer()
     }
 }

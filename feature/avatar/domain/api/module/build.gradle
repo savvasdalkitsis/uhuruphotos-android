@@ -6,8 +6,17 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.avatar.domain.api.module'
 }
 
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                api project(":feature:avatar:domain:api")
+            }
+        }
+    }
+}
+
 dependencies {
-    api project(":feature:avatar:domain:api")
     implementation project(":feature:auth:domain:api:module")
     implementation project(":feature:avatar:domain:implementation")
     implementation project(":feature:jobs:domain:api:module")

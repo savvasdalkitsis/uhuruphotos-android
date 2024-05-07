@@ -6,9 +6,13 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.welcome.domain.api'
 }
 
-dependencies {
-    api(
-            project(":feature:auth:domain:api"),
-            project(":feature:local:domain:api"),
-    )
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                api project(":feature:auth:domain:api")
+                api project(":feature:local:domain:api")
+            }
+        }
+    }
 }

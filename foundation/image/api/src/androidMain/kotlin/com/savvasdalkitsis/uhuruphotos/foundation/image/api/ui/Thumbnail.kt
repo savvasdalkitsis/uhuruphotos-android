@@ -39,15 +39,15 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
-fun Thumbnail(
-    modifier: Modifier = Modifier,
+actual fun Thumbnail(
+    modifier: Modifier,
     url: String?,
     contentScale: ContentScale,
-    placeholder: Int? = null,
+    placeholder: Int?,
     contentDescription: String?,
-    respectNetworkCacheHeaders: Boolean = false,
-    isVideo: Boolean = false,
-    onSuccess: () -> Unit = {},
+    respectNetworkCacheHeaders: Boolean,
+    isVideo: Boolean,
+    onSuccess: () -> Unit,
 ) {
     val bg = remember(placeholder) {
         placeholder?.let { ColorPainter(Color(it)) }

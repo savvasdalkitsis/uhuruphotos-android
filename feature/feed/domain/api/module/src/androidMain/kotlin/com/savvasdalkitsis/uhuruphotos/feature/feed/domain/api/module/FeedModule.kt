@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCa
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.initializer.FeedInitializer
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.module.FeedModule
-import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
+import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCallbacks
 import com.savvasdalkitsis.uhuruphotos.foundation.inject.api.singleInstance
 
 object FeedModule {
@@ -30,7 +30,7 @@ object FeedModule {
     val feedWorkScheduler: FeedWorkScheduler
         get() = FeedModule.feedWorkScheduler
 
-    val feedInitializer: ApplicationCreated by singleInstance {
+    val feedInitializer: ApplicationCallbacks by singleInstance {
         FeedInitializer(feedWorkScheduler, feedUseCase)
     }
 

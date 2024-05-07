@@ -7,19 +7,18 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api'
 }
 
-dependencies {
-
-    implementation(
-            compose.material,
-            libs.androidx.compose.ui.tooling.preview,
-            libs.androidx.work,
-            project(":feature:avatar:domain:api"),
-            project(":foundation:compose:api"),
-            project(":foundation:icons:api"),
-            project(":foundation:image:api"),
-            project(":foundation:ui:api"),
-    )
-    debugImplementation(
-            libs.androidx.compose.ui.tooling,
-    )
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                api project(":feature:avatar:domain:api")
+                implementation compose.foundation
+                implementation compose.material
+                implementation project(":foundation:compose:api")
+                implementation project(":foundation:icons:api")
+                implementation project(":foundation:image:api")
+                implementation project(":foundation:theme:api")
+            }
+        }
+    }
 }

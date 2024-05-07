@@ -40,7 +40,7 @@ internal class LocalAlbumPageActionsContext(
             localAlbumUseCase.observeLocalAlbum(albumId)
                 .map { (bucket, albums) ->
                     GalleryDetails(
-                        title = com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title.Text(bucket.displayName),
+                        title = Title.Text(bucket.displayName),
                         clusters = albums.map { it.toCluster() },
                     )
                 }

@@ -38,9 +38,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.navig
 import com.savvasdalkitsis.uhuruphotos.foundation.activity.implementation.module.AndroidModule
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.module.ImageModule
-import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ActivityCreated
-import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ActivityInitializer
-import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
+import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationWindowCallbacks
+import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationWindowInitializer
+import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCallbacks
 import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationInitializer
 import com.savvasdalkitsis.uhuruphotos.foundation.inject.api.singleInstance
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.module.LogModule
@@ -50,7 +50,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.tracing.implementation.initial
 
 object Initialization {
 
-    val applicationInitializer: ApplicationCreated by singleInstance {
+    val applicationInitializer: ApplicationCallbacks by singleInstance {
         ApplicationInitializer(
             AboutNavigationTarget,
             AutoAlbumNavigationTarget,
@@ -95,8 +95,8 @@ object Initialization {
         )
     }
 
-    val activityInitializer: ActivityCreated by singleInstance {
-        ActivityInitializer(
+    val applicationWindowInitializer: ApplicationWindowCallbacks by singleInstance {
+        ApplicationWindowInitializer(
             AndroidModule.currentActivityHolder,
             DownloadModule.downloadActivityInitializer,
             LocalMediaModule.localMediaInitializer,

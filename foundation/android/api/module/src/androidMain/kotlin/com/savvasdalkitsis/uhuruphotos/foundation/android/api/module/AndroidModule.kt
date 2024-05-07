@@ -15,12 +15,18 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.android.api.module
 
+import android.app.ActivityManager
 import android.app.DownloadManager
 import android.content.ClipboardManager
 import android.content.ContentResolver
 import android.content.Context
+import android.content.Context.ACTIVITY_SERVICE
+import android.content.Context.POWER_SERVICE
+import android.content.pm.PackageManager
 import android.location.LocationManager
+import android.os.PowerManager
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.PackageManagerCompat
 import com.savvasdalkitsis.uhuruphotos.foundation.activity.implementation.module.AndroidModule
 import com.savvasdalkitsis.uhuruphotos.foundation.android.api.holder.CurrentActivityHolder
 import com.savvasdalkitsis.uhuruphotos.foundation.android.api.request.ActivityRequestLauncher
@@ -54,4 +60,13 @@ object AndroidModule {
             currentActivityHolder
         )
     }
+
+    val packageManager: PackageManager
+        get() = applicationContext.packageManager
+
+    val powerManager: PowerManager
+        get() = applicationContext.getSystemService(POWER_SERVICE) as PowerManager
+
+    val activityManager: ActivityManager
+        get() = applicationContext.getSystemService(ACTIVITY_SERVICE) as ActivityManager
 }

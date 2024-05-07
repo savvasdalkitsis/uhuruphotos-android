@@ -7,11 +7,14 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.api'
 }
 
-dependencies {
-    api(
-            libs.androidx.compose.navigation,
-            project(":foundation:navigation:api"),
-            project(":feature:media:common:domain:api"),
-    )
-    implementation project(":feature:catalogue:view:api")
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                api project(":foundation:navigation:api")
+                api project(":feature:media:common:domain:api")
+                implementation project(":feature:catalogue:view:api")
+            }
+        }
+    }
 }

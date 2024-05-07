@@ -16,14 +16,14 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.foundation.notification.api.module
 
 import com.savvasdalkitsis.uhuruphotos.foundation.android.api.module.AndroidModule
-import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
+import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCallbacks
 import com.savvasdalkitsis.uhuruphotos.foundation.inject.api.singleInstance
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.implementation.initializer.NotificationInitializer
 
 object NotificationModule {
 
-    val notificationInitializer: ApplicationCreated by singleInstance {
+    val notificationInitializer: ApplicationCallbacks by singleInstance {
         NotificationInitializer(AndroidModule.notificationManager)
     }
 

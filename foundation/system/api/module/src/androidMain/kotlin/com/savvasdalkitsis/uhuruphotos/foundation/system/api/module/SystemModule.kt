@@ -19,15 +19,18 @@ import com.savvasdalkitsis.uhuruphotos.foundation.android.api.module.AndroidModu
 import com.savvasdalkitsis.uhuruphotos.foundation.system.api.usecase.ApplicationUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.system.api.usecase.SystemUseCase
 
-object SystemModule {
+actual object SystemModule {
 
-    val applicationUseCase: ApplicationUseCase
+    actual val applicationUseCase: ApplicationUseCase
         get() = com.savvasdalkitsis.uhuruphotos.foundation.system.implementation.usecase.ApplicationUseCase(
-            AndroidModule.applicationContext
+            AndroidModule.applicationContext,
+            AndroidModule.packageManager,
         )
 
-    val systemUseCase: SystemUseCase
+    actual val systemUseCase: SystemUseCase
         get() = com.savvasdalkitsis.uhuruphotos.foundation.system.implementation.usecase.SystemUseCase(
-            AndroidModule.applicationContext
+            AndroidModule.applicationContext,
+            AndroidModule.powerManager,
+            AndroidModule.activityManager,
         )
 }

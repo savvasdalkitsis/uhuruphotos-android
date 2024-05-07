@@ -6,9 +6,13 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.sync.domain.api'
 }
 
-dependencies {
-    api(
-            libs.kotlinx.coroutines.android,
-            project(":feature:upload:domain:api"),
-    )
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                api libs.kotlinx.coroutines.core
+                api project(":feature:upload:domain:api")
+            }
+        }
+    }
 }

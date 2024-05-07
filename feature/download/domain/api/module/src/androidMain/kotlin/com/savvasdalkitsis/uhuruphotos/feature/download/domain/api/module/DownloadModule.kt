@@ -21,8 +21,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.module.Co
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.module.LocalMediaModule
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.module.RemoteMediaModule
 import com.savvasdalkitsis.uhuruphotos.foundation.android.api.module.AndroidModule
-import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ActivityCreated
-import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
+import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationWindowCallbacks
+import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCallbacks
 import com.savvasdalkitsis.uhuruphotos.foundation.inject.api.singleInstance
 import com.savvasdalktsis.uhuruphotos.feature.download.domain.api.usecase.DownloadUseCase
 import com.savvasdalktsis.uhuruphotos.feature.download.domain.implementation.initializer.DownloadActivityInitializer
@@ -44,11 +44,11 @@ object DownloadModule {
     private val downloadingRepository: DownloadingRepository
         get() = DownloadingRepository(DbModule.database.downloadingMediaItemsQueries)
 
-    val downloadInitializer: ApplicationCreated by singleInstance {
+    val downloadInitializer: ApplicationCallbacks by singleInstance {
         DownloadInitializer(downloadUseCase)
     }
 
-    val downloadActivityInitializer: ActivityCreated by singleInstance {
+    val downloadActivityInitializer: ApplicationWindowCallbacks by singleInstance {
         DownloadActivityInitializer(LocalMediaModule.localMediaWorkScheduler)
     }
 }

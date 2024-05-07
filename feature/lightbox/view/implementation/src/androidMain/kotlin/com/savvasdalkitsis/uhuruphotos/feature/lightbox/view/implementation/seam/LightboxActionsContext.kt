@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.sea
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.pm.PackageManager
 import android.net.Uri
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
@@ -94,6 +95,7 @@ internal class LightboxActionsContext(
     val localMediaUseCase: LocalMediaUseCase,
     val displayingDateTimeFormat: DateTimeFormatter,
     val context: Context,
+    val packageManager: PackageManager,
     val uiUseCase: UiUseCase,
     val shareUseCase: ShareUseCase,
     val toaster: ToasterUseCase,

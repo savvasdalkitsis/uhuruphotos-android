@@ -7,7 +7,13 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api'
 }
 
-dependencies {
-    api project(":foundation:navigation:api")
-    implementation project(":feature:media:common:domain:api")
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                api project(":foundation:navigation:api")
+                implementation project(":feature:media:common:domain:api")
+            }
+        }
+    }
 }

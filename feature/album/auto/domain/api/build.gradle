@@ -6,11 +6,14 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.album.auto.domain.api'
 }
 
-dependencies {
-    api(
-            project(":feature:db:domain:api"),
-            project(":feature:media:common:domain:api"),
-            project(":foundation:group:api"),
-            project(":foundation:result:api"),
-    )
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation project(":feature:db:domain:api")
+                implementation project(":feature:media:common:domain:api")
+                implementation project(":foundation:result:api")
+            }
+        }
+    }
 }

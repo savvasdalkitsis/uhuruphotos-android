@@ -6,6 +6,12 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.memories.domain.api'
 }
 
-dependencies {
-    api project(":feature:media:common:domain:api")
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                api project(":feature:media:common:domain:api")
+            }
+        }
+    }
 }

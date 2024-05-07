@@ -26,7 +26,7 @@ import com.michaelflisar.lumberjack.implementation.plant
 import com.michaelflisar.lumberjack.loggers.file.FileLoggerSetup
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R
-import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
+import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCallbacks
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.Log
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.logError
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.usecase.FeedbackUseCase
@@ -38,7 +38,7 @@ class LogInitializer(
     private val context: Context,
     private val fileLoggerSetup: FileLoggerSetup,
     private val settingsUseCase: SettingsUseCase,
-) : ApplicationCreated {
+) : ApplicationCallbacks {
 
     override fun onAppCreated(app: Application) {
         L.init(LumberjackLogger)

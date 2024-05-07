@@ -8,11 +8,15 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.uploads.view.api'
 }
 
-dependencies {
-    api project(":foundation:navigation:api")
-    implementation(
-            compose.material,
-            libs.androidx.compose.ui,
-            project(":foundation:strings:api"),
-    )
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                api project(":foundation:navigation:api")
+                implementation compose.material
+                implementation compose.ui
+                implementation project(":foundation:strings:api")
+            }
+        }
+    }
 }

@@ -20,9 +20,9 @@ import androidx.startup.AppInitializer
 import com.mapbox.common.MapboxOptions
 import com.mapbox.maps.loader.MapboxMapsInitializer
 import com.savvasdalkitsis.uhuruphotos.foundation.android.api.extensions.getMetadata
-import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
+import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCallbacks
 
-class MapsInitializer : ApplicationCreated {
+class MapsInitializer : ApplicationCallbacks {
 
     override fun onAppCreated(app: Application) {
         AppInitializer.getInstance(app)

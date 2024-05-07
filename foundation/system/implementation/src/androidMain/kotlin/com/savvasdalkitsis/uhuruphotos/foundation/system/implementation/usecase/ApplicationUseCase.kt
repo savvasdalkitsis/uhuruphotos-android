@@ -16,21 +16,21 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.foundation.system.implementation.usecase
 
 import android.content.Context
+import android.content.pm.PackageManager
 import android.content.pm.PackageManager.PackageInfoFlags
 import android.os.Build
 import com.savvasdalkitsis.uhuruphotos.foundation.system.api.usecase.ApplicationUseCase
 
 class ApplicationUseCase(
     context: Context,
+    private val packageManager: PackageManager,
 ) : ApplicationUseCase {
-    private val pm = context.packageManager
     private val packageName = context.packageName
 
     override fun appVersion(): String =
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            pm.getPackageInfo(packageName, PackageInfoFlags.of(0)).versionName
+            packageManager.getPackageInfo(packageName, PackageInfoFlags.of(0)).versionName
         } else {
-            @Suppress("DEPRECATION")
-            pm.getPackageInfo(packageName, 0).versionName
+            packageManager.getPackageInfo(packageName, 0).versionName
         }
 }

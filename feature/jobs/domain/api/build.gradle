@@ -6,8 +6,13 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api'
 }
 
-dependencies {
-    api(
-            libs.kotlinx.coroutines.android,
-    )
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                api libs.kotlinx.coroutines.core
+            }
+        }
+    }
 }
+

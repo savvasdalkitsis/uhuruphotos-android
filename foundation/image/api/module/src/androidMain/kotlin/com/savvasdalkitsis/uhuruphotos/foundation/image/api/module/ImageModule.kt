@@ -27,7 +27,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.module.AuthModule
 import com.savvasdalkitsis.uhuruphotos.foundation.android.api.module.AndroidModule
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.module.cache.ImageCacheModule
 import com.savvasdalkitsis.uhuruphotos.foundation.image.implementation.initializer.ImageInitializer
-import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
+import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCallbacks
 import com.savvasdalkitsis.uhuruphotos.foundation.inject.api.singleInstance
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -60,7 +60,7 @@ object ImageModule {
             .build()
     }
 
-    val imageInitializer: ApplicationCreated by singleInstance {
+    val imageInitializer: ApplicationCallbacks by singleInstance {
         ImageInitializer(
             fullImageLoader,
             AuthModule.authenticatedOkHttpBuilder,

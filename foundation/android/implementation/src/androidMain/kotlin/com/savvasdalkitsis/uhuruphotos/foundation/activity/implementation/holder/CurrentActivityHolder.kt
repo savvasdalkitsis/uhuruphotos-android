@@ -17,10 +17,10 @@ package com.savvasdalkitsis.uhuruphotos.foundation.activity.implementation.holde
 
 import androidx.fragment.app.FragmentActivity
 import com.savvasdalkitsis.uhuruphotos.foundation.android.api.holder.CurrentActivityHolder
-import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ActivityCreated
+import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationWindowCallbacks
 import java.lang.ref.WeakReference
 
-class CurrentActivityHolder : CurrentActivityHolder, ActivityCreated {
+class CurrentActivityHolder : CurrentActivityHolder, ApplicationWindowCallbacks {
 
     override fun priority(): Int = Int.MIN_VALUE
 
@@ -29,11 +29,11 @@ class CurrentActivityHolder : CurrentActivityHolder, ActivityCreated {
     override val currentActivity: FragmentActivity?
         get() = _activity.get()
 
-    override fun onActivityCreated(activity: FragmentActivity) {
-        _activity = WeakReference(activity)
+    override fun onApplicationWindowCreated(window: FragmentActivity) {
+        _activity = WeakReference(window)
     }
 
-    override fun onActivityDestroyed(activity: FragmentActivity) {
+    override fun onApplicationWindowDestroyed(window: FragmentActivity) {
         _activity.clear()
     }
 }

@@ -7,11 +7,29 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.account.view.api'
 }
 
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                api libs.kotlinx.immutable
+                api project(":feature:avatar:domain:api")
+                api project(":feature:jobs:domain:api")
+                api project(":feature:jobs:view:api")
+                implementation compose.foundation
+                implementation libs.compose.constraint
+                implementation project(":feature:avatar:view:api")
+                implementation project(":feature:uploads:view:api")
+                implementation project(":foundation:compose:api")
+                implementation project(":foundation:icons:api")
+                implementation project(":foundation:strings:api")
+                implementation project(":foundation:theme:api")
+                implementation project(":foundation:ui:api")
+            }
+        }
+    }
+}
+
 dependencies {
-    api(
-            project(":feature:avatar:domain:api"),
-            project(":feature:jobs:domain:api"),
-    )
     implementation(
             libs.androidx.compose.foundation.layout,
             compose.material,

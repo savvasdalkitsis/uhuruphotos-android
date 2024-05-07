@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.map.api.module
 
-import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
+import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCallbacks
 import com.savvasdalkitsis.uhuruphotos.foundation.inject.api.singleInstance
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.CompositeMapViewFactoryProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.CompositeMapViewStateFactory
@@ -51,11 +51,11 @@ object MapModule {
             )
         )
 
-    val mapBoxInitializer: ApplicationCreated by singleInstance {
+    val mapBoxInitializer: ApplicationCallbacks by singleInstance {
         com.savvasdalkitsis.uhuruphotos.foundation.map.mapbox.implementation.initializer.MapsInitializer()
     }
 
-    val maplibreInitializer: ApplicationCreated by singleInstance {
+    val maplibreInitializer: ApplicationCallbacks by singleInstance {
         com.savvasdalkitsis.uhuruphotos.foundation.map.maplibre.implementation.initializer.MapsInitializer()
     }
 

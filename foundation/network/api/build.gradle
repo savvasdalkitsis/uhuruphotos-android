@@ -6,10 +6,17 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.network.api'
 }
 
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                api libs.kotlinx.serialization
+                api libs.ktorfit.core
+            }
+        }
+    }
+}
+
 dependencies {
-    api(
-            libs.okhttp,
-            libs.kotlinx.serialization,
-            libs.ktorfit.core,
-    )
+    api libs.okhttp
 }

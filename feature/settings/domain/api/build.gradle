@@ -6,12 +6,21 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api'
 }
 
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                api libs.kotlinx.coroutines.android
+                api project(":feature:feed:view:api")
+                api project(":foundation:map:api")
+                api project(":foundation:ui:api")
+            }
+        }
+    }
+}
+
 dependencies {
     api(
             libs.androidx.work,
-            libs.kotlinx.coroutines.android,
-            project(":feature:feed:view:api"),
-            project(":foundation:map:api"),
-            project(":foundation:ui:api"),
     )
 }

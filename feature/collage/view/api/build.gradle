@@ -7,30 +7,17 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.collage.view.api'
 }
 
-dependencies {
-
-    api(
-            libs.kotlinx.immutable,
-            project(":foundation:icons:api"),
-    )
-    implementation(
-            libs.androidx.compose.foundation,
-            libs.androidx.compose.foundation.layout,
-            compose.material,
-            libs.compose.material.windowsize,
-            libs.androidx.compose.ui,
-            libs.androidx.compose.ui.tooling.preview,
-            libs.androidx.compose.ui.util,
-            libs.androidx.core,
-            libs.compose.constraint,
-            project(":foundation:compose:api"),
-            project(":foundation:strings:api"),
-            project(":foundation:ui:api"),
-            project(":feature:media:common:domain:api"),
-            project(":feature:media:common:view:api"),
-            project(":foundation:image:api"),
-    )
-    debugImplementation(
-            libs.androidx.compose.ui.tooling,
-    )
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                api libs.kotlinx.immutable
+                api project(":foundation:icons:api")
+                api project(":foundation:strings:api")
+                implementation libs.compose.material.windowsize
+                implementation project(":feature:media:common:domain:api")
+                implementation project(":feature:media:common:view:api")
+            }
+        }
+    }
 }

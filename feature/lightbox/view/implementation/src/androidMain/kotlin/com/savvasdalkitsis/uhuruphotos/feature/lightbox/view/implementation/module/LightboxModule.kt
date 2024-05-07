@@ -59,6 +59,7 @@ internal object LightboxModule {
         LocalMediaModule.localMediaUseCase,
         DateModule.displayingDateTimeFormat,
         AndroidModule.applicationContext,
+        AndroidModule.packageManager,
         UiModule.uiUseCase,
         ShareModule.shareUseCase,
         ToasterModule.toasterUseCase,

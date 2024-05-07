@@ -7,10 +7,14 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.feed.view.api'
 }
 
-dependencies {
-    api project(":foundation:navigation:api")
-    implementation(
-            project(":foundation:icons:api"),
-            project(":foundation:strings:api"),
-    )
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                api project(":foundation:navigation:api")
+                implementation project(":foundation:icons:api")
+                implementation project(":foundation:strings:api")
+            }
+        }
+    }
 }

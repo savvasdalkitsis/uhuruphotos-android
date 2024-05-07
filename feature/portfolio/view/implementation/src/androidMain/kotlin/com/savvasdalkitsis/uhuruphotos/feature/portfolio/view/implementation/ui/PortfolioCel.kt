@@ -26,8 +26,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.sea
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.seam.actions.NavigateToFolder
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.seam.actions.PortfolioAction
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui.state.PortfolioCelState
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.Res.images
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.CustomColors
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkable.Checkable
