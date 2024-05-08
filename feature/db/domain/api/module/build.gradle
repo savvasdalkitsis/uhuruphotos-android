@@ -10,15 +10,17 @@ kotlin {
     sourceSets {
         androidMain {
             dependencies {
-                implementation(libs.sqldelight.adapters)
-                implementation(libs.sqldelight.android)
+                implementation libs.sqldelight.android
+                implementation project(":foundation:android:api:module")
+            }
+        }
+        commonMain {
+            dependencies {
+                implementation libs.sqldelight.adapters
+                implementation libs.sqldelight.runtime
+                api project(":feature:db:domain:api")
+                implementation project(":foundation:inject:api")
             }
         }
     }
-}
-
-dependencies {
-    api project(":feature:db:domain:api")
-    implementation project(":foundation:android:api:module")
-    implementation project(":foundation:inject:api")
 }

@@ -15,12 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.module
 
-import androidx.sqlite.db.SupportSQLiteDatabase
 import app.cash.sqldelight.EnumColumnAdapter
 import app.cash.sqldelight.adapter.primitive.FloatColumnAdapter
 import app.cash.sqldelight.adapter.primitive.IntColumnAdapter
-import app.cash.sqldelight.db.SqlDriver
-import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.Database
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.AutoAlbumPeople
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.AutoAlbums
@@ -37,33 +34,13 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.person.PersonPhotos
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.portfolio.Portfolio
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.portfolio.PortfolioItems
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.user.User
-import com.savvasdalkitsis.uhuruphotos.foundation.android.api.module.AndroidModule
 import com.savvasdalkitsis.uhuruphotos.foundation.inject.api.singleInstance
 
 object DbModule {
 
-    private val driver: SqlDriver by singleInstance {
-        AndroidSqliteDriver(
-            schema = Database.Schema,
-            context = AndroidModule.applicationContext,
-            name = "uhuruPhotos.db",
-            callback = object : AndroidSqliteDriver.Callback(Database.Schema) {
-                override fun onConfigure(db: SupportSQLiteDatabase) {
-                    super.onConfigure(db)
-                    setPragma(db, "JOURNAL_MODE = WAL")
-                    setPragma(db, "SYNCHRONOUS = NORMAL")
-                }
-
-                private fun setPragma(db: SupportSQLiteDatabase, pragma: String) {
-                    db.query("PRAGMA $pragma").close()
-                }
-            }
-        )
-    }
-
     val database: Database by singleInstance {
         Database(
-            driver = driver,
+            driver = PlatformDbModule.driver,
             tokenAdapter = Token.Adapter(typeAdapter = EnumColumnAdapter()),
             autoAlbumPeopleAdapter = AutoAlbumPeople.Adapter(IntColumnAdapter),
             autoAlbumsAdapter = AutoAlbums.Adapter(IntColumnAdapter, IntColumnAdapter),
