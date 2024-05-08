@@ -7,14 +7,22 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation'
 }
 
-dependencies {
-    implementation(
-            libs.accompanist.webview,
-            libs.androidx.compose.navigation,
-            project(":feature:auth:domain:api:module"),
-            project(":feature:auth:view:api"),
-            project(":feature:settings:domain:api"),
-            project(":foundation:launchers:api"),
-            project(":foundation:navigation:api:module"),
-    )
+kotlin {
+    sourceSets {
+        androidMain {
+            dependencies {
+                implementation libs.accompanist.webview
+            }
+        }
+        commonMain {
+            dependencies {
+                implementation compose.foundation
+                implementation project(":feature:auth:domain:api:module")
+                implementation project(":feature:auth:view:api")
+                implementation project(":foundation:launchers:api")
+                implementation project(":foundation:navigation:api:module")
+                implementation project(":foundation:ui:api")
+            }
+        }
+    }
 }

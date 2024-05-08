@@ -15,43 +15,33 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.ui
 
-import android.annotation.SuppressLint
-import android.webkit.CookieManager
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.google.accompanist.web.WebView
-import com.google.accompanist.web.rememberWebViewState
+import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.ui.state.USER_AGENT
+import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.ui.state.WebLoginState
+import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.ui.state.rememberWebViewState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.CommonScaffold
 
-private const val USER_AGENT =
-    "Mozilla/5.0 (Linux; Android 12; Pixel 6 Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/" +
-            "99.0.4844.88 Mobile Safari/537.36 OPR/68.2.3557.64219"
-
-@SuppressLint("SetJavaScriptEnabled")
 @Composable
 fun WebLogin(state: WebLoginState) {
     if (state.url == null) {
         FullLoading()
     } else {
-        val webState = rememberWebViewState(url = state.url)
+        val webState = rememberWebViewState(state.url)
         CommonScaffold { contentPadding ->
             Column {
                 Spacer(modifier = Modifier.height(contentPadding.calculateTopPadding()))
                 WebView(
-                    webState,
-                    onCreated = {
-                        CookieManager.getInstance().setAcceptThirdPartyCookies(it, true)
-                        with(it.settings) {
-                            userAgentString =
-                                USER_AGENT
-                            javaScriptEnabled = true
-                        }
-                    }
-                )
+                    webState
+                ) {
+                    it.setAcceptThirdPartyCookies(true)
+                    it.setUserAgentString(USER_AGENT)
+                    it.setJavaScriptEnabled(true)
+                }
             }
         }
     }

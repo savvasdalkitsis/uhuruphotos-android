@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.worke
 import android.content.Context
 import androidx.work.WorkerParameters
 import com.github.michaelbull.result.onSuccess
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.module.AuthModule
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.module.PlatformAuthModule
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.isVideo
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType
@@ -54,7 +54,7 @@ internal class PrecacheFeedThumbnailsWorker(
         RemoteMediaModule.remoteMediaPrecacher
     }
     private val serverUseCase: ServerUseCase by lazy(NONE) {
-        AuthModule.serverUseCase
+        PlatformAuthModule.serverUseCase
     }
 
     override suspend fun work(): Result {

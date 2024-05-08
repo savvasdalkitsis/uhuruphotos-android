@@ -1,5 +1,5 @@
 /*
-Copyright 2022 Savvas Dalkitsis
+Copyright 2024 Savvas Dalkitsis
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,8 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.ui
+package com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.ui.state
 
-data class WebLoginState(
-    val url: String? = null,
-)
+import androidx.compose.runtime.Composable
+
+actual typealias WebViewState = com.google.accompanist.web.WebViewState
+
+@Composable
+actual fun rememberWebViewState(url: String): WebViewState =
+    com.google.accompanist.web.rememberWebViewState(url)
+

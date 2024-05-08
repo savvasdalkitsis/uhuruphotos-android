@@ -23,7 +23,7 @@ import coil.decode.ImageDecoderDecoder
 import coil.decode.VideoFrameDecoder
 import coil.disk.DiskCache
 import coil.memory.MemoryCache
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.module.AuthModule
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.module.PlatformAuthModule
 import com.savvasdalkitsis.uhuruphotos.foundation.android.api.module.AndroidModule
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.module.cache.ImageCacheModule
 import com.savvasdalkitsis.uhuruphotos.foundation.image.implementation.initializer.ImageInitializer
@@ -37,8 +37,8 @@ object ImageModule {
     val fullImageLoader: ImageLoader by singleInstance {
         imageLoader(
             AndroidModule.applicationContext,
-            AuthModule.authenticatedOkHttpBuilder,
-            AuthModule.tokenRefreshInterceptor,
+            PlatformAuthModule.authenticatedOkHttpBuilder,
+            PlatformAuthModule.tokenRefreshInterceptor,
             ImageCacheModule.fullImageMemoryCache,
             ImageCacheModule.fullImageDiskCache,
         )
@@ -47,8 +47,8 @@ object ImageModule {
     val thumbnailImageLoader: ImageLoader by singleInstance {
         imageLoader(
             AndroidModule.applicationContext,
-            AuthModule.authenticatedOkHttpBuilder,
-            AuthModule.tokenRefreshInterceptor,
+            PlatformAuthModule.authenticatedOkHttpBuilder,
+            PlatformAuthModule.tokenRefreshInterceptor,
             ImageCacheModule.thumbnailImageMemoryCache,
             ImageCacheModule.thumbnailImageDiskCache,
         )
@@ -63,8 +63,8 @@ object ImageModule {
     val imageInitializer: ApplicationCallbacks by singleInstance {
         ImageInitializer(
             fullImageLoader,
-            AuthModule.authenticatedOkHttpBuilder,
-            AuthModule.tokenRefreshInterceptor,
+            PlatformAuthModule.authenticatedOkHttpBuilder,
+            PlatformAuthModule.tokenRefreshInterceptor,
         )
     }
 

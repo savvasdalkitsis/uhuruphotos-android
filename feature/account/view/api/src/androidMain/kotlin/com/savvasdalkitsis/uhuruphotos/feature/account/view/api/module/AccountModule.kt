@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.account.view.api.module
 
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.module.AuthModule
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.module.PlatformAuthModule
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.domain.api.module.AvatarModule
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.module.JobsModule
 import com.savvasdalkitsis.uhuruphotos.feature.sync.domain.api.module.SyncModule
@@ -30,7 +30,7 @@ object AccountModule {
 
     val accountOverviewActionsContext get() = AccountOverviewActionsContext(
         AndroidModule.applicationContext,
-        AuthModule.authenticationLoginUseCase,
+        PlatformAuthModule.authenticationLoginUseCase,
         AvatarModule.avatarUseCase,
         JobsModule.jobsUseCase,
         NavigationModule.navigator,

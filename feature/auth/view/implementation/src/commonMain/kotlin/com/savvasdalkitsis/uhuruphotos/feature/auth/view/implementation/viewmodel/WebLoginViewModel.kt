@@ -20,7 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.module.W
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.seam.WebLoginActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.seam.actions.LoadPage
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.seam.actions.WebLoginAction
-import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.ui.WebLoginState
+import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.ui.state.WebLoginState
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 

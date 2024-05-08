@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.upload.domain.implementation.module
 
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.module.AuthModule
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.module.PlatformAuthModule
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.module.DbModule
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.module.LocalMediaModule
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.module.RemoteMediaModule
@@ -69,6 +69,6 @@ object UploadModule {
         )
 
     private val uploadService: UploadService by singleInstance {
-        AuthModule.ktorfit.create()
+        PlatformAuthModule.ktorfit.create()
     }
 }

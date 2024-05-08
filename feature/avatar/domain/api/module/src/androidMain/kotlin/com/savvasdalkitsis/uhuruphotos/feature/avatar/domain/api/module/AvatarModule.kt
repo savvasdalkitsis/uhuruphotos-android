@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.avatar.domain.api.module
 
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.module.AuthModule
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.module.PlatformAuthModule
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.domain.api.usecase.AvatarUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.module.JobsModule
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.module.UserModule
@@ -26,7 +26,7 @@ object AvatarModule {
     val avatarUseCase: AvatarUseCase
         get() = com.savvasdalkitsis.uhuruphotos.feature.avatar.domain.implementation.usecase.AvatarUseCase(
             UserModule.userUseCase,
-            AuthModule.serverUseCase,
+            PlatformAuthModule.serverUseCase,
             JobsModule.jobsUseCase,
             WelcomeModule.welcomeUseCase,
         )

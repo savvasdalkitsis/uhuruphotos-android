@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.domain.api.module
 
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.module.AuthModule
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.module.PlatformAuthModule
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.domain.api.usecase.UserAlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.domain.implementation.repository.UserAlbumsRepository
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.domain.implementation.service.UserAlbumsService
@@ -37,6 +37,6 @@ object UserAlbumsModule {
     )
 
     private val userAlbumsService: UserAlbumsService by singleInstance {
-        AuthModule.ktorfit.create()
+        PlatformAuthModule.ktorfit.create()
     }
 }

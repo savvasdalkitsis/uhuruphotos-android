@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.module
 
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.module.AuthModule
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.module.PlatformAuthModule
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.HomeActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.domain.api.module.NotificationsModule
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.module.SettingsModule
@@ -26,7 +26,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.module.Navigati
 internal object HomeModule {
 
     val homeActionsContext get() = HomeActionsContext(
-        AuthModule.authenticationUseCase,
+        PlatformAuthModule.authenticationUseCase,
         SettingsModule.settingsUseCase,
         BiometricsModule.biometricsUseCase,
         NavigationModule.navigator,

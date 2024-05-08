@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.m
 
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.domain.api.module.AutoAlbumModule
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.seam.AutoAlbumActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.module.AuthModule
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.module.PlatformAuthModule
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.module.GalleryModule
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.module.UserModule
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule
@@ -26,7 +26,7 @@ internal object AutoAlbumModule {
 
     val autoAlbumActionsContext get() = AutoAlbumActionsContext(
         AutoAlbumModule.autoAlbumUseCase,
-        AuthModule.serverUseCase,
+        PlatformAuthModule.serverUseCase,
         DateModule.dateDisplayer,
         GalleryModule.galleryActionsContextFactory,
         UserModule.userUseCase,

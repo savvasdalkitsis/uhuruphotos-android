@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.module
 
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.module.AuthModule
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.module.PlatformAuthModule
 import com.savvasdalkitsis.uhuruphotos.feature.people.domain.api.module.PeopleModule
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleActionsContext
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.module.NavigationModule
@@ -25,7 +25,7 @@ object PeopleModule {
 
     val peopleActionsContext get() = PeopleActionsContext(
         PeopleModule.peopleUseCase,
-        AuthModule.serverUseCase,
+        PlatformAuthModule.serverUseCase,
         ToasterModule.toasterUseCase,
         NavigationModule.navigator,
     )

@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.module
 
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.module.AuthModule
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.module.PlatformAuthModule
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.DiscoverActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.module.FeedModule
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.domain.api.module.HeatmapModule
@@ -34,7 +34,7 @@ object DiscoverModule {
         FeedModule.feedUseCase,
         SettingsUiModule.settingsUiUseCase,
         PeopleModule.peopleUseCase,
-        AuthModule.serverUseCase,
+        PlatformAuthModule.serverUseCase,
         SearchModule.searchUseCase,
         HeatmapModule.heatmapUseCase,
         UiModule.uiUseCase,

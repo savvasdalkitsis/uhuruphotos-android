@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.app.module
 
 import com.savvasdalkitsis.uhuruphotos.app.navigation.AppNavigator
 import com.savvasdalkitsis.uhuruphotos.app.navigation.AndroidCompositionLocalProviders
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.module.AuthModule
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.module.PlatformAuthModule
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.module.ui.SettingsUiModule
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.module.ImageModule
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.module.MapModule
@@ -37,7 +37,7 @@ object AppModule {
         fullImageLoader = ImageModule.fullImageLoader,
         thumbnailImageLoader = ImageModule.thumbnailImageLoader,
         thumbnailImageWithNetworkCacheSupportLoader = ImageModule.thumbnailImageWithNetworkCacheSupportLoader,
-        serverUseCase = AuthModule.serverUseCase,
+        serverUseCase = PlatformAuthModule.serverUseCase,
         mapViewFactoryProvider = MapModule.mapViewFactoryProvider,
         mapViewStateFactory = MapModule.mapViewStateFactory,
     )

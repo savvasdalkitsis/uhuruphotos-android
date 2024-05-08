@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.module
 
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.module.AuthModule
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.module.PlatformAuthModule
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.module.LocalMediaModule
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.module.WelcomeModule
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam.WelcomeActionsContext
@@ -25,7 +25,7 @@ internal object WelcomeModule {
 
     val welcomeActionsContext get() = WelcomeActionsContext(
         WelcomeModule.welcomeUseCase,
-        AuthModule.authenticationLoginUseCase,
+        PlatformAuthModule.authenticationLoginUseCase,
         NavigationModule.navigator,
         LocalMediaModule.localMediaUseCase,
     )

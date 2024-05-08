@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.mod
 
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.domain.api.module.AutoAlbumModule
 import com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.api.module.UserAlbumModule
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.module.AuthModule
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.module.PlatformAuthModule
 import com.savvasdalkitsis.uhuruphotos.feature.download.domain.api.module.DownloadModule
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.module.FeedModule
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.domain.api.module.LightboxModule
@@ -66,7 +66,7 @@ internal object LightboxModule {
         NavigationModule.navigator,
         AndroidModule.clipboardManager,
         LocalMediaModule.localMediaDeletionUseCase,
-        AuthModule.serverUseCase,
+        PlatformAuthModule.serverUseCase,
         LightboxModule.lightboxUseCase,
     )
 }

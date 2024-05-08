@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.foundation.video.api.module
 import android.annotation.SuppressLint
 import androidx.media3.datasource.cache.CacheDataSource
 import androidx.media3.datasource.okhttp.OkHttpDataSource
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.module.AuthModule
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.module.PlatformAuthModule
 import com.savvasdalkitsis.uhuruphotos.foundation.android.api.module.AndroidModule
 import com.savvasdalkitsis.uhuruphotos.foundation.inject.api.singleInstance
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.ExoplayerProvider
@@ -43,12 +43,12 @@ object VideoModule {
     }
 
     private val videoOkHttpClient: OkHttpClient by singleInstance {
-        AuthModule.authenticatedOkHttpBuilder
+        PlatformAuthModule.authenticatedOkHttpBuilder
             .callTimeout(0, TimeUnit.MILLISECONDS)
             .connectTimeout(0, TimeUnit.MILLISECONDS)
             .readTimeout(0, TimeUnit.MILLISECONDS)
             .writeTimeout(0, TimeUnit.MILLISECONDS)
-            .addInterceptor(AuthModule.tokenRefreshInterceptor)
+            .addInterceptor(PlatformAuthModule.tokenRefreshInterceptor)
             .build()
     }
 }

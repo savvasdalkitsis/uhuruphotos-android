@@ -13,20 +13,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.seam
+package com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.ui.state
 
-import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.ui.WebLoginState
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
-
-sealed class WebLoginMutation(
-    mutation: Mutation<WebLoginState>,
-) : Mutation<WebLoginState> by mutation {
-
-    data class LoadPage(val url: String) : WebLoginMutation({
-        it.copy(url = url)
-    })
-
-    data object Loading : WebLoginMutation({
-        it.copy(url = null)
-    })
-}
+data class WebLoginState(
+    val url: String? = null,
+)

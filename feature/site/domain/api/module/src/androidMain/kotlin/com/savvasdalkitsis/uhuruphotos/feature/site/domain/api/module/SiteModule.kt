@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.site.domain.api.module
 
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.module.AuthModule
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.module.PlatformAuthModule
 import com.savvasdalkitsis.uhuruphotos.feature.site.domain.api.usecase.SiteUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.site.domain.implementation.service.SiteService
 import com.savvasdalkitsis.uhuruphotos.foundation.inject.api.singleInstance
@@ -28,6 +28,6 @@ object SiteModule {
         )
 
     private val siteService: SiteService by singleInstance {
-        AuthModule.ktorfit.create()
+        PlatformAuthModule.ktorfit.create()
     }
 }

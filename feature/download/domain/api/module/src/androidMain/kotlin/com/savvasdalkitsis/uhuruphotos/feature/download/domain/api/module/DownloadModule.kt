@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.download.domain.api.module
 
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.module.AuthModule
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.module.PlatformAuthModule
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.module.DbModule
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.module.CommonMediaModule
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.module.LocalMediaModule
@@ -37,8 +37,8 @@ object DownloadModule {
             downloadingRepository,
             CommonMediaModule.mediaUseCase,
             RemoteMediaModule.remoteMediaUseCase,
-            AuthModule.authenticationHeadersUseCase,
-            AuthModule.serverUseCase,
+            PlatformAuthModule.authenticationHeadersUseCase,
+            PlatformAuthModule.serverUseCase,
         )
 
     private val downloadingRepository: DownloadingRepository

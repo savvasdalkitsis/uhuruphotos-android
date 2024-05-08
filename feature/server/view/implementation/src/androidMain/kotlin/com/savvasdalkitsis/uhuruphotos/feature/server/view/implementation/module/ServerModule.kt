@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.module
 
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.module.AuthModule
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.module.PlatformAuthModule
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.module.SettingsModule
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.module.LogModule
@@ -25,8 +25,8 @@ import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.module.ToasterModu
 internal object ServerModule {
 
     val serverActionsContext get() = ServerActionsContext(
-        AuthModule.serverUseCase,
-        AuthModule.authenticationLoginUseCase,
+        PlatformAuthModule.serverUseCase,
+        PlatformAuthModule.authenticationLoginUseCase,
         SettingsModule.settingsUseCase,
         LogModule.feedbackUseCase,
         NavigationModule.navigator,

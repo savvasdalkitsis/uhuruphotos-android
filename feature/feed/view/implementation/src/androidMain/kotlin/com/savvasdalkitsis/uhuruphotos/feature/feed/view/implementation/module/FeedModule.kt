@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.module
 
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.module.AuthModule
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.module.PlatformAuthModule
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.domain.api.module.AvatarModule
 import com.savvasdalkitsis.uhuruphotos.feature.battery.domain.api.module.BatteryModule
 import com.savvasdalkitsis.uhuruphotos.feature.download.domain.api.module.DownloadModule
@@ -56,8 +56,8 @@ internal object FeedModule {
         NavigationModule.navigator,
         WelcomeModule.welcomeUseCase,
         SyncModule.syncUseCase,
-        AuthModule.authenticationLoginUseCase,
-        AuthModule.serverUseCase,
+        PlatformAuthModule.authenticationLoginUseCase,
+        PlatformAuthModule.serverUseCase,
         BatteryModule.batteryUseCase,
     )
 

@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.module
 
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.module.AuthModule
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.module.PlatformAuthModule
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.module.LocalMediaModule
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.WelcomeUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.module.PreferencesModule
@@ -25,7 +25,7 @@ object WelcomeModule {
     val welcomeUseCase: WelcomeUseCase
         get() = com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.implementation.usecase.WelcomeUseCase(
             LocalMediaModule.localMediaUseCase,
-            AuthModule.authenticationUseCase,
+            PlatformAuthModule.authenticationUseCase,
             PreferencesModule.plainTextPreferences,
         )
 }
