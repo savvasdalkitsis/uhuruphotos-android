@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.api.navigatio
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.ui.AutoAlbums
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.viewmodel.AutoAlbumsViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.ViewModelNavigationTarget
 
 object AutoAlbumsNavigationTarget : NavigationTarget<AutoAlbumsNavigationRoute> by ViewModelNavigationTarget(
     AutoAlbumsViewModel::class,

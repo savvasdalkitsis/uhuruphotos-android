@@ -27,8 +27,7 @@ import kotlinx.coroutines.flow.merge
 
 data object Load : ProcessingAction() {
 
-    context(ProcessingActionsContext)
-    override fun handle(state: ProcessingState): Flow<Mutation<ProcessingState>> =
+    override fun ProcessingActionsContext.handle(state: ProcessingState): Flow<Mutation<ProcessingState>> =
         merge(
             flowOf(Loading),
             processingUseCase.observeProcessingMedia().map(::ShowProcessing)

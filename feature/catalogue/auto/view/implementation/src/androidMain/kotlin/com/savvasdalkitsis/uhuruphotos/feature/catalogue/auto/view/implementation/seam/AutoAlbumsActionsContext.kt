@@ -23,7 +23,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 
-internal class AutoAlbumsActionsContext(
+class AutoAlbumsActionsContext(
     val autoAlbumsUseCase: AutoAlbumsUseCase,
     val toaster: ToasterUseCase,
     val navigator: Navigator,

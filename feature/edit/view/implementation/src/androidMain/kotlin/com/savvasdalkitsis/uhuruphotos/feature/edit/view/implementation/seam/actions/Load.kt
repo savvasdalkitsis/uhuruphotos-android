@@ -28,7 +28,7 @@ data class Load(
     val name: String,
     val timestamp: Long?,
 ) : EditAction() {
-    context(EditActionsContext) override fun handle(
+    override fun EditActionsContext.handle(
         state: EditState
     ): Flow<Mutation<EditState>> = flowOf(
         SetPhotoData(uri, name, timestamp),

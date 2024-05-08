@@ -8,25 +8,33 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.navigation.implementation'
 }
 
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                api project(":foundation:navigation:api")
+                implementation project(":foundation:launchers:api")
+                implementation project(":foundation:log:api")
+                implementation project(":feature:home:view:api")
+            }
+        }
+    }
+}
+
 dependencies {
 
     api(
             libs.accompanist.navigation,
             libs.kotlin.reflect,
-            project(":foundation:navigation:api"),
     )
     implementation(
             libs.accompanist.systemui,
             libs.androidx.compose.foundation,
             libs.gson,
-            project(":feature:home:view:api"),
             project(":foundation:android:api"),
-            project(":foundation:launchers:api"),
-            project(":foundation:log:api"),
             project(":foundation:strings:api"),
             project(":foundation:toaster:api"),
             project(":foundation:ui:api"),
             project(":foundation:seam:api"),
     )
-
-    }
+}

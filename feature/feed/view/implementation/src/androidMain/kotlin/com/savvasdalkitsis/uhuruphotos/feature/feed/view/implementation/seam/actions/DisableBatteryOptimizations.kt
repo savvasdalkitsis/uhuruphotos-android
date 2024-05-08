@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state
 import kotlinx.coroutines.flow.flow
 
 data object DisableBatteryOptimizations : FeedAction() {
-    context(FeedActionsContext) override fun handle(
+    override fun FeedActionsContext.handle(
         state: FeedState
     ) = flow<FeedMutation> {
         navigator.navigateTo(Intent(ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS))

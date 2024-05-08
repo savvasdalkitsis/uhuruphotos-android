@@ -20,6 +20,5 @@ kotlin {
 }
 
 dependencies {
-    implementation libs.gson
     implementation project(":foundation:android:api:module")
 }

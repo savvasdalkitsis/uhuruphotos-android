@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxS
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
 import kotlinx.coroutines.flow.map
 
-internal class UserAlbumActionsContext(
+class UserAlbumActionsContext(
     userAlbumDisplay: UserAlbumDisplay,
     userAlbumUseCase: UserAlbumUseCase,
     galleryActionsContextFactory: GalleryActionsContextFactory,

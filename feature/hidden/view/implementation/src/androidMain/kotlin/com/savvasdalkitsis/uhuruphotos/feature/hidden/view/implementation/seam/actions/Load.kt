@@ -21,7 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.H
 import kotlinx.coroutines.flow.map
 
 data object Load : HiddenPhotosAction() {
-    context(HiddenPhotosActionsContext) override fun handle(
+    override fun HiddenPhotosActionsContext.handle(
         state: HiddenPhotosState
     ) = settingsUseCase.observeBiometricsRequiredForHiddenPhotosAccess()
         .map { required ->

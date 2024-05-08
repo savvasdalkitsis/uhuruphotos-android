@@ -23,7 +23,7 @@ import kotlinx.coroutines.flow.flow
 import kotlin.coroutines.coroutineContext
 
 data class LoadPage(val url: String): WebLoginAction() {
-    context(WebLoginActionsContext) override fun handle(
+    override fun WebLoginActionsContext.handle(
         state: WebLoginState
     ) = flow {
         emit(WebLoginMutation.Loading)

@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.uploads.view.api.navigation.Uploa
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.view.implementation.ui.Uploads
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.view.implementation.viewmodel.UploadsViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.ViewModelNavigationTarget
 
 object UploadsNavigationTarget : NavigationTarget<UploadsNavigationRoute> by ViewModelNavigationTarget(
     UploadsViewModel::class,

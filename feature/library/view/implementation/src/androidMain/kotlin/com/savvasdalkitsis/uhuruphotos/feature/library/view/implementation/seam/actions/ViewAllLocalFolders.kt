@@ -25,8 +25,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 data object ViewAllLocalFolders : LibraryAction() {
-    context(LibraryActionsContext)
-    override fun handle(state: LibraryState): Flow<Mutation<LibraryState>> = flow {
+    override fun LibraryActionsContext.handle(state: LibraryState): Flow<Mutation<LibraryState>> = flow {
         navigator.navigateTo(PortfolioNavigationRoute(
             editMode = false,
             title = strings.local_albums.desc().toString(context),

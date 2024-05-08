@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
 
 data class ChangeBiometricsAppAccessRequirement(val required: Boolean) : SettingsAction() {
-    context(SettingsActionsContext) override fun handle(
+    override fun SettingsActionsContext.handle(
         state: SettingsState
     ) = authenticateIfNeeded(required) {
         settingsUseCase.setBiometricsRequiredForAppAccess(it)

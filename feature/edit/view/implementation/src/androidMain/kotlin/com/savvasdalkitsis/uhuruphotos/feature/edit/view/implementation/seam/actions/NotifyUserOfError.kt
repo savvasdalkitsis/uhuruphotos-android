@@ -25,7 +25,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 data object NotifyUserOfError : EditAction() {
-    context(EditActionsContext) override fun handle(
+    override fun EditActionsContext.handle(
         state: EditState
     ): Flow<Mutation<EditState>> = flow {
         toaster.show(strings.error_editing_photo)

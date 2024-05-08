@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.usecase.StatsUseCase
 
-internal class StatsActionsContext(
+class StatsActionsContext(
     val statsUseCase: StatsUseCase,
     val feedUseCase: FeedUseCase,
 )

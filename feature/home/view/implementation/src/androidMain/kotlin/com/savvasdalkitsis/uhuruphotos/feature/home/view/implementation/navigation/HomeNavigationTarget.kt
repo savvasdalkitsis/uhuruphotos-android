@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.navigation.HomeNavi
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.ui.Home
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.viewmodel.HomeViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.ViewModelNavigationTarget
 
 object HomeNavigationTarget : NavigationTarget<HomeNavigationRoute> by ViewModelNavigationTarget(
     HomeViewModel::class,

@@ -22,8 +22,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 data object StartScanningOtherFolders : PortfolioAction() {
-    context(PortfolioActionsContext)
-    override fun handle(state: PortfolioState): Flow<Mutation<PortfolioState>> = flow {
+    override fun PortfolioActionsContext.handle(state: PortfolioState): Flow<Mutation<PortfolioState>> = flow {
         localMediaUseCase.startScanningOtherFolders()
     }
 }

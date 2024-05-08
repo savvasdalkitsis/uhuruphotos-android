@@ -23,7 +23,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 data class ItemOrderChanged(val items: List<LibraryItem>) : LibraryAction() {
-    context(LibraryActionsContext) override fun handle(
+    override fun LibraryActionsContext.handle(
         state: LibraryState
     ): Flow<Mutation<LibraryState>> = flow {
         libraryUseCase.setLibraryItems(items)

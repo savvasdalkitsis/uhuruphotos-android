@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation.Ligh
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.Lightbox
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.viewmodel.LightboxViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.ViewModelNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode
 
 object LightboxNavigationTarget : NavigationTarget<LightboxNavigationRoute> by ViewModelNavigationTarget(

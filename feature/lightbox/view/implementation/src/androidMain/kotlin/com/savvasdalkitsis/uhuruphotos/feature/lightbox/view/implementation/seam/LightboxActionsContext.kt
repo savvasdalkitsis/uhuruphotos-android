@@ -77,7 +77,7 @@ import kotlinx.coroutines.flow.flow
 import org.joda.time.format.DateTimeFormatter
 import kotlin.random.Random
 
-internal class LightboxActionsContext(
+class LightboxActionsContext(
     val mediaUseCase: MediaUseCase,
     val downloadUseCase: DownloadUseCase,
     val uploadUseCase: UploadUseCase,

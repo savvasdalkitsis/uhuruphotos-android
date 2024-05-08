@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.album.user.view.api.navigation.Us
 import com.savvasdalkitsis.uhuruphotos.feature.album.user.view.implementation.viewmodel.UserAlbumViewModel
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.Gallery
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.ViewModelNavigationTarget
 
 object UserAlbumNavigationTarget : NavigationTarget<UserAlbumNavigationRoute> by ViewModelNavigationTarget(
     UserAlbumViewModel::class,

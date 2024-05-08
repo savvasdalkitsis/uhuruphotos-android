@@ -21,7 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.s
 
 data object RestoreMediaItem : LightboxAction() {
 
-    context(LightboxActionsContext) override fun handle(
+    override fun LightboxActionsContext.handle(
         state: LightboxState
     ) = processAndRemoveMediaItem(state) {
         // this just schedules deletion so no need to check result

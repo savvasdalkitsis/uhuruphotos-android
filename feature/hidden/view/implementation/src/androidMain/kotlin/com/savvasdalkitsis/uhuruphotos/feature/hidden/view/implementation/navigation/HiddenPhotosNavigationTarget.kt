@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.api.HiddenPhotosNavig
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.ui.HiddenPhotosAlbumPage
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.viewmodel.HiddenPhotosViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.ViewModelNavigationTarget
 
 object HiddenPhotosNavigationTarget : NavigationTarget<HiddenPhotosNavigationRoute> by ViewModelNavigationTarget(
     HiddenPhotosViewModel::class,

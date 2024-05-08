@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.notifications.view.api.navigation
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.view.implementation.ui.Notifications
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.view.implementation.viewmodel.NotificationsViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.ViewModelNavigationTarget
 
 object NotificationsNavigationTarget : NavigationTarget<NotificationsNavigationRoute> by ViewModelNavigationTarget(
     NotificationsViewModel::class,

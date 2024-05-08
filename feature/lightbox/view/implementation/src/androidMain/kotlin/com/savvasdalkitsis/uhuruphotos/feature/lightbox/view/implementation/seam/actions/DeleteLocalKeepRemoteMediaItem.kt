@@ -25,7 +25,7 @@ import kotlinx.coroutines.flow.Flow
 
 data object DeleteLocalKeepRemoteMediaItem : LightboxAction() {
 
-    context(LightboxActionsContext) override fun handle(
+    override fun LightboxActionsContext.handle(
         state: LightboxState
     ): Flow<LightboxMutation> {
         return processMediaItem(state, process = { deleteLocal(state.currentMediaItem) }

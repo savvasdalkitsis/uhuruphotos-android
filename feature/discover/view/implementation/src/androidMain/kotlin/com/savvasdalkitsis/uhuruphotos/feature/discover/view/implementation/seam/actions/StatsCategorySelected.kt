@@ -23,7 +23,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 data object StatsCategorySelected : DiscoverAction() {
-    context(DiscoverActionsContext) override fun handle(
+    override fun DiscoverActionsContext.handle(
         state: DiscoverState
     ): Flow<Mutation<DiscoverState>> = flow {
         navigator.navigateTo(StatsNavigationRoute)

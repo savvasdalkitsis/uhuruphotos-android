@@ -7,23 +7,22 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.about.view.implementation'
 }
 
-dependencies {
-    implementation(
-            libs.about,
-            compose.material,
-            libs.androidx.compose.ui.tooling.preview,
-            libs.scrollbar,
-            project(":feature:about:view:api"),
-            project(":feature:settings:domain:api"),
-            project(":foundation:compose:api"),
-            project(":foundation:icons:api"),
-            project(":foundation:log:api:module"),
-            project(":foundation:navigation:api:module"),
-            project(":foundation:strings:api"),
-            project(":foundation:system:api:module"),
-            project(":foundation:ui:api"),
-    )
-    debugImplementation(
-            libs.androidx.compose.ui.tooling,
-    )
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation libs.about
+                implementation compose.material
+                implementation project(":feature:about:view:api")
+                implementation project(":feature:settings:domain:api")
+                implementation project(":foundation:compose:api")
+                implementation project(":foundation:icons:api")
+                implementation project(":foundation:log:api:module")
+                implementation project(":foundation:navigation:api:module")
+                implementation project(":foundation:strings:api")
+                implementation project(":foundation:system:api:module")
+                implementation project(":foundation:ui:api")
+            }
+        }
+    }
 }

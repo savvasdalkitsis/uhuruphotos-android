@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkable.SelectionM
 import kotlinx.coroutines.flow.flow
 
 data class ClusterSelectionClicked(val cluster: Cluster) : FeedAction() {
-    context(FeedActionsContext) override fun handle(
+    override fun FeedActionsContext.handle(
         state: FeedState
     ) = flow<FeedMutation> {
         val cels = cluster.cels

@@ -76,7 +76,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 
 data object LoadSettings : SettingsAction() {
-    context(SettingsActionsContext) override fun handle(
+    override fun SettingsActionsContext.handle(
         state: SettingsState
     ) = with(settingsUseCase) {
         with(settingsUIUseCase) {

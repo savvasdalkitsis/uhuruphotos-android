@@ -1,7 +1,7 @@
 plugins {
     id "android.library"
+    id "ktorfit"
     alias(libs.plugins.kotlinx.serialization)
-    alias(libs.plugins.ktorfit)
 }
 
 android {

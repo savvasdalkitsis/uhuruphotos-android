@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.processing.view.api.navigation.Pr
 import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.ui.Processing
 import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.viewmodel.ProcessingViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.ViewModelNavigationTarget
 
 object ProcessingNavigationTarget : NavigationTarget<ProcessingNavigationRoute> by ViewModelNavigationTarget(
     ProcessingViewModel::class,

@@ -26,8 +26,7 @@ import kotlinx.coroutines.flow.flow
 data class NavigateToFolder(
     val folder: LocalMediaFolder,
 ) : PortfolioAction() {
-    context(PortfolioActionsContext)
-    override fun handle(state: PortfolioState): Flow<Mutation<PortfolioState>> = flow {
+    override fun PortfolioActionsContext.handle(state: PortfolioState): Flow<Mutation<PortfolioState>> = flow {
         navigator.navigateTo(LocalAlbumNavigationRoute(folder.id))
     }
 }

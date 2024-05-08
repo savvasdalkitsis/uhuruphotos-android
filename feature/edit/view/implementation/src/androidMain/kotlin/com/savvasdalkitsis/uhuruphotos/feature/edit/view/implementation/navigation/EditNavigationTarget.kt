@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.edit.view.api.navigation.EditNavi
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.ui.Edit
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.viewmodel.EditViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.ViewModelNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode
 
 object EditNavigationTarget : NavigationTarget<EditNavigationRoute> by ViewModelNavigationTarget(

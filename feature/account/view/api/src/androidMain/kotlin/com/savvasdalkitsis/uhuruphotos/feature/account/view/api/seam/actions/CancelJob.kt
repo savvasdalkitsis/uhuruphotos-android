@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job
 import kotlinx.coroutines.flow.flow
 
 data class CancelJob(val job: Job) : AccountOverviewAction() {
-    context(AccountOverviewActionsContext) override fun handle(
+    override fun AccountOverviewActionsContext.handle(
         state: AccountOverviewState
     ) = flow<AccountOverviewMutation> {
         jobsUseCase.cancelJob(job)

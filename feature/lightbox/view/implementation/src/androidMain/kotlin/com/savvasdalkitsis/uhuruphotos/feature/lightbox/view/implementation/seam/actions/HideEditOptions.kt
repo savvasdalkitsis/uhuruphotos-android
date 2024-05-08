@@ -23,7 +23,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
 data object HideEditOptions : LightboxAction() {
-    context(LightboxActionsContext) override fun handle(
+    override fun LightboxActionsContext.handle(
         state: LightboxState
     ): Flow<Mutation<LightboxState>> = flowOf(ShowEditOptions(
         state.currentMediaItem.id,

@@ -24,7 +24,7 @@ import kotlinx.coroutines.flow.flow
 data class SelectedCel(
     val cel: CelState,
 ) : GalleryAction() {
-    context(com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContext) override fun handle(
+    override fun com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContext.handle(
         state: GalleryState
     ) = flow<GalleryMutation> {
         navigator.navigateTo(

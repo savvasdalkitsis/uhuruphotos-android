@@ -15,16 +15,14 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam
 
-import android.content.Context
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.AuthenticationLoginUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.WelcomeUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 
-internal class WelcomeActionsContext(
+class WelcomeActionsContext(
     val welcomeUseCase: WelcomeUseCase,
     val authenticationLoginUseCase: AuthenticationLoginUseCase,
     val navigator: Navigator,
     val localMediaUseCase: LocalMediaUseCase,
-    val context: Context,
 )

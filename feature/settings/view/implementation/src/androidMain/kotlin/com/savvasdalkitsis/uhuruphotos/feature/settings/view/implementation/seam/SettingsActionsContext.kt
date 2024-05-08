@@ -35,7 +35,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.system.api.usecase.SystemUseCa
 import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
 import kotlinx.coroutines.flow.flow
 
-internal class SettingsActionsContext(
+class SettingsActionsContext(
     val settingsUseCase: SettingsUseCase,
     val settingsUIUseCase: SettingsUIUseCase,
     val feedWorkScheduler: FeedWorkScheduler,

@@ -24,7 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.Ce
 import kotlinx.coroutines.flow.flow
 
 data class MemorySelected(val cel: CelState, val yearsAgo: Int) : FeedAction() {
-    context(FeedActionsContext) override fun handle(
+    override fun FeedActionsContext.handle(
         state: FeedState
     ) = flow<FeedMutation> {
         navigator.navigateTo(

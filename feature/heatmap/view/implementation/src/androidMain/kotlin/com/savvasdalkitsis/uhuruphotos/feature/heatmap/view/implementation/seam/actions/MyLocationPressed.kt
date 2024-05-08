@@ -33,7 +33,7 @@ data class MyLocationPressed(
     val mapViewState: MapViewState
 ) : HeatMapAction() {
 
-    context(HeatMapActionsContext) override fun handle(
+    override fun HeatMapActionsContext.handle(
         state: HeatMapState
     ) = flow<HeatMapMutation> {
         if (locationPermissionState.status.isGranted) {

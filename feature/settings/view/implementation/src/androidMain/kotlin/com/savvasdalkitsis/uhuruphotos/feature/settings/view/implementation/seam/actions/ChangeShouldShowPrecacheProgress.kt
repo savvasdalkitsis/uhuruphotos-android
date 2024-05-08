@@ -22,7 +22,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 data class ChangeShouldShowPrecacheProgress(val show: Boolean) : SettingsAction() {
-    context(SettingsActionsContext) override fun handle(
+    override fun SettingsActionsContext.handle(
         state: SettingsState
     ): Flow<Mutation<SettingsState>> = flow {
         settingsUIUseCase.setShouldShowPrecacheProgress(show)

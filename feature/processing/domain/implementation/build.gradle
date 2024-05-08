@@ -1,19 +1,19 @@
 plugins {
     id "android.library"
-    }
+}
 
 android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.processing.domain.implementation'
 }
 
-dependencies {
-    implementation(
-            project(":feature:processing:domain:api"),
-            project(":feature:upload:domain:api"),
-            project(":foundation:notification:api"),
-            project(":foundation:worker:api"),
-    )
-    testImplementation(
-            libs.bundles.test,
-    )
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation project(":feature:processing:domain:api")
+                implementation project(":feature:upload:domain:api")
+                implementation project(":foundation:notification:api")
+            }
+        }
+    }
 }

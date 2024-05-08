@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.navigation.HomeNavi
 import kotlinx.coroutines.flow.flow
 
 data object LogOut : AccountOverviewAction() {
-    context(AccountOverviewActionsContext) override fun handle(
+    override fun AccountOverviewActionsContext.handle(
         state: AccountOverviewState
     ) = flow {
         emit(HideLogOutConfirmation)

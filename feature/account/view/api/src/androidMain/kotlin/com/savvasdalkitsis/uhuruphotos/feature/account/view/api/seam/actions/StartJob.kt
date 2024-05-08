@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job
 import kotlinx.coroutines.flow.flow
 
 data class StartJob(val job: Job) : AccountOverviewAction() {
-    context(AccountOverviewActionsContext) override fun handle(
+    override fun AccountOverviewActionsContext.handle(
         state: AccountOverviewState
     ) = flow {
         jobsUseCase.startJob(job)

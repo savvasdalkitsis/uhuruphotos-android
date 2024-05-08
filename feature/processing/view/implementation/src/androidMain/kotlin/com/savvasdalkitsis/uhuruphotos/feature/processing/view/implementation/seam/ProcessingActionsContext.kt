@@ -20,7 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.processing.domain.api.usecase.Pro
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
 
-internal class ProcessingActionsContext(
+class ProcessingActionsContext(
     val processingUseCase: ProcessingUseCase,
     val uploadUseCase: UploadUseCase,
     val remoteMediaUseCase: RemoteMediaUseCase,

@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.s
 import kotlinx.coroutines.flow.flow
 
 data object EnrollToBiometrics : SettingsAction() {
-    context(SettingsActionsContext) override fun handle(
+    override fun SettingsActionsContext.handle(
         state: SettingsState
     ) = flow<SettingsMutation> {
         navigator.navigateTo(Intent(Settings.ACTION_SECURITY_SETTINGS))

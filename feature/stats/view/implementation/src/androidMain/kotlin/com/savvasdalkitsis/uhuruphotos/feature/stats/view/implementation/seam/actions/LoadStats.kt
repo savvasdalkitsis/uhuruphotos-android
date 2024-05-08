@@ -35,8 +35,7 @@ import kotlinx.coroutines.flow.onStart
 
 data object LoadStats : StatsAction() {
 
-    context(StatsActionsContext)
-    override fun handle(state: StatsState): Flow<Mutation<StatsState>> = channelFlow {
+    override fun StatsActionsContext.handle(state: StatsState): Flow<Mutation<StatsState>> = channelFlow {
         val allMedia = feedUseCase.observeFeed(FeedFetchType.ALL).first()
             .flatMap { it.mediaItems }
         val mediaWithDates = allMedia.filter { it.mediaDay != null }

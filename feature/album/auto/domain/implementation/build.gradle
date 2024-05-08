@@ -2,8 +2,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id "android.library"
+    id "ktorfit"
     alias(libs.plugins.kotlinx.serialization)
-    alias(libs.plugins.ktorfit)
 }
 
 android {
@@ -22,15 +22,5 @@ kotlin {
                 implementation project(":foundation:network:api")
             }
         }
-    }
-}
-
-dependencies {
-    add("kspCommonMainMetadata", libs.ktorfit.ksp)
-}
-
-tasks.withType(KotlinCompile).configureEach {
-    if (name != "kspCommonMainKotlinMetadata") {
-        dependsOn("kspCommonMainKotlinMetadata")
     }
 }

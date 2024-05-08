@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import kotlinx.coroutines.flow.flow
 
 data object ShareSelectedCels : FeedAction() {
-    context(FeedActionsContext) override fun handle(
+    override fun FeedActionsContext.handle(
         state: FeedState
     ) = flow<FeedMutation> {
         when(val serverUrl = serverUseCase.getServerUrl()) {

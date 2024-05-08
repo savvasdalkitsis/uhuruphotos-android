@@ -29,7 +29,7 @@ data class CameraViewPortChanged(
     val newBoundsChecker: suspend (LatLon) -> Boolean,
 ) : HeatMapAction() {
 
-    context(HeatMapActionsContext) override fun handle(
+    override fun HeatMapActionsContext.handle(
         state: HeatMapState
     ) = flow {
         updateVisibleMapContentJob?.cancel()

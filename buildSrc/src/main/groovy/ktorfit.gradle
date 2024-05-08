@@ -1,0 +1,9 @@
+plugins {
+    id "de.jensklingenberg.ktorfit"
+}
+
+
+dependencies {
+    add("kspCommonMainMetadata", libs.ktorfit.ksp)
+    add("kspAndroid", libs.ktorfit.ksp)
+}

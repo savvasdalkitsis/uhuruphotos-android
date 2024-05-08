@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.person.view.api.navigation.Person
 import kotlinx.coroutines.flow.flow
 
 data class PersonSelected(val person: Person) : DiscoverAction() {
-    context(DiscoverActionsContext) override fun handle(
+    override fun DiscoverActionsContext.handle(
         state: DiscoverState
     ) = flow<DiscoverMutation> {
         navigator.navigateTo(PersonNavigationRoute(person.id))

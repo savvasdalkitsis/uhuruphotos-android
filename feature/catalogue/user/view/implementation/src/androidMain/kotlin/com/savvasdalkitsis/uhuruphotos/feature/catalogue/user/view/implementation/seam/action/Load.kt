@@ -25,7 +25,7 @@ import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.merge
 
 data object Load : UserAlbumsAction() {
-    context(UserAlbumsActionsContext) override fun handle(
+    override fun UserAlbumsActionsContext.handle(
         state: UserAlbumsState
     ) = merge(
         userAlbumsUseCase.observeUserAlbums()

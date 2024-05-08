@@ -19,7 +19,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.module.AuthModule
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.module.LocalMediaModule
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.module.WelcomeModule
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam.WelcomeActionsContext
-import com.savvasdalkitsis.uhuruphotos.foundation.android.api.module.AndroidModule
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.module.NavigationModule
 
 internal object WelcomeModule {
@@ -29,6 +28,5 @@ internal object WelcomeModule {
         AuthModule.authenticationLoginUseCase,
         NavigationModule.navigator,
         LocalMediaModule.localMediaUseCase,
-        AndroidModule.applicationContext,
     )
 }

@@ -26,7 +26,7 @@ import kotlinx.coroutines.flow.flow
 
 data class SetFavourite(val favourite: Boolean) : LightboxAction() {
 
-    context(LightboxActionsContext) override fun handle(
+    override fun LightboxActionsContext.handle(
         state: LightboxState
     ) = flow {
         mediaUseCase.setMediaItemFavourite(state.currentMediaItem.id, favourite)

@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.log.api.usecase.FeedbackUseCas
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
 
-internal class ServerActionsContext(
+class ServerActionsContext(
     val serverUseCase: ServerUseCase,
     val authenticationLoginUseCase: AuthenticationLoginUseCase,
     val settingsUseCase: SettingsUseCase,

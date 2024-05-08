@@ -23,7 +23,7 @@ import kotlinx.coroutines.flow.flow
 
 data class FullMediaDataLoaded(val mediaItemState: SingleMediaItemState) : LightboxAction() {
 
-    context(LightboxActionsContext) override fun handle(
+    override fun LightboxActionsContext.handle(
         state: LightboxState
     ) = flow<LightboxMutation> {
         val serverUrl = serverUseCase.getServerUrl()

@@ -31,7 +31,7 @@ data class Login(
     val allowUnsecuredServers: Boolean,
     val rememberCredentials: Boolean = false,
 ) : ServerAction() {
-    context(ServerActionsContext) override fun handle(
+    override fun ServerActionsContext.handle(
         state: ServerState
     ) = flow {
         if (!state.allowLogin) {

@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
-internal class SelectionList() {
+class SelectionList() {
 
     private var selectedIds = MutableStateFlow(emptySet<String>())
 

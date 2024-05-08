@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.notifications.view.implementatio
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.domain.api.usecase.NotificationsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 
-internal class NotificationsActionsContext(
+class NotificationsActionsContext(
     val notificationsUseCase: NotificationsUseCase,
     val navigator: Navigator,
 )

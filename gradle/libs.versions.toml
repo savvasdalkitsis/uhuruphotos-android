@@ -25,6 +25,7 @@ resaca = "3.2.0"
 result = "2.0.0"
 resources = "0.24.0-beta-3"
 sqldelight = "2.0.2"
+viewmodel = "0.7.1"
 
 [plugins]
 about = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "about" }
@@ -159,7 +160,6 @@ result = { module = "com.michael-bull.kotlin-result:kotlin-result", version.ref 
 result-coroutines = { module = "com.michael-bull.kotlin-result:kotlin-result-coroutines", version.ref = "result" }
 resources-core = { module = "dev.icerock.moko:resources", version.ref = "resources" }
 resources-compose = { module = "dev.icerock.moko:resources-compose", version.ref = "resources" }
-scrollbar = "com.github.nanihadesuka:LazyColumnScrollbar:1.9.0"
 seeker = "io.github.2307vivek:seeker:1.2.2"
 shazamcrest = "com.shazam:shazamcrest:0.11"
 sqldelight-adapters = { module = "app.cash.sqldelight:primitive-adapters", version.ref = "sqldelight" }
@@ -173,6 +173,8 @@ turbine = "app.cash.turbine:turbine:1.0.0"
 urlvalidator = "commons-validator:commons-validator:1.8.0"
 vico = "com.patrykandpatrick.vico:compose-m2:1.9.2"
 videocache = "com.github.Andrew0000:Android-VideoView-cache:1.0.15"
+viewmodel-core = { module = "io.github.hoc081098:kmp-viewmodel", version.ref = "viewmodel" }
+viewmodel-compose = { module = "io.github.hoc081098:kmp-viewmodel-compose", version.ref = "viewmodel" }
 zoomable = "com.mxalbert.zoomable:zoomable:1.6.1"
 
 [bundles]
@@ -221,4 +223,8 @@ test = [
     "mockk",
     "shazamcrest",
     "turbine",
+]
+viewmodel = [
+    "viewmodel-core",
+    "viewmodel-compose",
 ]

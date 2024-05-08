@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.server.view.api.navigation.Server
 import kotlinx.coroutines.flow.flow
 
 data object LogIn : AccountOverviewAction() {
-    context(AccountOverviewActionsContext) override fun handle(
+    override fun AccountOverviewActionsContext.handle(
         state: AccountOverviewState
     ) = flow<AccountOverviewMutation> {
         navigator.navigateTo(ServerNavigationRoute)

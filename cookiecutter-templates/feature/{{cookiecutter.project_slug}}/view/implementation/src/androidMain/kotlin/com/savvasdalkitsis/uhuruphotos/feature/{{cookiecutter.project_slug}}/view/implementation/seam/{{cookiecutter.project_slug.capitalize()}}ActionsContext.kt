@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.{{cookiecutter.project_slug}}.vi
 import com.savvasdalkitsis.uhuruphotos.feature.{{cookiecutter.project_slug}}.domain.api.usecase.{{cookiecutter.project_slug.capitalize()}}UseCase
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 
-internal class {{cookiecutter.project_slug.capitalize()}}ActionsContext(
+class {{cookiecutter.project_slug.capitalize()}}ActionsContext(
     val {{cookiecutter.project_slug}}UseCase: {{cookiecutter.project_slug.capitalize()}}UseCase,
     val settingsUseCase: SettingsUseCase,
 )

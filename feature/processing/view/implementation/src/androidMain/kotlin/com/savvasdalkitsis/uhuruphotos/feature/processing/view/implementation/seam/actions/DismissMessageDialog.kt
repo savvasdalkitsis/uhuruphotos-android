@@ -9,8 +9,7 @@ import kotlinx.coroutines.flow.flowOf
 
 data object DismissMessageDialog : ProcessingAction() {
 
-    context(ProcessingActionsContext)
-    override fun handle(state: ProcessingState): Flow<Mutation<ProcessingState>> =
+    override fun ProcessingActionsContext.handle(state: ProcessingState): Flow<Mutation<ProcessingState>> =
         flowOf(ProcessingMutation.DismissMessageDialog)
 
 }

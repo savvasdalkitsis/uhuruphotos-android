@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.naviga
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.api.navigation.TrashNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.viewmodel.TrashViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.ViewModelNavigationTarget
 
 object TrashNavigationTarget : NavigationTarget<TrashNavigationRoute> by ViewModelNavigationTarget(
     TrashViewModel::class,

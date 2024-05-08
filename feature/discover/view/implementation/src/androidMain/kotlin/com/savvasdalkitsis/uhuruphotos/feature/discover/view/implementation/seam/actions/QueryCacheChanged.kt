@@ -22,7 +22,7 @@ import kotlinx.coroutines.flow.flow
 import java.util.*
 
 data object QueryCacheChanged : DiscoverAction() {
-    context(DiscoverActionsContext) override fun handle(
+    override fun DiscoverActionsContext.handle(
         state: DiscoverState
     ) = flow<DiscoverMutation> {
         emit(DiscoverMutation.BustQueryCache(UUID.randomUUID().toString()))

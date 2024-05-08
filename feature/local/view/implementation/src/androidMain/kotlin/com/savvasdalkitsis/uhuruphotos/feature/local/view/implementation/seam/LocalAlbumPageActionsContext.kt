@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.local.domain.api.usecase.LocalAlb
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
 import kotlinx.coroutines.flow.map
 
-internal class LocalAlbumPageActionsContext(
+class LocalAlbumPageActionsContext(
     localAlbumUseCase: LocalAlbumUseCase,
     galleryActionsContextFactory: GalleryActionsContextFactory,
 ) {

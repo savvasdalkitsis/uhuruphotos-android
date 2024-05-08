@@ -10,17 +10,15 @@ android {
 
 kotlin {
     sourceSets {
-        androidMain {
-            dependencies {
-                api libs.appyx.backstack
-                api libs.appyx.navigation
-            }
-        }
         commonMain {
             dependencies {
                 api libs.appyx.backstack
                 api libs.appyx.navigation
+                api libs.bundles.viewmodel
                 api project(':foundation:initializer:api')
+                api project(":foundation:log:api")
+                api project(":foundation:seam:api")
+                api project(":foundation:theme:api")
             }
         }
     }
@@ -33,8 +31,5 @@ dependencies {
             libs.kotlin.reflect,
             libs.appyx.backstack,
             libs.appyx.navigation,
-            project(":foundation:log:api"),
-            project(":foundation:seam:api"),
-            project(":foundation:theme:api"),
     )
 }

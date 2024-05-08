@@ -35,7 +35,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
 
-internal class HiddenPhotosAlbumPageActionsContext(
+class HiddenPhotosAlbumPageActionsContext(
     mediaUseCase: MediaUseCase,
     hiddenMediaUseCase: HiddenMediaUseCase,
     settingsUseCase: SettingsUseCase,

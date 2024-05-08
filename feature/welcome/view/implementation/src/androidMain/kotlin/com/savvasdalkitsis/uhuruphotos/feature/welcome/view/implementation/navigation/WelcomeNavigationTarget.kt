@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.api.navigation.Welco
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.ui.Welcome
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.viewmodel.WelcomeViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.ViewModelNavigationTarget
 
 object WelcomeNavigationTarget : NavigationTarget<WelcomeNavigationRoute> by ViewModelNavigationTarget(
     WelcomeViewModel::class,

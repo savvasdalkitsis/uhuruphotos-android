@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.navigation.FeedNavi
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.Feed
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.viewmodel.FeedViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.ViewModelNavigationTarget
 
 object FeedNavigationTarget : NavigationTarget<FeedNavigationRoute> by ViewModelNavigationTarget(
     FeedViewModel::class,

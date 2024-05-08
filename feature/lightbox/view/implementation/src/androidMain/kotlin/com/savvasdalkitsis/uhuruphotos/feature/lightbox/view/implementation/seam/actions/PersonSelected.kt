@@ -24,7 +24,7 @@ import kotlinx.coroutines.flow.flow
 
 data class PersonSelected(val person: Person) : LightboxAction() {
 
-    context(LightboxActionsContext) override fun handle(
+    override fun LightboxActionsContext.handle(
         state: LightboxState
     ) = flow<LightboxMutation> {
         navigator.navigateTo(PersonNavigationRoute(person.id))

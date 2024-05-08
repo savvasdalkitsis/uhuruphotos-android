@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.uploads.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.domain.api.usecase.UploadsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkPruneUseCase
 
-internal class UploadsActionsContext(
+class UploadsActionsContext(
     val uploadsUseCase: UploadsUseCase,
     val workPruneUseCase: WorkPruneUseCase,
 )

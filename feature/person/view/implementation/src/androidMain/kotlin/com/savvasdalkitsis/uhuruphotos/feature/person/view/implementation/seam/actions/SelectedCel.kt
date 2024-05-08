@@ -24,7 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.ui.sta
 import kotlinx.coroutines.flow.flow
 
 data class SelectedCel(val cel: CelState) : PersonAction() {
-    context(PersonActionsContext) override fun handle(
+    override fun PersonActionsContext.handle(
         state: PersonState
     ) = flow<PersonMutation> {
         navigator.navigateTo(

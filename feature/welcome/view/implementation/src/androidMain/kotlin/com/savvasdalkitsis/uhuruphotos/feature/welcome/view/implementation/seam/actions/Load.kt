@@ -30,8 +30,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 
 data object Load : WelcomeAction() {
-    context(WelcomeActionsContext)
-    override fun handle(state: WelcomeState): Flow<Mutation<WelcomeState>> = merge(
+    override fun WelcomeActionsContext.handle(state: WelcomeState): Flow<Mutation<WelcomeState>> = merge(
         flowOf(SetLoading(true)),
         welcomeUseCase.observeWelcomeStatus().map { status ->
             if (!status.hasLocalAccess) {

@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.auth.view.api.navigation.WebLogin
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.ui.WebLogin
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.viewmodel.WebLoginViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.ViewModelNavigationTarget
 
 object WebLoginNavigationTarget : NavigationTarget<WebLoginNavigationRoute> by ViewModelNavigationTarget(
     WebLoginViewModel::class,

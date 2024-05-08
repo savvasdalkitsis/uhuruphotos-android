@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.Lo
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.domain.api.usecase.PortfolioUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 
-internal class PortfolioActionsContext(
+class PortfolioActionsContext(
     val portfolioUseCase: PortfolioUseCase,
     val localMediaUseCase: LocalMediaUseCase,
     val navigator: Navigator,

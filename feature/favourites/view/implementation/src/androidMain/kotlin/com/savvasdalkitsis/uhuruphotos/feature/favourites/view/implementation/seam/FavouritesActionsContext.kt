@@ -29,7 +29,7 @@ import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
 
-internal class FavouritesActionsContext(
+class FavouritesActionsContext(
     mediaUseCase: MediaUseCase,
     favouritesUseCase: FavouritesUseCase,
     galleryActionsContextFactory: GalleryActionsContextFactory,

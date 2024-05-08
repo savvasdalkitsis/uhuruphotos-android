@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.api.navigation.HeatM
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.HeatMap
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.viewmodel.HeatMapViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.ViewModelNavigationTarget
 
 object HeatMapNavigationTarget : NavigationTarget<HeatMapNavigationRoute> by ViewModelNavigationTarget(
     HeatMapViewModel::class,

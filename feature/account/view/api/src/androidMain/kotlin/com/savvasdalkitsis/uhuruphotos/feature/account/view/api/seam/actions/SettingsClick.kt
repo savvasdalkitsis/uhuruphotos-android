@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.api.navigation.Sett
 import kotlinx.coroutines.flow.flow
 
 data object SettingsClick : AccountOverviewAction() {
-    context(AccountOverviewActionsContext) override fun handle(
+    override fun AccountOverviewActionsContext.handle(
         state: AccountOverviewState
     ) = flow {
         emit(HideAccountOverview)

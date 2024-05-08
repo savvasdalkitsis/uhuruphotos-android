@@ -26,9 +26,17 @@ import com.savvasdalkitsis.uhuruphotos.foundation.inject.api.singleInstance
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.usecase.FeedbackUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.implementation.initializer.LogInitializer
 
-object LogModule {
+actual object LogModule {
 
-    val logInitializer: ApplicationCallbacks by singleInstance {
+    actual val feedbackUseCase: FeedbackUseCase
+        get() = com.savvasdalkitsis.uhuruphotos.foundation.log.implementation.FeedbackUseCase(
+            AndroidModule.applicationContext,
+            loggerSetup,
+            SettingsModule.settingsUseCase,
+            SettingsUiModule.settingsUiUseCase,
+        )
+
+    actual val logInitializer: ApplicationCallbacks by singleInstance {
         LogInitializer(
             fileTree,
             LogExtraModule.consoleTree,
@@ -37,14 +45,6 @@ object LogModule {
             SettingsModule.settingsUseCase,
         )
     }
-
-    val feedbackUseCase: FeedbackUseCase
-        get() = com.savvasdalkitsis.uhuruphotos.foundation.log.implementation.FeedbackUseCase(
-            AndroidModule.applicationContext,
-            loggerSetup,
-            SettingsModule.settingsUseCase,
-            SettingsUiModule.settingsUiUseCase,
-        )
 
     private val loggerSetup: FileLoggerSetup by singleInstance {
         FileLoggerSetup.Daily.create(

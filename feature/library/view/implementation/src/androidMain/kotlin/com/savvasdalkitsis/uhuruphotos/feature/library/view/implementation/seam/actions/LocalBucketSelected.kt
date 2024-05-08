@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Loca
 import kotlinx.coroutines.flow.flow
 
 data class LocalBucketSelected(val bucket: LocalMediaFolder) : LibraryAction() {
-    context(LibraryActionsContext) override fun handle(
+    override fun LibraryActionsContext.handle(
         state: LibraryState
     ) = flow<LibraryMutation> {
         navigator.navigateTo(LocalAlbumNavigationRoute(bucket.id))

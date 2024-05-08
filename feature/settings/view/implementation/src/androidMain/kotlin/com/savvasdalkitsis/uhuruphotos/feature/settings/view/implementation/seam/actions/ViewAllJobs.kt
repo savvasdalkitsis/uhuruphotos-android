@@ -23,8 +23,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 data object ViewAllJobs : SettingsAction() {
-    context(SettingsActionsContext)
-    override fun handle(state: SettingsState): Flow<Mutation<SettingsState>> = flow {
+    override fun SettingsActionsContext.handle(state: SettingsState): Flow<Mutation<SettingsState>> = flow {
         navigator.navigateTo(UploadsNavigationRoute)
     }
 

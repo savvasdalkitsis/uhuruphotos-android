@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.Ce
 import kotlinx.coroutines.flow.flow
 
 data class CelLongPressed(val celState: CelState) : FeedAction() {
-    context(FeedActionsContext) override fun handle(
+    override fun FeedActionsContext.handle(
         state: FeedState
     ) = flow<FeedMutation> {
         if (state.selectedCelCount == 0) {

@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.search.view.api.navigation.Search
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.Search
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.viewmodel.SearchViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.ViewModelNavigationTarget
 
 object SearchNavigationTarget : NavigationTarget<SearchNavigationRoute> by ViewModelNavigationTarget(
     SearchViewModel::class,

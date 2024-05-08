@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.api.navigation.HeatM
 import kotlinx.coroutines.flow.flow
 
 data object LoadHeatMap : DiscoverAction() {
-    context(DiscoverActionsContext) override fun handle(
+    override fun DiscoverActionsContext.handle(
         state: DiscoverState
     ) = flow<DiscoverMutation> {
         navigator.navigateTo(HeatMapNavigationRoute)

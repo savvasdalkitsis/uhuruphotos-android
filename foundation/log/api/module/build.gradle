@@ -11,6 +11,7 @@ kotlin {
         commonMain {
             dependencies {
                 api project(":foundation:log:api")
+                api project(":foundation:initializer:api")
                 implementation project(":foundation:inject:api")
                 implementation project(":foundation:log:implementation")
             }

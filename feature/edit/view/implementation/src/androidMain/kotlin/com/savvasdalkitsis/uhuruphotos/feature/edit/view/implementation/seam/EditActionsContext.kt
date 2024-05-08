@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.Lo
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
 
-internal class EditActionsContext(
+class EditActionsContext(
     val toaster: ToasterUseCase,
     val localMediaUseCase: LocalMediaUseCase,
     val navigator: Navigator,

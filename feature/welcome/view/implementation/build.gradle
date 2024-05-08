@@ -22,7 +22,6 @@ dependencies {
             project(":feature:settings:domain:api"),
             project(":feature:welcome:domain:api:module"),
             project(":feature:welcome:view:api"),
-            project(":foundation:android:api:module"),
             project(":foundation:icons:api"),
             project(":foundation:navigation:api:module"),
             project(":foundation:permissions:api"),

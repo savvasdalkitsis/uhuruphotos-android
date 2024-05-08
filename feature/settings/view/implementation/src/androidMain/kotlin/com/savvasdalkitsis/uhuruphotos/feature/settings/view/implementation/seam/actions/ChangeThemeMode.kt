@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode
 import kotlinx.coroutines.flow.flow
 
 data class ChangeThemeMode(val themeMode: ThemeMode) : SettingsAction() {
-    context(SettingsActionsContext) override fun handle(
+    override fun SettingsActionsContext.handle(
         state: SettingsState
     ) = flow<SettingsMutation> {
         settingsUIUseCase.setThemeMode(themeMode)

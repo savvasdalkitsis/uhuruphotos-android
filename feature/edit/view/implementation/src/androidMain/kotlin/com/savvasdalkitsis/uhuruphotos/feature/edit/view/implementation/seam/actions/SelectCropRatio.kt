@@ -27,7 +27,7 @@ data class SelectCropRatio(
     val ratio: CropRatio,
 ) : EditAction() {
 
-    context(EditActionsContext) override fun handle(
+    override fun EditActionsContext.handle(
         state: EditState
     ): Flow<Mutation<EditState>> = flowOf(EditMutation.SelectCropRatio(ratio))
 

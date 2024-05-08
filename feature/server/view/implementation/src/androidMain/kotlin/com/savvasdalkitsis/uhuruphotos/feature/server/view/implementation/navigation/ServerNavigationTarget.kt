@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.server.view.api.navigation.Server
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.ui.Server
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.viewmodel.ServerViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.ViewModelNavigationTarget
 
 object ServerNavigationTarget : NavigationTarget<ServerNavigationRoute> by ViewModelNavigationTarget(
     ServerViewModel::class,

@@ -18,18 +18,25 @@ package com.savvasdalkitsis.uhuruphotos.foundation.navigation.implementation
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ExternalNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ExternalNavigator
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
 
 class IntentLauncher(
     private val context: Context,
     private val toasterUseCase: ToasterUseCase,
-) {
+) : ExternalNavigator {
 
-    fun launch(intent: Intent) {
+    override fun navigateToWeb(webUrl: String) {
+        navigateTo(Intent(Intent.ACTION_VIEW, Uri.parse(webUrl)))
+    }
+
+    override fun navigateTo(externalTarget: ExternalNavigationTarget) {
         try {
-            context.startActivity(intent.apply {
+            context.startActivity(externalTarget.apply {
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             })
         } catch (e: ActivityNotFoundException) {
@@ -37,14 +44,18 @@ class IntentLauncher(
             toasterUseCase.show(strings.could_not_find_app_to_open)
         }
     }
-    fun launch(intent: Intent, fallbackIntent: Intent) {
+
+    override fun navigateTo(
+        externalTarget: ExternalNavigationTarget,
+        fallbackExternalTarget: ExternalNavigationTarget,
+    ) {
         try {
-            context.startActivity(intent.apply {
+            context.startActivity(externalTarget.apply {
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             })
         } catch (e: ActivityNotFoundException) {
             log(e)
-            launch(fallbackIntent)
+            navigateTo(fallbackExternalTarget)
         }
     }
 

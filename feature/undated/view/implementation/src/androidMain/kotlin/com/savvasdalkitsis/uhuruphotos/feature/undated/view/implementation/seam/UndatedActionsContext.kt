@@ -28,7 +28,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.map
 
-internal class UndatedActionsContext(
+class UndatedActionsContext(
     undatedUseCase: UndatedUseCase,
     feedUseCase: FeedUseCase,
     galleryActionsContextFactory: GalleryActionsContextFactory,

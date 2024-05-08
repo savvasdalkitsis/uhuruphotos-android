@@ -32,7 +32,7 @@ import kotlinx.coroutines.flow.flow
 
 data class UploadToServer(val mediaItemState: SingleMediaItemState) : LightboxAction() {
 
-    context(LightboxActionsContext) override fun handle(
+    override fun LightboxActionsContext.handle(
         state: LightboxState,
     ) = flow {
         val id = mediaItemState.id.findLocals.firstOrNull()

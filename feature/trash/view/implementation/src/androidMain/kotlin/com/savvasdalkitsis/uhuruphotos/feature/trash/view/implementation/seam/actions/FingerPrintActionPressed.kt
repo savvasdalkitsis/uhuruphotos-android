@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.state.T
 import kotlinx.coroutines.flow.flow
 
 data object FingerPrintActionPressed : TrashAction() {
-    context(TrashActionsContext) override fun handle(
+    override fun TrashActionsContext.handle(
         state: TrashState
     ) = flow<TrashMutation> {
         navigator.navigateTo(SettingsNavigationRoute)

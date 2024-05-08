@@ -23,7 +23,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 data class SearchCaptionSelected(val caption: String) : LightboxAction() {
-    context(LightboxActionsContext) override fun handle(
+    override fun LightboxActionsContext.handle(
         state: LightboxState
     ): Flow<Mutation<LightboxState>> = flow {
         navigator.navigateTo(SearchNavigationRoute(caption))

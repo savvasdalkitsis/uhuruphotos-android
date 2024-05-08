@@ -21,7 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.state.T
 import kotlinx.coroutines.flow.map
 
 data object Load : TrashAction() {
-    context(TrashActionsContext) override fun handle(
+    override fun TrashActionsContext.handle(
         state: TrashState
     ) = settingsUseCase.observeBiometricsRequiredForTrashAccess()
         .map { required ->

@@ -21,7 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.get
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
 
-internal class UserAlbumDisplay(
+class UserAlbumDisplay(
     private val preferences: Preferences,
 ) {
 

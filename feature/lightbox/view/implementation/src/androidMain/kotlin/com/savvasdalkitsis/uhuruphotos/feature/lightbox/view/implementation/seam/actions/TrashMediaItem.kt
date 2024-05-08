@@ -27,7 +27,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.s
 
 data object TrashMediaItem : LightboxAction() {
 
-    context(LightboxActionsContext) override fun handle(
+    override fun LightboxActionsContext.handle(
         state: LightboxState
     ) = processAndRemoveMediaItem(state) {
         val mediaItem = state.currentMediaItem

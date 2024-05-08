@@ -21,8 +21,8 @@ interface Navigator {
     var backStack: BackStack<NavigationRoute>
 
     fun navigateToWeb(webUrl: String)
-    fun navigateTo(intent: CommonIntent)
-    fun navigateTo(intent: CommonIntent, fallbackIntent: CommonIntent)
+    fun navigateTo(externalTarget: ExternalNavigationTarget)
+    fun navigateTo(externalTarget: ExternalNavigationTarget, fallbackExternalTarget: ExternalNavigationTarget)
     fun <R : NavigationRoute> navigateTo(route: R)
     fun <R : NavigationRoute> newRoot(route: R)
     fun navigateBack()

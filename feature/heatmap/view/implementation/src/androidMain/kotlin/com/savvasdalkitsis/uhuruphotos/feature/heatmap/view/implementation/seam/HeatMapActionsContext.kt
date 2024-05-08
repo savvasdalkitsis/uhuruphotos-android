@@ -29,7 +29,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
 import kotlinx.coroutines.Deferred
 
-internal class HeatMapActionsContext(
+class HeatMapActionsContext(
     val feedUseCase: FeedUseCase,
     val feedWorkScheduler: FeedWorkScheduler,
     val mediaUseCase: MediaUseCase,

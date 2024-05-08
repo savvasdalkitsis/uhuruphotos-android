@@ -27,7 +27,7 @@ import kotlinx.coroutines.flow.flow
 
 data object EditMediaItem : LightboxAction() {
 
-    context(LightboxActionsContext) override fun handle(
+    override fun LightboxActionsContext.handle(
         state: LightboxState
     ) = flow<LightboxMutation> {
         val intent = Intent(ACTION_EDIT).apply {

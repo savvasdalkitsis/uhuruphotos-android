@@ -28,7 +28,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.map
 
-internal class VideosActionsContext(
+class VideosActionsContext(
     videosUseCase: VideosUseCase,
     feedUseCase: FeedUseCase,
     galleryActionsContextFactory: GalleryActionsContextFactory,

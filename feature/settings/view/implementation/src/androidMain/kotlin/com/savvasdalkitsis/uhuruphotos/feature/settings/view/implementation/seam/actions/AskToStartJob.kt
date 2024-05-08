@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.s
 import kotlinx.coroutines.flow.flowOf
 
 data class AskToStartJob(val job: Job) : SettingsAction() {
-    context(SettingsActionsContext) override fun handle(
+    override fun SettingsActionsContext.handle(
         state: SettingsState
     ) = flowOf(ShowJobStartDialog(job))
 }

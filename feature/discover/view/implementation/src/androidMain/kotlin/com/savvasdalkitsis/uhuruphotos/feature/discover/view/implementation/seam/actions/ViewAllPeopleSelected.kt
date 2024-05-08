@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.navigation.People
 import kotlinx.coroutines.flow.flow
 
 data object ViewAllPeopleSelected : DiscoverAction() {
-    context(DiscoverActionsContext) override fun handle(
+    override fun DiscoverActionsContext.handle(
         state: DiscoverState
     ) = flow<DiscoverMutation> {
         navigator.navigateTo(PeopleNavigationRoute)

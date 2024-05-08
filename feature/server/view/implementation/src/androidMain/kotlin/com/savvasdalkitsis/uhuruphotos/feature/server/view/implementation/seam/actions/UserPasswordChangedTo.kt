@@ -22,7 +22,7 @@ import dev.zacsweers.redacted.annotations.Redacted
 import kotlinx.coroutines.flow.flowOf
 
 data class UserPasswordChangedTo(@Redacted val password: String) : ServerAction() {
-    context(ServerActionsContext) override fun handle(
+    override fun ServerActionsContext.handle(
         state: ServerState
     ) = flowOf(ChangePasswordTo(password))
 }

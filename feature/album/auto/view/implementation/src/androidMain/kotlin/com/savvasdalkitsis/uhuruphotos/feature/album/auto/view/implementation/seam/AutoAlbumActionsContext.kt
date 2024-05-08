@@ -34,7 +34,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.mapNotNull
 
-internal class AutoAlbumActionsContext(
+class AutoAlbumActionsContext(
     autoAlbumUseCase: AutoAlbumUseCase,
     serverUseCase: ServerUseCase,
     dateDisplayer: DateDisplayer,

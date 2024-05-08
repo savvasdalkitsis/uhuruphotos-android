@@ -21,7 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.Gallery
 import kotlinx.coroutines.flow.flow
 
 data class ChangeGallerySorting(val sorting: GallerySorting) : GalleryAction() {
-    context(com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContext) override fun handle(
+    override fun com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContext.handle(
         state: GalleryState
     ) = flow<GalleryMutation> {
         setSorting(sorting)

@@ -23,8 +23,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 data object ReScanLocalMedia : SettingsAction() {
-    context(SettingsActionsContext)
-    override fun handle(state: SettingsState): Flow<Mutation<SettingsState>> = flow {
+    override fun SettingsActionsContext.handle(state: SettingsState): Flow<Mutation<SettingsState>> = flow {
         localMediaUseCase.clearAll()
         localMediaWorkScheduler.scheduleLocalMediaSyncNowIfNotRunning()
         toaster.show(strings.scanning_local_media)

@@ -22,7 +22,7 @@ import kotlinx.coroutines.flow.flow
 
 data object ToggleUI : LightboxAction() {
 
-    context(LightboxActionsContext) override fun handle(
+    override fun LightboxActionsContext.handle(
         state: LightboxState
     ) = flow {
         if (state.showUI) {

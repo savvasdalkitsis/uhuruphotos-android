@@ -29,7 +29,7 @@ import kotlinx.coroutines.flow.flow
 
 data object AskForSelectedPhotosTrashing : FeedAction() {
 
-    context(FeedActionsContext) override fun handle(
+    override fun FeedActionsContext.handle(
         state: FeedState
     ) = flow {
         when (state.selectedCels.syncStates) {

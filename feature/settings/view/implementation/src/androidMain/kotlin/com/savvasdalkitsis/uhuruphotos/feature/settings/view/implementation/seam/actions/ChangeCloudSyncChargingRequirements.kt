@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import kotlinx.coroutines.flow.flow
 
 data class ChangeCloudSyncChargingRequirements(val requiredCharging: Boolean) : SettingsAction() {
-    context(SettingsActionsContext) override fun handle(
+    override fun SettingsActionsContext.handle(
         state: SettingsState
     ) = flow<SettingsMutation> {
         settingsUseCase.setCloudSyncRequiresCharging(requiredCharging)

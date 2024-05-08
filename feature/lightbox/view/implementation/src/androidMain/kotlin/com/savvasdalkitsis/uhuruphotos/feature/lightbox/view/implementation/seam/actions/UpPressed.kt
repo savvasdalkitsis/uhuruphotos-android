@@ -22,7 +22,7 @@ import kotlinx.coroutines.flow.flow
 
 data object UpPressed : LightboxAction() {
 
-    context(LightboxActionsContext) override fun handle(
+    override fun LightboxActionsContext.handle(
         state: LightboxState
     ) = flow<LightboxMutation> {
         uiUseCase.setSystemBarsVisibility(true)

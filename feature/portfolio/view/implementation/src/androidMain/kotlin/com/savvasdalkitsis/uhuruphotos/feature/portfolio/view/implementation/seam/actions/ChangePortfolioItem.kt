@@ -26,8 +26,7 @@ data class ChangePortfolioItem(
     val folder: LocalMediaFolder,
     val published: Boolean,
 ) : PortfolioAction() {
-    context(PortfolioActionsContext)
-    override fun handle(state: PortfolioState): Flow<Mutation<PortfolioState>> = flow {
+    override fun PortfolioActionsContext.handle(state: PortfolioState): Flow<Mutation<PortfolioState>> = flow {
         portfolioUseCase.setPortfolioFolderPublished(folder.id, published)
     }
 }

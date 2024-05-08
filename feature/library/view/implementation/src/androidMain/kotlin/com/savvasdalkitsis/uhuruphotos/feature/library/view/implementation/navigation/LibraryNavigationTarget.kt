@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.library.view.api.navigation.Libra
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.Library
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.viewmodel.LibraryViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.ViewModelNavigationTarget
 
 object LibraryNavigationTarget : NavigationTarget<LibraryNavigationRoute> by ViewModelNavigationTarget(
     LibraryViewModel::class,

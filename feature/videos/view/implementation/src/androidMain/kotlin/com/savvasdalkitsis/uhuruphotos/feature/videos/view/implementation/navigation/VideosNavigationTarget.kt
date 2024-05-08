@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.videos.view.api.navigation.Videos
 import com.savvasdalkitsis.uhuruphotos.feature.videos.view.implementation.ui.Videos
 import com.savvasdalkitsis.uhuruphotos.feature.videos.view.implementation.viewmodel.VideosViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.ViewModelNavigationTarget
 
 object VideosNavigationTarget : NavigationTarget<VideosNavigationRoute> by ViewModelNavigationTarget(
     VideosViewModel::class,

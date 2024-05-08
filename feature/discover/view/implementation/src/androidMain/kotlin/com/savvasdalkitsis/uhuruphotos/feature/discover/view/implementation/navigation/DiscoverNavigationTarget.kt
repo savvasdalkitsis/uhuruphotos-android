@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.discover.view.api.navigation.Disc
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.DiscoverPage
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.viewmodel.DiscoverViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.ViewModelNavigationTarget
 
 object DiscoverNavigationTarget : NavigationTarget<DiscoverNavigationRoute> by ViewModelNavigationTarget(
     DiscoverViewModel::class,

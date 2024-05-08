@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.favourites.view.api.navigation.Fa
 import com.savvasdalkitsis.uhuruphotos.feature.favourites.view.implementation.viewmodel.FavouritesViewModel
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.Gallery
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.ViewModelNavigationTarget
 
 object FavouritesNavigationTarget : NavigationTarget<FavouritesNavigationRoute> by ViewModelNavigationTarget(
     FavouritesViewModel::class,

@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.local.view.api.navigation.LocalAl
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.ui.LocalAlbumPage
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.viewmodel.LocalAlbumViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.ViewModelNavigationTarget
 
 object LocalAlbumNavigationTarget : NavigationTarget<LocalAlbumNavigationRoute> by ViewModelNavigationTarget(
     LocalAlbumViewModel::class,

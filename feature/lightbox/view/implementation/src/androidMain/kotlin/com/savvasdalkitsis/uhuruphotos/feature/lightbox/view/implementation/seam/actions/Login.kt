@@ -24,8 +24,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 data object Login : LightboxAction() {
-    context(LightboxActionsContext)
-    override fun handle(state: LightboxState): Flow<Mutation<LightboxState>> = flow {
+    override fun LightboxActionsContext.handle(state: LightboxState): Flow<Mutation<LightboxState>> = flow {
         emit(ShowUpsellDialog(false))
         navigator.navigateTo(ServerNavigationRoute)
     }

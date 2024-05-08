@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.Welcom
 import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.usecase.BiometricsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 
-internal class HomeActionsContext(
+class HomeActionsContext(
     val authenticationUseCase: AuthenticationUseCase,
     val settingsUseCase: SettingsUseCase,
     val biometricsUseCase: BiometricsUseCase,

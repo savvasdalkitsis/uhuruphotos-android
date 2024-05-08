@@ -21,7 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.ui.Ser
 import kotlinx.coroutines.flow.flow
 
 data class SetLoggingEnabled(val enabled: Boolean) : ServerAction() {
-    context(ServerActionsContext) override fun handle(
+    override fun ServerActionsContext.handle(
         state: ServerState
     ) = flow<ServerMutation> {
         settingsUseCase.setLoggingEnabled(enabled)

@@ -21,7 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.st
 import kotlinx.coroutines.flow.flow
 
 data object StartScanningOtherFolders : LibraryAction() {
-    context(LibraryActionsContext) override fun handle(
+    override fun LibraryActionsContext.handle(
         state: LibraryState
     ) = flow<LibraryMutation> {
         localMediaUseCase.startScanningOtherFolders()

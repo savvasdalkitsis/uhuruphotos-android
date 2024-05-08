@@ -23,8 +23,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
 data class ChangeRememberCredentials(val remember: Boolean) : ServerAction() {
-    context(ServerActionsContext)
-    override fun handle(state: ServerState): Flow<Mutation<ServerState>> = flowOf(
+    override fun ServerActionsContext.handle(state: ServerState): Flow<Mutation<ServerState>> = flowOf(
         SetRememberCredentials(remember)
     )
 }

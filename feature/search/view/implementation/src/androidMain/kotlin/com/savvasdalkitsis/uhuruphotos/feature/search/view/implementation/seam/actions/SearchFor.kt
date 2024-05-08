@@ -35,7 +35,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.mapNotNull
 
 data class SearchFor(val query: String) : SearchAction() {
-    context(SearchActionsContext) override fun handle(
+    override fun SearchActionsContext.handle(
         state: SearchState
     ): Flow<Mutation<SearchState>> = flow {
         emit(Loading)

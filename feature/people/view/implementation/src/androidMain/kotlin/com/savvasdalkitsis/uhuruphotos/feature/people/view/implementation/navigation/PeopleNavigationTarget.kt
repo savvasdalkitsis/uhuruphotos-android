@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.navigation.People
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.People
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.viewmodel.PeopleViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.ViewModelNavigationTarget
 
 object PeopleNavigationTarget : NavigationTarget<PeopleNavigationRoute> by ViewModelNavigationTarget(
     PeopleViewModel::class,

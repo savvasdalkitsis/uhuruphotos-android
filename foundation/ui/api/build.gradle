@@ -9,11 +9,6 @@ android {
 
 kotlin {
     sourceSets {
-        androidMain {
-            dependencies {
-                api libs.scrollbar
-            }
-        }
         commonMain {
             dependencies {
                 api compose.runtime

@@ -24,7 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.sta
 import kotlinx.coroutines.flow.flow
 
 data class SelectedCel(val celState: CelState) : SearchAction() {
-    context(SearchActionsContext) override fun handle(
+    override fun SearchActionsContext.handle(
         state: SearchState
     ) = flow<SearchMutation> {
         navigator.navigateTo(

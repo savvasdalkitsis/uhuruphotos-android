@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementatio
 import kotlinx.coroutines.flow.flow
 
 data class UserAlbumSelected(val album: UserAlbumState) : UserAlbumsAction() {
-    context(UserAlbumsActionsContext) override fun handle(
+    override fun UserAlbumsActionsContext.handle(
         state: UserAlbumsState
     ) = flow<UserAlbumsMutation> {
         navigator.navigateTo(UserAlbumNavigationRoute(album.id))

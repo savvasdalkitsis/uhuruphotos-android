@@ -26,8 +26,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 data object ForceReUploadSelectedItems : ProcessingAction() {
-    context(ProcessingActionsContext)
-    override fun handle(state: ProcessingState): Flow<Mutation<ProcessingState>> = flow {
+    override fun ProcessingActionsContext.handle(state: ProcessingState): Flow<Mutation<ProcessingState>> = flow {
         val selectedItems = state.items
             .filter { it.selected }
             .map { UploadItem(it.localItemId, it.contentUri) to it.md5 }

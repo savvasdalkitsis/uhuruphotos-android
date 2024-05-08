@@ -29,7 +29,7 @@ import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.merge
 
 data class Load(val albumId: Int) : LocalAlbumAction() {
-    context(LocalAlbumActionsContext) override fun handle(
+    override fun LocalAlbumActionsContext.handle(
         state: LocalAlbumState
     ) = merge(
         flow { galleryId = albumId },

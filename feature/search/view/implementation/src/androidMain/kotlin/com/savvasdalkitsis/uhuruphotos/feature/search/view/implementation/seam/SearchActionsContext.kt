@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.search.domain.api.usecase.SearchU
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
 
-internal class SearchActionsContext(
+class SearchActionsContext(
     val searchUseCase: SearchUseCase,
     val toaster: ToasterUseCase,
     val navigator: Navigator,

@@ -7,10 +7,13 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.ui.implementation'
 }
 
-dependencies {
-    implementation(
-            libs.accompanist.systemui,
-            project(":foundation:launchers:api"),
-            project(":foundation:ui:api"),
-    )
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation project(":foundation:launchers:api")
+                implementation project(":foundation:ui:api")
+            }
+        }
+    }
 }

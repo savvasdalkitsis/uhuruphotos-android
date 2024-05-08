@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
 import kotlinx.coroutines.flow.flow
 
 data class FeedSyncFrequencyChanged(val frequency: Float, val upperLimit: Float) : SettingsAction() {
-    context(SettingsActionsContext) override fun handle(
+    override fun SettingsActionsContext.handle(
         state: SettingsState
     ) = flow<SettingsMutation> {
         settingsUseCase.setFeedSyncFrequency(frequency.toInt())

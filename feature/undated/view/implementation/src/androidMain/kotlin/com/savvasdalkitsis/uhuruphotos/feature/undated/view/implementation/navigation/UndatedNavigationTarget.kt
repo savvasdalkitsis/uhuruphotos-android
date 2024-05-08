@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.undated.view.api.navigation.Undat
 import com.savvasdalkitsis.uhuruphotos.feature.undated.view.implementation.ui.Undated
 import com.savvasdalkitsis.uhuruphotos.feature.undated.view.implementation.viewmodel.UndatedViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.ViewModelNavigationTarget
 
 object UndatedNavigationTarget : NavigationTarget<UndatedNavigationRoute> by ViewModelNavigationTarget(
     UndatedViewModel::class,

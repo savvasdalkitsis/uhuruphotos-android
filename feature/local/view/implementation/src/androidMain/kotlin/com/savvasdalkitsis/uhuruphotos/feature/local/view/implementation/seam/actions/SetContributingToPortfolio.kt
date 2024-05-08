@@ -24,8 +24,7 @@ import kotlinx.coroutines.flow.flow
 
 data class SetContributingToPortfolio(val contributing: Boolean) : LocalAlbumAction() {
 
-    context(LocalAlbumActionsContext)
-    override fun handle(state: LocalAlbumState): Flow<Mutation<LocalAlbumState>> = flow {
+    override fun LocalAlbumActionsContext.handle(state: LocalAlbumState): Flow<Mutation<LocalAlbumState>> = flow {
         portfolioUseCase.setPortfolioFolderPublished(galleryId, contributing)
         toaster.show(
             when {

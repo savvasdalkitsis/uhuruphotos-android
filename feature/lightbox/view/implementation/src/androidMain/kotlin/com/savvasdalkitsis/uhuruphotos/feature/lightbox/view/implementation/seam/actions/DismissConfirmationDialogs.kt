@@ -22,7 +22,7 @@ import kotlinx.coroutines.flow.flowOf
 
 data object DismissConfirmationDialogs : LightboxAction() {
 
-    context(LightboxActionsContext) override fun handle(
+    override fun LightboxActionsContext.handle(
         state: LightboxState
     ) = flowOf(LightboxMutation.HideAllConfirmationDialogs)
 }

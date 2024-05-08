@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.Setti
 import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.usecase.BiometricsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 
-internal class HiddenPhotosActionsContext(
+class HiddenPhotosActionsContext(
     val settingsUseCase: SettingsUseCase,
     val biometricsUseCase: BiometricsUseCase,
     val navigator: Navigator,
