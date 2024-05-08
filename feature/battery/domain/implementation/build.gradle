@@ -6,12 +6,19 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.battery.domain.implementation'
 }
 
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation project(":feature:battery:domain:api")
+                implementation project(":foundation:preferences:api")
+                implementation project(":foundation:system:api")
+            }
+        }
+    }
+}
+
 dependencies {
-    implementation(
-            project(":feature:battery:domain:api"),
-            project(":foundation:preferences:api"),
-            project(":foundation:system:api"),
-    )
     testImplementation(
             libs.bundles.test,
     )

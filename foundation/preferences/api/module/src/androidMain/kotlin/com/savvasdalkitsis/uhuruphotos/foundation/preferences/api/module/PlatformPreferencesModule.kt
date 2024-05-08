@@ -27,12 +27,12 @@ import com.savvasdalkitsis.uhuruphotos.foundation.android.api.module.AndroidModu
 import com.savvasdalkitsis.uhuruphotos.foundation.inject.api.singleInstance
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.implementation.Preferences
 
-object PreferencesModule {
+actual object PlatformPreferencesModule {
 
-    val plainTextPreferences: com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
+    actual val plainTextPreferences: com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
         get() = Preferences(plainTextFlowSharedPreferences)
 
-    val encryptedPreferences: com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
+    actual val encryptedPreferences: com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
         get() = Preferences(encryptedFlowSharedPreferences)
 
     private val plainTextFlowSharedPreferences: FlowSharedPreferences

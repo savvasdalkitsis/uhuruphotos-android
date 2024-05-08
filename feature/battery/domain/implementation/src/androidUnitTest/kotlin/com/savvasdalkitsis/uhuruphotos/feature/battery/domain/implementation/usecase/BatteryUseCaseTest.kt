@@ -28,6 +28,7 @@ import io.mockk.mockk
 import kotlinx.coroutines.test.advanceTimeBy
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
+import com.savvasdalkitsis.uhuruphotos.feature.battery.domain.implementation.usecase.BatteryUseCase
 
 class BatteryUseCaseTest {
 

@@ -6,8 +6,17 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.module'
 }
 
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                api project(":foundation:preferences:api")
+            }
+        }
+    }
+}
+
 dependencies {
-    api project(":foundation:preferences:api")
     implementation libs.androidx.preference
     implementation libs.bundles.androidx.security.crypto
     implementation libs.flowpreferences
