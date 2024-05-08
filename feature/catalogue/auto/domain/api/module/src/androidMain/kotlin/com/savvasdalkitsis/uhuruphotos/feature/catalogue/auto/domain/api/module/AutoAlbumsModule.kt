@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.domain.api.module
 
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.module.PlatformAuthModule
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.module.AuthModule
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.domain.api.usecase.AutoAlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.domain.implementation.repository.AutoAlbumsRepository
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.domain.implementation.service.AutoAlbumsService
@@ -25,9 +25,9 @@ import com.savvasdalkitsis.uhuruphotos.foundation.android.api.module.AndroidModu
 import com.savvasdalkitsis.uhuruphotos.foundation.inject.api.singleInstance
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.module.PreferencesModule
 
-object AutoAlbumsModule {
+actual object AutoAlbumsModule {
 
-    val autoAlbumsUseCase: AutoAlbumsUseCase
+    actual val autoAlbumsUseCase: AutoAlbumsUseCase
         get() = com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.domain.implementation.usecase.AutoAlbumsUseCase(
             autoAlbumsRepository,
             PreferencesModule.plainTextPreferences,
@@ -41,6 +41,6 @@ object AutoAlbumsModule {
     )
 
     private val autoAlbumsService: AutoAlbumsService by singleInstance {
-        PlatformAuthModule.ktorfit.create()
+        AuthModule.ktorfit.create()
     }
 }

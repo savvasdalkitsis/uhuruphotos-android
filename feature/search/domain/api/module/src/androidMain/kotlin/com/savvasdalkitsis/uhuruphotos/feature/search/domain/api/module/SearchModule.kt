@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.search.domain.api.module
 
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.module.PlatformAuthModule
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.module.AuthModule
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.module.DbModule
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.module.CommonMediaModule
 import com.savvasdalkitsis.uhuruphotos.feature.search.domain.api.usecase.SearchUseCase
@@ -42,7 +42,7 @@ object SearchModule {
     )
 
     private val searchService: SearchService by singleInstance {
-        PlatformAuthModule.ktorfit.create()
+        AuthModule.ktorfit.create()
     }
 
 

@@ -6,11 +6,15 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.domain.api'
 }
 
-dependencies {
-    api(
-            libs.kotlinx.coroutines.android,
-            project(":feature:catalogue:user:view:api"),
-            project(":feature:catalogue:view:api"),
-            project(":foundation:result:api"),
-    )
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                api libs.kotlinx.coroutines.core
+                api project(":feature:catalogue:user:view:api")
+                api project(":feature:catalogue:view:api")
+                api project(":foundation:result:api")
+            }
+        }
+    }
 }

@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.album.auto.domain.api.module
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.domain.api.usecase.AutoAlbumUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.domain.implementation.repository.AutoAlbumRepository
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.domain.implementation.service.AutoAlbumService
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.module.PlatformAuthModule
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.module.AuthModule
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.module.DbModule
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.module.CommonMediaModule
 import com.savvasdalkitsis.uhuruphotos.foundation.inject.api.singleInstance
@@ -42,6 +42,6 @@ object AutoAlbumModule {
     )
 
     private val autoAlbumService: AutoAlbumService by singleInstance {
-        PlatformAuthModule.ktorfit.create()
+        AuthModule.ktorfit.create()
     }
 }

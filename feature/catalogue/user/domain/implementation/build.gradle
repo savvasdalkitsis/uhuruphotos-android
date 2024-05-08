@@ -8,15 +8,16 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.domain.implementation'
 }
 
-dependencies {
-    implementation(
-            libs.sqldelight.coroutines,
-            project(":feature:catalogue:user:domain:api"),
-            project(":foundation:log:api"),
-            project(":foundation:network:api"),
-            project(":foundation:preferences:api"),
-    )
-    ksp(
-            libs.ktorfit.ksp,
-    )
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation libs.sqldelight.coroutines
+                implementation project(":feature:catalogue:user:domain:api")
+                implementation project(":foundation:log:api")
+                implementation project(":foundation:network:api")
+                implementation project(":foundation:preferences:api")
+            }
+        }
+    }
 }

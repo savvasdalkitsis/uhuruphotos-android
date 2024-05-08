@@ -16,7 +16,9 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.module
 
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.cookies.CookieMonitor
+import de.jensklingenberg.ktorfit.Ktorfit
 
 actual object AuthModule {
     actual val cookieMonitor: CookieMonitor get() = TODO()
+    actual val ktorfit: Ktorfit get() = TODO()
 }

@@ -7,8 +7,17 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.domain.api.module'
 }
 
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                api project(":feature:catalogue:auto:domain:api")
+            }
+        }
+    }
+}
+
 dependencies {
-    api project(":feature:catalogue:auto:domain:api")
     implementation project(":feature:auth:domain:api:module")
     implementation project(":feature:db:domain:api:module")
     implementation project(":feature:user:domain:api:module")
