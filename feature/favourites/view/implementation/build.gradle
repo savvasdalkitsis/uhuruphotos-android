@@ -7,21 +7,26 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.favourites.view.implementation'
 }
 
-dependencies {
-    implementation(
-            project(":feature:collage:view:api"),
-            project(":feature:db:domain:api"),
-            project(":feature:favourites:domain:api:module"),
-            project(":feature:favourites:view:api"),
-            project(":feature:gallery:view:api"),
-            project(":feature:lightbox:view:api"),
-            project(":feature:media:common:domain:api:module"),
-            project(":feature:media:common:view:api"),
-            project(":feature:media:remote:domain:api"),
-            project(":feature:settings:domain:api"),
-            project(":foundation:date:api"),
-            project(":foundation:navigation:api"),
-            project(":foundation:preferences:api"),
-            project(":foundation:strings:api"),
-    )
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation project(":feature:collage:view:api")
+                implementation project(":feature:db:domain:api")
+                implementation project(":feature:favourites:domain:api:module")
+                implementation project(":feature:favourites:view:api")
+                implementation project(":feature:gallery:view:api")
+                implementation project(":feature:lightbox:view:api")
+                implementation project(":feature:media:common:domain:api:module")
+                implementation project(":feature:media:common:view:api")
+                implementation project(":feature:media:remote:domain:api")
+                implementation project(":feature:settings:domain:api")
+                implementation project(":foundation:date:api")
+                implementation project(":foundation:navigation:api")
+                implementation project(":foundation:preferences:api")
+                implementation project(":foundation:strings:api")
+            }
+        }
+    }
 }
+

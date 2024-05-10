@@ -15,9 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.date.api
 
-import android.content.Context
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.Res.strings
-import dev.icerock.moko.resources.desc.desc
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.StringRenderer
 import net.danlew.android.joda.DateUtils
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormatter
@@ -27,7 +26,7 @@ class DateDisplayer(
     private val displayingDateFormat: DateTimeFormatter,
     private val displayingDateTimeFormat: DateTimeFormatter,
     private val displayingTimeFormat: DateTimeFormatter,
-    private val context: Context,
+    private val stringRenderer: StringRenderer,
 ) {
 
     fun dateString(date: String?): String = format(date, displayingDateFormat, appendTimeIfToday = false)
@@ -41,7 +40,7 @@ class DateDisplayer(
 
     private fun format(date: DateTime, formatter: DateTimeFormatter, appendTimeIfToday: Boolean): String =
         if (DateUtils.isToday(date)) {
-            strings.today.desc().toString(context) + if (appendTimeIfToday) {
+            stringRenderer.render(strings.today) + if (appendTimeIfToday) {
                 " " + displayingTimeFormat.print(date.toLocalDateTime())
             } else {
                 ""

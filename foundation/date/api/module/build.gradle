@@ -12,4 +12,5 @@ dependencies {
     implementation project(":foundation:android:api:module")
     implementation project(":foundation:inject:api")
     implementation project(":foundation:date:implementation")
+    implementation project(":foundation:strings:api:module")
 }

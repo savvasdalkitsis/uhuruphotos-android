@@ -7,9 +7,15 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.site.domain.api.module'
 }
 
-dependencies {
-    api project(":feature:site:domain:api")
-    implementation project(":feature:auth:domain:api:module")
-    implementation project(":feature:site:domain:implementation")
-    implementation project(":foundation:inject:api")
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                api project(":feature:site:domain:api")
+                implementation project(":feature:auth:domain:api:module")
+                implementation project(":feature:site:domain:implementation")
+                implementation project(":foundation:inject:api")
+            }
+        }
+    }
 }

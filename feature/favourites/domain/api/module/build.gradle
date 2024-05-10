@@ -6,9 +6,16 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.favourites.domain.api.module'
 }
 
-dependencies {
-    api project(":feature:favourites:domain:api")
-    implementation project(":feature:favourites:domain:implementation")
-    implementation project(":foundation:inject:api")
-    implementation project(":foundation:preferences:api:module")
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                api project(":feature:favourites:domain:api")
+                implementation project(":feature:favourites:domain:implementation")
+                implementation project(":foundation:inject:api")
+                implementation project(":foundation:preferences:api:module")
+            }
+        }
+    }
 }
+

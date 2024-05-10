@@ -6,8 +6,17 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.module'
 }
 
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                api project(":feature:media:common:domain:api")
+            }
+        }
+    }
+}
+
 dependencies {
-    api project(":feature:media:common:domain:api")
     implementation project(":feature:auth:domain:api:module")
     implementation project(":feature:media:common:domain:implementation")
     implementation project(":feature:media:local:domain:api:module")

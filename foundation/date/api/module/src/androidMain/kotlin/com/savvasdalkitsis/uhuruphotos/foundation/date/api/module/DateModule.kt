@@ -15,12 +15,12 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.date.api.module
 
-import com.savvasdalkitsis.uhuruphotos.foundation.android.api.module.AndroidModule
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateParser
 import com.savvasdalkitsis.uhuruphotos.foundation.date.implementation.initializer.DateInitializer
 import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCallbacks
 import com.savvasdalkitsis.uhuruphotos.foundation.inject.api.singleInstance
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.module.StringsModule
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.format.DateTimeFormatter
 
@@ -48,7 +48,7 @@ object DateModule {
             displayingDateFormat = displayingDateFormat,
             displayingDateTimeFormat = displayingDateTimeFormat,
             displayingTimeFormat = displayingTimeFormat,
-            context = AndroidModule.applicationContext
+            stringRenderer = StringsModule.stringRenderer,
         )
 
     val dateInitializer: ApplicationCallbacks by singleInstance {

@@ -6,9 +6,15 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.heatmap.domain.api.module'
 }
 
-dependencies {
-    api project(":feature:heatmap:domain:api")
-    implementation project(":feature:heatmap:domain:implementation")
-    implementation project(":foundation:inject:api")
-    implementation project(":foundation:preferences:api:module")
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                api project(":feature:heatmap:domain:api")
+                implementation project(":feature:heatmap:domain:implementation")
+                implementation project(":foundation:inject:api")
+                implementation project(":foundation:preferences:api:module")
+            }
+        }
+    }
 }

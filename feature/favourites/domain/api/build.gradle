@@ -6,6 +6,12 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.favourites.domain.api'
 }
 
-dependencies {
-    api project(":feature:collage:view:api")
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                api project(":feature:collage:view:api")
+            }
+        }
+    }
 }

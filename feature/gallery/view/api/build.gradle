@@ -14,6 +14,16 @@ kotlin {
                 api project(":feature:collage:view:api")
                 api project(":feature:people:view:api")
                 api project(":foundation:ui:api")
+                implementation compose.foundation
+                implementation compose.material
+                implementation project(":feature:lightbox:view:api")
+                implementation project(":feature:media:common:view:api")
+                implementation project(":feature:person:view:api")
+                implementation project(":foundation:coroutines:api")
+                implementation project(":foundation:navigation:api:module")
+                implementation project(":foundation:preferences:api:module")
+                implementation project(":foundation:toaster:api:module")
+                implementation project(":foundation:strings:api")
             }
         }
     }
@@ -21,18 +31,8 @@ kotlin {
 
 dependencies {
     implementation(
-            libs.androidx.compose.foundation,
-            compose.material,
-            project(":feature:lightbox:view:api"),
             project(":feature:media:common:domain:api"),
-            project(":feature:media:common:view:api"),
-            project(":feature:person:view:api"),
-            project(":foundation:coroutines:api"),
             project(":foundation:icons:api"),
             project(":foundation:log:api"),
-            project(":foundation:navigation:api:module"),
-            project(":foundation:preferences:api:module"),
-            project(":foundation:strings:api"),
-            project(":foundation:toaster:api:module"),
     )
 }

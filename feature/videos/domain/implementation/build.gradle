@@ -6,9 +6,13 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.videos.domain.implementation'
 }
 
-dependencies {
-    implementation(
-            project(":feature:videos:domain:api"),
-            project(":foundation:preferences:api"),
-    )
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation project(":feature:videos:domain:api")
+                implementation project(":foundation:preferences:api")
+            }
+        }
+    }
 }

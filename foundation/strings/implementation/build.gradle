@@ -1,0 +1,17 @@
+plugins {
+    id "android.library"
+}
+
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.strings.implementation'
+}
+
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                api project(":foundation:strings:api")
+            }
+        }
+    }
+}

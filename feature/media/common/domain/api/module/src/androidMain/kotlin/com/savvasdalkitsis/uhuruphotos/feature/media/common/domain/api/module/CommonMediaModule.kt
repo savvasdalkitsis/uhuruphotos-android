@@ -25,9 +25,9 @@ import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule
 import com.savvasdalkitsis.uhuruphotos.foundation.exif.api.module.ExifModule
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.module.cache.ImageCacheModule
 
-object CommonMediaModule {
+actual object CommonMediaModule {
 
-    val mediaUseCase: MediaUseCase
+    actual val mediaUseCase: MediaUseCase
         get() = com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.implementation.usecase.MediaUseCase(
             LocalMediaModule.localMediaUseCase,
             RemoteMediaModule.remoteMediaUseCase,
@@ -37,7 +37,7 @@ object CommonMediaModule {
             AndroidModule.applicationContext,
         )
 
-    val metadataUseCase: MetadataUseCase
+    actual val metadataUseCase: MetadataUseCase
         get() = com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.implementation.usecase.MetadataUseCase(
             ImageCacheModule.fullImageDiskCache,
             ExifModule.exifUseCase,
