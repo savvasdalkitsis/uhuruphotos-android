@@ -23,9 +23,9 @@ import android.os.Looper
 import androidx.tracing.Trace
 import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCallbacks
 
-object TracingInitializer : ApplicationCallbacks {
+actual object TracingInitializer : ApplicationCallbacks {
 
-    override fun onAppCreated(app: Application) {
+    actual override fun onAppCreated(app: Application) {
         val debuggable = (app.applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE) != 0
         val profileable = Build.VERSION.SDK_INT >= 29 && app.applicationInfo.isProfileableByShell
 

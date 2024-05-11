@@ -6,9 +6,18 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.tracing.implementation'
 }
 
-dependencies {
-    implementation(
-            libs.androidx.tracing,
-            project(":foundation:initializer:api"),
-    )
+kotlin {
+    sourceSets {
+        androidMain {
+            dependencies {
+                implementation libs.androidx.tracing
+            }
+        }
+        commonMain {
+            dependencies {
+                implementation project(":foundation:initializer:api")
+            }
+        }
+    }
 }
+
