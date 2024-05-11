@@ -1,4 +1,4 @@
-package com.savvasdalkitsis.uhuruphotos.foundation.notification.api/*
+/*
 Copyright 2024 Savvas Dalkitsis
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,6 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
+package com.savvasdalkitsis.uhuruphotos.foundation.notification.api
 
 actual val IMPORTANCE_LOW: Int = 0
 actual val IMPORTANCE_MIN: Int = 0
