@@ -128,7 +128,7 @@ ktor-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
 ktorfit-core = { module = "de.jensklingenberg.ktorfit:ktorfit-lib", version.ref = "ktorfit" }
 ktorfit-ksp = { module = "de.jensklingenberg.ktorfit:ktorfit-ksp", version.ref = "ktorfit" }
 leaks = "com.squareup.leakcanary:leakcanary-android:2.13"
-lottie = "com.airbnb.android:lottie-compose:6.3.0"
+lottie = "com.airbnb.android:lottie-compose:6.4.1"
 lumberjack-core = { module = "com.github.MFlisar.Lumberjack:core", version.ref = "lumberjack" }
 lumberjack-implementation = { module = "com.github.MFlisar.Lumberjack:implementation-lumberjack", version.ref = "lumberjack" }
 lumberjack-logger-console = { module = "com.github.MFlisar.Lumberjack:logger-console", version.ref = "lumberjack" }
