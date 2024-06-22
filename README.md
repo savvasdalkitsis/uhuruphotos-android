@@ -15,6 +15,8 @@ Own your memories. UhuruPhotos and LibrePhotos are both non commercial, open sou
 
 (* advanced features require a [LibrePhotos](https://github.com/LibrePhotos/librephotos) server)
 
+### Note that most of development is currently happening on a [multiplatform](https://github.com/savvasdalkitsis/uhuruphotos-android/tree/multiplatform) branch which will make UhuruPhotos work across all platforms
+
 |<img src="https://github.com/savvasdalkitsis/uhuruphotos-android/raw/main/docs/assets/phone-1.png" alt="screen 1" width = 180px>|<img src="https://github.com/savvasdalkitsis/uhuruphotos-android/raw/main/docs/assets/phone-2.png" alt="screen 2" width = 180px>|<img src="https://github.com/savvasdalkitsis/uhuruphotos-android/raw/main/docs/assets/phone-3.png" alt="screen 3" width = 180px>|
 
 Features include:
