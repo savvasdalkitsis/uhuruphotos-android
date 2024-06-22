@@ -1,4 +1,3 @@
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=savvasdalkitsis_uhuruphotos-android&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=savvasdalkitsis_uhuruphotos-android)
 [![Translation status](https://hosted.weblate.org/widgets/uhuruphotos/-/app-translations/svg-badge.svg)](https://hosted.weblate.org/engage/uhuruphotos/)
 [![Lines of code](https://tokei.rs/b1/github/savvasdalkitsis/uhuruphotos-android)](https://github.com/savvasdalkitsis/uhuruphotos-android)
 [![Join the chat at https://app.gitter.im/#/room/#uhuruphotos:gitter.im](https://badges.gitter.im/uhuruphotos/community.svg)](https://app.gitter.im/#/room/#uhuruphotos:gitter.im)
