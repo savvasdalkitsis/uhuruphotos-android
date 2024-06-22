@@ -13,7 +13,7 @@ dependencies {
     api(
             libs.androidx.compose.material,
             libs.androidx.compose.ui,
-            libs.androidx.constraint,
+            libs.androidx.compose.constraintlayout,
             libs.capturable,
             libs.scrollbar,
             project(":foundation:compose:api"),

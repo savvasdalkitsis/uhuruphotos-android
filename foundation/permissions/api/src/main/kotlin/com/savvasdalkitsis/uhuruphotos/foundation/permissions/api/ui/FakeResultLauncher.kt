@@ -20,13 +20,13 @@ import androidx.activity.result.contract.ActivityResultContract
 import androidx.core.app.ActivityOptionsCompat
 
 internal object FakeResultLauncher : ActivityResultLauncher<Array<String>>() {
-    override fun launch(input: Array<String>?, options: ActivityOptionsCompat?) {
+
+    override fun launch(input: Array<String>, options: ActivityOptionsCompat?) {
     }
 
     override fun unregister() {
     }
 
-    override fun getContract(): ActivityResultContract<Array<String>, *> {
-        TODO("Not yet implemented")
-    }
+    override val contract: ActivityResultContract<Array<String>, *>
+        get() = TODO("Not yet implemented")
 }

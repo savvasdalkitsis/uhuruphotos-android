@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam
 
 import android.annotation.SuppressLint
 import android.location.LocationManager
+import android.os.CancellationSignal
 import androidx.core.location.LocationManagerCompat
 import com.google.accompanist.permissions.PermissionState
 import com.google.accompanist.permissions.isGranted
@@ -38,7 +39,8 @@ data class MyLocationPressed(
     ) = flow<HeatMapMutation> {
         if (locationPermissionState.status.isGranted) {
             var location: LatLon? = null
-            LocationManagerCompat.getCurrentLocation(locationManager, LocationManager.NETWORK_PROVIDER, null, Runnable::run) {
+            val cancellationSignal: CancellationSignal? = null
+            LocationManagerCompat.getCurrentLocation(locationManager, LocationManager.NETWORK_PROVIDER, cancellationSignal, Runnable::run) {
                 location = LatLon(it.latitude, it.longitude)
             }
             location?.let {
