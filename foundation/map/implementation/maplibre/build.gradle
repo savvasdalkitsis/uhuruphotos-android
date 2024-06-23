@@ -37,5 +37,5 @@ dependencies {
     implementation(libs.maplibre.annotations) {
         exclude group: 'org.maplibre.gl', module: 'android-sdk-geojson'
     }
-    compileOnly('org.maplibre.gl:android-sdk-geojson:5.9.0')
+    compileOnly('org.maplibre.gl:android-sdk-geojson:5.9.1')
 }
