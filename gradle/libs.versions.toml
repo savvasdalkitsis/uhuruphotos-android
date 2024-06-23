@@ -23,7 +23,7 @@ okhttp = "5.0.0-alpha.11"
 permissions = "1.2.0"
 resaca = "3.2.0"
 result = "2.0.0"
-retrofit = "2.9.0"
+retrofit = "2.11.0"
 sqldelight = "2.0.2"
 
 [plugins]
