@@ -105,7 +105,7 @@ heatmap = "com.github.k-surtel:heat-map:1.0.1"
 hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt-android-gradle-plugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hilt" }
 hilt-dagger-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
-imaging = "org.apache.commons:commons-imaging:1.0-alpha3"
+imaging = "org.apache.commons:commons-imaging:1.0.0-alpha5"
 infobar = "com.radusalagean:info-bar-compose:1.0.0"
 jetlime = "io.github.pushpalroy:jetlime:2.1.1"
 joda-time = "net.danlew:android.joda:2.12.7"
