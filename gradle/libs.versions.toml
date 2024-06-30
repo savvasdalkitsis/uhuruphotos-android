@@ -149,7 +149,7 @@ result = { module = "com.michael-bull.kotlin-result:kotlin-result", version.ref 
 result-coroutines = { module = "com.michael-bull.kotlin-result:kotlin-result-coroutines", version.ref = "result" }
 retrofit-core = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "retrofit" }
-scrollbar = "com.github.nanihadesuka:LazyColumnScrollbar:1.9.0"
+scrollbar = "com.github.nanihadesuka:LazyColumnScrollbar:2.2.0"
 seeker = "io.github.2307vivek:seeker:1.2.2"
 shazamcrest = "com.shazam:shazamcrest:0.11"
 sqldelight-adapters = { module = "app.cash.sqldelight:primitive-adapters", version.ref = "sqldelight" }
