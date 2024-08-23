@@ -16,8 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service
 
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItem
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollectionById
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollectionsByDate
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteFeedDayResult
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteFeedResult
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaItemSummaryContainer
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.model.RemoteMediaExistsResponse
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.model.RemoteMediaHashOperationResponseServiceModel
@@ -60,16 +60,16 @@ interface RemoteMediaService {
     ): Response<RemoteMediaHashOperationResponseServiceModel>
 
     @GET("/api/albums/date/list/?favorite=true")
-    suspend fun getFavouriteMedia(): RemoteMediaCollectionsByDate
+    suspend fun getFavouriteMedia(): RemoteFeedResult
 
     @GET("/api/albums/date/{id}/?favorite=true")
-    suspend fun getFavouriteMediaCollection(@Path("id") id: String): RemoteMediaCollectionById
+    suspend fun getFavouriteMediaCollection(@Path("id") id: String): RemoteFeedDayResult
 
     @GET("/api/albums/date/list/?hidden=true")
-    suspend fun getHiddenMedia(): RemoteMediaCollectionsByDate
+    suspend fun getHiddenMedia(): RemoteFeedResult
 
     @GET("/api/albums/date/{id}/?hidden=true")
-    suspend fun getHiddenMediaCollection(@Path("id") id: String): RemoteMediaCollectionById
+    suspend fun getHiddenMediaCollection(@Path("id") id: String): RemoteFeedDayResult
 
     @GET("/api/exists/{hash}/")
     suspend fun exists(@Path("hash") hash: String): RemoteMediaExistsResponse

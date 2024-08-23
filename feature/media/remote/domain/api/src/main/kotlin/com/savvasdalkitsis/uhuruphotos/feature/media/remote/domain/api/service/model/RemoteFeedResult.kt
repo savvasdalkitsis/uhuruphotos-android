@@ -18,6 +18,6 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class RemoteMediaCollectionsByDate(
-    val results: List<RemoteMediaCollection.Incomplete>,
+data class RemoteFeedResult(
+    val results: List<RemoteFeedDay.Incomplete>,
 )

@@ -22,9 +22,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResult
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummaryStatus
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollection
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollectionById
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollectionsByDate
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteFeedDay
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteFeedDayResult
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteFeedResult
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import kotlinx.coroutines.flow.Flow
 
@@ -65,21 +65,21 @@ interface RemoteMediaUseCase {
     fun restoreMediaItem(id: String)
 
     suspend fun processRemoteMediaCollections(
-        incompleteAlbumsFetcher: suspend () -> List<RemoteMediaCollection.Incomplete>,
-        completeAlbumsFetcher: suspend (String) -> RemoteMediaCollection.Complete,
+        incompleteAlbumsFetcher: suspend () -> List<RemoteFeedDay.Incomplete>,
+        completeAlbumsFetcher: suspend (String) -> RemoteFeedDay.Complete,
         shallow: Boolean,
         onProgressChange: suspend (current: Int, total: Int) -> Unit = { _, _ -> },
-        incompleteAlbumsProcessor: suspend (List<RemoteMediaCollection.Incomplete>) -> Unit = {},
-        completeAlbumProcessor: suspend (RemoteMediaCollection.Complete) -> Unit = {},
+        incompleteAlbumsProcessor: suspend (List<RemoteFeedDay.Incomplete>) -> Unit = {},
+        completeAlbumProcessor: suspend (RemoteFeedDay.Complete) -> Unit = {},
         clearSummariesBeforeInserting: Boolean = true,
     ): SimpleResult
 
     suspend fun exists(hash: MediaItemHash): Result<Boolean, Throwable>
 
     suspend fun refreshMediaCollections(
-        incompleteMediaCollections: suspend () -> RemoteMediaCollectionsByDate,
+        incompleteMediaCollections: suspend () -> RemoteFeedResult,
         clearCollectionsBeforeRefreshing: () -> Unit,
-        completeMediaCollection: suspend (String) -> RemoteMediaCollectionById,
+        completeMediaCollection: suspend (String) -> RemoteFeedDayResult,
         processSummary: (albumId: String, summary: RemoteMediaItemSummary) -> Unit,
     ): SimpleResult
 

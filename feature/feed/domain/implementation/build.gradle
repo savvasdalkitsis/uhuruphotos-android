@@ -25,6 +25,7 @@ dependencies {
             project(":feature:upload:domain:api"),
             project(":feature:welcome:domain:api"),
             project(":foundation:coroutines:api"),
+            project(":foundation:date:api"),
             project(":foundation:initializer:api"),
             project(":foundation:launchers:api"),
             project(":foundation:log:api"),

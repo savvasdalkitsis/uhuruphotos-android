@@ -15,8 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.trash.domain.implementation.service
 
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollectionById
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollectionsByDate
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteFeedDayResult
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteFeedResult
 import retrofit2.http.GET
 import retrofit2.http.Path
 import se.ansman.dagger.auto.retrofit.AutoProvideService
@@ -27,9 +27,9 @@ import javax.inject.Singleton
 interface TrashService {
 
     @GET("/api/albums/date/list/?in_trashcan=true")
-    suspend fun getTrash(): RemoteMediaCollectionsByDate
+    suspend fun getTrash(): RemoteFeedResult
 
     @GET("/api/albums/date/{id}/?in_trashcan=true")
-    suspend fun getTrashMediaCollection(@Path("id") id: String): RemoteMediaCollectionById
+    suspend fun getTrashMediaCollection(@Path("id") id: String): RemoteFeedDayResult
 
 }
