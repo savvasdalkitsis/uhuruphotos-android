@@ -15,8 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.service
 
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollectionById
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollectionsByDate
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteFeedDayResult
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteFeedResult
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -28,8 +28,20 @@ import javax.inject.Singleton
 interface FeedService {
 
     @GET("/api/albums/date/list/")
-    suspend fun getRemoteMediaCollectionsByDate(): RemoteMediaCollectionsByDate
+    suspend fun getRemoteFeed(): RemoteFeedResult
+
+    @GET("/api/albums/date/list/")
+    suspend fun getRemoteFeedSince(
+        @Query("last_modified") since: String, // example: "2024-08-02T21:09:57Z"
+    ): RemoteFeedResult
 
     @GET("/api/albums/date/{id}/")
-    suspend fun getRemoteMediaCollection(@Path("id") id: String, @Query("page") page: Int): RemoteMediaCollectionById
+    suspend fun getRemoteFeedDay(@Path("id") id: String, @Query("page") page: Int): RemoteFeedDayResult
+
+    @GET("/api/albums/date/{id}/")
+    suspend fun getRemoteFeedDaySince(
+        @Path("id") id: String,
+        @Query("page") page: Int,
+        @Query("last_modified") since: String, // example: "2024-08-02T21:09:57Z"
+    ): RemoteFeedDayResult
 }

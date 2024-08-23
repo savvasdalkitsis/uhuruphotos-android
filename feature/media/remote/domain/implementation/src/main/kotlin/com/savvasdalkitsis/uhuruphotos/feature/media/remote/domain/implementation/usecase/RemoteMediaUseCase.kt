@@ -27,9 +27,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummaryStatus
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.toDbModel
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollection
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollectionById
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollectionsByDate
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteFeedDay
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteFeedDayResult
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteFeedResult
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.toDbModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.repository.RemoteMediaRepository
@@ -209,12 +209,12 @@ class RemoteMediaUseCase @Inject constructor(
     }
 
     override suspend fun processRemoteMediaCollections(
-        incompleteAlbumsFetcher: suspend () -> List<RemoteMediaCollection.Incomplete>,
-        completeAlbumsFetcher: suspend (String) -> RemoteMediaCollection.Complete,
+        incompleteAlbumsFetcher: suspend () -> List<RemoteFeedDay.Incomplete>,
+        completeAlbumsFetcher: suspend (String) -> RemoteFeedDay.Complete,
         shallow: Boolean,
         onProgressChange: suspend (current: Int, total: Int) -> Unit,
-        incompleteAlbumsProcessor: suspend (List<RemoteMediaCollection.Incomplete>) -> Unit,
-        completeAlbumProcessor: suspend (RemoteMediaCollection.Complete) -> Unit,
+        incompleteAlbumsProcessor: suspend (List<RemoteFeedDay.Incomplete>) -> Unit,
+        completeAlbumProcessor: suspend (RemoteFeedDay.Complete) -> Unit,
         clearSummariesBeforeInserting: Boolean,
     ): SimpleResult = runCatchingWithLog {
         onProgressChange(0, 0)
@@ -236,9 +236,9 @@ class RemoteMediaUseCase @Inject constructor(
     }
 
     override suspend fun refreshMediaCollections(
-        incompleteMediaCollections: suspend () -> RemoteMediaCollectionsByDate,
+        incompleteMediaCollections: suspend () -> RemoteFeedResult,
         clearCollectionsBeforeRefreshing: () -> Unit,
-        completeMediaCollection: suspend (String) -> RemoteMediaCollectionById,
+        completeMediaCollection: suspend (String) -> RemoteFeedDayResult,
         processSummary: (albumId: String, summary: RemoteMediaItemSummary) -> Unit,
     ): SimpleResult = runCatchingWithLog {
         val incompleteCollections = incompleteMediaCollections().results
@@ -263,11 +263,11 @@ class RemoteMediaUseCase @Inject constructor(
 
     private suspend fun updateSummaries(
         id: String,
-        remoteMediaCollectionFetcher: suspend (String) -> RemoteMediaCollection.Complete,
-        completeAlbumProcessor: suspend (RemoteMediaCollection.Complete) -> Unit,
+        remoteFeedDayFetcher: suspend (String) -> RemoteFeedDay.Complete,
+        completeAlbumProcessor: suspend (RemoteFeedDay.Complete) -> Unit,
         clearSummariesBeforeInserting: Boolean = true,
     ) {
-        val completeAlbum = remoteMediaCollectionFetcher(id)
+        val completeAlbum = remoteFeedDayFetcher(id)
         completeAlbumProcessor(completeAlbum)
         async {
             remoteMediaItemSummaryQueries.transaction {

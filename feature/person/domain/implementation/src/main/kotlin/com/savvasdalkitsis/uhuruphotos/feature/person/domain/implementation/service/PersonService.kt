@@ -15,8 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.person.domain.implementation.service
 
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollectionById
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollectionsByDate
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteFeedDayResult
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteFeedResult
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -28,8 +28,8 @@ import javax.inject.Singleton
 interface PersonService {
 
     @GET("/api/albums/date/list/")
-    suspend fun getMediaCollectionsForPerson(@Query("person") personId: Int): RemoteMediaCollectionsByDate
+    suspend fun getMediaCollectionsForPerson(@Query("person") personId: Int): RemoteFeedResult
 
     @GET("/api/albums/date/{id}/")
-    suspend fun getMediaCollectionForPerson(@Path("id") id: String, @Query("person") personId: Int): RemoteMediaCollectionById
+    suspend fun getMediaCollectionForPerson(@Path("id") id: String, @Query("person") personId: Int): RemoteFeedDayResult
 }

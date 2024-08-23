@@ -45,7 +45,7 @@ internal class FeedDownloadWorker @AssistedInject constructor(
     override suspend fun work(): Result {
         val shallow = params.inputData.getBoolean(KEY_SHALLOW, false)
         updateProgress(0)
-        val result = feedRepository.refreshRemoteMediaCollections(shallow) { current, total ->
+        val result = feedRepository.refreshRemoteFeed(shallow) { current, total ->
             delay(300)
             updateProgress(current, total)
         }
