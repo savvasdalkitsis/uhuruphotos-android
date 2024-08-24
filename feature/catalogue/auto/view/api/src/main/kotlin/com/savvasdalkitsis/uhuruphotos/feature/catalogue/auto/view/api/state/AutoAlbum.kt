@@ -22,4 +22,5 @@ data class AutoAlbum(
     val cover: MediaItem,
     val title: String,
     val photoCount: Int?,
+    val visible: Boolean = true,
 )

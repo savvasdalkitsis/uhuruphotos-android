@@ -16,9 +16,11 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam.AutoAlbumsState
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam.actions.AutoAlbumsAction
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam.actions.ChangeSorting
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam.actions.FilterAlbums
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam.actions.Refresh
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.Catalogue
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
@@ -35,12 +37,20 @@ internal fun AutoAlbums(
         isEmpty = state.albums.isEmpty(),
         emptyContentMessage = string.no_auto_albums,
         sorting = state.sorting,
+        initialFilter = state.filter,
+        onFilterUpdate =  { action(FilterAlbums(it)) },
         onChangeSorting = { action(ChangeSorting(it)) },
     ) {
-        state.albums.forEach { album ->
-            item(album.id) {
-                AutoAlbumItem(album, action)
+        state.albums
+            .filter { it.visible }
+            .forEach { album ->
+                item(album.id) {
+                    AutoAlbumItem(
+                        modifier = Modifier.animateItemPlacement(),
+                        album = album,
+                        action = action
+                    )
+                }
             }
-        }
     }
 }

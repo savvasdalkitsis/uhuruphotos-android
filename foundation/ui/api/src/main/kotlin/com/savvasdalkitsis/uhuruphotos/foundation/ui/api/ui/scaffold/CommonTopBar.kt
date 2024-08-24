@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -43,6 +44,8 @@ fun CommonTopBar(
     expandable: Boolean = false,
     navigationIcon: @Composable (() -> Unit)? = null,
     actionBarContent: @Composable (RowScope.() -> Unit) = {},
+    alternativeTopBar: @Composable () -> Unit = {},
+    showAlternativeTopBar: Boolean = false,
 ) {
     AnimatedVisibility(
         visible = topBarDisplayed,
@@ -61,16 +64,25 @@ fun CommonTopBar(
                     .weight(1f)
             ) {
                 Spacer(modifier = Modifier.height(insetsTop()))
-                ExpandableTopAppBar(
-                    title = title,
-                    backgroundColor = Color.Transparent,
-                    elevation = 0.dp,
-                    navigationIcon = navigationIcon,
-                    expandable = expandable,
-                    actions = {
-                        actionBarContent()
+
+                AnimatedContent(
+                    targetState = showAlternativeTopBar,
+                    label = "topBar",
+                ) { show ->
+                    when {
+                        show -> alternativeTopBar()
+                        else -> ExpandableTopAppBar(
+                            title = title,
+                            backgroundColor = Color.Transparent,
+                            elevation = 0.dp,
+                            navigationIcon = navigationIcon,
+                            expandable = expandable,
+                            actions = {
+                                actionBarContent()
+                            }
+                        )
                     }
-                )
+                }
             }
             Spacer(
                 modifier = Modifier

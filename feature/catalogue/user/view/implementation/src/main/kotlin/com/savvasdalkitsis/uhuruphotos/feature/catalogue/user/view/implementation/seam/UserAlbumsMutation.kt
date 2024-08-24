@@ -26,6 +26,10 @@ sealed class UserAlbumsMutation(
         it.copy(albums = albums)
     })
 
+    data class SetFilter(val filter: String) : UserAlbumsMutation({
+        it.copy(filter = filter)
+    })
+
     data class Loading(val loading: Boolean) : UserAlbumsMutation({
         it.copy(isLoading = loading)
     })

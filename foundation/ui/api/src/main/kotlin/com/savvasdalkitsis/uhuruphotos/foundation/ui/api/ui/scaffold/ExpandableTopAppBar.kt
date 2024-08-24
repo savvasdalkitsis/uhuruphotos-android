@@ -78,9 +78,10 @@ fun ExpandableTopAppBar(
                 )
             }
         }
-
         Row(
-            Modifier.fillMaxHeight().weight(1f),
+            Modifier
+                .fillMaxHeight()
+                .weight(1f),
             verticalAlignment = Alignment.CenterVertically
         ) {
             ProvideTextStyle(value = MaterialTheme.typography.h6) {
@@ -90,7 +91,6 @@ fun ExpandableTopAppBar(
                 )
             }
         }
-
         CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
             Row(
                 Modifier
@@ -140,8 +140,8 @@ internal fun ExpandableAppBar(
         }
     }
 }
-private val AppBarHeight = 56.dp
-private val AppBarHorizontalPadding = 4.dp
+val AppBarHeight = 56.dp
+val AppBarHorizontalPadding = 4.dp
 private val TitleInsetWithoutIcon = Modifier.width(16.dp - AppBarHorizontalPadding)
 private val TitleIconModifier = Modifier.fillMaxHeight()
     .width(72.dp - AppBarHorizontalPadding)

@@ -16,12 +16,19 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state
 
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.search.SearchSuggestion
 
-sealed class SearchSuggestion(
-    val filterable: String,
-) {
+data class RecentSearchSuggestion(val query: String) : SearchSuggestion {
+    override val type: String = "recent"
+    override val filterable: String = query
+}
 
-    data class RecentSearchSuggestion(val query: String) : SearchSuggestion(query)
-    data class PersonSearchSuggestion(val person: Person) : SearchSuggestion(person.name)
-    data class ServerSearchSuggestion(val query: String) : SearchSuggestion(query)
+data class PersonSearchSuggestion(val person: Person) : SearchSuggestion {
+    override val type: String = "person"
+    override val filterable: String = person.name
+}
+
+data class ServerSearchSuggestion(val query: String) : SearchSuggestion {
+    override val type: String = "server"
+    override val filterable: String = query
 }

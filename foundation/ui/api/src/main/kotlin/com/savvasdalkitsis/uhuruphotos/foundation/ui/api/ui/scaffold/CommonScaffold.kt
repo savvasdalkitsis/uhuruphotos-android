@@ -50,6 +50,8 @@ fun CommonScaffold(
     title: @Composable () -> Unit = { Logo() },
     bottomBarContent: @Composable () -> Unit = {},
     actionBarContent: @Composable (RowScope.() -> Unit) = {},
+    alternativeTopBar: @Composable () -> Unit = {},
+    showAlternativeTopBar: Boolean = false,
     toolbarColor: @Composable () -> Color = { MaterialTheme.colors.background.copy(alpha = 0.8f) },
     bottomBarColor: @Composable () -> Color = { MaterialTheme.colors.background.copy(alpha = 0.8f) },
     topBarDisplayed: Boolean = true,
@@ -66,7 +68,9 @@ fun CommonScaffold(
             title = title,
             expandable = expandableTopBar,
             navigationIcon = navigationIcon,
-            actionBarContent = actionBarContent
+            actionBarContent = actionBarContent,
+            alternativeTopBar = alternativeTopBar,
+            showAlternativeTopBar = showAlternativeTopBar,
         )
     },
     bottomBarContent = bottomBarContent,

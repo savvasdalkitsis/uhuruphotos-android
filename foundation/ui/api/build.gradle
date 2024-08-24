@@ -15,6 +15,7 @@ dependencies {
             libs.androidx.compose.ui,
             libs.androidx.compose.constraintlayout,
             libs.capturable,
+            libs.kotlinx.immutable,
             libs.scrollbar,
             project(":foundation:compose:api"),
             project(":foundation:image:api"),

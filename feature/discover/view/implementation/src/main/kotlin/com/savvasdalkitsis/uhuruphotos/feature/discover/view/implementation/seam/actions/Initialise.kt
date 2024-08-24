@@ -26,13 +26,16 @@ import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.DiscoverMutation.ShowPeopleUpsell
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.DiscoverMutation.ShowSearchSuggestions
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.DiscoverState
-import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.SearchSuggestion
+import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.PersonSearchSuggestion
+import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.RecentSearchSuggestion
+import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.ServerSearchSuggestion
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.flow
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.onErrors
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.onErrorsIgnore
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.andThen
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.search.SearchSuggestion
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -68,17 +71,17 @@ data object Initialise : DiscoverAction() {
             combine(
                 searchUseCase.getRecentTextSearches()
                     .map {
-                        it.map(SearchSuggestion::RecentSearchSuggestion)
+                        it.map(::RecentSearchSuggestion)
                     },
                 peopleUseCase.observePeopleByPhotoCount()
                     .onErrorsIgnore()
                     .toPeople()
                     .map {
-                        it.map(SearchSuggestion::PersonSearchSuggestion)
+                        it.map(::PersonSearchSuggestion)
                     },
                 searchUseCase.getSearchSuggestions()
                     .map {
-                        it.map(SearchSuggestion::ServerSearchSuggestion)
+                        it.map(::ServerSearchSuggestion)
                     },
                 queryFilter,
                 ) { recentSearches, people, searchSuggestions, query ->

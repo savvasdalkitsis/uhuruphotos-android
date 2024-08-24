@@ -40,11 +40,12 @@ import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 
 @Composable
 internal fun UserAlbumItem(
+    modifier: Modifier,
     album: UserAlbumState,
     action: (UserAlbumsAction) -> Unit,
 ) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .padding(8.dp)
             .clickable { action(UserAlbumSelected(album)) }
     ) {

@@ -16,8 +16,10 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsState
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.action.ChangeSorting
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.action.FilterAlbums
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.action.Refresh
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.action.UserAlbumsAction
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.Catalogue
@@ -35,12 +37,20 @@ internal fun UserAlbums(
         isEmpty = state.albums.isEmpty(),
         emptyContentMessage = string.no_user_albums,
         sorting = state.sorting,
+        initialFilter = state.filter,
+        onFilterUpdate =  { action(FilterAlbums(it)) },
         onChangeSorting = { action(ChangeSorting(it)) },
     ) {
-        state.albums.forEach { album ->
-            item(album.id) {
-                UserAlbumItem(album, action)
+        state.albums
+            .filter { it.visible }
+            .forEach { album ->
+                item(album.id) {
+                    UserAlbumItem(
+                        modifier = Modifier.animateItemPlacement(),
+                        album = album,
+                        action = action
+                    )
+                }
             }
-        }
     }
 }

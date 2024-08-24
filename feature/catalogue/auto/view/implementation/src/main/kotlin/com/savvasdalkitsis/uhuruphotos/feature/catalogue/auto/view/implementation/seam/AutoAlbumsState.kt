@@ -22,4 +22,5 @@ data class AutoAlbumsState(
     val isLoading: Boolean = false,
     val albums: List<AutoAlbum> = emptyList(),
     val sorting: CatalogueSorting = CatalogueSorting.default,
+    val filter: String = "",
 )

@@ -13,6 +13,7 @@ dependencies {
             libs.androidx.compose.foundation,
             libs.androidx.compose.material,
             project(":foundation:icons:api"),
+            project(":foundation:navigation:api"),
             project(":foundation:strings:api"),
             project(":foundation:ui:api"),
     )

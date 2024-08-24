@@ -18,36 +18,15 @@ package com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementati
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam.AutoAlbumsActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam.AutoAlbumsMutation
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam.AutoAlbumsMutation.DisplayAlbums
-import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam.AutoAlbumsMutation.SetFilter
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam.AutoAlbumsState
-import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.andThen
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.merge
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSorting
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 
-data object Load : AutoAlbumsAction() {
+data class FilterAlbums(val filter: String) : AutoAlbumsAction() {
     context(AutoAlbumsActionsContext) override fun handle(
         state: AutoAlbumsState
-    ) = merge(
-        combine(
-            autoAlbumsUseCase.observeAutoAlbums(),
-            filterText,
-        ) { albums, filter ->
-            DisplayAlbums(albums.map {
-                it.copy(
-                    visible = when {
-                        filter.isBlank() -> true
-                        else -> it.title.contains(filter, ignoreCase = true)
-                    }
-                )
-            }) andThen SetFilter(filter)
-        },
-        loading
-            .map(AutoAlbumsMutation::Loading)
-    ).safelyOnStartIgnoring {
-        if (autoAlbumsUseCase.getAutoAlbums().isEmpty()) {
-            refreshAlbums()
-        }
+    ) = flow<DisplayAlbums> {
+        filterText.emit(filter)
     }
 }

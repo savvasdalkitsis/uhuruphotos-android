@@ -22,6 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUse
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject
 
 internal class AutoAlbumsActionsContext @Inject constructor(
@@ -32,6 +33,7 @@ internal class AutoAlbumsActionsContext @Inject constructor(
 
     private val _loading = MutableSharedFlow<Boolean>()
     val loading: Flow<Boolean> get() = _loading
+    val filterText = MutableStateFlow("")
 
     suspend fun refreshAlbums() {
         _loading.emit(true)

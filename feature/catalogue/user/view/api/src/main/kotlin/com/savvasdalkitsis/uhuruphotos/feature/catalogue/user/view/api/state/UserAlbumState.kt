@@ -31,6 +31,7 @@ data class UserAlbumState(
     val cover: VitrineState,
     val title: Title,
     val photoCount: Int?,
+    val visible: Boolean = true,
 )
 
 fun UserAlbums.toUserAlbumState() = UserAlbumState(

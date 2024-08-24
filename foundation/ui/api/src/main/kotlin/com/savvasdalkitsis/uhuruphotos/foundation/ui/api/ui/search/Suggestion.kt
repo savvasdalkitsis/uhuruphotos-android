@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui
+package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.search
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -31,7 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-internal fun Suggestion(
+fun Suggestion(
     modifier: Modifier = Modifier,
     text: String,
     onClick: () -> Unit,
