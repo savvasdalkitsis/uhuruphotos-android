@@ -47,8 +47,8 @@ import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.IconOutlineButton
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SectionHeader
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.IconOutlineButton
 
 @Composable
 internal fun LocalFolders(
@@ -76,7 +76,7 @@ internal fun LocalFolders(
             for ((bucket, vitrineState) in media.buckets) {
                 item(bucket.id) {
                     NamedVitrine(
-                        modifier = Modifier.animateItemPlacement(),
+                        modifier = Modifier.animateItem(),
                         state = vitrineState,
                         photoGridModifier = Modifier.width(120.dp),
                         title = bucket.displayName,

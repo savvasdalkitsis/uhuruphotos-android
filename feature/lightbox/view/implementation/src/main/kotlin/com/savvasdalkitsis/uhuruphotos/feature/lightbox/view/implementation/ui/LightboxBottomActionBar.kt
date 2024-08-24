@@ -130,7 +130,7 @@ fun LightboxBottomActionBarOptions(
         if (mediaItem.showShareIcon) {
             item("share") {
                 ActionIconWithText(
-                    modifier = Modifier.animateItemPlacement(),
+                    modifier = Modifier.animateItem(),
                     onClick = { action(ShareMediaItem) },
                     icon = drawable.ic_share,
                     text = stringResource(string.share),
@@ -140,7 +140,7 @@ fun LightboxBottomActionBarOptions(
         if (mediaItem.showUseAsIcon) {
             item("useAs") {
                 ActionIconWithText(
-                    modifier = Modifier.animateItemPlacement(),
+                    modifier = Modifier.animateItem(),
                     onClick = { action(UseMediaItemAs) },
                     icon = drawable.ic_open_in_new,
                     text = stringResource(string.use_as),
@@ -150,7 +150,7 @@ fun LightboxBottomActionBarOptions(
         if (mediaItem.showEditIcon) {
             item("edit") {
                 ActionIconWithText(
-                    modifier = Modifier.animateItemPlacement(),
+                    modifier = Modifier.animateItem(),
                     onClick = { action(EditMediaItem) },
                     icon = drawable.ic_edit,
                     text = stringResource(string.edit),
@@ -160,7 +160,7 @@ fun LightboxBottomActionBarOptions(
         if (showRestoreButton) {
             item("restore") {
                 ActionIconWithText(
-                    modifier = Modifier.animateItemPlacement(),
+                    modifier = Modifier.animateItem(),
                     onClick = { action(AskForMediaItemRestoration) },
                     icon = drawable.ic_restore_from_trash,
                     text = stringResource(string.restore),
@@ -170,7 +170,7 @@ fun LightboxBottomActionBarOptions(
         if (mediaItem.showDeleteButton) {
             item("delete") {
                 ActionIconWithText(
-                    modifier = Modifier.animateItemPlacement(),
+                    modifier = Modifier.animateItem(),
                     onClick = { action(AskForMediaItemTrashing) },
                     icon = drawable.ic_delete,
                     text = stringResource(string.delete),

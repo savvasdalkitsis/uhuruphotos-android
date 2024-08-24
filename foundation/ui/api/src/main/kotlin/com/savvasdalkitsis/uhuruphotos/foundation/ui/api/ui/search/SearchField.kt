@@ -141,7 +141,7 @@ fun SearchField(
                 }
             },
             keyboardOptions = KeyboardOptions.Default.copy(
-                autoCorrect = true,
+                autoCorrectEnabled = true,
                 keyboardType = KeyboardType.Text,
                 imeAction = ImeAction.Search,
             ),

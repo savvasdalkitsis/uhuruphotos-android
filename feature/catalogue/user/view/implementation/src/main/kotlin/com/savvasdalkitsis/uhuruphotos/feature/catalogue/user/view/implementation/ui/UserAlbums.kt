@@ -46,7 +46,7 @@ internal fun UserAlbums(
             .forEach { album ->
                 item(album.id) {
                     UserAlbumItem(
-                        modifier = Modifier.animateItemPlacement(),
+                        modifier = Modifier.animateItem(),
                         album = album,
                         action = action
                     )

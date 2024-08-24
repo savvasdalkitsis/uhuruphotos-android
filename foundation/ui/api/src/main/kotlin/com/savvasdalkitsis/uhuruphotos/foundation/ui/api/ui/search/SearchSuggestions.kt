@@ -17,23 +17,17 @@ package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.search
 
 import android.content.res.Configuration.ORIENTATION_LANDSCAPE
 import androidx.compose.animation.animateContentSize
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Card
-import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.persistentMapOf
@@ -66,7 +60,7 @@ internal fun SearchSuggestions(
                     val suggestion = s.filterable
                     item("$type-$suggestion", contentType = "${type}SearchSuggestion") {
                         Suggestion(
-                            modifier = Modifier.animateItemPlacement(),
+                            modifier = Modifier.animateItem(),
                             text = suggestion,
                             onClick = {
                                 onSearchAction(s)

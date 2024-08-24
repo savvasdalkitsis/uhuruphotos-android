@@ -46,7 +46,7 @@ internal fun AutoAlbums(
             .forEach { album ->
                 item(album.id) {
                     AutoAlbumItem(
-                        modifier = Modifier.animateItemPlacement(),
+                        modifier = Modifier.animateItem(),
                         album = album,
                         action = action
                     )
