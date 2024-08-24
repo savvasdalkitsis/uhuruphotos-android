@@ -37,7 +37,7 @@ kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 ksp = "com.google.devtools.ksp:1.9.24-1.0.20"
 moduleGraph = "com.savvasdalkitsis.module-dependency-graph:0.12"
 powerassert = "com.bnorm.power.kotlin-power-assert:0.13.0"
-redacted = "dev.zacsweers.redacted:1.7.1"
+redacted = "dev.zacsweers.redacted:1.10.0"
 sonarqube = "org.sonarqube:4.4.1.3373"
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
 
