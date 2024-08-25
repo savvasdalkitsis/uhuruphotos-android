@@ -1,0 +1,4 @@
+* Adding ability to filter auto and user albums by a search bar
+* Fixing lightbox transition between thumbnail and full image
+* Fixing some ui spacing and sizing
+* Updating to latest versions of multiple dependencies
