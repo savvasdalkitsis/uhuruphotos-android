@@ -1,10 +1,8 @@
+plugins {
+    alias(libs.plugins.kotlin.compose.compiler)
+}
+
 android {
-    buildFeatures {
-        compose true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
-    }
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.map.implementation.maplibre'
 
     defaultConfig {
@@ -37,5 +35,5 @@ dependencies {
     implementation(libs.maplibre.annotations) {
         exclude group: 'org.maplibre.gl', module: 'android-sdk-geojson'
     }
-    compileOnly('org.maplibre.gl:android-sdk-geojson:5.9.1')
+    compileOnly(libs.android.sdk.geojson)
 }

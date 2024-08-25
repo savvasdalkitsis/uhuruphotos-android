@@ -61,15 +61,18 @@ subprojects {
             sourceCompatibility JavaVersion.VERSION_17
             targetCompatibility JavaVersion.VERSION_17
         }
-        kotlinOptions {
-            jvmTarget = '17'
-        }
     }
 
     dependencies {
         kapt libs.hilt.dagger.compiler
         kapt libs.androidx.hilt.compiler
     }
+
+//    with(extensions.getByType<KotlinAndroidProjectExtension>()) {
+//        compilerOptions {
+//            jvmTarget = JVM_17
+//        }
+//    }
 
     tasks.withType(KotlinCompile).configureEach {
         compilerOptions {

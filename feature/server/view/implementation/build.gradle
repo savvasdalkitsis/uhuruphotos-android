@@ -2,13 +2,11 @@ plugins {
     id 'kotlin-parcelize'
 }
 
+plugins {
+    alias(libs.plugins.kotlin.compose.compiler)
+}
+
 android {
-    buildFeatures {
-        compose true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
-    }
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation'
 }
 

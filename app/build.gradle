@@ -2,15 +2,13 @@ plugins {
     id 'dagger.hilt.android.plugin'
     alias(libs.plugins.google.services)
     alias(libs.plugins.about)
+    alias(libs.plugins.kotlin.compose.compiler)
     id 'com.bugsnag.android.gradle'
 }
 
 android {
     buildFeatures {
         compose true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
     }
 
     defaultConfig {
