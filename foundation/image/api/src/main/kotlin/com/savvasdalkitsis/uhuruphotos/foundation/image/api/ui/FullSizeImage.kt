@@ -17,9 +17,9 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui
 
 import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
 import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES.UPSIDE_DOWN_CAKE
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -28,13 +28,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import coil.request.ImageRequest
 import coil.request.SuccessResult
+import coil.transition.Transition
 import com.savvasdalkitsis.uhuruphotos.foundation.activity.api.extensions.setHDR
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.LocalFullImageLoader
-import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.LocalThumbnailImageLoader
+import kotlinx.coroutines.delay
 import me.saket.telephoto.zoomable.ZoomableImageState
 import me.saket.telephoto.zoomable.coil.ZoomableAsyncImage
 
@@ -51,30 +53,34 @@ fun FullSizeImage(
 ) {
     val context = LocalContext.current
 
-    var thumb by remember {
-        mutableStateOf<Drawable?>(null)
-    }
-    val imageLoader = LocalThumbnailImageLoader.current
-    val request = lowResUrl?.toRequest(
-        onSuccess = { result ->
-            thumb = result.drawable
-        },
-    )
-    LaunchedEffect(lowResUrl) {
-        if (request != null) {
-            imageLoader.execute(request)
+    var showThumbnail by remember { mutableStateOf(true) }
+
+    LaunchedEffect(zoomableState.isImageDisplayed) {
+        if (zoomableState.isImageDisplayed) {
+            delay(500)
+            showThumbnail = false
         }
+    }
+
+    if (showThumbnail) {
+        Thumbnail(
+            modifier = Modifier.fillMaxSize(),
+            url = lowResUrl,
+            contentScale = contentScale,
+            contentDescription = "low resolution image"
+        )
     }
 
     ZoomableAsyncImage(
         modifier = modifier
+            .background(Color.Transparent)
             .fillMaxSize(),
         imageLoader = LocalFullImageLoader.current,
         state = zoomableState,
         onClick = { onClick() },
         model = ImageRequest.Builder(context)
             .data(fullResUrl)
-            .placeholder(thumb)
+            .transitionFactory(Transition.Factory.NONE)
             .listener(remember {
                 object : ImageRequest.Listener {
                     override fun onSuccess(request: ImageRequest, result: SuccessResult)  {
