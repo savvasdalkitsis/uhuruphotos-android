@@ -159,7 +159,7 @@ internal fun SmartCollage(
                     }
                     FeedClusterHeader(
                         modifier = Modifier
-                            .animateItemPlacement()
+                            .animateItem()
                             .alpha(alpha),
                         cluster = cluster,
                         showSelectionHeader = showSelectionHeader,
@@ -182,7 +182,7 @@ internal fun SmartCollage(
                             rememberSharedElementTransitionState(id.value, contentUrl, aspectRatio)
                         Cel(
                             modifier = Modifier
-                                .animateItemPlacement()
+                                .animateItem()
                                 .clip(shape)
                                 .then(
                                     if (maintainAspectRatio) {

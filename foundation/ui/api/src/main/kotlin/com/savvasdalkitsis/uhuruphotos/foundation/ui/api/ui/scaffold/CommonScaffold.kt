@@ -91,6 +91,7 @@ fun CommonScaffold(
     var bottomBarHeight by remember {
         mutableIntStateOf(0)
     }
+    @Suppress("DEPRECATION")
     Scaffold(
         modifier = modifier
             .recomposeHighlighter()

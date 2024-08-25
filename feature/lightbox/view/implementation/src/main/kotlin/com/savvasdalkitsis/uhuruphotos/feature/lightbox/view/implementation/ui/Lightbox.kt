@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui
 
+import androidx.compose.animation.core.SnapSpec
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
@@ -83,7 +84,7 @@ internal fun Lightbox(
                 LightboxBackHandler(showingActionsOverlay, scrollState, zoomableState, action)
             } else {
                 LaunchedEffect(Unit) {
-                    zoomableState.resetZoom(withAnimation = false)
+                    zoomableState.resetZoom(SnapSpec())
                     scrollState.scrollTo(0)
                 }
             }

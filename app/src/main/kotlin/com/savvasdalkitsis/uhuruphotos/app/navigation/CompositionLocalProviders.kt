@@ -87,7 +87,7 @@ class CompositionLocalProviders @Inject constructor(
         val sharedElementTransition = remember(screenshotState) {
             SharedElementTransition(screenshotState)
         }
-        val systemUiController = rememberSystemUiController()
+        @Suppress("DEPRECATION") val systemUiController = rememberSystemUiController()
         CompositionLocalProvider(
             LocalExoPlayerProvider provides exoplayerProvider,
             LocalAnimatedVideoThumbnails provides animateVideoThumbnails.value,

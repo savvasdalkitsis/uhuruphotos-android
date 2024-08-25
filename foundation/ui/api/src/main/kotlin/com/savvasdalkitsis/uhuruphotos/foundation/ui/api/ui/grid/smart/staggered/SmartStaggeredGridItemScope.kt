@@ -27,10 +27,10 @@ class SmartStaggeredGridItemScope(
 ): SmartGridItemScope {
     val lazyStaggeredGridItemScope: MutableState<LazyStaggeredGridItemScope?> = mutableStateOf(null)
 
-    override fun Modifier.animateItemPlacement(): Modifier =
+    override fun Modifier.animateItem(): Modifier =
         lazyStaggeredGridItemScope.value?.let {
             with (it) {
-                animateItemPlacement()
+                animateItem()
             }
         } ?: this
 }

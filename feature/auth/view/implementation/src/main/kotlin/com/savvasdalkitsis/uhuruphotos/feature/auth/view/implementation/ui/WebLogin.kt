@@ -31,6 +31,7 @@ private const val USER_AGENT =
     "Mozilla/5.0 (Linux; Android 12; Pixel 6 Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/" +
             "99.0.4844.88 Mobile Safari/537.36 OPR/68.2.3557.64219"
 
+@Suppress("DEPRECATION")
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
 fun WebLogin(state: WebLoginState) {

@@ -78,7 +78,7 @@ fun Gallery(
                 collageHeader = state.people.takeIf { it.isNotEmpty() }?.let {
                     {
                         PeopleBanner(
-                            modifier = Modifier.animateItemPlacement(),
+                            modifier = Modifier.animateItem(),
                             people = state.people,
                             onPersonSelected = { action(PersonSelected(it)) }
                         )

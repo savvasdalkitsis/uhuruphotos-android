@@ -25,10 +25,10 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.smart.SmartGrid
 @Stable
 class SmartSimpleGridItemScope: SmartGridItemScope {
     val lazyGridItemScope: MutableState<LazyGridItemScope?> = mutableStateOf(null)
-    override fun Modifier.animateItemPlacement(): Modifier =
+    override fun Modifier.animateItem(): Modifier =
         lazyGridItemScope.value?.let {
             with(it) {
-                animateItemPlacement()
+                Modifier.animateItem()
             }
         } ?: this
 }

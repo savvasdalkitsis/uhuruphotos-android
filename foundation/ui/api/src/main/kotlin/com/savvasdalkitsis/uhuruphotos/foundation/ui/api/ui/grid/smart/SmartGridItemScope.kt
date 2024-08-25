@@ -20,5 +20,5 @@ import androidx.compose.ui.Modifier
 
 @Stable
 interface SmartGridItemScope {
-    fun Modifier.animateItemPlacement(): Modifier
+    fun Modifier.animateItem(): Modifier
 }

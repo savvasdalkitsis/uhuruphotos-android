@@ -60,10 +60,10 @@ class LightboxRepository @Inject constructor(
 
     fun observeDetails(
         md5Hash: Md5Hash,
-    ): Flow<LightboxDetails> = userUseCase.observeUser().flatMapLatest { user ->
+    ): Flow<LightboxDetails> = userUseCase.observeUser().flatMapLatest {
         lightboxDetailsQueries.get(md5Hash.value)
             .asFlow().mapToOneOrNull(Dispatchers.IO).distinctUntilChanged().map {
-                it?.toLightboxDetails(user.id)
+                it?.toLightboxDetails()
             }
             .filterNotNull()
     }
@@ -114,7 +114,7 @@ class LightboxRepository @Inject constructor(
     private suspend fun getDbDetails(md5Hash: Md5Hash): DbLightboxDetails? =
         lightboxDetailsQueries.get(md5Hash.value).awaitSingleOrNull()
 
-    private suspend fun DbLightboxDetails.toLightboxDetails(userId: Int?): LightboxDetails {
+    private suspend fun DbLightboxDetails.toLightboxDetails(): LightboxDetails {
         val people = peopleUseCase.getPeopleByName().ifEmpty {
             peopleUseCase.refreshPeople()
             peopleUseCase.getPeopleByName()

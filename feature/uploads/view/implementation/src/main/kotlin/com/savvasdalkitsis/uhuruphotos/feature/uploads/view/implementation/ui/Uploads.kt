@@ -124,7 +124,6 @@ fun UploadJobRow(job: UploadJob) {
             .height(64.dp),
         horizontalArrangement = spacedBy(4.dp),
     ) {
-        val smallSegment = 0.2f
         Thumbnail(
             modifier = Modifier
                 .fillMaxHeight()

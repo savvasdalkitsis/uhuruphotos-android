@@ -13,6 +13,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
+@file:Suppress("DEPRECATION")
+
 package com.savvasdalkitsis.uhuruphotos.foundation.ui.implementation.usecase
 
 import androidx.compose.ui.hapticfeedback.HapticFeedback
