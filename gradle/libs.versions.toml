@@ -2,18 +2,18 @@
 about = "11.1.0"
 accompanist = "0.34.0"
 agp = "8.5.2"
+android-sdk-geojson = "5.9.1"
 androidx-hilt = "1.2.0"
 autodagger = "1.2.1"
 coil = "2.6.0"
-compose = "1.6.8"
-compose-compiler = "1.5.14"
+compose = "1.7.0-rc01"
 crypto = "1.1.0-alpha06"
 datastore = "1.1.1"
 gms = "19.0.0"
 google-services = "4.4.2"
 hilt = "2.51.1"
 hilt-compiler = "1.2.0"
-kotlin = "1.9.24"
+kotlin = "2.0.20"
 kotlinx = "1.8.1"
 lumberjack = "6.0.7"
 media3 = "1.4.0"
@@ -34,10 +34,11 @@ analysis = "com.autonomousapps.dependency-analysis:1.33.0"
 google-services = { id = "com.google.gms.google-services", version.ref = "google-services" }
 kotlin-android = { id = 'org.jetbrains.kotlin.android', version.ref = "kotlin" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
-ksp = "com.google.devtools.ksp:1.9.24-1.0.20"
+kotlin-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+ksp = "com.google.devtools.ksp:2.0.20-1.0.24"
 moduleGraph = "com.savvasdalkitsis.module-dependency-graph:0.12"
 powerassert = "com.bnorm.power.kotlin-power-assert:0.13.0"
-redacted = "dev.zacsweers.redacted:1.7.1"
+redacted = "dev.zacsweers.redacted:1.10.0"
 sonarqube = "org.sonarqube:4.4.1.3373"
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
 
@@ -49,6 +50,7 @@ accompanist-navigation = { module = "com.google.accompanist:accompanist-navigati
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist" }
 accompanist-systemui = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
 accompanist-webview = { module = "com.google.accompanist:accompanist-webview", version.ref = "accompanist" }
+android-sdk-geojson = { module = "org.maplibre.gl:android-sdk-geojson", version.ref = "android-sdk-geojson" }
 androidx-activity = "androidx.activity:activity-compose:1.9.1"
 androidx-annotation = "androidx.annotation:annotation:1.8.2"
 androidx-compose-animation-base = { module = "androidx.compose.animation:animation", version.ref = "compose" }
