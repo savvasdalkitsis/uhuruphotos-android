@@ -90,7 +90,7 @@ autodagger-core = { module = "se.ansman.dagger.auto:android", version.ref = "aut
 autodagger-kapt = { module = "se.ansman.dagger.auto:compiler", version.ref = "autodagger" }
 autodagger-retrofit = { module = "se.ansman.dagger.auto:retrofit", version.ref = "autodagger" }
 bubble-navigation = "com.github.savvasdalkitsis:BubbleNavigationBarCompose:1.0.2"
-bugsnag = "com.bugsnag:bugsnag-android:6.6.0"
+bugsnag = "com.bugsnag:bugsnag-android:6.7.0"
 bugsnag-plugin = "com.bugsnag:bugsnag-android-gradle-plugin:8.1.0"
 capturable = "com.github.SmartToolFactory:Compose-Screenshot:1.0.3"
 coil-base = { module = "io.coil-kt:coil-base", version.ref = "coil" }
