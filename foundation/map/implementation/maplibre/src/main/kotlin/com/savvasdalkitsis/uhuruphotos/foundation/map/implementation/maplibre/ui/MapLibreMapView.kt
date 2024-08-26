@@ -25,9 +25,9 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.viewinterop.AndroidView
-import com.mapbox.mapboxsdk.camera.CameraPosition
-import com.mapbox.mapboxsdk.maps.MapView
-import com.mapbox.mapboxsdk.utils.BitmapUtils
+import org.maplibre.android.camera.CameraPosition
+import org.maplibre.android.maps.MapView
+import org.maplibre.android.utils.BitmapUtils
 import com.savvasdalkitsis.uhuruphotos.foundation.activity.api.extensions.getActivity
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapOptions
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewScope

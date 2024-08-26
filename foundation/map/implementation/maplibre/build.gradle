@@ -21,6 +21,8 @@ dependencies {
             libs.androidx.startup,
             libs.bundles.autodagger,
             libs.hilt,
+            libs.maplibre,
+            libs.maplibre.annotations,
             project(":foundation:activity:api"),
             project(":foundation:android:api"),
             project(":foundation:icons:api"),
@@ -29,11 +31,5 @@ dependencies {
             project(":foundation:map:api"),
     )
     kapt libs.autodagger.kapt
-    implementation(libs.maplibre) {
-        exclude group: 'org.maplibre.gl', module: 'android-sdk-geojson'
-    }
-    implementation(libs.maplibre.annotations) {
-        exclude group: 'org.maplibre.gl', module: 'android-sdk-geojson'
-    }
     compileOnly(libs.android.sdk.geojson)
 }

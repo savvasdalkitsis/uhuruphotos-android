@@ -16,10 +16,10 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.foundation.map.implementation.maplibre.initializer
 
 import android.app.Application
-import com.mapbox.mapboxsdk.Mapbox
-import com.mapbox.mapboxsdk.WellKnownTileServer
 import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
 import com.savvasdalkitsis.uhuruphotos.foundation.map.implementation.maplibre.api.MapLibreApi
+import org.maplibre.android.MapLibre
+import org.maplibre.android.WellKnownTileServer
 import se.ansman.dagger.auto.AutoBindIntoSet
 import javax.inject.Inject
 
@@ -28,6 +28,6 @@ internal class MapsInitializer @Inject constructor(
 ) : ApplicationCreated {
 
     override fun onAppCreated(app: Application) {
-        Mapbox.getInstance(app, MapLibreApi.getApiKey(app), WellKnownTileServer.MapTiler)
+        MapLibre.getInstance(app, MapLibreApi.getApiKey(app), WellKnownTileServer.MapTiler)
     }
 }

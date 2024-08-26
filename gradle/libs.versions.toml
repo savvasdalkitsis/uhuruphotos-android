@@ -2,7 +2,7 @@
 about = "11.2.3"
 accompanist = "0.34.0"
 agp = "8.5.2"
-android-sdk-geojson = "5.9.1"
+android-sdk-geojson = "6.0.1"
 androidx-hilt = "1.2.0"
 autodagger = "1.3.0"
 coil = "2.6.0"
@@ -126,13 +126,13 @@ lumberjack-logger-file = { module = "com.github.MFlisar.Lumberjack:logger-file",
 lumberjack-extension-feedback = { module = "com.github.MFlisar.Lumberjack:extension-feedback", version.ref = "lumberjack" }
 lumberjack-extension-notification = { module = "com.github.MFlisar.Lumberjack:extension-notification", version.ref = "lumberjack" }
 lumberjack-extension-viewer = { module = "com.github.MFlisar.Lumberjack:extension-viewer", version.ref = "lumberjack" }
-mapbox = "com.mapbox.maps:android:11.2.2"
-maplibre = "org.maplibre.gl:android-sdk:10.3.2-pre3"
-maplibre-annotations = "org.maplibre.gl:android-plugin-annotation-v9:2.0.2"
+mapbox = "com.mapbox.maps:android:11.6.0"
+maplibre = "org.maplibre.gl:android-sdk:11.1.0"
+maplibre-annotations = "org.maplibre.gl:android-plugin-annotation-v9:3.0.0"
 maps = { module = "com.google.android.gms:play-services-maps", version.ref = "gms" }
-maps-compose = "com.google.maps.android:maps-compose:4.4.2"
+maps-compose = "com.google.maps.android:maps-compose:6.1.1"
 maps-utils = "com.google.maps.android:android-maps-utils:3.8.2"
-maps-utils-ktx = "com.google.maps.android:maps-utils-ktx:5.0.0"
+maps-utils-ktx = "com.google.maps.android:maps-utils-ktx:5.1.1"
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 moshi = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "moshi" }
 moshi-ksp = { module = "com.squareup.moshi:moshi-kotlin-codegen", version.ref = "moshi" }

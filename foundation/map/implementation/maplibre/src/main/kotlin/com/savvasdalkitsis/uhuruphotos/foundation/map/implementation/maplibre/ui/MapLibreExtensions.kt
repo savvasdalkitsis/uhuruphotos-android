@@ -18,12 +18,12 @@ package com.savvasdalkitsis.uhuruphotos.foundation.map.implementation.maplibre.u
 import android.os.Bundle
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
-import com.mapbox.mapboxsdk.maps.MapView
-import com.mapbox.mapboxsdk.maps.MapboxMap
-import com.mapbox.mapboxsdk.maps.Style
-import com.mapbox.mapboxsdk.plugins.annotation.SymbolManager
-import com.mapbox.mapboxsdk.plugins.annotation.SymbolOptions
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
+import org.maplibre.android.maps.MapLibreMap
+import org.maplibre.android.maps.MapView
+import org.maplibre.android.maps.Style
+import org.maplibre.android.plugins.annotation.SymbolManager
+import org.maplibre.android.plugins.annotation.SymbolOptions
 
 
 internal fun MapView.bindTo(mapViewState: MapLibreMapViewState) {
@@ -62,11 +62,11 @@ internal fun MapView.lifecycleObserver() = object : DefaultLifecycleObserver {
     }
 }
 
-internal fun MapView?.withMap(action: MapboxMap.(MapView) -> Unit) {
+internal fun MapView?.withMap(action: MapLibreMap.(MapView) -> Unit) {
     this?.let { view -> view.getMapAsync { action(it, view) } }
 }
 
-internal fun MapView?.withStyle(action: MapboxMap.(MapView, Style) -> Unit) = withMap { view ->
+internal fun MapView?.withStyle(action: MapLibreMap.(MapView, Style) -> Unit) = withMap { view ->
     getStyle {
         action(this, view, it)
     }

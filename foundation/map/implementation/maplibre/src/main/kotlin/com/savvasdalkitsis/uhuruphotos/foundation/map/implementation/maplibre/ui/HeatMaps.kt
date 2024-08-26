@@ -15,22 +15,22 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.map.implementation.maplibre.ui
 
-import com.mapbox.geojson.Feature
-import com.mapbox.geojson.FeatureCollection
-import com.mapbox.mapboxsdk.style.expressions.Expression.get
-import com.mapbox.mapboxsdk.style.expressions.Expression.heatmapDensity
-import com.mapbox.mapboxsdk.style.expressions.Expression.interpolate
-import com.mapbox.mapboxsdk.style.expressions.Expression.linear
-import com.mapbox.mapboxsdk.style.expressions.Expression.literal
-import com.mapbox.mapboxsdk.style.expressions.Expression.rgb
-import com.mapbox.mapboxsdk.style.expressions.Expression.rgba
-import com.mapbox.mapboxsdk.style.expressions.Expression.stop
-import com.mapbox.mapboxsdk.style.expressions.Expression.zoom
-import com.mapbox.mapboxsdk.style.layers.CircleLayer
-import com.mapbox.mapboxsdk.style.layers.HeatmapLayer
-import com.mapbox.mapboxsdk.style.layers.PropertyFactory
-import com.mapbox.mapboxsdk.style.sources.GeoJsonSource
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
+import org.maplibre.android.style.expressions.Expression.get
+import org.maplibre.android.style.expressions.Expression.heatmapDensity
+import org.maplibre.android.style.expressions.Expression.interpolate
+import org.maplibre.android.style.expressions.Expression.linear
+import org.maplibre.android.style.expressions.Expression.literal
+import org.maplibre.android.style.expressions.Expression.rgb
+import org.maplibre.android.style.expressions.Expression.rgba
+import org.maplibre.android.style.expressions.Expression.stop
+import org.maplibre.android.style.expressions.Expression.zoom
+import org.maplibre.android.style.layers.CircleLayer
+import org.maplibre.android.style.layers.HeatmapLayer
+import org.maplibre.android.style.layers.PropertyFactory
+import org.maplibre.android.style.sources.GeoJsonSource
+import org.maplibre.geojson.Feature
+import org.maplibre.geojson.FeatureCollection
 
 internal fun createHeatMapSource(
     layerId: String,
