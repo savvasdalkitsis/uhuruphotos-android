@@ -776,7 +776,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\"title\":\"Title\",\"photos\":[\"8a99ff6a6b0cb1bd147fd14e7d179dc91\"]}",
+									"raw": "{\"title\":\"Test\",\"photos\":[\"8a99ff6a6b0cb1bd147fd14e7d179dc91\"]}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -784,7 +784,7 @@
 									}
 								},
 								"url": {
-									"raw": "{{HOST}}/api/albums/user/edit/:id",
+									"raw": "{{HOST}}/api/albums/user/edit/:id/",
 									"host": [
 										"{{HOST}}"
 									],
@@ -793,12 +793,13 @@
 										"albums",
 										"user",
 										"edit",
-										":id"
+										":id",
+										""
 									],
 									"variable": [
 										{
 											"key": "id",
-											"value": ""
+											"value": "4"
 										}
 									]
 								}
