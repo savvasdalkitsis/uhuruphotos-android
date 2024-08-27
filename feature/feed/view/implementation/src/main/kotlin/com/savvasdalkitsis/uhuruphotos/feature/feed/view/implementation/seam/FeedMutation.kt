@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam
 
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.state.UserAlbumState
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
@@ -23,6 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.MemoryCel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
 
@@ -85,11 +87,11 @@ sealed class FeedMutation(
     })
 
     data class ShowMemories(val memories: List<MemoryCel>) : FeedMutation({
-        it.copy(memories = memories)
+        it.copy(memories = memories.toPersistentList())
     })
 
     data object HideMemories : FeedMutation({
-        it.copy(memories = emptyList())
+        it.copy(memories = persistentListOf())
     })
 
     data class ShowLostServerConnection(val show: Boolean) : FeedMutation({
@@ -109,7 +111,7 @@ sealed class FeedMutation(
     })
 
     data class AskForPermissions(val deniedPermissions: List<String>) : FeedMutation({
-        it.copy(missingPermissions = deniedPermissions)
+        it.copy(missingPermissions = deniedPermissions.toPersistentList())
     })
 
     data object HideLocalStoragePermissionRequest : FeedMutation({
@@ -126,6 +128,40 @@ sealed class FeedMutation(
 
     data class AutoHideNavBar(val autoHide: Boolean) : FeedMutation({
         it.copy(autoHideNavOnScroll = autoHide)
+    })
+
+    data class ShowAddToAlbumDialog(val albums: List<UserAlbumState>) : FeedMutation({
+        it.copy(
+            isRefreshing = false,
+            showAddToAlbumDialog = albums.toPersistentList(),
+        )
+    })
+
+    data class FilterAlbums(val filter: String) : FeedMutation({
+        it.copy(
+            showAddToAlbumDialog = it.showAddToAlbumDialog
+                ?.map { album ->
+                    album.copy(visible =
+                        when {
+                            filter.isBlank() -> true
+                            else -> (album.title as? Title.Text)?.title.orEmpty().contains(filter, ignoreCase = true)
+                        }
+                    )
+                }
+                ?.toPersistentList(),
+        )
+    })
+
+    data object HideAddToAlbumDialog : FeedMutation({
+        it.copy(showAddToAlbumDialog = null)
+    })
+
+    data object ShowNewAlbumNameDialog : FeedMutation({
+        it.copy(showNewAlbumNameDialog = true)
+    })
+
+    data object HideNewAlbumNameDialog : FeedMutation({
+        it.copy(showNewAlbumNameDialog = false)
     })
 }
 

@@ -12,6 +12,9 @@ dependencies {
             project(":feature:album:user:domain:api"),
             project(":feature:media:remote:domain:api"),
             project(":foundation:log:api"),
+            project(":foundation:notification:api"),
+            project(":foundation:strings:api"),
+            project(":foundation:worker:api"),
     )
     kapt libs.autodagger.kapt
     ksp libs.moshi.ksp

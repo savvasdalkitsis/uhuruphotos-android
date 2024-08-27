@@ -9,6 +9,9 @@ insert:
 INSERT OR REPLACE INTO userAlbum VALUES ?;
 
 getUserAlbum:
+SELECT * FROM userAlbum WHERE id == :id LIMIT 1;
+
+getUserAlbumMedia:
 SELECT
     userAlbum.id,
     userAlbum.date,

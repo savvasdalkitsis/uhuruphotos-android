@@ -17,10 +17,12 @@ package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementati
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.ui.UserAlbumItem
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsState
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.action.ChangeSorting
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.action.FilterAlbums
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.action.Refresh
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.action.UserAlbumSelected
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.action.UserAlbumsAction
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.Catalogue
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
@@ -48,7 +50,7 @@ internal fun UserAlbums(
                     UserAlbumItem(
                         modifier = Modifier.animateItem(),
                         album = album,
-                        action = action
+                        onAlbumSelected = { action(UserAlbumSelected(album)) },
                     )
                 }
             }

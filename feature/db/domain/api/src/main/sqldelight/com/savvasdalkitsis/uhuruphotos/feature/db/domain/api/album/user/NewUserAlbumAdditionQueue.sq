@@ -1,0 +1,15 @@
+CREATE TABLE newUserAlbumAdditionQueue (
+    albumName TEXT NOT NULL,
+    mediaId TEXT NOT NULL,
+    UNIQUE(albumName, mediaId) ON CONFLICT IGNORE
+);
+
+insert:
+INSERT OR IGNORE INTO newUserAlbumAdditionQueue VALUES (:albumName, :mediaId);
+
+migrate:
+INSERT INTO userAlbumAdditionQueue (albumId, mediaId)
+SELECT :albumId, mediaId FROM newUserAlbumAdditionQueue WHERE albumName == :albumName;
+
+removeForName:
+DELETE FROM newUserAlbumAdditionQueue WHERE albumName == :albumName;

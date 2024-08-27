@@ -29,6 +29,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.AutoAlbu
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.AutoAlbumQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.AutoAlbums
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.AutoAlbumsQueries
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.NewUserAlbumAdditionQueueQueries
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbumAdditionQueue
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbumAdditionQueueQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbumPhotosQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbumQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbums
@@ -111,6 +114,7 @@ class DbModule {
         portfolioAdapter = Portfolio.Adapter(IntColumnAdapter),
         portfolioItemsAdapter = PortfolioItems.Adapter(IntColumnAdapter),
         lightboxDetailsAdapter = LightboxDetails.Adapter(IntColumnAdapter, IntColumnAdapter),
+        userAlbumAdditionQueueAdapter = UserAlbumAdditionQueue.Adapter(IntColumnAdapter),
     )
 
     @Provides
@@ -181,5 +185,11 @@ class DbModule {
 
     @Provides
     fun lightboxDetailsQueries(database: Database): LightboxDetailsQueries = database.lightboxDetailsQueries
+
+    @Provides
+    fun userAlbumAdditionQueueQueries(database: Database): UserAlbumAdditionQueueQueries = database.userAlbumAdditionQueueQueries
+
+    @Provides
+    fun newUserAlbumAdditionQueueQueries(database: Database): NewUserAlbumAdditionQueueQueries = database.newUserAlbumAdditionQueueQueries
 
 }

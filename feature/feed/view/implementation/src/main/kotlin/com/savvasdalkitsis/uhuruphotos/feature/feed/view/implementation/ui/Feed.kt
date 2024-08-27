@@ -134,6 +134,7 @@ private fun Feed(
         showBottomNavigationBar = !state.autoHideNavOnScroll || gridState.isScrollingUp(),
         actionBarContent = {
             FeedActionBar(
+                shouldShowAddIcon = state.shouldShowAddIcon,
                 shouldShowShareIcon = state.shouldShowShareIcon,
                 shouldShowDeleteIcon = state.shouldShowDeleteIcon,
                 shouldShowDownloadIcon = state.shouldShowDownloadIcon,
@@ -233,6 +234,12 @@ private fun Feed(
         }
         if (state.missingPermissions.isNotEmpty()) {
             permissionLauncher.launch(state.missingPermissions.toTypedArray())
+        }
+        state.showAddToAlbumDialog?.let { albums ->
+            AddToAlbumDialog(albums, action)
+        }
+        if (state.showNewAlbumNameDialog) {
+            NewAlbumNameDialog(action)
         }
         additionalContent()
     }

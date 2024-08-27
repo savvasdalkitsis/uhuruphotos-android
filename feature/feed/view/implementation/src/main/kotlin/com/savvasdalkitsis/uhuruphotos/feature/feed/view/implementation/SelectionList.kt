@@ -22,16 +22,16 @@ import javax.inject.Inject
 
 internal class SelectionList @Inject constructor() {
 
-    private var selectedIds = MutableStateFlow(emptySet<String>())
+    private var selectedIds = MutableStateFlow(emptySet<MediaId<*>>())
 
-    val ids: Flow<Set<String>> = selectedIds
+    val ids: Flow<Set<MediaId<*>>> = selectedIds
 
     suspend fun deselect(id: MediaId<*>) {
-        selectedIds.emit(selectedIds.value - id.value.toString())
+        selectedIds.emit(selectedIds.value - id)
     }
 
     suspend fun select(id: MediaId<*>) {
-        selectedIds.emit(selectedIds.value + id.value.toString())
+        selectedIds.emit(selectedIds.value + id)
     }
 
     suspend fun clear() {

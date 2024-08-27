@@ -400,4 +400,9 @@
     <string name="rounded_rectangle">Rounded rectangle</string>
     <string name="disable_battery_optimizations">Disable battery optimizations\n\nWhile battery optimizations are enabled, this app\'s background tasks like media syncing might not run properly</string>
     <string name="battery_optimizations_warning">This might cause the app to consume more of your battery</string>
+    <string name="add_to_album">Add to album</string>
+    <string name="adding_to_album">Adding media to album</string>
+    <string name="create_album">Create new album</string>
+    <string name="create">Create</string>
+    <string name="new_album_name">Name for the new album</string>
 </resources>

@@ -37,7 +37,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.MemoryCel
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice.RequiresPermissions
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkable.SelectionMode
 import kotlinx.collections.immutable.toPersistentList
@@ -105,9 +106,7 @@ data object LoadFeed : FeedAction() {
         mediaUseCase.observeLocalMedia()
             .mapNotNull {
                 when (it) {
-                    is MediaItemsOnDevice.RequiresPermissions -> ShowLocalStoragePermissionRequest(
-                        it
-                    )
+                    is RequiresPermissions -> ShowLocalStoragePermissionRequest(it)
                         .takeIf {
                             settingsUIUseCase.getShowBannerAskingForLocalMediaPermissionsOnFeed()
                         }
@@ -137,7 +136,7 @@ data object LoadFeed : FeedAction() {
             avatarUseCase.getAvatarState(),
             feedUseCase
                 .observeFeedDisplay()
-                .distinctUntilChanged()
+                .distinctUntilChanged(),
         ) { mediaCollections, selectedIds, avatar, feedDisplay ->
             val selected = mediaCollections
                 .map { it.toCluster() }
@@ -157,14 +156,14 @@ data object LoadFeed : FeedAction() {
 
     private val List<Cluster>.celCount get() = sumOf { it.cels.size }
 
-    private fun List<Cluster>.selectCels(ids: Set<String>): List<Cluster> {
+    private fun List<Cluster>.selectCels(ids: Set<MediaId<*>>): List<Cluster> {
         val empty = ids.isEmpty()
         return map { cluster ->
             cluster.copy(cels = cluster.cels.map { cel ->
                 cel.copy(
                     selectionMode = when {
                         empty -> SelectionMode.UNDEFINED
-                        cel.mediaItem.id.value.toString() in ids -> SelectionMode.SELECTED
+                        cel.mediaItem.id in ids -> SelectionMode.SELECTED
                         else -> SelectionMode.UNSELECTED
                     }
                 )

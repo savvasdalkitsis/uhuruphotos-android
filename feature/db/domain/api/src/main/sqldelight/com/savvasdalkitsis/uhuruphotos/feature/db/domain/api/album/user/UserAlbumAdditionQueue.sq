@@ -1,0 +1,14 @@
+CREATE TABLE userAlbumAdditionQueue (
+    albumId INTEGER AS kotlin.Int NOT NULL,
+    mediaId TEXT NOT NULL,
+    UNIQUE(albumId, mediaId) ON CONFLICT IGNORE
+);
+
+insert:
+INSERT OR IGNORE INTO userAlbumAdditionQueue VALUES (:albumId, :mediaId);
+
+getQueueFor:
+SELECT mediaId FROM userAlbumAdditionQueue WHERE albumId == :albumId;
+
+remove:
+DELETE FROM userAlbumAdditionQueue WHERE albumId == :albumId AND mediaId == :mediaId;

@@ -16,11 +16,14 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state
 
 import androidx.compose.runtime.Immutable
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.state.UserAlbumState
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkable.SelectionMode
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
 @Immutable
 data class FeedState(
@@ -35,8 +38,10 @@ data class FeedState(
     val showBatteryOptimizationBanner: Boolean = false,
     val localMediaSyncRunning: Boolean = false,
     val autoHideNavOnScroll: Boolean = true,
-    val memories: List<MemoryCel> = emptyList(),
-    val missingPermissions: List<String> = emptyList(),
+    val showAddToAlbumDialog: ImmutableList<UserAlbumState>? = null,
+    val showNewAlbumNameDialog: Boolean = false,
+    val memories: ImmutableList<MemoryCel> = persistentListOf(),
+    val missingPermissions: ImmutableList<String> = persistentListOf(),
     val syncItemDisplay: FeedMediaItemSyncDisplay = FeedMediaItemSyncDisplay.default,
     val showRequestForCloudSync: Boolean = false,
 ) {
@@ -53,6 +58,9 @@ data class FeedState(
     }
     val shouldShowShareIcon: Boolean = selectedCels.let { selected ->
         selected.isNotEmpty() && selected.none { it.mediaItem.id.isVideo }
+    }
+    val shouldShowAddIcon: Boolean = selectedCels.let { selected ->
+        selected.isNotEmpty() && selected.all { it.mediaItem.id.findRemote != null }
     }
     val shouldShowDeleteIcon: Boolean = selectedCels.syncStates.size == 1
 

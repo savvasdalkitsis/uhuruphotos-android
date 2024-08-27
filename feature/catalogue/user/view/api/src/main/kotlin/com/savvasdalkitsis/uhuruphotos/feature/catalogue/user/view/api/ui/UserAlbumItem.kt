@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.ui
+package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -28,8 +28,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.state.UserAlbumState
-import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.action.UserAlbumSelected
-import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.action.UserAlbumsAction
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstance
@@ -39,21 +37,21 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.to
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 
 @Composable
-internal fun UserAlbumItem(
-    modifier: Modifier,
+fun UserAlbumItem(
+    modifier: Modifier = Modifier,
     album: UserAlbumState,
-    action: (UserAlbumsAction) -> Unit,
+    onAlbumSelected: (UserAlbumState) -> Unit,
 ) {
     Column(
         modifier = modifier
             .padding(8.dp)
-            .clickable { action(UserAlbumSelected(album)) }
+            .clickable { onAlbumSelected(album) }
     ) {
         if (album.cover.hasMoreThanOneItem) {
             Vitrine(
                 state = album.cover,
                 onSelected = {
-                    action(UserAlbumSelected(album))
+                    onAlbumSelected(album)
                 },
                 shape = MaterialTheme.shapes.large,
             )
@@ -64,7 +62,7 @@ internal fun UserAlbumItem(
                     mediaHash = MediaItemHash.fromRemoteMediaHash("", 0),
                 ).toCel(),
                 onSelected = {
-                    action(UserAlbumSelected(album))
+                    onAlbumSelected(album)
                 },
                 aspectRatio = 1f,
                 contentScale = ContentScale.Crop,

@@ -18,9 +18,11 @@ package com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.implementation
 import com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.api.model.UserAlbum
 import com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.api.usecase.UserAlbumUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.implementation.repository.UserAlbumRepository
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.GetUserAlbum
+import com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.implementation.work.UserAlbumWorkScheduler
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.GetUserAlbumMedia
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.isVideo
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSource
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -32,6 +34,7 @@ import javax.inject.Inject
 class UserAlbumUseCase @Inject constructor(
     private val userAlbumRepository: UserAlbumRepository,
     private val mediaUseCase: MediaUseCase,
+    private val userAlbumWorkScheduler: UserAlbumWorkScheduler,
 ) : UserAlbumUseCase {
 
     override fun observeUserAlbum(albumId: Int): Flow<UserAlbum> = with(mediaUseCase) {
@@ -60,7 +63,19 @@ class UserAlbumUseCase @Inject constructor(
     override suspend fun refreshUserAlbum(albumId: Int) =
         userAlbumRepository.refreshUserAlbum(albumId)
 
-    private fun GetUserAlbum.toMediaCollectionSource() = MediaCollectionSource(
+    override fun addMediaToAlbum(albumId: Int, media: List<MediaId.Remote>) {
+        userAlbumRepository.queueMediaAdditionToUserAlbum(albumId, media.map { it.value })
+        userAlbumWorkScheduler.scheduleMediaAddition(albumId)
+    }
+
+    override suspend fun createNewUserAlbum(name: String, media: List<MediaId.Remote>) {
+        if (media.isNotEmpty()) {
+            userAlbumRepository.queueMediaAdditionToNewUserAlbum(name, media.map { it.value })
+        }
+        userAlbumWorkScheduler.scheduleNewAlbumCreation(name, performAdditionAfterCreation = media.isNotEmpty())
+    }
+
+    private fun GetUserAlbumMedia.toMediaCollectionSource() = MediaCollectionSource(
         id = id,
         date = photoDate,
         location = location,
@@ -73,7 +88,7 @@ class UserAlbumUseCase @Inject constructor(
         lon = null,
     )
 
-    private val List<GetUserAlbum>.userAlbumTitle: String
+    private val List<GetUserAlbumMedia>.userAlbumTitle: String
         get() = firstOrNull()?.title ?: ""
 }
 

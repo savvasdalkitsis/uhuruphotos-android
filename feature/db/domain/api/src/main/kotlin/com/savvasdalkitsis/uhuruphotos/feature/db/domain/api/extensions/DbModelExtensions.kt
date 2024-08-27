@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions
 
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.GetUserAlbum
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.GetUserAlbumMedia
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.GetRemoteMediaCollections
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.GetTrash
@@ -26,7 +26,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.search.GetSearchRes
 val GetRemoteMediaCollections.isVideo get() = type.isVideo
 val GetTrash.isVideo get() = type.isVideo
 val GetPersonAlbums.isVideo get() = type.isVideo
-val GetUserAlbum.isVideo get() = type.isVideo
+val GetUserAlbumMedia.isVideo get() = type.isVideo
 val GetSearchResults.isVideo get() = type.isVideo
 val DbRemoteMediaItemSummary.isVideo get() = type.isVideo
 private val String?.isVideo get() = this == "video"

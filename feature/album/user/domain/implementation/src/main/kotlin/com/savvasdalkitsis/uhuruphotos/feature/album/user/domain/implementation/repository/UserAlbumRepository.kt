@@ -17,13 +17,18 @@ package com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.implementation
 
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
+import com.github.michaelbull.result.Result
 import com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.implementation.service.UserAlbumService
+import com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.implementation.service.model.UserAlbumEditModel
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.Database
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.GetUserAlbum
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.GetUserAlbumMedia
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.NewUserAlbumAdditionQueueQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbum
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbumAdditionQueueQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbumPhotosQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbumQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitList
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingleOrNull
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemSummaryQueries
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.toDbModel
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
@@ -37,16 +42,67 @@ import javax.inject.Inject
 class UserAlbumRepository @Inject constructor(
     private val db: Database,
     private val userAlbumQueries: UserAlbumQueries,
+    private val userAlbumAdditionQueueQueries: UserAlbumAdditionQueueQueries,
+    private val newUserAlbumAdditionQueueQueries: NewUserAlbumAdditionQueueQueries,
     private val userAlbumPhotosQueries: UserAlbumPhotosQueries,
     private val userAlbumService: UserAlbumService,
     private val remoteMediaItemSummaryQueries: RemoteMediaItemSummaryQueries,
 ) {
 
-    suspend fun getUserAlbum(albumId: Int): List<GetUserAlbum> =
-        userAlbumQueries.getUserAlbum(albumId.toString()).awaitList()
+    suspend fun getUserAlbum(albumId: Int): List<GetUserAlbumMedia> =
+        userAlbumQueries.getUserAlbumMedia(albumId.toString()).awaitList()
 
-    fun observeUserAlbum(albumId: Int): Flow<List<GetUserAlbum>> =
-        userAlbumQueries.getUserAlbum(albumId.toString())
+    suspend fun getMediaAdditionQueue(albumId: Int): Result<List<String>, Throwable> = runCatchingWithLog {
+        userAlbumAdditionQueueQueries.getQueueFor(albumId).awaitList()
+    }
+
+    fun removeMediaFromAdditionQueue(albumId: Int, ids: List<String>): SimpleResult = runCatchingWithLog {
+        db.transaction {
+            for (id in ids) {
+                userAlbumAdditionQueueQueries.remove(albumId, id)
+            }
+        }
+    }
+
+    fun queueMediaAdditionToUserAlbum(albumId: Int, ids: List<String>): SimpleResult = runCatchingWithLog {
+        db.transaction {
+            for (mediaId in ids) {
+                userAlbumAdditionQueueQueries.insert(albumId, mediaId)
+            }
+        }
+    }
+
+    fun queueMediaAdditionToNewUserAlbum(albumName: String, ids: List<String>): SimpleResult = runCatchingWithLog {
+        db.transaction {
+            for (mediaId in ids) {
+                newUserAlbumAdditionQueueQueries.insert(albumName, mediaId)
+            }
+        }
+    }
+
+    fun migrateQueueFromNewAlbum(name: String, albumId: Int) {
+        db.transaction {
+            newUserAlbumAdditionQueueQueries.migrate(albumId = albumId, albumName = name)
+            newUserAlbumAdditionQueueQueries.removeForName(name)
+        }
+    }
+
+    suspend fun addMediaToUserAlbum(albumId: Int, ids: List<String>): SimpleResult = runCatchingWithLog {
+        val album = userAlbumQueries.getUserAlbum(albumId.toString()).awaitSingleOrNull()
+            ?: throw IllegalArgumentException("Album $albumId not found")
+        val title = album.title ?: throw IllegalStateException("Album $albumId has no title")
+        val newAlbum =
+            userAlbumService.addMediaToUserAlbum(albumId.toString(), UserAlbumEditModel(title, ids))
+        db.transaction {
+            userAlbumPhotosQueries.removePhotosForAlbum(albumId.toString())
+            for (id in newAlbum.ids) {
+                userAlbumPhotosQueries.insert(id, albumId.toString())
+            }
+        }
+    }.simple()
+
+    fun observeUserAlbum(albumId: Int): Flow<List<GetUserAlbumMedia>> =
+        userAlbumQueries.getUserAlbumMedia(albumId.toString())
             .asFlow().mapToList(Dispatchers.IO)
             .distinctUntilChanged()
 
@@ -68,4 +124,17 @@ class UserAlbumRepository @Inject constructor(
             }
         }
     }.simple()
+
+    suspend fun createNewUserAlbum(name: String) = runCatchingWithLog {
+        userAlbumService.createUserAlbum(UserAlbumEditModel(title = name, ids = emptyList())).also { album ->
+            userAlbumQueries.insert(
+                UserAlbum(
+                    id = album.id.toString(),
+                    title = album.title,
+                    date = album.date,
+                    location = null,
+                )
+            )
+        }
+    }
 }

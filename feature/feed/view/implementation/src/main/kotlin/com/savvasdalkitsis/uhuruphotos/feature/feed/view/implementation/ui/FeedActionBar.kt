@@ -21,6 +21,7 @@ import androidx.compose.runtime.Composable
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.CollageDisplayActionButton
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.ShowAddSelectedCelsToAlbumDialog
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.AskForSelectedPhotosTrashing
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.ChangeDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.DownloadSelectedCels
@@ -32,6 +33,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
 
 @Composable
 internal fun RowScope.FeedActionBar(
+    shouldShowAddIcon: Boolean = false,
     shouldShowShareIcon: Boolean = false,
     shouldShowDeleteIcon: Boolean = false,
     shouldShowDownloadIcon: Boolean = false,
@@ -40,6 +42,12 @@ internal fun RowScope.FeedActionBar(
     collageDisplay: CollageDisplay,
     action: (FeedAction) -> Unit
 ) {
+    AnimatedVisibility(visible = shouldShowAddIcon) {
+        ActionIcon(
+            onClick = { action(ShowAddSelectedCelsToAlbumDialog) },
+            icon = drawable.ic_add_image
+        )
+    }
     AnimatedVisibility(visible = shouldShowShareIcon) {
         ActionIcon(
             onClick = { action(ShareSelectedCels) },
