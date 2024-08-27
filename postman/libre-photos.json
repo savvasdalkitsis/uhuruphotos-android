@@ -805,6 +805,28 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "Create new user album",
+							"id": "85421420-d76d-4c79-a577-05312d37b96c",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"title\":\"Test 12\",\"photos\":[]}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{HOST}}/api/albums/user/edit/"
+							},
+							"response": []
 						}
 					],
 					"id": "bc9977be-33d7-4b47-9512-0db9d6d79247"
