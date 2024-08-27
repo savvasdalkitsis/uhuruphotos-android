@@ -766,6 +766,37 @@
 							"response": []
 						},
 						{
+							"name": "Delete User Album",
+							"id": "1f4301d2-2b03-4546-80f5-deada82b3b45",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{HOST}}/api/albums/user/:id",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"albums",
+										"user",
+										":id"
+									],
+									"variable": [
+										{
+											"id": "efe4b151-c9f0-4128-bd7d-19d7a2268f26",
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "Add photo to album",
 							"id": "6f1e80e9-2976-4efa-87a1-5c2f82f83637",
 							"protocolProfileBehavior": {
