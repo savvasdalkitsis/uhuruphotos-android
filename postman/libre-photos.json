@@ -736,7 +736,7 @@
 							"response": []
 						},
 						{
-							"name": "Get Auto Album",
+							"name": "Get User Album",
 							"id": "ad03e8ef-fac5-4d45-b983-bca589b2058d",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
@@ -759,6 +759,46 @@
 										{
 											"key": "id",
 											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add photo to album",
+							"id": "6f1e80e9-2976-4efa-87a1-5c2f82f83637",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"title\":\"Title\",\"photos\":[\"8a99ff6a6b0cb1bd147fd14e7d179dc91\"]}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{HOST}}/api/albums/user/edit/:id",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"albums",
+										"user",
+										"edit",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
 										}
 									]
 								}
