@@ -715,6 +715,37 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "Delete Auto Album",
+							"id": "4943aa81-88cb-43fa-8a4f-58b90c387399",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{HOST}}/api/albums/auto/:id/",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"albums",
+										"auto",
+										":id",
+										""
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1397"
+										}
+									]
+								}
+							},
+							"response": []
 						}
 					],
 					"id": "74bdb5a8-d4db-4ac3-936f-08f584b8c104"
