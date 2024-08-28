@@ -772,10 +772,10 @@
 								"disableBodyPruning": true
 							},
 							"request": {
-								"method": "GET",
+								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "{{HOST}}/api/albums/user/:id",
+									"raw": "{{HOST}}/api/albums/user/:id/",
 									"host": [
 										"{{HOST}}"
 									],
@@ -783,13 +783,13 @@
 										"api",
 										"albums",
 										"user",
-										":id"
+										":id",
+										""
 									],
 									"variable": [
 										{
-											"id": "efe4b151-c9f0-4128-bd7d-19d7a2268f26",
 											"key": "id",
-											"value": "1"
+											"value": "23"
 										}
 									]
 								}
