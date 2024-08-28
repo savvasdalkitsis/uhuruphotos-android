@@ -15,15 +15,19 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.album.user.view.implementation.seam.action
 
+import com.github.michaelbull.result.onFailure
+import com.github.michaelbull.result.onSuccess
 import com.savvasdalkitsis.uhuruphotos.feature.album.user.view.implementation.seam.UserAlbumActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.album.user.view.implementation.seam.UserAlbumMutation
 import com.savvasdalkitsis.uhuruphotos.feature.album.user.view.implementation.ui.state.UserAlbumState
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import kotlinx.coroutines.flow.flow
 
 data object DeleteUserAlbum : UserAlbumAction() {
     context(UserAlbumActionsContext)
     override fun handle(state: UserAlbumState) = flow<UserAlbumMutation> {
         userAlbumUseCase.deleteUserAlbum(state.albumId)
-        navigator.navigateUp()
+            .onSuccess { navigator.navigateUp() }
+            .onFailure { toaster.show(R.string.error_deleting_album) }
     }
 }

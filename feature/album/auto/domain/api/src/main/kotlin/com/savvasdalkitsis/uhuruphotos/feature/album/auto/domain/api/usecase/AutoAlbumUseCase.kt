@@ -31,4 +31,6 @@ interface AutoAlbumUseCase {
 
     suspend fun refreshAutoAlbum(albumId: Int): SimpleResult
 
+    suspend fun deleteAutoAlbum(albumId: Int): SimpleResult
+
 }

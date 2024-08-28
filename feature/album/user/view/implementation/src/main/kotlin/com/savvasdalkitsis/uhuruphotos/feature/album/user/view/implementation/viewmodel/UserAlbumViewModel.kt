@@ -32,7 +32,6 @@ import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
-
 typealias UserAlbumCompositeState = Pair<GalleryState, UserAlbumState>
 typealias UserAlbumCompositeAction = Either<GalleryAction, UserAlbumAction>
 

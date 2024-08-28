@@ -16,3 +16,6 @@ SELECT * FROM autoAlbums ORDER BY timestamp DESC;
 
 clearAll:
 DELETE FROM autoAlbums;
+
+removeAlbum:
+DELETE FROM autoAlbums WHERE id == :albumId;

@@ -16,8 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.navigation
 
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.api.navigation.AutoAlbumNavigationRoute
+import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.ui.AutoAlbum
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.viewmodel.AutoAlbumViewModel
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.Gallery
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
 import se.ansman.dagger.auto.AutoInitialize
@@ -31,6 +31,7 @@ class AutoAlbumNavigationTarget @Inject constructor(
     AutoAlbumViewModel::class,
     AutoAlbumNavigationRoute::class,
     view = { state, action ->
-        Gallery(state, action = action)
+        AutoAlbum(state, action)
     }
 )
+

@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.album.auto.domain.implementation.service
 
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.domain.implementation.service.model.AutoAlbum
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Path
 import se.ansman.dagger.auto.retrofit.AutoProvideService
@@ -27,4 +28,7 @@ interface AutoAlbumService {
 
     @GET("api/albums/auto/{id}/")
     suspend fun getAutoAlbum(@Path("id") id: String): AutoAlbum
+
+    @DELETE("api/albums/auto/{id}/")
+    suspend fun deleteUserAlbum(@Path("id") id: String)
 }

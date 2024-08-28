@@ -28,6 +28,7 @@ dependencies {
             project(":foundation:navigation:api"),
             project(":foundation:preferences:api"),
             project(":foundation:strings:api"),
+            project(":foundation:toaster:api"),
     )
     debugImplementation(
             libs.androidx.compose.ui.tooling,

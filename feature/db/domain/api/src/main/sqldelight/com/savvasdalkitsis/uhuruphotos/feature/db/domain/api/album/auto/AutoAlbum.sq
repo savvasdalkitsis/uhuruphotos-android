@@ -19,6 +19,9 @@ INSERT OR REPLACE INTO autoAlbum VALUES (
     :gpsLon
 );
 
+remove:
+DELETE FROM autoAlbum WHERE id == :albumId;
+
 getAutoAlbum:
 SELECT
     autoAlbum.id,

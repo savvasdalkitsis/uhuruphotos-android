@@ -22,6 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.Database
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.AutoAlbumPeopleQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.AutoAlbumPhotosQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.AutoAlbumQueries
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.AutoAlbumsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.GetAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.GetPeopleForAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitList
@@ -41,6 +42,7 @@ import javax.inject.Inject
 class AutoAlbumRepository @Inject constructor(
     private val db: Database,
     private val autoAlbumQueries: AutoAlbumQueries,
+    private val autoAlbumsQueries: AutoAlbumsQueries,
     private val autoAlbumPeopleQueries: AutoAlbumPeopleQueries,
     private val peopleQueries: PeopleQueries,
     private val autoAlbumPhotosQueries: AutoAlbumPhotosQueries,
@@ -83,4 +85,12 @@ class AutoAlbumRepository @Inject constructor(
             }
         }
     }.simple()
+
+    suspend fun deleteAutoAlbum(albumId: Int): SimpleResult = runCatchingWithLog {
+        autoAlbumService.deleteUserAlbum(albumId.toString())
+        autoAlbumPhotosQueries.removePhotosForAlbum(albumId.toString())
+        autoAlbumQueries.remove(albumId.toString())
+        autoAlbumsQueries.removeAlbum(albumId)
+    }.simple()
+
 }

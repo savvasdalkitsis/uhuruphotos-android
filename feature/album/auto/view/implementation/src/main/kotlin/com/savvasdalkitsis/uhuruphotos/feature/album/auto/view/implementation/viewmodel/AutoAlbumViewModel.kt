@@ -17,7 +17,10 @@ package com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.v
 
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.api.navigation.AutoAlbumNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.seam.AutoAlbumActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.state.AutoAlbumCollageDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.seam.action.AutoAlbumAction
+import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.seam.action.SetAlbumId
+import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.ui.state.AutoAlbumCollageDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.ui.state.AutoAlbumState
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryId
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.GalleryAction
@@ -25,19 +28,28 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.Load
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeActionHandler
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+
+typealias AutoAlbumCompositeState = Pair<GalleryState, AutoAlbumState>
+typealias AutoAlbumCompositeAction = Either<GalleryAction, AutoAlbumAction>
 
 @HiltViewModel
 internal class AutoAlbumViewModel @Inject constructor(
     autoAlbumActionsContext: AutoAlbumActionsContext,
-) : NavigationViewModel<GalleryState, GalleryAction, AutoAlbumNavigationRoute>(
-    ActionHandlerWithContext(autoAlbumActionsContext.galleryActionsContext),
-    GalleryState(collageState = CollageState(collageDisplay = AutoAlbumCollageDisplay))
+) : NavigationViewModel<AutoAlbumCompositeState, AutoAlbumCompositeAction, AutoAlbumNavigationRoute>(
+    CompositeActionHandler(
+        ActionHandlerWithContext(autoAlbumActionsContext.galleryActionsContext),
+        ActionHandlerWithContext(autoAlbumActionsContext),
+    ),
+    GalleryState(collageState = CollageState(collageDisplay = AutoAlbumCollageDisplay)) to AutoAlbumState()
 ) {
 
     override fun onRouteSet(route: AutoAlbumNavigationRoute) {
         val id = route.albumId
-        action(LoadCollage(GalleryId(id, "auto:$id")))
+        action(Either.Left(LoadCollage(GalleryId(id, "auto:$id"))))
+        action(Either.Right(SetAlbumId(id)))
     }
 }

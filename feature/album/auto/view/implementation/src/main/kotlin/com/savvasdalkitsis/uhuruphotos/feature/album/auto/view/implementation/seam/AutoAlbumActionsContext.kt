@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.s
 
 import com.github.michaelbull.result.mapOr
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.domain.api.usecase.AutoAlbumUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.state.AutoAlbumCollageDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.ui.state.AutoAlbumCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContextFactory
@@ -30,17 +30,21 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.to
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateDisplayer
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
+import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.mapNotNull
 import javax.inject.Inject
 
 internal class AutoAlbumActionsContext @Inject constructor(
-    autoAlbumUseCase: AutoAlbumUseCase,
+    val autoAlbumUseCase: AutoAlbumUseCase,
     serverUseCase: ServerUseCase,
     dateDisplayer: DateDisplayer,
     galleryActionsContextFactory: GalleryActionsContextFactory,
     userUseCase: UserUseCase,
+    val navigator: Navigator,
+    val toaster: ToasterUseCase,
 ) {
     val galleryActionsContext = galleryActionsContextFactory.create(
         galleryRefresher = { autoAlbumUseCase.refreshAutoAlbum(it) },

@@ -23,6 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSource
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.mapValues
+import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -61,6 +62,9 @@ internal class AutoAlbumUseCase @Inject constructor(
 
     override suspend fun refreshAutoAlbum(albumId: Int) =
         autoAlbumRepository.refreshAutoAlbum(albumId)
+
+    override suspend fun deleteAutoAlbum(albumId: Int): SimpleResult =
+        autoAlbumRepository.deleteAutoAlbum(albumId)
 
     private fun GetAutoAlbum.toMediaCollectionSource() = MediaCollectionSource(
         id = id,
