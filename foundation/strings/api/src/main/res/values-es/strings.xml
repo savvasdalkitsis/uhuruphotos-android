@@ -426,4 +426,8 @@
     <string name="add_to_album">Añadir al álbum</string>
     <string name="adding_to_album">Agregando medios al álbum</string>
     <string name="create">Crear</string>
+    <string name="delete_album">Eliminar álbum</string>
+    <string name="delete_album_confirmation">¿Estás seguro de que deseas eliminar este álbum?</string>
+    <string name="error_deleting_album">Se produjo un error al eliminar el álbum</string>
+    <string name="delete_album_explanation">Los medios de este álbum NO se eliminarán</string>
 </resources>
