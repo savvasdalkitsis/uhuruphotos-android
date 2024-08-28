@@ -17,6 +17,9 @@ CREATE TABLE userAlbums (
 insert:
 INSERT OR REPLACE INTO userAlbums VALUES ?;
 
+removeAlbum:
+DELETE FROM userAlbums WHERE id == :albumId;
+
 getUserAlbums:
 SELECT * FROM userAlbums ORDER BY timestamp DESC;
 

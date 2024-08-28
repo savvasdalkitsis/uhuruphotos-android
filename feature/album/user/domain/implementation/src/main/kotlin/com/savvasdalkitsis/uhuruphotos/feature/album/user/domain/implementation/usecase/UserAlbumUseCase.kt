@@ -24,6 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.isVideo
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSource
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
@@ -74,6 +75,9 @@ class UserAlbumUseCase @Inject constructor(
         }
         userAlbumWorkScheduler.scheduleNewAlbumCreation(name, performAdditionAfterCreation = media.isNotEmpty())
     }
+
+    override suspend fun deleteUserAlbum(albumId: Int): SimpleResult =
+        userAlbumRepository.deleteUserAlbum(albumId)
 
     private fun GetUserAlbumMedia.toMediaCollectionSource() = MediaCollectionSource(
         id = id,

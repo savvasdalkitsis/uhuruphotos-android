@@ -29,4 +29,5 @@ data class GalleryState(
     val title: Title = Title.Text(""),
     val people: ImmutableList<Person> = persistentListOf(),
     val sorting: GallerySorting? = null,
+    val showDeleteConfirmation: Boolean = false,
 )

@@ -19,6 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.implementation.
 import com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.implementation.service.model.UserAlbumServiceModel
 import com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.implementation.service.model.UserAlbumServiceUpdateModel
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.PATCH
 import retrofit2.http.POST
@@ -38,4 +39,7 @@ interface UserAlbumService {
 
     @POST("/api/albums/user/edit/")
     suspend fun createUserAlbum(@Body body: UserAlbumEditModel): UserAlbumServiceUpdateModel
+
+    @DELETE("/api/albums/user/edit/{id}/")
+    suspend fun deleteUserAlbum(@Path("id") id: String)
 }

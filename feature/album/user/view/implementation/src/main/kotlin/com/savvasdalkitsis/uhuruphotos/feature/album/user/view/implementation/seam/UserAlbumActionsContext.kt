@@ -20,14 +20,16 @@ import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.toClust
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContextFactory
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetails
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.UserAlbum
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 internal class UserAlbumActionsContext @Inject constructor(
     userAlbumDisplay: UserAlbumDisplay,
-    userAlbumUseCase: UserAlbumUseCase,
+    val userAlbumUseCase: UserAlbumUseCase,
     galleryActionsContextFactory: GalleryActionsContextFactory,
+    val navigator: Navigator,
 ) {
     val galleryActionsContext = galleryActionsContextFactory.create(
         galleryRefresher = { userAlbumUseCase.refreshUserAlbum(it) },

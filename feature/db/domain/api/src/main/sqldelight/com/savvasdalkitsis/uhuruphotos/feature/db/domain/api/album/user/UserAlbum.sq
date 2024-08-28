@@ -8,6 +8,9 @@ CREATE TABLE userAlbum (
 insert:
 INSERT OR REPLACE INTO userAlbum VALUES ?;
 
+remove:
+DELETE FROM userAlbum WHERE id == :id;
+
 getUserAlbum:
 SELECT * FROM userAlbum WHERE id == :id LIMIT 1;
 

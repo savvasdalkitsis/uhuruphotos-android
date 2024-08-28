@@ -27,4 +27,5 @@ interface UserAlbumUseCase {
     suspend fun refreshUserAlbum(albumId: Int): SimpleResult
     fun addMediaToAlbum(albumId: Int, media: List<MediaId.Remote>)
     suspend fun createNewUserAlbum(name: String, media: List<MediaId.Remote> = emptyList())
+    suspend fun deleteUserAlbum(albumId: Int): SimpleResult
 }
