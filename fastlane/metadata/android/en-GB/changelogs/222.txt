@@ -1,0 +1,3 @@
+* User can now add media from the feed to an existing album or create a new one
+* User can delete auto and user albums
+* Updating mapping libraries to latest versions
