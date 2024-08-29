@@ -49,8 +49,8 @@ fun BoxScope.PortfolioGrid(
         horizontalArrangement = spacedBy(padding),
         verticalArrangement = spacedBy(padding),
     ) {
-        localMedia.buckets.forEach { cel ->
-            item(cel.folder.id) {
+        localMedia.buckets.forEachIndexed { index, cel ->
+            item(index) {
                 PortfolioCel(cel, action)
             }
         }
