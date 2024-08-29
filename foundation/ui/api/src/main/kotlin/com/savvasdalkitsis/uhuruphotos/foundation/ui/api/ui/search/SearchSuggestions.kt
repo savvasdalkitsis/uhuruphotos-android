@@ -55,21 +55,19 @@ internal fun SearchSuggestions(
                     .heightIn(max = height)
                     .animateContentSize()
             ) {
-                for (s in suggestions) {
-                    val type = s.type
-                    val suggestion = s.filterable
-                    item("$type-$suggestion", contentType = "${type}SearchSuggestion") {
+                for ((index, suggestion) in suggestions.withIndex()) {
+                    item(index, contentType = "${suggestion.type}SearchSuggestion") {
                         Suggestion(
                             modifier = Modifier.animateItem(),
-                            text = suggestion,
+                            text = suggestion.filterable,
                             onClick = {
-                                onSearchAction(s)
+                                onSearchAction(suggestion)
                             },
                             leadingContent = {
-                                leadingContent[type]?.invoke(s)
+                                leadingContent[suggestion.type]?.invoke(suggestion)
                             },
                             trailingContent = {
-                                trailingContent[type]?.invoke(s)
+                                trailingContent[suggestion.type]?.invoke(suggestion)
                             }
                         )
                     }

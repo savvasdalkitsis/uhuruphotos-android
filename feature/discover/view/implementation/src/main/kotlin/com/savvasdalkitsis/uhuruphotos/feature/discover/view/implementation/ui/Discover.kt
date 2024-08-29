@@ -35,7 +35,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.dialogs.UpsellDialog
 ) {
     Column {
         Spacer(modifier = Modifier.height(contentPadding.calculateTopPadding()))
-        SearchField(state, action)
+        DiscoverSearchField(state, action)
         DiscoverIdle(state, action, contentPadding)
     }
     if (state.showLoginUpsellDialogFromPeople) {

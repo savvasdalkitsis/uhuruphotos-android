@@ -15,20 +15,54 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state
 
+import androidx.compose.runtime.Immutable
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.api.state.AutoAlbum
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbums
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.search.SearchSuggestion
 
+@Immutable
 data class RecentSearchSuggestion(val query: String) : SearchSuggestion {
-    override val type: String = "recent"
+    override val type: String = TYPE
     override val filterable: String = query
+
+    companion object {
+        const val TYPE = "recent"
+    }
 }
 
+@Immutable
 data class PersonSearchSuggestion(val person: Person) : SearchSuggestion {
-    override val type: String = "person"
+    override val type: String = TYPE
     override val filterable: String = person.name
+    companion object {
+        const val TYPE = "person"
+    }
 }
 
+@Immutable
 data class ServerSearchSuggestion(val query: String) : SearchSuggestion {
-    override val type: String = "server"
+    override val type: String = TYPE
     override val filterable: String = query
+    companion object {
+        const val TYPE = "server"
+    }
+}
+
+@Immutable
+data class UserAlbumSearchSuggestion(val userAlbums: UserAlbums) : SearchSuggestion {
+    override val type: String = TYPE
+    override val filterable: String = userAlbums.title.orEmpty()
+    companion object {
+        const val TYPE = "userAlbum"
+    }
+}
+
+@Immutable
+data class AutoAlbumSearchSuggestion(val autoAlbum: AutoAlbum) : SearchSuggestion {
+    override val type: String = TYPE
+    override val filterable: String = autoAlbum.title
+    companion object {
+        const val TYPE = "autoAlbum"
+    }
 }

@@ -25,10 +25,12 @@ import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.DiscoverMutation.ShowPeople
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.DiscoverMutation.ShowPeopleUpsell
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.DiscoverMutation.ShowSearchSuggestions
+import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.AutoAlbumSearchSuggestion
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.DiscoverState
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.PersonSearchSuggestion
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.RecentSearchSuggestion
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.ServerSearchSuggestion
+import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.UserAlbumSearchSuggestion
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.flow
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.onErrors
@@ -69,30 +71,34 @@ data object Initialise : DiscoverAction() {
         withRemoteAccess = merge(
             flowOf(EnableSearch),
             combine(
-                searchUseCase.getRecentTextSearches()
-                    .map {
-                        it.map(::RecentSearchSuggestion)
-                    },
-                peopleUseCase.observePeopleByPhotoCount()
-                    .onErrorsIgnore()
-                    .toPeople()
-                    .map {
-                        it.map(::PersonSearchSuggestion)
-                    },
-                searchUseCase.getSearchSuggestions()
-                    .map {
-                        it.map(::ServerSearchSuggestion)
-                    },
+                searchSuggestions(),
                 queryFilter,
-                ) { recentSearches, people, searchSuggestions, query ->
-                    when {
-                        query.isEmpty() -> emptyList()
-                        else -> recentSearches + people + searchSuggestions
-                    }.filterQuery(query)
-                }.map(::ShowSearchSuggestions)
+            ) { suggestions, query ->
+                suggestions.filterQuery(query)
+            }.map(::ShowSearchSuggestions)
         ),
         withoutRemoteAccess = flowOf(DisableSearch)
     )
+
+    context(DiscoverActionsContext)
+    private fun searchSuggestions() = combine(
+        searchUseCase.getRecentTextSearches()
+            .toSuggestion(::RecentSearchSuggestion),
+        peopleUseCase.observePeopleByPhotoCount()
+            .onErrorsIgnore()
+            .toPeople()
+            .toSuggestion(::PersonSearchSuggestion),
+        userAlbumsUseCase.observeUserAlbums()
+            .toSuggestion(::UserAlbumSearchSuggestion),
+        autoAlbumsUseCase.observeAutoAlbums()
+            .toSuggestion(::AutoAlbumSearchSuggestion),
+        searchUseCase.getSearchSuggestions()
+            .toSuggestion(::ServerSearchSuggestion),
+    ) { suggestions -> suggestions.flatMap { it } }
+
+    private fun <T> Flow<List<T>>.toSuggestion(mapper: (T) -> SearchSuggestion) = map {
+        it.map(mapper)
+    }
 
     context(DiscoverActionsContext)
     private fun showPeopleSuggestion() = welcomeUseCase.flow(
@@ -138,6 +144,8 @@ data object Initialise : DiscoverAction() {
         }
     }
 
-    private fun List<SearchSuggestion>.filterQuery(query: String): List<SearchSuggestion> =
-        filter { it.filterable.contains(query, ignoreCase = true) }
+    private fun List<SearchSuggestion>.filterQuery(query: String): List<SearchSuggestion> = when {
+        query.isBlank() -> this
+        else -> filter { it.filterable.contains(query, ignoreCase = true) }
+    }
 }

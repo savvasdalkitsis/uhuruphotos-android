@@ -17,16 +17,15 @@ package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.state.UserAlbumState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
@@ -40,11 +39,12 @@ import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 fun UserAlbumItem(
     modifier: Modifier = Modifier,
     album: UserAlbumState,
+    shape: Shape = MaterialTheme.shapes.large,
+    miniIcons: Boolean = false,
     onAlbumSelected: (UserAlbumState) -> Unit,
 ) {
     Column(
         modifier = modifier
-            .padding(8.dp)
             .clickable { onAlbumSelected(album) }
     ) {
         if (album.cover.hasMoreThanOneItem) {
@@ -53,7 +53,7 @@ fun UserAlbumItem(
                 onSelected = {
                     onAlbumSelected(album)
                 },
-                shape = MaterialTheme.shapes.large,
+                shape = shape,
             )
         } else {
             Cel(
@@ -64,9 +64,10 @@ fun UserAlbumItem(
                 onSelected = {
                     onAlbumSelected(album)
                 },
+                miniIcons = miniIcons,
                 aspectRatio = 1f,
                 contentScale = ContentScale.Crop,
-                shape = MaterialTheme.shapes.large,
+                shape = shape,
             )
         }
         Text(

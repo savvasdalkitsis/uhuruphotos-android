@@ -101,7 +101,11 @@ internal fun AddToAlbumDialog(
                     for (album in albums) {
                         if (album.visible) {
                             item(album.id) {
-                                UserAlbumItem(album = album) {
+                                UserAlbumItem(
+                                    modifier = Modifier
+                                        .padding(8.dp),
+                                    album = album,
+                                ) {
                                     action(AddSelectedCelsToAlbum(album.id))
                                     action(HideAddToAlbumDialog)
                                 }

@@ -15,8 +15,10 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.ui
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.ui.UserAlbumItem
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsState
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.action.ChangeSorting
@@ -48,7 +50,8 @@ internal fun UserAlbums(
             .forEach { album ->
                 item(album.id) {
                     UserAlbumItem(
-                        modifier = Modifier.animateItem(),
+                        modifier = Modifier.animateItem()
+                            .padding(8.dp),
                         album = album,
                         onAlbumSelected = { action(UserAlbumSelected(album)) },
                     )

@@ -41,14 +41,14 @@ fun Suggestion(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .height(52.dp)
-            .padding(4.dp)
-            .clickable { onClick() },
+            .height(74.dp)
+            .clickable { onClick() }
+            .padding(8.dp),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         Box(
-            modifier = Modifier.size(36.dp)
+            modifier = Modifier.size(58.dp)
         ) {
             leadingContent()
         }

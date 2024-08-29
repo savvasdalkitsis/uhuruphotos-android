@@ -15,76 +15,28 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui
 
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
+import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.AutoAlbumSelected
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.DiscoverAction
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.PersonSelected
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.QueryChanged
-import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.RemoveFromRecentSearches
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.SearchFor
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.UpsellLoginFromSearch
+import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.UserAlbumSelected
+import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.AutoAlbumSearchSuggestion
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.DiscoverState
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.PersonSearchSuggestion
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.PersonImage
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
+import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.UserAlbumSearchSuggestion
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.search.SearchField
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.search.SearchSuggestion
-import kotlinx.collections.immutable.persistentMapOf
 
 @Composable
-fun SearchField(
+fun DiscoverSearchField(
     state: DiscoverState,
     action: (DiscoverAction) -> Unit,
 ) {
-    val leading = remember {
-        persistentMapOf<String, @Composable (SearchSuggestion) -> Unit>(
-            "recent" to {
-                Icon(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(4.dp),
-                    painter = painterResource(id = drawable.ic_history),
-                    contentDescription = null
-                )
-            },
-            "server" to {
-                Icon(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(4.dp),
-                    painter = painterResource(id = drawable.ic_assistant),
-                    contentDescription = null
-                )
-            },
-            "person" to {
-                (it as? PersonSearchSuggestion)?.person?.let { person ->
-                    PersonImage(
-                        modifier = Modifier.fillMaxSize(),
-                        shape = CircleShape,
-                        person = person
-                    )
-                }
-            }
-        )
-    }
-    val trailing = remember {
-        persistentMapOf<String, @Composable (SearchSuggestion) -> Unit>(
-            "recent" to {
-                ActionIcon(
-                    onClick = { action(RemoveFromRecentSearches(it.filterable)) },
-                    icon = drawable.ic_clear
-                )
-            }
-        )
-    }
+    val leading = remember { suggestionLeadingContent }
+    val trailing = remember(action) { suggestionTrailingContent(action) }
     SearchField(
         queryCacheKey = state.queryCacheKey,
         latestQuery = state.latestQuery,
@@ -98,8 +50,10 @@ fun SearchField(
         onSearchForSuggestion = {
             when (it) {
                 is PersonSearchSuggestion -> action(PersonSelected(it.person))
+                is UserAlbumSearchSuggestion -> action(UserAlbumSelected(it.userAlbums))
+                is AutoAlbumSearchSuggestion -> action(AutoAlbumSelected(it.autoAlbum))
                 else -> action(SearchFor(it.filterable))
             }
-        }
+        },
     )
 }
