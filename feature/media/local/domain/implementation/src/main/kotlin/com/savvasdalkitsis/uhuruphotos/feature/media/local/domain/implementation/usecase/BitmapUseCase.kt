@@ -23,6 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.io.ByteArrayOutputStream
 import java.io.IOException
+import java.io.InputStream
 import javax.inject.Inject
 
 class BitmapUseCase @Inject constructor(
@@ -40,18 +41,22 @@ class BitmapUseCase @Inject constructor(
     }
 
     fun ByteArray.copyExifFrom(
-        uri: Uri?
+        uri: Uri?,
     ): ByteArray = when (uri) {
         null -> this
-        else -> try {
-            resolver.openInputStream(uri)?.use { original ->
-                with(exifUseCase) {
-                    copyExifFrom(original)
-                }
-            } ?: this
-        } catch (e: Exception) {
-            log(e)
-            this
+        else -> resolver.openInputStream(uri)?.let { copyExifFrom(it) } ?: this
+    }
+
+    fun ByteArray.copyExifFrom(
+        inputStream: InputStream
+    ): ByteArray = try {
+        inputStream.use { original ->
+            with(exifUseCase) {
+                copyExifFrom(original)
+            }
         }
+    } catch (e: Exception) {
+        log(e)
+        this
     }
 }

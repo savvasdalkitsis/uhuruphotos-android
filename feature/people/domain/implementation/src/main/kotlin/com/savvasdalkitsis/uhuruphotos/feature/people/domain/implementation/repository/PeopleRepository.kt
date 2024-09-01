@@ -15,20 +15,17 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.people.domain.implementation.repository
 
-import app.cash.sqldelight.coroutines.asFlow
-import app.cash.sqldelight.coroutines.mapToList
-import app.cash.sqldelight.coroutines.mapToOne
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitList
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.asFlowList
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.asFlowSingle
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.people.People
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.people.PeopleQueries
 import com.savvasdalkitsis.uhuruphotos.feature.people.domain.api.service.model.toDbModel
 import com.savvasdalkitsis.uhuruphotos.feature.people.domain.implementation.service.PeopleService
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simple
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.distinctUntilChanged
 import javax.inject.Inject
 
 class PeopleRepository @Inject constructor(
@@ -37,16 +34,16 @@ class PeopleRepository @Inject constructor(
 ) {
 
     fun observePeopleByName(): Flow<List<People>> = peopleQueries.getPeopleByName()
-        .asFlow().mapToList(Dispatchers.IO).distinctUntilChanged()
+        .asFlowList()
 
     suspend fun getPeopleByName(): List<People> = peopleQueries.getPeopleByName()
         .awaitList()
 
     fun observePeopleByPhotoCount(): Flow<List<People>> = peopleQueries.getPeopleByFaceCount()
-        .asFlow().mapToList(Dispatchers.IO).distinctUntilChanged()
+        .asFlowList()
 
     fun observePerson(id: Int): Flow<People> = peopleQueries.getPerson(id)
-        .asFlow().mapToOne(Dispatchers.IO).distinctUntilChanged()
+        .asFlowSingle()
 
     suspend fun refreshPerson(id: Int) = runCatchingWithLog {
         val person = peopleService.getPerson(id)

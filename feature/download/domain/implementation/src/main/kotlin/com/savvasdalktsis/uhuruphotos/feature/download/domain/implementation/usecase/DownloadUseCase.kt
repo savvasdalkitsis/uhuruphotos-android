@@ -25,12 +25,11 @@ import android.app.DownloadManager.STATUS_PENDING
 import android.app.DownloadManager.STATUS_RUNNING
 import android.net.Uri
 import android.os.Environment.DIRECTORY_DCIM
-import app.cash.sqldelight.coroutines.asFlow
-import app.cash.sqldelight.coroutines.mapToList
 import com.github.michaelbull.result.onFailure
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.AuthenticationHeadersUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.asyncReturn
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.asFlowSet
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId.Remote
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.deserializePaths
@@ -42,11 +41,8 @@ import com.savvasdalktsis.uhuruphotos.feature.download.domain.api.usecase.Downlo
 import com.savvasdalktsis.uhuruphotos.feature.download.domain.implementation.repository.DownloadId
 import com.savvasdalktsis.uhuruphotos.feature.download.domain.implementation.repository.DownloadingRepository
 import com.savvasdalktsis.uhuruphotos.feature.download.domain.implementation.repository.MediaId
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.map
 import se.ansman.dagger.auto.AutoBind
 import java.io.File
 import javax.inject.Inject
@@ -111,7 +107,7 @@ internal class DownloadUseCase @Inject constructor(
     }
 
     override fun observeDownloading(): Flow<Set<String>> = downloadingRepository.getAll()
-        .asFlow().mapToList(Dispatchers.IO).distinctUntilChanged().map { it.toSet() }
+        .asFlowSet()
 
     override suspend fun clearFailuresAndStale() {
         (downloadingRepository.getAllDownloadIds() - getActive().toSet())

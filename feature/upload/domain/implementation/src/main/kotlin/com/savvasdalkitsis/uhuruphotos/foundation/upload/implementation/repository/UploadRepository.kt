@@ -15,20 +15,16 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.repository
 
-import app.cash.sqldelight.coroutines.asFlow
-import app.cash.sqldelight.coroutines.mapToList
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.Database
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingle
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingleOrNull
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.asFlowSet
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.upload.ProcessingMediaItems
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.upload.ProcessingMediaItemsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.upload.UploadingMediaItems
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.upload.UploadingMediaItemsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class UploadRepository @Inject constructor(
@@ -60,10 +56,10 @@ class UploadRepository @Inject constructor(
     }
 
     fun observeUploading(): Flow<Set<Long>> = uploadingMediaItemsQueries.getAll()
-        .asFlow().mapToList(Dispatchers.IO).map { it.toSet() }.distinctUntilChanged()
+        .asFlowSet()
 
     fun observeProcessing(): Flow<Set<ProcessingMediaItems>> = processingMediaItemsQueries.getAll()
-        .asFlow().mapToList(Dispatchers.IO).map { it.toSet() }.distinctUntilChanged()
+        .asFlowSet()
 
     suspend fun getOffset(itemId: Long): Long? =
         uploadingMediaItemsQueries.getOffset(itemId).awaitSingleOrNull()

@@ -15,19 +15,17 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.repository
 
-import app.cash.sqldelight.coroutines.asFlow
-import app.cash.sqldelight.coroutines.mapToOneOrNull
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.usecase.JwtUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.auth.Token
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.auth.TokenQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.auth.TokenType
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.asFlowSingleNullable
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingleOrNull
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.EncryptedPreferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.get
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
-import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
 
 internal const val EXPIRED = "EXPIRED"
@@ -98,7 +96,7 @@ class AuthenticationRepository @Inject constructor(
     }
 
     fun observeRefreshToken() =
-        tokenQueries.getRefreshToken().asFlow().mapToOneOrNull(Dispatchers.IO)
+        tokenQueries.getRefreshToken().asFlowSingleNullable()
 
     suspend fun getRefreshToken() =
         tokenQueries.getRefreshToken().awaitSingleOrNull()

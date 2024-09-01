@@ -15,19 +15,16 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.domain.implementation.repository
 
-import app.cash.sqldelight.coroutines.asFlow
-import app.cash.sqldelight.coroutines.mapToList
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.domain.implementation.service.UserAlbumsService
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.domain.implementation.service.model.toUserAlbums
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbums
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbumsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitList
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.asFlowList
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simple
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.distinctUntilChanged
 import javax.inject.Inject
 
 class UserAlbumsRepository @Inject constructor(
@@ -36,8 +33,7 @@ class UserAlbumsRepository @Inject constructor(
 ) {
 
     fun observeUserAlbums(): Flow<List<UserAlbums>> =
-        userAlbumsQueries.getUserAlbums().asFlow().mapToList(Dispatchers.IO)
-            .distinctUntilChanged()
+        userAlbumsQueries.getUserAlbums().asFlowList()
 
     suspend fun getUserAlbums(): List<UserAlbums> =
         userAlbumsQueries.getUserAlbums().awaitList()

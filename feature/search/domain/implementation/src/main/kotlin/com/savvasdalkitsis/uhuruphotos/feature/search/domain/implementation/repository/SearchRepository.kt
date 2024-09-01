@@ -15,10 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.search.domain.implementation.repository
 
-import app.cash.sqldelight.coroutines.asFlow
-import app.cash.sqldelight.coroutines.mapToList
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitList
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.asFlowList
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemSummaryQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.search.GetSearchResults
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.search.SearchQueries
@@ -29,9 +28,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simple
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -48,9 +45,7 @@ class SearchRepository @Inject constructor(
     private val recentSearches = "recentSearches"
 
     fun observeSearchResults(query: String): Flow<Group<String, GetSearchResults>> =
-        searchQueries.getSearchResults(query).asFlow().mapToList(Dispatchers.IO).groupBy(
-            GetSearchResults::date)
-            .distinctUntilChanged()
+        searchQueries.getSearchResults(query).asFlowList().groupBy(GetSearchResults::date)
 
     suspend fun getSearchResults(query: String): Group<String, GetSearchResults> =
         searchQueries.getSearchResults(query).awaitList().groupBy(GetSearchResults::date).let(::Group)

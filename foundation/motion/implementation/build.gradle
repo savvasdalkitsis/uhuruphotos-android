@@ -1,0 +1,12 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.motion.implementation'
+}
+
+dependencies {
+    implementation(
+            libs.bundles.autodagger,
+            libs.hilt,
+            libs.xmp,
+            project(":foundation:motion:api"),
+    )
+}

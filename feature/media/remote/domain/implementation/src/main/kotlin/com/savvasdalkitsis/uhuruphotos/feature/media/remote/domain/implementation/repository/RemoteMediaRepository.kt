@@ -17,7 +17,6 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementati
 
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
-import app.cash.sqldelight.coroutines.mapToOneNotNull
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
@@ -25,6 +24,8 @@ import com.github.michaelbull.result.map
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaCollections
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemDetails
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.asFlowList
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.asFlowSingleNotNull
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitList
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingle
@@ -65,17 +66,13 @@ class RemoteMediaRepository @Inject constructor(
             .mapToList(Dispatchers.IO)
 
     fun observeFavouriteMedia(favouriteThreshold: Int): Flow<List<DbRemoteMediaItemSummary>> =
-        remoteMediaItemSummaryQueries.getFavourites(favouriteThreshold).asFlow()
-            .mapToList(Dispatchers.IO)
-            .distinctUntilChanged()
+        remoteMediaItemSummaryQueries.getFavourites(favouriteThreshold).asFlowList()
 
     fun observeHiddenMedia(): Flow<List<DbRemoteMediaItemSummary>> =
-        remoteMediaItemSummaryQueries.getHidden().asFlow()
-            .mapToList(Dispatchers.IO).distinctUntilChanged()
+        remoteMediaItemSummaryQueries.getHidden().asFlowList()
 
     fun observeMediaItemDetails(id: String): Flow<DbRemoteMediaItemDetails> =
-        remoteMediaItemDetailsQueries.getMediaItem(id).asFlow()
-            .mapToOneNotNull(Dispatchers.IO).distinctUntilChanged()
+        remoteMediaItemDetailsQueries.getMediaItem(id).asFlowSingleNotNull()
 
     private suspend fun getMediaItemDetails(id: String): DbRemoteMediaItemDetails? =
         remoteMediaItemDetailsQueries.getMediaItem(id).awaitSingleOrNull()

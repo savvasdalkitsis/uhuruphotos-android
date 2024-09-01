@@ -16,7 +16,15 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions
 
 import app.cash.sqldelight.Query
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToList
+import app.cash.sqldelight.coroutines.mapToOne
+import app.cash.sqldelight.coroutines.mapToOneNotNull
+import app.cash.sqldelight.coroutines.mapToOneOrNull
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
 suspend fun <R : Any> Query<R>.awaitSingle(): R = withContext(Dispatchers.IO) {
@@ -42,3 +50,18 @@ suspend fun <T> asyncReturn(action: () -> T) = withContext(Dispatchers.IO) {
 suspend fun <T> read(action: () -> T) = withContext(Dispatchers.IO) {
     action()
 }
+
+fun <R : Any> Query<R>.asFlowList(): Flow<List<R>> =
+    asFlow().mapToList(Dispatchers.IO).distinctUntilChanged()
+
+fun <R : Any> Query<R>.asFlowSet(): Flow<Set<R>> =
+    asFlow().mapToList(Dispatchers.IO).map { it.toSet() }.distinctUntilChanged()
+
+fun <R : Any> Query<R>.asFlowSingle(): Flow<R> =
+    asFlow().mapToOne(Dispatchers.IO).distinctUntilChanged()
+
+fun <R : Any> Query<R>.asFlowSingleNotNull(): Flow<R> =
+    asFlow().mapToOneNotNull(Dispatchers.IO).distinctUntilChanged()
+
+fun <R : Any> Query<R>.asFlowSingleNullable(): Flow<R?> =
+    asFlow().mapToOneOrNull(Dispatchers.IO).distinctUntilChanged()

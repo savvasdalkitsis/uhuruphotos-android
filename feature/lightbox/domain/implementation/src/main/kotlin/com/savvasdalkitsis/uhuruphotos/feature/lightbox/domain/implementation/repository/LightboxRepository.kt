@@ -15,11 +15,10 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.lightbox.domain.implementation.repository
 
-import app.cash.sqldelight.coroutines.asFlow
-import app.cash.sqldelight.coroutines.mapToOneOrNull
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.coroutines.coroutineBinding
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemDetails
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.asFlowSingleNullable
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingleOrNull
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.lightbox.LightboxDetailsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.domain.api.model.LightboxDetails
@@ -38,9 +37,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCa
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
@@ -62,7 +59,7 @@ class LightboxRepository @Inject constructor(
         md5Hash: Md5Hash,
     ): Flow<LightboxDetails> = userUseCase.observeUser().flatMapLatest {
         lightboxDetailsQueries.get(md5Hash.value)
-            .asFlow().mapToOneOrNull(Dispatchers.IO).distinctUntilChanged().map {
+            .asFlowSingleNullable().map {
                 it?.toLightboxDetails()
             }
             .filterNotNull()

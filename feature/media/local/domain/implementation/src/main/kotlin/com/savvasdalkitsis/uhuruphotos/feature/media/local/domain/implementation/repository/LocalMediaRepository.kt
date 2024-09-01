@@ -15,19 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.repository
 
-import android.content.ContentResolver
-import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory.decodeStream
-import android.graphics.Color
-import android.media.MediaMetadataRetriever
-import android.media.MediaMetadataRetriever.OPTION_CLOSEST_SYNC
-import android.net.Uri
-import androidx.palette.graphics.Palette
-import app.cash.sqldelight.coroutines.asFlow
-import app.cash.sqldelight.coroutines.mapToList
-import app.cash.sqldelight.coroutines.mapToOneNotNull
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.Database
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.asFlowList
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.asFlowSingleNotNull
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitList
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingleOrNull
@@ -35,28 +25,15 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.download.Down
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.local.LocalMediaItemDetails
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.local.LocalMediaItemDetailsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaDeletionException
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.module.LocalMediaModule
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.LocalMediaService
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.model.LocalMediaStoreServiceItem
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.model.LocalMediaStoreServiceItem.Photo
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.model.LocalMediaStoreServiceItem.Video
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.usecase.BitmapUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.exif.api.usecase.ExifUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.get
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simple
-import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.distinctUntilChanged
-import org.joda.time.format.DateTimeFormatter
-import java.io.File
-import java.math.BigInteger
-import java.security.MessageDigest
 import javax.inject.Inject
 
 class LocalMediaRepository @Inject constructor(
@@ -64,150 +41,31 @@ class LocalMediaRepository @Inject constructor(
     private val localMediaItemDetailsQueries: LocalMediaItemDetailsQueries,
     private val downloadingMediaItemsQueries: DownloadingMediaItemsQueries,
     private val localMediaService: LocalMediaService,
-    private val localMediaFolderRepository: LocalMediaFolderRepository,
-    private val contentResolver: ContentResolver,
-    @ApplicationContext private val context: Context,
-    private val exifUseCase: ExifUseCase,
-    @LocalMediaModule.LocalMediaDateTimeFormat
-    private val dateTimeFormat: DateTimeFormatter,
-    private val bitmapUseCase: BitmapUseCase,
     @PlainTextPreferences
     private val preferences: Preferences,
+    private val localMediaResolver: LocalMediaResolver,
+    private val localMediaProcessor: LocalMediaProcessor,
 ) {
 
     private val keyLocalSyncedBefore = "keyLocalSyncedBefore"
 
     fun observeMedia(): Flow<List<LocalMediaItemDetails>> = localMediaItemDetailsQueries.getItems()
-        .asFlow().mapToList(Dispatchers.IO).distinctUntilChanged()
+        .asFlowList()
 
     fun observeFolder(folderId: Int): Flow<List<LocalMediaItemDetails>> =
-        localMediaItemDetailsQueries.getBucketItems(folderId)
-            .asFlow().mapToList(Dispatchers.IO).distinctUntilChanged()
+        localMediaItemDetailsQueries.getBucketItems(folderId).asFlowList()
 
     suspend fun getMedia(): List<LocalMediaItemDetails> =
         localMediaItemDetailsQueries.getItems().awaitList()
 
     suspend fun refreshFolder(folderId: Int) =
-        (localMediaService.getPhotosForBucket(folderId) + localMediaService.getVideosForBucket(folderId))
-            .processAndInsertItems(folderId)
+         localMediaResolver.resolveMediaForFolder(folderId)
+             .processAndInsertItems(folderId)
 
     suspend fun refresh(
         onProgressChange: suspend (current: Int, total: Int) -> Unit = { _, _ -> },
-    ) {
-        val camera = localMediaFolderRepository.getDefaultLocalFolderId()
-        val cameraPhotos = (camera?.let { localMediaService.getPhotosForBucket(it) } ?: emptyList())
-        val cameraVideos = (camera?.let { localMediaService.getVideosForBucket(it) } ?: emptyList())
-
-        val photos = when {
-            localMediaFolderRepository.shouldScanOtherFolders() -> localMediaService.getPhotos() - cameraPhotos.toSet()
-            else -> emptySet()
-        }
-        val videos =  when {
-            localMediaFolderRepository.shouldScanOtherFolders() -> localMediaService.getVideos() - cameraVideos.toSet()
-            else -> emptySet()
-        }
-        val cameraItems = (cameraPhotos + cameraVideos).sortedByDescending { it.dateTaken }
-        (cameraItems + photos + videos)
-            .processAndInsertItems(onProgressChange = onProgressChange)
-    }
-
-    private suspend fun <T : LocalMediaStoreServiceItem> List<T>.processAndInsertItems(
-        bucketId: Int? = null,
-        onProgressChange: suspend (current: Int, total: Int) -> Unit = { _, _ -> },
-        removeMissingItems: Boolean = true,
-        forceProcess: Boolean = false,
-    ) = process(bucketId, onProgressChange, removeMissingItems, forceProcess) { itemDetails ->
-        database.transaction {
-            downloadingMediaItemsQueries.removeStartingWith(itemDetails.md5)
-            localMediaItemDetailsQueries.insert(itemDetails)
-        }
-    }
-
-    private suspend fun List<LocalMediaStoreServiceItem>.process(
-        bucketId: Int? = null,
-        onProgressChange: suspend (current: Int, total: Int) -> Unit = { _, _ -> },
-        removeMissingItems: Boolean = true,
-        forceProcess: Boolean = false,
-        onNewItem: (LocalMediaItemDetails) -> Unit,
-    ) {
-        onProgressChange(0, 0)
-        val existingIds = when {
-            forceProcess -> emptySet()
-            else -> if (bucketId != null) {
-                localMediaItemDetailsQueries.getExistingBucketIds(bucketId)
-            } else {
-                localMediaItemDetailsQueries.getExistingIds()
-            }.awaitList().toSet()
-        }
-        if (removeMissingItems) {
-            val currentIds = map { it.id }.toSet()
-            async {
-                for (id in existingIds - currentIds) {
-                    removeItemsFromDb(id)
-                }
-            }
-        }
-        val newItems = filter { it.id !in existingIds }
-        for ((index, item) in newItems.withIndex()) {
-            onProgressChange(index, newItems.size)
-            async {
-                processNewItem(item, onNewItem)
-            }
-        }
-    }
-
-    private fun processNewItem(
-        item: LocalMediaStoreServiceItem,
-        onNewItem: (LocalMediaItemDetails) -> Unit
-    ) {
-        val exif = contentResolver.openInputStream(item.contentUri)!!.use { stream ->
-            exifUseCase.extractFrom(stream)
-        }
-        val (size, md5) = contentResolver.openInputStream(item.contentUri)!!.use { stream ->
-            val digest = MessageDigest.getInstance("MD5")
-            val buffer = ByteArray(64 * 1024)
-            var totalRead = 0
-            do {
-                val read = stream.read(buffer)
-                if (read > 0) {
-                    totalRead += read
-                    digest.update(buffer, 0, read)
-                }
-            } while (read > 0)
-            totalRead to BigInteger(1, digest.digest()).toString(16).padStart(32, '0')
-        }
-        val thumbnail = when (item) {
-            is Photo -> item.bitmap
-            is Video -> item.bitmap
-        }
-        val thumbnailPath = thumbnail?.save(item)
-        val fallbackColor = thumbnail.palette(item)
-        thumbnail?.recycle()
-        onNewItem(
-            LocalMediaItemDetails(
-                id = item.id,
-                displayName = item.displayName,
-                dateTaken = (exif.dateTime ?: item.dateTaken).toDateString(),
-                bucketId = item.bucketId,
-                bucketName = item.bucketName,
-                width = item.width ?: 0,
-                height = item.height ?: 0,
-                size = item.size ?: size,
-                contentUri = item.contentUri.toString(),
-                md5 = md5,
-                video = item is Video,
-                duration = (item as? Video)?.duration,
-                latLon = exif.latLon?.let { (lat, lon) -> "$lat,$lon" },
-                fallbackColor = "#${fallbackColor.toUInt().toString(16).padStart(6, '0')}",
-                path = item.path,
-                orientation = item.orientation,
-                thumbnailPath = thumbnailPath,
-            )
-        )
-    }
-
-    private fun Long.toDateString(): String =
-        dateTimeFormat.print(this)
+    ) = localMediaResolver.resolveAllLocalMediaInOrder()
+        .processAndInsertItems(onProgressChange = onProgressChange)
 
     fun clearAll() {
         localMediaItemDetailsQueries.clearAll()
@@ -225,7 +83,7 @@ class LocalMediaRepository @Inject constructor(
 
     fun observeItem(id: Long): Flow<LocalMediaItemDetails> =
         localMediaItemDetailsQueries.getItem(id)
-            .asFlow().mapToOneNotNull(Dispatchers.IO).distinctUntilChanged()
+            .asFlowSingleNotNull()
 
     suspend fun getItem(id: Long): LocalMediaItemDetails? =
         localMediaItemDetailsQueries.getItem(id).awaitSingleOrNull()
@@ -249,7 +107,6 @@ class LocalMediaRepository @Inject constructor(
     fun removeItemsFromDb(vararg ids: Long) =
         localMediaItemDetailsQueries.delete(ids.toList())
 
-
     fun markLocalMediaSyncedBefore(synced: Boolean) = preferences.set(keyLocalSyncedBefore, synced)
 
     fun hasLocalMediaBeenSyncedBefore(): Boolean =
@@ -257,72 +114,40 @@ class LocalMediaRepository @Inject constructor(
         // will be set to false during Welcome
         preferences.get(keyLocalSyncedBefore, true)
 
-    private val thumbWidth = 400
-
-    private val Video.bitmap get() = try {
-        MediaMetadataRetriever().apply {
-            setDataSource(context, contentUri)
-        }.getFrameAtTime(0, OPTION_CLOSEST_SYNC).scale()
-    } catch (e: Exception) {
-        log(e)
-        null
-    }
-
-    private val Photo.bitmap get() = try {
-        contentResolver.openInputStream(contentUri)!!.use { stream ->
-            decodeStream(stream)
-        }.scale()
-    } catch (e: Exception) {
-        log(e)
-        null
-    }
-
-    private fun Bitmap?.scale() = try {
-        this?.let { frame ->
-            val ratio = frame.height / frame.width.toFloat()
-            Bitmap.createScaledBitmap(frame, thumbWidth, (thumbWidth * ratio).toInt(), true).also {
-                frame.recycle()
+    private suspend fun <T : LocalMediaStoreServiceItem> List<T>.processAndInsertItems(
+        bucketId: Int? = null,
+        onProgressChange: suspend (current: Int, total: Int) -> Unit = { _, _ -> },
+        removeMissingItems: Boolean = true,
+        forceProcess: Boolean = false,
+    ) {
+        onProgressChange(0, 0)
+        val existingIds = when {
+            forceProcess -> emptySet()
+            else -> if (bucketId != null) {
+                localMediaItemDetailsQueries.getExistingBucketIds(bucketId)
+            } else {
+                localMediaItemDetailsQueries.getExistingIds()
+            }.awaitList().toSet()
+        }
+        if (removeMissingItems) {
+            val currentIds = map { it.id }.toSet()
+            async {
+                for (id in existingIds - currentIds) {
+                    removeItemsFromDb(id)
+                }
+            }
+        }
+        val newItems = filter { it.id !in existingIds }
+        for ((index, item) in newItems.withIndex<LocalMediaStoreServiceItem>()) {
+            onProgressChange(index, newItems.size)
+            async {
+                localMediaProcessor.processNewItem(item) { itemDetails: LocalMediaItemDetails ->
+                    database.transaction {
+                        downloadingMediaItemsQueries.removeStartingWith(itemDetails.md5)
+                        localMediaItemDetailsQueries.insert(itemDetails)
+                    }
+                }
             }
         }
     }
-    catch (e: Exception) {
-        log(e)
-        null
-    }
-
-    private val Bitmap.palette get() = try {
-        Palette.from(this).generate().lightMutedSwatch?.rgb
-    } catch (e: Exception) {
-        log(e)
-        null
-    }
-
-    private fun Bitmap?.palette(item: LocalMediaStoreServiceItem) = item.tryPalette { this }
-
-    private fun Bitmap?.save(item: LocalMediaStoreServiceItem): String? = try {
-        this?.let { bitmap ->
-            val file = context.filesDir.subFolder("localThumbnails").subFile("${item.id}.jpg")
-            with(bitmapUseCase) {
-                file.writeBytes(
-                    bitmap.toJpeg().copyExifFrom(item.contentUri)
-                )
-            }
-            return file.absolutePath
-        }
-    } catch (e: Exception) {
-        log(e)
-        null
-    }
-
-    private fun File.subFolder(name: String) = subFile(name).apply {
-        mkdirs()
-    }
-    private fun File.subFile(name: String) = File(this, name)
-
-    private fun LocalMediaStoreServiceItem.tryPalette(bitmap: (Uri) -> Bitmap?): Int = try {
-        bitmap(contentUri)
-    } catch (e: Exception) {
-        log(e) { "Could not extract frame from item at $contentUri"}
-        null
-    }?.palette ?: Color.rgb(231, 231, 231)
 }

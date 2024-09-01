@@ -15,19 +15,16 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.domain.implementation.repository
 
-import app.cash.sqldelight.coroutines.asFlow
-import app.cash.sqldelight.coroutines.mapToList
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.domain.implementation.service.AutoAlbumsService
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.domain.implementation.service.model.toAutoAlbums
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.AutoAlbums
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.AutoAlbumsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitList
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.asFlowList
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simple
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.distinctUntilChanged
 import javax.inject.Inject
 
 class AutoAlbumsRepository @Inject constructor(
@@ -35,8 +32,7 @@ class AutoAlbumsRepository @Inject constructor(
     private val autoAlbumsService: AutoAlbumsService,
 ) {
     fun observeAutoAlbums(): Flow<List<AutoAlbums>> =
-        autoAlbumsQueries.getAutoAlbums().asFlow().mapToList(Dispatchers.IO)
-            .distinctUntilChanged()
+        autoAlbumsQueries.getAutoAlbums().asFlowList()
 
     suspend fun getAutoAlbums(): List<AutoAlbums> =
         autoAlbumsQueries.getAutoAlbums().awaitList()
