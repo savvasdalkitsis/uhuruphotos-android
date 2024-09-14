@@ -235,7 +235,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{HOST}}/api/albums/date/list/?hidden=true",
+									"raw": "{{HOST}}/api/albums/date/list/?in_trashcan=true",
 									"host": [
 										"{{HOST}}"
 									],
@@ -248,7 +248,7 @@
 									],
 									"query": [
 										{
-											"key": "hidden",
+											"key": "in_trashcan",
 											"value": "true"
 										}
 									]
@@ -266,7 +266,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{HOST}}/api/albums/date/:id/?hidden=true",
+									"raw": "{{HOST}}/api/albums/date/:id/?in_trashcan=true",
 									"host": [
 										"{{HOST}}"
 									],
@@ -279,21 +279,20 @@
 									],
 									"query": [
 										{
-											"key": "hidden",
-											"value": "true"
-										},
-										{
 											"key": "",
 											"value": "",
 											"type": "text",
 											"disabled": true
+										},
+										{
+											"key": "in_trashcan",
+											"value": "true"
 										}
 									],
 									"variable": [
 										{
-											"id": "2bb48761-b4d5-472b-8f9a-3b4f1a2534bc",
 											"key": "id",
-											"value": "1480"
+											"value": "1839"
 										}
 									]
 								}
