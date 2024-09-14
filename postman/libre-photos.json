@@ -223,6 +223,87 @@
 					"id": "a9743ebb-1fa4-47f0-9fd7-e3c28254a057"
 				},
 				{
+					"name": "Trash",
+					"item": [
+						{
+							"name": "Get Trash",
+							"id": "b3d33304-8de6-4c32-b4ce-1808ad366204",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{HOST}}/api/albums/date/list/?hidden=true",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"albums",
+										"date",
+										"list",
+										""
+									],
+									"query": [
+										{
+											"key": "hidden",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Trash Summary",
+							"id": "1336602e-2631-45c8-ba3b-2751064a8ec8",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{HOST}}/api/albums/date/:id/?hidden=true",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"albums",
+										"date",
+										":id",
+										""
+									],
+									"query": [
+										{
+											"key": "hidden",
+											"value": "true"
+										},
+										{
+											"key": "",
+											"value": "",
+											"type": "text",
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"id": "2bb48761-b4d5-472b-8f9a-3b4f1a2534bc",
+											"key": "id",
+											"value": "1480"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "de2a13ef-ab43-42a9-9f72-ca57bb2d3b6d"
+				},
+				{
 					"name": "Favourites",
 					"item": [
 						{
