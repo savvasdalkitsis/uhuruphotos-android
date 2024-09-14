@@ -26,10 +26,10 @@ import javax.inject.Singleton
 @Singleton
 interface TrashService {
 
-    @GET("/api/albums/date/list/?deleted=true")
+    @GET("/api/albums/date/list/?in_trashcan=true")
     suspend fun getTrash(): RemoteMediaCollectionsByDate
 
-    @GET("/api/albums/date/{id}/?deleted=true")
+    @GET("/api/albums/date/{id}/?in_trashcan=true")
     suspend fun getTrashMediaCollection(@Path("id") id: String): RemoteMediaCollectionById
 
 }
