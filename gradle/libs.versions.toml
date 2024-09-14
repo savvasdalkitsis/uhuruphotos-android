@@ -55,7 +55,7 @@ androidx-activity = "androidx.activity:activity-compose:1.9.1"
 androidx-annotation = "androidx.annotation:annotation:1.8.2"
 androidx-compose-animation-base = { module = "androidx.compose.animation:animation", version.ref = "compose" }
 androidx-compose-animation-graphics = { module = "androidx.compose.animation:animation-graphics", version.ref = "compose" }
-androidx-compose-constraintlayout = "androidx.constraintlayout:constraintlayout-compose:1.1.0-alpha14"
+androidx-compose-constraintlayout = "androidx.constraintlayout:constraintlayout-compose:1.1.0-beta01"
 androidx-compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose" }
 androidx-compose-foundation-layout = { module = "androidx.compose.foundation:foundation-layout", version.ref = "compose" }
 androidx-compose-hilt-navigation = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "androidx-hilt" }
