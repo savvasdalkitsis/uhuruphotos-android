@@ -9,9 +9,10 @@ android {
 dependencies {
 
     api(
-            libs.androidx.compose.material,
-            libs.androidx.compose.ui,
             libs.androidx.compose.constraintlayout,
+            libs.androidx.compose.material,
+            libs.androidx.compose.material.icons,
+            libs.androidx.compose.ui,
             libs.capturable,
             libs.kotlinx.immutable,
             libs.scrollbar,

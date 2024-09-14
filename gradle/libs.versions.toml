@@ -1,12 +1,12 @@
 [versions]
 about = "11.2.3"
 accompanist = "0.34.0"
-agp = "8.5.2"
+agp = "8.6.0"
 android-sdk-geojson = "6.0.1"
 androidx-hilt = "1.2.0"
 autodagger = "1.3.0"
 coil = "2.7.0"
-compose = "1.7.0-rc01"
+compose = "1.7.1"
 crypto = "1.1.0-alpha06"
 datastore = "1.1.1"
 gms = "19.0.0"
@@ -51,17 +51,18 @@ accompanist-permissions = { module = "com.google.accompanist:accompanist-permiss
 accompanist-systemui = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
 accompanist-webview = { module = "com.google.accompanist:accompanist-webview", version.ref = "accompanist" }
 android-sdk-geojson = { module = "org.maplibre.gl:android-sdk-geojson", version.ref = "android-sdk-geojson" }
-androidx-activity = "androidx.activity:activity-compose:1.9.1"
+androidx-activity = "androidx.activity:activity-compose:1.9.2"
 androidx-annotation = "androidx.annotation:annotation:1.8.2"
 androidx-compose-animation-base = { module = "androidx.compose.animation:animation", version.ref = "compose" }
 androidx-compose-animation-graphics = { module = "androidx.compose.animation:animation-graphics", version.ref = "compose" }
-androidx-compose-constraintlayout = "androidx.constraintlayout:constraintlayout-compose:1.1.0-alpha14"
+androidx-compose-constraintlayout = "androidx.constraintlayout:constraintlayout-compose:1.1.0-beta01"
 androidx-compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose" }
 androidx-compose-foundation-layout = { module = "androidx.compose.foundation:foundation-layout", version.ref = "compose" }
 androidx-compose-hilt-navigation = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "androidx-hilt" }
 androidx-compose-material = { module = "androidx.compose.material:material", version.ref = "compose" }
-androidx-compose-material-windowsize = "androidx.compose.material3:material3-window-size-class:1.2.1"
-androidx-compose-navigation = "androidx.navigation:navigation-compose:2.7.7"
+androidx-compose-material-icons = { module = "androidx.compose.material:material-icons-core", version.ref = "compose" }
+androidx-compose-material-windowsize = "androidx.compose.material3:material3-window-size-class:1.3.0"
+androidx-compose-navigation = "androidx.navigation:navigation-compose:2.8.0"
 androidx-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
 androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
 androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
@@ -69,7 +70,7 @@ androidx-compose-ui-util = { module = "androidx.compose.ui:ui-util", version.ref
 androidx-core = "androidx.core:core-ktx:1.13.1"
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hilt-compiler" }
-androidx-lifecycle = "androidx.lifecycle:lifecycle-runtime-ktx:2.8.2"
+androidx-lifecycle = "androidx.lifecycle:lifecycle-runtime-ktx:2.8.5"
 androidx-media3-core = { module = "androidx.media3:media3-exoplayer", version.ref = "media3" }
 androidx-media3-database = { module = "androidx.media3:media3-database", version.ref = "media3" }
 androidx-media3-hls = { module = "androidx.media3:media3-exoplayer-hls", version.ref = "media3" }
@@ -79,7 +80,7 @@ androidx-preference = "androidx.preference:preference-ktx:1.2.1"
 androidx-security-crypto-core = { module = "androidx.security:security-crypto", version.ref = "crypto" }
 androidx-security-crypto-ktx = { module = "androidx.security:security-crypto-ktx", version.ref = "crypto" }
 androidx-splash = "androidx.core:core-splashscreen:1.0.1"
-androidx-startup = "androidx.startup:startup-runtime:1.2.0-beta01"
+androidx-startup = "androidx.startup:startup-runtime:1.2.0-rc01"
 androidx-tracing = "androidx.tracing:tracing-ktx:1.2.0"
 androidx-window = "androidx.window:window:1.3.0"
 androidx-work = "androidx.work:work-runtime-ktx:2.9.1"
