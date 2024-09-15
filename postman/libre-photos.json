@@ -84,7 +84,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{HOST}}/api/albums/date/list?last_modified=2024-08-02T21:09:57Z",
+							"raw": "{{HOST}}/api/albums/date/list?last_modified=2024-09-15T21:09:57Z",
 							"host": [
 								"{{HOST}}"
 							],
@@ -97,8 +97,7 @@
 							"query": [
 								{
 									"key": "last_modified",
-									"value": "2024-08-02T21:09:57Z",
-									"type": "text"
+									"value": "2024-09-15T21:09:57Z"
 								}
 							]
 						}
@@ -146,7 +145,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{HOST}}/api/albums/date/:id",
+							"raw": "{{HOST}}/api/albums/date/:id?last_modified=2024-09-15T21:09:57Z",
 							"host": [
 								"{{HOST}}"
 							],
@@ -156,11 +155,16 @@
 								"date",
 								":id"
 							],
+							"query": [
+								{
+									"key": "last_modified",
+									"value": "2024-09-15T21:09:57Z"
+								}
+							],
 							"variable": [
 								{
-									"id": "0d0a776c-0653-4f65-b5a0-f73960fe52fb",
 									"key": "id",
-									"value": "1533"
+									"value": "1036"
 								}
 							]
 						}
