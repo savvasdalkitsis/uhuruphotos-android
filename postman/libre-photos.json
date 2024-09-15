@@ -135,6 +135,37 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Get Last Modified Day",
+					"id": "6da93fba-daf9-44b0-b210-bb117b188e27",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/albums/date/:id",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"albums",
+								"date",
+								":id"
+							],
+							"variable": [
+								{
+									"id": "0d0a776c-0653-4f65-b5a0-f73960fe52fb",
+									"key": "id",
+									"value": "1533"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"id": "d4310b88-d453-4c40-8856-98259d5b521c"
