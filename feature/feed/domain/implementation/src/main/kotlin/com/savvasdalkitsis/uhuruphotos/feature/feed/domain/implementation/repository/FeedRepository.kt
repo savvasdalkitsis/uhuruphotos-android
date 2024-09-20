@@ -26,8 +26,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.GetRem
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaCollectionsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.service.FeedService
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteFeedDay.Complete
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteFeedDay.Incomplete
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaDaySummaries.Complete
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaDaySummaries.Incomplete
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.toDbModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule
@@ -100,7 +100,6 @@ class FeedRepository @Inject constructor(
             .groupBy(GetRemoteMediaCollections::id).let(::Group)
 
     suspend fun refreshRemoteFeed(
-        shallow: Boolean,
         onProgressChange: suspend (current: Int, total: Int) -> Unit = { _, _ -> },
     ): SimpleResult {
         val start = parsingDateTimeFormat.print(Instant.now().toDateTime(DateTimeZone.UTC))
@@ -112,17 +111,14 @@ class FeedRepository @Inject constructor(
                 }
             },
             completeAlbumsFetcher = getCollectionAllPages(lastFeedRefresh),
-            shallow = false,
             onProgressChange = onProgressChange,
             incompleteAlbumsProcessor = { albums ->
                 database.transaction {
-//                    cannot clear anymore, what about removed days?
-                    remoteMediaCollectionsQueries.clearAll()
                     for (album in albums.map { it.toDbModel() }) {
                         remoteMediaCollectionsQueries.insert(album)
                     }
                 }
-            }
+            },
         ).onSuccess {
             lastFeedRefresh = start
         }
@@ -141,12 +137,7 @@ class FeedRepository @Inject constructor(
                 ))
             },
             completeAlbumsFetcher = getCollectionAllPages(),
-            shallow = false,
             clearSummariesBeforeInserting = true,
-            completeAlbumProcessor = { album ->
-                remoteMediaCollectionsQueries.insert(album.toIncomplete().toDbModel())
-            },
-            incompleteAlbumsProcessor = { }
         )
 
     private fun getCollectionAllPages(since: String? = null): suspend (String) -> Complete = { id ->

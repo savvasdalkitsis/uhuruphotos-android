@@ -22,10 +22,10 @@ import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.map
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.Database
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaCollections
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemDetails
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitList
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingle
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingleOrNull
@@ -34,6 +34,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.Remote
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemSummaryQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaTrashQueries
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResult
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummaryStatus
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummaryStatus.Found
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummaryStatus.Processing
@@ -55,6 +56,7 @@ class RemoteMediaRepository @Inject constructor(
     private val remoteMediaItemSummaryQueries: RemoteMediaItemSummaryQueries,
     private val remoteMediaService: RemoteMediaService,
     private val remoteMediaTrashQueries: RemoteMediaTrashQueries,
+    private val db: Database,
 ) {
 
     fun observeAllMediaItemDetails(): Flow<List<DbRemoteMediaItemDetails>> =
@@ -83,17 +85,17 @@ class RemoteMediaRepository @Inject constructor(
     suspend fun getOrRefreshRemoteMediaItemSummary(id: String): Result<RemoteMediaItemSummaryStatus, Throwable> {
         val summary = remoteMediaItemSummaryQueries.get(id).awaitSingleOrNull()
         return if (summary != null) {
-            Ok(Found(summary))
+            Ok(Found(summary.containerId))
         } else {
             try {
                 val response = remoteMediaService.getMediaItemSummary(id)
                 val albumDateId = response.albumDateId
-                if (albumDateId == null || response.processing == true || response.photoSummary.aspectRatio == null) {
+                if (albumDateId == null || response.processing == true || response.remoteMediaItemSummary.aspectRatio == null) {
                     Ok(Processing(response))
                 } else {
-                    val model = response.photoSummary.toDbModel(albumDateId)
-                    remoteMediaItemSummaryQueries.insert(model)
-                    Ok(Found(model))
+                    val model = response.remoteMediaItemSummary
+                    saveRemoteMediaSummary(albumDateId, model)
+                    Ok(Found(albumDateId))
                 }
             } catch (e: Exception) {
                 log(e)
@@ -123,44 +125,40 @@ class RemoteMediaRepository @Inject constructor(
         }
     }
 
-    suspend fun insertMediaItem(mediaItemDetails: DbRemoteMediaItemDetails) {
-        async {
-            remoteMediaItemDetailsQueries.insert(mediaItemDetails)
-            remoteMediaItemSummaryQueries.setRating(
-                mediaItemDetails.rating,
-                mediaItemDetails.imageHash
-            )
+    fun saveRemoteMediaSummary(containerId: String, summary: RemoteMediaItemSummary) {
+        when {
+            summary.removed -> deleteMediaItem(summary.id)
+            summary.inTrash -> trashMediaItem(summary.id)
+            else -> remoteMediaItemSummaryQueries.insert(summary.toDbModel(containerId))
         }
     }
 
-    suspend fun setMediaItemRating(id: String, rating: Int) {
-        async {
-            remoteMediaItemDetailsQueries.setRating(rating, id)
-            remoteMediaItemSummaryQueries.setRating(rating, id)
-        }
+    fun insertMediaItem(mediaItemDetails: DbRemoteMediaItemDetails) {
+        remoteMediaItemDetailsQueries.insert(mediaItemDetails)
+        remoteMediaItemSummaryQueries.setRating(
+            mediaItemDetails.rating,
+            mediaItemDetails.imageHash
+        )
     }
 
-    suspend fun trashMediaItem(id: String) {
-        async {
-            remoteMediaItemSummaryQueries.transaction {
-                remoteMediaItemSummaryQueries.copyToTrash(id)
-                remoteMediaItemSummaryQueries.delete(id)
-            }
-        }
+    fun setMediaItemRating(id: String, rating: Int) {
+        remoteMediaItemDetailsQueries.setRating(rating, id)
+        remoteMediaItemSummaryQueries.setRating(rating, id)
     }
 
-    suspend fun restoreMediaItemFromTrash(id: String) {
-        async {
-            remoteMediaTrashQueries.moveToSummaries(id)
-        }
+    fun trashMediaItem(id: String) {
+        remoteMediaItemSummaryQueries.copyToTrash(id)
+        remoteMediaItemSummaryQueries.delete(id)
     }
 
-    suspend fun deleteMediaItem(id: String) {
-        async {
-            remoteMediaItemDetailsQueries.delete(id)
-            remoteMediaItemSummaryQueries.delete(id)
-            remoteMediaTrashQueries.delete(id)
-        }
+    fun restoreMediaItemFromTrash(id: String) {
+        remoteMediaTrashQueries.moveToSummaries(id)
+    }
+
+    fun deleteMediaItem(id: String) {
+        remoteMediaItemDetailsQueries.delete(id)
+        remoteMediaItemSummaryQueries.delete(id)
+        remoteMediaTrashQueries.delete(id)
     }
 
     fun insertMediaCollection(remoteMediaCollections: DbRemoteMediaCollections) {

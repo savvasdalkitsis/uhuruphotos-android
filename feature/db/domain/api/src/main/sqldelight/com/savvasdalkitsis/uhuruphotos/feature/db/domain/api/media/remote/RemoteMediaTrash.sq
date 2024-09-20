@@ -9,6 +9,8 @@ CREATE TABLE remoteMediaTrash (
   type TEXT,
   videoLength TEXT,
   rating INTEGER AS kotlin.Int,
+  gpsLat TEXT,
+  gpsLon TEXT,
   containerId TEXT NOT NULL,
 
   FOREIGN KEY (containerId) REFERENCES remoteMediaCollections(id)

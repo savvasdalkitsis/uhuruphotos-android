@@ -9,6 +9,8 @@ CREATE TABLE remoteMediaItemSummary (
   type TEXT,
   videoLength TEXT,
   rating INTEGER AS kotlin.Int,
+  gpsLat TEXT,
+  gpsLon TEXT,
   containerId TEXT NOT NULL,
 
   FOREIGN KEY (containerId) REFERENCES remoteMediaCollections(id)
@@ -29,7 +31,7 @@ SELECT * FROM remoteMediaItemSummary WHERE containerId == 'hiddenPhoto'
 ORDER BY date DESC;
 
 insertHidden:
-INSERT OR REPLACE INTO remoteMediaItemSummary VALUES (?,?,?,?,?,?,?,?,?,?,'hiddenPhoto');
+INSERT OR REPLACE INTO remoteMediaItemSummary VALUES (?,?,?,?,?,?,?,?,?,?,?,?,'hiddenPhoto');
 
 deleteHidden:
 DELETE FROM remoteMediaItemSummary WHERE containerId == 'hiddenPhoto';

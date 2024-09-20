@@ -30,8 +30,16 @@ data class RemoteMediaItemSummary(
     val birthTime: String,
     val aspectRatio: Float? = null,
     val type: String,
-    @Json(name = "video_length") val videoLength: String,
-    val rating: Int
+    @Json(name = "video_length")
+    val videoLength: String,
+    val rating: Int,
+    @Json(name = "exif_gps_lat")
+    val lat: String? = null,
+    @Json(name = "exif_gps_lon")
+    val lon: String? = null,
+    val removed: Boolean = false,
+    @Json(name = "in_trashcan")
+    val inTrash: Boolean = false,
 )
 
 fun RemoteMediaItemSummary.toDbModel(albumId: String) = DbRemoteMediaItemSummary(
@@ -45,7 +53,9 @@ fun RemoteMediaItemSummary.toDbModel(albumId: String) = DbRemoteMediaItemSummary
     type = type,
     videoLength = videoLength,
     rating = rating,
-    containerId = albumId
+    containerId = albumId,
+    gpsLat = lat,
+    gpsLon = lon
 )
 
 fun RemoteMediaItemSummary.toTrash(albumId: String) = DbTrash(
@@ -59,5 +69,7 @@ fun RemoteMediaItemSummary.toTrash(albumId: String) = DbTrash(
     type = type,
     videoLength = videoLength,
     rating = rating,
-    containerId = albumId
+    containerId = albumId,
+    gpsLat = lat,
+    gpsLon = lon,
 )

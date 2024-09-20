@@ -17,11 +17,10 @@ package com.savvasdalkitsis.uhuruphotos.feature.search.domain.implementation.rep
 
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitList
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemSummaryQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.search.GetSearchResults
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.search.SearchQueries
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.search.domain.implementation.service.SearchService
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.groupBy
@@ -38,7 +37,7 @@ import javax.inject.Inject
 class SearchRepository @Inject constructor(
     private val searchService: SearchService,
     private val searchQueries: SearchQueries,
-    private val remoteMediaItemSummaryQueries: RemoteMediaItemSummaryQueries,
+    private val remoteMediaUseCase: RemoteMediaUseCase,
     @PlainTextPreferences
     private val preferences: Preferences,
 ) {
@@ -58,29 +57,15 @@ class SearchRepository @Inject constructor(
     suspend fun refreshSearch(query: String) = runCatchingWithLog {
         val results = searchService.search(query)
         for (searchResult in results.results) {
-            for (photoSummary in searchResult.items) {
+            for (mediaItemSummary in searchResult.items) {
                 searchQueries.addSearchResult(
                     id = null,
                     query = query,
                     date = searchResult.date,
                     location = searchResult.location,
-                    photoId = photoSummary.id
+                    photoId = mediaItemSummary.id
                 )
-                remoteMediaItemSummaryQueries.insert(
-                    DbRemoteMediaItemSummary(
-                        id = photoSummary.id,
-                        dominantColor = photoSummary.dominantColor,
-                        url = photoSummary.url,
-                        location = photoSummary.location,
-                        date = photoSummary.date,
-                        birthTime = photoSummary.birthTime,
-                        aspectRatio = photoSummary.aspectRatio,
-                        type = photoSummary.type,
-                        videoLength = photoSummary.videoLength,
-                        rating = photoSummary.rating,
-                        containerId = query,
-                    )
-                )
+                remoteMediaUseCase.saveRemoteMediaSummary(query, mediaItemSummary)
             }
         }
     }.simple()

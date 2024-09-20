@@ -98,7 +98,7 @@ class JobsUseCase @Inject constructor(
 
     override fun startJob(job: Job) {
         when (job) {
-            FEED_SYNC -> feedWorkScheduler.scheduleFeedRefreshNow(shallow = false)
+            FEED_SYNC -> feedWorkScheduler.scheduleFeedRefreshNow()
             PRECACHE_THUMBNAILS -> feedWorkScheduler.schedulePrecacheThumbnailsNow()
             LOCAL_MEDIA_SYNC -> localMediaWorkScheduler.scheduleLocalMediaSyncNowIfNotRunning()
             FEED_DETAILS_SYNC -> feedWorkScheduler.scheduleFeedDetailsRefreshNow()

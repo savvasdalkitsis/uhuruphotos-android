@@ -181,7 +181,7 @@ internal class FeedUseCase @Inject constructor(
     private fun Flow<Sequence<MediaCollection>>.initialize() = distinctUntilChanged()
         .safelyOnStartIgnoring {
             if (!feedRepository.hasRemoteMediaCollections()) {
-                refreshFeed(shallow = false)
+                refreshFeed()
             }
         }
 
@@ -195,8 +195,8 @@ internal class FeedUseCase @Inject constructor(
         preferences.set(key, feedDisplay)
     }
 
-    override fun refreshFeed(shallow: Boolean) {
-        feedWorkScheduler.scheduleFeedRefreshNow(shallow)
+    override fun refreshFeed() {
+        feedWorkScheduler.scheduleFeedRefreshNow()
     }
 
     private fun GetRemoteMediaCollections.toMediaCollectionSource() = MediaCollectionSource(

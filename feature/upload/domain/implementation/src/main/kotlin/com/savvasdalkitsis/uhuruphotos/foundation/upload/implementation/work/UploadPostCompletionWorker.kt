@@ -56,7 +56,7 @@ class UploadPostCompletionWorker @AssistedInject constructor(
         val hash = params.inputData.getString(KEY_HASH)!!
         when (val status = mediaUseCase.getRemoteMediaItemSummary(hash).bind()) {
             is Found -> {
-                feedUseCase.refreshCluster(status.summary.containerId).bind()
+                feedUseCase.refreshCluster(status.containerId).bind()
                 uploadUseCase.markAsNotProcessing(itemId)
                 Result.success()
             }

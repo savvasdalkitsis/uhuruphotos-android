@@ -22,9 +22,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResult
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummaryStatus
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteFeedDay
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteFeedDayResult
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteFeedResult
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaDaySummaries
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import kotlinx.coroutines.flow.Flow
 
@@ -65,13 +65,12 @@ interface RemoteMediaUseCase {
     fun restoreMediaItem(id: String)
 
     suspend fun processRemoteMediaCollections(
-        incompleteAlbumsFetcher: suspend () -> List<RemoteFeedDay.Incomplete>,
-        completeAlbumsFetcher: suspend (String) -> RemoteFeedDay.Complete,
-        shallow: Boolean,
+        incompleteAlbumsFetcher: suspend () -> List<RemoteMediaDaySummaries.Incomplete>,
+        completeAlbumsFetcher: suspend (String) -> RemoteMediaDaySummaries.Complete,
         onProgressChange: suspend (current: Int, total: Int) -> Unit = { _, _ -> },
-        incompleteAlbumsProcessor: suspend (List<RemoteFeedDay.Incomplete>) -> Unit = {},
-        completeAlbumProcessor: suspend (RemoteFeedDay.Complete) -> Unit = {},
-        clearSummariesBeforeInserting: Boolean = true,
+        incompleteAlbumsProcessor: suspend (List<RemoteMediaDaySummaries.Incomplete>) -> Unit = {},
+        completeAlbumInterceptor: suspend (RemoteMediaDaySummaries.Complete) -> Unit = {},
+        clearSummariesBeforeInserting: Boolean = false,
     ): SimpleResult
 
     suspend fun exists(hash: MediaItemHash): Result<Boolean, Throwable>
@@ -82,5 +81,7 @@ interface RemoteMediaUseCase {
         completeMediaCollection: suspend (String) -> RemoteFeedDayResult,
         processSummary: (albumId: String, summary: RemoteMediaItemSummary) -> Unit,
     ): SimpleResult
+
+    fun saveRemoteMediaSummary(containerId: String, summary: RemoteMediaItemSummary)
 
 }

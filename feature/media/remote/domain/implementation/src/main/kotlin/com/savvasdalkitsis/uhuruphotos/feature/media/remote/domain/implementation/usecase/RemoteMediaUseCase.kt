@@ -22,14 +22,14 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRe
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemSummaryQueries
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaTrashQueries
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResult
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummaryStatus
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.toDbModel
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteFeedDay
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteFeedDayResult
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteFeedResult
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaDaySummaries
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.toDbModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.repository.RemoteMediaRepository
@@ -60,6 +60,7 @@ class RemoteMediaUseCase @Inject constructor(
     private val remoteMediaRepository: RemoteMediaRepository,
     private val remoteMediaService: RemoteMediaService,
     private val remoteMediaItemWorkScheduler: RemoteMediaItemWorkScheduler,
+    private val remoteMediaTrashQueries: RemoteMediaTrashQueries,
     private val userUseCase: UserUseCase,
     private val remoteMediaItemSummaryQueries: RemoteMediaItemSummaryQueries,
     private val db: Database,
@@ -120,7 +121,7 @@ class RemoteMediaUseCase @Inject constructor(
                     }
                 },
                 processSummary = { albumId, summary ->
-                    remoteMediaItemSummaryQueries.insert(summary.toDbModel(albumId))
+                    remoteMediaRepository.saveRemoteMediaSummary(albumId, summary)
                 }
             )
             val newFavouriteIds = newFavourites.map { it.id }.toSet()
@@ -131,6 +132,10 @@ class RemoteMediaUseCase @Inject constructor(
                 }
             }
         }
+
+    override fun saveRemoteMediaSummary(containerId: String, summary: RemoteMediaItemSummary) {
+        remoteMediaRepository.saveRemoteMediaSummary(containerId, summary)
+    }
 
     override suspend fun refreshHiddenMedia() = refreshMediaCollections(
         incompleteMediaCollections = { remoteMediaService.getHiddenMedia() },
@@ -148,6 +153,8 @@ class RemoteMediaUseCase @Inject constructor(
                 birthTime = summary.birthTime,
                 type = summary.type,
                 videoLength = summary.videoLength,
+                gpsLat = summary.lat,
+                gpsLon = summary.lon,
             )
         }
     )
@@ -209,25 +216,20 @@ class RemoteMediaUseCase @Inject constructor(
     }
 
     override suspend fun processRemoteMediaCollections(
-        incompleteAlbumsFetcher: suspend () -> List<RemoteFeedDay.Incomplete>,
-        completeAlbumsFetcher: suspend (String) -> RemoteFeedDay.Complete,
-        shallow: Boolean,
+        incompleteAlbumsFetcher: suspend () -> List<RemoteMediaDaySummaries.Incomplete>,
+        completeAlbumsFetcher: suspend (String) -> RemoteMediaDaySummaries.Complete,
         onProgressChange: suspend (current: Int, total: Int) -> Unit,
-        incompleteAlbumsProcessor: suspend (List<RemoteFeedDay.Incomplete>) -> Unit,
-        completeAlbumProcessor: suspend (RemoteFeedDay.Complete) -> Unit,
+        incompleteAlbumsProcessor: suspend (List<RemoteMediaDaySummaries.Incomplete>) -> Unit,
+        completeAlbumInterceptor: suspend (RemoteMediaDaySummaries.Complete) -> Unit,
         clearSummariesBeforeInserting: Boolean,
     ): SimpleResult = runCatchingWithLog {
         onProgressChange(0, 0)
         val albums = incompleteAlbumsFetcher()
         incompleteAlbumsProcessor(albums)
-        val albumsToDownloadSummaries = when {
-            shallow -> albums.take(settingsUseCase.getFeedDaysToRefresh())
-            else -> albums
-        }
-        for ((index, incompleteAlbum) in albumsToDownloadSummaries.withIndex()) {
+        for ((index, incompleteAlbum) in albums.withIndex()) {
             val id = incompleteAlbum.id
-            updateSummaries(id, completeAlbumsFetcher, completeAlbumProcessor, clearSummariesBeforeInserting)
-            onProgressChange(index, albumsToDownloadSummaries.size)
+            updateSummaries(id, completeAlbumsFetcher, completeAlbumInterceptor, clearSummariesBeforeInserting)
+            onProgressChange(index, albums.size)
         }
     }.simple()
 
@@ -263,24 +265,16 @@ class RemoteMediaUseCase @Inject constructor(
 
     private suspend fun updateSummaries(
         id: String,
-        remoteFeedDayFetcher: suspend (String) -> RemoteFeedDay.Complete,
-        completeAlbumProcessor: suspend (RemoteFeedDay.Complete) -> Unit,
-        clearSummariesBeforeInserting: Boolean = true,
+        remoteMediaDaySummariesFetcher: suspend (String) -> RemoteMediaDaySummaries.Complete,
+        completeAlbumInterceptor: suspend (RemoteMediaDaySummaries.Complete) -> Unit,
+        clearSummariesBeforeInserting: Boolean,
     ) {
-        val completeAlbum = remoteFeedDayFetcher(id)
-        completeAlbumProcessor(completeAlbum)
-        async {
-            remoteMediaItemSummaryQueries.transaction {
-                if (clearSummariesBeforeInserting) {
-                    remoteMediaItemSummaryQueries.deletePhotoSummariesforAlbum(id)
-                }
-                completeAlbum.items
-                    .map { it.toDbModel(id) }
-                    .forEach {
-                        remoteMediaItemSummaryQueries.insert(it)
-                    }
-            }
+        val completeAlbum = remoteMediaDaySummariesFetcher(id)
+        completeAlbumInterceptor(completeAlbum)
+        if (clearSummariesBeforeInserting) {
+            remoteMediaItemSummaryQueries.deletePhotoSummariesforAlbum(id)
         }
+        saveRemoteMediaSummaries(completeAlbum)
     }
 
     private suspend fun <T> withFavouriteThreshold(action: suspend (Int) -> T): Result<T, Throwable> =
@@ -292,4 +286,12 @@ class RemoteMediaUseCase @Inject constructor(
         userUseCase.getRemoteUserOrRefresh().andThenTry {
             action(it.favoriteMinRating!!).getOrThrow()
         }
+
+    private fun saveRemoteMediaSummaries(album: RemoteMediaDaySummaries.Complete) {
+        db.transaction {
+            for (day in album.items) {
+                saveRemoteMediaSummary(album.id, day)
+            }
+        }
+    }
 }

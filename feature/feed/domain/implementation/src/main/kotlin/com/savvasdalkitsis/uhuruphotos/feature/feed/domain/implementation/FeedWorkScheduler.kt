@@ -95,13 +95,11 @@ internal class FeedWorkScheduler @Inject constructor(
     override fun observePrecacheThumbnailsJobStatus(): Flow<WorkInfo.State?> =
         workerStatusUseCase.monitorUniqueJobStatus(PrecacheFeedThumbnailsWorker.WORK_NAME)
 
-    override fun scheduleFeedRefreshNow(shallow: Boolean) =
+    override fun scheduleFeedRefreshNow() =
         workScheduleUseCase.scheduleNow(
             FeedDownloadWorker.WORK_NAME,
             FeedDownloadWorker::class,
-        ) {
-            putBoolean(FeedDownloadWorker.KEY_SHALLOW, shallow)
-        }
+        )
 
     override fun schedulePrecacheThumbnailsNow() {
         workScheduleUseCase.scheduleNow(

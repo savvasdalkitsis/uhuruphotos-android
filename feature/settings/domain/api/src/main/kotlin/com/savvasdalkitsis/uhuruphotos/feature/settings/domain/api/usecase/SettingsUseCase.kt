@@ -28,6 +28,7 @@ interface SettingsUseCase {
     fun getThumbnailMemCacheMaxLimit(): Int
     fun getVideoDiskCacheMaxLimit(): Int
     fun getFeedSyncFrequency(): Int
+    @Deprecated("")
     fun getFeedDaysToRefresh(): Int
     fun getFullSyncNetworkRequirements(): NetworkType
     fun getFullSyncRequiresCharging(): Boolean

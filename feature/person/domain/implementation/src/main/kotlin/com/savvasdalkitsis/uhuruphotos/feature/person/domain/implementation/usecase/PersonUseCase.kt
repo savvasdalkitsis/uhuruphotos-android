@@ -57,7 +57,7 @@ class PersonUseCase @Inject constructor(
     private fun Flow<List<MediaCollection>>.initialize(): Flow<List<MediaCollection>> = distinctUntilChanged()
         .safelyOnStartIgnoring {
             if (!feedUseCase.hasFeed()) {
-                feedWorkScheduler.scheduleFeedRefreshNow(shallow = false)
+                feedWorkScheduler.scheduleFeedRefreshNow()
             }
         }
 

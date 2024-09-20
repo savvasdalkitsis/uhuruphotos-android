@@ -43,9 +43,8 @@ internal class FeedDownloadWorker @AssistedInject constructor(
 ) {
 
     override suspend fun work(): Result {
-        val shallow = params.inputData.getBoolean(KEY_SHALLOW, false)
         updateProgress(0)
-        val result = feedRepository.refreshRemoteFeed(shallow) { current, total ->
+        val result = feedRepository.refreshRemoteFeed { current, total ->
             delay(300)
             updateProgress(current, total)
         }
@@ -58,7 +57,6 @@ internal class FeedDownloadWorker @AssistedInject constructor(
     companion object {
         // string value needs to remain as is for backwards compatibility
         const val WORK_NAME = "refreshAlbums"
-        const val KEY_SHALLOW = "shallow"
         private const val NOTIFICATION_ID = 1273
     }
 }

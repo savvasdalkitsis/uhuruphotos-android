@@ -19,5 +19,5 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class RemoteFeedDayResult(
-    val results: RemoteFeedDay.Complete,
+    val results: RemoteMediaDaySummaries.Complete,
 )

@@ -1,0 +1,79 @@
+CREATE TABLE remoteMediaItemSummaryBackup (
+  id TEXT NOT NULL PRIMARY KEY ,
+  dominantColor TEXT,
+  url TEXT NOT NULL,
+  location TEXT,
+  date TEXT,
+  birthTime TEXT,
+  aspectRatio REAL AS kotlin.Float,
+  type TEXT,
+  videoLength TEXT,
+  rating INTEGER AS kotlin.Int,
+  containerId TEXT NOT NULL,
+
+  FOREIGN KEY (containerId) REFERENCES remoteMediaCollections(id)
+);
+
+CREATE TABLE remoteMediaTrashBackup (
+  id TEXT NOT NULL PRIMARY KEY ,
+  dominantColor TEXT,
+  url TEXT NOT NULL,
+  location TEXT,
+  date TEXT,
+  birthTime TEXT,
+  aspectRatio REAL AS kotlin.Float,
+  type TEXT,
+  videoLength TEXT,
+  rating INTEGER AS kotlin.Int,
+  containerId TEXT NOT NULL,
+
+  FOREIGN KEY (containerId) REFERENCES remoteMediaCollections(id)
+);
+
+INSERT INTO remoteMediaItemSummaryBackup SELECT id, dominantColor, url, location, date, birthTime, aspectRatio, type, videoLength, rating, containerId FROM remoteMediaItemSummary;
+INSERT INTO remoteMediaTrashBackup SELECT * FROM remoteMediaTrash;
+
+DROP TABLE remoteMediaItemSummary;
+DROP TABLE remoteMediaTrash;
+
+CREATE TABLE remoteMediaItemSummary (
+  id TEXT NOT NULL PRIMARY KEY ,
+  dominantColor TEXT,
+  url TEXT NOT NULL,
+  location TEXT,
+  date TEXT,
+  birthTime TEXT,
+  aspectRatio REAL AS kotlin.Float,
+  type TEXT,
+  videoLength TEXT,
+  rating INTEGER AS kotlin.Int,
+  gpsLat TEXT,
+  gpsLon TEXT,
+  containerId TEXT NOT NULL,
+
+  FOREIGN KEY (containerId) REFERENCES remoteMediaCollections(id)
+);
+
+CREATE TABLE remoteMediaTrash (
+  id TEXT NOT NULL PRIMARY KEY ,
+  dominantColor TEXT,
+  url TEXT NOT NULL,
+  location TEXT,
+  date TEXT,
+  birthTime TEXT,
+  aspectRatio REAL AS kotlin.Float,
+  type TEXT,
+  videoLength TEXT,
+  rating INTEGER AS kotlin.Int,
+  gpsLat TEXT,
+  gpsLon TEXT,
+  containerId TEXT NOT NULL,
+
+  FOREIGN KEY (containerId) REFERENCES remoteMediaCollections(id)
+);
+
+INSERT INTO remoteMediaItemSummary SELECT id, dominantColor, url, location, date, birthTime, aspectRatio, type, videoLength, rating, '', '', containerId FROM remoteMediaItemSummaryBackup;
+INSERT INTO remoteMediaTrash SELECT id, dominantColor, url, location, date, birthTime, aspectRatio, type, videoLength, rating, '', '', containerId FROM remoteMediaTrashBackup;
+
+DROP TABLE remoteMediaItemSummaryBackup;
+DROP TABLE remoteMediaTrashBackup;

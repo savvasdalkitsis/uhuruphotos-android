@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRe
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummary
 import com.squareup.moshi.JsonClass
 
-sealed class RemoteFeedDay(
+sealed class RemoteMediaDaySummaries(
     open val id: String,
     open val date: String?,
     open val location: String,
@@ -34,7 +34,7 @@ sealed class RemoteFeedDay(
         override val location: String,
         override val incomplete: Boolean,
         override val numberOfItems: Int,
-    ) : RemoteFeedDay(id, date, location, incomplete, numberOfItems)
+    ) : RemoteMediaDaySummaries(id, date, location, incomplete, numberOfItems)
 
     @JsonClass(generateAdapter = true)
     data class Complete(
@@ -45,14 +45,14 @@ sealed class RemoteFeedDay(
         override val numberOfItems: Int,
         val rating: Int?,
         val items: List<RemoteMediaItemSummary>,
-    ) : RemoteFeedDay(id, date, location, incomplete, numberOfItems) {
+    ) : RemoteMediaDaySummaries(id, date, location, incomplete, numberOfItems) {
         fun toIncomplete() = Incomplete(
             id, date, location, incomplete, numberOfItems
         )
     }
 }
 
-fun RemoteFeedDay.Incomplete.toDbModel() = DbRemoteMediaCollections(
+fun RemoteMediaDaySummaries.Incomplete.toDbModel() = DbRemoteMediaCollections(
     id,
     date,
     location,

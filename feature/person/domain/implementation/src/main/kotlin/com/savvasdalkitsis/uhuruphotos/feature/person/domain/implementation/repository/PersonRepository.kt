@@ -53,8 +53,6 @@ class PersonRepository @Inject constructor(
         remoteMediaUseCase.processRemoteMediaCollections(
             incompleteAlbumsFetcher = { personService.getMediaCollectionsForPerson(personId).results },
             completeAlbumsFetcher = { personService.getMediaCollectionForPerson(it, personId).results },
-            shallow = false,
-            clearSummariesBeforeInserting = false,
             incompleteAlbumsProcessor = { albums ->
                 remoteMediaCollectionsQueries.transaction {
                     for (album in albums.map { it.toDbModel() }) {
@@ -62,7 +60,7 @@ class PersonRepository @Inject constructor(
                     }
                 }
             },
-            completeAlbumProcessor = { album ->
+            completeAlbumInterceptor = { album ->
                 for (photo in album.items) {
                     personQueries.insert(
                         id = null,

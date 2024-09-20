@@ -29,7 +29,7 @@ data object RefreshFeed : FeedAction() {
         emit(StartRefreshing)
         localMediaWorkScheduler.scheduleLocalMediaSyncNowIfNotRunning()
         if (welcomeUseCase.getWelcomeStatus().hasRemoteAccess) {
-            feedWorkScheduler.scheduleFeedRefreshNow(shallow = true)
+           feedWorkScheduler.scheduleFeedRefreshNow()
         }
         delay(1000)
         emit(StopRefreshing)
