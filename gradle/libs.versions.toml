@@ -80,7 +80,7 @@ androidx-preference = "androidx.preference:preference-ktx:1.2.1"
 androidx-security-crypto-core = { module = "androidx.security:security-crypto", version.ref = "crypto" }
 androidx-security-crypto-ktx = { module = "androidx.security:security-crypto-ktx", version.ref = "crypto" }
 androidx-splash = "androidx.core:core-splashscreen:1.0.1"
-androidx-startup = "androidx.startup:startup-runtime:1.2.0-rc01"
+androidx-startup = "androidx.startup:startup-runtime:1.2.0"
 androidx-tracing = "androidx.tracing:tracing-ktx:1.2.0"
 androidx-window = "androidx.window:window:1.3.0"
 androidx-work = "androidx.work:work-runtime-ktx:2.9.1"
