@@ -91,6 +91,8 @@ internal class FeedWorkScheduler @Inject constructor(
         workScheduleUseCase.scheduleNow(
             FeedDownloadWorker.WORK_NAME,
             FeedDownloadWorker::class,
+            existingWorkPolicy = ExistingWorkPolicy.KEEP,
+            networkRequirement = NetworkType.CONNECTED,
         )
 
     override fun schedulePrecacheThumbnailsNow() {

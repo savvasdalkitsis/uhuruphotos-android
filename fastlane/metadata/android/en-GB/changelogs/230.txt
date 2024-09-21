@@ -1,0 +1,5 @@
+* Big change on how remote feed loading/refreshing works.LibrePhotos now supports incremental changes in the api.
+  The old "full feed sync" process is no longer needed. Now the app should always be up to date with the server
+* The media summary endpoints now also return GPS information which means that the map screen no longer
+  needs to fetch ALL media item details which means that all media should be available on the map by default.
+* Updating dependencies
