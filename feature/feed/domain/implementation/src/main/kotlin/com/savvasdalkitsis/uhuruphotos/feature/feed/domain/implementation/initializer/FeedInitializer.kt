@@ -16,7 +16,6 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.initializer
 
 import android.app.Application
-import androidx.work.ExistingPeriodicWorkPolicy
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
 import se.ansman.dagger.auto.AutoBindIntoSet
@@ -28,9 +27,7 @@ internal class FeedInitializer @Inject constructor(
 ): ApplicationCreated {
 
     override fun onAppCreated(app: Application) {
-        feedWorkScheduler.scheduleFeedRefreshPeriodic(
-            existingPeriodicWorkPolicy = ExistingPeriodicWorkPolicy.KEEP
-        )
+        feedWorkScheduler.scheduleFeedRefreshPeriodic()
     }
 
 }

@@ -27,14 +27,9 @@ interface SettingsUseCase {
     fun getThumbnailDiskCacheMaxLimit(): Int
     fun getThumbnailMemCacheMaxLimit(): Int
     fun getVideoDiskCacheMaxLimit(): Int
-    fun getFeedSyncFrequency(): Int
-    @Deprecated("")
-    fun getFeedDaysToRefresh(): Int
-    fun getFullSyncNetworkRequirements(): NetworkType
-    fun getFullSyncRequiresCharging(): Boolean
+
     fun getCloudSyncNetworkRequirements(): NetworkType
     fun getCloudSyncRequiresCharging(): Boolean
-    fun getShouldPerformPeriodicFullSync(): Boolean
     fun getShareRemoveGpsData(): Boolean
     fun getLoggingEnabled(): Boolean
     fun getSendDatabaseEnabled(): Boolean
@@ -47,10 +42,6 @@ interface SettingsUseCase {
     fun observeThumbnailDiskCacheMaxLimit(): Flow<Int>
     fun observeThumbnailMemCacheMaxLimit(): Flow<Int>
     fun observeVideoDiskCacheMaxLimit(): Flow<Int>
-    fun observeFeedSyncFrequency(): Flow<Int>
-    fun observeFeedDaysToRefresh(): Flow<Int>
-    fun observeFullSyncNetworkRequirements(): Flow<NetworkType>
-    fun observeFullSyncRequiresCharging(): Flow<Boolean>
     fun observeCloudSyncNetworkRequirements(): Flow<NetworkType>
     fun observeCloudSyncRequiresCharging(): Flow<Boolean>
     fun observeShareRemoveGpsData(): Flow<Boolean>
@@ -65,13 +56,8 @@ interface SettingsUseCase {
     fun setThumbnailDiskCacheMaxLimit(sizeInMb: Int)
     fun setThumbnailMemCacheMaxLimit(sizeInMb: Int)
     fun setVideoDiskCacheMaxLimit(sizeInMb: Int)
-    fun setFeedSyncFrequency(frequency: Int)
-    fun setFeedFeedDaysToRefresh(days: Int)
-    fun setFullSyncNetworkRequirements(networkType: NetworkType)
-    fun setFullSyncRequiresCharging(requiresCharging: Boolean)
     fun setCloudSyncNetworkRequirements(networkType: NetworkType)
     fun setCloudSyncRequiresCharging(requiresCharging: Boolean)
-    fun setShouldPerformPeriodicFullSync(perform: Boolean)
     fun setShareRemoveGpsData(enabled: Boolean)
     fun setLoggingEnabled(enabled: Boolean)
     fun setSendDatabaseEnabled(enabled: Boolean)

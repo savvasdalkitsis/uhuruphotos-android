@@ -1,7 +1,5 @@
 CREATE TABLE remoteMediaItemDetails (
   imageHash TEXT NOT NULL PRIMARY KEY,
-  gpsLat TEXT,
-  gpsLon TEXT,
   timestamp TEXT,
   captions TEXT,
   location TEXT,

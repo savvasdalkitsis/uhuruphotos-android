@@ -36,7 +36,7 @@ internal class UndatedActionsContext @Inject constructor(
 ) {
     val galleryActionsContext = galleryActionsContextFactory.create(
         galleryRefresher = {
-            feedUseCase.refreshFeed()
+            feedUseCase.scheduleFeedRefreshNow()
             delay(500)
             simpleOk
         },

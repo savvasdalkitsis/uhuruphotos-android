@@ -23,7 +23,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkSc
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.worker.FeedDetailsDownloadWorker
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.worker.FeedDownloadWorker
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.worker.PrecacheFeedThumbnailsWorker
-import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNotificationWorker
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.model.RefreshJobState
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkScheduleUseCase
@@ -37,28 +36,21 @@ import javax.inject.Inject
 @AutoBind
 internal class FeedWorkScheduler @Inject constructor(
     private val workScheduleUseCase: WorkScheduleUseCase,
-    private val workerStatusUseCase: WorkerStatusUseCase,
-    private val settingsUseCase: SettingsUseCase
+    private val workerStatusUseCase: WorkerStatusUseCase
 ) : FeedWorkScheduler {
 
-    override fun scheduleFeedRefreshPeriodic(
-        existingPeriodicWorkPolicy: ExistingPeriodicWorkPolicy
-    ) {
-        if (settingsUseCase.getShouldPerformPeriodicFullSync()) {
-            workScheduleUseCase.schedulePeriodic(
-                FeedDownloadWorker.WORK_NAME,
-                FeedDownloadWorker::class,
-                repeatInterval = settingsUseCase.getFeedSyncFrequency().toLong(),
-                repeatIntervalTimeUnit = TimeUnit.HOURS,
-                initialDelayDuration = 1,
-                initialDelayTimeUnit = TimeUnit.HOURS,
-                existingPeriodicWorkPolicy = existingPeriodicWorkPolicy,
-                networkRequirement = settingsUseCase.getFullSyncNetworkRequirements(),
-                requiresCharging = settingsUseCase.getFullSyncRequiresCharging(),
-            )
-        } else {
-            workScheduleUseCase.cancelUniqueWork(FeedDownloadWorker.WORK_NAME)
-        }
+    override fun scheduleFeedRefreshPeriodic() {
+        workScheduleUseCase.schedulePeriodic(
+            FeedDownloadWorker.WORK_NAME,
+            FeedDownloadWorker::class,
+            repeatInterval = 3,
+            repeatIntervalTimeUnit = TimeUnit.HOURS,
+            initialDelayDuration = 1,
+            initialDelayTimeUnit = TimeUnit.HOURS,
+            existingPeriodicWorkPolicy = ExistingPeriodicWorkPolicy.KEEP,
+            networkRequirement = NetworkType.CONNECTED,
+            requiresCharging = false,
+        )
     }
 
     override fun observeFeedRefreshJob(): Flow<RefreshJobState?> =
@@ -71,7 +63,7 @@ internal class FeedWorkScheduler @Inject constructor(
             }
         }
 
-    override fun cancelFullFeedSync() {
+    override fun cancelFeedSync() {
         workScheduleUseCase.cancelUniqueWork(FeedDownloadWorker.WORK_NAME)
     }
 

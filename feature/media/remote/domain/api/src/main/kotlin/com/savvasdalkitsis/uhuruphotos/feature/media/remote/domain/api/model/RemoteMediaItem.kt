@@ -21,8 +21,6 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class RemoteMediaItem(
-    @field:Json(name = "exif_gps_lat") val gpsLat: String?,
-    @field:Json(name = "exif_gps_lon") val gpsLon: String?,
     @field:Json(name = "exif_timestamp") val timestamp: String?,
     @field:Json(name = "search_captions") val captions: String?,
     @field:Json(name = "search_location") val location: String?,
@@ -74,8 +72,6 @@ val String.deserializePaths: Set<String>
 
 fun RemoteMediaItem.toDbModel() = DbRemoteMediaItemDetails(
     imageHash = imageHash,
-    gpsLat = gpsLat,
-    gpsLon = gpsLon,
     timestamp = timestamp,
     captions = captions,
     location = location,

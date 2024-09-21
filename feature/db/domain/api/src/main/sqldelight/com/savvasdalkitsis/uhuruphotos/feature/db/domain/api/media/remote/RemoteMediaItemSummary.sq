@@ -37,7 +37,7 @@ deleteHidden:
 DELETE FROM remoteMediaItemSummary WHERE containerId == 'hiddenPhoto';
 
 insert:
-INSERT OR IGNORE INTO remoteMediaItemSummary VALUES ?;
+INSERT OR REPLACE INTO remoteMediaItemSummary VALUES ?;
 
 deletePhotoSummariesforAlbum:
 DELETE FROM remoteMediaItemSummary WHERE containerId=?;

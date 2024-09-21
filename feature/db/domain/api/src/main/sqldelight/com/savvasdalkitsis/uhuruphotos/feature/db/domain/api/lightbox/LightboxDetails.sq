@@ -1,5 +1,5 @@
 CREATE TABLE lightboxDetails (
-    id TEXT NOT NULL PRIMARY KEY,
+    md5 TEXT NOT NULL PRIMARY KEY,
     formattedDatetime TEXT,
     location TEXT,
     lat REAL,
@@ -23,10 +23,10 @@ CREATE TABLE lightboxDetails (
 );
 
 get:
-SELECT * FROM lightboxDetails WHERE id = :id;
+SELECT * FROM lightboxDetails WHERE md5 = :md5;
 
 touch:
-INSERT OR IGNORE INTO lightboxDetails (id) VALUES (:id);
+INSERT OR IGNORE INTO lightboxDetails (md5) VALUES (:md5);
 
 insert:
 INSERT OR REPLACE INTO lightboxDetails VALUES ?;
@@ -39,20 +39,26 @@ SET formattedDatetime = :formattedDateTime,
     hash = :hash,
     localPaths = :localPaths
 WHERE
-    id = :id;
+    md5 = :md5;
 
 updateRemote:
 UPDATE lightboxDetails
 SET formattedDatetime = :formattedDateTime,
     location = :location,
-    lat = :lat,
-    lon = :lon,
     hash = :hash,
     remotePaths = :remotePaths,
     peopleInMediaItem = :peopleInMediaItem,
     searchCaptions = :searchCaptions
 WHERE
-    id = :id;
+    md5 = :md5;
+
+updateRemoteGps:
+UPDATE lightboxDetails
+SET lat = :lat,
+    lon = :lon,
+    hash = :hash
+WHERE
+    md5 = :md5;
 
 updateMetadata:
 UPDATE lightboxDetails
@@ -68,4 +74,4 @@ SET size = :size,
     width = :width,
     height = :height
 WHERE
-    id = :id;
+    md5 = :md5;

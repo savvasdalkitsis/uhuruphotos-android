@@ -29,6 +29,6 @@ class CancelFeedDownloadWorkBroadcastReceiver : BroadcastReceiver() {
     lateinit var feedWorkScheduler: FeedWorkScheduler
 
     override fun onReceive(context: Context?, intent: Intent?) {
-        feedWorkScheduler.cancelFullFeedSync()
+        feedWorkScheduler.cancelFeedSync()
     }
 }

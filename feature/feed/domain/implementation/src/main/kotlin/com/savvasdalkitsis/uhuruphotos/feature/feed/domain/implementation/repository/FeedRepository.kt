@@ -157,4 +157,8 @@ class FeedRepository @Inject constructor(
             )
         }
     }
+
+    fun invalidateRemoteFeed() {
+        lastFeedRefresh = null
+    }
 }

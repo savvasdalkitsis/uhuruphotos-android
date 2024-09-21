@@ -30,11 +30,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayCollageShape
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayCollageSpacing
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayCollageSpacingIncludeEdges
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayFeedDaysToRefresh
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayFeedMediaItemSyncDisplay
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayFeedSyncFrequency
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayFullSyncNetworkRequirements
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayFullSyncRequiresCharging
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayLightboxPhotoDiskCacheCurrentUse
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayLightboxPhotoDiskCacheMaxLimit
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayLightboxPhotoMemCacheCurrentUse
@@ -89,10 +85,6 @@ data object LoadSettings : SettingsAction() {
             observeThumbnailDiskCacheMaxLimit().map(::DisplayThumbnailDiskCacheMaxLimit),
             observeThumbnailMemCacheMaxLimit().map(::DisplayThumbnailMemCacheMaxLimit),
             observeVideoDiskCacheMaxLimit().map(::DisplayVideoDiskCacheMaxLimit),
-            observeFeedSyncFrequency().map(::DisplayFeedSyncFrequency),
-            observeFeedDaysToRefresh().map(::DisplayFeedDaysToRefresh),
-            observeFullSyncNetworkRequirements().map(::DisplayFullSyncNetworkRequirements),
-            observeFullSyncRequiresCharging().map(::DisplayFullSyncRequiresCharging),
             observeCloudSyncNetworkRequirements().map(::DisplayCloudSyncNetworkRequirements),
             observeCloudSyncRequiresCharging().map(::DisplayCloudSyncRequiresCharging),
             observeThemeMode().map(::DisplayThemeMode),

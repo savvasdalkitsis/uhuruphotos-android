@@ -37,6 +37,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -56,6 +57,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.AvatarSt
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.SyncState
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.previewAvatarState
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job.FEED_DETAILS_SYNC
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job.FULL_FEED_SYNC
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus.Blocked
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus.Idle
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus.InProgress
@@ -69,11 +72,11 @@ import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.raw
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.group.CollapsibleGroup
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.ToggleableButtonWithIcon
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.group.CollapsibleGroup
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.group.state.rememberCollapsibleGroupState
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
 import kotlinx.collections.immutable.persistentListOf
 
 @Composable
@@ -208,6 +211,7 @@ private fun ConstraintLayoutScope.Content(
             ) {
                 Jobs(
                     jobs = state.jobs,
+                    blockFilter = remember { persistentListOf(FULL_FEED_SYNC, FEED_DETAILS_SYNC) },
                     onStartJob = onStartJob,
                     onCancelJob = onCancelJob,
                 )
@@ -346,10 +350,10 @@ private fun AccountOverviewPreview() {
                 showCloudSync = true,
                 avatarState = previewAvatarState,
                 jobs = persistentListOf(
-                    JobState(Title.Text("Feed"), Job.FEED_SYNC, Idle),
-                    JobState(Title.Text("Precache"), Job.FEED_SYNC, Blocked),
-                    JobState(Title.Text("Local"), Job.FEED_SYNC, InProgress(25)),
-                    JobState(Title.Text("Queued"), Job.FEED_SYNC, Queued),
+                    JobState(Title.Text("Feed"), FULL_FEED_SYNC, Idle),
+                    JobState(Title.Text("Precache"), FULL_FEED_SYNC, Blocked),
+                    JobState(Title.Text("Local"), FULL_FEED_SYNC, InProgress(25)),
+                    JobState(Title.Text("Queued"), FULL_FEED_SYNC, Queued),
                 )
             ),
         )
@@ -369,10 +373,10 @@ private fun AccountOverviewDarkPreview() {
                 showCloudSync = true,
                 avatarState = previewAvatarState,
                 jobs = persistentListOf(
-                    JobState(Title.Text("Feed"), Job.FEED_SYNC, Idle),
-                    JobState(Title.Text("Precache"), Job.FEED_SYNC, Blocked),
-                    JobState(Title.Text("Local"), Job.FEED_SYNC, InProgress(25)),
-                    JobState(Title.Text("Queued"), Job.FEED_SYNC, Queued),
+                    JobState(Title.Text("Feed"), FULL_FEED_SYNC, Idle),
+                    JobState(Title.Text("Precache"), FULL_FEED_SYNC, Blocked),
+                    JobState(Title.Text("Local"), FULL_FEED_SYNC, InProgress(25)),
+                    JobState(Title.Text("Queued"), FULL_FEED_SYNC, Queued),
                 )
             ),
         )
@@ -390,7 +394,7 @@ private fun AccountOverviewPreviewLoggedOut() {
                 showUserAndServerDetails = false,
                 avatarState = AvatarState(syncState = SyncState.GOOD),
                 jobs = persistentListOf(
-                    JobState(Title.Text("Local"), Job.FEED_SYNC, InProgress(25)),
+                    JobState(Title.Text("Local"), FULL_FEED_SYNC, InProgress(25)),
                 )
             ),
         )
@@ -411,10 +415,10 @@ private fun AccountOverviewPreviewSmall() {
                     showCloudSync = true,
                     avatarState = previewAvatarState,
                     jobs = persistentListOf(
-                        JobState(Title.Text("Feed"), Job.FEED_SYNC, Idle),
-                        JobState(Title.Text("Precache"), Job.FEED_SYNC, Blocked),
-                        JobState(Title.Text("Local"), Job.FEED_SYNC, InProgress(25)),
-                        JobState(Title.Text("Queued"), Job.FEED_SYNC, Queued),
+                        JobState(Title.Text("Feed"), FULL_FEED_SYNC, Idle),
+                        JobState(Title.Text("Precache"), FULL_FEED_SYNC, Blocked),
+                        JobState(Title.Text("Local"), FULL_FEED_SYNC, InProgress(25)),
+                        JobState(Title.Text("Queued"), FULL_FEED_SYNC, Queued),
                     )
                 ),
             )

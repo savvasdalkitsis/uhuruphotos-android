@@ -24,10 +24,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.worker.LocalMediaWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUIUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
-import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
 import kotlinx.coroutines.Deferred
 import javax.inject.Inject
 
@@ -35,12 +33,10 @@ internal class HeatMapActionsContext @Inject constructor(
     val feedUseCase: FeedUseCase,
     val feedWorkScheduler: FeedWorkScheduler,
     val mediaUseCase: MediaUseCase,
-    val settingsUseCase: SettingsUseCase,
     val settingsUIUseCase: SettingsUIUseCase,
     val localMediaWorkScheduler: LocalMediaWorkScheduler,
     val locationManager: LocationManager,
     val heatMapUseCase: HeatMapUseCase,
-    val toaster: ToasterUseCase,
     val navigator: Navigator,
 ) {
 

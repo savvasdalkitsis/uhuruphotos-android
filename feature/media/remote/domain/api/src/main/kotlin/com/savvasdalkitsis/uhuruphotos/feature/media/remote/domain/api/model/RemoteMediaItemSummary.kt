@@ -40,6 +40,7 @@ data class RemoteMediaItemSummary(
     val removed: Boolean = false,
     @Json(name = "in_trashcan")
     val inTrash: Boolean = false,
+    val owner: RemoteMediaItemSummaryOwner,
 )
 
 fun RemoteMediaItemSummary.toDbModel(albumId: String) = DbRemoteMediaItemSummary(

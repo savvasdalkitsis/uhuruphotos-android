@@ -144,7 +144,7 @@ private fun Job(status: JobStatus) {
         JobRow(
             JobState(
                 title = Title.Text("Job title"),
-                job = Job.FEED_SYNC,
+                job = Job.FULL_FEED_SYNC,
                 status
             )
         )

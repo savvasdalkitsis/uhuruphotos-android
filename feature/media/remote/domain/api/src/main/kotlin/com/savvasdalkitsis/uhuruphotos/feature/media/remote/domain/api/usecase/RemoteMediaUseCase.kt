@@ -83,5 +83,4 @@ interface RemoteMediaUseCase {
     ): SimpleResult
 
     fun saveRemoteMediaSummary(containerId: String, summary: RemoteMediaItemSummary)
-
 }

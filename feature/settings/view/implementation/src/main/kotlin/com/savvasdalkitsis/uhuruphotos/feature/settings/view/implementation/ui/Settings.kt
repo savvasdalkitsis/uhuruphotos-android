@@ -128,11 +128,6 @@ internal fun Settings(
                     }
                 }
                 SuperGroup(controller.jobs) {
-                    if (state.hasRemoteAccess) {
-                        CollapsibleGroup(groupState = controller.jobsFeedConfiguration) {
-                            SettingsJobsFeedConfiguration(state, action)
-                        }
-                    }
                     CollapsibleGroup(groupState = controller.jobsStatus) {
                         SettingsJobsStatus(state, action)
                     }

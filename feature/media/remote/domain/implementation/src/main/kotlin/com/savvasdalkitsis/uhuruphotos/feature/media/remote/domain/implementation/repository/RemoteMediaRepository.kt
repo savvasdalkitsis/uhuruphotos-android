@@ -22,17 +22,18 @@ import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.map
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.Database
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaCollections
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemDetails
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitList
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingle
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingleOrNull
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.lightbox.LightboxDetailsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaCollectionsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemDetailsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemSummaryQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaTrashQueries
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResult
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummaryStatus
@@ -56,7 +57,7 @@ class RemoteMediaRepository @Inject constructor(
     private val remoteMediaItemSummaryQueries: RemoteMediaItemSummaryQueries,
     private val remoteMediaService: RemoteMediaService,
     private val remoteMediaTrashQueries: RemoteMediaTrashQueries,
-    private val db: Database,
+    private val lightboxDetailsQueries: LightboxDetailsQueries,
 ) {
 
     fun observeAllMediaItemDetails(): Flow<List<DbRemoteMediaItemDetails>> =
@@ -129,7 +130,17 @@ class RemoteMediaRepository @Inject constructor(
         when {
             summary.removed -> deleteMediaItem(summary.id)
             summary.inTrash -> trashMediaItem(summary.id)
-            else -> remoteMediaItemSummaryQueries.insert(summary.toDbModel(containerId))
+            else -> {
+                remoteMediaItemSummaryQueries.insert(summary.toDbModel(containerId))
+                val md5 = MediaItemHash.fromRemoteMediaHash(summary.id, summary.owner.id).md5.value
+                lightboxDetailsQueries.touch(md5 = md5)
+                lightboxDetailsQueries.updateRemoteGps(
+                    lat = summary.lat?.toDoubleOrNull(),
+                    lon = summary.lon?.toDoubleOrNull(),
+                    hash = summary.id,
+                    md5 = md5,
+                )
+            }
         }
     }
 

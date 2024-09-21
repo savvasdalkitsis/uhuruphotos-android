@@ -45,16 +45,6 @@ internal class SettingsUseCase @Inject constructor(
     private val thumbnailMemCacheSizeDefault = 200
     private val videoDiskCacheSize = "videoDiskCacheSize"
     private val videoDiskCacheSizeDefault = 700
-    private val feedSyncFrequency = "feedSyncFrequency"
-    private val feedSyncFrequencyDefault = 12
-    private val feedDaysToRefresh = "feedDaysToRefresh"
-    private val feedDaysToRefreshDefault = 3
-    private val shouldPerformPeriodicFeedSync = "shouldPerformPeriodicFeedSync"
-    private val shouldPerformPeriodicFeedSyncDefault = true
-    private val fullSyncNetworkRequirements = "fullSyncNetworkRequirements"
-    private val fullSyncNetworkRequirementsDefault = NetworkType.NOT_ROAMING
-    private val fullSyncRequiresCharging = "fullSyncRequiresCharging"
-    private val fullSyncRequiresChargingDefault = false
     private val cloudSyncNetworkRequirements = "cloudSyncNetworkRequirements"
     private val cloudSyncNetworkRequirementsDefault = NetworkType.NOT_ROAMING
     private val cloudSyncRequiresCharging = "cloudSyncRequiresCharging"
@@ -82,20 +72,10 @@ internal class SettingsUseCase @Inject constructor(
         getCache(thumbnailMemCacheSize, thumbnailMemCacheSizeDefault)
     override fun getVideoDiskCacheMaxLimit(): Int =
         getCache(videoDiskCacheSize, videoDiskCacheSizeDefault)
-    override fun getFeedSyncFrequency(): Int =
-        get(feedSyncFrequency, feedSyncFrequencyDefault)
-    override fun getFeedDaysToRefresh(): Int =
-        get(feedDaysToRefresh, feedDaysToRefreshDefault)
-    override fun getFullSyncNetworkRequirements(): NetworkType =
-        get(fullSyncNetworkRequirements, fullSyncNetworkRequirementsDefault)
-    override fun getFullSyncRequiresCharging(): Boolean =
-        get(fullSyncRequiresCharging, fullSyncRequiresChargingDefault)
     override fun getCloudSyncNetworkRequirements(): NetworkType =
         get(cloudSyncNetworkRequirements, cloudSyncNetworkRequirementsDefault)
     override fun getCloudSyncRequiresCharging(): Boolean =
         get(cloudSyncRequiresCharging, cloudSyncRequiresChargingDefault)
-    override fun getShouldPerformPeriodicFullSync(): Boolean =
-        get(shouldPerformPeriodicFeedSync, shouldPerformPeriodicFeedSyncDefault)
     override fun getShareRemoveGpsData(): Boolean =
         get(shareRemoveGpsData, shareRemoveGpsDataDefault)
     override fun getLoggingEnabled(): Boolean =
@@ -119,14 +99,6 @@ internal class SettingsUseCase @Inject constructor(
         observeCache(thumbnailMemCacheSize, thumbnailMemCacheSizeDefault)
     override fun observeVideoDiskCacheMaxLimit(): Flow<Int> =
         observeCache(videoDiskCacheSize, videoDiskCacheSizeDefault)
-    override fun observeFeedSyncFrequency(): Flow<Int> =
-        observe(feedSyncFrequency, feedSyncFrequencyDefault)
-    override fun observeFeedDaysToRefresh(): Flow<Int> =
-        observe(feedDaysToRefresh, feedDaysToRefreshDefault)
-    override fun observeFullSyncNetworkRequirements(): Flow<NetworkType> =
-        observe(fullSyncNetworkRequirements, fullSyncNetworkRequirementsDefault)
-    override fun observeFullSyncRequiresCharging(): Flow<Boolean> =
-        observe(fullSyncRequiresCharging, fullSyncRequiresChargingDefault)
     override fun observeCloudSyncNetworkRequirements(): Flow<NetworkType> =
         observe(cloudSyncNetworkRequirements, cloudSyncNetworkRequirementsDefault)
     override fun observeCloudSyncRequiresCharging(): Flow<Boolean> =
@@ -164,32 +136,12 @@ internal class SettingsUseCase @Inject constructor(
         set(videoDiskCacheSize, sizeInMb)
     }
 
-    override fun setFeedSyncFrequency(frequency: Int) {
-        set(feedSyncFrequency, frequency)
-    }
-
-    override fun setFeedFeedDaysToRefresh(days: Int) {
-        set(feedDaysToRefresh, days)
-    }
-
-    override fun setFullSyncNetworkRequirements(networkType: NetworkType) {
-        set(fullSyncNetworkRequirements, networkType)
-    }
-
-    override fun setFullSyncRequiresCharging(requiresCharging: Boolean) {
-        set(fullSyncRequiresCharging, requiresCharging)
-    }
-
     override fun setCloudSyncNetworkRequirements(networkType: NetworkType) {
         set(cloudSyncNetworkRequirements, networkType)
     }
 
     override fun setCloudSyncRequiresCharging(requiresCharging: Boolean) {
         set(cloudSyncRequiresCharging, requiresCharging)
-    }
-
-    override fun setShouldPerformPeriodicFullSync(perform: Boolean) {
-        set(shouldPerformPeriodicFeedSync, perform)
     }
 
     override fun setShareRemoveGpsData(enabled: Boolean) {

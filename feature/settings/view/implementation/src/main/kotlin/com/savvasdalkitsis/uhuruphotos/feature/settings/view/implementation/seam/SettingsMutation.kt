@@ -116,29 +116,8 @@ sealed class SettingsMutation(
         it.copy(videoDiskCache = it.videoDiskCache.copy(current = current))
     })
 
-    data class DisplayFeedSyncFrequency(val frequency: Int): SettingsMutation({
-        it.copy(
-            isLoading = false,
-            feedSyncFrequency = frequency,
-        )
-    })
-
-    data class DisplayFeedDaysToRefresh(val days: Int): SettingsMutation({
-        it.copy(
-            feedDaysToRefresh = days,
-        )
-    })
-
-    data class DisplayFullSyncNetworkRequirements(val networkType: NetworkType): SettingsMutation({
-        it.copy(fullSyncNetworkRequirement = networkType)
-    })
-
     data class DisplayCloudSyncNetworkRequirements(val networkType: NetworkType): SettingsMutation({
         it.copy(cloudSyncNetworkRequirement = networkType)
-    })
-
-    data class DisplayFullSyncRequiresCharging(val requiresCharging: Boolean): SettingsMutation({
-        it.copy(fullSyncRequiresCharging = requiresCharging)
     })
 
     data class DisplayCloudSyncRequiresCharging(val requiresCharging: Boolean): SettingsMutation({

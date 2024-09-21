@@ -26,6 +26,9 @@ data class MediaItemHash(
     val md5: Md5Hash,
     val userId: Int?,
 ) : Parcelable {
+    /**
+     * The media md5 hash combined with the user id.
+     */
     val hash get() = "${md5.value}${userId?.toString().orEmpty()}"
 
     companion object {

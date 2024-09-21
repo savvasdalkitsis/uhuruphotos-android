@@ -19,15 +19,18 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.state.JobState
+import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 fun ColumnScope.Jobs(
     jobs: List<JobState>,
+    blockFilter: List<Job> = persistentListOf(),
     onStartJob: (Job) -> Unit,
     onCancelJob: (Job) -> Unit,
 ) {
     jobs
         .sortedBy { it.job.order }
+        .filter { it.job !in blockFilter }
         .forEach { state ->
             JobRow(
                 state = state,

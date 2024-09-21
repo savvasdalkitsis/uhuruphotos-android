@@ -30,8 +30,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbu
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbumsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitList
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingleOrNull
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemSummaryQueries
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simple
@@ -48,8 +46,6 @@ class UserAlbumRepository @Inject constructor(
     private val newUserAlbumAdditionQueueQueries: NewUserAlbumAdditionQueueQueries,
     private val userAlbumPhotosQueries: UserAlbumPhotosQueries,
     private val userAlbumService: UserAlbumService,
-    private val remoteMediaItemSummaryQueries: RemoteMediaItemSummaryQueries,
-    private val remoteMediaUseCase: RemoteMediaUseCase,
 ) {
 
     suspend fun getUserAlbum(albumId: Int): List<GetUserAlbumMedia> =
@@ -122,7 +118,6 @@ class UserAlbumRepository @Inject constructor(
             )
             userAlbumPhotosQueries.removePhotosForAlbum(albumId.toString())
             for (summary in album.groups.flatMap { it.items }) {
-                remoteMediaUseCase.saveRemoteMediaSummary(albumId.toString(), summary)
                 if (!summary.removed && !summary.inTrash) {
                     userAlbumPhotosQueries.insert(summary.id, albumId.toString())
                 }

@@ -1,0 +1,45 @@
+CREATE TABLE remoteMediaItemDetailsBackup (
+  imageHash TEXT NOT NULL PRIMARY KEY,
+  timestamp TEXT,
+  captions TEXT,
+  location TEXT,
+  thumbnailUrl TEXT,
+  thumbnailHeight TEXT,
+  thumbnailWidth TEXT,
+  bigThumbnailUrl TEXT,
+  smallThumbnailUrl TEXT,
+  squareThumbnailUrl TEXT,
+  bigSquareThumbnailUrl TEXT,
+  smallSquareThumbnailUrl TEXT,
+  tinySquareThumbnailUrl TEXT,
+  video INTEGER AS kotlin.Boolean,
+  rating INTEGER AS kotlin.Int,
+  peopleNames TEXT,
+  imagePath TEXT
+);
+
+INSERT INTO remoteMediaItemDetailsBackup SELECT imageHash, timestamp, captions, location, thumbnailUrl, thumbnailHeight, thumbnailWidth, bigThumbnailUrl, smallThumbnailUrl, squareThumbnailUrl, bigSquareThumbnailUrl, smallSquareThumbnailUrl, tinySquareThumbnailUrl, video, rating, peopleNames, imagePath FROM remoteMediaItemDetails;
+DROP TABLE remoteMediaItemDetails;
+
+CREATE TABLE remoteMediaItemDetails (
+  imageHash TEXT NOT NULL PRIMARY KEY,
+  timestamp TEXT,
+  captions TEXT,
+  location TEXT,
+  thumbnailUrl TEXT,
+  thumbnailHeight TEXT,
+  thumbnailWidth TEXT,
+  bigThumbnailUrl TEXT,
+  smallThumbnailUrl TEXT,
+  squareThumbnailUrl TEXT,
+  bigSquareThumbnailUrl TEXT,
+  smallSquareThumbnailUrl TEXT,
+  tinySquareThumbnailUrl TEXT,
+  video INTEGER AS kotlin.Boolean,
+  rating INTEGER AS kotlin.Int,
+  peopleNames TEXT,
+  imagePath TEXT
+);
+
+INSERT INTO remoteMediaItemDetails SELECT * FROM remoteMediaItemDetailsBackup;
+DROP TABLE remoteMediaItemDetailsBackup;

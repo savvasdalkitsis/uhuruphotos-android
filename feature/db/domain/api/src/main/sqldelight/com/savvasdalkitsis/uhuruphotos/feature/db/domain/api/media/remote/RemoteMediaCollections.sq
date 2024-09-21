@@ -20,11 +20,10 @@ SELECT
  summary.rating,
  summary.aspectRatio,
  summary.type,
- details.gpsLat,
- details.gpsLon
+ summary.gpsLat,
+ summary.gpsLon
 FROM remoteMediaCollections
 LEFT JOIN remoteMediaItemSummary AS summary ON remoteMediaCollections.id = summary.containerId
-LEFT JOIN remoteMediaItemDetails AS details ON summary.id = details.imageHash
 WHERE
     CASE WHEN :includeNoDates
         THEN 1

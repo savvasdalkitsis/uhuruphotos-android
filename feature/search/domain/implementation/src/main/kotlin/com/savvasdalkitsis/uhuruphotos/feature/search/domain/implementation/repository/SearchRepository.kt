@@ -65,7 +65,6 @@ class SearchRepository @Inject constructor(
                     location = searchResult.location,
                     photoId = mediaItemSummary.id
                 )
-                remoteMediaUseCase.saveRemoteMediaSummary(query, mediaItemSummary)
             }
         }
     }.simple()

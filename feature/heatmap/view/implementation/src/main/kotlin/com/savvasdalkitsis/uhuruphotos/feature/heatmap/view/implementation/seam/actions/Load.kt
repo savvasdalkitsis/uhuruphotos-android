@@ -15,17 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.actions
 
-import androidx.work.WorkInfo
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapMutation
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state.HeatMapState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
-import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.onErrors
-import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStart
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
-import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
@@ -49,18 +43,9 @@ data object Load : HeatMapAction() {
                     .flatMap { it.mediaItems }
                     .filter { it.latLng != null }
             }
-            .safelyOnStart {
-                feedWorkScheduler.scheduleFeedDetailsRefreshNow()
-            }
-            .debounce(500)
-            .distinctUntilChanged()
-            .onErrors { toaster.show(R.string.error_loading_photo_details) }
             .flatMapLatest { media ->
                 flowOf(HeatMapMutation.UpdateAllMedia(media), updateDisplay(media))
             },
-        feedWorkScheduler.observeFeedDetailsRefreshJob()
-            .mapNotNull { it?.status == WorkInfo.State.RUNNING }
-            .map(HeatMapMutation::ShowLoading),
         mediaUseCase.observeLocalMedia()
             .mapNotNull {
                 when (it) {

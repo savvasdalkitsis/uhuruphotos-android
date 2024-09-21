@@ -22,7 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job.FEED_DETAILS_SYNC
-import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job.FEED_SYNC
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job.FULL_FEED_SYNC
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job.LOCAL_MEDIA_SYNC
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job.PRECACHE_THUMBNAILS
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
@@ -36,7 +36,7 @@ fun JobPermissionDialog(
 ) {
     YesNoDialog(
         title = stringResource(when(job) {
-            FEED_SYNC -> string.perform_full_feed_sync
+            FULL_FEED_SYNC -> string.perform_full_feed_sync
             PRECACHE_THUMBNAILS -> string.precache_thumbnails
             LOCAL_MEDIA_SYNC -> string.scan_local_media
             FEED_DETAILS_SYNC -> string.perform_full_feed_details_sync
@@ -46,7 +46,7 @@ fun JobPermissionDialog(
     ) {
         Column {
             Text(stringResource(when(job) {
-                FEED_SYNC -> string.are_you_sure_you_want_to_perform_full_sync
+                FULL_FEED_SYNC -> string.are_you_sure_you_want_to_perform_full_sync
                 PRECACHE_THUMBNAILS -> string.are_you_sure_you_want_to_perform_precache
                 LOCAL_MEDIA_SYNC -> string.are_you_sure_you_want_to_start_local_scan
                 FEED_DETAILS_SYNC -> string.are_you_sure_you_want_to_perform_feed_details_sync

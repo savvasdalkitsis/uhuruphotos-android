@@ -79,20 +79,18 @@ class LightboxRepository @Inject constructor(
                 lon = local.latLon?.second,
                 hash = mediaHash.hash,
                 localPaths = local.path ?: local.contentUri,
-                id = mediaHash.md5.value,
+                md5 = mediaHash.md5.value,
             )
         }
         id.refreshedRemote().bind()?.let { remote ->
             lightboxDetailsQueries.updateRemote(
                 formattedDateTime = dateDisplayer.dateTimeString(remote.timestamp),
                 location = remote.location,
-                lat = remote.gpsLat?.toDoubleOrNull(),
-                lon = remote.gpsLon?.toDoubleOrNull(),
                 remotePaths = remote.imagePath,
                 hash = remote.imageHash,
                 peopleInMediaItem = remote.peopleNames,
                 searchCaptions = remote.captions,
-                id = mediaHash.md5.value,
+                md5 = mediaHash.md5.value,
             )
         }
     }
@@ -162,7 +160,7 @@ class LightboxRepository @Inject constructor(
             digitalZoomRatio = exifData.digitalZoomRatio,
             width = exifData.width,
             height = exifData.height,
-            id = md5Hash.value,
+            md5 = md5Hash.value,
         )
     }
 }

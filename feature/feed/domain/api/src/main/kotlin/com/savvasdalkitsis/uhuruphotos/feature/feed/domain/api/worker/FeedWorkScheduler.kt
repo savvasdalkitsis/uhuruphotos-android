@@ -15,19 +15,16 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker
 
-import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.WorkInfo
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.model.RefreshJobState
 import kotlinx.coroutines.flow.Flow
 
 interface FeedWorkScheduler {
 
-    fun scheduleFeedRefreshPeriodic(
-        existingPeriodicWorkPolicy: ExistingPeriodicWorkPolicy
-    )
+    fun scheduleFeedRefreshPeriodic()
     fun observeFeedRefreshJob(): Flow<RefreshJobState?>
     fun observeFeedRefreshJobStatus(): Flow<WorkInfo.State?>
-    fun cancelFullFeedSync()
+    fun cancelFeedSync()
     fun observePrecacheThumbnailsJob(): Flow<RefreshJobState?>
     fun observePrecacheThumbnailsJobStatus(): Flow<WorkInfo.State?>
     fun cancelPrecacheThumbnails()
