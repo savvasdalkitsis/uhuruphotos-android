@@ -1,0 +1,8 @@
+* Big change on how remote feed loading/refreshing works.
+  LibrePhotos now supports incremental changes in the api (https://github.com/LibrePhotos/librephotos/issues/1177).
+  This allows UhuruPhotos to avoid the need for the old "full feed sync" process of making sure that all
+  upstream changes are reflected in the app. Now the app should always be up to date with the server
+  and there is no longer any need for the "full feed sync" process (even though it can still be accessed via settings).
+* The media summary endpoints now also return GPS information which means that the map screen no longer
+  needs to fetch ALL media item details which means that all media should be available on the map by default.
+* Updating dependencies
