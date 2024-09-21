@@ -22,12 +22,12 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.model.CacheTy
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.model.CacheType.THUMBNAIL_MEMORY
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.model.CacheType.VIDEO_DISK
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.CacheSettingsUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.image.api.cache.ImageCacheUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.Location.DISK
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.Location.MEMORY
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.Type.FULL
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.Type.THUMB
-import com.savvasdalkitsis.uhuruphotos.foundation.video.api.VideoCacheUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.image.api.usecase.ImageCacheUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.video.api.usecase.VideoCacheUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow

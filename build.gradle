@@ -39,6 +39,10 @@ sonarqube {
 }
 
 subprojects {
+    if (name == "konsist") {
+        return
+    }
+
     if (name == "app") {
         apply plugin: libs.plugins.android.app.get().pluginId
     } else {

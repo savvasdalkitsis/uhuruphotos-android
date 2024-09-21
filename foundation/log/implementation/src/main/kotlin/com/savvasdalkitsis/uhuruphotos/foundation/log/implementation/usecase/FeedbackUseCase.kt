@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.foundation.log.implementation
+package com.savvasdalkitsis.uhuruphotos.foundation.log.implementation.usecase
 
 import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
@@ -28,6 +28,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.Setti
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.usecase.FeedbackUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.usecase.FeedbackUseCase.Companion.EMAIL
+import com.savvasdalkitsis.uhuruphotos.foundation.log.implementation.R
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode.DARK_MODE
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode.FOLLOW_SYSTEM

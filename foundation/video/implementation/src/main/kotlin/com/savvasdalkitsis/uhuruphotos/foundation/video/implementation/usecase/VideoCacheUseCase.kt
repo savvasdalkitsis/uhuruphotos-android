@@ -13,13 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.foundation.video.implementation
+package com.savvasdalkitsis.uhuruphotos.foundation.video.implementation.usecase
 
 import androidx.annotation.OptIn
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.datasource.cache.SimpleCache
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.VideoCache
-import com.savvasdalkitsis.uhuruphotos.foundation.video.api.VideoCacheUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.video.api.usecase.VideoCacheUseCase
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 

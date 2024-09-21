@@ -230,3 +230,5 @@ include ':foundation:video:implementation'
 include ':foundation:worker:api'
 include ':foundation:worker:implementation'
 include ':foundation:system'
+
+include ':konsist'

@@ -45,7 +45,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         MAPBOX_DOWNLOADS_TOKEN: ${{ secrets.MAPBOX_DOWNLOADS_TOKEN }}
-      run: ./gradlew test assembleDebug # sonarqube
+      run: ./gradlew testDebugUnitTest assembleDebug # sonarqube
 #    - name: run tests
 #      uses: reactivecircus/android-emulator-runner@v2
 #      with:

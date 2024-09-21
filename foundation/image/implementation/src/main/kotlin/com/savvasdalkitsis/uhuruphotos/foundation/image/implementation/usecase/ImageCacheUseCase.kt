@@ -13,11 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.foundation.image.implementation.cache
+package com.savvasdalkitsis.uhuruphotos.foundation.image.implementation.usecase
 
 import coil.disk.DiskCache
 import coil.memory.MemoryCache
-import com.savvasdalkitsis.uhuruphotos.foundation.image.api.cache.ImageCacheUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.FullImage
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.Location
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.Location.DISK
@@ -26,6 +25,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.ThumbnailImage
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.Type
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.Type.FULL
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.Type.THUMB
+import com.savvasdalkitsis.uhuruphotos.foundation.image.api.usecase.ImageCacheUseCase
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 

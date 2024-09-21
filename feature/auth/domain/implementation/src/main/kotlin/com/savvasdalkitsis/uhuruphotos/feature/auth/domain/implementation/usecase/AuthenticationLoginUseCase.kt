@@ -27,10 +27,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.servic
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.Database
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.clearAllUserLinkedTables
-import com.savvasdalkitsis.uhuruphotos.foundation.image.api.cache.ImageCacheUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.image.api.usecase.ImageCacheUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.lang.api.letBoth
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
-import com.savvasdalkitsis.uhuruphotos.foundation.video.api.VideoCacheUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.video.api.usecase.VideoCacheUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkScheduleUseCase
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
