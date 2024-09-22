@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase
 
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.model.WelcomeStatus
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 
@@ -27,6 +28,7 @@ interface WelcomeUseCase {
     suspend fun getWelcomeStatus(): WelcomeStatus
 }
 
+@OptIn(ExperimentalCoroutinesApi::class)
 fun <T> WelcomeUseCase.flow(
     withRemoteAccess: Flow<T>,
     withoutRemoteAccess: Flow<T>,

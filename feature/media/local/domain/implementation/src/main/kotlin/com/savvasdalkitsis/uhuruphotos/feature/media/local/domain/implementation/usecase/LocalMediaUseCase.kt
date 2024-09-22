@@ -60,6 +60,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.model.RefreshJobSta
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkerStatusUseCase
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.shreyaspatil.permissionFlow.PermissionFlow
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
@@ -70,6 +71,7 @@ import se.ansman.dagger.auto.AutoBind
 import java.io.IOException
 import javax.inject.Inject
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @AutoBind
 class LocalMediaUseCase @Inject constructor(
     @ApplicationContext

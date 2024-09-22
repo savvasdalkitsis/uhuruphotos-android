@@ -20,6 +20,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.core.content.FileProvider
 import coil.ImageLoader
+import coil.annotation.ExperimentalCoilApi
 import coil.disk.DiskCache
 import coil.request.ImageRequest
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
@@ -36,6 +37,7 @@ import javax.inject.Inject
 
 private const val imageMimeType = "image/jpeg"
 
+@OptIn(ExperimentalCoilApi::class)
 internal class ShareUseCase @Inject constructor(
     @FullImage
     private val diskCache: DiskCache,

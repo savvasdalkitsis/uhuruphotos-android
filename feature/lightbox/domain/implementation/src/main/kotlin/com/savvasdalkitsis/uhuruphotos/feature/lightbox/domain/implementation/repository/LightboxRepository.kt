@@ -39,6 +39,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
@@ -49,6 +50,7 @@ import javax.inject.Inject
 
 typealias DbLightboxDetails = com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.lightbox.LightboxDetails
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class LightboxRepository @Inject constructor(
     private val remoteMediaUseCase: RemoteMediaUseCase,
     private val localMediaUseCase: LocalMediaUseCase,

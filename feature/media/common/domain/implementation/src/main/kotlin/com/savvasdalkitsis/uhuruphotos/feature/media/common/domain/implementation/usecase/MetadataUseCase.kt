@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.implementati
 
 import android.content.ContentResolver
 import android.net.Uri
+import coil.annotation.ExperimentalCoilApi
 import coil.disk.DiskCache
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.read
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.ExifData
@@ -28,6 +29,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.FullImage
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 
+@OptIn(ExperimentalCoilApi::class)
 @AutoBind
 class MetadataUseCase @Inject constructor(
     @FullImage

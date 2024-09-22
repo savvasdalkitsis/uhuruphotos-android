@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.image.implementation.usecase
 
+import coil.annotation.ExperimentalCoilApi
 import coil.disk.DiskCache
 import coil.memory.MemoryCache
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.FullImage
@@ -29,6 +30,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.image.api.usecase.ImageCacheUs
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 
+@OptIn(ExperimentalCoilApi::class)
 @AutoBind
 class ImageCacheUseCase @Inject constructor(
     @FullImage

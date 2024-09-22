@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementati
 
 import android.content.Context
 import coil.ImageLoader
+import coil.annotation.ExperimentalCoilApi
 import coil.decode.DataSource
 import coil.request.CachePolicy.DISABLED
 import coil.request.CachePolicy.ENABLED
@@ -37,6 +38,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 
+@OptIn(ExperimentalCoilApi::class)
 @AutoBind
 class RemoteMediaPrecacher @Inject constructor(
     @ApplicationContext val context: Context,

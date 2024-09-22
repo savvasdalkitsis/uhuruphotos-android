@@ -22,12 +22,14 @@ import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam.Lo
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam.LocalAlbumMutation.PermissionsGranted
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.ui.state.LocalAlbumState
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalPermissions
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.merge
 
+@OptIn(ExperimentalCoroutinesApi::class)
 data class Load(val albumId: Int) : LocalAlbumAction() {
     context(LocalAlbumActionsContext) override fun handle(
         state: LocalAlbumState

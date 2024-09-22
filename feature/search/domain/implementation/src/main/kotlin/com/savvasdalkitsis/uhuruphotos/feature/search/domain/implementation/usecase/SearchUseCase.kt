@@ -27,6 +27,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.onStartWithResu
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.mapNotNullValues
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -39,6 +40,7 @@ import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 import kotlin.random.Random
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @AutoBind
 class SearchUseCase @Inject constructor(
     private val searchRepository: SearchRepository,

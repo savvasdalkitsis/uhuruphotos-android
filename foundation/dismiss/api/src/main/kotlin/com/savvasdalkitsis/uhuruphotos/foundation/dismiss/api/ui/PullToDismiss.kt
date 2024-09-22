@@ -19,35 +19,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
-import androidx.compose.ui.input.nestedscroll.NestedScrollSource.Companion.Drag
+import androidx.compose.ui.input.nestedscroll.NestedScrollSource.Companion.UserInput
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.debugInspectorInfo
-import androidx.compose.ui.platform.inspectable
 import androidx.compose.ui.unit.Velocity
 
 fun Modifier.pullToDismiss(
     state: PullToDismissState,
     enabled: Boolean = true
-) = inspectable(inspectorInfo = debugInspectorInfo {
-    name = "pullToDismiss"
-    properties["state"] = state
-    properties["enabled"] = enabled
-}) {
-    Modifier.pullToDismiss(state::onPull, state::onRelease, enabled)
-}
+) = pullToDismiss(state::onPull, state::onRelease, enabled)
 
 fun Modifier.pullToDismiss(
     onPull: (pullDelta: Float) -> Float,
     onRelease: suspend (flingVelocity: Float) -> Float,
     enabled: Boolean = true
-) = inspectable(inspectorInfo = debugInspectorInfo {
-    name = "pullToDismiss"
-    properties["onPull"] = onPull
-    properties["onRelease"] = onRelease
-    properties["enabled"] = enabled
-}) {
-    Modifier.nestedScroll(PullToDismissNestedScrollConnection(onPull, onRelease, enabled))
-}
+) = nestedScroll(PullToDismissNestedScrollConnection(onPull, onRelease, enabled))
 
 private class PullToDismissNestedScrollConnection(
     private val onPull: (pullDelta: Float) -> Float,
@@ -60,7 +45,7 @@ private class PullToDismissNestedScrollConnection(
         source: NestedScrollSource
     ): Offset = when {
         !enabled -> Offset.Zero
-        source == Drag && available.y < 0 -> Offset(0f, onPull(available.y)) // Pulling up
+        source == UserInput && available.y < 0 -> Offset(0f, onPull(available.y)) // Pulling up
         else -> Offset.Zero
     }
 
@@ -70,7 +55,7 @@ private class PullToDismissNestedScrollConnection(
         source: NestedScrollSource
     ): Offset = when {
         !enabled -> Offset.Zero
-        source == Drag && available.y > 0 -> Offset(0f, onPull(available.y)) // Pulling down
+        source == UserInput && available.y > 0 -> Offset(0f, onPull(available.y)) // Pulling down
         else -> Offset.Zero
     }
 
