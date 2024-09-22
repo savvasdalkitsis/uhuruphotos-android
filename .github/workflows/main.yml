@@ -48,6 +48,11 @@ jobs:
       run: ./gradlew testDebugUnitTest assembleDebug # sonarqube
     - name: Test Reporter
       uses: dorny/test-reporter@v1.9.1
+      if: success() || failure()
+      with:
+        name: Tests
+        path: "*.xml"
+        reporter: java-junit
 
       #    - name: run tests
 #      uses: reactivecircus/android-emulator-runner@v2
