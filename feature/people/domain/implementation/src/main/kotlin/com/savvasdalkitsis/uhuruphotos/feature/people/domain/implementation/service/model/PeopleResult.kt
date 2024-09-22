@@ -16,7 +16,11 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.people.domain.implementation.service.model
 
 import com.savvasdalkitsis.uhuruphotos.feature.people.domain.api.service.model.PersonResult
+import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class PeopleResult(val results: List<PersonResult>)
+data class PeopleResult(
+    @field:Json(name = "results")
+    val results: List<PersonResult>,
+)

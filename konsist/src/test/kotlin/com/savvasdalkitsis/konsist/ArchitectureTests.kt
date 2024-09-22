@@ -5,6 +5,8 @@ import com.lemonappdev.konsist.api.KoModifier
 import com.lemonappdev.konsist.api.Konsist
 import com.lemonappdev.konsist.api.architecture.KoArchitectureCreator.assertArchitecture
 import com.lemonappdev.konsist.api.architecture.Layer
+import com.lemonappdev.konsist.api.ext.list.properties
+import com.lemonappdev.konsist.api.ext.list.withAnnotationNamed
 import com.lemonappdev.konsist.api.ext.list.withNameEndingWith
 import com.lemonappdev.konsist.api.ext.list.withPackage
 import com.lemonappdev.konsist.api.ext.list.withParentClassOf
@@ -98,6 +100,18 @@ class ArchitectureTests {
                     val name = prop.type?.name.orEmpty()
                     name.startsWith("List<") || name.startsWith("Map<") || name.startsWith("Set<")
                 }
+            }
+    }
+
+    @Test
+    fun `classes annotated with 'JsonClass' have all properties annotated with 'Json'`() {
+        Konsist
+            .scopeFromProject()
+            .classes()
+            .withAnnotationNamed("com.squareup.moshi.JsonClass")
+            .properties()
+            .assertTrue {
+                it.hasAnnotationWithName("com.squareup.moshi.Json")
             }
     }
 }

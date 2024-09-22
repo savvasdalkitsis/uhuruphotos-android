@@ -15,9 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model
 
+import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class RemoteFeedResult(
+    @field:Json(name = "results")
     val results: List<RemoteMediaDaySummaries.Incomplete>,
 )

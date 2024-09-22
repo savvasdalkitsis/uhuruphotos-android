@@ -20,7 +20,9 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class UserAlbumServiceUpdateModel(
+    @field:Json(name = "id")
     val id: Int,
+    @field:Json(name = "title")
     val title: String,
     @field:Json(name = "photos")
     val ids: List<String>,

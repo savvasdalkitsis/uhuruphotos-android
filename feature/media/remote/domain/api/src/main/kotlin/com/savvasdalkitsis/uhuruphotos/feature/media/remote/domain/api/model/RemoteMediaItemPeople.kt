@@ -15,7 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model
 
+import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class RemoteMediaItemPeople(val name: String)
+data class RemoteMediaItemPeople(
+    @field:Json(name = "name")
+    val name: String,
+)

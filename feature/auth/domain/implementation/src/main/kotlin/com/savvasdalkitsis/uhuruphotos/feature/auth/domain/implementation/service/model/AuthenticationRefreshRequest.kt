@@ -15,9 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.service.model
 
+import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class AuthenticationRefreshRequest(
+    @field:Json(name = "refresh")
     val refresh: String,
 )

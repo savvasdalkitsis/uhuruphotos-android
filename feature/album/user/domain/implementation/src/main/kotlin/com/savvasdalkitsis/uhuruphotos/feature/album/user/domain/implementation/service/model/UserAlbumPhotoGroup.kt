@@ -16,10 +16,13 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.implementation.service.model
 
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummary
+import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class UserAlbumPhotoGroup(
+    @field:Json(name = "date")
     val date: String,
+    @field:Json(name = "items")
     val items: List<RemoteMediaItemSummary>
 )

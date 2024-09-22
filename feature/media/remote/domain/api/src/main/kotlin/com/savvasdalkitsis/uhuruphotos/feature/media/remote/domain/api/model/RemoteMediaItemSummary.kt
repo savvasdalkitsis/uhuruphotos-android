@@ -22,24 +22,35 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class RemoteMediaItemSummary(
+    @field:Json(name = "id")
     val id: String,
+    @field:Json(name = "dominantColor")
     val dominantColor: String,
+    @field:Json(name = "url")
     val url: String,
+    @field:Json(name = "location")
     val location: String,
+    @field:Json(name = "date")
     val date: String?,
+    @field:Json(name = "birthTime")
     val birthTime: String,
+    @field:Json(name = "aspectRatio")
     val aspectRatio: Float? = null,
+    @field:Json(name = "type")
     val type: String,
     @Json(name = "video_length")
     val videoLength: String,
+    @Json(name = "rating")
     val rating: Int,
     @Json(name = "exif_gps_lat")
     val lat: String? = null,
     @Json(name = "exif_gps_lon")
     val lon: String? = null,
+    @Json(name = "removed")
     val removed: Boolean = false,
     @Json(name = "in_trashcan")
     val inTrash: Boolean = false,
+    @Json(name = "owner")
     val owner: RemoteMediaItemSummaryOwner,
 )
 

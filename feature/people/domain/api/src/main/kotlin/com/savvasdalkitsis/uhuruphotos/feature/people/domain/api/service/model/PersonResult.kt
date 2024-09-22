@@ -21,8 +21,8 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class PersonResult(
-    val name: String,
-    val id: Int,
+    @field:Json(name = "name") val name: String,
+    @field:Json(name = "id") val id: Int,
     @field:Json(name = "face_count") val faceCount: Int,
     @field:Json(name = "face_url") val faceUrl: String,
     @field:Json(name = "face_photo_url") val facePhotoUrl: String,

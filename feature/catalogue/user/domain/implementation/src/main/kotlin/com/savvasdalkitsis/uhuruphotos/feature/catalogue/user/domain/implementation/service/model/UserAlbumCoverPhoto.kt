@@ -22,5 +22,6 @@ import com.squareup.moshi.JsonClass
 data class UserAlbumCoverPhoto(
     @field:Json(name = "image_hash")
     val imageHash: String,
+    @field:Json(name = "video")
     val video: Boolean,
 )

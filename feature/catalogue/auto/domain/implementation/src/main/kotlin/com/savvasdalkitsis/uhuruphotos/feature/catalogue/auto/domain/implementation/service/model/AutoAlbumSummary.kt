@@ -23,12 +23,15 @@ import com.squareup.moshi.JsonClass
 data class AutoAlbumSummary(
     @field:Json(name = "favorited")
     val isFavorite: Boolean,
+    @field:Json(name = "id")
     val id: Int,
     @field:Json(name = "photo_count")
     val photoCount: Int,
     @field:Json(name = "photos")
     val coverPhoto: AutoAlbumPhoto,
+    @field:Json(name = "timestamp")
     val timestamp: String,
+    @field:Json(name = "title")
     val title: String,
 )
 

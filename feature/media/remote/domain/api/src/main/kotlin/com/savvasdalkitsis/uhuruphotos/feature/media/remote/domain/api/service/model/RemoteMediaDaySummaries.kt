@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.
 
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaCollections
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummary
+import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 sealed class RemoteMediaDaySummaries(
@@ -29,27 +30,35 @@ sealed class RemoteMediaDaySummaries(
 
     @JsonClass(generateAdapter = true)
     data class Incomplete(
+        @field:Json(name = "id")
         override val id: String,
+        @field:Json(name = "date")
         override val date: String?,
+        @field:Json(name = "location")
         override val location: String,
+        @field:Json(name = "incomplete")
         override val incomplete: Boolean,
+        @field:Json(name = "numberOfItems")
         override val numberOfItems: Int,
     ) : RemoteMediaDaySummaries(id, date, location, incomplete, numberOfItems)
 
     @JsonClass(generateAdapter = true)
     data class Complete(
+        @field:Json(name = "id")
         override val id: String,
+        @field:Json(name = "date")
         override val date: String?,
+        @field:Json(name = "location")
         override val location: String,
+        @field:Json(name = "incomplete")
         override val incomplete: Boolean,
+        @field:Json(name = "numberOfItems")
         override val numberOfItems: Int,
+        @field:Json(name = "rating")
         val rating: Int?,
+        @field:Json(name = "items")
         val items: List<RemoteMediaItemSummary>,
-    ) : RemoteMediaDaySummaries(id, date, location, incomplete, numberOfItems) {
-        fun toIncomplete() = Incomplete(
-            id, date, location, incomplete, numberOfItems
-        )
-    }
+    ) : RemoteMediaDaySummaries(id, date, location, incomplete, numberOfItems)
 }
 
 fun RemoteMediaDaySummaries.Incomplete.toDbModel() = DbRemoteMediaCollections(

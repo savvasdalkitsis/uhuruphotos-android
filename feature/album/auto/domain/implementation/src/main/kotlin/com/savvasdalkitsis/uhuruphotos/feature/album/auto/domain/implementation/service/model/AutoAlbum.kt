@@ -30,9 +30,14 @@ data class AutoAlbum(
     val gpsLat: Double?,
     @field:Json(name = "gps_lon")
     val gpsLon: Double?,
+    @field:Json(name = "id")
     val id: Int,
+    @field:Json(name = "timestamp")
     val timestamp: String,
+    @field:Json(name = "title")
     val title: String,
+    @field:Json(name = "photos")
     val photos: List<RemoteMediaItem>,
+    @field:Json(name = "people")
     val people: List<PersonResult>,
 )

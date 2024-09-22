@@ -23,6 +23,7 @@ import com.squareup.moshi.JsonClass
 data class UserAlbumSummary(
     @field:Json(name = "favorited")
     val isFavorite: Boolean,
+    @field:Json(name = "id")
     val id: Int,
     @field:Json(name = "photo_count")
     val photoCount: Int,
@@ -32,6 +33,7 @@ data class UserAlbumSummary(
     val coverPhoto: UserAlbumCoverPhoto?,
     @field:Json(name = "created_on")
     val createdOn: String,
+    @field:Json(name = "title")
     val title: String,
 )
 

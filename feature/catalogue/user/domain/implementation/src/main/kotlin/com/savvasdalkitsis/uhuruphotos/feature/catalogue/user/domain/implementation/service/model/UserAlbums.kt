@@ -15,10 +15,13 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.domain.implementation.service.model
 
+import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class UserAlbums(
+    @field:Json(name = "count")
     val count: Int,
+    @field:Json(name = "results")
     val results: List<UserAlbumSummary>,
 )
