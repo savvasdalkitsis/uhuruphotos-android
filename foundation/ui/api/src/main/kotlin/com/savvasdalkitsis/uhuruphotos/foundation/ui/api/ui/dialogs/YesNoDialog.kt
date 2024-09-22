@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.dialogs
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedButton
@@ -39,6 +40,7 @@ fun YesNoDialog(
     YesNoDialog(title, onDismiss, onYes, stringResource(string.yes), stringResource(string.no), body)
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun YesNoDialog(
     title: String,

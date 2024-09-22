@@ -28,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.max
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionState
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.actions.HeatMapAction
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.actions.NeverAskForLocalMediaAccessPermissionRequest
@@ -40,6 +41,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.sheet.SheetHandle
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.sheet.SheetSize
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.sheet.adjustingSheetSize
 
+@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun BottomPanelHeatMap(
     state: HeatMapState,

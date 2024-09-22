@@ -38,6 +38,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.onErrorsIgnore
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.andThen
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.search.SearchSuggestion
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -50,6 +51,7 @@ import kotlinx.coroutines.flow.merge
 import kotlin.math.max
 import kotlin.math.min
 
+@OptIn(ExperimentalCoroutinesApi::class)
 data object Initialise : DiscoverAction() {
     context(DiscoverActionsContext) override fun handle(
         state: DiscoverState

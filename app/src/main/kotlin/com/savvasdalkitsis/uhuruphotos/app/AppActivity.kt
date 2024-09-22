@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.app
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -33,6 +34,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window.LocalWindowSi
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @AndroidEntryPoint
 class AppActivity : FragmentNodeActivity() {
 

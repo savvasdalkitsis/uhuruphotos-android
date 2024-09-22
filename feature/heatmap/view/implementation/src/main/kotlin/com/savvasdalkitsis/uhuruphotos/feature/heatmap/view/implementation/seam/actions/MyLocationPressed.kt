@@ -19,6 +19,7 @@ import android.annotation.SuppressLint
 import android.location.LocationManager
 import android.os.CancellationSignal
 import androidx.core.location.LocationManagerCompat
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionState
 import com.google.accompanist.permissions.isGranted
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapActionsContext
@@ -29,12 +30,14 @@ import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewState
 import kotlinx.coroutines.flow.flow
 
 @SuppressLint("MissingPermission")
+@OptIn(ExperimentalPermissionsApi::class)
 data class MyLocationPressed(
     val locationPermissionState: PermissionState,
     val mapViewState: MapViewState
 ) : HeatMapAction() {
 
-    context(HeatMapActionsContext) override fun handle(
+    context(HeatMapActionsContext)
+    override fun handle(
         state: HeatMapState
     ) = flow<HeatMapMutation> {
         if (locationPermissionState.status.isGranted) {

@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.dialogs
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -35,6 +36,7 @@ fun OkDialog(
     OkDialog(title, stringResource(string.ok), onDismiss, body)
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun OkDialog(
     title: String,

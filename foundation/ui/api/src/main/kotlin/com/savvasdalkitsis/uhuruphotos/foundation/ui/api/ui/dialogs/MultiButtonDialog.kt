@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.dialogs
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRowScope
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.MaterialTheme
@@ -31,6 +32,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlight
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.layout.ReverseDirection
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun MultiButtonDialog(
     title: String,

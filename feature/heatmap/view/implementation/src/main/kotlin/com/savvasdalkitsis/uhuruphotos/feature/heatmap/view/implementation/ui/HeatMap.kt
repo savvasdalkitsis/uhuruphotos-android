@@ -19,6 +19,7 @@ import android.content.res.Configuration.ORIENTATION_LANDSCAPE
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalConfiguration
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.permissions.shouldShowRationale
@@ -27,6 +28,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.st
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewState
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.rememberMapViewState
 
+@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun HeatMap(
     state: HeatMapState,

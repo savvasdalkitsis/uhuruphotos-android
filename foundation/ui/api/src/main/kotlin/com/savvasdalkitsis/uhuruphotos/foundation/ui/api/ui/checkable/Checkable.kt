@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkable
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Animatable
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
@@ -44,6 +45,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlight
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.CustomColors
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun Checkable(
     modifier: Modifier = Modifier,

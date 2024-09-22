@@ -31,6 +31,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionState
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.actions.HeatMapAction
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.actions.MyLocationPressed
@@ -42,6 +43,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.CommonTopBar
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UpNavButton
 
+@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun HeatMapTopBar(
     action: (HeatMapAction) -> Unit,
@@ -79,6 +81,7 @@ fun HeatMapTopBar(
     )
 }
 
+@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 private fun RowScope.Actions(
     state: HeatMapState,
