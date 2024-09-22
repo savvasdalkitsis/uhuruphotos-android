@@ -18,6 +18,13 @@ import org.junit.Test
 class ArchitectureTests {
 
     @Test
+    fun `all files have license header`() {
+        Konsist.scopeFromProject()
+            .files
+            .assertTrue { it.text.contains("Apache License, Version 2.0") }
+    }
+
+    @Test
     fun `classes with 'UseCase' suffix should reside in 'usecsase' package`() {
         Konsist.scopeFromProject()
             .classesAndInterfacesAndObjects()
