@@ -19,13 +19,13 @@ import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplayState
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.PersonState
-import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.ui.state.PersonState
+import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.ui.state.PersonCollageState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
-import kotlinx.collections.immutable.toPersistentList
+import kotlinx.collections.immutable.toImmutableList
 
 sealed class PersonMutation(
-    mutation: Mutation<PersonState>,
-) : Mutation<PersonState> by mutation {
+    mutation: Mutation<PersonCollageState>,
+) : Mutation<PersonCollageState> by mutation {
 
     data object Loading : PersonMutation({
         it.copyFeed { copy(isLoading = true) }
@@ -34,11 +34,11 @@ sealed class PersonMutation(
     data class ShowPersonMedia(val clusterStates: List<ClusterState>) : PersonMutation({
         it.copyFeed { copy(
             isLoading = false,
-            clusterStates = clusterStates.toPersistentList(),
+            clusterStates = clusterStates.toImmutableList(),
         ) }
     })
 
-    data class ShowPersonDetails(val personState: com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.PersonState) : PersonMutation({
+    data class ShowPersonDetails(val personState: PersonState) : PersonMutation({
         it.copy(personState = personState)
     })
 
@@ -47,5 +47,5 @@ sealed class PersonMutation(
     })
 }
 
-private fun PersonState.copyFeed(feedCopy: CollageState.() -> CollageState): PersonState =
+private fun PersonCollageState.copyFeed(feedCopy: CollageState.() -> CollageState): PersonCollageState =
     copy(collageState = collageState.feedCopy())

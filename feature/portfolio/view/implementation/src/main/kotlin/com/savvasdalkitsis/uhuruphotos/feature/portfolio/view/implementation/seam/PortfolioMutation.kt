@@ -19,14 +19,14 @@ import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui.
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui.state.PortfolioItemsState
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui.state.PortfolioState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
-import kotlinx.collections.immutable.toPersistentList
+import kotlinx.collections.immutable.toImmutableList
 
 sealed class PortfolioMutation(
     mutation: Mutation<PortfolioState>,
 ) : Mutation<PortfolioState> by mutation {
 
     data class RequestPermissions(val deniedPermissions: List<String>): PortfolioMutation({
-        it.copy(localMedia = PortfolioItemsState.RequiresPermissionsState(deniedPermissions))
+        it.copy(localMedia = PortfolioItemsState.RequiresPermissionsState(deniedPermissions.toImmutableList()))
     })
 
     data object ShowError : PortfolioMutation({
@@ -34,7 +34,7 @@ sealed class PortfolioMutation(
     })
 
     data class DisplayPortfolio(val states: List<PortfolioCelState>, val scanningOther: Boolean) : PortfolioMutation({
-        it.copy(localMedia = PortfolioItemsState.FoundState(states.toPersistentList()), showScanOther = !scanningOther)
+        it.copy(localMedia = PortfolioItemsState.FoundState(states.toImmutableList()), showScanOther = !scanningOther)
     })
 
     data class ChangeTitle(val title: Int) : PortfolioMutation({

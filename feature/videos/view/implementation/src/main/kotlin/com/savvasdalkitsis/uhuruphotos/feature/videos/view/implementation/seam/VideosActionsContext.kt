@@ -25,6 +25,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.videos.domain.api.usecase.VideosU
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simpleOk
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -46,6 +47,7 @@ internal class VideosActionsContext @Inject constructor(
                     GalleryDetailsState(
                         title = Title.Resource(string.videos),
                         clusterStates = it.map { collection -> collection.toCluster() }
+                            .toImmutableList()
                     )
                 }
         },

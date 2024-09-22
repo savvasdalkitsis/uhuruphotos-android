@@ -44,6 +44,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Loca
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItems
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.flow
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
@@ -94,12 +96,12 @@ data object Load : LibraryAction() {
                     refreshLocalMedia()
                     val primary = listOfNotNull(media.primaryFolder)
                     val vitrines = (primary + media.mediaFolders).map { it.toVitrine() }
-                    LibraryLocalMediaState.FoundState(vitrines, scanningOtherFolders)
+                    LibraryLocalMediaState.FoundState(vitrines.toImmutableList(), scanningOtherFolders)
                 }
 
                 is RequiresPermissions ->
-                    LibraryLocalMediaState.RequiresPermissionsState(media.deniedPermissions)
-                is Error -> LibraryLocalMediaState.FoundState(emptyList(), scanningOtherFolders)
+                    LibraryLocalMediaState.RequiresPermissionsState(media.deniedPermissions.toImmutableList())
+                is Error -> LibraryLocalMediaState.FoundState(persistentListOf(), scanningOtherFolders)
             }
         }.distinctUntilChanged().map(::DisplayLocalAlbums)
 

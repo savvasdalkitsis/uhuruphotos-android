@@ -18,11 +18,11 @@ package com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplayState
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonMutation
-import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.ui.state.PersonState
+import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.ui.state.PersonCollageState
 import kotlinx.coroutines.flow.flowOf
 
 data class ChangeDisplay(val display: CollageDisplayState) : PersonAction() {
     context(PersonActionsContext) override fun handle(
-        state: PersonState
+        state: PersonCollageState
     ) = flowOf(PersonMutation.SetFeedDisplay(display))
 }

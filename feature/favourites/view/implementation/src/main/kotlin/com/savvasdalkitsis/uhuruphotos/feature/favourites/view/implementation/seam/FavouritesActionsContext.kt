@@ -25,7 +25,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.M
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
-import kotlinx.collections.immutable.toPersistentList
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
 import javax.inject.Inject
@@ -48,14 +49,14 @@ internal class FavouritesActionsContext @Inject constructor(
                 .map { mediaItems ->
                     GalleryDetailsState(
                         title = Title.Resource(string.favourite_media),
-                        clusterStates = listOf(
+                        clusterStates = persistentListOf(
                             ClusterState(
                                 id = "favourites",
                                 displayTitle = "",
                                 location = null,
                                 cels = mediaItems.map {
                                     it.toCel()
-                                }.toPersistentList(),
+                                }.toImmutableList(),
                             )
                         ),
                     )

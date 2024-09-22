@@ -33,7 +33,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.layout.plus
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.IconOutlineButton
 import kotlinx.collections.immutable.persistentListOf
-import kotlinx.collections.immutable.toPersistentList
+import kotlinx.collections.immutable.toImmutableList
 
 @Composable
 fun BoxScope.PortfolioGrid(
@@ -71,7 +71,7 @@ private fun PortfolioGridPreview() {
     PreviewAppTheme {
         PortfolioGrid(
             localMedia = PortfolioItemsState.FoundState(
-                List(50) { state(it) }.toPersistentList()
+                List(50) { state(it) }.toImmutableList()
             ),
             showScanOther = false,
         ) {}

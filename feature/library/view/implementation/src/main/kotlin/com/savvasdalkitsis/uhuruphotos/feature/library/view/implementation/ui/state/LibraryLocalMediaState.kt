@@ -18,16 +18,17 @@ package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.s
 import androidx.compose.runtime.Immutable
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.VitrineState
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaFolder
+import kotlinx.collections.immutable.ImmutableList
 
 @Immutable
 sealed class LibraryLocalMediaState {
 
     @Immutable
-    data class RequiresPermissionsState(val deniedPermissions: List<String>) : LibraryLocalMediaState()
+    data class RequiresPermissionsState(val deniedPermissions: ImmutableList<String>) : LibraryLocalMediaState()
 
     @Immutable
     data class FoundState(
-        val buckets: List<Pair<LocalMediaFolder, VitrineState>>,
+        val buckets: ImmutableList<Pair<LocalMediaFolder, VitrineState>>,
         val scanningOtherFolders: Boolean,
     ) : LibraryLocalMediaState()
 }

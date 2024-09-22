@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.Ce
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
-import kotlinx.collections.immutable.toPersistentList
+import kotlinx.collections.immutable.toImmutableList
 
 @Immutable
 data class ClusterState(
@@ -47,7 +47,7 @@ val previewClusterStateEmpty = ClusterState(
 
 fun MediaCollection.toCluster() = ClusterState(
     id = id,
-    cels = mediaItems.map { it.toCel() }.toPersistentList(),
+    cels = mediaItems.map { it.toCel() }.toImmutableList(),
     displayTitle = displayTitle,
     unformattedDate = unformattedDate,
     location = location,

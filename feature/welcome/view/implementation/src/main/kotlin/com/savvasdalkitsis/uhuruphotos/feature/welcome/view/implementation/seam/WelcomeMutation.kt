@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam
 
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.ui.state.WelcomeState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
+import kotlinx.collections.immutable.toImmutableList
 
 sealed class WelcomeMutation(
     mutation: Mutation<WelcomeState>,
@@ -30,7 +31,7 @@ sealed class WelcomeMutation(
     })
 
     data class SetMissingPermissions(val missingPermissions: List<String>?) : WelcomeMutation({
-        it.copy(missingPermissions = missingPermissions)
+        it.copy(missingPermissions = missingPermissions?.toImmutableList())
     })
 
     data class SetLoading(val isLoading: Boolean) : WelcomeMutation({

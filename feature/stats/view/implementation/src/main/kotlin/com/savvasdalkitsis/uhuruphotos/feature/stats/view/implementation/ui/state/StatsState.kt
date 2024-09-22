@@ -23,7 +23,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.DayOfWeek
 import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.Month
 import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.Year
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.persistentMapOf
 
 @Immutable
 data class StatsState(
@@ -32,11 +34,11 @@ data class StatsState(
     val isLoadingMediaByDayOfMonth: Boolean = true,
     val isLoadingMediaByDayOfWeek: Boolean = true,
     val isLoadingMediaHeatMap: Boolean = true,
-    val mediaByYear: Map<Year, Int> = emptyMap(),
-    val mediaByMonth: Map<Month, Int> = emptyMap(),
-    val mediaByDayOfMonth: Map<DayOfMonth, Int> = emptyMap(),
-    val mediaByDayOfWeek: Map<DayOfWeek, Int> = emptyMap(),
-    val mediaHeatMap: Map<MediaDay, Int> = emptyMap(),
+    val mediaByYear: ImmutableMap<Year, Int> = persistentMapOf(),
+    val mediaByMonth: ImmutableMap<Month, Int> = persistentMapOf(),
+    val mediaByDayOfMonth: ImmutableMap<DayOfMonth, Int> = persistentMapOf(),
+    val mediaByDayOfWeek: ImmutableMap<DayOfWeek, Int> = persistentMapOf(),
+    val mediaHeatMap: ImmutableMap<MediaDay, Int> = persistentMapOf(),
     val isLoadingTimeline: Boolean = true,
     val timeline: ImmutableList<CountryVisit> = persistentListOf(),
     val photoCount: Int? = null,

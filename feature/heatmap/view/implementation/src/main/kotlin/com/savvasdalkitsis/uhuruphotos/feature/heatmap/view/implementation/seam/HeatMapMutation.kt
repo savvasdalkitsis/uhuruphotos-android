@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.to
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.Viewport
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
-import kotlinx.collections.immutable.toPersistentList
+import kotlinx.collections.immutable.toImmutableList
 
 sealed class HeatMapMutation(
     mutation: Mutation<HeatMapState>,
@@ -33,9 +33,9 @@ sealed class HeatMapMutation(
             .mapNotNull { photo -> photo.latLng }
             .map { (lat, lon) -> LatLon(lat, lon) }
         it.copy(
-            allPoints = points.toPersistentList(),
-            pointsOnVisibleMap = points.toPersistentList(),
-            allMedia = mediaItems.toPersistentList(),
+            allPoints = points.toImmutableList(),
+            pointsOnVisibleMap = points.toImmutableList(),
+            allMedia = mediaItems.toImmutableList(),
         )
     })
 
@@ -44,8 +44,8 @@ sealed class HeatMapMutation(
         val pointsOnVisibleMap: List<LatLon>,
     ) : HeatMapMutation({
         it.copy(
-            photosOnVisibleMap = photosOnVisibleMap.map(MediaItem::toCel).toPersistentList(),
-            pointsOnVisibleMap = pointsOnVisibleMap.toPersistentList(),
+            photosOnVisibleMap = photosOnVisibleMap.map(MediaItem::toCel).toImmutableList(),
+            pointsOnVisibleMap = pointsOnVisibleMap.toImmutableList(),
         )
     })
 

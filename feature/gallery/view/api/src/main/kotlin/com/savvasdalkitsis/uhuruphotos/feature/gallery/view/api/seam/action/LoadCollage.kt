@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryMuta
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GallerySortingState
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
-import kotlinx.collections.immutable.toPersistentList
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOf
@@ -44,7 +44,7 @@ data class LoadCollage(val id: GalleryId) : GalleryAction() {
                     clusterStates = when (sorting) {
                         GallerySortingState.DATE_DESC -> galleryDetails.clusterStates.descending()
                         GallerySortingState.DATE_ASC -> galleryDetails.clusterStates.ascending()
-                    }
+                    }.toImmutableList()
                 )
             }.map(GalleryMutation::ShowGallery),
             observeSorting()
@@ -61,7 +61,7 @@ data class LoadCollage(val id: GalleryId) : GalleryAction() {
         cluster.copy(cels = cluster.cels
             .sortedByDescending {
                 it.mediaItem.sortableDate
-            }.toPersistentList()
+            }.toImmutableList()
         )
     }.sortedByDescending {
         it.unformattedDate
@@ -71,7 +71,7 @@ data class LoadCollage(val id: GalleryId) : GalleryAction() {
         cluster.copy(cels = cluster.cels
             .sortedBy {
                 it.mediaItem.sortableDate
-            }.toPersistentList()
+            }.toImmutableList()
         )
     }.sortedBy {
         it.unformattedDate

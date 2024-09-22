@@ -27,6 +27,9 @@ import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CollageShape
+import kotlinx.collections.immutable.toImmutableList
+import kotlinx.collections.immutable.toImmutableSet
+import kotlinx.collections.immutable.toImmutableSet
 
 sealed class SettingsMutation(
     mutation: Mutation<SettingsState>,
@@ -41,7 +44,7 @@ sealed class SettingsMutation(
     })
 
     data class ShowJobs(val jobStates: List<JobState>) : SettingsMutation({
-        it.copy(jobStates = jobStates)
+        it.copy(jobStates = jobStates.toImmutableList())
     })
 
     data class DisplayLightboxPhotoDiskCacheMaxLimit(val limit: Int) : SettingsMutation({
@@ -218,7 +221,7 @@ sealed class SettingsMutation(
     ) : SettingsMutation({
         it.copy(
             mapProviderState = MapProviderState.SelectedState(
-                current, available
+                current, available.toImmutableSet()
             )
         )
     })

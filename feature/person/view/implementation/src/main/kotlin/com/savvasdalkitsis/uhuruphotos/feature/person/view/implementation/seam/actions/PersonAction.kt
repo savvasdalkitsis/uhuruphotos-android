@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.actions
 
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.ui.state.PersonState
+import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.ui.state.PersonCollageState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Action
 
-sealed class PersonAction : Action<PersonState, PersonActionsContext>
+sealed class PersonAction : Action<PersonCollageState, PersonActionsContext>

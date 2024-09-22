@@ -27,7 +27,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.usecase.Biometr
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
-import kotlinx.collections.immutable.toPersistentList
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
@@ -79,9 +79,9 @@ internal class TrashAlbumPageActionsContext @Inject constructor(
                                             location = mediaCollection.location,
                                             cels = mediaCollection.mediaItems.map {
                                                 it.toCel()
-                                            }.toPersistentList(),
+                                            }.toImmutableList(),
                                         )
-                                    }
+                                    }.toImmutableList()
                                 )
                             }
                     }

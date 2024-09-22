@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.s
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.toLightboxDetailsState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
-import kotlinx.collections.immutable.toPersistentList
+import kotlinx.collections.immutable.toImmutableList
 import kotlin.math.min
 
 sealed class LightboxMutation(
@@ -116,7 +116,7 @@ sealed class LightboxMutation(
         it.copyWithIndex(
             index = index,
         ).copy(
-            media = mediaItemStates.reuse(current).toPersistentList(),
+            media = mediaItemStates.reuse(current).toImmutableList(),
         )
     }) {
         override fun toString() = "ShowMedia [index: $index, size:${mediaItemStates.size}, current: ${mediaItemStates[index]}]"
@@ -145,7 +145,7 @@ sealed class LightboxMutation(
 
     data class RemoveMediaItemFromSource(val id: MediaId<*>) : LightboxMutation({
         val removed = it.copy(
-            media = it.media.filter { photoState -> photoState.id != id }.toPersistentList(),
+            media = it.media.filter { photoState -> photoState.id != id }.toImmutableList(),
         )
         removed.copyWithIndex(
             index = min(it.currentIndex, removed.media.size - 1)
@@ -159,12 +159,12 @@ sealed class LightboxMutation(
     })
 
     data class AskForPermissions(val deniedPermissions: List<String>) : LightboxMutation({
-        it.copy(missingPermissions = deniedPermissions.toPersistentList())
+        it.copy(missingPermissions = deniedPermissions.toImmutableList())
     })
 
     class ShowEditOptions(id: MediaId<*>, apps: List<ResolveInfo>) : LightboxMutation({
         it.copyItem(id) { photoState ->
-            photoState.copy(showEditApps = apps.toPersistentList())
+            photoState.copy(showEditApps = apps.toImmutableList())
         }
     })
 
@@ -197,7 +197,7 @@ private fun LightboxState.copyItem(
         id -> copy(mediaItem)
         else -> mediaItem
     }
-}.toPersistentList())
+}.toImmutableList())
 
 
 private fun List<SingleMediaItemState>.reuse(current: SingleMediaItemState?): List<SingleMediaItemState> =

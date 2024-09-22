@@ -20,7 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.Gallery
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GallerySortingState
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
-import kotlinx.collections.immutable.toPersistentList
+import kotlinx.collections.immutable.toImmutableList
 
 sealed class GalleryMutation(
     mutation: Mutation<GalleryState>,
@@ -29,10 +29,10 @@ sealed class GalleryMutation(
     data class ShowGallery(val galleryDetailsState: GalleryDetailsState) : GalleryMutation({
         it.copy(
             title = galleryDetailsState.title,
-            people = galleryDetailsState.people.toPersistentList(),
+            people = galleryDetailsState.people.toImmutableList(),
             collageState = it.collageState.copy(
                 isEmpty = galleryDetailsState.clusterStates.isEmpty(),
-                clusterStates = galleryDetailsState.clusterStates.toPersistentList(),
+                clusterStates = galleryDetailsState.clusterStates.toImmutableList(),
             )
         )
     })

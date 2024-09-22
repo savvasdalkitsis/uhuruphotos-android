@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.uploads.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.domain.api.model.Uploads
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.view.implementation.ui.state.UploadsState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
-import kotlinx.collections.immutable.toPersistentList
+import kotlinx.collections.immutable.toImmutableList
 
 sealed class UploadsMutation(
     mutation: Mutation<UploadsState>,
@@ -29,6 +29,6 @@ sealed class UploadsMutation(
     })
 
     data class ShowUploads(val uploads: Uploads) : UploadsMutation({
-        it.copy(isLoading = false, jobs = uploads.jobs.toPersistentList())
+        it.copy(isLoading = false, jobs = uploads.jobs.toImmutableList())
     })
 }

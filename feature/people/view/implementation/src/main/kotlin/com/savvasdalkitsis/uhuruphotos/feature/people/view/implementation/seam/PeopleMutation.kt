@@ -19,6 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.PersonSt
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.state.PeopleState
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.state.SortOrderState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
+import kotlinx.collections.immutable.toImmutableList
 
 sealed class PeopleMutation(
     mutation: Mutation<PeopleState>,
@@ -29,7 +30,7 @@ sealed class PeopleMutation(
     })
 
     data class DisplayPeople(val people: List<PersonState>) : PeopleMutation({
-        it.copy(people = people)
+        it.copy(people = people.toImmutableList())
     })
 
     data class SetSortOrder(val sortOrderState: SortOrderState) : PeopleMutation({

@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.processing.domain.api.model.Proce
 import com.savvasdalkitsis.uhuruphotos.feature.processing.domain.api.model.ProcessingItem
 import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.ui.state.ProcessingState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
-import kotlinx.collections.immutable.toPersistentList
+import kotlinx.collections.immutable.toImmutableList
 
 sealed class ProcessingMutation(
     mutation: Mutation<ProcessingState>,
@@ -34,7 +34,7 @@ sealed class ProcessingMutation(
     })
 
     data class ShowProcessing(val processing: Processing) : ProcessingMutation({
-        it.copy(isLoading = false, items = processing.jobs.toPersistentList())
+        it.copy(isLoading = false, items = processing.jobs.toImmutableList())
     })
 
     data class ShowMessageDialog(val item: ProcessingItem, val message: String) : ProcessingMutation({
@@ -48,6 +48,6 @@ sealed class ProcessingMutation(
             } else {
                 processingItem
             }
-        }.toPersistentList())
+        }.toImmutableList())
     })
 }

@@ -48,6 +48,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UpNavButton
+import kotlinx.collections.immutable.toImmutableMap
 import java.time.LocalDate
 
 @Composable
@@ -185,25 +186,25 @@ private fun StatsPreviewStats() {
             isLoadingMediaByYear = false,
             mediaByYear = List(20) { it }.associateBy {
                 Year(1978 + it)
-            },
+            }.toImmutableMap(),
             isLoadingMediaByMonth = false,
             mediaByMonth = List(12) { it }.associateBy {
                 Month(it)
-            },
+            }.toImmutableMap(),
             isLoadingMediaByDayOfMonth = false,
             mediaByDayOfMonth = List(31) { it }.associateBy {
                 DayOfMonth(it)
-            },
+            }.toImmutableMap(),
             isLoadingMediaByDayOfWeek = false,
             mediaByDayOfWeek = List(7) { it }.associateBy {
                 DayOfWeek(it)
-            },
+            }.toImmutableMap(),
             isLoadingMediaHeatMap = false,
             mediaHeatMap = List(11) { it + 1 }.flatMap { month ->
                 List(28) { it + 1 }.map { day ->
                     MediaDay(day, 0, month, 2023, "") to day
                 }
-            }.toMap(),
+            }.toMap().toImmutableMap(),
         ))
     }
 }

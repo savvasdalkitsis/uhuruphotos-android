@@ -33,7 +33,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
-import kotlinx.collections.immutable.toPersistentList
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.mapNotNull
 import javax.inject.Inject
 
@@ -63,7 +63,7 @@ internal class AutoAlbumActionsContext @Inject constructor(
                                 title = Title.Text(photoEntries.firstOrNull()?.title ?: ""),
                                 people = people.map { person ->
                                     person.toPerson { "$serverUrl$it" }
-                                },
+                                }.toImmutableList(),
                                 clusterStates = photoEntries.groupBy { entry ->
                                     dateDisplayer.dateString(entry.timestamp)
                                 }.entries.map { (date, photos) ->
@@ -86,9 +86,9 @@ internal class AutoAlbumActionsContext @Inject constructor(
                                                 sortableDate = it.timestamp,
                                                 isFavourite = it.isFavorite ?: false,
                                             ).toCel()
-                                        }.toPersistentList()
+                                        }.toImmutableList()
                                     )
-                                }
+                                }.toImmutableList()
                             )
                         }
                 }

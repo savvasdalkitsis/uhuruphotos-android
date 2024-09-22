@@ -17,10 +17,11 @@ package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.
 
 import androidx.compose.runtime.Immutable
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider
+import kotlinx.collections.immutable.ImmutableSet
 
 @Immutable
 sealed class MapProviderState {
     data object NoOptionsState: MapProviderState()
     @Immutable
-    data class SelectedState(val current: MapProvider, val available: Set<MapProvider>) : MapProviderState()
+    data class SelectedState(val current: MapProvider, val available: ImmutableSet<MapProvider>) : MapProviderState()
 }

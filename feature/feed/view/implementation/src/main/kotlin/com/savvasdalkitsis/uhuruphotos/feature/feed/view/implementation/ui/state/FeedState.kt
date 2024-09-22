@@ -24,6 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.Ce
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkable.SelectionMode
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 
 @Immutable
 data class FeedState(
@@ -51,11 +52,11 @@ data class FeedState(
         }
     }
     val hasSelection = selectedCelCount > 0
-    val selectedCels: List<CelState> = collageState.clusterStates.flatMap { cluster ->
+    val selectedCels: ImmutableList<CelState> = collageState.clusterStates.flatMap { cluster ->
         cluster.cels.filter { cel ->
             cel.selectionMode == SelectionMode.SELECTED
         }
-    }
+    }.toImmutableList()
     val shouldShowShareIcon: Boolean = selectedCels.let { selected ->
         selected.isNotEmpty() && selected.none { it.mediaItem.id.isVideo }
     }

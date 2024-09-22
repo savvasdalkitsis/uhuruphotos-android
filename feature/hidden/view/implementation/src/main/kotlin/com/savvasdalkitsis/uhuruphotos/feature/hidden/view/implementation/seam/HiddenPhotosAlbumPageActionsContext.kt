@@ -29,7 +29,8 @@ import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.usecase.Biometr
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
-import kotlinx.collections.immutable.toPersistentList
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
@@ -74,14 +75,14 @@ internal class HiddenPhotosAlbumPageActionsContext @Inject constructor(
                             .map { photoEntries ->
                                 GalleryDetailsState(
                                     title = Title.Resource(string.hidden_media),
-                                    clusterStates = listOf(
+                                    clusterStates = persistentListOf(
                                         ClusterState(
                                             id = "hidden",
                                             displayTitle = "",
                                             location = null,
                                             cels = photoEntries.map {
                                                 it.toCel()
-                                            }.toPersistentList(),
+                                            }.toImmutableList(),
                                         )
                                     ),
                                 )

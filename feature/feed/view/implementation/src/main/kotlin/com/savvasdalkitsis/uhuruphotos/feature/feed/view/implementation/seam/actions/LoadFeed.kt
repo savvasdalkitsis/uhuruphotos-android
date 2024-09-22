@@ -41,7 +41,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice.RequiresPermissions
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkable.SelectionMode
-import kotlinx.collections.immutable.toPersistentList
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -88,7 +88,7 @@ data object LoadFeed : FeedAction() {
                     memoryCollections.map { (collection, yearsAgo) ->
                         MemoryCelState(
                             yearsAgo = yearsAgo,
-                            cels = collection.mediaItems.map { it.toCel() }.toPersistentList(),
+                            cels = collection.mediaItems.map { it.toCel() }.toImmutableList(),
                         )
                     }
                 }.map(FeedMutation::ShowMemories)
@@ -167,7 +167,7 @@ data object LoadFeed : FeedAction() {
                         else -> SelectionMode.UNSELECTED
                     }
                 )
-            }.toPersistentList())
+            }.toImmutableList())
         }
     }
 
@@ -177,7 +177,7 @@ data object LoadFeed : FeedAction() {
         ClusterState(
             id = year ?: "-",
             unformattedDate = year ?: "-",
-            cels = clusters.flatMap { it.cels }.toPersistentList(),
+            cels = clusters.flatMap { it.cels }.toImmutableList(),
             displayTitle = year ?: "-",
             location = null,
         )

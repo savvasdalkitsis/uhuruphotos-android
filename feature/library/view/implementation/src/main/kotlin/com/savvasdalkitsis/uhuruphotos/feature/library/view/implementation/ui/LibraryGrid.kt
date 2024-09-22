@@ -55,6 +55,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.NamedVit
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.VitrineState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import dev.shreyaspatil.permissionflow.compose.rememberPermissionFlowRequestLauncher
+import kotlinx.collections.immutable.toImmutableList
 import org.burnoutcrew.reorderable.ReorderableItem
 import org.burnoutcrew.reorderable.ReorderableLazyGridState
 import org.burnoutcrew.reorderable.SpringDragCancelledAnimation
@@ -76,7 +77,7 @@ internal fun LibraryGrid(
         onMove = { from, to ->
             data.value = data.value.toMutableList().apply {
                 add(to.index, removeAt(from.index))
-            }
+            }.toImmutableList()
             action(ItemOrderChanged(data.value))
         }
     )

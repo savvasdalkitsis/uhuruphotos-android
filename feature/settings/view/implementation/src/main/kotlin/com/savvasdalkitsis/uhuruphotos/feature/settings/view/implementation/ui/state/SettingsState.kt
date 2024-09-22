@@ -24,6 +24,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.state.JobState
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.model.CacheType
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CollageShape
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
 @Immutable
 data class SettingsState(
@@ -34,7 +36,7 @@ data class SettingsState(
     val thumbnailMemCacheState: CacheState = CacheState(cacheType = CacheType.THUMBNAIL_MEMORY),
     val videoDiskCacheState: CacheState = CacheState(cacheType = CacheType.VIDEO_DISK),
     val avatarState: AvatarState = AvatarState(),
-    val jobStates: List<JobState> = emptyList(),
+    val jobStates: ImmutableList<JobState> = persistentListOf(),
     val showJobStartDialog: Job? = null,
     val cloudSyncNetworkRequirement: NetworkType? = null,
     val cloudSyncRequiresCharging: Boolean = false,

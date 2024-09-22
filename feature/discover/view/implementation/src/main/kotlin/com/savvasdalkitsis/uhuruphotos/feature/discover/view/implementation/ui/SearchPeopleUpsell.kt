@@ -25,7 +25,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.PeopleBanner
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.PersonState
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import kotlinx.collections.immutable.toPersistentList
+import kotlinx.collections.immutable.toImmutableList
 
 @Composable
 fun SearchPeopleUpsell(
@@ -41,7 +41,7 @@ fun SearchPeopleUpsell(
                     photos = 0,
                     id = it,
                 )
-            }.toPersistentList()
+            }.toImmutableList()
         },
         headerPadding = PaddingValues(horizontal = 12.dp),
         onViewAllClicked = { action(UpsellLoginFromPeople) },

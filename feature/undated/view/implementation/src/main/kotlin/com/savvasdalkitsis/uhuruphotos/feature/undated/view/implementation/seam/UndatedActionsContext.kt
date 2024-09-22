@@ -25,6 +25,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.undated.domain.api.usecase.Undate
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simpleOk
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -46,6 +47,7 @@ internal class UndatedActionsContext @Inject constructor(
                     GalleryDetailsState(
                         title = Title.Resource(string.media_without_date),
                         clusterStates = it.map { collection -> collection.toCluster() }
+                            .toImmutableList()
                     )
                 }
         },

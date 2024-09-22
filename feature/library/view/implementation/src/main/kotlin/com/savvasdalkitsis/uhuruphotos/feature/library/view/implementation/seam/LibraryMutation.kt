@@ -20,6 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.st
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.VitrineState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
+import kotlinx.collections.immutable.toImmutableList
 
 sealed class LibraryMutation(
     mutation: Mutation<LibraryState>,
@@ -54,7 +55,7 @@ sealed class LibraryMutation(
     })
 
     data class SetItemOrder(val items: List<LibraryItemState>) : LibraryMutation({
-        it.copy(items = items)
+        it.copy(items = items.toImmutableList())
     })
 
     data class ShowUpsellFrom(val item: LibraryItemState): LibraryMutation({

@@ -21,6 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.Gallery
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.LocalAlbum
 import com.savvasdalkitsis.uhuruphotos.feature.local.domain.api.usecase.LocalAlbumUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -42,7 +43,7 @@ internal class LocalAlbumPageActionsContext @Inject constructor(
                 .map { (bucket, albums) ->
                     GalleryDetailsState(
                         title = Title.Text(bucket.displayName),
-                        clusterStates = albums.map { it.toCluster() },
+                        clusterStates = albums.map { it.toCluster() }.toImmutableList(),
                     )
                 }
         },

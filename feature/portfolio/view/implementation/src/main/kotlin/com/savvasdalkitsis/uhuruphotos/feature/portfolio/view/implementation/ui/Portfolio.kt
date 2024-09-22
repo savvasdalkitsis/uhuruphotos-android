@@ -34,7 +34,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkable.SelectionM
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkable.SelectionMode.UNSELECTED
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UpNavButton
 import kotlinx.collections.immutable.persistentListOf
-import kotlinx.collections.immutable.toPersistentList
+import kotlinx.collections.immutable.toImmutableList
 
 @Composable
 internal fun Portfolio(
@@ -59,7 +59,7 @@ private fun PortfolioPreview() {
     PreviewAppTheme {
         Portfolio(state = PortfolioState(
             FoundState(
-                List(50) { state(it) }.toPersistentList()
+                List(50) { state(it) }.toImmutableList()
             )
         ))
     }
@@ -88,7 +88,7 @@ private fun PortfolioLoadingPreview() {
 @Composable
 private fun PortfolioNoPermissionsPreview() {
     PreviewAppTheme {
-        Portfolio(state = PortfolioState(RequiresPermissionsState(emptyList())))
+        Portfolio(state = PortfolioState(RequiresPermissionsState(persistentListOf())))
     }
 }
 

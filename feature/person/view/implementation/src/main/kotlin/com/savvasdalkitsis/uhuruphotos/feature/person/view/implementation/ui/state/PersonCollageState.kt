@@ -20,7 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Collage
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.PersonState
 
 @Immutable
-data class PersonState(
+data class PersonCollageState(
     val personState: PersonState? = null,
     val collageState: CollageState = CollageState(),
 )

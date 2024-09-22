@@ -21,7 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.PersonSt
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.Viewport
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.search.SearchSuggestion
-import kotlinx.collections.immutable.toPersistentList
+import kotlinx.collections.immutable.toImmutableList
 
 sealed class DiscoverMutation(
     mutation: Mutation<DiscoverState>,
@@ -67,7 +67,7 @@ sealed class DiscoverMutation(
     })
 
     data class ShowPeople(val people: List<PersonState>) : DiscoverMutation({
-        it.copy(people = people.toPersistentList())
+        it.copy(people = people.toImmutableList())
     })
 
     data class ShowPeopleUpsell(val show: Boolean) : DiscoverMutation({
@@ -77,7 +77,7 @@ sealed class DiscoverMutation(
     data class ShowSearchSuggestions(
         val suggestions: List<SearchSuggestion>,
     ) : DiscoverMutation({
-        it.copy(searchSuggestions = suggestions.toPersistentList())
+        it.copy(searchSuggestions = suggestions.toImmutableList())
     })
 
     data class UpdateLatestQuery(val query: String) : DiscoverMutation({

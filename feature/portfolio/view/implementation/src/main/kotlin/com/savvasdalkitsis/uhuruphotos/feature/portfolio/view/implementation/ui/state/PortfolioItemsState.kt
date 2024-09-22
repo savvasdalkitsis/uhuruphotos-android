@@ -22,7 +22,7 @@ import kotlinx.collections.immutable.ImmutableList
 sealed class PortfolioItemsState {
 
     @Immutable
-    data class RequiresPermissionsState(val deniedPermissions: List<String>) : PortfolioItemsState()
+    data class RequiresPermissionsState(val deniedPermissions: ImmutableList<String>) : PortfolioItemsState()
 
     @Immutable
     data class FoundState(

@@ -17,6 +17,8 @@ package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.s
 
 import androidx.compose.runtime.Immutable
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.VitrineState
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
 @Immutable
 data class LibraryState(
@@ -27,6 +29,6 @@ data class LibraryState(
     val userAlbums: VitrineState? = null,
     val favouritePhotos: VitrineState? = null,
     val localMedia: LibraryLocalMediaState? = null,
-    val items: List<LibraryItemState> = emptyList(),
+    val items: ImmutableList<LibraryItemState> = persistentListOf(),
     val showUpsellDialogFromSource: LibraryItemState? = null,
 )

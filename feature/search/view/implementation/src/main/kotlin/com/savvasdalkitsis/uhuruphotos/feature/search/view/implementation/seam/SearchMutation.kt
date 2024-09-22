@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplayState
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
-import kotlinx.collections.immutable.toPersistentList
+import kotlinx.collections.immutable.toImmutableList
 
 sealed class SearchMutation(
     mutation: Mutation<SearchState>,
@@ -42,7 +42,7 @@ sealed class SearchMutation(
     data class DisplaySearchResults(val clusterStates: List<ClusterState>) : SearchMutation({
         it.copy(
             isLoading = false,
-            clusterStates = clusterStates.toPersistentList(),
+            clusterStates = clusterStates.toImmutableList(),
         )
     })
 

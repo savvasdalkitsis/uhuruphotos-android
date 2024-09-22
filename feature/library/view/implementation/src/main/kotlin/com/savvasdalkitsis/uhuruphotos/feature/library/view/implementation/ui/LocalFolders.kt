@@ -49,6 +49,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SectionHeader
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.IconOutlineButton
+import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 internal fun LocalFolders(
@@ -123,7 +124,7 @@ private fun LocalFoldersPreviewDark() {
 
 @Composable
 private fun LocalFoldersAll() {
-    LocalFolders(title = stringResource(string.local_albums), media = LibraryLocalMediaState.FoundState(listOf(
+    LocalFolders(title = stringResource(string.local_albums), media = LibraryLocalMediaState.FoundState(persistentListOf(
         LocalMediaFolder(0, "Folder 1") to VitrineState(
             celState("#ff0000"),
             celState("#00ff00"),
@@ -171,7 +172,7 @@ private fun LocalFoldersPreviewWithoutOtherDark() {
 
 @Composable
 private fun LocalFoldersWithoutOther() {
-    LocalFolders(title = stringResource(string.local_albums), media = LibraryLocalMediaState.FoundState(listOf(
+    LocalFolders(title = stringResource(string.local_albums), media = LibraryLocalMediaState.FoundState(persistentListOf(
         LocalMediaFolder(0, "Folder 1") to VitrineState(
             celState("#ff0000"),
             celState("#00ff00"),

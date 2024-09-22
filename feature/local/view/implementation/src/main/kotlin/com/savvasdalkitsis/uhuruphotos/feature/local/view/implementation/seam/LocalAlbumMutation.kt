@@ -17,17 +17,19 @@ package com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam
 
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.ui.state.LocalAlbumState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 
 sealed class LocalAlbumMutation(
     mutation: Mutation<LocalAlbumState>
 ) : Mutation<LocalAlbumState> by mutation {
 
     data object PermissionsGranted : LocalAlbumMutation({
-        it.copy(deniedPermissions = emptyList())
+        it.copy(deniedPermissions = persistentListOf())
     })
 
     data class AskForPermissions(val deniedPermissions: List<String>) : LocalAlbumMutation({
-        it.copy(deniedPermissions = deniedPermissions)
+        it.copy(deniedPermissions = deniedPermissions.toImmutableList())
     })
 
     data class DisplayContributingToPortfolio(val contributingToPortfolio: Boolean) : LocalAlbumMutation({

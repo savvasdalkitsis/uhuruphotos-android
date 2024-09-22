@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.ui.state
 
 import androidx.compose.runtime.Immutable
+import kotlinx.collections.immutable.ImmutableList
 
 @Immutable
 data class WelcomeState(
@@ -23,6 +24,6 @@ data class WelcomeState(
     val isSaveEnabled: Boolean = false,
     val localMediaSelected: Boolean = false,
     val cloudMediaSelected: Boolean = false,
-    val missingPermissions: List<String>? = null,
+    val missingPermissions: ImmutableList<String>? = null,
     val showLibrePhotosHelp: Boolean = false,
 )

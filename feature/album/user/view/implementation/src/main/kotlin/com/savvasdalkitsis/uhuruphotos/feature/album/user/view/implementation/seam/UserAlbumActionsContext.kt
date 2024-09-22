@@ -23,6 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxS
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -48,6 +49,7 @@ internal class UserAlbumActionsContext @Inject constructor(
                     GalleryDetailsState(
                         title = Title.Text(album.title),
                         clusterStates = album.mediaCollections.map { it.toCluster() }
+                            .toImmutableList()
                     )
                 }
         },

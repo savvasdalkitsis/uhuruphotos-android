@@ -50,7 +50,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SectionHeader
-import kotlinx.collections.immutable.toPersistentSet
+import kotlinx.collections.immutable.toImmutableSet
 
 @Composable
 fun LightboxSearchCaptions(
@@ -136,7 +136,7 @@ private fun CaptionsPreviewContent() {
             SingleMediaItemState(
                 id = MediaId.Remote("", false),
                 details = LightboxDetailsState(
-                    searchCaptions = LightboxCaptionIcons.icons.keys.toList().toPersistentSet()
+                    searchCaptions = LightboxCaptionIcons.icons.keys.toList().toImmutableSet()
                 )
             )
         ) {}

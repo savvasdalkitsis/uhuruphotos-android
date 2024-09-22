@@ -23,7 +23,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.Month
 import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.Year
 import com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.ui.state.StatsState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
-import kotlinx.collections.immutable.toPersistentList
+import kotlinx.collections.immutable.toImmutableMap
+import kotlinx.collections.immutable.toImmutableList
 
 sealed class StatsMutation(
     mutation: Mutation<StatsState>,
@@ -39,42 +40,42 @@ sealed class StatsMutation(
     data class ShowMediaPerYear(val mediaByYear: Map<Year, Int>) : StatsMutation({
         it.copy(
             isLoadingMediaByYear = false,
-            mediaByYear = mediaByYear,
+            mediaByYear = mediaByYear.toImmutableMap(),
         )
     })
 
     data class ShowMediaPerMonth(val mediaByMonth: Map<Month, Int>) : StatsMutation({
         it.copy(
             isLoadingMediaByMonth = false,
-            mediaByMonth = mediaByMonth,
+            mediaByMonth = mediaByMonth.toImmutableMap(),
         )
     })
 
     data class ShowMediaPerDayOfMonth(val mediaByDayOfMonth: Map<DayOfMonth, Int>) : StatsMutation({
         it.copy(
             isLoadingMediaByDayOfMonth = false,
-            mediaByDayOfMonth = mediaByDayOfMonth,
+            mediaByDayOfMonth = mediaByDayOfMonth.toImmutableMap(),
         )
     })
 
     data class ShowMediaPerDayOfWeek(val mediaByDayOfWeek: Map<DayOfWeek, Int>) : StatsMutation({
         it.copy(
             isLoadingMediaByDayOfWeek = false,
-            mediaByDayOfWeek = mediaByDayOfWeek,
+            mediaByDayOfWeek = mediaByDayOfWeek.toImmutableMap(),
         )
     })
 
     data class ShowMediaHeatMap(val mediaHeatMap: Map<MediaDay, Int>) : StatsMutation({
         it.copy(
             isLoadingMediaHeatMap = false,
-            mediaHeatMap = mediaHeatMap,
+            mediaHeatMap = mediaHeatMap.toImmutableMap(),
         )
     })
 
     data class ShowTimeline(val timeline: List<CountryVisit>) : StatsMutation({
         it.copy(
             isLoadingTimeline = false,
-            timeline = timeline.toPersistentList(),
+            timeline = timeline.toImmutableList(),
         )
     })
 

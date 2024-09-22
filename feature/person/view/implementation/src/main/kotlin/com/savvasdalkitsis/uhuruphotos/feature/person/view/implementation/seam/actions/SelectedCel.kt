@@ -20,12 +20,12 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation.Ligh
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonMutation
-import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.ui.state.PersonState
+import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.ui.state.PersonCollageState
 import kotlinx.coroutines.flow.flow
 
 data class SelectedCel(val cel: CelState) : PersonAction() {
     context(PersonActionsContext) override fun handle(
-        state: PersonState
+        state: PersonCollageState
     ) = flow<PersonMutation> {
         navigator.navigateTo(
             LightboxNavigationRoute(

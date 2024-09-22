@@ -78,12 +78,26 @@ class ArchitectureTests {
     }
 
     @Test
-    fun `compose state data classes are marked as immutable`() {
+    fun `compose state classes are marked as immutable`() {
         Konsist
             .scopeFromProject()
             .classes()
             .filter { !it.hasModifier(KoModifier.ENUM) }
             .withPackage("..ui.state..")
             .assertTrue { it.hasAnnotationWithName("androidx.compose.runtime.Immutable") }
+    }
+
+    @Test
+    fun `compose state classes do not use standard kotlin collections`() {
+        Konsist
+            .scopeFromProject()
+            .classes()
+            .withPackage("..ui.state..")
+            .assertTrue {
+                it.properties().none { prop ->
+                    val name = prop.type?.name.orEmpty()
+                    name.startsWith("List<") || name.startsWith("Map<") || name.startsWith("Set<")
+                }
+            }
     }
 }

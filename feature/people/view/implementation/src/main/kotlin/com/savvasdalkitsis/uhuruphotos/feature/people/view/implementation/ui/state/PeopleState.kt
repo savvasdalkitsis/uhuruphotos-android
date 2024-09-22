@@ -17,11 +17,13 @@ package com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.st
 
 import androidx.compose.runtime.Immutable
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.PersonState
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
 @Immutable
 data class PeopleState(
     val loading: Boolean = false,
-    val people: List<PersonState> = emptyList(),
+    val people: ImmutableList<PersonState> = persistentListOf(),
     val sortOrderState: SortOrderState = SortOrderState.default,
 )
 

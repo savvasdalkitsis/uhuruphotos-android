@@ -26,7 +26,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
 import kotlinx.collections.immutable.persistentListOf
-import kotlinx.collections.immutable.toPersistentList
+import kotlinx.collections.immutable.toImmutableList
 
 sealed class FeedMutation(
     mutation: Mutation<FeedState>,
@@ -69,7 +69,7 @@ sealed class FeedMutation(
     })
 
     data class ShowClusters(val clusterStates: List<ClusterState>) : FeedMutation({
-        it.copyFeed { copy(isLoading = false, isEmpty = false, clusterStates = clusterStates.toPersistentList()) }
+        it.copyFeed { copy(isLoading = false, isEmpty = false, clusterStates = clusterStates.toImmutableList()) }
     }) {
         override fun toString() = "ShowClusters(${clusterStates.size})"
     }
@@ -87,7 +87,7 @@ sealed class FeedMutation(
     })
 
     data class ShowMemories(val memories: List<MemoryCelState>) : FeedMutation({
-        it.copy(memories = memories.toPersistentList())
+        it.copy(memories = memories.toImmutableList())
     })
 
     data object HideMemories : FeedMutation({
@@ -111,7 +111,7 @@ sealed class FeedMutation(
     })
 
     data class AskForPermissions(val deniedPermissions: List<String>) : FeedMutation({
-        it.copy(missingPermissions = deniedPermissions.toPersistentList())
+        it.copy(missingPermissions = deniedPermissions.toImmutableList())
     })
 
     data object HideLocalStoragePermissionRequest : FeedMutation({
@@ -133,7 +133,7 @@ sealed class FeedMutation(
     data class ShowAddToAlbumDialog(val albums: List<UserAlbumState>) : FeedMutation({
         it.copy(
             isRefreshing = false,
-            showAddToAlbumDialog = albums.toPersistentList(),
+            showAddToAlbumDialog = albums.toImmutableList(),
         )
     })
 
@@ -148,7 +148,7 @@ sealed class FeedMutation(
                         }
                     )
                 }
-                ?.toPersistentList(),
+                ?.toImmutableList(),
         )
     })
 

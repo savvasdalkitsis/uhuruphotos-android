@@ -24,8 +24,8 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableSet
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentSetOf
-import kotlinx.collections.immutable.toPersistentList
-import kotlinx.collections.immutable.toPersistentSet
+import kotlinx.collections.immutable.toImmutableList
+import kotlinx.collections.immutable.toImmutableSet
 
 @Immutable
 data class LightboxDetailsState(
@@ -81,16 +81,16 @@ fun LightboxDetails.toLightboxDetailsState(serverUrl: String) = LightboxDetailsS
         formattedDateTime = formattedDateTime,
         location = location,
         latLon = latLon,
-        remotePaths = remotePaths.toPersistentSet(),
-        localPaths = localPaths.toPersistentSet(),
+        remotePaths = remotePaths.toImmutableSet(),
+        localPaths = localPaths.toImmutableSet(),
         hash = hash,
         peopleInMediaItem = peopleInMediaItem
             .map {
                 it.toPerson { url ->
                     "$serverUrl$url"
                 }
-            }.toPersistentList(),
-        searchCaptions = searchCaptions.toPersistentSet(),
+            }.toImmutableList(),
+        searchCaptions = searchCaptions.toImmutableSet(),
         size = size,
         fStop = exifData.fStop,
         shutterSpeed = exifData.shutterSpeed,

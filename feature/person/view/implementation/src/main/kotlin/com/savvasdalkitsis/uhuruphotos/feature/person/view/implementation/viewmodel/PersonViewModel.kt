@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.person.view.api.navigation.Person
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.actions.LoadPerson
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.actions.PersonAction
-import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.ui.state.PersonState
+import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.ui.state.PersonCollageState
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,9 +28,9 @@ import javax.inject.Inject
 @HiltViewModel
 class PersonViewModel @Inject constructor(
     personActionsContext: PersonActionsContext,
-) : NavigationViewModel<PersonState, PersonAction, PersonNavigationRoute>(
+) : NavigationViewModel<PersonCollageState, PersonAction, PersonNavigationRoute>(
     ActionHandlerWithContext(personActionsContext),
-    PersonState()
+    PersonCollageState()
 ) {
 
     override fun onRouteSet(route: PersonNavigationRoute) {
