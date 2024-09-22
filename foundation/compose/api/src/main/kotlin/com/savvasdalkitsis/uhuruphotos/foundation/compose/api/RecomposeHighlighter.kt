@@ -15,6 +15,7 @@ package com.savvasdalkitsis.uhuruphotos.foundation.compose.api
 
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -54,7 +55,7 @@ private val recomposeModifier =
         totalCompositions[0]++
 
         // The value of totalCompositions at the last timeout.
-        val totalCompositionsAtLastTimeout = remember { mutableStateOf(0L) }
+        val totalCompositionsAtLastTimeout = remember { mutableLongStateOf(0L) }
 
         // Start the timeout, and reset everytime there's a recomposition. (Using totalCompositions
         // as the key is really just to cause the timer to restart every composition).

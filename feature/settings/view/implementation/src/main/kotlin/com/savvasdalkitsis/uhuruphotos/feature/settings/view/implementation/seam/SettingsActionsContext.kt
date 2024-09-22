@@ -17,7 +17,6 @@ package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.sea
 
 import com.github.michaelbull.result.Ok
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.domain.api.usecase.AvatarUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.usecase.JobsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.worker.LocalMediaWorkScheduler
@@ -39,7 +38,6 @@ import javax.inject.Inject
 internal class SettingsActionsContext @Inject constructor(
     val settingsUseCase: SettingsUseCase,
     val settingsUIUseCase: SettingsUIUseCase,
-    val feedWorkScheduler: FeedWorkScheduler,
     val avatarUseCase: AvatarUseCase,
     val cacheUseCase: CacheSettingsUseCase,
     val feedbackUseCase: FeedbackUseCase,

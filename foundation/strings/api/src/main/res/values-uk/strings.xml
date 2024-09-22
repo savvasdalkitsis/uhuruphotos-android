@@ -60,7 +60,7 @@
         <item quantity="other">Відновити %d медіа елементів?</item>
     </plurals>
     <plurals name="trash_photos_confirmation">
-        <item quantity="one">Надіслати це фото до кошика?</item>
+        <item quantity="one">Надіслати %d фото до кошика?</item>
         <item quantity="few">Надіслати %d фото до кошика?</item>
         <item quantity="many">Надіслати %d фото до кошика?</item>
         <item quantity="other">Надіслати %d фото до кошика?</item>

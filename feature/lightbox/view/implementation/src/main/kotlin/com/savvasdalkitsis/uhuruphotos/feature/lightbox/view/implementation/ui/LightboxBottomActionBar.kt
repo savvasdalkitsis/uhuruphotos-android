@@ -52,18 +52,10 @@ fun LightboxBottomActionBar(
     action: (LightboxAction) -> Unit,
 ) {
     val apps = mediaItem.showEditApps
-//    AnimatedContent(
-//        targetState = mediaItem.showEditApps,
-//        transitionSpec = {
-//            fadeIn() + slideInVertically { it } togetherWith fadeOut() + slideOutVertically { it }
-//        },
-//        label = "editApps",
-//    ) { apps ->
-        when {
-            apps.isEmpty() -> LightboxBottomActionBarOptions(mediaItem, showRestoreButton, action)
-            else -> LightboxBottomActionBarEdit(mediaItem, action)
-        }
-//    }
+    when {
+        apps.isEmpty() -> LightboxBottomActionBarOptions(mediaItem, showRestoreButton, action)
+        else -> LightboxBottomActionBarEdit(mediaItem, action)
+    }
 }
 
 @Composable

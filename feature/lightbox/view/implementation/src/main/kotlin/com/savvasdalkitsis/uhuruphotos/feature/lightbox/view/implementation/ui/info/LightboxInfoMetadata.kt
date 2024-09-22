@@ -49,8 +49,8 @@ import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_save
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_shutter_speed
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_videocam
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SectionHeader
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
 
 @Composable
 internal fun LightboxInfoMetadata(
@@ -102,9 +102,8 @@ internal fun LightboxInfoMetadata(
             .Entry(ic_camera_roll, action)
         mediaItem.details.isoSpeed
             .Entry(ic_iso, action)
-        mediaItem.details.hash?.let {
-            it.Entry(ic_fingerprint, action)
-        }
+        mediaItem.details.hash
+            ?.Entry(ic_fingerprint, action)
         mediaItem.details.remotePaths.forEach {
             it.Entry(ic_folder_network, action)
         }

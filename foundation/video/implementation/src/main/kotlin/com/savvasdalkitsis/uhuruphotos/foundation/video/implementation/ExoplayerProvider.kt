@@ -16,9 +16,11 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.foundation.video.implementation
 
 import android.content.Context
+import androidx.annotation.OptIn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.remember
+import androidx.media3.common.util.UnstableApi
 import androidx.media3.datasource.cache.CacheDataSource
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
@@ -33,6 +35,7 @@ import javax.inject.Singleton
 
 @AutoBind
 @Singleton
+@OptIn(UnstableApi::class)
 class ExoplayerProvider @Inject constructor(
     @ApplicationContext private val context: Context,
     private val cacheDataSourceFactory: CacheDataSource.Factory,

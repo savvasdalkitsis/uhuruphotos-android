@@ -16,8 +16,6 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions
 
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.DiscoverActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.DiscoverMutation
-import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.DiscoverMutation.ShowLoginUpsellDialogFromPeople
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.DiscoverMutation.ShowLoginUpsellDialogFromSearch
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.DiscoverState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation

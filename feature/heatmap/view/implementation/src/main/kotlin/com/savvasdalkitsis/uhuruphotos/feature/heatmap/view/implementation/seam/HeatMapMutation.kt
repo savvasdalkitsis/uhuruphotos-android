@@ -49,10 +49,6 @@ sealed class HeatMapMutation(
         )
     })
 
-    data class ShowLoading(val loading: Boolean) : HeatMapMutation({
-        it.copy(loading = loading)
-    })
-
     data class ShowLocalStoragePermissionRequest(val permissions: MediaItemsOnDevice.RequiresPermissions) : HeatMapMutation({
         it.copy(showRequestPermissionForLocalMediaAccess = permissions)
     })

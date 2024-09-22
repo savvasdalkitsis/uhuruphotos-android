@@ -15,6 +15,4 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.about.domain.api.usecase
 
-interface AboutUseCase {
-
-}
+interface AboutUseCase

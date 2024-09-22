@@ -33,7 +33,7 @@ class GoogleMapViewFactory @Inject constructor(
         mapOptions: MapOptions.() -> MapOptions,
         contentPadding: PaddingValues,
         onMapClick: () -> Unit,
-        content: @Composable() (MapViewScope.() -> Unit)?
+        content: @Composable (MapViewScope.() -> Unit)?
     ) {
         GoogleMapView(
             modifier,

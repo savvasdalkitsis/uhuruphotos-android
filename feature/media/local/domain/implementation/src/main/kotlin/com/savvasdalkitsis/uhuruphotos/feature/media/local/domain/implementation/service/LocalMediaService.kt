@@ -215,8 +215,8 @@ class LocalMediaService @Inject constructor(
             it?.let { log(it) }
             cancellation.cancel()
         }
-        cont.resume(result) {
-            log(it)
+        cont.resume(result) { cause, _, _ ->
+            log(cause)
             cancellation.cancel()
         }
     }

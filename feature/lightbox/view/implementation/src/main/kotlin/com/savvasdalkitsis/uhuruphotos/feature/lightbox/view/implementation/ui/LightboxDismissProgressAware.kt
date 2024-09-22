@@ -29,7 +29,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.dismiss.api.ui.PullToDismissSt
 @Composable
 fun LightboxDismissProgressAware(
     dismissState: PullToDismissState,
-    content: @Composable() (BoxScope.() -> Unit),
+    content: @Composable (BoxScope.() -> Unit),
 ) {
     val alpha by remember {
         derivedStateOf { dismissState.dismissAlpha }

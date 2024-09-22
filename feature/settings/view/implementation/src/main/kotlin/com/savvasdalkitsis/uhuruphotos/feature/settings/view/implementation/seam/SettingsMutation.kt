@@ -29,7 +29,6 @@ import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CollageShape
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.collections.immutable.toImmutableSet
-import kotlinx.collections.immutable.toImmutableSet
 
 sealed class SettingsMutation(
     mutation: Mutation<SettingsState>,
@@ -209,8 +208,8 @@ sealed class SettingsMutation(
         val limit: Int,
     ): SettingsMutation({
         it.copy(
-            lightboxPhotoDiskCacheState = it.lightboxPhotoDiskCacheState.copy(limit = limit,),
-            thumbnailDiskCacheState = it.thumbnailDiskCacheState.copy(limit = limit,),
+            lightboxPhotoDiskCacheState = it.lightboxPhotoDiskCacheState.copy(limit = limit),
+            thumbnailDiskCacheState = it.thumbnailDiskCacheState.copy(limit = limit),
             videoDiskCacheState = it.videoDiskCacheState.copy(limit = limit),
         )
     })

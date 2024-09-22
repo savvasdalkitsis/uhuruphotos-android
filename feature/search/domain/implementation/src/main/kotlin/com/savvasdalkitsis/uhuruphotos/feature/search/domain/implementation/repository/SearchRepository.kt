@@ -20,7 +20,6 @@ import app.cash.sqldelight.coroutines.mapToList
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitList
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.search.GetSearchResults
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.search.SearchQueries
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.search.domain.implementation.service.SearchService
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.groupBy
@@ -37,7 +36,6 @@ import javax.inject.Inject
 class SearchRepository @Inject constructor(
     private val searchService: SearchService,
     private val searchQueries: SearchQueries,
-    private val remoteMediaUseCase: RemoteMediaUseCase,
     @PlainTextPreferences
     private val preferences: Preferences,
 ) {

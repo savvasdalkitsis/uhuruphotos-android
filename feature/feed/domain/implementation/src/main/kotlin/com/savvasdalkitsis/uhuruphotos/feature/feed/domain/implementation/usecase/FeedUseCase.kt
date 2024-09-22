@@ -125,6 +125,7 @@ internal class FeedUseCase @Inject constructor(
                 day.copy(mediaItems = day.mediaItems.map { item ->
                     val local = remainingLocalMedia
                         .filter { it.mediaHash == item.mediaHash }
+                        .toSet()
                     remainingLocalMedia.removeAll(local)
                     when {
                         local.isEmpty() -> item.orDownloading(mediaBeingDownloaded)
@@ -138,6 +139,7 @@ internal class FeedUseCase @Inject constructor(
             .map { collection ->
                 val local = remainingLocalMedia
                     .filter { it.displayDayDate == collection.displayTitle }
+                    .toSet()
                 remainingLocalMedia.removeAll(local)
                 when {
                     local.isEmpty() -> collection

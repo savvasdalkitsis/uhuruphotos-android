@@ -132,7 +132,7 @@ internal fun LightboxPreviousScreenBackground(
                 LaunchedEffect(subImage) {
                     imageLoader.execute(request)
                 }
-                subImageBitmap?.let { it ->
+                subImageBitmap?.let {
                     val alpha by animateFloatAsState(targetValue = 1f, label = "alpha")
                     with(LocalDensity.current) {
                         Image(

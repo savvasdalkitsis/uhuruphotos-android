@@ -34,6 +34,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -86,7 +87,7 @@ fun InternalLazyGridScrollbar(
 
     var isSelected by remember { mutableStateOf(false) }
 
-    var dragOffset by remember { mutableStateOf(0f) }
+    var dragOffset by remember { mutableFloatStateOf(0f) }
 
     val realFirstVisibleItem by remember {
         derivedStateOf {
@@ -193,7 +194,7 @@ fun InternalLazyGridScrollbar(
     val isInAction = gridState.isScrollInProgress || isSelected
 
     val isInActionSelectable = remember { mutableStateOf(isInAction) }
-    val durationAnimationMillis: Int = 500
+    val durationAnimationMillis = 500
     LaunchedEffect(isInAction) {
         if (isInAction) {
             isInActionSelectable.value = true

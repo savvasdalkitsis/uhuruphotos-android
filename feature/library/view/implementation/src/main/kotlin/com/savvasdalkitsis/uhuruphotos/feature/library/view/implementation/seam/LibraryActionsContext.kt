@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam
 
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.domain.api.usecase.AutoAlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.domain.api.usecase.UserAlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItemState
@@ -41,7 +40,6 @@ internal class LibraryActionsContext @Inject constructor(
     val autoAlbumsUseCase: AutoAlbumsUseCase,
     val userAlbumsUseCase: UserAlbumsUseCase,
     val mediaUseCase: MediaUseCase,
-    val serverUseCase: ServerUseCase,
     val localMediaUseCase: LocalMediaUseCase,
     val libraryUseCase: LibraryUseCase,
     val navigator: Navigator,
@@ -54,8 +52,6 @@ internal class LibraryActionsContext @Inject constructor(
 
     private val _loading = MutableSharedFlow<Boolean>()
     val loading: Flow<Boolean> get() = _loading
-
-    private val upsellSourceKey = "libraryUpsellSource"
 
     suspend fun refreshAutoAlbums() {
         refresh {

@@ -42,7 +42,7 @@ internal fun SettingsMaps(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Icon(painter = painterResource(drawable.ic_map), contentDescription = null)
-                Text("${stringResource(string.map_provider)}: ${mapProviderState.current.name}",)
+                Text("${stringResource(string.map_provider)}: ${mapProviderState.current.name}")
             }
         },
         buttonText = stringResource(string.change),

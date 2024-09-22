@@ -36,7 +36,6 @@ data object EditMediaItem : LightboxAction() {
         val result = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             context.packageManager.queryIntentActivities(intent, ResolveInfoFlags.of(0))
         } else {
-            @Suppress("DEPRECATION")
             context.packageManager.queryIntentActivities(intent, 0)
         }
         if (result.isEmpty()) {

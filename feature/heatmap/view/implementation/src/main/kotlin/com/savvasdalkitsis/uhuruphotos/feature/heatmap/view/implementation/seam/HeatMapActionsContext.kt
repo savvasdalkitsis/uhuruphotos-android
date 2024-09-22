@@ -17,7 +17,6 @@ package com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam
 
 import android.location.LocationManager
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.domain.api.usecase.HeatMapUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapMutation.UpdateVisibleMapContent
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
@@ -31,7 +30,6 @@ import javax.inject.Inject
 
 internal class HeatMapActionsContext @Inject constructor(
     val feedUseCase: FeedUseCase,
-    val feedWorkScheduler: FeedWorkScheduler,
     val mediaUseCase: MediaUseCase,
     val settingsUIUseCase: SettingsUIUseCase,
     val localMediaWorkScheduler: LocalMediaWorkScheduler,

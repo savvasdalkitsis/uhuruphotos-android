@@ -72,31 +72,10 @@ subprojects {
         kapt libs.androidx.hilt.compiler
     }
 
-//    with(extensions.getByType<KotlinAndroidProjectExtension>()) {
-//        compilerOptions {
-//            jvmTarget = JVM_17
-//        }
-//    }
-
     tasks.withType(KotlinCompile).configureEach {
         compilerOptions {
             languageVersion = KotlinVersion.KOTLIN_1_9
             freeCompilerArgs.addAll(
-                    "-opt-in=androidx.compose.animation.ExperimentalAnimationApi",
-                    "-opt-in=androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi",
-                    "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi",
-                    "-opt-in=androidx.compose.foundation.layout.ExperimentalLayoutApi",
-                    "-opt-in=androidx.compose.material.ExperimentalMaterialApi",
-                    "-opt-in=androidx.compose.material3.windowsizeclass.Experimental",
-                    "-opt-in=androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi",
-                    "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi",
-                    "-opt-in=androidx.media3.common.util.UnstableApi",
-                    "-opt-in=coil.annotation.ExperimentalCoilApi",
-                    "-opt-in=com.google.accompanist.permissions.ExperimentalPermissionsApi",
-                    "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
-                    "-opt-in=kotlinx.coroutines.FlowPreview",
-                    "-opt-in=kotlinx.ExperimentalStdlibApi",
-                    "-opt-in=kotlin.ExperimentalStdlibApi",
                     "-Xcontext-receivers",
             )
         }

@@ -42,7 +42,6 @@ class UploadChunkWorker @AssistedInject constructor(
     override suspend fun work(): Result = Result.success()
 
     companion object {
-        fun workName(id: Long, offset: Long) = "uploadChunk/$id/$offset"
         private const val NOTIFICATION_ID = 1285
     }
 }

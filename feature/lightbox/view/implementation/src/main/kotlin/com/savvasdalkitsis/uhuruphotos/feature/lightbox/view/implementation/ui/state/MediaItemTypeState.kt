@@ -19,6 +19,6 @@ enum class MediaItemTypeState {
     TRASHED, NORMAL;
 
     companion object {
-        val default = NORMAL;
+        val default = NORMAL
     }
 }

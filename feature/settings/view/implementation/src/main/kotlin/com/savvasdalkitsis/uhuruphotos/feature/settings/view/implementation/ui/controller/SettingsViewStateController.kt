@@ -45,7 +45,6 @@ class SettingsViewStateController @Inject constructor(
     val privacyBiometrics = group(string.biometrics, "settings:group:privacy:biometrics")
     val privacyShare = group(string.share, "settings:group:privacy:share")
     val jobs = group(string.jobs, "settings:group:jobs")
-    val jobsFeedConfiguration = group(string.feed_sync_job_configuration, "settings:group:jobs:feedConfiguration")
     val jobsStatus = group(string.status, "settings:group:jobs:status")
     val jobsCloudSync = group(string.cloud_sync, "settings:group:jobs:cloudSync")
     val advanced = group(string.advanced, "settings:group:advanced")

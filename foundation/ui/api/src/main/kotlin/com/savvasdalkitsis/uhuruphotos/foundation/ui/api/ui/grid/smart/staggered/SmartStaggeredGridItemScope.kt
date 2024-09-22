@@ -23,8 +23,7 @@ import androidx.compose.ui.Modifier
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.smart.SmartGridItemScope
 
 @Stable
-class SmartStaggeredGridItemScope(
-): SmartGridItemScope {
+class SmartStaggeredGridItemScope : SmartGridItemScope {
     val lazyStaggeredGridItemScope: MutableState<LazyStaggeredGridItemScope?> = mutableStateOf(null)
 
     override fun Modifier.animateItem(): Modifier =

@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam
 
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.AuthenticationUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.domain.api.usecase.NotificationsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.WelcomeUseCase
@@ -24,7 +23,6 @@ import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import javax.inject.Inject
 
 internal class HomeActionsContext @Inject constructor(
-    val authenticationUseCase: AuthenticationUseCase,
     val settingsUseCase: SettingsUseCase,
     val biometricsUseCase: BiometricsUseCase,
     val navigator: Navigator,

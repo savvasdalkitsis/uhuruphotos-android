@@ -22,7 +22,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRe
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemSummaryQueries
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaTrashQueries
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResult
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummary
@@ -39,7 +38,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementatio
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.model.RemoteMediaItemDeletedRequestServiceModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.model.RemoteMediaOperationResponseServiceModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.worker.RemoteMediaItemWorkScheduler
-import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.andThenTry
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
@@ -56,11 +54,9 @@ import javax.inject.Inject
 
 @AutoBind
 class RemoteMediaUseCase @Inject constructor(
-    private val settingsUseCase: SettingsUseCase,
     private val remoteMediaRepository: RemoteMediaRepository,
     private val remoteMediaService: RemoteMediaService,
     private val remoteMediaItemWorkScheduler: RemoteMediaItemWorkScheduler,
-    private val remoteMediaTrashQueries: RemoteMediaTrashQueries,
     private val userUseCase: UserUseCase,
     private val remoteMediaItemSummaryQueries: RemoteMediaItemSummaryQueries,
     private val db: Database,

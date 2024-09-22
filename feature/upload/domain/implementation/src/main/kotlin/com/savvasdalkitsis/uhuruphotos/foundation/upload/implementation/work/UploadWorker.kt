@@ -18,7 +18,6 @@ package com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.work
 import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.WorkerParameters
-import com.github.michaelbull.result.Result
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log

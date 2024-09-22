@@ -15,14 +15,13 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui
 
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.state.JobState
 import kotlinx.collections.immutable.persistentListOf
 
 @Composable
-fun ColumnScope.Jobs(
+fun Jobs(
     jobs: List<JobState>,
     blockFilter: List<Job> = persistentListOf(),
     onStartJob: (Job) -> Unit,

@@ -20,8 +20,4 @@ import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 
 @AutoBind
-class AboutUseCase @Inject constructor(
-
-) : AboutUseCase {
-
-}
+class AboutUseCase @Inject constructor() : AboutUseCase

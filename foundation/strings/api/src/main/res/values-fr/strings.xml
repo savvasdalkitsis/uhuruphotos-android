@@ -125,7 +125,7 @@
         <item quantity="other">Restaurer ces %d photos ?</item>
     </plurals>
     <plurals name="trash_photos_confirmation">
-        <item quantity="one">Envoyer cette photo dans la corbeille ?</item>
+        <item quantity="one">Envoyer cette %d photo dans la corbeille ?</item>
         <item quantity="many">Envoyer ces %d photos dans la corbeille ?</item>
         <item quantity="other">Envoyer ces %d photos dans la corbeille ?</item>
     </plurals>

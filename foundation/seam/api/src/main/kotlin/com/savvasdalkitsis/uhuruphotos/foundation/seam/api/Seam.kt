@@ -41,7 +41,7 @@ class Seam<S : Any, A : Any>(
     override fun action(action: A) {
         scope.launch {
             log("Seam") { "Starting handling of action $action" }
-            actionHandler.handleAction(_state.value, action,)
+            actionHandler.handleAction(_state.value, action)
                 .distinctUntilChanged()
                 .flowOn(Dispatchers.Default)
                 .cancellable()

@@ -80,8 +80,8 @@ fun RequestBanner(
     modifier: Modifier = Modifier,
     @StringRes description: Int,
     @StringRes warning: Int? = null,
-    grantButton: @Composable() (RowScope.() -> Unit),
-    denyButton: @Composable() (RowScope.() -> Unit),
+    grantButton: @Composable (RowScope.() -> Unit),
+    denyButton: @Composable (RowScope.() -> Unit),
 ){
     Card(
         modifier = modifier

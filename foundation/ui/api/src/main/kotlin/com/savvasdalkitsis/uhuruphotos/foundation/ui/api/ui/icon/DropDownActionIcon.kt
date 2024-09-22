@@ -67,10 +67,10 @@ class DropDownActionIconScope {
     val itemsActions: MutableList<Pair<@Composable RowScope.() -> Unit, () -> Unit>> = mutableListOf()
 
     @Composable
-    fun item(itemContent: @Composable RowScope.() -> Unit, action: () -> Unit) {
+    fun DropDownItem(itemContent: @Composable RowScope.() -> Unit, action: () -> Unit) {
         itemsActions += itemContent to action
     }
 
     @Composable
-    fun item(text: String, action: () -> Unit) = item({ Text(text) }, action)
+    fun DropDownItem(text: String, action: () -> Unit) = DropDownItem({ Text(text) }, action)
 }

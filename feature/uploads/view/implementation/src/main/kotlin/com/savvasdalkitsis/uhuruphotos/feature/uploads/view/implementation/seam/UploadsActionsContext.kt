@@ -16,12 +16,10 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.uploads.view.implementation.seam
 
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.domain.api.usecase.UploadsUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkPruneUseCase
 import javax.inject.Inject
 
 internal class UploadsActionsContext @Inject constructor(
     val uploadsUseCase: UploadsUseCase,
-    val navigator: Navigator,
     val workPruneUseCase: WorkPruneUseCase,
 )

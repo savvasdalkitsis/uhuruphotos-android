@@ -34,16 +34,16 @@ internal fun CatalogueSortingAction(
         icon = sorting.icon,
         contentDescription = stringResource(string.sorting),
     ) {
-        item("Date descending") {
+        DropDownItem("Date descending") {
             sortingChanged(DATE_DESC)
         }
-        item("Date ascending") {
+        DropDownItem("Date ascending") {
             sortingChanged(DATE_ASC)
         }
-        item("Title descending") {
+        DropDownItem("Title descending") {
             sortingChanged(ALPHABETICAL_DESC)
         }
-        item("Title ascending") {
+        DropDownItem("Title ascending") {
             sortingChanged(ALPHABETICAL_ASC)
         }
     }
