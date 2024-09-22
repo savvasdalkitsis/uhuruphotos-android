@@ -25,11 +25,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.ClusterState
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplayState
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.CelSelected
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelSelectionMode
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelSelectionModeState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.LocalAnimatedVideoThumbnails
@@ -52,19 +52,19 @@ fun Collage(
     showSyncState: Boolean = false,
     showStickyHeaders: Boolean = false,
     showScrollbarHint: Boolean = false,
-    celsSelectionMode: CelSelectionMode = CelSelectionMode.SELECTABLE,
-    gridState: SmartGridState = rememberSmartGridState(state.collageDisplay.usingStaggeredGrid),
+    celsSelectionMode: CelSelectionModeState = CelSelectionModeState.SELECTABLE,
+    gridState: SmartGridState = rememberSmartGridState(state.collageDisplayState.usingStaggeredGrid),
     collageHeader: @Composable (SmartGridItemScope.() -> Unit)? = null,
     collageFooter: @Composable (SmartGridItemScope.() -> Unit)? = null,
     emptyContent: @Composable () -> Unit = { NoContent(string.no_media) },
     @RawRes loadingAnimation: Int? = null,
     onCelSelected: CelSelected = { _ -> },
-    onChangeDisplay: (CollageDisplay) -> Unit = {},
+    onChangeDisplay: (CollageDisplayState) -> Unit = {},
     onCelLongPressed: (CelState) -> Unit = {},
-    onClusterRefreshClicked: (Cluster) -> Unit = {},
-    onClusterSelectionClicked: (Cluster) -> Unit = {},
+    onClusterRefreshClicked: (ClusterState) -> Unit = {},
+    onClusterSelectionClicked: (ClusterState) -> Unit = {},
 ) = when {
-    isLoading(state.isLoading, state.clusters, state.isEmpty) -> {
+    isLoading(state.isLoading, state.clusterStates, state.isEmpty) -> {
         if (loadingAnimation != null) {
             FullLoading {
                 DynamicIcon(icon = loadingAnimation)
@@ -73,9 +73,9 @@ fun Collage(
             FullLoading()
         }
     }
-    isEmpty(state.isLoading, state.clusters, state.isEmpty) -> emptyContent()
+    isEmpty(state.isLoading, state.clusterStates, state.isEmpty) -> emptyContent()
     else -> {
-        val collageDisplay = state.collageDisplay
+        val collageDisplay = state.collageDisplayState
         val animatedThumbnails = LocalAnimatedVideoThumbnails.current
         val animated = remember(animatedThumbnails, collageDisplay) {
             animatedThumbnails && collageDisplay.allowsAnimatedVideoThumbnails
@@ -100,7 +100,7 @@ fun Collage(
             SmartCollage(
                 modifier = collageModifier,
                 contentPadding = contentPadding,
-                state = state.clusters,
+                state = state.clusterStates,
                 showSelectionHeader = showSelectionHeader,
                 maintainAspectRatio = collageDisplay.maintainAspectRatio,
                 miniIcons = collageDisplay.miniIcons,
@@ -125,15 +125,15 @@ fun Collage(
 }
 
 @Composable
-private fun isEmpty(isLoading: Boolean, clusters: ImmutableList<Cluster>, isEmpty: Boolean) =
-    !isLoading && isEmpty && clusters.isEmpty()
+private fun isEmpty(isLoading: Boolean, clusterStates: ImmutableList<ClusterState>, isEmpty: Boolean) =
+    !isLoading && isEmpty && clusterStates.isEmpty()
 
 @Composable
-private fun isLoading(isLoading: Boolean, clusters: ImmutableList<Cluster>, isEmpty: Boolean) =
-    (isLoading && clusters.isEmpty()) || (!isEmpty && clusters.isEmpty())
+private fun isLoading(isLoading: Boolean, clusterStates: ImmutableList<ClusterState>, isEmpty: Boolean) =
+    (isLoading && clusterStates.isEmpty()) || (!isEmpty && clusterStates.isEmpty())
 
 @Composable
-private fun CollageDisplay.columnCount(
+private fun CollageDisplayState.columnCount(
     widthSizeClass: WindowWidthSizeClass,
     landscape: Boolean,
 ) = when {

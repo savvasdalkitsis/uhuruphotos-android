@@ -23,9 +23,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.Vi
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaFolder
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.seam.actions.PortfolioAction
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui.state.PortfolioCelState
-import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui.state.PortfolioItems.Found
-import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui.state.PortfolioItems.Loading
-import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui.state.PortfolioItems.RequiresPermissions
+import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui.state.PortfolioItemsState.FoundState
+import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui.state.PortfolioItemsState.LoadingState
+import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui.state.PortfolioItemsState.RequiresPermissionsState
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui.state.PortfolioState
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.CommonScaffold
@@ -46,9 +46,9 @@ internal fun Portfolio(
         navigationIcon = { UpNavButton() },
     ) { contentPadding ->
         when(state.localMedia) {
-            is Found -> PortfolioGrid(contentPadding, state.localMedia, state.showScanOther, action)
-            Loading -> FullLoading()
-            is RequiresPermissions -> PortfolioMissingPermissions(state.localMedia.deniedPermissions)
+            is FoundState -> PortfolioGrid(contentPadding, state.localMedia, state.showScanOther, action)
+            LoadingState -> FullLoading()
+            is RequiresPermissionsState -> PortfolioMissingPermissions(state.localMedia.deniedPermissions)
         }
     }
 }
@@ -58,7 +58,7 @@ internal fun Portfolio(
 private fun PortfolioPreview() {
     PreviewAppTheme {
         Portfolio(state = PortfolioState(
-            Found(
+            FoundState(
                 List(50) { state(it) }.toPersistentList()
             )
         ))
@@ -70,7 +70,7 @@ private fun PortfolioPreview() {
 private fun PortfolioNotOthersPreview() {
     PreviewAppTheme {
         Portfolio(state = PortfolioState(
-            localMedia = Found(persistentListOf(state(1))),
+            localMedia = FoundState(persistentListOf(state(1))),
             showScanOther = true,
         ))
     }
@@ -80,7 +80,7 @@ private fun PortfolioNotOthersPreview() {
 @Composable
 private fun PortfolioLoadingPreview() {
     PreviewAppTheme {
-        Portfolio(state = PortfolioState(Loading))
+        Portfolio(state = PortfolioState(LoadingState))
     }
 }
 
@@ -88,7 +88,7 @@ private fun PortfolioLoadingPreview() {
 @Composable
 private fun PortfolioNoPermissionsPreview() {
     PreviewAppTheme {
-        Portfolio(state = PortfolioState(RequiresPermissions(emptyList())))
+        Portfolio(state = PortfolioState(RequiresPermissionsState(emptyList())))
     }
 }
 

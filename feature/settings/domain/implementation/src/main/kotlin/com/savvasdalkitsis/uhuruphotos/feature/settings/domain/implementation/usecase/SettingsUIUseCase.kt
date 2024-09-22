@@ -21,8 +21,8 @@ import com.google.android.gms.common.ConnectionResult.SERVICE_VERSION_UPDATE_REQ
 import com.google.android.gms.common.ConnectionResult.SIGN_IN_REQUIRED
 import com.google.android.gms.common.ConnectionResult.SUCCESS
 import com.google.android.gms.common.GoogleApiAvailability
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplay
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplay.ALWAYS_OFF
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplayState
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplayState.ALWAYS_OFF
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUIUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.WelcomeUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.flow
@@ -72,7 +72,7 @@ internal class SettingsUIUseCase @Inject constructor(
     private val showBannerAskingForLocalMediaPermissionsOnHeatmap = "showBannerAskingForLocalMediaPermissionsOnHeatmap"
     private val showBannerAskingForLocalMediaPermissionsOnHeatmapDefault = true
     private val feedMediaItemSyncDisplay = "feedMediaItemSyncDisplay"
-    private val feedMediaItemSyncDisplayDefault = FeedMediaItemSyncDisplay.default
+    private val feedMediaItemSyncDisplayStateDefault = FeedMediaItemSyncDisplayState.default
     private val shouldShowFeedSyncProgress = "shouldShowFeedSyncProgress"
     private val shouldShowFeedSyncProgressDefault = false
     private val shouldShowFeedDetailsSyncProgress = "shouldShowFeedDetailsSyncProgress"
@@ -108,8 +108,8 @@ internal class SettingsUIUseCase @Inject constructor(
         get(showBannerAskingForLocalMediaPermissionsOnFeed, showBannerAskingForLocalMediaPermissionsOnFeedDefault)
     override fun getShowBannerAskingForLocalMediaPermissionsOnHeatmap(): Boolean =
         get(showBannerAskingForLocalMediaPermissionsOnHeatmap, showBannerAskingForLocalMediaPermissionsOnHeatmapDefault)
-    override suspend fun getFeedMediaItemSyncDisplay(): FeedMediaItemSyncDisplay = when {
-        welcomeUseCase.getWelcomeStatus().hasRemoteAccess -> get(feedMediaItemSyncDisplay, feedMediaItemSyncDisplayDefault)
+    override suspend fun getFeedMediaItemSyncDisplay(): FeedMediaItemSyncDisplayState = when {
+        welcomeUseCase.getWelcomeStatus().hasRemoteAccess -> get(feedMediaItemSyncDisplay, feedMediaItemSyncDisplayStateDefault)
         else -> ALWAYS_OFF
     }
     override fun getShouldShowFeedSyncProgress(): Boolean =
@@ -146,8 +146,8 @@ internal class SettingsUIUseCase @Inject constructor(
         observe(animateVideoThumbnails, animateVideoThumbnailsDefault)
     override fun observeMaxAnimatedVideoThumbnails(): Flow<Int> =
         observe(maxAnimatedVideoThumbnails, maxAnimatedVideoThumbnailsDefault)
-    override fun observeFeedMediaItemSyncDisplay(): Flow<FeedMediaItemSyncDisplay> = welcomeUseCase.flow(
-        withRemoteAccess = observe(feedMediaItemSyncDisplay, feedMediaItemSyncDisplayDefault),
+    override fun observeFeedMediaItemSyncDisplay(): Flow<FeedMediaItemSyncDisplayState> = welcomeUseCase.flow(
+        withRemoteAccess = observe(feedMediaItemSyncDisplay, feedMediaItemSyncDisplayStateDefault),
         withoutRemoteAccess = flowOf(ALWAYS_OFF)
     )
     override fun observeShouldShowFeedSyncProgress(): Flow<Boolean> =
@@ -207,7 +207,7 @@ internal class SettingsUIUseCase @Inject constructor(
         set(showBannerAskingForLocalMediaPermissionsOnHeatmap, show)
     }
 
-    override fun setFeedMediaItemSyncDisplay(display: FeedMediaItemSyncDisplay) {
+    override fun setFeedMediaItemSyncDisplay(display: FeedMediaItemSyncDisplayState) {
         set(feedMediaItemSyncDisplay, display)
     }
 

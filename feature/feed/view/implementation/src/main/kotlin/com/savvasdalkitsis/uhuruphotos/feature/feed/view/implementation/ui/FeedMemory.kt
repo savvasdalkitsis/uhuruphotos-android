@@ -44,7 +44,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.MemoryCel
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.MemoryCelState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstance
@@ -60,7 +60,7 @@ import kotlinx.coroutines.isActive
 
 @Composable
 internal fun FeedMemory(
-    memory: MemoryCel,
+    memory: MemoryCelState,
     onMemorySelected: (memory: CelState, yearsAgo: Int) -> Unit,
     onScrollToMemory: (CelState) -> Unit,
 ) {
@@ -146,7 +146,7 @@ internal fun FeedMemory(
 @Composable
 private fun FeedMemoryPreview() {
     PreviewAppTheme {
-        FeedMemory(memory = MemoryCel(
+        FeedMemory(memory = MemoryCelState(
             yearsAgo = 10,
             cels = persistentListOf(CelState(
                 MediaItemInstance(

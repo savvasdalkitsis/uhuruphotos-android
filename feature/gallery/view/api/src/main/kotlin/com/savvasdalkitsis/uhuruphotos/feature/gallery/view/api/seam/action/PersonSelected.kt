@@ -18,14 +18,14 @@ package com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryMutation
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.PersonState
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.api.navigation.PersonNavigationRoute
 import kotlinx.coroutines.flow.flow
 
-data class PersonSelected(val person: Person) : GalleryAction() {
+data class PersonSelected(val personState: PersonState) : GalleryAction() {
     context(GalleryActionsContext) override fun handle(
         state: GalleryState
     ) = flow<GalleryMutation> {
-        navigator.navigateTo(PersonNavigationRoute(person.id))
+        navigator.navigateTo(PersonNavigationRoute(personState.id))
     }
 }

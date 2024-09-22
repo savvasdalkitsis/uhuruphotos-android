@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.usecase
 
-import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItem
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItemState
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.observe
@@ -30,16 +30,16 @@ class LibraryUseCase @Inject constructor(
 ) {
     private val key = "libraryItemsOrder"
 
-    fun getLibraryItems(): Flow<List<LibraryItem>> = preferences.observe<String>(
+    fun getLibraryItems(): Flow<List<LibraryItemState>> = preferences.observe<String>(
         key,
-        defaultValue = LibraryItem.entries.serialize
+        defaultValue = LibraryItemState.entries.serialize
     ).map { it.deserialize }
 
-    fun setLibraryItems(items: List<LibraryItem>) {
+    fun setLibraryItems(items: List<LibraryItemState>) {
         preferences.set(key, items.serialize)
     }
 
-    private val List<LibraryItem>.serialize get() = joinToString(":")
+    private val List<LibraryItemState>.serialize get() = joinToString(":")
 
-    private val String.deserialize get() = split(":").map(LibraryItem::valueOf)
+    private val String.deserialize get() = split(":").map(LibraryItemState::valueOf)
 }

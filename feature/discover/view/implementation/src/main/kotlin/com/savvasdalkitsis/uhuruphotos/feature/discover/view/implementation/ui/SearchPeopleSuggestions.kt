@@ -22,12 +22,12 @@ import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.PersonSelected
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.ViewAllPeopleSelected
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.PeopleBanner
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.PersonState
 import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 fun SearchPeopleSuggestions(
-    people: ImmutableList<Person>,
+    people: ImmutableList<PersonState>,
     action: (DiscoverAction) -> Unit,
 ) {
     PeopleBanner(

@@ -17,18 +17,18 @@ package com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSorting
-import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSorting.ALPHABETICAL_ASC
-import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSorting.ALPHABETICAL_DESC
-import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSorting.DATE_ASC
-import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSorting.DATE_DESC
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSortingState
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSortingState.ALPHABETICAL_ASC
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSortingState.ALPHABETICAL_DESC
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSortingState.DATE_ASC
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSortingState.DATE_DESC
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.DropDownActionIcon
 
 @Composable
 internal fun CatalogueSortingAction(
-    sorting: CatalogueSorting,
-    sortingChanged: (CatalogueSorting) -> Unit,
+    sorting: CatalogueSortingState,
+    sortingChanged: (CatalogueSortingState) -> Unit,
 ) {
     DropDownActionIcon(
         icon = sorting.icon,

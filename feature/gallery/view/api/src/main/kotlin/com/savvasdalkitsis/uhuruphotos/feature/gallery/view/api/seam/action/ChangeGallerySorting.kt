@@ -17,11 +17,11 @@ package com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action
 
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryMutation
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GallerySorting
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GallerySortingState
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import kotlinx.coroutines.flow.flow
 
-data class ChangeGallerySorting(val sorting: GallerySorting) : GalleryAction() {
+data class ChangeGallerySorting(val sorting: GallerySortingState) : GalleryAction() {
     context(GalleryActionsContext) override fun handle(
         state: GalleryState
     ) = flow<GalleryMutation> {

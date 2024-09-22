@@ -15,22 +15,24 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state
 
+import androidx.compose.runtime.Immutable
 import androidx.work.NetworkType
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.AvatarState
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplayState
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.state.JobState
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.model.CacheType
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CollageShape
 
+@Immutable
 data class SettingsState(
     val isLoading: Boolean = true,
-    val lightboxPhotoDiskCache: Cache = Cache(cacheType = CacheType.LIGHTBOX_PHOTO_DISK),
-    val lightboxPhotoMemCache: Cache = Cache(cacheType = CacheType.LIGHTBOX_PHOTO_MEMORY),
-    val thumbnailDiskCache: Cache = Cache(cacheType = CacheType.THUMBNAIL_DISK),
-    val thumbnailMemCache: Cache = Cache(cacheType = CacheType.THUMBNAIL_MEMORY),
-    val videoDiskCache: Cache = Cache(cacheType = CacheType.VIDEO_DISK),
+    val lightboxPhotoDiskCacheState: CacheState = CacheState(cacheType = CacheType.LIGHTBOX_PHOTO_DISK),
+    val lightboxPhotoMemCacheState: CacheState = CacheState(cacheType = CacheType.LIGHTBOX_PHOTO_MEMORY),
+    val thumbnailDiskCacheState: CacheState = CacheState(cacheType = CacheType.THUMBNAIL_DISK),
+    val thumbnailMemCacheState: CacheState = CacheState(cacheType = CacheType.THUMBNAIL_MEMORY),
+    val videoDiskCacheState: CacheState = CacheState(cacheType = CacheType.VIDEO_DISK),
     val avatarState: AvatarState = AvatarState(),
     val jobStates: List<JobState> = emptyList(),
     val showJobStartDialog: Job? = null,
@@ -43,13 +45,13 @@ data class SettingsState(
     val showLibrary: Boolean = true,
     val animateVideoThumbnails: Boolean = true,
     val maxAnimatedVideoThumbnails: Int = 3,
-    val mapProviderState: MapProviderState = MapProviderState.NoOptions,
+    val mapProviderState: MapProviderState = MapProviderState.NoOptionsState,
     val isLoggingEnabled: Boolean = false,
     val isSendDatabaseEnabled: Boolean = false,
-    val biometrics: BiometricsSetting? = null,
+    val biometrics: BiometricsSettingState? = null,
     val showMemories: Boolean = true,
     val autoHideFeedNavOnScroll: Boolean = true,
-    val feedMediaItemSyncDisplay: FeedMediaItemSyncDisplay = FeedMediaItemSyncDisplay.default,
+    val feedMediaItemSyncDisplayState: FeedMediaItemSyncDisplayState = FeedMediaItemSyncDisplayState.default,
     val shouldShowFeedSyncProgress: Boolean = false,
     val shouldShowFeedDetailsSyncProgress: Boolean = false,
     val shouldShowPrecacheProgress: Boolean = false,

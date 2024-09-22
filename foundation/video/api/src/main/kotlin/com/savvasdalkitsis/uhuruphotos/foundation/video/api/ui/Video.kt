@@ -17,11 +17,17 @@ package com.savvasdalkitsis.uhuruphotos.foundation.video.api.ui
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import androidx.annotation.OptIn
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -30,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
+import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.AspectRatioFrameLayout
 import androidx.media3.ui.PlayerView
@@ -66,6 +73,7 @@ fun Video(
     )
 }
 
+@OptIn(UnstableApi::class)
 @Composable
 fun Video(
     modifier: Modifier,
@@ -91,8 +99,7 @@ fun Video(
             null,
             false
         )
-        val playerView =
-            layout.findViewById(R.id.playerView) as PlayerView
+        val playerView = layout.findViewById<PlayerView>(R.id.playerView)
         playerView.apply {
             player = exoPlayer
             if (mute) {

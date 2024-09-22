@@ -20,7 +20,7 @@ import androidx.annotation.StringRes
 import androidx.compose.runtime.Immutable
 
 @Immutable
-interface CollageDisplay {
+interface CollageDisplayState {
     val miniIcons: Boolean
     val compactColumnsPortrait: Int
     val compactColumnsLandscape: Int
@@ -30,8 +30,8 @@ interface CollageDisplay {
     val maintainAspectRatio: Boolean
     val allowsAnimatedVideoThumbnails: Boolean
     @get:StringRes val friendlyName: Int
-    val zoomIn: CollageDisplay
-    val zoomOut: CollageDisplay
+    val zoomIn: CollageDisplayState
+    val zoomOut: CollageDisplayState
     val allowsPinchGestures: Boolean
     val usingStaggeredGrid: Boolean
 }

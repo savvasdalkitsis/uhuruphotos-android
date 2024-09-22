@@ -15,9 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam
 
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetails
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GallerySorting
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplayState
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetailsState
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GallerySortingState
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import kotlinx.collections.immutable.toPersistentList
@@ -26,13 +26,13 @@ sealed class GalleryMutation(
     mutation: Mutation<GalleryState>,
 ) : Mutation<GalleryState> by mutation {
 
-    data class ShowGallery(val galleryDetails: GalleryDetails) : GalleryMutation({
+    data class ShowGallery(val galleryDetailsState: GalleryDetailsState) : GalleryMutation({
         it.copy(
-            title = galleryDetails.title,
-            people = galleryDetails.people.toPersistentList(),
+            title = galleryDetailsState.title,
+            people = galleryDetailsState.people.toPersistentList(),
             collageState = it.collageState.copy(
-                isEmpty = galleryDetails.clusters.isEmpty(),
-                clusters = galleryDetails.clusters.toPersistentList(),
+                isEmpty = galleryDetailsState.clusterStates.isEmpty(),
+                clusterStates = galleryDetailsState.clusterStates.toPersistentList(),
             )
         )
     })
@@ -44,13 +44,13 @@ sealed class GalleryMutation(
         ))
     })
 
-    data class ChangeCollageDisplay(val collageDisplay: CollageDisplay) : GalleryMutation({
+    data class ChangeCollageDisplay(val collageDisplayState: CollageDisplayState) : GalleryMutation({
         it.copy(collageState = it.collageState.copy(
-            collageDisplay = collageDisplay,
+            collageDisplayState = collageDisplayState,
         ))
     })
 
-    data class ShowGallerySorting(val sorting: GallerySorting?) : GalleryMutation({
+    data class ShowGallerySorting(val sorting: GallerySortingState?) : GalleryMutation({
         it.copy(sorting = sorting)
     })
 }

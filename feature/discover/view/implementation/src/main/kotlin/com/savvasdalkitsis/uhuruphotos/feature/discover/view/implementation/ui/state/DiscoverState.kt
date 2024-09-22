@@ -16,9 +16,9 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state
 
 import androidx.compose.runtime.Immutable
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplayState
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplayState
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.PersonState
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.Locations.TRAFALGAR_SQUARE
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.Viewport
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.search.SearchSuggestion
@@ -28,13 +28,13 @@ import kotlinx.collections.immutable.persistentListOf
 @Immutable
 data class DiscoverState(
     val showClearButton: Boolean = false,
-    val collageDisplay: CollageDisplay = PredefinedCollageDisplay.default,
+    val collageDisplayState: CollageDisplayState = PredefinedCollageDisplayState.default,
     val showLibrary: Boolean = true,
     val showLoginUpsellDialogFromSearch: Boolean = false,
     val showLoginUpsellDialogFromPeople: Boolean = false,
     val isSearchEnabled: Boolean = false,
     val suggestion: String? = null,
-    val people: ImmutableList<Person> = persistentListOf(),
+    val people: ImmutableList<PersonState> = persistentListOf(),
     val showPeopleUpsell: Boolean = false,
     val searchSuggestions: ImmutableList<SearchSuggestion> = persistentListOf(),
     val latestQuery: String = "",

@@ -15,13 +15,13 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions
 
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplayState
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
 import kotlinx.coroutines.flow.flow
 
-data class ChangeDisplay(val display: PredefinedCollageDisplay) : FeedAction() {
+data class ChangeDisplay(val display: PredefinedCollageDisplayState) : FeedAction() {
     context(FeedActionsContext) override fun handle(
         state: FeedState
     ) = flow<FeedMutation> {

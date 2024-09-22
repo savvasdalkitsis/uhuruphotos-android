@@ -27,7 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.seam.actions.PortfolioAction
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.seam.actions.StartScanningOtherFolders
-import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui.state.PortfolioItems
+import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui.state.PortfolioItemsState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.layout.plus
@@ -38,7 +38,7 @@ import kotlinx.collections.immutable.toPersistentList
 @Composable
 fun BoxScope.PortfolioGrid(
     contentPadding: PaddingValues = PaddingValues(),
-    localMedia: PortfolioItems.Found,
+    localMedia: PortfolioItemsState.FoundState,
     showScanOther: Boolean,
     action: (PortfolioAction) -> Unit
 ) {
@@ -70,7 +70,7 @@ fun BoxScope.PortfolioGrid(
 private fun PortfolioGridPreview() {
     PreviewAppTheme {
         PortfolioGrid(
-            localMedia = PortfolioItems.Found(
+            localMedia = PortfolioItemsState.FoundState(
                 List(50) { state(it) }.toPersistentList()
             ),
             showScanOther = false,
@@ -83,7 +83,7 @@ private fun PortfolioGridPreview() {
 private fun PortfolioGridNotOthersPreview() {
     PreviewAppTheme {
         PortfolioGrid(
-            localMedia = PortfolioItems.Found(
+            localMedia = PortfolioItemsState.FoundState(
                 persistentListOf(state(1))
             ),
             showScanOther = true,

@@ -25,7 +25,7 @@ data object ToggleSortOrder : PeopleAction() {
     context(PeopleActionsContext) override fun handle(
         state: PeopleState
     ) = flow {
-        val sortOrder = state.sortOrder.toggle()
+        val sortOrder = state.sortOrderState.toggle()
         emit(SetSortOrder(sortOrder))
         changeSort(sortOrder)
     }

@@ -13,17 +13,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state
+package com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state
 
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.VitrineState
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaFolder
+import androidx.compose.runtime.Immutable
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.ClusterState
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.PersonState
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
 
-sealed class LibraryLocalMedia {
-
-    data class RequiresPermissions(val deniedPermissions: List<String>) : LibraryLocalMedia()
-
-    data class Found(
-        val buckets: List<Pair<LocalMediaFolder, VitrineState>>,
-        val scanningOtherFolders: Boolean,
-    ) : LibraryLocalMedia()
-}
+@Immutable
+data class GalleryDetailsState(
+    val title: Title = Title.Text(""),
+    val clusterStates: List<ClusterState> = emptyList(),
+    val people: List<PersonState> = emptyList(),
+)

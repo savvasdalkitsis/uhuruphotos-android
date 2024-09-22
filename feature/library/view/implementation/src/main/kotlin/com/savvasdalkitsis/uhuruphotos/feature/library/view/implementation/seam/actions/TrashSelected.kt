@@ -18,8 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryMutation
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryMutation.ShowUpsellFrom
-import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItem
-import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItem.*
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItemState.TRASH
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryState
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.api.navigation.TrashNavigationRoute
 import kotlinx.coroutines.flow.flow

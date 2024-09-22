@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state
 import androidx.annotation.DrawableRes
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 
-enum class CatalogueSorting(@DrawableRes val icon: Int) {
+enum class CatalogueSortingState(@DrawableRes val icon: Int) {
 
     DATE_DESC(drawable.ic_sort_date_descending),
     DATE_ASC(drawable.ic_sort_date_ascending),
@@ -29,7 +29,7 @@ enum class CatalogueSorting(@DrawableRes val icon: Int) {
         val default = DATE_DESC
 
         fun <T> List<T>.sorted(
-            sorting: CatalogueSorting,
+            sorting: CatalogueSortingState,
             timeStamp: (T) -> String?,
             title: (T) -> String?,
         ): List<T> = sortedBy {

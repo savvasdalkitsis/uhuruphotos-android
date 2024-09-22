@@ -15,8 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam
 
-import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItem
-import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryLocalMedia
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItemState
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryLocalMediaState
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.VitrineState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
@@ -49,15 +49,15 @@ sealed class LibraryMutation(
         it.copy(favouritePhotos = cover)
     })
 
-    data class DisplayLocalAlbums(val localMedia: LibraryLocalMedia) : LibraryMutation({
+    data class DisplayLocalAlbums(val localMedia: LibraryLocalMediaState) : LibraryMutation({
         it.copy(localMedia = localMedia)
     })
 
-    data class SetItemOrder(val items: List<LibraryItem>) : LibraryMutation({
+    data class SetItemOrder(val items: List<LibraryItemState>) : LibraryMutation({
         it.copy(items = items)
     })
 
-    data class ShowUpsellFrom(val item: LibraryItem): LibraryMutation({
+    data class ShowUpsellFrom(val item: LibraryItemState): LibraryMutation({
         it.copy(showUpsellDialogFromSource = item)
     })
 

@@ -1,5 +1,5 @@
 /*
-Copyright 2023 Savvas Dalkitsis
+Copyright 2022 Savvas Dalkitsis
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,18 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.ui.state
+package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state
 
-import android.net.Uri
 import androidx.compose.runtime.Immutable
 
 @Immutable
-data class EditState(
-    val photoUri: Uri? = null,
-    val fileName: String = "",
-    val timestamp: Long? = null,
-    val actionBarActionsEnabled: Boolean = false,
-    val isLoading: Boolean = true,
-    val showCropOptions: Boolean = false,
-    val selectedRatio: CropRatioState? = null,
-)
+sealed class BiometricsSettingState {
+    data object NotEnrolledState : BiometricsSettingState()
+    @Immutable
+    data class EnrolledState(
+        val requiredForAppAccess: Boolean,
+        val requiredForHiddenPhotosAccess: Boolean,
+        val requiredForTrashAccess: Boolean,
+    ) : BiometricsSettingState()
+}

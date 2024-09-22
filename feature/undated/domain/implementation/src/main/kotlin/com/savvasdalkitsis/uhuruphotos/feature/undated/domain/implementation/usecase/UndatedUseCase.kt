@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.undated.domain.implementation.usecase
 
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplayState
 import com.savvasdalkitsis.uhuruphotos.feature.undated.domain.api.usecase.UndatedUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
@@ -31,10 +31,10 @@ class UndatedUseCase @Inject constructor(
 ) : UndatedUseCase {
     private val key = "undatedGalleryDisplay"
 
-    override fun getUndatedGalleryDisplay(): PredefinedCollageDisplay =
-        preferences.get(key, PredefinedCollageDisplay.default)
+    override fun getUndatedGalleryDisplay(): PredefinedCollageDisplayState =
+        preferences.get(key, PredefinedCollageDisplayState.default)
 
-    override fun setUndatedGalleryDisplay(galleryDisplay: PredefinedCollageDisplay) {
+    override fun setUndatedGalleryDisplay(galleryDisplay: PredefinedCollageDisplayState) {
         preferences.set(key, galleryDisplay)
     }
 }

@@ -15,11 +15,13 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.ui.state
 
+import androidx.compose.runtime.Immutable
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.PersonState
 
+@Immutable
 data class PersonState(
-    val person: Person? = null,
+    val personState: PersonState? = null,
     val collageState: CollageState = CollageState(),
 )
 

@@ -15,17 +15,17 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.actions
 
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.PersonState
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleMutation
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.state.PeopleState
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.api.navigation.PersonNavigationRoute
 import kotlinx.coroutines.flow.flow
 
-data class PersonSelected(val person: Person) : PeopleAction() {
+data class PersonSelected(val personState: PersonState) : PeopleAction() {
     context(PeopleActionsContext) override fun handle(
         state: PeopleState
     ) = flow<PeopleMutation> {
-        navigator.navigateTo(PersonNavigationRoute(person.id))
+        navigator.navigateTo(PersonNavigationRoute(personState.id))
     }
 }

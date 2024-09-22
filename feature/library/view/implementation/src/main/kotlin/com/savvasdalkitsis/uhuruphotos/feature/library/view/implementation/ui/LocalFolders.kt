@@ -35,7 +35,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.LocalBucketSelected
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.StartScanningOtherFolders
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.ViewAllLocalFolders
-import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryLocalMedia
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryLocalMediaState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstance
@@ -53,7 +53,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.IconOutlineBu
 @Composable
 internal fun LocalFolders(
     title: String,
-    media: LibraryLocalMedia.Found,
+    media: LibraryLocalMediaState.FoundState,
     action: (LibraryAction) -> Unit,
 ) {
     Column(
@@ -123,7 +123,7 @@ private fun LocalFoldersPreviewDark() {
 
 @Composable
 private fun LocalFoldersAll() {
-    LocalFolders(title = stringResource(string.local_albums), media = LibraryLocalMedia.Found(listOf(
+    LocalFolders(title = stringResource(string.local_albums), media = LibraryLocalMediaState.FoundState(listOf(
         LocalMediaFolder(0, "Folder 1") to VitrineState(
             celState("#ff0000"),
             celState("#00ff00"),
@@ -171,7 +171,7 @@ private fun LocalFoldersPreviewWithoutOtherDark() {
 
 @Composable
 private fun LocalFoldersWithoutOther() {
-    LocalFolders(title = stringResource(string.local_albums), media = LibraryLocalMedia.Found(listOf(
+    LocalFolders(title = stringResource(string.local_albums), media = LibraryLocalMediaState.FoundState(listOf(
         LocalMediaFolder(0, "Folder 1") to VitrineState(
             celState("#ff0000"),
             celState("#00ff00"),

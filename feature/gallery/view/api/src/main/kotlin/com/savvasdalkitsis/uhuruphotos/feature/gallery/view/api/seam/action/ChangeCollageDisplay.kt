@@ -15,19 +15,19 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action
 
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplayState
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplayState
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryMutation
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import kotlinx.coroutines.flow.flow
 
-data class ChangeCollageDisplay(val collageDisplay: CollageDisplay) : GalleryAction() {
+data class ChangeCollageDisplay(val collageDisplayState: CollageDisplayState) : GalleryAction() {
     context(GalleryActionsContext) override fun handle(
         state: GalleryState
     ) = flow {
-        emit(GalleryMutation.ChangeCollageDisplay(collageDisplay))
-        (collageDisplay as? PredefinedCollageDisplay)?.let {
+        emit(GalleryMutation.ChangeCollageDisplay(collageDisplayState))
+        (collageDisplayState as? PredefinedCollageDisplayState)?.let {
             collageDisplayPersistence(galleryId.id, it)
         }
     }

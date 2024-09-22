@@ -28,7 +28,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.input.pointer.positionChanged
 import androidx.compose.ui.util.fastAny
 import androidx.compose.ui.util.fastForEach
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplayState
 import kotlinx.coroutines.launch
 import kotlin.math.max
 import kotlin.math.min
@@ -39,13 +39,13 @@ private const val ZOOM_LOW_TRIGGER = 0.9f
 private const val ZOOM_HIGH_TRIGGER = 1.1f
 
 internal fun Modifier.pinchToChange(
-    collageDisplay: CollageDisplay,
-    onChangeDisplay: (CollageDisplay) -> Unit,
+    collageDisplayState: CollageDisplayState,
+    onChangeDisplay: (CollageDisplayState) -> Unit,
 ) = composed {
     val coroutineScope = rememberCoroutineScope()
     val zoom = remember { Animatable(1f) }
 
-    pointerInput(collageDisplay) {
+    pointerInput(collageDisplayState) {
         awaitEachGesture {
             awaitFirstDown(requireUnconsumed = false)
             do {
@@ -69,10 +69,10 @@ internal fun Modifier.pinchToChange(
                 }
             } while (event.changes.fastAny { it.pressed })
             if (zoom.value < ZOOM_LOW_TRIGGER) {
-                onChangeDisplay(collageDisplay.zoomOut)
+                onChangeDisplay(collageDisplayState.zoomOut)
             }
             if (zoom.value > ZOOM_HIGH_TRIGGER) {
-                onChangeDisplay(collageDisplay.zoomIn)
+                onChangeDisplay(collageDisplayState.zoomIn)
             }
             coroutineScope.launch {
                 zoom.animateTo(1f)

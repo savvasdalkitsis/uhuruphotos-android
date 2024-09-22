@@ -33,18 +33,18 @@ import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.api.ui.AutoAlbumItem
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.state.toUserAlbumState
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.ui.UserAlbumItem
-import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.AutoAlbumSearchSuggestion
-import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.PersonSearchSuggestion
-import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.RecentSearchSuggestion
-import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.ServerSearchSuggestion
-import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.UserAlbumSearchSuggestion
+import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.AutoAlbumSearchSuggestionState
+import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.PersonSearchSuggestionState
+import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.RecentSearchSuggestionState
+import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.ServerSearchSuggestionState
+import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.UserAlbumSearchSuggestionState
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.PersonImage
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.search.SearchSuggestion
 import kotlinx.collections.immutable.persistentMapOf
 
 val suggestionLeadingContent = persistentMapOf<String, @Composable (SearchSuggestion) -> Unit>(
-    RecentSearchSuggestion.TYPE to {
+    RecentSearchSuggestionState.TYPE to {
         Icon(
             modifier = Modifier
                 .fillMaxSize()
@@ -53,7 +53,7 @@ val suggestionLeadingContent = persistentMapOf<String, @Composable (SearchSugges
             contentDescription = null
         )
     },
-    ServerSearchSuggestion.TYPE to {
+    ServerSearchSuggestionState.TYPE to {
         Icon(
             modifier = Modifier
                 .fillMaxSize()
@@ -62,17 +62,17 @@ val suggestionLeadingContent = persistentMapOf<String, @Composable (SearchSugges
             contentDescription = null
         )
     },
-    PersonSearchSuggestion.TYPE to {
-        (it as? PersonSearchSuggestion)?.person?.let { person ->
+    PersonSearchSuggestionState.TYPE to {
+        (it as? PersonSearchSuggestionState)?.personState?.let { person ->
             PersonImage(
                 modifier = Modifier.fillMaxSize(),
                 shape = CircleShape,
-                person = person
+                personState = person
             )
         }
     },
-    UserAlbumSearchSuggestion.TYPE to {
-        (it as? UserAlbumSearchSuggestion)?.userAlbums?.let { album ->
+    UserAlbumSearchSuggestionState.TYPE to {
+        (it as? UserAlbumSearchSuggestionState)?.userAlbums?.let { album ->
             UserAlbumItem(
                 album = album.toUserAlbumState(),
                 shape = RoundedCornerShape(8.dp),
@@ -81,8 +81,8 @@ val suggestionLeadingContent = persistentMapOf<String, @Composable (SearchSugges
             )
         }
     },
-    AutoAlbumSearchSuggestion.TYPE to {
-        (it as? AutoAlbumSearchSuggestion)?.autoAlbum?.let { album ->
+    AutoAlbumSearchSuggestionState.TYPE to {
+        (it as? AutoAlbumSearchSuggestionState)?.autoAlbum?.let { album ->
             Box {
                 AutoAlbumItem(
                     album = album,

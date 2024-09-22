@@ -15,10 +15,12 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.uploads.view.implementation.ui.state
 
+import androidx.compose.runtime.Immutable
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadJob
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
+@Immutable
 data class UploadsState(
     val isLoading: Boolean = true,
     val jobs: ImmutableList<UploadJob> = persistentListOf(),

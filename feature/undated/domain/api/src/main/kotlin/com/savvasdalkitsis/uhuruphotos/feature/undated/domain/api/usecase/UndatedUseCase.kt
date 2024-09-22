@@ -15,10 +15,10 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.undated.domain.api.usecase
 
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplayState
 
 interface UndatedUseCase {
 
-    fun getUndatedGalleryDisplay() : PredefinedCollageDisplay
-    fun setUndatedGalleryDisplay(galleryDisplay: PredefinedCollageDisplay)
+    fun getUndatedGalleryDisplay() : PredefinedCollageDisplayState
+    fun setUndatedGalleryDisplay(galleryDisplay: PredefinedCollageDisplayState)
 }

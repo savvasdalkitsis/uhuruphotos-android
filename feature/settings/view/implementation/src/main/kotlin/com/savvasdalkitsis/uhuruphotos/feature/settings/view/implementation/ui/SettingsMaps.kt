@@ -32,7 +32,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 
 @Composable
 internal fun SettingsMaps(
-    mapProviderState: MapProviderState.Selected,
+    mapProviderState: MapProviderState.SelectedState,
     action: (SettingsAction) -> Unit,
 ) {
     SettingsTextDropDownButtonRow(

@@ -15,8 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.hidden.domain.implementation.usecase
 
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplayState
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplayState
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.domain.api.usecase.HiddenMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
@@ -33,10 +33,10 @@ internal class HiddenMediaUseCase @Inject constructor(
 
     private val key = "hiddenMediaGalleryDisplay"
 
-    override fun getHiddenMediaGalleryDisplay(): CollageDisplay =
-        preferences.get(key, PredefinedCollageDisplay.default)
+    override fun getHiddenMediaGalleryDisplay(): CollageDisplayState =
+        preferences.get(key, PredefinedCollageDisplayState.default)
 
-    override suspend fun setHiddenMediaGalleryDisplay(galleryDisplay: PredefinedCollageDisplay) {
+    override suspend fun setHiddenMediaGalleryDisplay(galleryDisplay: PredefinedCollageDisplayState) {
         preferences.set(key, galleryDisplay)
     }
 }

@@ -18,11 +18,11 @@ package com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.
 import androidx.compose.runtime.Immutable
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.api.state.AutoAlbum
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbums
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.PersonState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.search.SearchSuggestion
 
 @Immutable
-data class RecentSearchSuggestion(val query: String) : SearchSuggestion {
+data class RecentSearchSuggestionState(val query: String) : SearchSuggestion {
     override val type: String = TYPE
     override val filterable: String = query
 
@@ -32,16 +32,16 @@ data class RecentSearchSuggestion(val query: String) : SearchSuggestion {
 }
 
 @Immutable
-data class PersonSearchSuggestion(val person: Person) : SearchSuggestion {
+data class PersonSearchSuggestionState(val personState: PersonState) : SearchSuggestion {
     override val type: String = TYPE
-    override val filterable: String = person.name
+    override val filterable: String = personState.name
     companion object {
         const val TYPE = "person"
     }
 }
 
 @Immutable
-data class ServerSearchSuggestion(val query: String) : SearchSuggestion {
+data class ServerSearchSuggestionState(val query: String) : SearchSuggestion {
     override val type: String = TYPE
     override val filterable: String = query
     companion object {
@@ -50,7 +50,7 @@ data class ServerSearchSuggestion(val query: String) : SearchSuggestion {
 }
 
 @Immutable
-data class UserAlbumSearchSuggestion(val userAlbums: UserAlbums) : SearchSuggestion {
+data class UserAlbumSearchSuggestionState(val userAlbums: UserAlbums) : SearchSuggestion {
     override val type: String = TYPE
     override val filterable: String = userAlbums.title.orEmpty()
     companion object {
@@ -59,7 +59,7 @@ data class UserAlbumSearchSuggestion(val userAlbums: UserAlbums) : SearchSuggest
 }
 
 @Immutable
-data class AutoAlbumSearchSuggestion(val autoAlbum: AutoAlbum) : SearchSuggestion {
+data class AutoAlbumSearchSuggestionState(val autoAlbum: AutoAlbum) : SearchSuggestion {
     override val type: String = TYPE
     override val filterable: String = autoAlbum.title
     companion object {

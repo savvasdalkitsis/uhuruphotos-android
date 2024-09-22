@@ -17,9 +17,9 @@ package com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam
 
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.getOr
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.ClusterState
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContextFactory
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetails
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetailsState
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.domain.api.usecase.HiddenMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.HiddenMedia
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
@@ -46,12 +46,12 @@ internal class HiddenPhotosAlbumPageActionsContext @Inject constructor(
 ) {
     val galleryActionsContext = galleryActionsContextFactory.create(
         galleryRefresher = { mediaUseCase.refreshHiddenMedia() },
-        initialCollageDisplay = { hiddenMediaUseCase.getHiddenMediaGalleryDisplay() },
+        initialCollageDisplayState = { hiddenMediaUseCase.getHiddenMediaGalleryDisplay() },
         collageDisplayPersistence = { _, galleryDisplay ->
             hiddenMediaUseCase.setHiddenMediaGalleryDisplay(galleryDisplay)
         },
         shouldRefreshOnLoad = { true },
-        galleryDetailsFlow = { _ ->
+        galleryDetailsStateFlow = { _ ->
             settingsUseCase.observeBiometricsRequiredForHiddenPhotosAccess()
                 .flatMapLatest { biometricsRequired ->
                     val proceed = when {
@@ -72,10 +72,10 @@ internal class HiddenPhotosAlbumPageActionsContext @Inject constructor(
                         mediaUseCase.observeHiddenMedia()
                             .mapNotNull { it.getOr(null) }
                             .map { photoEntries ->
-                                GalleryDetails(
+                                GalleryDetailsState(
                                     title = Title.Resource(string.hidden_media),
-                                    clusters = listOf(
-                                        Cluster(
+                                    clusterStates = listOf(
+                                        ClusterState(
                                             id = "hidden",
                                             displayTitle = "",
                                             location = null,

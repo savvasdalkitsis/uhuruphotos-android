@@ -22,28 +22,28 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.minCa
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ChangeCache
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ClearCache
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.SettingsAction
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.Cache
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.CacheState
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import kotlin.math.max
 
 @Composable
 internal fun SettingsCache(
-    cache: Cache,
+    cacheState: CacheState,
     action: (SettingsAction) -> Unit,
 ) {
-    val initialMaxLimit = cache.max.toFloat()
+    val initialMaxLimit = cacheState.max.toFloat()
     SettingsTextButtonRow(
-        text = stringResource(string.currently_used, cache.current),
+        text = stringResource(string.currently_used, cacheState.current),
         buttonText = stringResource(string.clear),
-        onClick = { action(ClearCache(cache.cacheType)) }
+        onClick = { action(ClearCache(cacheState.cacheType)) }
     )
     Divider()
     SettingsSliderRow(
         text = { stringResource(string.max_limit, it.toInt()) },
         subtext = string.changes_effect_after_restart,
         initialValue = initialMaxLimit,
-        range = (minCacheSize.toFloat().. cache.limit.toFloat()).maybeExpandTo(initialMaxLimit),
-        onValueChanged = { action(ChangeCache(cache.cacheType, it)) }
+        range = (minCacheSize.toFloat().. cacheState.limit.toFloat()).maybeExpandTo(initialMaxLimit),
+        onValueChanged = { action(ChangeCache(cacheState.cacheType, it)) }
     )
 }
 

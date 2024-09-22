@@ -24,7 +24,7 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.tooling.preview.Preview
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.seam.actions.EditAction
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.seam.actions.SelectCropRatio
-import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.ui.state.CropRatio
+import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.ui.state.CropRatioState
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIconWithText
 
@@ -37,7 +37,7 @@ internal fun EditCropOptions(
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceEvenly,
     ) {
-        for (ratio in CropRatio.entries) {
+        for (ratio in CropRatioState.entries) {
             ActionIconWithText(
                 onClick = { action(SelectCropRatio(ratio)) },
                 icon = ratio.icon,

@@ -41,15 +41,15 @@ import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.LibraryAction
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.TrashSelected
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.UserAlbumsSelected
-import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItem
-import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItem.AUTO
-import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItem.FAVOURITE
-import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItem.HIDDEN
-import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItem.LOCAL
-import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItem.TRASH
-import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItem.USER
-import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryLocalMedia.Found
-import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryLocalMedia.RequiresPermissions
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItemState
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItemState.AUTO
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItemState.FAVOURITE
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItemState.HIDDEN
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItemState.LOCAL
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItemState.TRASH
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItemState.USER
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryLocalMediaState.FoundState
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryLocalMediaState.RequiresPermissionsState
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.NamedVitrine
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.VitrineState
@@ -107,8 +107,8 @@ internal fun LibraryGrid(
                         Vibrate(isDragging)
                         val title = stringResource(item.title)
                         when (val media = state.localMedia) {
-                            is Found -> LocalFolders(title, media, action)
-                            is RequiresPermissions -> LibraryPillItem(title, drawable.ic_folder) {
+                            is FoundState -> LocalFolders(title, media, action)
+                            is RequiresPermissionsState -> LibraryPillItem(title, drawable.ic_folder) {
                                 permissionLauncher.launch(media.deniedPermissions.toTypedArray<String>())
                             }
                             null -> {}
@@ -131,7 +131,7 @@ internal fun LibraryGrid(
 
 internal fun LazyGridScope.pillItem(
     reorder: ReorderableLazyGridState,
-    item: LibraryItem,
+    item: LibraryItemState,
     @DrawableRes icon: Int,
     span: (LazyGridItemSpanScope.() -> GridItemSpan)? = null,
     onSelected: () -> Unit,
@@ -148,7 +148,7 @@ internal fun LazyGridScope.pillItem(
 internal fun LazyGridScope.libraryItem(
     reordering: ReorderableLazyGridState,
     vitrineState: VitrineState?,
-    item: LibraryItem,
+    item: LibraryItemState,
     iconFallback: Int,
     onSelected: () -> Unit,
 ) {

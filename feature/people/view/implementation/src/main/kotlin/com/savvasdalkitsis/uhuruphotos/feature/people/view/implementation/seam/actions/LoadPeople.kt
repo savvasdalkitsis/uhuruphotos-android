@@ -20,7 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.P
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleMutation.DisplayPeople
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleMutation.Loading
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.state.PeopleState
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.state.SortOrder
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.state.SortOrderState
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
@@ -44,8 +44,8 @@ data object LoadPeople : PeopleAction() {
             val serverUrl = serverUseCase.getServerUrl()!!
             DisplayPeople(
                 when (sortOrder) {
-                    SortOrder.ASCENDING -> people
-                    SortOrder.DESCENDING -> people.reversed()
+                    SortOrderState.ASCENDING -> people
+                    SortOrderState.DESCENDING -> people.reversed()
                 }.map {
                     it.toPerson { url -> "$serverUrl$url" }
                 }

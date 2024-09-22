@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.usecase
 
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplayState
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.isVideo
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.GetRemoteMediaCollections
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.upload.ProcessingMediaItems
@@ -186,10 +186,10 @@ internal class FeedUseCase @Inject constructor(
     override suspend fun hasFeed(): Boolean =
         feedRepository.hasRemoteMediaCollections()
 
-    override fun observeFeedDisplay(): Flow<PredefinedCollageDisplay> =
-        preferences.observe(key, PredefinedCollageDisplay.default)
+    override fun observeFeedDisplay(): Flow<PredefinedCollageDisplayState> =
+        preferences.observe(key, PredefinedCollageDisplayState.default)
 
-    override fun setFeedDisplay(feedDisplay: PredefinedCollageDisplay) {
+    override fun setFeedDisplay(feedDisplay: PredefinedCollageDisplayState) {
         preferences.set(key, feedDisplay)
     }
 

@@ -25,12 +25,12 @@ import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.DiscoverMutation.ShowPeople
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.DiscoverMutation.ShowPeopleUpsell
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.DiscoverMutation.ShowSearchSuggestions
-import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.AutoAlbumSearchSuggestion
+import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.AutoAlbumSearchSuggestionState
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.DiscoverState
-import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.PersonSearchSuggestion
-import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.RecentSearchSuggestion
-import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.ServerSearchSuggestion
-import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.UserAlbumSearchSuggestion
+import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.PersonSearchSuggestionState
+import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.RecentSearchSuggestionState
+import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.ServerSearchSuggestionState
+import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.UserAlbumSearchSuggestionState
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.flow
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.onErrors
@@ -83,17 +83,17 @@ data object Initialise : DiscoverAction() {
     context(DiscoverActionsContext)
     private fun searchSuggestions() = combine(
         searchUseCase.getRecentTextSearches()
-            .toSuggestion(::RecentSearchSuggestion),
+            .toSuggestion(::RecentSearchSuggestionState),
         peopleUseCase.observePeopleByPhotoCount()
             .onErrorsIgnore()
             .toPeople()
-            .toSuggestion(::PersonSearchSuggestion),
+            .toSuggestion(::PersonSearchSuggestionState),
         userAlbumsUseCase.observeUserAlbums()
-            .toSuggestion(::UserAlbumSearchSuggestion),
+            .toSuggestion(::UserAlbumSearchSuggestionState),
         autoAlbumsUseCase.observeAutoAlbums()
-            .toSuggestion(::AutoAlbumSearchSuggestion),
+            .toSuggestion(::AutoAlbumSearchSuggestionState),
         searchUseCase.getSearchSuggestions()
-            .toSuggestion(::ServerSearchSuggestion),
+            .toSuggestion(::ServerSearchSuggestionState),
     ) { suggestions -> suggestions.flatMap { it } }
 
     private fun <T> Flow<List<T>>.toSuggestion(mapper: (T) -> SearchSuggestion) = map {

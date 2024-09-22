@@ -20,8 +20,8 @@ import com.github.michaelbull.result.mapOr
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.domain.api.usecase.AutoAlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.domain.implementation.repository.AutoAlbumsRepository
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.api.state.AutoAlbum
-import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSorting
-import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSorting.Companion.sorted
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSortingState
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSortingState.Companion.sorted
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.AutoAlbums
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId.Remote
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
@@ -52,10 +52,10 @@ class AutoAlbumsUseCase @Inject constructor(
 
     private val key = "autoAlbumsSorting"
 
-    override fun observeAutoAlbumsSorting(): Flow<CatalogueSorting> =
-        preferences.observe(key, CatalogueSorting.default)
+    override fun observeAutoAlbumsSorting(): Flow<CatalogueSortingState> =
+        preferences.observe(key, CatalogueSortingState.default)
 
-    override suspend fun changeAutoAlbumsSorting(sorting: CatalogueSorting) {
+    override suspend fun changeAutoAlbumsSorting(sorting: CatalogueSortingState) {
         preferences.set(key, sorting)
     }
 
@@ -75,11 +75,11 @@ class AutoAlbumsUseCase @Inject constructor(
     override suspend fun getAutoAlbums(): List<AutoAlbum> =
         userUseCase.getRemoteUserOrRefresh().mapOr(emptyList()) { user ->
             autoAlbumsRepository.getAutoAlbums()
-                .toAutoAlbums(preferences.get(key, CatalogueSorting.default), user)
+                .toAutoAlbums(preferences.get(key, CatalogueSortingState.default), user)
         }
 
     private fun List<AutoAlbums>.toAutoAlbums(
-        sorting: CatalogueSorting,
+        sorting: CatalogueSortingState,
         user: RemoteUserModel,
     ): List<AutoAlbum> =
         sorted(

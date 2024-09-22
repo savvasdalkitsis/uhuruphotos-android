@@ -35,40 +35,40 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplayState
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplayState
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
 
 @Composable
 fun CollageDisplayActionButton(
-    onChange: (CollageDisplay) -> Unit,
-    currentCollageDisplay: CollageDisplay,
+    onChange: (CollageDisplayState) -> Unit,
+    currentCollageDisplayState: CollageDisplayState,
 ) {
     var isOpen by remember { mutableStateOf(false) }
     Box {
         ActionIcon(
             modifier = Modifier
-                .pointerInput(currentCollageDisplay) {
+                .pointerInput(currentCollageDisplayState) {
                     detectVerticalDragGestures { _, dragAmount ->
                         onChange(
                             when {
-                                dragAmount > 0 -> currentCollageDisplay.zoomIn
-                                else -> currentCollageDisplay.zoomOut
+                                dragAmount > 0 -> currentCollageDisplayState.zoomIn
+                                else -> currentCollageDisplayState.zoomOut
                             }
                         )
                     }
                 },
             onClick = { isOpen = true },
-            icon = currentCollageDisplay.iconResource,
+            icon = currentCollageDisplayState.iconResource,
             contentDescription = stringResource(string.gallery_size),
         )
         DropdownMenu(
             expanded = isOpen,
             onDismissRequest = { isOpen = false },
         ) {
-            PredefinedCollageDisplay.entries.toTypedArray().reversedArray().forEach { display ->
-                CollageDisplayDropDownItem(display, currentCollageDisplay) {
+            PredefinedCollageDisplayState.entries.toTypedArray().reversedArray().forEach { display ->
+                CollageDisplayDropDownItem(display, currentCollageDisplayState) {
                     isOpen = false
                     onChange(it)
                 }
@@ -79,16 +79,16 @@ fun CollageDisplayActionButton(
 
 @Composable
 private fun CollageDisplayDropDownItem(
-    display: PredefinedCollageDisplay,
-    currentCollageDisplay: CollageDisplay,
-    onChange: (PredefinedCollageDisplay) -> Unit
+    display: PredefinedCollageDisplayState,
+    currentCollageDisplayState: CollageDisplayState,
+    onChange: (PredefinedCollageDisplayState) -> Unit
 ) {
     DropdownMenuItem(
         onClick = { onChange(display) }
     ) {
         Row {
             RadioButton(
-                selected = currentCollageDisplay == display,
+                selected = currentCollageDisplayState == display,
                 onClick = { onChange(display) }
             )
             Text(

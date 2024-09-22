@@ -15,8 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.album.user.view.implementation.seam
 
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplayState
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplayState
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.get
@@ -28,10 +28,10 @@ internal class UserAlbumDisplay @Inject constructor(
     private val preferences: Preferences,
 ) {
 
-    fun getUserAlbumGalleryDisplay(albumId: Int) : CollageDisplay =
-        preferences.get(key(albumId), PredefinedCollageDisplay.default)
+    fun getUserAlbumGalleryDisplay(albumId: Int) : CollageDisplayState =
+        preferences.get(key(albumId), PredefinedCollageDisplayState.default)
 
-    fun setUserAlbumGalleryDisplay(albumId: Int, galleryDisplay: PredefinedCollageDisplay) {
+    fun setUserAlbumGalleryDisplay(albumId: Int, galleryDisplay: PredefinedCollageDisplayState) {
         preferences.set(key(albumId), galleryDisplay)
     }
 

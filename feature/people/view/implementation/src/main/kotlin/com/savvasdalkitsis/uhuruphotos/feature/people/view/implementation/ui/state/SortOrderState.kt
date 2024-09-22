@@ -1,5 +1,5 @@
 /*
-Copyright 2023 Savvas Dalkitsis
+Copyright 2022 Savvas Dalkitsis
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,18 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state
+package com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.state
 
-import androidx.annotation.StringRes
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+enum class SortOrderState {
+    ASCENDING, DESCENDING;
 
-enum class LibraryItem(
-    @StringRes val title: Int,
-) {
-    TRASH(string.trash),
-    HIDDEN(string.hidden_media),
-    LOCAL(string.local_albums),
-    AUTO(string.auto_albums),
-    USER(string.user_albums),
-    FAVOURITE(string.favourite_photos);
+    fun toggle(): SortOrderState = when (this) {
+        ASCENDING -> DESCENDING
+        DESCENDING -> ASCENDING
+    }
+
+    companion object {
+        val default = ASCENDING
+    }
 }

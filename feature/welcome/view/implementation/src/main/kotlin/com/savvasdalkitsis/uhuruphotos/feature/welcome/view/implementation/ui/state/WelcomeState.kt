@@ -15,6 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.ui.state
 
+import androidx.compose.runtime.Immutable
+
+@Immutable
 data class WelcomeState(
     val isLoading: Boolean = true,
     val isSaveEnabled: Boolean = false,

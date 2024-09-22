@@ -18,10 +18,10 @@ package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui
 import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplay
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplay.ALWAYS_OFF
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplay.ALWAYS_ON
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplay.SHOW_ON_SCROLL
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplayState
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplayState.ALWAYS_OFF
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplayState.ALWAYS_ON
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplayState.SHOW_ON_SCROLL
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ChangeAutoHideNavOnScrollEnabled
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ChangeFeedMediaItemSyncDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ChangeMemoriesEnabled
@@ -54,13 +54,13 @@ internal fun SettingsFeedUI(
         SettingsTextRow(stringResource(string.show_media_sync_status))
         SettingsTextDropDownButtonRow(
             content = {
-                SyncDisplayRow(state.feedMediaItemSyncDisplay)
+                SyncDisplayRow(state.feedMediaItemSyncDisplayState)
             },
             buttonText = stringResource(string.change),
             action = action,
         ) {
             @Composable
-            fun item(display: FeedMediaItemSyncDisplay) {
+            fun item(display: FeedMediaItemSyncDisplayState) {
                 Item({ SyncDisplayRow(display) }, ChangeFeedMediaItemSyncDisplay(display))
             }
             item(SHOW_ON_SCROLL)

@@ -17,8 +17,8 @@ package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.domain.implementa
 
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.domain.api.usecase.UserAlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.domain.implementation.repository.UserAlbumsRepository
-import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSorting
-import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSorting.Companion.sorted
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSortingState
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSortingState.Companion.sorted
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbums
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
@@ -39,10 +39,10 @@ class UserAlbumsUseCase @Inject constructor(
 
     private val key = "userAlbumsSorting"
 
-    override fun observeUserAlbumsSorting(): Flow<CatalogueSorting> =
-        preferences.observe(key, CatalogueSorting.default)
+    override fun observeUserAlbumsSorting(): Flow<CatalogueSortingState> =
+        preferences.observe(key, CatalogueSortingState.default)
 
-    override suspend fun changeUserAlbumsSorting(sorting: CatalogueSorting) {
+    override suspend fun changeUserAlbumsSorting(sorting: CatalogueSortingState) {
         preferences.set(key, sorting)
     }
 
@@ -58,9 +58,9 @@ class UserAlbumsUseCase @Inject constructor(
         userAlbumsRepository.refreshUserAlbums()
 
     override suspend fun getUserAlbums(): List<UserAlbums> =
-        userAlbumsRepository.getUserAlbums().sorted(preferences.get(key, CatalogueSorting.default))
+        userAlbumsRepository.getUserAlbums().sorted(preferences.get(key, CatalogueSortingState.default))
 
-    private fun List<UserAlbums>.sorted(sorting: CatalogueSorting): List<UserAlbums> =
+    private fun List<UserAlbums>.sorted(sorting: CatalogueSortingState): List<UserAlbums> =
         sorted(
             sorting,
             timeStamp = { it.timestamp },

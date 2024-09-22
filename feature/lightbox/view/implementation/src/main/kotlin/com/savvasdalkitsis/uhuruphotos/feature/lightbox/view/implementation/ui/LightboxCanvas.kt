@@ -54,7 +54,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.DeleteFu
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.DeletePermissionDialog
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.TrashPermissionDialog
 import com.savvasdalkitsis.uhuruphotos.feature.upload.view.api.ui.UploadErrorDialog
-import com.savvasdalkitsis.uhuruphotos.feature.upload.view.api.ui.state.UploadErrorDialogMode
+import com.savvasdalkitsis.uhuruphotos.feature.upload.view.api.ui.state.UploadErrorDialogModeState
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.dismiss.api.ui.PullToDismissSpacer
 import com.savvasdalkitsis.uhuruphotos.foundation.dismiss.api.ui.PullToDismissState
@@ -150,12 +150,12 @@ fun LightboxCanvas(
         }
         if (state.showCannotUploadDialog) {
             UploadErrorDialog(
-                mode = UploadErrorDialogMode.NOT_ALLOWED,
+                mode = UploadErrorDialogModeState.NOT_ALLOWED,
             ) { action(DismissConfirmationDialogs) }
         }
         if (state.showCannotCheckUploadStatusDialog) {
             UploadErrorDialog(
-                mode = UploadErrorDialogMode.ERROR_CHECKING,
+                mode = UploadErrorDialogModeState.ERROR_CHECKING,
             ) { action(DismissConfirmationDialogs) }
         }
         if (state.showUpsellDialog) {

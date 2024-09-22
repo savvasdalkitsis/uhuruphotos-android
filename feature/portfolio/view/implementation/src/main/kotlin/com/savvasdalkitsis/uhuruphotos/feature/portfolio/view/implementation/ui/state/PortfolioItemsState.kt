@@ -15,15 +15,19 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui.state
 
+import androidx.compose.runtime.Immutable
 import kotlinx.collections.immutable.ImmutableList
 
-sealed class PortfolioItems {
+@Immutable
+sealed class PortfolioItemsState {
 
-    data class RequiresPermissions(val deniedPermissions: List<String>) : PortfolioItems()
+    @Immutable
+    data class RequiresPermissionsState(val deniedPermissions: List<String>) : PortfolioItemsState()
 
-    data class Found(
+    @Immutable
+    data class FoundState(
         val buckets: ImmutableList<PortfolioCelState>
-    ) : PortfolioItems()
+    ) : PortfolioItemsState()
 
-    data object Loading : PortfolioItems()
+    data object LoadingState : PortfolioItemsState()
 }

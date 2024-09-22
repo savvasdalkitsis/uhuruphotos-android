@@ -15,10 +15,10 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.videos.domain.api.usecase
 
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplayState
 
 interface VideosUseCase {
 
-    fun getVideosGalleryDisplay() : PredefinedCollageDisplay
-    fun setVideosGalleryDisplay(galleryDisplay: PredefinedCollageDisplay)
+    fun getVideosGalleryDisplay() : PredefinedCollageDisplayState
+    fun setVideosGalleryDisplay(galleryDisplay: PredefinedCollageDisplayState)
 }

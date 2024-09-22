@@ -32,8 +32,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.a
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.actions.SwipeToRefresh
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.actions.ToggleSortOrder
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.state.PeopleState
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.state.SortOrder.ASCENDING
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.state.SortOrder.DESCENDING
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.state.SortOrderState.ASCENDING
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.state.SortOrderState.DESCENDING
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window.LocalWindowSize
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
@@ -51,7 +51,7 @@ fun People(
         title = { Text("People") },
         navigationIcon = { UpNavButton() },
         actionBarContent = {
-            ActionIcon(onClick = { action(ToggleSortOrder) }, icon = when (state.sortOrder) {
+            ActionIcon(onClick = { action(ToggleSortOrder) }, icon = when (state.sortOrderState) {
                 ASCENDING -> drawable.ic_sort_az_ascending
                 DESCENDING -> drawable.ic_sort_az_descending
             })
@@ -80,7 +80,7 @@ fun People(
                     for (person in state.people) {
                         item {
                             PersonThumbnail(
-                                person = person,
+                                personState = person,
                                 shape = MaterialTheme.shapes.medium,
                                 onPersonSelected = { action(PersonSelected(person)) }
                             )

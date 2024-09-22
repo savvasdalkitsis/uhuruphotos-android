@@ -50,7 +50,7 @@ data class SearchFor(val query: String) : SearchAction() {
                     clusters != null -> DisplaySearchResults(clusters)
                     else -> {
                         currentCoroutineContext().cancel()
-                        if (!state.clusters.isEmpty()) {
+                        if (!state.clusterStates.isEmpty()) {
                             toaster.show(R.string.error_searching)
                         }
                         null

@@ -24,10 +24,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.SearchFor
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.UpsellLoginFromSearch
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.UserAlbumSelected
-import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.AutoAlbumSearchSuggestion
+import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.AutoAlbumSearchSuggestionState
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.DiscoverState
-import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.PersonSearchSuggestion
-import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.UserAlbumSearchSuggestion
+import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.PersonSearchSuggestionState
+import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.UserAlbumSearchSuggestionState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.search.SearchField
 
 @Composable
@@ -49,9 +49,9 @@ fun DiscoverSearchField(
         onSearchFor = { action(SearchFor(it)) },
         onSearchForSuggestion = {
             when (it) {
-                is PersonSearchSuggestion -> action(PersonSelected(it.person))
-                is UserAlbumSearchSuggestion -> action(UserAlbumSelected(it.userAlbums))
-                is AutoAlbumSearchSuggestion -> action(AutoAlbumSelected(it.autoAlbum))
+                is PersonSearchSuggestionState -> action(PersonSelected(it.personState))
+                is UserAlbumSearchSuggestionState -> action(UserAlbumSelected(it.userAlbums))
+                is AutoAlbumSearchSuggestionState -> action(AutoAlbumSelected(it.autoAlbum))
                 else -> action(SearchFor(it.filterable))
             }
         },

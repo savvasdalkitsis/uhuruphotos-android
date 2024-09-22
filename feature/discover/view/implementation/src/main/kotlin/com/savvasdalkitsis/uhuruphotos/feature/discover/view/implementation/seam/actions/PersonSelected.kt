@@ -18,14 +18,14 @@ package com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.sea
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.DiscoverActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.DiscoverMutation
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.DiscoverState
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.PersonState
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.api.navigation.PersonNavigationRoute
 import kotlinx.coroutines.flow.flow
 
-data class PersonSelected(val person: Person) : DiscoverAction() {
+data class PersonSelected(val personState: PersonState) : DiscoverAction() {
     context(DiscoverActionsContext) override fun handle(
         state: DiscoverState
     ) = flow<DiscoverMutation> {
-        navigator.navigateTo(PersonNavigationRoute(person.id))
+        navigator.navigateTo(PersonNavigationRoute(personState.id))
     }
 }

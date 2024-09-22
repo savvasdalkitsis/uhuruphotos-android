@@ -16,10 +16,10 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.favourites.view.implementation.seam
 
 import com.github.michaelbull.result.getOr
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.ClusterState
 import com.savvasdalkitsis.uhuruphotos.feature.favourites.domain.api.usecase.FavouritesUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContextFactory
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetails
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetailsState
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.FavouriteMedia
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
@@ -37,19 +37,19 @@ internal class FavouritesActionsContext @Inject constructor(
 ) {
     val galleryActionsContext = galleryActionsContextFactory.create(
         galleryRefresher = { mediaUseCase.refreshFavouriteMedia() },
-        initialCollageDisplay = { favouritesUseCase.getFavouriteMediaGalleryDisplay() },
+        initialCollageDisplayState = { favouritesUseCase.getFavouriteMediaGalleryDisplay() },
         collageDisplayPersistence = { _, galleryDisplay ->
             favouritesUseCase.setFavouriteMediaGalleryDisplay(galleryDisplay)
         },
         shouldRefreshOnLoad = { _ -> true },
-        galleryDetailsFlow = { _ ->
+        galleryDetailsStateFlow = { _ ->
             mediaUseCase.observeFavouriteMedia()
                 .mapNotNull { it.getOr(null) }
                 .map { mediaItems ->
-                    GalleryDetails(
+                    GalleryDetailsState(
                         title = Title.Resource(string.favourite_media),
-                        clusters = listOf(
-                            Cluster(
+                        clusterStates = listOf(
+                            ClusterState(
                                 id = "favourites",
                                 displayTitle = "",
                                 location = null,

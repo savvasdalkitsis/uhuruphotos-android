@@ -1,5 +1,5 @@
 /*
-Copyright 2022 Savvas Dalkitsis
+Copyright 2023 Savvas Dalkitsis
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,22 +13,20 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state
+package com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.ui.state
 
 import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 
-enum class FeedMediaItemSyncDisplay(
-    @StringRes val friendlyName: Int,
+enum class CropRatioState(
+    val ratio: Float,
     @DrawableRes val icon: Int,
+    val label: String,
+    val rotation: Float = 0f,
 ) {
-    SHOW_ON_SCROLL(string.show_on_scroll, drawable.ic_swipe_vertical),
-    ALWAYS_ON(string.show_always, drawable.ic_visible),
-    ALWAYS_OFF(string.show_never, drawable.ic_invisible);
-
-    companion object {
-        val default = SHOW_ON_SCROLL
-    }
+    Ratio_16x9(16/9f, drawable.ic_crop_16_9, "16:9"),
+    Ratio_9x16(9/16f, drawable.ic_crop_16_9, "9:16", 90f),
+    Ratio_3x2(3/2f, drawable.ic_crop_3_2, "3:2"),
+    Ratio_2x3(2/3f, drawable.ic_crop_3_2, "2:3", 90f),
+    Ratio_Square(1f, drawable.ic_crop_square, "1:1"),
 }

@@ -15,6 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.notifications.view.implementation.ui.state
 
+import androidx.compose.runtime.Immutable
+
+@Immutable
 data class NotificationsState(
     val isLoading: Boolean = true,
     val rememberChoice: Boolean = false,

@@ -16,12 +16,12 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam
 
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.state.UserAlbumState
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.ClusterState
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplayState
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplayState
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.MemoryCel
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.MemoryCelState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
@@ -65,20 +65,20 @@ sealed class FeedMutation(
     })
 
     data object ShowNoPhotosFound : FeedMutation({
-        it.copyFeed { copy(isLoading = false, isEmpty = true, clusters = persistentListOf()) }
+        it.copyFeed { copy(isLoading = false, isEmpty = true, clusterStates = persistentListOf()) }
     })
 
-    data class ShowClusters(val clusters: List<Cluster>) : FeedMutation({
-        it.copyFeed { copy(isLoading = false, isEmpty = false, clusters = clusters.toPersistentList()) }
+    data class ShowClusters(val clusterStates: List<ClusterState>) : FeedMutation({
+        it.copyFeed { copy(isLoading = false, isEmpty = false, clusterStates = clusterStates.toPersistentList()) }
     }) {
-        override fun toString() = "ShowClusters(${clusters.size})"
+        override fun toString() = "ShowClusters(${clusterStates.size})"
     }
 
-    data class ChangeDisplay(val display: PredefinedCollageDisplay) : FeedMutation({
-        it.copyFeed { copy(collageDisplay = display) }
+    data class ChangeDisplay(val display: PredefinedCollageDisplayState) : FeedMutation({
+        it.copyFeed { copy(collageDisplayState = display) }
     })
 
-    data class ChangeItemSyncDisplay(val display: FeedMediaItemSyncDisplay) : FeedMutation({
+    data class ChangeItemSyncDisplay(val display: FeedMediaItemSyncDisplayState) : FeedMutation({
         it.copy(syncItemDisplay = display)
     })
 
@@ -86,7 +86,7 @@ sealed class FeedMutation(
         it.copy(showLibrary = showLibrary)
     })
 
-    data class ShowMemories(val memories: List<MemoryCel>) : FeedMutation({
+    data class ShowMemories(val memories: List<MemoryCelState>) : FeedMutation({
         it.copy(memories = memories.toPersistentList())
     })
 

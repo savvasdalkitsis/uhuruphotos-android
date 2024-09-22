@@ -41,8 +41,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.RemoveMediaItemFromSource
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ShowErrorMessage
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.MediaItemType
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.MediaItemType.TRASHED
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.MediaItemTypeState
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.MediaItemTypeState.TRASHED
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.SingleMediaItemState
 import com.savvasdalkitsis.uhuruphotos.feature.local.domain.api.usecase.LocalAlbumUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
@@ -109,11 +109,11 @@ internal class LightboxActionsContext @Inject constructor(
     val lightboxUseCase: LightboxUseCase,
 ) {
 
-    var mediaItemType = MediaItemType.default
+    var mediaItemTypeState = MediaItemTypeState.default
     val currentMediaId = MutableSharedFlow<MediaId<*>>(1)
 
     fun deletionCategory(item: SingleMediaItemState) = when {
-        mediaItemType == TRASHED -> REMOTE_ITEM_TRASHED
+        mediaItemTypeState == TRASHED -> REMOTE_ITEM_TRASHED
         item.id.isBothRemoteAndLocal -> FULLY_SYNCED_ITEM
         item.id.findLocals.isNotEmpty() -> LOCAL_ONLY_ITEM
         else -> REMOTE_ITEM

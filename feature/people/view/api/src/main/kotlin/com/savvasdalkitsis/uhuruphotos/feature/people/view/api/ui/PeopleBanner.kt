@@ -29,7 +29,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.PersonState
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SectionHeader
 import kotlinx.collections.immutable.ImmutableList
@@ -37,10 +37,10 @@ import kotlinx.collections.immutable.ImmutableList
 @Composable
 fun PeopleBanner(
     modifier: Modifier = Modifier,
-    people: ImmutableList<Person>,
+    people: ImmutableList<PersonState>,
     headerPadding: PaddingValues = PaddingValues(),
     onViewAllClicked: (() -> Unit)? = null,
-    onPersonSelected: (Person) -> Unit,
+    onPersonSelected: (PersonState) -> Unit,
 ) {
     Column(
         modifier = modifier
@@ -64,7 +64,7 @@ fun PeopleBanner(
                     PersonThumbnail(
                         modifier = Modifier
                             .width(94.dp),
-                        person = person,
+                        personState = person,
                         onPersonSelected = { onPersonSelected(person) },
                     )
                 }

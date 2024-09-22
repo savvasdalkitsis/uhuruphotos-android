@@ -18,15 +18,15 @@ package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.sea
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.PersonState
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.api.navigation.PersonNavigationRoute
 import kotlinx.coroutines.flow.flow
 
-data class PersonSelected(val person: Person) : LightboxAction() {
+data class PersonSelected(val personState: PersonState) : LightboxAction() {
 
     context(LightboxActionsContext) override fun handle(
         state: LightboxState
     ) = flow<LightboxMutation> {
-        navigator.navigateTo(PersonNavigationRoute(person.id))
+        navigator.navigateTo(PersonNavigationRoute(personState.id))
     }
 }

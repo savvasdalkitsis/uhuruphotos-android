@@ -22,24 +22,24 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ChangeBiometricsTrashAccessRequirement
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.EnrollToBiometrics
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.SettingsAction
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.BiometricsSetting
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.BiometricsSetting.Enrolled
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.BiometricsSetting.NotEnrolled
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.BiometricsSettingState
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.BiometricsSettingState.EnrolledState
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.BiometricsSettingState.NotEnrolledState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 
 @Composable
 internal fun SettingsBiometrics(
-    biometrics: BiometricsSetting,
+    biometrics: BiometricsSettingState,
     action: (SettingsAction) -> Unit,
 ) {
     when (biometrics) {
-        NotEnrolled -> SettingsButtonRow(
+        NotEnrolledState -> SettingsButtonRow(
             buttonText = stringResource(string.biometrics_enroll)
         ) {
             action(EnrollToBiometrics)
         }
-        is Enrolled -> {
+        is EnrolledState -> {
             SettingsEntryWithSubtext(
                 subtext = string.changes_effect_after_restart
             ) {

@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.domain.api.usecase.AutoAlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.domain.api.usecase.UserAlbumsUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItem
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItemState
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.usecase.LibraryUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
@@ -85,10 +85,10 @@ internal class LibraryActionsContext @Inject constructor(
         localMediaWorkScheduler.scheduleLocalMediaSyncNowIfNotRunning()
     }
 
-    fun observeShouldShowUpsellFromSource(source: LibraryItem) =
+    fun observeShouldShowUpsellFromSource(source: LibraryItemState) =
         preferences.observe("upsellSourceKey::${source.name}", true)
 
-    fun disableUpsellFromSource(source: LibraryItem) {
+    fun disableUpsellFromSource(source: LibraryItemState) {
         preferences.set("upsellSourceKey::${source.name}", false)
     }
 

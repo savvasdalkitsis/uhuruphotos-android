@@ -15,9 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state
 
+import androidx.compose.runtime.Immutable
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.model.CacheType
 
-data class Cache(
+@Immutable
+data class CacheState(
     val max: Int = 0,
     val limit: Int = 2000,
     val current: Int = 0,

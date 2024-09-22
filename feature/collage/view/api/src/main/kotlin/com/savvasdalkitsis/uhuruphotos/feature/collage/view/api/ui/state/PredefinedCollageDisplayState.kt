@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import kotlin.math.max
 import kotlin.math.min
 
-enum class PredefinedCollageDisplay(
+enum class PredefinedCollageDisplayState(
     override val miniIcons: Boolean,
     override val compactColumnsPortrait: Int,
     override val compactColumnsLandscape: Int,
@@ -34,7 +34,7 @@ enum class PredefinedCollageDisplay(
     override val allowsAnimatedVideoThumbnails: Boolean = true,
     @StringRes override val friendlyName: Int,
     override val usingStaggeredGrid: Boolean = true,
-) : CollageDisplay {
+) : CollageDisplayState {
     YEARLY(
         miniIcons = true,
         compactColumnsPortrait = 10,
@@ -97,8 +97,8 @@ enum class PredefinedCollageDisplay(
         friendlyName = string.full,
     );
 
-    override val zoomIn: CollageDisplay get() = entries[min(ordinal + 1, entries.size - 1)]
-    override val zoomOut: CollageDisplay get() = entries[max(0, ordinal -1)]
+    override val zoomIn: CollageDisplayState get() = entries[min(ordinal + 1, entries.size - 1)]
+    override val zoomOut: CollageDisplayState get() = entries[max(0, ordinal -1)]
     override val allowsPinchGestures = true
 
     companion object {

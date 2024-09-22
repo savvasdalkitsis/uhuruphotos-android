@@ -18,14 +18,14 @@ package com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui
 import androidx.compose.runtime.Composable
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.DiscoverAction
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.RemoveFromRecentSearches
-import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.RecentSearchSuggestion
+import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.RecentSearchSuggestionState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.search.SearchSuggestion
 import kotlinx.collections.immutable.persistentMapOf
 
 fun suggestionTrailingContent(action: (DiscoverAction) -> Unit) = persistentMapOf<String, @Composable (SearchSuggestion) -> Unit>(
-    RecentSearchSuggestion.TYPE to {
+    RecentSearchSuggestionState.TYPE to {
         ActionIcon(
             onClick = { action(RemoveFromRecentSearches(it.filterable)) },
             icon = R.drawable.ic_clear

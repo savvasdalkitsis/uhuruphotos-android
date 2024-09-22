@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.videos.domain.implementation.usecase
 
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplayState
 import com.savvasdalkitsis.uhuruphotos.feature.videos.domain.api.usecase.VideosUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
@@ -31,10 +31,10 @@ class VideosUseCase @Inject constructor(
 ) : VideosUseCase {
     private val key = "videosGalleryDisplay"
 
-    override fun getVideosGalleryDisplay(): PredefinedCollageDisplay =
-        preferences.get(key, PredefinedCollageDisplay.default)
+    override fun getVideosGalleryDisplay(): PredefinedCollageDisplayState =
+        preferences.get(key, PredefinedCollageDisplayState.default)
 
-    override fun setVideosGalleryDisplay(galleryDisplay: PredefinedCollageDisplay) {
+    override fun setVideosGalleryDisplay(galleryDisplay: PredefinedCollageDisplayState) {
         preferences.set(key, galleryDisplay)
     }
 }

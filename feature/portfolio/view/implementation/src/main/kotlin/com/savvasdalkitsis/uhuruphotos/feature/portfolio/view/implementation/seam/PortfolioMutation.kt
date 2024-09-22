@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.seam
 
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui.state.PortfolioCelState
-import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui.state.PortfolioItems
+import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui.state.PortfolioItemsState
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui.state.PortfolioState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import kotlinx.collections.immutable.toPersistentList
@@ -26,7 +26,7 @@ sealed class PortfolioMutation(
 ) : Mutation<PortfolioState> by mutation {
 
     data class RequestPermissions(val deniedPermissions: List<String>): PortfolioMutation({
-        it.copy(localMedia = PortfolioItems.RequiresPermissions(deniedPermissions))
+        it.copy(localMedia = PortfolioItemsState.RequiresPermissionsState(deniedPermissions))
     })
 
     data object ShowError : PortfolioMutation({
@@ -34,7 +34,7 @@ sealed class PortfolioMutation(
     })
 
     data class DisplayPortfolio(val states: List<PortfolioCelState>, val scanningOther: Boolean) : PortfolioMutation({
-        it.copy(localMedia = PortfolioItems.Found(states.toPersistentList()), showScanOther = !scanningOther)
+        it.copy(localMedia = PortfolioItemsState.FoundState(states.toPersistentList()), showScanOther = !scanningOther)
     })
 
     data class ChangeTitle(val title: Int) : PortfolioMutation({

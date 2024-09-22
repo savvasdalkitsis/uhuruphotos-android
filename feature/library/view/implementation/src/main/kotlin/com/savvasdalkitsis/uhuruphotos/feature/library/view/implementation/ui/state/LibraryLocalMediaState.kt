@@ -13,14 +13,21 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state
+package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state
 
 import androidx.compose.runtime.Immutable
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
-import kotlinx.collections.immutable.ImmutableList
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.VitrineState
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaFolder
 
 @Immutable
-data class MemoryCel(
-    val yearsAgo: Int,
-    val cels: ImmutableList<CelState>,
-)
+sealed class LibraryLocalMediaState {
+
+    @Immutable
+    data class RequiresPermissionsState(val deniedPermissions: List<String>) : LibraryLocalMediaState()
+
+    @Immutable
+    data class FoundState(
+        val buckets: List<Pair<LocalMediaFolder, VitrineState>>,
+        val scanningOtherFolders: Boolean,
+    ) : LibraryLocalMediaState()
+}

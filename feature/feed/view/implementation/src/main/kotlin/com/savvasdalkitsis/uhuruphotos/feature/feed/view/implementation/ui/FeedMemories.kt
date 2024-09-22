@@ -32,13 +32,13 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.MemoryCel
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.MemoryCelState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 
 @Composable
 internal fun FeedMemories(
-    memories: List<MemoryCel>,
+    memories: List<MemoryCelState>,
     onScrollToMemory: (CelState) -> Unit,
     onMemorySelected: (memory: CelState, yearsAgo: Int) -> Unit,
 ) {

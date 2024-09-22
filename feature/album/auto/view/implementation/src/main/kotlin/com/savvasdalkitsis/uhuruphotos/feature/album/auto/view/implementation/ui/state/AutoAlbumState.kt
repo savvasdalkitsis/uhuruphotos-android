@@ -15,6 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.ui.state
 
+import androidx.compose.runtime.Immutable
+
+@Immutable
 data class AutoAlbumState(
     val albumId: Int = -1,
     val showDeleteConfirmationDialog: Boolean = false,

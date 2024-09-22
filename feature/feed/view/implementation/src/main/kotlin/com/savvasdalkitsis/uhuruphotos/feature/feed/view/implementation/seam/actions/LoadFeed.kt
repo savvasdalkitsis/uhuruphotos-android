@@ -17,8 +17,8 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.ac
 
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.SyncState
 import com.savvasdalkitsis.uhuruphotos.feature.battery.domain.api.model.BatteryOptimizationStatus.BATTERY_OPTIMIZED
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.ClusterState
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplayState
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.toCluster
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedActionsContext
@@ -34,7 +34,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.Fee
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.ShowLostServerConnection
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.ShowNoPhotosFound
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.MemoryCel
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.MemoryCelState
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
@@ -47,7 +47,6 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
@@ -87,7 +86,7 @@ data object LoadFeed : FeedAction() {
             if (enabled) {
                 memoriesUseCase.observeMemories().map { memoryCollections ->
                     memoryCollections.map { (collection, yearsAgo) ->
-                        MemoryCel(
+                        MemoryCelState(
                             yearsAgo = yearsAgo,
                             cels = collection.mediaItems.map { it.toCel() }.toPersistentList(),
                         )
@@ -143,7 +142,7 @@ data object LoadFeed : FeedAction() {
                 .map { it.toCluster() }
                 .selectCels(selectedIds)
             val final = when (feedDisplay) {
-                PredefinedCollageDisplay.YEARLY -> selected.groupByYear()
+                PredefinedCollageDisplayState.YEARLY -> selected.groupByYear()
                     .map { it.copy(showRefreshIcon = false) }
                 else -> selected
                     .map { it.copy(showRefreshIcon = it.hasAnyCelsWithRemoteMedia) }
@@ -155,9 +154,9 @@ data object LoadFeed : FeedAction() {
             }
         }
 
-    private val List<Cluster>.celCount get() = sumOf { it.cels.size }
+    private val List<ClusterState>.celCount get() = sumOf { it.cels.size }
 
-    private fun List<Cluster>.selectCels(ids: Set<MediaId<*>>): List<Cluster> {
+    private fun List<ClusterState>.selectCels(ids: Set<MediaId<*>>): List<ClusterState> {
         val empty = ids.isEmpty()
         return map { cluster ->
             cluster.copy(cels = cluster.cels.map { cel ->
@@ -172,10 +171,10 @@ data object LoadFeed : FeedAction() {
         }
     }
 
-    private fun List<Cluster>.groupByYear() = groupBy {
+    private fun List<ClusterState>.groupByYear() = groupBy {
         it.unformattedDate?.split("-")?.get(0)
     }.map { (year, clusters) ->
-        Cluster(
+        ClusterState(
             id = year ?: "-",
             unformattedDate = year ?: "-",
             cels = clusters.flatMap { it.cels }.toPersistentList(),

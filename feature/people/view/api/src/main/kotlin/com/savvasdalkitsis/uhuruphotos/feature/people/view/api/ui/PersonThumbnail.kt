@@ -31,12 +31,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.PersonState
 
 @Composable
 fun PersonThumbnail(
     modifier: Modifier = Modifier,
-    person: Person,
+    personState: PersonState,
     onPersonSelected: () -> Unit = {},
     shape: Shape = CircleShape,
 ) {
@@ -53,10 +53,10 @@ fun PersonThumbnail(
             PersonImage(
                 modifier = Modifier.fillMaxWidth(),
                 shape = shape,
-                person = person
+                personState = personState
             )
             Text(
-                text = person.name,
+                text = personState.name,
                 maxLines = 2,
                 textAlign = TextAlign.Center,
             )

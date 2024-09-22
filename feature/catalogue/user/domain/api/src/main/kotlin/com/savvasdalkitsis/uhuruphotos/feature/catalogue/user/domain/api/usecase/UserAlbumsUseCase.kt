@@ -15,14 +15,14 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.domain.api.usecase
 
-import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSorting
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSortingState
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbums
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import kotlinx.coroutines.flow.Flow
 
 interface UserAlbumsUseCase {
-    fun observeUserAlbumsSorting(): Flow<CatalogueSorting>
-    suspend fun changeUserAlbumsSorting(sorting: CatalogueSorting)
+    fun observeUserAlbumsSorting(): Flow<CatalogueSortingState>
+    suspend fun changeUserAlbumsSorting(sorting: CatalogueSortingState)
     fun observeUserAlbums(): Flow<List<UserAlbums>>
     suspend fun refreshUserAlbums(): SimpleResult
     suspend fun getUserAlbums(): List<UserAlbums>

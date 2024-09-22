@@ -15,6 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.album.user.view.implementation.ui.state
 
+import androidx.compose.runtime.Immutable
+
+@Immutable
 data class UserAlbumState(
     val albumId: Int = -1,
     val showDeleteConfirmationDialog: Boolean = false,

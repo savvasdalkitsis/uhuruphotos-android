@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.DiscoverAction
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.UpsellLoginFromPeople
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.PeopleBanner
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.PersonState
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import kotlinx.collections.immutable.toPersistentList
 
@@ -35,7 +35,7 @@ fun SearchPeopleUpsell(
     PeopleBanner(
         people = remember {
             List(5) {
-                Person(
+                PersonState(
                     name = name,
                     imageUrl = null,
                     photos = 0,

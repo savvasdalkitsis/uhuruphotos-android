@@ -15,6 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state
 
+import androidx.compose.runtime.Immutable
+
+@Immutable
 data class AvatarState(
     val avatarUrl: String? = null,
     val initials: String = "",

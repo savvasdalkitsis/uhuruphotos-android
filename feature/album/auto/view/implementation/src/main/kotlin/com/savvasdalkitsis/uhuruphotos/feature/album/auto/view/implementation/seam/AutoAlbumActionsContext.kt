@@ -17,11 +17,11 @@ package com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.s
 
 import com.github.michaelbull.result.mapOr
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.domain.api.usecase.AutoAlbumUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.ui.state.AutoAlbumCollageDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.ui.state.AutoAlbumCollageDisplayState
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.ClusterState
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContextFactory
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetails
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetailsState
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.AutoAlbum
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
@@ -48,26 +48,26 @@ internal class AutoAlbumActionsContext @Inject constructor(
 ) {
     val galleryActionsContext = galleryActionsContextFactory.create(
         galleryRefresher = { autoAlbumUseCase.refreshAutoAlbum(it) },
-        initialCollageDisplay = { AutoAlbumCollageDisplay },
+        initialCollageDisplayState = { AutoAlbumCollageDisplayState },
         collageDisplayPersistence = { _, _ -> },
         shouldRefreshOnLoad = { albumId ->
             autoAlbumUseCase.getAutoAlbum(albumId).isEmpty()
         },
-        galleryDetailsFlow = { albumId ->
+        galleryDetailsStateFlow = { albumId ->
             val serverUrl = serverUseCase.getServerUrl()!!
             autoAlbumUseCase.observeAutoAlbumWithPeople(albumId)
                 .mapNotNull { (photoEntries, people) ->
                     userUseCase.getRemoteUserOrRefresh()
                         .mapOr(null) { user ->
-                            GalleryDetails(
+                            GalleryDetailsState(
                                 title = Title.Text(photoEntries.firstOrNull()?.title ?: ""),
                                 people = people.map { person ->
                                     person.toPerson { "$serverUrl$it" }
                                 },
-                                clusters = photoEntries.groupBy { entry ->
+                                clusterStates = photoEntries.groupBy { entry ->
                                     dateDisplayer.dateString(entry.timestamp)
                                 }.entries.map { (date, photos) ->
-                                    Cluster(
+                                    ClusterState(
                                         id = date,
                                         unformattedDate = photos.firstOrNull()?.timestamp,
                                         displayTitle = date,

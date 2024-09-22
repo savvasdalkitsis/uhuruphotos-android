@@ -15,8 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.favourites.domain.implementation.usecase
 
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplayState
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplayState
 import com.savvasdalkitsis.uhuruphotos.feature.favourites.domain.api.usecase.FavouritesUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
@@ -33,10 +33,10 @@ internal class FavouritesUseCase @Inject constructor(
 
     private val key = "favouriteMediaGalleryDisplay"
 
-    override fun getFavouriteMediaGalleryDisplay(): CollageDisplay =
-        preferences.get(key, defaultValue = PredefinedCollageDisplay.default)
+    override fun getFavouriteMediaGalleryDisplay(): CollageDisplayState =
+        preferences.get(key, defaultValue = PredefinedCollageDisplayState.default)
 
-    override suspend fun setFavouriteMediaGalleryDisplay(galleryDisplay: PredefinedCollageDisplay) {
+    override suspend fun setFavouriteMediaGalleryDisplay(galleryDisplay: PredefinedCollageDisplayState) {
         preferences.set(key, galleryDisplay)
     }
 

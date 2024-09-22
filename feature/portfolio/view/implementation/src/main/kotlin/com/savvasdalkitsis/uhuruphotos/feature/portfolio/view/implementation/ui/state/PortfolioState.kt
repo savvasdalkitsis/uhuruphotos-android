@@ -15,8 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui.state
 
+import androidx.compose.runtime.Immutable
+
+@Immutable
 data class PortfolioState(
-    val localMedia: PortfolioItems = PortfolioItems.Loading,
+    val localMedia: PortfolioItemsState = PortfolioItemsState.LoadingState,
     val title: Int? = null,
     val showScanOther: Boolean = false,
 )

@@ -15,9 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam
 
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplayState
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.DiscoverState
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.PersonState
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.Viewport
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.search.SearchSuggestion
@@ -54,8 +54,8 @@ sealed class DiscoverMutation(
         it.copy(isSearchEnabled = false)
     })
 
-    data class ChangeFeedDisplay(val display: CollageDisplay) : DiscoverMutation({
-        it.copy(collageDisplay = display)
+    data class ChangeFeedDisplay(val display: CollageDisplayState) : DiscoverMutation({
+        it.copy(collageDisplayState = display)
     })
 
     data class FocusChanged(val focused: Boolean) : DiscoverMutation({
@@ -66,7 +66,7 @@ sealed class DiscoverMutation(
         it.copy(suggestion = suggestion)
     })
 
-    data class ShowPeople(val people: List<Person>) : DiscoverMutation({
+    data class ShowPeople(val people: List<PersonState>) : DiscoverMutation({
         it.copy(people = people.toPersistentList())
     })
 

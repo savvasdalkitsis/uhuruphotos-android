@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.toClust
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContextFactory
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetails
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetailsState
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource
 import com.savvasdalkitsis.uhuruphotos.feature.videos.domain.api.usecase.VideosUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simpleOk
@@ -40,18 +40,18 @@ internal class VideosActionsContext @Inject constructor(
             delay(500)
             simpleOk
         },
-        galleryDetailsFlow = { _ ->
+        galleryDetailsStateFlow = { _ ->
             feedUseCase.observeFeed(FeedFetchType.VIDEOS)
                 .map {
-                    GalleryDetails(
+                    GalleryDetailsState(
                         title = Title.Resource(string.videos),
-                        clusters = it.map { collection -> collection.toCluster() }
+                        clusterStates = it.map { collection -> collection.toCluster() }
                     )
                 }
         },
         shouldRefreshOnLoad = { false },
         lightboxSequenceDataSource = { LightboxSequenceDataSource.Videos },
-        initialCollageDisplay = { videosUseCase.getVideosGalleryDisplay() },
+        initialCollageDisplayState = { videosUseCase.getVideosGalleryDisplay() },
         collageDisplayPersistence = { _, galleryDisplay ->
             videosUseCase.setVideosGalleryDisplay(galleryDisplay)
         },

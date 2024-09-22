@@ -15,9 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam
 
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.PersonState
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.state.PeopleState
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.state.SortOrder
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.state.SortOrderState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 
 sealed class PeopleMutation(
@@ -28,11 +28,11 @@ sealed class PeopleMutation(
         it.copy(loading = loading)
     })
 
-    data class DisplayPeople(val people: List<Person>) : PeopleMutation({
+    data class DisplayPeople(val people: List<PersonState>) : PeopleMutation({
         it.copy(people = people)
     })
 
-    data class SetSortOrder(val sortOrder: SortOrder) : PeopleMutation({
-        it.copy(sortOrder = sortOrder)
+    data class SetSortOrder(val sortOrderState: SortOrderState) : PeopleMutation({
+        it.copy(sortOrderState = sortOrderState)
     })
 }

@@ -16,18 +16,20 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state
 
 import androidx.annotation.StringRes
+import androidx.compose.runtime.Immutable
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.PersonState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
+@Immutable
 data class GalleryState(
     val collageState: CollageState = CollageState(),
     @get:StringRes
     val error: Int? = null,
     val title: Title = Title.Text(""),
-    val people: ImmutableList<Person> = persistentListOf(),
-    val sorting: GallerySorting? = null,
+    val people: ImmutableList<PersonState> = persistentListOf(),
+    val sorting: GallerySortingState? = null,
     val showDeleteConfirmation: Boolean = false,
 )

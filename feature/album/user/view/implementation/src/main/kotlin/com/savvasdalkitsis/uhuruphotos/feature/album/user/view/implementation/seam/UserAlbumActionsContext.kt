@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.album.user.view.implementation.s
 import com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.api.usecase.UserAlbumUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.toCluster
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContextFactory
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetails
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetailsState
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.UserAlbum
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
@@ -35,19 +35,19 @@ internal class UserAlbumActionsContext @Inject constructor(
 ) {
     val galleryActionsContext = galleryActionsContextFactory.create(
         galleryRefresher = { userAlbumUseCase.refreshUserAlbum(it) },
-        initialCollageDisplay = { userAlbumDisplay.getUserAlbumGalleryDisplay(it) },
+        initialCollageDisplayState = { userAlbumDisplay.getUserAlbumGalleryDisplay(it) },
         collageDisplayPersistence = { albumId, galleryDisplay ->
             userAlbumDisplay.setUserAlbumGalleryDisplay(albumId, galleryDisplay)
         },
         shouldRefreshOnLoad = { albumId ->
             userAlbumUseCase.getUserAlbum(albumId).mediaCollections.isEmpty()
         },
-        galleryDetailsFlow = { albumId ->
+        galleryDetailsStateFlow = { albumId ->
             userAlbumUseCase.observeUserAlbum(albumId)
                 .map { album ->
-                    GalleryDetails(
+                    GalleryDetailsState(
                         title = Title.Text(album.title),
-                        clusters = album.mediaCollections.map { it.toCluster() }
+                        clusterStates = album.mediaCollections.map { it.toCluster() }
                     )
                 }
         },

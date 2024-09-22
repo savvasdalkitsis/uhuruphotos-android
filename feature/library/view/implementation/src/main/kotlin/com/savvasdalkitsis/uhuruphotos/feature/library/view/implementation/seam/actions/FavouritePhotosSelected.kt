@@ -19,10 +19,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.favourites.view.api.navigation.Fa
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryMutation
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryMutation.ShowUpsellFrom
-import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItem
-import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItem.FAVOURITE
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItemState.FAVOURITE
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryState
-import com.savvasdalkitsis.uhuruphotos.feature.trash.view.api.navigation.TrashNavigationRoute
 import kotlinx.coroutines.flow.flow
 
 data object FavouritePhotosSelected : LibraryAction() {

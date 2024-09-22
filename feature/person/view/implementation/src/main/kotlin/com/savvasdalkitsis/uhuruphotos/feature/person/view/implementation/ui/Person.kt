@@ -33,8 +33,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.a
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.actions.SelectedCel
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.ui.state.PersonState
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Thumbnail
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UpNavButton
 
 @Composable
@@ -44,7 +44,7 @@ fun Person(
 ) {
     CommonScaffold(
         title = {
-            val person = state.person
+            val person = state.personState
             when {
                 person != null -> Text(text = person.name)
                 else -> Text("Loading person")
@@ -52,13 +52,13 @@ fun Person(
         },
         navigationIcon = {
             UpNavButton(furtherContent = {
-                AnimatedVisibility(visible = state.person != null) {
+                AnimatedVisibility(visible = state.personState != null) {
                     Thumbnail(
                         modifier = Modifier
                             .width(32.dp)
                             .aspectRatio(1f)
                             .clip(CircleShape),
-                        url = state.person?.imageUrl,
+                        url = state.personState?.imageUrl,
                         contentScale = ContentScale.Crop,
                         contentDescription = null
                     )
@@ -67,19 +67,19 @@ fun Person(
         },
         actionBarContent = {
             AnimatedVisibility(
-                visible = state.collageState.clusters.isNotEmpty() && state.collageState.isLoading
+                visible = state.collageState.clusterStates.isNotEmpty() && state.collageState.isLoading
             ) {
                 CircularProgressIndicator()
             }
-            AnimatedVisibility(state.collageState.clusters.isNotEmpty()) {
+            AnimatedVisibility(state.collageState.clusterStates.isNotEmpty()) {
                 CollageDisplayActionButton(
                     onChange = { action(ChangeDisplay(it)) },
-                    currentCollageDisplay = state.collageState.collageDisplay
+                    currentCollageDisplayState = state.collageState.collageDisplayState
                 )
             }
         }
     ) { contentPadding ->
-        if (state.collageState.clusters.isEmpty()) {
+        if (state.collageState.clusterStates.isEmpty()) {
             FullLoading()
         } else {
             Collage(

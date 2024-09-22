@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.local.domain.implementation.usecase
 
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplayState
 import com.savvasdalkitsis.uhuruphotos.feature.local.domain.api.usecase.LocalAlbumUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaFolderOnDevice
@@ -56,10 +56,10 @@ internal class LocalAlbumUseCase @Inject constructor(
     override suspend fun refreshLocalAlbum(albumId: Int) =
         localMediaUseCase.refreshLocalMediaFolder(albumId)
 
-    override fun getLocalAlbumGalleryDisplay(albumId: Int) : PredefinedCollageDisplay =
-        preferences.get(key(albumId), PredefinedCollageDisplay.default)
+    override fun getLocalAlbumGalleryDisplay(albumId: Int) : PredefinedCollageDisplayState =
+        preferences.get(key(albumId), PredefinedCollageDisplayState.default)
 
-    override fun setLocalAlbumGalleryDisplay(albumId: Int, galleryDisplay: PredefinedCollageDisplay) {
+    override fun setLocalAlbumGalleryDisplay(albumId: Int, galleryDisplay: PredefinedCollageDisplayState) {
         preferences.set(key(albumId), galleryDisplay)
     }
 

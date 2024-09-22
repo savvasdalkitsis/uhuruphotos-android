@@ -15,6 +15,7 @@ hilt = "2.52"
 hilt-compiler = "1.2.0"
 kotlin = "2.0.20"
 kotlinx = "1.9.0"
+lifecycle = "2.8.6"
 lumberjack = "6.0.7"
 media3 = "1.4.1"
 mockk = "1.13.12"
@@ -70,7 +71,8 @@ androidx-compose-ui-util = { module = "androidx.compose.ui:ui-util", version.ref
 androidx-core = "androidx.core:core-ktx:1.13.1"
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hilt-compiler" }
-androidx-lifecycle = "androidx.lifecycle:lifecycle-runtime-ktx:2.8.5"
+androidx-lifecycle = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle" }
+androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-android", version.ref = "lifecycle" }
 androidx-media3-core = { module = "androidx.media3:media3-exoplayer", version.ref = "media3" }
 androidx-media3-database = { module = "androidx.media3:media3-database", version.ref = "media3" }
 androidx-media3-hls = { module = "androidx.media3:media3-exoplayer-hls", version.ref = "media3" }

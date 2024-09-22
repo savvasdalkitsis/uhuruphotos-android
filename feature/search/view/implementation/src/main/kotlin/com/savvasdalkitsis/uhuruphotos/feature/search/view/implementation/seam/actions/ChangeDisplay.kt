@@ -15,13 +15,13 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.actions
 
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplayState
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchMutation.ChangeSearchDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchState
 import kotlinx.coroutines.flow.flowOf
 
-data class ChangeDisplay(val display: CollageDisplay) : SearchAction() {
+data class ChangeDisplay(val display: CollageDisplayState) : SearchAction() {
     context(SearchActionsContext) override fun handle(
         state: SearchState
     ) = flowOf(ChangeSearchDisplay(display))

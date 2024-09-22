@@ -18,10 +18,10 @@ package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementati
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsMutation
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsState
-import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSorting
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSortingState
 import kotlinx.coroutines.flow.flow
 
-data class ChangeSorting(val sorting: CatalogueSorting) : UserAlbumsAction() {
+data class ChangeSorting(val sorting: CatalogueSortingState) : UserAlbumsAction() {
     context(UserAlbumsActionsContext) override fun handle(
         state: UserAlbumsState
     ) = flow<UserAlbumsMutation> {

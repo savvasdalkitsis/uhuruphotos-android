@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.DiscoverMutation
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.DiscoverState
 import kotlinx.coroutines.flow.flow
-import java.util.*
+import java.util.UUID
 
 data object QueryCacheChanged : DiscoverAction() {
     context(DiscoverActionsContext) override fun handle(

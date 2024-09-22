@@ -39,7 +39,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSorting
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSortingState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.LocalNavigator
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
@@ -60,8 +60,8 @@ fun Catalogue(
     isEmpty: Boolean,
     emptyContentMessage: Int,
     initialFilter: String,
-    sorting: CatalogueSorting,
-    onChangeSorting: (CatalogueSorting) -> Unit,
+    sorting: CatalogueSortingState,
+    onChangeSorting: (CatalogueSortingState) -> Unit,
     onFilterUpdate: (String) -> Unit = {},
     content: LazyGridScope.() -> Unit,
 ) {

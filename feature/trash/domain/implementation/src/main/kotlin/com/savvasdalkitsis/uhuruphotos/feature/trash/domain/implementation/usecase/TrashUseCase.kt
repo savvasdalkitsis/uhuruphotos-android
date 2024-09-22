@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.trash.domain.implementation.usecase
 
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplayState
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.isVideo
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.GetTrash
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
@@ -47,10 +47,10 @@ internal class TrashUseCase @Inject constructor(
     override suspend fun refreshTrash() =
         trashRepository.refreshTrash()
 
-    override fun getTrashGalleryDisplay() : PredefinedCollageDisplay =
-        preferences.get(key, PredefinedCollageDisplay.default)
+    override fun getTrashGalleryDisplay() : PredefinedCollageDisplayState =
+        preferences.get(key, PredefinedCollageDisplayState.default)
 
-    override fun setTrashGalleryDisplay(galleryDisplay: PredefinedCollageDisplay) {
+    override fun setTrashGalleryDisplay(galleryDisplay: PredefinedCollageDisplayState) {
         preferences.set(key, galleryDisplay)
     }
 

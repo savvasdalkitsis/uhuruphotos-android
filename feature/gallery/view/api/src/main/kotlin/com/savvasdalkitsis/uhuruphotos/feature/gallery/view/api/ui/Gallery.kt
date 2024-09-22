@@ -32,10 +32,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.Swip
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.PeopleBanner
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.NoContent
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.refresh.SwipeRefresh
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UpNavButton
 
 @Composable
@@ -57,11 +57,11 @@ fun Gallery(
                     contentDescription = stringResource(string.sorting)
                 )
             }
-            AnimatedVisibility(state.collageState.collageDisplay.iconResource != 0
-                    && state.collageState.clusters.isNotEmpty()) {
+            AnimatedVisibility(state.collageState.collageDisplayState.iconResource != 0
+                    && state.collageState.clusterStates.isNotEmpty()) {
                 CollageDisplayActionButton(
                     onChange = { action(ChangeCollageDisplay(it)) },
-                    currentCollageDisplay = state.collageState.collageDisplay
+                    currentCollageDisplayState = state.collageState.collageDisplayState
                 )
             }
             additionalActionBarContent()

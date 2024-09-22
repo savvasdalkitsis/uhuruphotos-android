@@ -22,11 +22,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.Collage
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.ClusterState
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.actions.HeatMapAction
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.actions.SelectedCel
-import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state.HeatMapCollageDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state.HeatMapCollageDisplayState
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state.HeatMapState
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import kotlinx.collections.immutable.persistentListOf
@@ -52,10 +52,10 @@ fun HeatMapVisibleMedia(
             contentPadding = contentPadding,
             state = CollageState(
                 isLoading = false,
-                collageDisplay = HeatMapCollageDisplay,
-                clusters = remember(displayTitle, state.photosOnVisibleMap) {
+                collageDisplayState = HeatMapCollageDisplayState,
+                clusterStates = remember(displayTitle, state.photosOnVisibleMap) {
                     persistentListOf(
-                        Cluster(
+                        ClusterState(
                             id = "visibleItems",
                             cels = state.photosOnVisibleMap,
                             displayTitle = displayTitle,

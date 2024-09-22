@@ -26,12 +26,12 @@ import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryMutation.DisplayUserAlbums
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryMutation.Loading
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryMutation.SetItemOrder
-import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItem.AUTO
-import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItem.FAVOURITE
-import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItem.HIDDEN
-import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItem.TRASH
-import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItem.USER
-import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryLocalMedia
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItemState.AUTO
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItemState.FAVOURITE
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItemState.HIDDEN
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItemState.TRASH
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItemState.USER
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryLocalMediaState
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice.Error
@@ -94,12 +94,12 @@ data object Load : LibraryAction() {
                     refreshLocalMedia()
                     val primary = listOfNotNull(media.primaryFolder)
                     val vitrines = (primary + media.mediaFolders).map { it.toVitrine() }
-                    LibraryLocalMedia.Found(vitrines, scanningOtherFolders)
+                    LibraryLocalMediaState.FoundState(vitrines, scanningOtherFolders)
                 }
 
                 is RequiresPermissions ->
-                    LibraryLocalMedia.RequiresPermissions(media.deniedPermissions)
-                is Error -> LibraryLocalMedia.Found(emptyList(), scanningOtherFolders)
+                    LibraryLocalMediaState.RequiresPermissionsState(media.deniedPermissions)
+                is Error -> LibraryLocalMediaState.FoundState(emptyList(), scanningOtherFolders)
             }
         }.distinctUntilChanged().map(::DisplayLocalAlbums)
 

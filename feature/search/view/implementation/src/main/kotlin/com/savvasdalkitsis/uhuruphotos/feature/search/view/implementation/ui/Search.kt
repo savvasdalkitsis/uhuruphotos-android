@@ -29,8 +29,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.a
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchState
 import com.savvasdalkitsis.uhuruphotos.foundation.search.view.implementation.R
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.NoContent
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UpNavButton
 
 @Composable
@@ -43,7 +43,7 @@ fun Search(
         actionBarContent = {
             CollageDisplayActionButton(
                 onChange = { action(ChangeDisplay(it)) },
-                currentCollageDisplay = state.searchDisplay
+                currentCollageDisplayState = state.searchDisplay
             )
         },
         navigationIcon = { UpNavButton() }
@@ -59,8 +59,8 @@ fun Search(
                 contentPadding = contentPadding,
                 state = CollageState(
                     isLoading = state.isLoading,
-                    clusters = state.clusters,
-                    collageDisplay = state.searchDisplay,
+                    clusterStates = state.clusterStates,
+                    collageDisplayState = state.searchDisplay,
                 ),
                 loadingAnimation = R.raw.animation_searching,
                 onCelSelected = { cel ->

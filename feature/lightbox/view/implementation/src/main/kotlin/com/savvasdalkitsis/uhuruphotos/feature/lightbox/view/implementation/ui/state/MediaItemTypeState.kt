@@ -13,17 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.state
+package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state
 
-enum class SortOrder {
-    ASCENDING, DESCENDING;
-
-    fun toggle(): SortOrder = when (this) {
-        ASCENDING -> DESCENDING
-        DESCENDING -> ASCENDING
-    }
+enum class MediaItemTypeState {
+    TRASHED, NORMAL;
 
     companion object {
-        val default = ASCENDING
+        val default = NORMAL;
     }
 }

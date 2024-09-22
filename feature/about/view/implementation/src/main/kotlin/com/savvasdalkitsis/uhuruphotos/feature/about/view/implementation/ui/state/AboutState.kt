@@ -15,6 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.ui.state
 
+import androidx.compose.runtime.Immutable
+
+@Immutable
 data class AboutState(
     val appVersion: String = "-"
 )

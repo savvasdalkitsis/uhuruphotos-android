@@ -15,11 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action
 
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.ClusterState
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryId
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryMutation
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GallerySorting
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GallerySortingState
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
 import kotlinx.collections.immutable.toPersistentList
@@ -35,15 +35,15 @@ data class LoadCollage(val id: GalleryId) : GalleryAction() {
     ) : Flow<GalleryMutation> {
         galleryId = id
         return merge(
-            flowOf(GalleryMutation.ChangeCollageDisplay(initialCollageDisplay(id.id))),
+            flowOf(GalleryMutation.ChangeCollageDisplay(initialCollageDisplayState(id.id))),
             combine(
-                galleryDetailsFlow(id.id),
+                galleryDetailsStateFlow(id.id),
                 observeSorting(),
             ) { galleryDetails, sorting ->
                 galleryDetails.copy(
-                    clusters = when (sorting) {
-                        GallerySorting.DATE_DESC -> galleryDetails.clusters.descending()
-                        GallerySorting.DATE_ASC -> galleryDetails.clusters.ascending()
+                    clusterStates = when (sorting) {
+                        GallerySortingState.DATE_DESC -> galleryDetails.clusterStates.descending()
+                        GallerySortingState.DATE_ASC -> galleryDetails.clusterStates.ascending()
                     }
                 )
             }.map(GalleryMutation::ShowGallery),
@@ -57,7 +57,7 @@ data class LoadCollage(val id: GalleryId) : GalleryAction() {
         }
     }
 
-    private fun List<Cluster>.descending() = map { cluster ->
+    private fun List<ClusterState>.descending() = map { cluster ->
         cluster.copy(cels = cluster.cels
             .sortedByDescending {
                 it.mediaItem.sortableDate
@@ -67,7 +67,7 @@ data class LoadCollage(val id: GalleryId) : GalleryAction() {
         it.unformattedDate
     }
 
-    private fun List<Cluster>.ascending() = map { cluster ->
+    private fun List<ClusterState>.ascending() = map { cluster ->
         cluster.copy(cels = cluster.cels
             .sortedBy {
                 it.mediaItem.sortableDate

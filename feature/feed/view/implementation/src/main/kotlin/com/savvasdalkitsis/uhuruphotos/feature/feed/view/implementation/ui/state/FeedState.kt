@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.stat
 import androidx.compose.runtime.Immutable
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.state.UserAlbumState
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplayState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkable.SelectionMode
@@ -40,18 +40,18 @@ data class FeedState(
     val autoHideNavOnScroll: Boolean = true,
     val showAddToAlbumDialog: ImmutableList<UserAlbumState>? = null,
     val showNewAlbumNameDialog: Boolean = false,
-    val memories: ImmutableList<MemoryCel> = persistentListOf(),
+    val memories: ImmutableList<MemoryCelState> = persistentListOf(),
     val missingPermissions: ImmutableList<String> = persistentListOf(),
-    val syncItemDisplay: FeedMediaItemSyncDisplay = FeedMediaItemSyncDisplay.default,
+    val syncItemDisplay: FeedMediaItemSyncDisplayState = FeedMediaItemSyncDisplayState.default,
     val showRequestForCloudSync: Boolean = false,
 ) {
-    val selectedCelCount: Int = collageState.clusters.sumOf { cluster ->
+    val selectedCelCount: Int = collageState.clusterStates.sumOf { cluster ->
         cluster.cels.count { cel ->
             cel.selectionMode == SelectionMode.SELECTED
         }
     }
     val hasSelection = selectedCelCount > 0
-    val selectedCels: List<CelState> = collageState.clusters.flatMap { cluster ->
+    val selectedCels: List<CelState> = collageState.clusterStates.flatMap { cluster ->
         cluster.cels.filter { cel ->
             cel.selectionMode == SelectionMode.SELECTED
         }

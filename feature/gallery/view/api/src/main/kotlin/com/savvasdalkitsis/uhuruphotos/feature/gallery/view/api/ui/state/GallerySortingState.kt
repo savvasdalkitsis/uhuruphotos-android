@@ -15,12 +15,20 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state
 
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
+import androidx.annotation.DrawableRes
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 
-data class GalleryDetails(
-    val title: Title = Title.Text(""),
-    val clusters: List<Cluster> = emptyList(),
-    val people: List<Person> = emptyList(),
-)
+enum class GallerySortingState(@DrawableRes val icon: Int) {
+
+    DATE_DESC(drawable.ic_sort_date_descending),
+    DATE_ASC(drawable.ic_sort_date_ascending);
+
+    fun toggle() = when (this) {
+        DATE_DESC -> DATE_ASC
+        else -> DATE_DESC
+    }
+
+    companion object {
+        val default = DATE_DESC
+    }
+}

@@ -30,7 +30,7 @@ data class SelectedCel(val cel: CelState) : PersonAction() {
         navigator.navigateTo(
             LightboxNavigationRoute(
                 mediaItem = cel.mediaItem,
-                lightboxSequenceDataSource = PersonResults(state.person!!.id)
+                lightboxSequenceDataSource = PersonResults(state.personState!!.id)
             )
         )
     }

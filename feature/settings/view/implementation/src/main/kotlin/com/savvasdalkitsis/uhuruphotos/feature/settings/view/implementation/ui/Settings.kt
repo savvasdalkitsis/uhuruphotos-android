@@ -31,7 +31,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.StartJob
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.controller.SettingsViewStateController
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.MapProviderState.Selected
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.MapProviderState.SelectedState
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
@@ -111,7 +111,7 @@ internal fun Settings(
 //                        SettingsVideo(state, action)
 //                    }
                     val mapProvider = state.mapProviderState
-                    if (mapProvider is Selected) {
+                    if (mapProvider is SelectedState) {
                         CollapsibleGroup(groupState = controller.uiMaps) {
                             SettingsMaps(mapProvider, action)
                         }
@@ -139,19 +139,19 @@ internal fun Settings(
                 }
                 SuperGroup(controller.advanced) {
                     CollapsibleGroup(groupState = controller.advancedLightboxPhotoDiskCache) {
-                        SettingsCache(state.lightboxPhotoDiskCache, action)
+                        SettingsCache(state.lightboxPhotoDiskCacheState, action)
                     }
                     CollapsibleGroup(groupState = controller.advancedLightboxPhotoMemoryCache) {
-                        SettingsCache(state.lightboxPhotoMemCache, action)
+                        SettingsCache(state.lightboxPhotoMemCacheState, action)
                     }
                     CollapsibleGroup(groupState = controller.advancedThumbnailDiskCache) {
-                        SettingsCache(state.thumbnailDiskCache, action)
+                        SettingsCache(state.thumbnailDiskCacheState, action)
                     }
                     CollapsibleGroup(groupState = controller.advancedThumbnailMemoryCache) {
-                        SettingsCache(state.thumbnailMemCache, action)
+                        SettingsCache(state.thumbnailMemCacheState, action)
                     }
                     CollapsibleGroup(groupState = controller.advancedVideoDiskCache) {
-                        SettingsCache(state.videoDiskCache, action)
+                        SettingsCache(state.videoDiskCacheState, action)
                     }
                     CollapsibleGroup(groupState = controller.advancedLocalMedia) {
                         SettingsLocalMedia(action)

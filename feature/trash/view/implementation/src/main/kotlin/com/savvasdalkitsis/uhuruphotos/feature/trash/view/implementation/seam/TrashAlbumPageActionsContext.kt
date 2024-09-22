@@ -16,9 +16,9 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam
 
 import com.github.michaelbull.result.Ok
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.ClusterState
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContextFactory
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetails
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetailsState
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.Trash
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
@@ -42,14 +42,14 @@ internal class TrashAlbumPageActionsContext @Inject constructor(
 ) {
     val galleryActionsContext = galleryActionsContextFactory.create(
         galleryRefresher = { trashUseCase.refreshTrash() },
-        initialCollageDisplay = { trashUseCase.getTrashGalleryDisplay() },
+        initialCollageDisplayState = { trashUseCase.getTrashGalleryDisplay() },
         collageDisplayPersistence = { _, galleryDisplay ->
             trashUseCase.setTrashGalleryDisplay(galleryDisplay)
         },
         shouldRefreshOnLoad = {
             !trashUseCase.hasTrash()
         },
-        galleryDetailsFlow = { _ ->
+        galleryDetailsStateFlow = { _ ->
             settingsUseCase.observeBiometricsRequiredForTrashAccess()
                 .flatMapLatest { biometricsRequired ->
                     val proceed = when {
@@ -69,10 +69,10 @@ internal class TrashAlbumPageActionsContext @Inject constructor(
                     } else {
                         trashUseCase.observeTrashAlbums()
                             .map { mediaCollections ->
-                                GalleryDetails(
+                                GalleryDetailsState(
                                     title = Title.Resource(string.trash),
-                                    clusters = mediaCollections.map { mediaCollection ->
-                                        Cluster(
+                                    clusterStates = mediaCollections.map { mediaCollection ->
+                                        ClusterState(
                                             id = mediaCollection.id,
                                             unformattedDate = mediaCollection.unformattedDate,
                                             displayTitle = mediaCollection.displayTitle,

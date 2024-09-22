@@ -26,22 +26,21 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.R
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.PersonState
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Thumbnail
 
 @Composable
 fun PersonImage(
     modifier: Modifier = Modifier,
     shape: Shape,
-    person: Person
+    personState: PersonState
 ) {
-    if (person.imageUrl != null) {
+    if (personState.imageUrl != null) {
         Thumbnail(
             modifier = modifier
                 .aspectRatio(1f)
                 .clip(shape),
-            url = person.imageUrl,
+            url = personState.imageUrl,
             contentScale = ContentScale.Crop,
             contentDescription = "person image"
         )
@@ -56,8 +55,8 @@ fun PersonImage(
                 R.drawable.ic_person_6,
             )
         }
-        val icon = remember(person.id) {
-            avatars[person.id % avatars.size]
+        val icon = remember(personState.id) {
+            avatars[personState.id % avatars.size]
         }
         Icon(
             modifier = modifier

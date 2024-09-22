@@ -15,11 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam
 
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplayState
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplayState
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryMutation.Loading
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetails
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GallerySorting
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetailsState
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GallerySortingState
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
@@ -39,15 +39,15 @@ class GalleryActionsContext @AssistedInject constructor(
     @Assisted
     val galleryRefresher: suspend (Int) -> SimpleResult,
     @Assisted
-    val galleryDetailsFlow: (galleryId: Int) -> Flow<GalleryDetails>,
+    val galleryDetailsStateFlow: (galleryId: Int) -> Flow<GalleryDetailsState>,
     @Assisted
     val shouldRefreshOnLoad: suspend (galleryId: Int) -> Boolean,
     @Assisted
     val lightboxSequenceDataSource: (galleryId: Int) -> LightboxSequenceDataSource,
     @Assisted
-    val initialCollageDisplay: (galleryId: Int) -> CollageDisplay,
+    val initialCollageDisplayState: (galleryId: Int) -> CollageDisplayState,
     @Assisted
-    val collageDisplayPersistence: suspend (galleryId: Int, PredefinedCollageDisplay) -> Unit,
+    val collageDisplayPersistence: suspend (galleryId: Int, PredefinedCollageDisplayState) -> Unit,
     @Assisted
     val shouldShowSortingAction: Boolean = true,
     @PlainTextPreferences
@@ -61,10 +61,10 @@ class GalleryActionsContext @AssistedInject constructor(
     var galleryId by Delegates.notNull<GalleryId>()
     private val sortingKey get() = "gallerySorting::${galleryId.serializationUniqueId}"
 
-    fun observeSorting(): Flow<GallerySorting> =
-        preferences.observe(sortingKey, GallerySorting.default)
+    fun observeSorting(): Flow<GallerySortingState> =
+        preferences.observe(sortingKey, GallerySortingState.default)
 
-    fun setSorting(sorting: GallerySorting) {
+    fun setSorting(sorting: GallerySortingState) {
         preferences.set(sortingKey, sorting)
     }
 

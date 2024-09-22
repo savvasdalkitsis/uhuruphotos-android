@@ -15,6 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state
 
-enum class CelSelectionMode {
+enum class CelSelectionModeState {
     CHECKABLE, SELECTABLE, NONE
 }

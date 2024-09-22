@@ -15,9 +15,12 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state
 
+import androidx.compose.runtime.Immutable
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider
 
+@Immutable
 sealed class MapProviderState {
-    data object NoOptions: MapProviderState()
-    data class Selected(val current: MapProvider, val available: Set<MapProvider>) : MapProviderState()
+    data object NoOptionsState: MapProviderState()
+    @Immutable
+    data class SelectedState(val current: MapProvider, val available: Set<MapProvider>) : MapProviderState()
 }

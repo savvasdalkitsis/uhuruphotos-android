@@ -16,15 +16,14 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions
 
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryMutation
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryMutation.HideUpsellDialog
-import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItem
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItemState
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-data class DoNotShowUpsellAgainFrom(val source: LibraryItem) : LibraryAction() {
+data class DoNotShowUpsellAgainFrom(val source: LibraryItemState) : LibraryAction() {
     context(LibraryActionsContext)
     override fun handle(state: LibraryState): Flow<Mutation<LibraryState>> = flow {
         emit(HideUpsellDialog)

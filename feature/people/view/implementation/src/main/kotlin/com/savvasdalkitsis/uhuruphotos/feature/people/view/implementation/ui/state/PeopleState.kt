@@ -15,12 +15,14 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.state
 
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
+import androidx.compose.runtime.Immutable
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.PersonState
 
+@Immutable
 data class PeopleState(
     val loading: Boolean = false,
-    val people: List<Person> = emptyList(),
-    val sortOrder: SortOrder = SortOrder.default,
+    val people: List<PersonState> = emptyList(),
+    val sortOrderState: SortOrderState = SortOrderState.default,
 )
 
 

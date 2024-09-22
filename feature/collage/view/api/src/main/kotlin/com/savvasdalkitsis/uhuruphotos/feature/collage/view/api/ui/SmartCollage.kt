@@ -47,10 +47,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.api.navigation.LocalServerUrl
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.ClusterState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.Cel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.CelSelected
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelSelectionMode
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelSelectionModeState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
@@ -69,22 +69,22 @@ import kotlinx.collections.immutable.ImmutableList
 internal fun SmartCollage(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues,
-    state: ImmutableList<Cluster>,
+    state: ImmutableList<ClusterState>,
     showSelectionHeader: Boolean = false,
     maintainAspectRatio: Boolean = true,
     miniIcons: Boolean = false,
     showSyncState: Boolean = false,
     showStickyHeaders: Boolean = false,
     showScrollbarHint: Boolean = false,
-    celsSelectionMode: CelSelectionMode = CelSelectionMode.SELECTABLE,
+    celsSelectionMode: CelSelectionModeState = CelSelectionModeState.SELECTABLE,
     columnCount: Int,
     gridState: SmartGridState = rememberSmartGridState(staggered = true),
     collageHeader: @Composable() (SmartGridItemScope.() -> Unit)? = null,
     collageFooter: @Composable() (SmartGridItemScope.() -> Unit)? = null,
     onCelSelected: CelSelected,
     onCelLongPressed: (CelState) -> Unit,
-    onClusterRefreshClicked: (Cluster) -> Unit,
-    onClusterSelectionClicked: (Cluster) -> Unit,
+    onClusterRefreshClicked: (ClusterState) -> Unit,
+    onClusterSelectionClicked: (ClusterState) -> Unit,
 ) {
     Box {
         val topPadding = remember {
@@ -161,7 +161,7 @@ internal fun SmartCollage(
                         modifier = Modifier
                             .animateItem()
                             .alpha(alpha),
-                        cluster = cluster,
+                        clusterState = cluster,
                         showSelectionHeader = showSelectionHeader,
                         onClusterRefreshClicked = onClusterRefreshClicked,
                         onClusterSelectionClicked = onClusterSelectionClicked,
@@ -260,10 +260,10 @@ internal fun SmartCollage(
 private fun BoxScope.StickyHeader(
     firstOffscreenCluster: Int?,
     topPadding: Dp,
-    state: ImmutableList<Cluster>,
+    state: ImmutableList<ClusterState>,
     showSelectionHeader: Boolean,
-    onClusterRefreshClicked: (Cluster) -> Unit,
-    onClusterSelectionClicked: (Cluster) -> Unit
+    onClusterRefreshClicked: (ClusterState) -> Unit,
+    onClusterSelectionClicked: (ClusterState) -> Unit
 ) {
     AnimatedVisibility(
         visible = firstOffscreenCluster != null,
@@ -276,16 +276,16 @@ private fun BoxScope.StickyHeader(
         label = "persistent cluster",
     ) {
         val interactionSource = remember { MutableInteractionSource() }
-        val cluster = remember(firstOffscreenCluster) {
+        val clusterState = remember(firstOffscreenCluster) {
             firstOffscreenCluster?.let {
                 state.getOrNull(it)
-            } ?: Cluster("")
+            } ?: ClusterState("")
         }
         FeedClusterHeader(
             modifier = Modifier
                 .background(MaterialTheme.colors.background.copy(alpha = 0.8f))
                 .clickable(interactionSource = interactionSource, indication = null) {},
-            cluster = cluster,
+            clusterState = clusterState,
             showSelectionHeader = showSelectionHeader,
             onClusterRefreshClicked = onClusterRefreshClicked,
             onClusterSelectionClicked = onClusterSelectionClicked,
@@ -296,29 +296,29 @@ private fun BoxScope.StickyHeader(
 @Composable
 private fun FeedClusterHeader(
     modifier: Modifier,
-    cluster: Cluster,
+    clusterState: ClusterState,
     showSelectionHeader: Boolean,
-    onClusterRefreshClicked: (Cluster) -> Unit,
-    onClusterSelectionClicked: (Cluster) -> Unit,
+    onClusterRefreshClicked: (ClusterState) -> Unit,
+    onClusterSelectionClicked: (ClusterState) -> Unit,
 ) {
     val noDate = stringResource(string.no_date)
-    val title = remember(cluster.displayTitle) {
-        cluster.displayTitle.ifEmpty { noDate }
+    val title = remember(clusterState.displayTitle) {
+        clusterState.displayTitle.ifEmpty { noDate }
     }
-    val location = remember(cluster.location, cluster.displayTitle) {
-        cluster.location?.takeIf { cluster.displayTitle.isNotEmpty() }
+    val location = remember(clusterState.location, clusterState.displayTitle) {
+        clusterState.location?.takeIf { clusterState.displayTitle.isNotEmpty() }
     }
     ClusterHeader(
         modifier = modifier
             .recomposeHighlighter(),
-        state = cluster,
+        state = clusterState,
         title = title,
         location = location,
         showSelectionHeader = showSelectionHeader,
         onRefreshClicked = {
-            onClusterRefreshClicked(cluster)
+            onClusterRefreshClicked(clusterState)
         }
     ) {
-        onClusterSelectionClicked(cluster)
+        onClusterSelectionClicked(clusterState)
     }
 }

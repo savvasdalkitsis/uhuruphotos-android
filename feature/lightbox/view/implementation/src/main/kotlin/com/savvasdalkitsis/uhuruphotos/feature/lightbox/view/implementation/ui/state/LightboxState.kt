@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.
 
 import android.content.pm.ResolveInfo
 import androidx.annotation.StringRes
+import androidx.compose.runtime.Immutable
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState
@@ -24,6 +25,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Md5H
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
+@Immutable
 data class LightboxState(
     private val _currentIndex: Int = 0,
     val media: ImmutableList<SingleMediaItemState> = persistentListOf(),
@@ -65,6 +67,7 @@ data class LightboxState(
     )
 }
 
+@Immutable
 data class SingleMediaItemState(
     val id: MediaId<*>,
     val isFavourite: Boolean? = null,

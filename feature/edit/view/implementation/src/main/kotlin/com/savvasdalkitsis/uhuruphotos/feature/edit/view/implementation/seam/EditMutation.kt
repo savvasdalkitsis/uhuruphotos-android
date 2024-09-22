@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.seam
 
 import android.net.Uri
-import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.ui.state.CropRatio
+import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.ui.state.CropRatioState
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.ui.state.EditState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 
@@ -45,7 +45,7 @@ sealed class EditMutation(
         it.copy(showCropOptions = visible)
     })
 
-    data class SelectCropRatio(val ratio: CropRatio) : EditMutation({
+    data class SelectCropRatio(val ratio: CropRatioState) : EditMutation({
         it.copy(selectedRatio = ratio)
     })
 }

@@ -15,6 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.ui.state
 
+import androidx.compose.runtime.Immutable
+
+@Immutable
 data class HomeState(
     val isLoading: Boolean = true,
     val needsAuthentication: Boolean = false,

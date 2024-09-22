@@ -34,17 +34,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.previewClusterEmpty
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.ClusterState
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.previewClusterStateEmpty
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkable.SelectionMode.UNSELECTED
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
 
 @Composable
 internal fun ClusterHeader(
     modifier: Modifier = Modifier,
-    state: Cluster,
+    state: ClusterState,
     showSelectionHeader: Boolean,
     title: String = state.displayTitle,
     location: String? = state.location,
@@ -120,7 +120,7 @@ private fun CollageGroupHeaderPreview() {
     PreviewAppTheme {
         ClusterHeader(
             modifier = Modifier,
-            state = previewClusterEmpty,
+            state = previewClusterStateEmpty,
             showSelectionHeader = false,
         )
     }
@@ -132,7 +132,7 @@ private fun CollageGroupPreviewSelection() {
     PreviewAppTheme {
         ClusterHeader(
             modifier = Modifier,
-            state = previewClusterEmpty,
+            state = previewClusterStateEmpty,
             showSelectionHeader = true,
         )
     }

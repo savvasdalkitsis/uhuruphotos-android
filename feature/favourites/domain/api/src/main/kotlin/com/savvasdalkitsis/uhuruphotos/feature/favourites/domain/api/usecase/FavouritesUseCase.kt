@@ -15,12 +15,12 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.favourites.domain.api.usecase
 
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplayState
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplayState
 
 interface FavouritesUseCase {
 
-    fun getFavouriteMediaGalleryDisplay(): CollageDisplay
+    fun getFavouriteMediaGalleryDisplay(): CollageDisplayState
 
-    suspend fun setFavouriteMediaGalleryDisplay(galleryDisplay: PredefinedCollageDisplay)
+    suspend fun setFavouriteMediaGalleryDisplay(galleryDisplay: PredefinedCollageDisplayState)
 }

@@ -15,24 +15,26 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state
 
+import androidx.compose.runtime.Immutable
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.GetPeopleForAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.people.People
 
-data class Person(
+@Immutable
+data class PersonState(
     val name: String,
     val imageUrl: String?,
     val photos: Int,
     val id: Int,
 )
 
-fun People.toPerson(urlResolver: (String) -> String?) = Person(
+fun People.toPerson(urlResolver: (String) -> String?) = PersonState(
     id = id,
     name = name,
     imageUrl = faceUrl?.let { urlResolver(it) },
     photos = faceCount,
 )
 
-suspend fun GetPeopleForAutoAlbum.toPerson(urlResolver: suspend (String) -> String?) = Person(
+suspend fun GetPeopleForAutoAlbum.toPerson(urlResolver: suspend (String) -> String?) = PersonState(
     id = personId,
     name = name ?: "",
     imageUrl = faceUrl?.let { urlResolver(it) },

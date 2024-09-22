@@ -28,10 +28,10 @@ import androidx.compose.ui.platform.LocalDensity
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.AccountOverviewActionBar
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.AccountOverviewContent
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.Collage
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplay.ALWAYS_OFF
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplay.ALWAYS_ON
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplay.SHOW_ON_SCROLL
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplayState
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplayState.ALWAYS_OFF
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplayState.ALWAYS_ON
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplayState.SHOW_ON_SCROLL
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.CelLongPressed
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.ChangeDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.ClusterRefreshClicked
@@ -50,7 +50,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.ui.HomeScaffold
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.DeleteFullySyncedPermissionDialog
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.DeletePermissionDialog
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.TrashPermissionDialog
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelSelectionMode
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelSelectionModeState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.blurIf
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
@@ -94,7 +94,7 @@ private fun Feed(
     additionalContent: @Composable () -> Unit,
 ) {
     val coroutineScope = rememberCoroutineScope()
-    val gridState = rememberSmartGridState(state.collageState.collageDisplay.usingStaggeredGrid)
+    val gridState = rememberSmartGridState(state.collageState.collageDisplayState.usingStaggeredGrid)
 
     fun scrollToTop() {
         coroutineScope.launch {
@@ -128,7 +128,7 @@ private fun Feed(
         title = {
             FeedTitle(action, ::scrollToTop, state.hasSelection, state.selectedCelCount)
         },
-        homeFeedDisplay = state.collageState.collageDisplay,
+        homeFeedDisplay = state.collageState.collageDisplayState,
         selectionMode = state.hasSelection,
         showLibrary = state.showLibrary,
         showBottomNavigationBar = !state.autoHideNavOnScroll || gridState.isScrollingUp(),
@@ -140,7 +140,7 @@ private fun Feed(
                 shouldShowDownloadIcon = state.shouldShowDownloadIcon,
                 shouldShowUploadIcon = state.shouldShowUploadIcon,
                 hasSelection = state.hasSelection,
-                collageDisplay = state.collageState.collageDisplay,
+                collageDisplayState = state.collageState.collageDisplayState,
                 action = action
             )
             actionBarContent()
@@ -156,7 +156,7 @@ private fun Feed(
         fun scrollToCel(cel: CelState) {
             coroutineScope.launch {
                 var found = false
-                val index = state.collageState.clusters.fold(0) { index, cluster ->
+                val index = state.collageState.clusterStates.fold(0) { index, cluster ->
                     if (found) {
                         index
                     } else if (cluster.cels.contains(cel)) {
@@ -183,7 +183,7 @@ private fun Feed(
                 showSyncState = showSyncState,
                 showStickyHeaders = true,
                 showScrollbarHint = true,
-                celsSelectionMode = CelSelectionMode.CHECKABLE,
+                celsSelectionMode = CelSelectionModeState.CHECKABLE,
                 gridState = gridState,
                 collageHeader = {
                     FeedHeaders(
@@ -200,7 +200,7 @@ private fun Feed(
                 onCelSelected = { cel ->
                     action(SelectedCel(cel))
                 },
-                onChangeDisplay = { action(ChangeDisplay(it as PredefinedCollageDisplay)) },
+                onChangeDisplay = { action(ChangeDisplay(it as PredefinedCollageDisplayState)) },
                 onCelLongPressed = {
                     action(CelLongPressed(it))
                 },

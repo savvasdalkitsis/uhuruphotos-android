@@ -15,6 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state
 
+import androidx.compose.runtime.Immutable
+
+@Immutable
 data class VitrineState(
     val cel1: CelState? = null,
     val cel2: CelState? = null,

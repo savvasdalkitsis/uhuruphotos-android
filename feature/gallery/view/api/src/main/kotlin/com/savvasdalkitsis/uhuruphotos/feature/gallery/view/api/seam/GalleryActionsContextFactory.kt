@@ -15,9 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam
 
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetails
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplayState
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplayState
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetailsState
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import dagger.assisted.AssistedFactory
@@ -28,11 +28,11 @@ interface GalleryActionsContextFactory {
 
     fun create(
         galleryRefresher: suspend (Int) -> SimpleResult,
-        galleryDetailsFlow: (galleryId: Int) -> Flow<GalleryDetails>,
+        galleryDetailsStateFlow: (galleryId: Int) -> Flow<GalleryDetailsState>,
         shouldRefreshOnLoad: suspend (galleryId: Int) -> Boolean,
         lightboxSequenceDataSource: (galleryId: Int) -> LightboxSequenceDataSource,
-        initialCollageDisplay: (galleryId: Int) -> CollageDisplay,
-        collageDisplayPersistence: suspend (galleryId: Int, PredefinedCollageDisplay) -> Unit,
+        initialCollageDisplayState: (galleryId: Int) -> CollageDisplayState,
+        collageDisplayPersistence: suspend (galleryId: Int, PredefinedCollageDisplayState) -> Unit,
         shouldShowSortingAction: Boolean = true,
     ): GalleryActionsContext
 }

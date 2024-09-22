@@ -48,7 +48,7 @@ import com.bumble.appyx.navmodel.backstack.operation.push
 import com.bumble.appyx.navmodel.backstack.operation.singleTop
 import com.commandiron.bubble_navigation_bar_compose.BubbleNavigationBar
 import com.commandiron.bubble_navigation_bar_compose.BubbleNavigationBarItem
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplayState
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.api.navigation.DiscoverNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.navigation.FeedNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.ui.NavigationStyle.BOTTOM_BAR
@@ -70,7 +70,7 @@ fun homeNavigationStyle() = when (LocalWindowSize.current.widthSizeClass) {
 @Composable
 fun HomeNavigationBar(
     contentPadding: PaddingValues = PaddingValues(0.dp),
-    homeFeedDisplay: CollageDisplay,
+    homeFeedDisplay: CollageDisplayState,
     showLibrary: Boolean,
     onReselected: () -> Unit = {},
 ) {
@@ -109,7 +109,7 @@ fun HomeNavigationBar(
 
 @Composable
 private fun Items(
-    homeFeedDisplay: CollageDisplay,
+    homeFeedDisplay: CollageDisplayState,
     showLibrary: Boolean,
     onReselected: () -> Unit,
     rowScope: RowScope? = null,

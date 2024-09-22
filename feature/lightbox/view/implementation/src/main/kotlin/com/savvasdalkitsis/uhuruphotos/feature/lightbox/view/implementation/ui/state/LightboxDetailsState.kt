@@ -15,8 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state
 
+import androidx.compose.runtime.Immutable
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.domain.api.model.LightboxDetails
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.PersonState
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 import kotlinx.collections.immutable.ImmutableList
@@ -26,6 +27,7 @@ import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.collections.immutable.toPersistentSet
 
+@Immutable
 data class LightboxDetailsState(
     val formattedDateTime: String? = null,
     val location: String? = null,
@@ -33,7 +35,7 @@ data class LightboxDetailsState(
     val remotePaths: ImmutableSet<String> = persistentSetOf(),
     val localPaths: ImmutableSet<String> = persistentSetOf(),
     val hash: String? = null,
-    val peopleInMediaItem: ImmutableList<Person> = persistentListOf(),
+    val peopleInMediaItem: ImmutableList<PersonState> = persistentListOf(),
     val searchCaptions: ImmutableSet<String> = persistentSetOf(),
     val size: String? = null,
     val fStop: String? = null,

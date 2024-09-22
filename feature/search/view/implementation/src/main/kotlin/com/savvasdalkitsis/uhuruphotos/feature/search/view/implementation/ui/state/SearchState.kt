@@ -15,16 +15,18 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state
 
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
+import androidx.compose.runtime.Immutable
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.ClusterState
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplayState
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplayState
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
+@Immutable
 data class SearchState(
     val query: String = "",
     val isLoading: Boolean = true,
     val isError: Boolean = false,
-    val clusters: ImmutableList<Cluster> = persistentListOf(),
-    val searchDisplay: CollageDisplay = PredefinedCollageDisplay.default,
+    val clusterStates: ImmutableList<ClusterState> = persistentListOf(),
+    val searchDisplay: CollageDisplayState = PredefinedCollageDisplayState.default,
 )

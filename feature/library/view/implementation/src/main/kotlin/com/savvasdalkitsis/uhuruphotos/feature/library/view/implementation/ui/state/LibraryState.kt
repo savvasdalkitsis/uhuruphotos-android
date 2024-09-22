@@ -15,8 +15,10 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state
 
+import androidx.compose.runtime.Immutable
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.VitrineState
 
+@Immutable
 data class LibraryState(
     val loading: Boolean = false,
     val showTrash: Boolean = true,
@@ -24,7 +26,7 @@ data class LibraryState(
     val autoAlbums: VitrineState? = null,
     val userAlbums: VitrineState? = null,
     val favouritePhotos: VitrineState? = null,
-    val localMedia: LibraryLocalMedia? = null,
-    val items: List<LibraryItem> = emptyList(),
-    val showUpsellDialogFromSource: LibraryItem? = null,
+    val localMedia: LibraryLocalMediaState? = null,
+    val items: List<LibraryItemState> = emptyList(),
+    val showUpsellDialogFromSource: LibraryItemState? = null,
 )

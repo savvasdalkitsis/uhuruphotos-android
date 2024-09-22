@@ -25,7 +25,7 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
 
 @Immutable
-data class Cluster(
+data class ClusterState(
     val id: String,
     val cels: ImmutableList<CelState> = persistentListOf(),
     val displayTitle: String = "",
@@ -36,7 +36,7 @@ data class Cluster(
     val hasAnyCelsWithRemoteMedia = cels.any { it.mediaItem.id.preferRemote is MediaId.Remote }
 }
 
-val previewClusterEmpty = Cluster(
+val previewClusterStateEmpty = ClusterState(
     "id",
     persistentListOf(),
     displayTitle = "01 January 2022",
@@ -45,7 +45,7 @@ val previewClusterEmpty = Cluster(
     showRefreshIcon = true,
 )
 
-fun MediaCollection.toCluster() = Cluster(
+fun MediaCollection.toCluster() = ClusterState(
     id = id,
     cels = mediaItems.map { it.toCel() }.toPersistentList(),
     displayTitle = displayTitle,

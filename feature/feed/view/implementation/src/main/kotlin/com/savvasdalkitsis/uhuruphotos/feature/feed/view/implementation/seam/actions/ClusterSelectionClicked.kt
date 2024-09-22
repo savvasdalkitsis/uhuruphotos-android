@@ -15,18 +15,18 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions
 
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.ClusterState
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkable.SelectionMode
 import kotlinx.coroutines.flow.flow
 
-data class ClusterSelectionClicked(val cluster: Cluster) : FeedAction() {
+data class ClusterSelectionClicked(val clusterState: ClusterState) : FeedAction() {
     context(FeedActionsContext) override fun handle(
         state: FeedState
     ) = flow<FeedMutation> {
-        val cels = cluster.cels
+        val cels = clusterState.cels
         uiUseCase.performLongPressHaptic()
         if (cels.all { it.selectionMode == SelectionMode.SELECTED }) {
             cels.forEach { it.deselect() }

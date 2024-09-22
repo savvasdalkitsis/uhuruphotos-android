@@ -15,6 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.ui.state
 
+import androidx.compose.runtime.Immutable
+
+@Immutable
 data class LocalAlbumState(
     val deniedPermissions: List<String> = emptyList(),
     val contributingToPortfolio: Boolean? = null,

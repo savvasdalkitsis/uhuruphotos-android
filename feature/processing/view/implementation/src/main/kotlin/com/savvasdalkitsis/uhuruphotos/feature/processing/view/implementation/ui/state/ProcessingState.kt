@@ -15,10 +15,12 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.ui.state
 
+import androidx.compose.runtime.Immutable
 import com.savvasdalkitsis.uhuruphotos.feature.processing.domain.api.model.ProcessingItem
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
+@Immutable
 data class ProcessingState(
     val isLoading: Boolean = true,
     val items: ImmutableList<ProcessingItem> = persistentListOf(),

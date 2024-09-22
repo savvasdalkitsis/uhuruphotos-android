@@ -80,7 +80,7 @@ private fun DiscoverPage(
                 Text(stringResource(string.discover))
             }
         },
-        homeFeedDisplay = state.collageDisplay,
+        homeFeedDisplay = state.collageDisplayState,
         showLibrary = state.showLibrary,
         actionBarContent = {
             actionBarContent()

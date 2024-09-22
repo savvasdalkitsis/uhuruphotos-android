@@ -61,11 +61,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.SetRemoteAccess
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.SetUploadsInProgress
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.ShowJobs
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.BiometricsSetting.Enrolled
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.BiometricsSetting.NotEnrolled
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.BiometricsSettingState.EnrolledState
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.BiometricsSettingState.NotEnrolledState
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.model.Biometrics
-import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.model.Biometrics.*
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
@@ -151,8 +150,8 @@ data object LoadSettings : SettingsAction() {
         hiddenPhotos: Boolean,
         trash: Boolean,
     ) = when (this) {
-        Enrolled -> Enrolled(app, hiddenPhotos, trash)
-        Biometrics.NotEnrolled -> NotEnrolled
-        NoHardware -> null
+        Biometrics.Enrolled -> EnrolledState(app, hiddenPhotos, trash)
+        Biometrics.NotEnrolled -> NotEnrolledState
+        Biometrics.NoHardware -> null
     }
 }

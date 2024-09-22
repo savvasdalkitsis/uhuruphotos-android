@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam
 
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.toCluster
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContextFactory
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetails
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetailsState
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.LocalAlbum
 import com.savvasdalkitsis.uhuruphotos.feature.local.domain.api.usecase.LocalAlbumUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
@@ -30,19 +30,19 @@ internal class LocalAlbumPageActionsContext @Inject constructor(
 ) {
     val galleryActionsContext = galleryActionsContextFactory.create(
         galleryRefresher = { localAlbumUseCase.refreshLocalAlbum(it) },
-        initialCollageDisplay = { localAlbumUseCase.getLocalAlbumGalleryDisplay(it) },
+        initialCollageDisplayState = { localAlbumUseCase.getLocalAlbumGalleryDisplay(it) },
         collageDisplayPersistence = { id, galleryDisplay ->
             localAlbumUseCase.setLocalAlbumGalleryDisplay(id, galleryDisplay)
         },
         shouldRefreshOnLoad = { albumId ->
             localAlbumUseCase.getLocalAlbum(albumId).isEmpty()
         },
-        galleryDetailsFlow = { albumId ->
+        galleryDetailsStateFlow = { albumId ->
             localAlbumUseCase.observeLocalAlbum(albumId)
                 .map { (bucket, albums) ->
-                    GalleryDetails(
+                    GalleryDetailsState(
                         title = Title.Text(bucket.displayName),
-                        clusters = albums.map { it.toCluster() },
+                        clusterStates = albums.map { it.toCluster() },
                     )
                 }
         },

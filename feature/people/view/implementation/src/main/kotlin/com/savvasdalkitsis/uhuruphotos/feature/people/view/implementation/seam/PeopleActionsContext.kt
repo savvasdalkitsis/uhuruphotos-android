@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam
 
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.people.domain.api.usecase.PeopleUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.state.SortOrder
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.state.SortOrderState
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
@@ -33,8 +33,8 @@ class PeopleActionsContext @Inject constructor(
     val navigator: Navigator,
 ) {
 
-    private val _sort: MutableSharedFlow<SortOrder> = MutableStateFlow(SortOrder.default)
-    val sort: Flow<SortOrder> get() = _sort
+    private val _sort: MutableSharedFlow<SortOrderState> = MutableStateFlow(SortOrderState.default)
+    val sort: Flow<SortOrderState> get() = _sort
     private val _loading: MutableSharedFlow<Boolean> = MutableStateFlow(false)
     val loading: Flow<Boolean> get() = _loading
 
@@ -47,7 +47,7 @@ class PeopleActionsContext @Inject constructor(
         _loading.emit(false)
     }
 
-    suspend fun changeSort(sortOrder: SortOrder) {
-        _sort.emit(sortOrder)
+    suspend fun changeSort(sortOrderState: SortOrderState) {
+        _sort.emit(sortOrderState)
     }
 }

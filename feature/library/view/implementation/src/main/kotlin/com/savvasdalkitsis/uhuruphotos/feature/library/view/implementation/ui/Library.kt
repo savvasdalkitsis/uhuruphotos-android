@@ -25,8 +25,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.AccountOverviewActionBar
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.AccountOverviewContent
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplayState
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplayState
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.ui.HomeScaffold
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.DismissUpsellDialog
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.DoNotShowUpsellAgainFrom
@@ -41,8 +41,8 @@ import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.Logo
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.refresh.SwipeRefresh
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.dialogs.UpsellDialog
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.refresh.SwipeRefresh
 
 @Composable
 internal fun Library(
@@ -51,7 +51,7 @@ internal fun Library(
 ) {
     Library(
         state = state.first,
-        homeFeedDisplay = PredefinedCollageDisplay.default,
+        homeFeedDisplay = PredefinedCollageDisplayState.default,
         isShowingPopUp = state.second.showAccountOverview,
         action = { actions(Either.Left(it)) },
         actionBarContent = {
@@ -69,7 +69,7 @@ internal fun Library(
 @Composable
 private fun Library(
     state: LibraryState,
-    homeFeedDisplay: CollageDisplay,
+    homeFeedDisplay: CollageDisplayState,
     isShowingPopUp: Boolean,
     action: (LibraryAction) -> Unit,
     actionBarContent: @Composable () -> Unit,

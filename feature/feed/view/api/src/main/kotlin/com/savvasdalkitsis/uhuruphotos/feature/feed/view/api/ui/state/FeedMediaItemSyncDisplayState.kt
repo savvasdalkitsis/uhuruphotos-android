@@ -13,22 +13,22 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state
+package com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state
 
 import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 
-enum class GallerySorting(@DrawableRes val icon: Int) {
-
-    DATE_DESC(drawable.ic_sort_date_descending),
-    DATE_ASC(drawable.ic_sort_date_ascending);
-
-    fun toggle() = when (this) {
-        DATE_DESC -> DATE_ASC
-        else -> DATE_DESC
-    }
+enum class FeedMediaItemSyncDisplayState(
+    @StringRes val friendlyName: Int,
+    @DrawableRes val icon: Int,
+) {
+    SHOW_ON_SCROLL(string.show_on_scroll, drawable.ic_swipe_vertical),
+    ALWAYS_ON(string.show_always, drawable.ic_visible),
+    ALWAYS_OFF(string.show_never, drawable.ic_invisible);
 
     companion object {
-        val default = DATE_DESC
+        val default = SHOW_ON_SCROLL
     }
 }

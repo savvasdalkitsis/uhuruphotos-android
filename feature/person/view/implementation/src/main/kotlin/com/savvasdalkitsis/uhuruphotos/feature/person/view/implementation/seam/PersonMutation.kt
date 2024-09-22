@@ -15,10 +15,10 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam
 
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.ClusterState
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplayState
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.PersonState
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.ui.state.PersonState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import kotlinx.collections.immutable.toPersistentList
@@ -31,19 +31,19 @@ sealed class PersonMutation(
         it.copyFeed { copy(isLoading = true) }
     })
 
-    data class ShowPersonMedia(val clusters: List<Cluster>) : PersonMutation({
+    data class ShowPersonMedia(val clusterStates: List<ClusterState>) : PersonMutation({
         it.copyFeed { copy(
             isLoading = false,
-            clusters = clusters.toPersistentList(),
+            clusterStates = clusterStates.toPersistentList(),
         ) }
     })
 
-    data class ShowPersonDetails(val person: Person) : PersonMutation({
-        it.copy(person = person)
+    data class ShowPersonDetails(val personState: com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.PersonState) : PersonMutation({
+        it.copy(personState = personState)
     })
 
-    data class SetFeedDisplay(val display: CollageDisplay) : PersonMutation({
-        it.copyFeed { copy(collageDisplay = display) }
+    data class SetFeedDisplay(val display: CollageDisplayState) : PersonMutation({
+        it.copyFeed { copy(collageDisplayState = display) }
     })
 }
 

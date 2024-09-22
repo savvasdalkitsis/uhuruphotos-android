@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.api.navigation.Au
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.seam.AutoAlbumActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.seam.action.AutoAlbumAction
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.seam.action.SetAlbumId
-import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.ui.state.AutoAlbumCollageDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.ui.state.AutoAlbumCollageDisplayState
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.ui.state.AutoAlbumState
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryId
@@ -44,7 +44,7 @@ internal class AutoAlbumViewModel @Inject constructor(
         ActionHandlerWithContext(autoAlbumActionsContext.galleryActionsContext),
         ActionHandlerWithContext(autoAlbumActionsContext),
     ),
-    GalleryState(collageState = CollageState(collageDisplay = AutoAlbumCollageDisplay)) to AutoAlbumState()
+    GalleryState(collageState = CollageState(collageDisplayState = AutoAlbumCollageDisplayState)) to AutoAlbumState()
 ) {
 
     override fun onRouteSet(route: AutoAlbumNavigationRoute) {

@@ -30,7 +30,7 @@ import com.shazam.shazamcrest.MatcherAssert.assertThat
 import com.shazam.shazamcrest.matcher.Matchers.sameBeanAs
 import io.mockk.mockk
 import org.junit.Test
-import java.util.*
+import java.util.UUID
 
 class UploadsUseCaseTest {
 

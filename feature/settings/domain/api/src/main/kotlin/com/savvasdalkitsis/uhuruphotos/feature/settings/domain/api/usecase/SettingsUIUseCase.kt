@@ -1,6 +1,6 @@
 package com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase
 
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplayState
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CollageShape
@@ -17,7 +17,7 @@ interface SettingsUIUseCase {
     fun getShowBannerAskingForCloudSyncOnFeed(): Boolean
     fun getShowBannerAskingForLocalMediaPermissionsOnFeed(): Boolean
     fun getShowBannerAskingForLocalMediaPermissionsOnHeatmap(): Boolean
-    suspend fun getFeedMediaItemSyncDisplay(): FeedMediaItemSyncDisplay
+    suspend fun getFeedMediaItemSyncDisplay(): FeedMediaItemSyncDisplayState
     fun getShouldShowFeedSyncProgress(): Boolean
     fun getShouldShowFeedDetailsSyncProgress(): Boolean
     fun getShouldShowPrecacheProgress(): Boolean
@@ -35,7 +35,7 @@ interface SettingsUIUseCase {
     fun observeMemoriesEnabled(): Flow<Boolean>
     fun observeAnimateVideoThumbnails(): Flow<Boolean>
     fun observeMaxAnimatedVideoThumbnails(): Flow<Int>
-    fun observeFeedMediaItemSyncDisplay(): Flow<FeedMediaItemSyncDisplay>
+    fun observeFeedMediaItemSyncDisplay(): Flow<FeedMediaItemSyncDisplayState>
     fun observeShouldShowFeedSyncProgress(): Flow<Boolean>
     fun observeShouldShowFeedDetailsSyncProgress(): Flow<Boolean>
     fun observeShouldShowPrecacheProgress(): Flow<Boolean>
@@ -55,7 +55,7 @@ interface SettingsUIUseCase {
     fun setShowBannerAskingForCloudSyncOnFeed(show: Boolean)
     fun setShowBannerAskingForLocalMediaPermissionsOnFeed(show: Boolean)
     fun setShowBannerAskingForLocalMediaPermissionsOnHeatmap(show: Boolean)
-    fun setFeedMediaItemSyncDisplay(display: FeedMediaItemSyncDisplay)
+    fun setFeedMediaItemSyncDisplay(display: FeedMediaItemSyncDisplayState)
     fun setShouldShowFeedSyncProgress(show: Boolean)
     fun setShouldShowFeedDetailsSyncProgress(show: Boolean)
     fun setShouldShowPrecacheProgress(show: Boolean)
