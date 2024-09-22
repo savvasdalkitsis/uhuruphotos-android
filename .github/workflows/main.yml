@@ -51,7 +51,7 @@ jobs:
       if: success() || failure()
       with:
         name: Tests
-        path: "**/*.xml"
+        path: "**/TEST-*.xml"
         reporter: java-junit
 
       #    - name: run tests
