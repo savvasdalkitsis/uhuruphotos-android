@@ -31,14 +31,14 @@
         <item quantity="other">Presunúť %d fotiek do koša</item>
     </plurals>
     <plurals name="restore_photos_confirmation">
-        <item quantity="one">Naozaj chcete obnoviť túto %d fotku\?</item>
-        <item quantity="few">Naozaj chcete obnoviť tieto %d fotky\?</item>
-        <item quantity="other">Naozaj chcete obnoviť týchto %d fotiek\?</item>
+        <item quantity="one">Naozaj chcete obnoviť túto %d fotku?</item>
+        <item quantity="few">Naozaj chcete obnoviť tieto %d fotky?</item>
+        <item quantity="other">Naozaj chcete obnoviť týchto %d fotiek?</item>
     </plurals>
     <plurals name="trash_media_confirmation">
-        <item quantity="one">Naozaj chcete poslať túto %d mediálnu položku do koša\?</item>
-        <item quantity="few">Naozaj chcete poslať tieto %d mediálne položky do koša\?</item>
-        <item quantity="other">Naozaj chcete poslať týchto %d mediálnych položiek do koša\?</item>
+        <item quantity="one">Naozaj chcete poslať túto %d mediálnu položku do koša?</item>
+        <item quantity="few">Naozaj chcete poslať tieto %d mediálne položky do koša?</item>
+        <item quantity="other">Naozaj chcete poslať týchto %d mediálnych položiek do koša?</item>
     </plurals>
     <string name="people">Ľudia</string>
     <string name="view_all">Zobraziť všetky</string>
@@ -69,14 +69,14 @@
     </plurals>
     <string name="error_refreshing_people">Pri obnovovaní ľudí sa vyskytla chyba</string>
     <plurals name="restore_media_confirmation">
-        <item quantity="one">Naozaj chcete obnoviť túto %d mediálnu položku\?</item>
-        <item quantity="few">Naozaj chcete obnoviť tieto %d mediálne položky\?</item>
-        <item quantity="other">Naozaj chcete obnoviť týchto %d mediálnych položiek\?</item>
+        <item quantity="one">Naozaj chcete obnoviť túto %d mediálnu položku?</item>
+        <item quantity="few">Naozaj chcete obnoviť tieto %d mediálne položky?</item>
+        <item quantity="other">Naozaj chcete obnoviť týchto %d mediálnych položiek?</item>
     </plurals>
     <plurals name="trash_photos_confirmation">
-        <item quantity="one">Naozaj chcete poslať túto %d fotku do koša\?</item>
-        <item quantity="few">Naozaj chcete poslať tieto %d fotky do koša\?</item>
-        <item quantity="other">Naozaj chcete poslať týchto %d fotiek do koša\?</item>
+        <item quantity="one">Naozaj chcete poslať túto %d fotku do koša?</item>
+        <item quantity="few">Naozaj chcete poslať tieto %d fotky do koša?</item>
+        <item quantity="other">Naozaj chcete poslať týchto %d fotiek do koša?</item>
     </plurals>
     <string name="error_loading_photo_details">Pri načítavaní podrobností fotografie sa vyskytla chyba</string>
     <string name="gallery_size">Veľkosť galérie</string>
