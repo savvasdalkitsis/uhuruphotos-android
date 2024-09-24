@@ -175,7 +175,9 @@ class ArchitectureTests {
             .assertTrue {
                 it.hasAllFunctions { function ->
                     val name = function.returnType?.name.orEmpty()
-                    name.endsWith("ResponseData") || name.startsWith("Response<") || name.isEmpty()
+                    name.endsWith("ResponseData") ||
+                            (name.startsWith("Response<") && name.endsWith("ResponseData>")) ||
+                            name.isEmpty()
                 }
             }
     }
