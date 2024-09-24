@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.album.auto.domain.implementation
 
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
-import com.savvasdalkitsis.uhuruphotos.feature.album.auto.domain.implementation.service.AutoAlbumService
+import com.savvasdalkitsis.uhuruphotos.feature.album.auto.domain.implementation.service.http.AutoAlbumService
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.Database
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.AutoAlbumPeopleQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.AutoAlbumPhotosQueries
@@ -28,8 +28,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.GetPeopl
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitList
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemDetailsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.people.PeopleQueries
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.toDbModel
-import com.savvasdalkitsis.uhuruphotos.feature.people.domain.api.service.model.toDbModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.toDbModel
+import com.savvasdalkitsis.uhuruphotos.feature.people.domain.api.service.http.response.toDbModel
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult

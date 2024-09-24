@@ -17,8 +17,8 @@ package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.domain.implementa
 
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
-import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.domain.implementation.service.UserAlbumsService
-import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.domain.implementation.service.model.toUserAlbums
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.domain.implementation.service.http.UserAlbumsService
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.domain.implementation.service.http.response.toUserAlbums
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbums
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbumsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitList

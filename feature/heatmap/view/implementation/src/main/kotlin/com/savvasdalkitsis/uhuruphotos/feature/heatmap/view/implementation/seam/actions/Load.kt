@@ -51,13 +51,13 @@ data object Load : HeatMapAction() {
         mediaUseCase.observeLocalMedia()
             .mapNotNull {
                 when (it) {
-                    is MediaItemsOnDevice.RequiresPermissions -> HeatMapMutation.ShowLocalStoragePermissionRequest(it)
+                    is MediaItemsOnDevice.RequiresPermissions -> HeatMapMutation.ShowRequestForLocalStoragePermission(it)
                         .takeIf {
                         settingsUIUseCase.getShowBannerAskingForLocalMediaPermissionsOnHeatmap()
                     }
                     else -> {
                         localMediaWorkScheduler.scheduleLocalMediaSyncNowIfNotRunning()
-                        HeatMapMutation.HideLocalStoragePermissionRequest
+                        HeatMapMutation.HideRequestLocalStoragePermission
                     }
                 }
             },

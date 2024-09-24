@@ -5,6 +5,7 @@ import com.lemonappdev.konsist.api.KoModifier
 import com.lemonappdev.konsist.api.Konsist
 import com.lemonappdev.konsist.api.architecture.KoArchitectureCreator.assertArchitecture
 import com.lemonappdev.konsist.api.architecture.Layer
+import com.lemonappdev.konsist.api.container.KoScope
 import com.lemonappdev.konsist.api.ext.list.properties
 import com.lemonappdev.konsist.api.ext.list.withAnnotationNamed
 import com.lemonappdev.konsist.api.ext.list.withNameEndingWith
@@ -121,4 +122,92 @@ class ArchitectureTests {
                 it.hasAnnotationWithName("com.squareup.moshi.Json")
             }
     }
+
+    @Test
+    fun `http ResponseData classes are in the correct package`() {
+        Konsist.scopeFromProject()
+            .httpResponseClasses()
+            .assertTrue {
+                it.resideInPackage("..service.http.response")
+            }
+    }
+
+    @Test
+    fun `http ResponseData classes are json classes`() {
+        Konsist.scopeFromProject()
+            .httpResponseClasses()
+            .assertTrue {
+                it.hasAnnotationWithName("com.squareup.moshi.JsonClass")
+            }
+    }
+
+    @Test
+    fun `http RequestData classes are in the correct package`() {
+        Konsist.scopeFromProject()
+            .httpRequestClasses()
+            .assertTrue {
+                it.resideInPackage("..service.http.request")
+            }
+    }
+
+    @Test
+    fun `http RequestData classes are json classes`() {
+        Konsist.scopeFromProject()
+            .httpRequestClasses()
+            .assertTrue {
+                it.hasAnnotationWithName("com.squareup.moshi.JsonClass")
+            }
+    }
+
+    @Test
+    fun `retrofit services are in the right package`() {
+        Konsist.scopeFromProject()
+            .retrofitServices()
+            .assertTrue {
+                it.resideInPackage("..service.http")
+            }
+    }
+
+    @Test
+    fun `retrofit services only return ResponseData types`() {
+        Konsist.scopeFromProject()
+            .retrofitServices()
+            .assertTrue {
+                it.hasAllFunctions { function ->
+                    val name = function.returnType?.name.orEmpty()
+                    name.endsWith("ResponseData") || name.startsWith("Response<") || name.isEmpty()
+                }
+            }
+    }
+
+    @Test
+    fun `retrofit services only have raw or RequestData types as parameters`() {
+        val rawTypes = setOf("Int", "String", "Boolean", "Float", "Double", "Long", "MultipartBody.Part")
+        Konsist.scopeFromProject()
+            .retrofitServices()
+            .assertTrue {
+                it.hasAllFunctions { function ->
+                    function.hasAllParameters { param ->
+                        param.type.name in rawTypes || param.type.name.endsWith("RequestData")
+                    }
+                }
+            }
+    }
+
+    private fun KoScope.httpResponseClasses() = classesAndInterfacesAndObjects()
+        .filter { !it.hasModifier(KoModifier.COMPANION) }
+        .withNameEndingWith("ResponseData")
+
+    private fun KoScope.httpRequestClasses() = classesAndInterfacesAndObjects()
+        .filter { !it.hasModifier(KoModifier.COMPANION) }
+        .withNameEndingWith("RequestData")
+
+    private fun KoScope.retrofitServices() = interfaces().filter {
+        it.hasFunction { f ->
+            f.annotations.any { annotation ->
+                annotation.fullyQualifiedName.orEmpty().contains("retrofit2.http")
+            }
+        }
+    }
+
 }

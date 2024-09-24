@@ -22,8 +22,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.AuthStatus.
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.AuthenticationLoginUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.Credentials
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.repository.AuthenticationRepository
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.service.AuthenticationService
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.service.model.toAuthenticationCredentials
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.service.http.AuthenticationService
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.service.http.request.toAuthenticationRequestData
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.Database
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.clearAllUserLinkedTables
@@ -49,7 +49,7 @@ class AuthenticationLoginUseCase @Inject constructor(
         credentials: Credentials,
         rememberCredentials: Boolean,
     ): Result<AuthStatus, Throwable> = runCatchingWithLog {
-        val response = authenticationService.login(credentials.toAuthenticationCredentials)
+        val response = authenticationService.login(credentials.toAuthenticationRequestData)
         with(authenticationRepository) {
             if (getUserId() != response.access.userId) {
                 logOut()

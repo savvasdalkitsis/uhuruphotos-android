@@ -30,8 +30,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Md5Hash
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.deserializePaths
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.deserializePeopleNames
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.deserializePaths
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.deserializePeopleNames
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.people.domain.api.usecase.PeopleUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase

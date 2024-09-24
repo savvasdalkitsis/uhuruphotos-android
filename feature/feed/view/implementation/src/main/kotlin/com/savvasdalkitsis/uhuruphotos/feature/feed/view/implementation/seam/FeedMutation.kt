@@ -106,7 +106,7 @@ sealed class FeedMutation(
         it.copy(localMediaSyncRunning = running)
     })
 
-    data class ShowLocalStoragePermissionRequest(val permissions: MediaItemsOnDevice.RequiresPermissions) : FeedMutation({
+    data class ShowRequestForLocalStoragePermission(val permissions: MediaItemsOnDevice.RequiresPermissions) : FeedMutation({
         it.copy(showRequestPermissionForLocalMediaAccess = permissions)
     })
 
@@ -114,15 +114,15 @@ sealed class FeedMutation(
         it.copy(missingPermissions = deniedPermissions.toImmutableList())
     })
 
-    data object HideLocalStoragePermissionRequest : FeedMutation({
+    data object HideRequestForLocalStoragePermission : FeedMutation({
         it.copy(showRequestPermissionForLocalMediaAccess = null)
     })
 
-    data object ShowCloudSyncRequest : FeedMutation({
+    data object ShowRequestForCloudSync : FeedMutation({
         it.copy(showRequestForCloudSync = true)
     })
 
-    data object HideCloudSyncRequest : FeedMutation({
+    data object HideRequestForCloudSync : FeedMutation({
         it.copy(showRequestForCloudSync = false)
     })
 

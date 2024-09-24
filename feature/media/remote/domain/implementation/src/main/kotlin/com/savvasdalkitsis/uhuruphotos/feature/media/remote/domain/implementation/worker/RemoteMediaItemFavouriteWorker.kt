@@ -19,10 +19,10 @@ import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.toDbModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.toDbModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.repository.RemoteMediaRepository
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.RemoteMediaService
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.model.RemoteMediaItemFavouriteRequestServiceModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.http.RemoteMediaService
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.http.request.RemoteMediaItemFavouriteRequestData
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.NotificationChannels
@@ -42,7 +42,7 @@ class RemoteMediaItemFavouriteWorker @AssistedInject constructor(
     override suspend fun doWork(): Result =
         try {
             val response = remoteMediaService.setMediaItemFavourite(
-                RemoteMediaItemFavouriteRequestServiceModel(
+                RemoteMediaItemFavouriteRequestData(
                     mediaHashes = listOf(params.inputData.getString(KEY_ID)!!),
                     favourite = params.inputData.getBoolean(KEY_FAVOURITE, false)
                 )

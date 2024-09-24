@@ -45,7 +45,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.model.uploadId
 import com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.repository.UploadRepository
-import com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.service.UploadService
+import com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.service.http.UploadService
 import kotlinx.coroutines.flow.Flow
 import okhttp3.MultipartBody.Part.Companion.createFormData
 import se.ansman.dagger.auto.AutoBind

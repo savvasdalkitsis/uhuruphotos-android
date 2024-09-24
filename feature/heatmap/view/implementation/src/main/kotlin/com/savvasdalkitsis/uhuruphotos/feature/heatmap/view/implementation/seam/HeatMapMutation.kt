@@ -49,7 +49,7 @@ sealed class HeatMapMutation(
         )
     })
 
-    data class ShowLocalStoragePermissionRequest(val permissions: MediaItemsOnDevice.RequiresPermissions) : HeatMapMutation({
+    data class ShowRequestForLocalStoragePermission(val permissions: MediaItemsOnDevice.RequiresPermissions) : HeatMapMutation({
         it.copy(showRequestPermissionForLocalMediaAccess = permissions)
     })
 
@@ -57,7 +57,7 @@ sealed class HeatMapMutation(
         it.copy(initialViewport = initialViewPort)
     })
 
-    data object HideLocalStoragePermissionRequest : HeatMapMutation({
+    data object HideRequestLocalStoragePermission : HeatMapMutation({
         it.copy(showRequestPermissionForLocalMediaAccess = null)
     })
 }

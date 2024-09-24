@@ -23,14 +23,14 @@ import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.toClust
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.HideLocalStoragePermissionRequest
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.HideRequestForLocalStoragePermission
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.HideMemories
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.Loading
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.ShowBatteryOptimizationBanner
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.ShowCloudSyncRequest
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.ShowRequestForCloudSync
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.ShowClusters
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.ShowLocalMediaSyncRunning
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.ShowLocalStoragePermissionRequest
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.ShowRequestForLocalStoragePermission
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.ShowLostServerConnection
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.ShowNoPhotosFound
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
@@ -109,13 +109,13 @@ data object LoadFeed : FeedAction() {
         mediaUseCase.observeLocalMedia()
             .mapNotNull {
                 when (it) {
-                    is RequiresPermissions -> ShowLocalStoragePermissionRequest(it)
+                    is RequiresPermissions -> ShowRequestForLocalStoragePermission(it)
                         .takeIf {
                             settingsUIUseCase.getShowBannerAskingForLocalMediaPermissionsOnFeed()
                         }
                     else -> {
                         localMediaWorkScheduler.scheduleLocalMediaSyncNowIfNotRunning()
-                        HideLocalStoragePermissionRequest
+                        HideRequestForLocalStoragePermission
                     }
                 }
             }
@@ -125,7 +125,7 @@ data object LoadFeed : FeedAction() {
             welcomeUseCase.observeWelcomeStatus(),
             syncUseCase.observeSyncEnabled(),
         ) { welcomeStatus, enabled ->
-            ShowCloudSyncRequest.takeIf {
+            ShowRequestForCloudSync.takeIf {
                 welcomeStatus.hasRemoteAccess
                         && !enabled
                         && settingsUIUseCase.getShowBannerAskingForCloudSyncOnFeed()

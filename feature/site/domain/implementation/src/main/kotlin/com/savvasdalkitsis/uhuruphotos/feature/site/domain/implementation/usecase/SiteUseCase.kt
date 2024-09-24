@@ -15,16 +15,16 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.site.domain.implementation.usecase
 
-import com.savvasdalkitsis.uhuruphotos.feature.site.domain.api.model.SiteOptions
+import com.savvasdalkitsis.uhuruphotos.feature.site.domain.api.service.http.response.SiteOptionsResponseData
 import com.savvasdalkitsis.uhuruphotos.feature.site.domain.api.usecase.SiteUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.site.domain.implementation.service.SiteService
+import com.savvasdalkitsis.uhuruphotos.feature.site.domain.implementation.service.http.SiteService
 import javax.inject.Inject
 
 class SiteUseCase @Inject constructor(
     private val siteService: SiteService,
 ) : SiteUseCase {
 
-    override suspend fun getSiteOptions(): Result<SiteOptions> = runCatching {
+    override suspend fun getSiteOptions(): Result<SiteOptionsResponseData> = runCatching {
         siteService.getSiteSettings()
     }
 }

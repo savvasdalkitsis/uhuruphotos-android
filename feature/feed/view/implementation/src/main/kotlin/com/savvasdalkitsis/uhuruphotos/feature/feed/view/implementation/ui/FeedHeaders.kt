@@ -32,9 +32,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.act
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.LogIn
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.LogOut
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.MemorySelected
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.NeverAskForCloudSyncRequest
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.NeverAskForCloudSync
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.NeverAskForDisablingBatteryOptimizations
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.NeverAskForLocalMediaAccessPermissionRequest
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.NeverAskForLocalMediaAccessPermission
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.view.api.ui.LocalMediaAccessRequestBanner
@@ -68,7 +68,7 @@ fun FeedHeaders(
                     missingPermissions = missingPermissions,
                     description = string.missing_local_media_permissions,
                 ) {
-                    action(NeverAskForLocalMediaAccessPermissionRequest)
+                    action(NeverAskForLocalMediaAccessPermission)
                 }
             }
             if (state.showRequestForCloudSync) {
@@ -77,7 +77,7 @@ fun FeedHeaders(
                     description = string.enable_cloud_sync,
                     grantText = string.enable,
                     onAccessGranted = { action(EnableCloudSync) },
-                    onNeverRemindMeAgain = { action(NeverAskForCloudSyncRequest) },
+                    onNeverRemindMeAgain = { action(NeverAskForCloudSync) },
                 )
             }
             if (state.showBatteryOptimizationBanner) {

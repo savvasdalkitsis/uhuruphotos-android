@@ -24,19 +24,20 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemSummaryQueries
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResult
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummaryStatus
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteFeedDayResult
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteFeedResult
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaDaySummaries
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.toDbModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.RemoteFeedDayResponseData
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.RemoteFeedResponseData
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.RemoteMediaDayCompleteResponse
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.RemoteMediaDaySummaryResponse
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.RemoteMediaItemSummaryResponse
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.toDbModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.repository.RemoteMediaRepository
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.RemoteMediaService
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.model.RemoteMediaHashOperationResponseServiceModel
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.model.RemoteMediaItemDeleteRequestServiceModel
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.model.RemoteMediaItemDeletedRequestServiceModel
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.model.RemoteMediaOperationResponseServiceModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.http.RemoteMediaService
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.http.response.RemoteMediaHashOperationResponseData
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.http.request.RemoteMediaItemDeleteRequestData
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.http.request.RemoteMediaItemDeletedRequestData
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.http.response.RemoteMediaOperationResponseData
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.worker.RemoteMediaItemWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.andThenTry
@@ -107,7 +108,7 @@ class RemoteMediaUseCase @Inject constructor(
             val currentFavourites = remoteMediaRepository.getFavouriteMedia(favouriteThreshold)
                 .map { it.id }
                 .toSet()
-            val newFavourites = mutableListOf<RemoteMediaItemSummary>()
+            val newFavourites = mutableListOf<RemoteMediaItemSummaryResponse>()
             refreshMediaCollections(
                 incompleteMediaCollections = { remoteMediaService.getFavouriteMedia() },
                 clearCollectionsBeforeRefreshing = {},
@@ -129,7 +130,7 @@ class RemoteMediaUseCase @Inject constructor(
             }
         }
 
-    override fun saveRemoteMediaSummary(containerId: String, summary: RemoteMediaItemSummary) {
+    override fun saveRemoteMediaSummary(containerId: String, summary: RemoteMediaItemSummaryResponse) {
         remoteMediaRepository.saveRemoteMediaSummary(containerId, summary)
     }
 
@@ -161,7 +162,7 @@ class RemoteMediaUseCase @Inject constructor(
 
     override suspend fun trashMediaItemNow(id: String): Boolean {
         val response = remoteMediaService.setMediaItemDeleted(
-            RemoteMediaItemDeletedRequestServiceModel(
+            RemoteMediaItemDeletedRequestData(
                 mediaHashes = listOf(id),
                 deleted = true,
             )
@@ -177,10 +178,10 @@ class RemoteMediaUseCase @Inject constructor(
         }
     }
 
-    private fun shouldTrashLocally(response: Response<RemoteMediaOperationResponseServiceModel>) =
+    private fun shouldTrashLocally(response: Response<RemoteMediaOperationResponseData>) =
         response.code() in 200..299 && response.body()?.status == true
 
-    private fun shouldDeleteLocally(response: Response<RemoteMediaOperationResponseServiceModel>) =
+    private fun shouldDeleteLocally(response: Response<RemoteMediaOperationResponseData>) =
         response.code() == 404
 
     override fun deleteMediaItems(vararg ids: String) {
@@ -191,7 +192,7 @@ class RemoteMediaUseCase @Inject constructor(
 
     override suspend fun deleteMediaItemNow(id: String): Boolean {
         val response = remoteMediaService.deleteMediaItemPermanently(
-            RemoteMediaItemDeleteRequestServiceModel(
+            RemoteMediaItemDeleteRequestData(
                 mediaHashes = listOf(id),
             )
         )
@@ -202,7 +203,7 @@ class RemoteMediaUseCase @Inject constructor(
         return false
     }
 
-    private fun shouldDeleteLocallyHashed(response: Response<RemoteMediaHashOperationResponseServiceModel>) =
+    private fun shouldDeleteLocallyHashed(response: Response<RemoteMediaHashOperationResponseData>) =
         response.code() == 404 ||
                 (response.code() in 200..299 && response.body()?.status == true)
 
@@ -212,19 +213,19 @@ class RemoteMediaUseCase @Inject constructor(
     }
 
     override suspend fun processRemoteMediaCollections(
-        incompleteAlbumsFetcher: suspend () -> List<RemoteMediaDaySummaries.Incomplete>,
-        completeAlbumsFetcher: suspend (String) -> RemoteMediaDaySummaries.Complete,
+        remoteMediaDaySummaryResponseAlbumsFetcher: suspend () -> List<RemoteMediaDaySummaryResponse>,
+        remoteMediaDayCompleteResponseAlbumsFetcher: suspend (String) -> RemoteMediaDayCompleteResponse,
         onProgressChange: suspend (current: Int, total: Int) -> Unit,
-        incompleteAlbumsProcessor: suspend (List<RemoteMediaDaySummaries.Incomplete>) -> Unit,
-        completeAlbumInterceptor: suspend (RemoteMediaDaySummaries.Complete) -> Unit,
+        incompleteAlbumsProcessor: suspend (List<RemoteMediaDaySummaryResponse>) -> Unit,
+        completeAlbumInterceptor: suspend (RemoteMediaDayCompleteResponse) -> Unit,
         clearSummariesBeforeInserting: Boolean,
     ): SimpleResult = runCatchingWithLog {
         onProgressChange(0, 0)
-        val albums = incompleteAlbumsFetcher()
+        val albums = remoteMediaDaySummaryResponseAlbumsFetcher()
         incompleteAlbumsProcessor(albums)
         for ((index, incompleteAlbum) in albums.withIndex()) {
             val id = incompleteAlbum.id
-            updateSummaries(id, completeAlbumsFetcher, completeAlbumInterceptor, clearSummariesBeforeInserting)
+            updateSummaries(id, remoteMediaDayCompleteResponseAlbumsFetcher, completeAlbumInterceptor, clearSummariesBeforeInserting)
             onProgressChange(index, albums.size)
         }
     }.simple()
@@ -234,10 +235,10 @@ class RemoteMediaUseCase @Inject constructor(
     }
 
     override suspend fun refreshMediaCollections(
-        incompleteMediaCollections: suspend () -> RemoteFeedResult,
+        incompleteMediaCollections: suspend () -> RemoteFeedResponseData,
         clearCollectionsBeforeRefreshing: () -> Unit,
-        completeMediaCollection: suspend (String) -> RemoteFeedDayResult,
-        processSummary: (albumId: String, summary: RemoteMediaItemSummary) -> Unit,
+        completeMediaCollection: suspend (String) -> RemoteFeedDayResponseData,
+        processSummary: (albumId: String, summary: RemoteMediaItemSummaryResponse) -> Unit,
     ): SimpleResult = runCatchingWithLog {
         val incompleteCollections = incompleteMediaCollections().results
         async {
@@ -261,8 +262,8 @@ class RemoteMediaUseCase @Inject constructor(
 
     private suspend fun updateSummaries(
         id: String,
-        remoteMediaDaySummariesFetcher: suspend (String) -> RemoteMediaDaySummaries.Complete,
-        completeAlbumInterceptor: suspend (RemoteMediaDaySummaries.Complete) -> Unit,
+        remoteMediaDaySummariesFetcher: suspend (String) -> RemoteMediaDayCompleteResponse,
+        completeAlbumInterceptor: suspend (RemoteMediaDayCompleteResponse) -> Unit,
         clearSummariesBeforeInserting: Boolean,
     ) {
         val completeAlbum = remoteMediaDaySummariesFetcher(id)
@@ -283,7 +284,7 @@ class RemoteMediaUseCase @Inject constructor(
             action(it.favoriteMinRating!!).getOrThrow()
         }
 
-    private fun saveRemoteMediaSummaries(album: RemoteMediaDaySummaries.Complete) {
+    private fun saveRemoteMediaSummaries(album: RemoteMediaDayCompleteResponse) {
         db.transaction {
             for (day in album.items) {
                 saveRemoteMediaSummary(album.id, day)

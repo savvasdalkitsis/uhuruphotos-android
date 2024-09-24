@@ -33,7 +33,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUse
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.asyncReturn
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId.Remote
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.deserializePaths
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.deserializePaths
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.andThenTry
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log

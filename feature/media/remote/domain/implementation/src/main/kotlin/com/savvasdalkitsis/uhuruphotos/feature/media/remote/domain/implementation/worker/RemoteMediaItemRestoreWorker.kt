@@ -20,9 +20,9 @@ import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.repository.RemoteMediaRepository
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.RemoteMediaService
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.model.RemoteMediaItemDeletedRequestServiceModel
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.model.RemoteMediaOperationResponseServiceModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.http.RemoteMediaService
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.http.request.RemoteMediaItemDeletedRequestData
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.http.response.RemoteMediaOperationResponseData
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.NotificationChannels
@@ -44,7 +44,7 @@ class RemoteMediaItemRestoreWorker @AssistedInject constructor(
         try {
             val id = params.inputData.getString(KEY_ID)!!
             val response = remoteMediaService.setMediaItemDeleted(
-                RemoteMediaItemDeletedRequestServiceModel(
+                RemoteMediaItemDeletedRequestData(
                     mediaHashes = listOf(id),
                     deleted = false,
                 )
@@ -60,7 +60,7 @@ class RemoteMediaItemRestoreWorker @AssistedInject constructor(
             failOrRetry()
         }
 
-    private fun shouldRestoreLocally(response: Response<RemoteMediaOperationResponseServiceModel>) =
+    private fun shouldRestoreLocally(response: Response<RemoteMediaOperationResponseData>) =
         response.code() in 200..299 && response.body()?.status == true
 
     private fun failOrRetry() = if (params.runAttemptCount < 4) {

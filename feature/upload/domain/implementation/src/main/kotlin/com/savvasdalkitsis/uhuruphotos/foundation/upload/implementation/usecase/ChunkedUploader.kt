@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.model.uploadId
 import com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.repository.UploadRepository
-import com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.service.UploadService
+import com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.service.http.UploadService
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.toRequestBody

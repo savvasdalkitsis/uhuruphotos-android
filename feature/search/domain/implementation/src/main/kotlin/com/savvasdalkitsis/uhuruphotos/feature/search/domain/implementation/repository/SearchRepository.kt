@@ -20,7 +20,7 @@ import app.cash.sqldelight.coroutines.mapToList
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitList
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.search.GetSearchResults
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.search.SearchQueries
-import com.savvasdalkitsis.uhuruphotos.feature.search.domain.implementation.service.SearchService
+import com.savvasdalkitsis.uhuruphotos.feature.search.domain.implementation.service.http.SearchService
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.groupBy
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog

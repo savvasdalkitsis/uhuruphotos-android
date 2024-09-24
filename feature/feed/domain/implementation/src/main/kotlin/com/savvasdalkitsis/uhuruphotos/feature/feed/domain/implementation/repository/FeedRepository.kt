@@ -25,10 +25,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSin
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.GetRemoteMediaCollections
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaCollectionsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType
-import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.service.FeedService
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaDaySummaries.Complete
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaDaySummaries.Incomplete
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.toDbModel
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.service.http.FeedService
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.RemoteMediaDayCompleteResponse
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.RemoteMediaDaySummaryResponse
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.toDbModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
@@ -104,13 +104,13 @@ class FeedRepository @Inject constructor(
     ): SimpleResult {
         val start = parsingDateTimeFormat.print(Instant.now().toDateTime(DateTimeZone.UTC))
         return remoteMediaUseCase.processRemoteMediaCollections(
-            incompleteAlbumsFetcher = {
+            remoteMediaDaySummaryResponseAlbumsFetcher = {
                 when (val last = lastFeedRefresh) {
                     null -> feedService.getRemoteFeed().results
                     else -> feedService.getRemoteFeedSince(last).results
                 }
             },
-            completeAlbumsFetcher = getCollectionAllPages(lastFeedRefresh),
+            remoteMediaDayCompleteResponseAlbumsFetcher = getCollectionAllPages(lastFeedRefresh),
             onProgressChange = onProgressChange,
             incompleteAlbumsProcessor = { albums ->
                 database.transaction {
@@ -126,23 +126,25 @@ class FeedRepository @Inject constructor(
 
     suspend fun refreshRemoteMediaCollection(collectionId: String) =
         remoteMediaUseCase.processRemoteMediaCollections(
-            incompleteAlbumsFetcher = {
+            remoteMediaDaySummaryResponseAlbumsFetcher = {
                 val collections = remoteMediaCollectionsQueries.get(collectionId).awaitSingleOrNull()
-                listOf(Incomplete(
+                listOf(
+                    RemoteMediaDaySummaryResponse(
                         id = collectionId,
                         date = collections?.date,
                         location = collections?.location.orEmpty(),
                         incomplete = true,
                         numberOfItems = collections?.numberOfItems ?: 0
-                ))
+                )
+                )
             },
-            completeAlbumsFetcher = getCollectionAllPages(),
+            remoteMediaDayCompleteResponseAlbumsFetcher = getCollectionAllPages(),
             clearSummariesBeforeInserting = true,
         )
 
-    private fun getCollectionAllPages(since: String? = null): suspend (String) -> Complete = { id ->
+    private fun getCollectionAllPages(since: String? = null): suspend (String) -> RemoteMediaDayCompleteResponse = { id ->
         var page = 1
-        val albums = mutableListOf<Complete>()
+        val albums = mutableListOf<RemoteMediaDayCompleteResponse>()
         do {
             val album = when(since) {
                 null -> feedService.getRemoteFeedDay(id, page).results

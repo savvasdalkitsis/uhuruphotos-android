@@ -15,9 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model
 
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaItemSummaryContainer
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.RemoteMediaItemSummaryContainerResponseData
 
 sealed class RemoteMediaItemSummaryStatus {
     data class Found(val containerId: String) : RemoteMediaItemSummaryStatus()
-    data class Processing(val response: RemoteMediaItemSummaryContainer) : RemoteMediaItemSummaryStatus()
+    data class Processing(val response: RemoteMediaItemSummaryContainerResponseData) : RemoteMediaItemSummaryStatus()
 }

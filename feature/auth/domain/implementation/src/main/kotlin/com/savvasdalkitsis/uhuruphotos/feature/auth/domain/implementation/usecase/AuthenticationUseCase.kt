@@ -32,8 +32,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.Authentic
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.AuthenticationUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.repository.AuthenticationRepository
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.repository.EXPIRED
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.service.AuthenticationService
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.service.model.AuthenticationRefreshRequest
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.service.http.AuthenticationService
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.service.http.request.AuthenticationRefreshRequestData
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import kotlinx.coroutines.flow.Flow
@@ -99,7 +99,7 @@ class AuthenticationUseCase @Inject constructor(
     }
 
     override suspend fun refreshAccessToken(refreshToken: String): AuthStatus = try {
-        val response = authenticationService.refreshToken(AuthenticationRefreshRequest(refreshToken))
+        val response = authenticationService.refreshToken(AuthenticationRefreshRequestData(refreshToken))
         val refreshResponse = response.body()
         when {
             refreshResponse != null -> {

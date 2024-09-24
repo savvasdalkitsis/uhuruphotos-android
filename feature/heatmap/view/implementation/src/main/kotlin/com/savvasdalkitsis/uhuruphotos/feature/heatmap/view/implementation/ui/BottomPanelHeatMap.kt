@@ -31,7 +31,7 @@ import androidx.compose.ui.unit.max
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionState
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.actions.HeatMapAction
-import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.actions.NeverAskForLocalMediaAccessPermissionRequest
+import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.actions.NeverAskForLocalMediaAccessPermission
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state.HeatMapState
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.view.api.ui.LocalMediaAccessRequestBanner
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewState
@@ -94,7 +94,7 @@ fun BottomPanelHeatMap(
                         missingPermissions = state.showRequestPermissionForLocalMediaAccess,
                         description = string.missing_local_media_permissions_photo_map,
                     ) {
-                        action(NeverAskForLocalMediaAccessPermissionRequest)
+                        action(NeverAskForLocalMediaAccessPermission)
                     }
                 }
             }

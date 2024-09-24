@@ -18,8 +18,8 @@ package com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.implementation
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import com.github.michaelbull.result.Result
-import com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.implementation.service.UserAlbumService
-import com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.implementation.service.model.UserAlbumEditModel
+import com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.implementation.service.http.UserAlbumService
+import com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.implementation.service.http.request.UserAlbumEditModelRequestData
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.Database
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.GetUserAlbumMedia
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.NewUserAlbumAdditionQueueQueries
@@ -91,7 +91,7 @@ class UserAlbumRepository @Inject constructor(
             ?: throw IllegalArgumentException("Album $albumId not found")
         val title = album.title ?: throw IllegalStateException("Album $albumId has no title")
         val newAlbum =
-            userAlbumService.addMediaToUserAlbum(albumId.toString(), UserAlbumEditModel(title, ids))
+            userAlbumService.addMediaToUserAlbum(albumId.toString(), UserAlbumEditModelRequestData(title, ids))
         db.transaction {
             userAlbumPhotosQueries.removePhotosForAlbum(albumId.toString())
             for (id in newAlbum.ids) {
@@ -126,7 +126,7 @@ class UserAlbumRepository @Inject constructor(
     }.simple()
 
     suspend fun createNewUserAlbum(name: String) = runCatchingWithLog {
-        userAlbumService.createUserAlbum(UserAlbumEditModel(title = name, ids = emptyList())).also { album ->
+        userAlbumService.createUserAlbum(UserAlbumEditModelRequestData(title = name, ids = emptyList())).also { album ->
             userAlbumQueries.insert(
                 UserAlbum(
                     id = album.id.toString(),

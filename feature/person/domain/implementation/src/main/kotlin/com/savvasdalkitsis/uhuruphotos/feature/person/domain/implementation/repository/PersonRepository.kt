@@ -21,9 +21,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitLis
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaCollectionsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.person.GetPersonAlbums
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.person.PersonQueries
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.toDbModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.toDbModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.person.domain.implementation.service.PersonService
+import com.savvasdalkitsis.uhuruphotos.feature.person.domain.implementation.service.http.PersonService
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.groupBy
@@ -51,8 +51,8 @@ class PersonRepository @Inject constructor(
 
     private suspend fun downloadPersonAlbums(personId: Int) {
         remoteMediaUseCase.processRemoteMediaCollections(
-            incompleteAlbumsFetcher = { personService.getMediaCollectionsForPerson(personId).results },
-            completeAlbumsFetcher = { personService.getMediaCollectionForPerson(it, personId).results },
+            remoteMediaDaySummaryResponseAlbumsFetcher = { personService.getMediaCollectionsForPerson(personId).results },
+            remoteMediaDayCompleteResponseAlbumsFetcher = { personService.getMediaCollectionForPerson(it, personId).results },
             incompleteAlbumsProcessor = { albums ->
                 remoteMediaCollectionsQueries.transaction {
                     for (album in albums.map { it.toDbModel() }) {

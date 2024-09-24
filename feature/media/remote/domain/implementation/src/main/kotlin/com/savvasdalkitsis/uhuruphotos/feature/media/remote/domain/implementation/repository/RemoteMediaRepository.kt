@@ -35,12 +35,12 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.Remote
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaTrashQueries
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResult
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummaryStatus
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummaryStatus.Found
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummaryStatus.Processing
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.toDbModel
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.RemoteMediaService
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.RemoteMediaItemSummaryResponse
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.toDbModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.http.RemoteMediaService
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import kotlinx.coroutines.Dispatchers
@@ -126,7 +126,7 @@ class RemoteMediaRepository @Inject constructor(
         }
     }
 
-    fun saveRemoteMediaSummary(containerId: String, summary: RemoteMediaItemSummary) {
+    fun saveRemoteMediaSummary(containerId: String, summary: RemoteMediaItemSummaryResponse) {
         when {
             summary.removed -> deleteMediaItem(summary.id)
             summary.inTrash -> trashMediaItem(summary.id)

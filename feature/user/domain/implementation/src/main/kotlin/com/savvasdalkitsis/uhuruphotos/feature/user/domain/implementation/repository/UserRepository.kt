@@ -24,7 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingleOrNull
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.user.User
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.user.UserQueries
-import com.savvasdalkitsis.uhuruphotos.feature.user.domain.implementation.service.UserService
+import com.savvasdalkitsis.uhuruphotos.feature.user.domain.implementation.service.http.UserService
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.andThenTry
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow

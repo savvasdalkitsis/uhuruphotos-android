@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions
 
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.HideCloudSyncRequest
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.HideRequestForCloudSync
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
 import kotlinx.coroutines.flow.flow
 
@@ -24,7 +24,7 @@ data object EnableCloudSync : FeedAction() {
     context(FeedActionsContext) override fun handle(
         state: FeedState
     ) = flow {
-        emit(HideCloudSyncRequest)
+        emit(HideRequestForCloudSync)
         syncUseCase.setSyncEnabled(true)
     }
 }
