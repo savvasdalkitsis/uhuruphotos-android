@@ -2,6 +2,7 @@
 [![Lines of code](https://tokei.rs/b1/github/savvasdalkitsis/uhuruphotos-android)](https://github.com/savvasdalkitsis/uhuruphotos-android)
 [![Join the chat at https://app.gitter.im/#/room/#uhuruphotos:gitter.im](https://badges.gitter.im/uhuruphotos/community.svg)](https://app.gitter.im/#/room/#uhuruphotos:gitter.im)
 [![CodeFactor](https://www.codefactor.io/repository/github/savvasdalkitsis/uhuruphotos-android/badge/main)](https://www.codefactor.io/repository/github/savvasdalkitsis/uhuruphotos-android/overview/main)
+<a href="https://codebeat.co/projects/github-com-savvasdalkitsis-uhuruphotos-android-main"><img alt="codebeat badge" src="https://codebeat.co/badges/d1d9d630-3a57-4a81-a1c0-f6e5c4424e16" /></a>
 [![GitHub Sponsor](https://img.shields.io/github/sponsors/savvasdalkitsis?label=Sponsor&logo=GitHub)](https://github.com/sponsors/savvasdalkitsis)
 
 # <img src="https://github.com/savvasdalkitsis/uhuruphotos-android/raw/main/foundation/icons/api/src/main/ic_launcher-playstore.png" alt="logo" width = 60px> UhuruPhotos. A modern media gallery.
