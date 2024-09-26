@@ -25,6 +25,7 @@ dependencies {
             project(":feature:db:domain:api"),
             project(":feature:settings:domain:api"),
             project(":foundation:activity:api"),
+            project(":foundation:coroutines:api"),
             project(":foundation:http:api"),
             project(":foundation:image:api"),
             project(":foundation:lang:api"),

@@ -18,6 +18,9 @@ import org.junit.Test
 
 class ArchitectureTests {
 
+    private val useCaseLayer = Layer("UseCases", "..usecase..")
+    private val databaseLayer = Layer("Database", "com.savvasdalkitsis.uhuruphotos.feature.db..")
+
     @Test
     fun `all files have license header`() {
         Konsist.scopeFromProject()
@@ -55,9 +58,18 @@ class ArchitectureTests {
     fun `UseCases should not use database layer classes directly`() {
         Konsist.scopeFromProject()
             .assertArchitecture {
-                val useCases = Layer("UseCases", "..usecase..")
-                val database = Layer("Database", "com.savvasdalkitsis.uhuruphotos.feature.db..")
-                useCases.doesNotDependOn(database)
+                useCaseLayer.doesNotDependOn(databaseLayer)
+            }
+    }
+
+    @Test
+    @Ignore("This is violated a lot so will be used to slowly fix the issues")
+    fun `UseCases do not use service http response models`() {
+        Konsist.scopeFromProject()
+            .assertArchitecture {
+                val serviceHttpResponseModelLayer = Layer("HttpServiceResponseModelsLayer", "..http.response..")
+
+                useCaseLayer.doesNotDependOn(serviceHttpResponseModelLayer)
             }
     }
 

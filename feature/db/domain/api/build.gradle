@@ -20,6 +20,7 @@ dependencies {
             libs.hilt,
             libs.sqldelight.android,
             libs.sqldelight.coroutines,
+            project(":foundation:coroutines:api"),
             project(":foundation:lang:api"),
     )
 }

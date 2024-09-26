@@ -18,12 +18,12 @@ package com.savvasdalkitsis.uhuruphotos.feature.people.domain.implementation.rep
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import app.cash.sqldelight.coroutines.mapToOne
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitList
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.people.People
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.people.PeopleQueries
 import com.savvasdalkitsis.uhuruphotos.feature.people.domain.api.service.http.response.toDbModel
 import com.savvasdalkitsis.uhuruphotos.feature.people.domain.implementation.service.http.PeopleService
+import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.async
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simple
 import kotlinx.coroutines.Dispatchers

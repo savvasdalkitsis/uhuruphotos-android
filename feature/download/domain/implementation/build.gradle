@@ -18,6 +18,7 @@ dependencies {
             project(":feature:media:common:domain:api"),
             project(":feature:media:local:domain:api"),
             project(":feature:media:remote:domain:api"),
+            project(":foundation:coroutines:api"),
             project(":foundation:initializer:api"),
             project(":foundation:log:api"),
     )

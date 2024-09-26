@@ -25,8 +25,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.reposi
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.service.http.AuthenticationService
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.service.http.request.toAuthenticationRequestData
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.Database
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.clearAllUserLinkedTables
+import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.async
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.usecase.ImageCacheUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.lang.api.letBoth
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog

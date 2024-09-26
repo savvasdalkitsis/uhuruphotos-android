@@ -19,10 +19,10 @@ import android.content.ContentResolver
 import android.net.Uri
 import coil.annotation.ExperimentalCoilApi
 import coil.disk.DiskCache
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.read
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.ExifData
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemMetadata
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MetadataUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.asyncReturn
 import com.savvasdalkitsis.uhuruphotos.foundation.exif.api.model.ExifMetadata
 import com.savvasdalkitsis.uhuruphotos.foundation.exif.api.usecase.ExifUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.FullImage
@@ -38,7 +38,7 @@ class MetadataUseCase @Inject constructor(
     private val contentResolver: ContentResolver,
 ) : MetadataUseCase {
 
-    override suspend fun extractMetadata(url: String): MediaItemMetadata? = read {
+    override suspend fun extractMetadata(url: String): MediaItemMetadata? = asyncReturn {
         when {
             url.startsWith("content://") -> fromUri(url)
             else -> fromUrl(url)

@@ -14,6 +14,7 @@ dependencies {
             project(":feature:db:domain:api"),
             project(":feature:media:local:domain:api"),
             project(":foundation:activity:api"),
+            project(":foundation:coroutines:api"),
             project(":foundation:date:api"),
             project(":foundation:exif:api"),
             project(":foundation:initializer:api"),
