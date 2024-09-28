@@ -113,7 +113,7 @@ hilt-android-gradle-plugin = { module = "com.google.dagger:hilt-android-gradle-p
 hilt-dagger-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
 imaging = "org.apache.commons:commons-imaging:1.0.0-alpha5"
 infobar = "com.radusalagean:info-bar-compose:1.0.0"
-jetlime = "io.github.pushpalroy:jetlime:2.3.0"
+jetlime = "io.github.pushpalroy:jetlime:3.0.1"
 joda-time = "net.danlew:android.joda:2.13.0"
 junit = "junit:junit:4.13.2"
 jwt = "com.auth0.android:jwtdecode:2.0.2"
