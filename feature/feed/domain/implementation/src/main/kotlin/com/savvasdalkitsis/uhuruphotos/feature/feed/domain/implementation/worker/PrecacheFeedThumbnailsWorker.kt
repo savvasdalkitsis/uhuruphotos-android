@@ -21,11 +21,11 @@ import androidx.work.WorkerParameters
 import com.github.michaelbull.result.onSuccess
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.isVideo
-import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchTypeModel
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.broadcast.CancelPrecacheWorkBroadcastReceiver
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.FeedRepository
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResult.CHANGED
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResultModel.CHANGED
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaPrecacher
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNotificationWorker
@@ -55,12 +55,12 @@ internal class PrecacheFeedThumbnailsWorker @AssistedInject constructor(
         updateProgress(0)
         val serverUrl = serverUseCase.getServerUrl()!!
         val mediaItemIds = feedRepository.getRemoteMediaCollectionsByDate(
-            FeedFetchType.ALL
+            FeedFetchTypeModel.ALL
         )
             .items.entries.flatMap { entry ->
                 entry.value.mapNotNull { collections ->
                     collections.photoId?.let { id ->
-                        MediaId.Remote(id, collections.isVideo)
+                        MediaIdModel.RemoteIdModel(id, collections.isVideo)
                     }
                 }
             }

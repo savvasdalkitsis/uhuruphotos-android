@@ -22,7 +22,7 @@ import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.coroutines.coroutineBinding
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.upload.ProcessingMediaItems
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.user.User
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHashModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Md5Hash
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
@@ -144,13 +144,13 @@ class UploadUseCase @Inject constructor(
         uploadRepository.setNotUploading(item.id)
         uploadRepository.setProcessing(item.id)
         uploadWorkScheduler.schedulePostUploadProcessing(
-            MediaItemHash(mediaItem.md5, user.id),
+            MediaItemHashModel(mediaItem.md5, user.id),
             item.id
         )
     }
 
     private suspend fun exists(md5: Md5Hash, user: User): Result<Boolean, Throwable> =
-        remoteMediaUseCase.exists(MediaItemHash(md5, user.id))
+        remoteMediaUseCase.exists(MediaItemHashModel(md5, user.id))
 
     private suspend fun completeUpload(
         item: UploadItem,

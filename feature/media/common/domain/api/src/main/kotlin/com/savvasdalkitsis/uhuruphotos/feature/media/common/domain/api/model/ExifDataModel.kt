@@ -15,8 +15,15 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model
 
-data class MediaItemMetadata(
-    val size: String,
-    val exifData: ExifData
+data class ExifDataModel(
+    val fStop: String? = null,
+    val shutterSpeed: String? = null,
+    val isoSpeed: String? = null,
+    val camera: String? = null,
+    val focalLength: String? = null,
+    val focalLength35Equivalent: String? = null,
+    val subjectDistance: String? = null,
+    val digitalZoomRatio: String? = null,
+    val width: Int? = null,
+    val height: Int? = null,
 )
-

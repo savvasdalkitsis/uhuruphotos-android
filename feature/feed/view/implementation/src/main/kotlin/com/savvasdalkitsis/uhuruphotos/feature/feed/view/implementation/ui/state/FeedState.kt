@@ -19,7 +19,7 @@ import androidx.compose.runtime.Immutable
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.state.UserAlbumState
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplayState
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDeviceModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkable.SelectionMode
 import kotlinx.collections.immutable.ImmutableList
@@ -34,7 +34,7 @@ data class FeedState(
     val showTrashingConfirmationDialog: Boolean = false,
     val showDeleteConfirmationDialog: Boolean = false,
     val showFullySyncedDeleteConfirmationDialog: Boolean = false,
-    val showRequestPermissionForLocalMediaAccess: MediaItemsOnDevice.RequiresPermissions? = null,
+    val showRequestPermissionForLocalMediaAccess: MediaItemsOnDeviceModel.RequiresPermissionsModel? = null,
     val showLoginBanner: Boolean = false,
     val showBatteryOptimizationBanner: Boolean = false,
     val localMediaSyncRunning: Boolean = false,

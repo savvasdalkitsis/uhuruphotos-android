@@ -15,8 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase
 
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemMetadata
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemMetadataModel
 
 fun interface MetadataUseCase {
-    suspend fun extractMetadata(url: String): MediaItemMetadata?
+    suspend fun extractMetadata(url: String): MediaItemMetadataModel?
 }

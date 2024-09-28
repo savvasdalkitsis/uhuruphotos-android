@@ -1,5 +1,5 @@
 /*
-Copyright 2022 Savvas Dalkitsis
+Copyright 2023 Savvas Dalkitsis
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,8 +13,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model
+package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model
 
-data class JobsStatus(
-    val jobs: Map<Job, JobStatus>
-)
+data class MediaDayModel(
+    val day: Int,
+    val dayOfWeek: Int,
+    val month: Int,
+    val year: Int,
+    val monthText: String,
+) {
+    val displayText = "$monthText $year"
+}

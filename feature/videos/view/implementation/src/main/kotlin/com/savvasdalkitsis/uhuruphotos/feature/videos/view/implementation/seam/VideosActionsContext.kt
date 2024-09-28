@@ -16,11 +16,11 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.videos.view.implementation.seam
 
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.toCluster
-import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchTypeModel
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContextFactory
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetailsState
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSourceModel
 import com.savvasdalkitsis.uhuruphotos.feature.videos.domain.api.usecase.VideosUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simpleOk
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
@@ -42,7 +42,7 @@ internal class VideosActionsContext @Inject constructor(
             simpleOk
         },
         galleryDetailsStateFlow = { _ ->
-            feedUseCase.observeFeed(FeedFetchType.VIDEOS)
+            feedUseCase.observeFeed(FeedFetchTypeModel.VIDEOS)
                 .map {
                     GalleryDetailsState(
                         title = Title.Resource(string.videos),
@@ -52,7 +52,7 @@ internal class VideosActionsContext @Inject constructor(
                 }
         },
         shouldRefreshOnLoad = { false },
-        lightboxSequenceDataSource = { LightboxSequenceDataSource.Videos },
+        lightboxSequenceDataSource = { LightboxSequenceDataSourceModel.VideosModel },
         initialCollageDisplayState = { videosUseCase.getVideosGalleryDisplay() },
         collageDisplayPersistence = { _, galleryDisplay ->
             videosUseCase.setVideosGalleryDisplay(galleryDisplay)

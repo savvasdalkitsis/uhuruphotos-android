@@ -15,10 +15,10 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository
 
-import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType
-import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType.ALL
-import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType.ONLY_WITH_DATES
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchTypeModel
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchTypeModel.ALL
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchTypeModel.ONLY_WITH_DATES
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionModel
 import com.savvasdalkitsis.uhuruphotos.foundation.launchers.api.onIO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -28,7 +28,7 @@ import javax.inject.Singleton
 @Singleton
 class FeedCache @Inject constructor() {
 
-    private val caches: Map<Pair<FeedFetchType, Boolean>, MutableSharedFlow<List<MediaCollection>>?> = mapOf(
+    private val caches: Map<Pair<FeedFetchTypeModel, Boolean>, MutableSharedFlow<List<MediaCollectionModel>>?> = mapOf(
         (ALL to true) to MutableSharedFlow(replay = 1),
         (ALL to false) to MutableSharedFlow(replay = 1),
         (ONLY_WITH_DATES to true) to MutableSharedFlow(replay = 1),
@@ -36,21 +36,21 @@ class FeedCache @Inject constructor() {
     )
 
     private fun cache(
-        feedFetchType: FeedFetchType,
+        feedFetchTypeModel: FeedFetchTypeModel,
         loadSmallInitialChunk: Boolean
-    ): MutableSharedFlow<List<MediaCollection>> =
-        caches[feedFetchType to loadSmallInitialChunk] ?: MutableSharedFlow()
+    ): MutableSharedFlow<List<MediaCollectionModel>> =
+        caches[feedFetchTypeModel to loadSmallInitialChunk] ?: MutableSharedFlow()
 
     fun observeFeed(
-        feedFetchType: FeedFetchType = ALL,
+        feedFetchTypeModel: FeedFetchTypeModel = ALL,
         loadSmallInitialChunk: Boolean = true,
-    ): Flow<List<MediaCollection>> = cache(feedFetchType, loadSmallInitialChunk)
+    ): Flow<List<MediaCollectionModel>> = cache(feedFetchTypeModel, loadSmallInitialChunk)
 
     fun cacheFeed(
-        feed: List<MediaCollection>,
-        feedFetchType: FeedFetchType,
+        feed: List<MediaCollectionModel>,
+        feedFetchTypeModel: FeedFetchTypeModel,
         loadSmallInitialChunk: Boolean
     ) = onIO {
-        cache(feedFetchType, loadSmallInitialChunk).emit(feed)
+        cache(feedFetchTypeModel, loadSmallInitialChunk).emit(feed)
     }
 }

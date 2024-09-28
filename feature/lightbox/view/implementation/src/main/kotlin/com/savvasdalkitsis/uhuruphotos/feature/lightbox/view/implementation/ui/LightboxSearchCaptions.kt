@@ -46,7 +46,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.i
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.info.LightboxCaptionIcons.icon
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxDetailsState
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.SingleMediaItemState
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode
@@ -136,7 +136,7 @@ private fun CaptionsPreviewContent() {
 
         LightboxSearchCaptions(
             SingleMediaItemState(
-                id = MediaId.Remote("", false),
+                id = MediaIdModel.RemoteIdModel("", false),
                 details = LightboxDetailsState(
                     searchCaptions = LightboxCaptionIcons.icons.keys.toList().toImmutableSet()
                 )

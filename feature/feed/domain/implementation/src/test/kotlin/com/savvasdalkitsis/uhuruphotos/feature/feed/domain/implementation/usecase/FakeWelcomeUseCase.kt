@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.usecase
 
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.ServerToken
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.ServerTokenModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalPermissions
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.model.WelcomeStatus
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.WelcomeUseCase
@@ -28,6 +28,6 @@ fun WelcomeUseCase.defaults() = apply {
 
 fun WelcomeUseCase.hasRemoteAccess() {
     every { observeWelcomeStatus() }.returns(
-        flowOf(WelcomeStatus(LocalPermissions.RequiresPermissions(emptyList()), ServerToken.Valid("token")))
+        flowOf(WelcomeStatus(LocalPermissions.RequiresPermissions(emptyList()), ServerTokenModel.ValidModel("token")))
     )
 }

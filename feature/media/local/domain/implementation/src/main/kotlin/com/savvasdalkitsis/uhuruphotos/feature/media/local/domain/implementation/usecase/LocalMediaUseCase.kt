@@ -31,7 +31,7 @@ import android.provider.MediaStore.MediaColumns.MIME_TYPE
 import android.provider.MediaStore.MediaColumns.RELATIVE_PATH
 import androidx.core.content.ContextCompat
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.local.LocalMediaItemDetails
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalFolder
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalFolderModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaFolder
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItems
@@ -119,11 +119,11 @@ class LocalMediaUseCase @Inject constructor(
     override suspend fun refreshLocalMediaItem(id: Long, isVideo: Boolean) =
         localMediaRepository.refreshItem(id, isVideo)
 
-    override fun observeLocalMediaFolder(folderId: Int): Flow<LocalFolder> =
+    override fun observeLocalMediaFolder(folderId: Int): Flow<LocalFolderModel> =
         observePermissionsState().flatMapLatest { permissions ->
             resetMediaStoreIfNeeded()
             when (permissions) {
-                is RequiresPermissions -> flowOf(LocalFolder.RequiresPermissions(permissions.deniedPermissions))
+                is RequiresPermissions -> flowOf(LocalFolderModel.RequiresPermissionsModel(permissions.deniedPermissions))
                 else -> localMediaRepository.observeFolder(folderId).map { media ->
                     media.toItems()
                         .groupBy(LocalMediaItem::bucket)
@@ -135,8 +135,8 @@ class LocalMediaUseCase @Inject constructor(
                                 it.dateTimeTaken
                             }
                         }
-                        ?.let(LocalFolder::Found)
-                        ?: LocalFolder.Error
+                        ?.let(LocalFolderModel::FoundModel)
+                        ?: LocalFolderModel.ErrorModel
                 }
             }
         }

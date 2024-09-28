@@ -13,6 +13,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model
+package com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model
 
-data class LocalMediaDeletionRequest(val id: Long, val isVideo: Boolean)
+data class JobsStatusModel(
+    val jobs: Map<JobModel, JobStatusModel>
+)

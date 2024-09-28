@@ -21,9 +21,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.AvatarSt
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.SyncState.BAD
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.SyncState.GOOD
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.SyncState.IN_PROGRESS
-import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus.Failed
-import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus.InProgress
-import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobsStatus
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatusModel.FailedModel
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatusModel.InProgressModel
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobsStatusModel
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.usecase.JobsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.model.User
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
@@ -66,10 +66,10 @@ class AvatarUseCase @Inject constructor(
         },
     )
 
-    private fun JobsStatus.syncState() = jobs.values.run {
+    private fun JobsStatusModel.syncState() = jobs.values.run {
         when {
-            any { it is Failed } -> BAD
-            any { it is InProgress } -> IN_PROGRESS
+            any { it is FailedModel } -> BAD
+            any { it is InProgressModel } -> IN_PROGRESS
             else -> GOOD
         }
     }

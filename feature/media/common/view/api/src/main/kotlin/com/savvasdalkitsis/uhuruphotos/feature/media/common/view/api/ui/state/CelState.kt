@@ -16,15 +16,15 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state
 
 import androidx.compose.runtime.Immutable
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemModel
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkable.SelectionMode
 
 @Immutable
 data class CelState(
-    val mediaItem: MediaItem,
+    val mediaItem: MediaItemModel,
     val selectionMode: SelectionMode = SelectionMode.UNDEFINED,
 )
 
-fun MediaItem.toCel() = CelState(
+fun MediaItemModel.toCel() = CelState(
     mediaItem = this,
 )

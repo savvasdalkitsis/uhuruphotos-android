@@ -18,10 +18,10 @@ package com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewMutation.ShowJobStartDialog
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.AccountOverviewState
-import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobModel
 import kotlinx.coroutines.flow.flowOf
 
-data class AskToStartJob(val job: Job) : AccountOverviewAction() {
+data class AskToStartJob(val job: JobModel) : AccountOverviewAction() {
     context(AccountOverviewActionsContext) override fun handle(
         state: AccountOverviewState
     ) = flowOf(ShowJobStartDialog(job))

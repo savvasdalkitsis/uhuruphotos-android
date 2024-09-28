@@ -16,8 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam
 
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state.HeatMapState
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDeviceModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.Viewport
@@ -28,7 +28,7 @@ sealed class HeatMapMutation(
     mutation: Mutation<HeatMapState>,
 ) : Mutation<HeatMapState> by mutation {
 
-    data class UpdateAllMedia(val mediaItems: List<MediaItem>) : HeatMapMutation({
+    data class UpdateAllMedia(val mediaItems: List<MediaItemModel>) : HeatMapMutation({
         val points = mediaItems
             .mapNotNull { photo -> photo.latLng }
             .map { (lat, lon) -> LatLon(lat, lon) }
@@ -40,16 +40,16 @@ sealed class HeatMapMutation(
     })
 
     data class UpdateVisibleMapContent(
-        val photosOnVisibleMap: List<MediaItem>,
+        val photosOnVisibleMap: List<MediaItemModel>,
         val pointsOnVisibleMap: List<LatLon>,
     ) : HeatMapMutation({
         it.copy(
-            photosOnVisibleMap = photosOnVisibleMap.map(MediaItem::toCel).toImmutableList(),
+            photosOnVisibleMap = photosOnVisibleMap.map(MediaItemModel::toCel).toImmutableList(),
             pointsOnVisibleMap = pointsOnVisibleMap.toImmutableList(),
         )
     })
 
-    data class ShowRequestForLocalStoragePermission(val permissions: MediaItemsOnDevice.RequiresPermissions) : HeatMapMutation({
+    data class ShowRequestForLocalStoragePermission(val permissions: MediaItemsOnDeviceModel.RequiresPermissionsModel) : HeatMapMutation({
         it.copy(showRequestPermissionForLocalMediaAccess = permissions)
     })
 

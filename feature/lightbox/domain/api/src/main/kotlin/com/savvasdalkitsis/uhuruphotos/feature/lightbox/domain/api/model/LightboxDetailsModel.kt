@@ -16,10 +16,10 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.lightbox.domain.api.model
 
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.people.People
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.ExifData
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.ExifDataModel
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 
-data class LightboxDetails(
+data class LightboxDetailsModel(
     val formattedDateTime: String? = null,
     val location: String? = null,
     val latLon: LatLon? = null,
@@ -29,5 +29,5 @@ data class LightboxDetails(
     val peopleInMediaItem: List<People> = emptyList(),
     val searchCaptions: Set<String> = emptySet(),
     val size: String? = null,
-    val exifData: ExifData = ExifData(),
+    val exifData: ExifDataModel = ExifDataModel(),
 )

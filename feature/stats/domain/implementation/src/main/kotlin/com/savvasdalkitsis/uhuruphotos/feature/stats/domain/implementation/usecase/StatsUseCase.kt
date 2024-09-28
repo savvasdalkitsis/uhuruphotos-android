@@ -20,8 +20,8 @@ import android.location.Geocoder
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaDay
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaDayModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemModel
 import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.CountryVisit
 import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.DayOfMonth
 import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.DayOfWeek
@@ -37,42 +37,42 @@ class StatsUseCase @Inject constructor(
     @ApplicationContext val context: Context,
 ) : StatsUseCase {
 
-    override fun List<MediaItem>.breakdownByTypeIsVideo(): Map<Boolean, List<MediaItem>> =
+    override fun List<MediaItemModel>.breakdownByTypeIsVideo(): Map<Boolean, List<MediaItemModel>> =
         groupBy { it.id.isVideo }
 
-    override fun List<MediaItem>.breakdownByYear(): Map<Year, Int> = breakdownBy(
+    override fun List<MediaItemModel>.breakdownByYear(): Map<Year, Int> = breakdownBy(
         grouper =  { it.mediaDay?.year },
         mapper = { Year(it) },
     )
 
-    override fun List<MediaItem>.breakdownByMonth(): Map<Month, Int> = breakdownBy(
+    override fun List<MediaItemModel>.breakdownByMonth(): Map<Month, Int> = breakdownBy(
         grouper =  { it.mediaDay?.month },
         mapper = { Month(it) },
     )
 
-    override fun List<MediaItem>.breakdownByDayOfMonth(): Map<DayOfMonth, Int> = breakdownBy(
+    override fun List<MediaItemModel>.breakdownByDayOfMonth(): Map<DayOfMonth, Int> = breakdownBy(
         grouper = { it.mediaDay?.day },
         mapper = { DayOfMonth(it) },
     )
 
-    override fun List<MediaItem>.breakdownByDayOfWeek(): Map<DayOfWeek, Int> = breakdownBy(
+    override fun List<MediaItemModel>.breakdownByDayOfWeek(): Map<DayOfWeek, Int> = breakdownBy(
         grouper = { it.mediaDay?.dayOfWeek },
         mapper = { DayOfWeek(it) },
     )
 
-    override fun List<MediaItem>.breakdownByMediaDay(): Map<MediaDay, Int> = breakdownBy(
+    override fun List<MediaItemModel>.breakdownByMediaDay(): Map<MediaDayModel, Int> = breakdownBy(
         grouper = { it.mediaDay },
         mapper = { it },
     )
 
-    private fun <T, P>List<MediaItem>.breakdownBy(grouper: (MediaItem) -> T?, mapper: (T) -> P): Map<P, Int> =
+    private fun <T, P>List<MediaItemModel>.breakdownBy(grouper: (MediaItemModel) -> T?, mapper: (T) -> P): Map<P, Int> =
         groupBy(grouper).mapNotNull {
             it.key?.let { item ->
                 mapper(item) to it.value.count()
             }
         }.toMap()
 
-    override fun List<MediaItem>.timeline(): Result<List<CountryVisit>, Unit> =
+    override fun List<MediaItemModel>.timeline(): Result<List<CountryVisit>, Unit> =
         when {
             !Geocoder.isPresent() -> Err(Unit)
             else -> {

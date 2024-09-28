@@ -18,10 +18,10 @@ package com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewMutation
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.AccountOverviewState
-import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobModel
 import kotlinx.coroutines.flow.flow
 
-data class CancelJob(val job: Job) : AccountOverviewAction() {
+data class CancelJob(val job: JobModel) : AccountOverviewAction() {
     context(AccountOverviewActionsContext) override fun handle(
         state: AccountOverviewState
     ) = flow<AccountOverviewMutation> {

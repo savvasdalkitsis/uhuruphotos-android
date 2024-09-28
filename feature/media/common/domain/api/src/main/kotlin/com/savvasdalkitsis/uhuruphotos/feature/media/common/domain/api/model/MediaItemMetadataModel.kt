@@ -1,5 +1,5 @@
 /*
-Copyright 2023 Savvas Dalkitsis
+Copyright 2022 Savvas Dalkitsis
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,6 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model
 
-enum class MediaOperationResult {
-    SKIPPED, CHANGED
-}
+data class MediaItemMetadataModel(
+    val size: String,
+    val exifData: ExifDataModel
+)
+

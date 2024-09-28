@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam
 
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.AccountOverviewState
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.AvatarState
-import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobModel
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.state.JobState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import kotlinx.collections.immutable.toImmutableList
@@ -74,7 +74,7 @@ sealed class AccountOverviewMutation(
         it.copy(cloudBackUpEnabled = enabled)
     })
 
-    data class ShowJobStartDialog(val job: Job) : AccountOverviewMutation({
+    data class ShowJobStartDialog(val job: JobModel) : AccountOverviewMutation({
         it.copy(showJobStartDialog = job)
     })
 

@@ -15,10 +15,10 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase
 
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaDeletionRequest
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaDeletionRequestModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItemDeletion
 
 fun interface LocalMediaDeletionUseCase {
 
-    suspend fun deleteLocalMediaItems(items: List<LocalMediaDeletionRequest>): LocalMediaItemDeletion
+    suspend fun deleteLocalMediaItems(items: List<LocalMediaDeletionRequestModel>): LocalMediaItemDeletion
 }

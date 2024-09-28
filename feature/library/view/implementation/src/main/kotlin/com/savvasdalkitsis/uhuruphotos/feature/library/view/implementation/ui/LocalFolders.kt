@@ -36,9 +36,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.StartScanningOtherFolders
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.ViewAllLocalFolders
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryLocalMediaState
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstance
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHashModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstanceModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.NamedVitrine
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.VitrineState
@@ -186,9 +186,9 @@ private fun LocalFoldersWithoutOther() {
 
 @Composable
 private fun celState(color: String) = CelState(
-    MediaItemInstance(
-        MediaId.Local(0, 0, false, "", ""),
-        MediaItemHash.fromRemoteMediaHash("", 0),
+    MediaItemInstanceModel(
+        MediaIdModel.LocalIdModel(0, 0, false, "", ""),
+        MediaItemHashModel.fromRemoteMediaHash("", 0),
         fallbackColor = color
     )
 )

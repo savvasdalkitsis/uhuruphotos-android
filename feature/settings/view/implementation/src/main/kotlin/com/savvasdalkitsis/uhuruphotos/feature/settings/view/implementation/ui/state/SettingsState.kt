@@ -19,7 +19,7 @@ import androidx.compose.runtime.Immutable
 import androidx.work.NetworkType
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.AvatarState
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplayState
-import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobModel
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.state.JobState
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.model.CacheType
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode
@@ -37,7 +37,7 @@ data class SettingsState(
     val videoDiskCacheState: CacheState = CacheState(cacheType = CacheType.VIDEO_DISK),
     val avatarState: AvatarState = AvatarState(),
     val jobStates: ImmutableList<JobState> = persistentListOf(),
-    val showJobStartDialog: Job? = null,
+    val showJobStartDialog: JobModel? = null,
     val cloudSyncNetworkRequirement: NetworkType? = null,
     val cloudSyncRequiresCharging: Boolean = false,
     val uploadsInProgress: Boolean = false,

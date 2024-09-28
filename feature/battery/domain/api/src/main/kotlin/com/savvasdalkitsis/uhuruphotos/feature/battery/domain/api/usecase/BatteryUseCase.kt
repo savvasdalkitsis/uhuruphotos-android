@@ -15,11 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.battery.domain.api.usecase
 
-import com.savvasdalkitsis.uhuruphotos.feature.battery.domain.api.model.BatteryOptimizationStatus
+import com.savvasdalkitsis.uhuruphotos.feature.battery.domain.api.model.BatteryOptimizationStatusModel
 import kotlinx.coroutines.flow.Flow
 
 interface BatteryUseCase {
 
-    fun observerBatteryOptimizationStatus(): Flow<BatteryOptimizationStatus>
+    fun observerBatteryOptimizationStatus(): Flow<BatteryOptimizationStatusModel>
     fun doNotCheckBatteryOptimization()
 }

@@ -15,16 +15,16 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.model
 
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.ServerToken
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.ServerTokenModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalPermissions
 
 data class WelcomeStatus(
     val permissions: LocalPermissions,
-    val refreshToken: ServerToken
+    val refreshToken: ServerTokenModel
 ) {
     val hasLocalAccess = permissions is LocalPermissions.Granted
-    val hasRemoteAccess = refreshToken is ServerToken.Valid
-    val hasLostRemoteAccess = refreshToken is ServerToken.Expired
+    val hasRemoteAccess = refreshToken is ServerTokenModel.ValidModel
+    val hasLostRemoteAccess = refreshToken is ServerTokenModel.ExpiredModel
     val allMissing = !hasLocalAccess && !hasRemoteAccess
     val allGranted = hasLocalAccess && hasRemoteAccess
 }

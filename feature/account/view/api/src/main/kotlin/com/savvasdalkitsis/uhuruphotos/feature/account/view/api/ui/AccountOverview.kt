@@ -56,13 +56,13 @@ import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.Avatar
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.AvatarState
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.SyncState
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.previewAvatarState
-import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job
-import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job.FEED_DETAILS_SYNC
-import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job.FULL_FEED_SYNC
-import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus.Blocked
-import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus.Idle
-import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus.InProgress
-import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus.Queued
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobModel
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobModel.FEED_DETAILS_SYNC
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobModel.FULL_FEED_SYNC
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatusModel.BlockedModel
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatusModel.IdleModel
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatusModel.InProgressModel
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatusModel.QueuedModel
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.Jobs
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.state.JobState
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.view.api.ui.UploadsRow
@@ -88,8 +88,8 @@ internal fun AccountOverview(
     onLogoutClicked: () -> Unit = {},
     onLoginClicked: () -> Unit = {},
     onSettingsClicked: () -> Unit = {},
-    onStartJob: (Job) -> Unit = {},
-    onCancelJob: (Job) -> Unit = {},
+    onStartJob: (JobModel) -> Unit = {},
+    onCancelJob: (JobModel) -> Unit = {},
     onClose: () -> Unit = {},
     onViewAllUploadsClicked: () -> Unit = {},
     onCloudSyncChanged: (Boolean) -> Unit = {},
@@ -180,8 +180,8 @@ private fun ConstraintLayoutScope.Content(
     contentRef: ConstrainedLayoutReference,
     footerRef: ConstrainedLayoutReference,
     state: AccountOverviewState,
-    onStartJob: (Job) -> Unit,
-    onCancelJob: (Job) -> Unit,
+    onStartJob: (JobModel) -> Unit,
+    onCancelJob: (JobModel) -> Unit,
     onViewAllUploadsClicked: () -> Unit,
     onCloudSyncChanged: (Boolean) -> Unit,
     onAboutClicked: () -> Unit,
@@ -350,10 +350,10 @@ private fun AccountOverviewPreview() {
                 showCloudSync = true,
                 avatarState = previewAvatarState,
                 jobs = persistentListOf(
-                    JobState(Title.Text("Feed"), FULL_FEED_SYNC, Idle),
-                    JobState(Title.Text("Precache"), FULL_FEED_SYNC, Blocked),
-                    JobState(Title.Text("Local"), FULL_FEED_SYNC, InProgress(25)),
-                    JobState(Title.Text("Queued"), FULL_FEED_SYNC, Queued),
+                    JobState(Title.Text("Feed"), FULL_FEED_SYNC, IdleModel),
+                    JobState(Title.Text("Precache"), FULL_FEED_SYNC, BlockedModel),
+                    JobState(Title.Text("Local"), FULL_FEED_SYNC, InProgressModel(25)),
+                    JobState(Title.Text("Queued"), FULL_FEED_SYNC, QueuedModel),
                 )
             ),
         )
@@ -373,10 +373,10 @@ private fun AccountOverviewDarkPreview() {
                 showCloudSync = true,
                 avatarState = previewAvatarState,
                 jobs = persistentListOf(
-                    JobState(Title.Text("Feed"), FULL_FEED_SYNC, Idle),
-                    JobState(Title.Text("Precache"), FULL_FEED_SYNC, Blocked),
-                    JobState(Title.Text("Local"), FULL_FEED_SYNC, InProgress(25)),
-                    JobState(Title.Text("Queued"), FULL_FEED_SYNC, Queued),
+                    JobState(Title.Text("Feed"), FULL_FEED_SYNC, IdleModel),
+                    JobState(Title.Text("Precache"), FULL_FEED_SYNC, BlockedModel),
+                    JobState(Title.Text("Local"), FULL_FEED_SYNC, InProgressModel(25)),
+                    JobState(Title.Text("Queued"), FULL_FEED_SYNC, QueuedModel),
                 )
             ),
         )
@@ -394,7 +394,7 @@ private fun AccountOverviewPreviewLoggedOut() {
                 showUserAndServerDetails = false,
                 avatarState = AvatarState(syncState = SyncState.GOOD),
                 jobs = persistentListOf(
-                    JobState(Title.Text("Local"), FULL_FEED_SYNC, InProgress(25)),
+                    JobState(Title.Text("Local"), FULL_FEED_SYNC, InProgressModel(25)),
                 )
             ),
         )
@@ -415,10 +415,10 @@ private fun AccountOverviewPreviewSmall() {
                     showCloudSync = true,
                     avatarState = previewAvatarState,
                     jobs = persistentListOf(
-                        JobState(Title.Text("Feed"), FULL_FEED_SYNC, Idle),
-                        JobState(Title.Text("Precache"), FULL_FEED_SYNC, Blocked),
-                        JobState(Title.Text("Local"), FULL_FEED_SYNC, InProgress(25)),
-                        JobState(Title.Text("Queued"), FULL_FEED_SYNC, Queued),
+                        JobState(Title.Text("Feed"), FULL_FEED_SYNC, IdleModel),
+                        JobState(Title.Text("Precache"), FULL_FEED_SYNC, BlockedModel),
+                        JobState(Title.Text("Local"), FULL_FEED_SYNC, InProgressModel(25)),
+                        JobState(Title.Text("Queued"), FULL_FEED_SYNC, QueuedModel),
                     )
                 ),
             )

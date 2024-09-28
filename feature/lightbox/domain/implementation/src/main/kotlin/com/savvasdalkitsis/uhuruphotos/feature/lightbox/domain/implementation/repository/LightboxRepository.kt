@@ -22,11 +22,11 @@ import com.github.michaelbull.result.coroutines.coroutineBinding
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemDetails
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingleOrNull
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.lightbox.LightboxDetailsQueries
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.domain.api.model.LightboxDetails
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.ExifData
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemMetadata
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.domain.api.model.LightboxDetailsModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.ExifDataModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHashModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemMetadataModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Md5Hash
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
@@ -62,7 +62,7 @@ class LightboxRepository @Inject constructor(
 
     fun observeDetails(
         md5Hash: Md5Hash,
-    ): Flow<LightboxDetails> = userUseCase.observeUser().flatMapLatest {
+    ): Flow<LightboxDetailsModel> = userUseCase.observeUser().flatMapLatest {
         lightboxDetailsQueries.get(md5Hash.value)
             .asFlow().mapToOneOrNull(Dispatchers.IO).distinctUntilChanged().map {
                 it?.toLightboxDetails()
@@ -70,7 +70,7 @@ class LightboxRepository @Inject constructor(
             .filterNotNull()
     }
 
-    suspend fun refreshDetails(id: MediaId<*>, mediaHash: MediaItemHash): SimpleResult = coroutineBinding {
+    suspend fun refreshDetails(id: MediaIdModel<*>, mediaHash: MediaItemHashModel): SimpleResult = coroutineBinding {
         if (getDbDetails(mediaHash.md5) == null) {
             lightboxDetailsQueries.touch(mediaHash.md5.value)
         }
@@ -97,14 +97,14 @@ class LightboxRepository @Inject constructor(
         }
     }
 
-    private suspend fun MediaId<*>.refreshedRemote(): Result<DbRemoteMediaItemDetails?, Throwable> = coroutineBinding {
+    private suspend fun MediaIdModel<*>.refreshedRemote(): Result<DbRemoteMediaItemDetails?, Throwable> = coroutineBinding {
         findRemote?.let { remote ->
             remoteMediaUseCase.refreshDetailsNow(remote.value).bind()
             remoteMediaUseCase.observeRemoteMediaItemDetails(remote.value).firstOrNull()
         }
     }
 
-    private suspend fun MediaId<*>.refreshedLocal(): Result<LocalMediaItem?, Throwable> = coroutineBinding {
+    private suspend fun MediaIdModel<*>.refreshedLocal(): Result<LocalMediaItem?, Throwable> = coroutineBinding {
         findLocals.firstOrNull()?.let { local ->
             localMediaUseCase.refreshLocalMediaItem(local.value, local.isVideo).bind()
             localMediaUseCase.getLocalMediaItem(local.value)
@@ -114,7 +114,7 @@ class LightboxRepository @Inject constructor(
     private suspend fun getDbDetails(md5Hash: Md5Hash): DbLightboxDetails? =
         lightboxDetailsQueries.get(md5Hash.value).awaitSingleOrNull()
 
-    private suspend fun DbLightboxDetails.toLightboxDetails(): LightboxDetails {
+    private suspend fun DbLightboxDetails.toLightboxDetails(): LightboxDetailsModel {
         val people = peopleUseCase.getPeopleByName().ifEmpty {
             peopleUseCase.refreshPeople()
             peopleUseCase.getPeopleByName()
@@ -122,7 +122,7 @@ class LightboxRepository @Inject constructor(
         val peopleNamesList = peopleInMediaItem.orEmpty().deserializePeopleNames
         val peopleInMediaItem = people
             .filter { it.name in peopleNamesList }
-        return LightboxDetails(
+        return LightboxDetailsModel(
             formattedDateTime = formattedDatetime,
             location = location,
             latLon = lat?.let { lat -> lon?.let { lon -> LatLon(lat, lon) } },
@@ -134,7 +134,7 @@ class LightboxRepository @Inject constructor(
                 .map { it.trim() }
                 .toSet(),
             size = size,
-            exifData = ExifData(
+            exifData = ExifDataModel(
                 fStop = fStop,
                 shutterSpeed = shutterSpeed,
                 isoSpeed = isoSpeed,
@@ -149,7 +149,7 @@ class LightboxRepository @Inject constructor(
         )
     }
 
-    fun saveMetadata(md5Hash: Md5Hash, metadata: MediaItemMetadata) = with(metadata) {
+    fun saveMetadata(md5Hash: Md5Hash, metadata: MediaItemMetadataModel) = with(metadata) {
         lightboxDetailsQueries.updateMetadata(
             size = size,
             fStop = exifData.fStop,

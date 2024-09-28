@@ -20,22 +20,22 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.isVideo
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.GetRemoteMediaCollections
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.upload.ProcessingMediaItems
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.portfolio.PortfolioItems
-import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType
-import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType.ALL
-import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType.ONLY_WITHOUT_DATES
-import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType.ONLY_WITH_DATES
-import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType.VIDEOS
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchTypeModel
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchTypeModel.ALL
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchTypeModel.ONLY_WITHOUT_DATES
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchTypeModel.ONLY_WITH_DATES
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchTypeModel.VIDEOS
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.FeedCache
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.FeedRepository
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSource
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemGroup
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstance
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice.Found
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSourceModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemGroupModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstanceModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDeviceModel.FoundModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.domain.api.usecase.PortfolioUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadUseCase
@@ -81,32 +81,32 @@ internal class FeedUseCase @Inject constructor(
     private val key = "feedDisplay"
 
     override fun observeFeed(
-        feedFetchType: FeedFetchType,
+        feedFetchTypeModel: FeedFetchTypeModel,
         loadSmallInitialChunk: Boolean,
-    ): Flow<List<MediaCollection>> = when {
-        loadSmallInitialChunk -> combinedFeed(feedFetchType, true)
+    ): Flow<List<MediaCollectionModel>> = when {
+        loadSmallInitialChunk -> combinedFeed(feedFetchTypeModel, true)
             .andThenSwitchTo(
-                combinedFeed(feedFetchType, false),
+                combinedFeed(feedFetchTypeModel, false),
             )
-        else -> combinedFeed(feedFetchType, false)
+        else -> combinedFeed(feedFetchTypeModel, false)
     }.distinctUntilChanged()
 
     private fun combinedFeed(
-        feedFetchType: FeedFetchType,
+        feedFetchTypeModel: FeedFetchTypeModel,
         loadSmallInitialChunk: Boolean
     ) = merge(
-            feedCache.observeFeed(feedFetchType, loadSmallInitialChunk),
-            liveFeed(feedFetchType, loadSmallInitialChunk).onEach {
-                feedCache.cacheFeed(it, feedFetchType, loadSmallInitialChunk)
+            feedCache.observeFeed(feedFetchTypeModel, loadSmallInitialChunk),
+            liveFeed(feedFetchTypeModel, loadSmallInitialChunk).onEach {
+                feedCache.cacheFeed(it, feedFetchTypeModel, loadSmallInitialChunk)
             }
         )
 
     private fun liveFeed(
-        feedFetchType: FeedFetchType,
+        feedFetchTypeModel: FeedFetchTypeModel,
         loadSmallInitialChunk: Boolean
     ) = combine(
-        observeRemoteMediaFeed(feedFetchType, loadSmallInitialChunk),
-        observeLocalMediaFeed(feedFetchType),
+        observeRemoteMediaFeed(feedFetchTypeModel, loadSmallInitialChunk),
+        observeLocalMediaFeed(feedFetchTypeModel),
         observeDownloading(),
         observeUploading(),
         observeProcessing().map { it.map(ProcessingMediaItems::id).toSet() },
@@ -114,12 +114,12 @@ internal class FeedUseCase @Inject constructor(
     ).debounce(500)
 
     private fun mergeRemoteWithLocalMedia(
-        allRemoteDays: Sequence<MediaCollection>,
-        allLocalMedia: List<MediaItem>,
+        allRemoteDays: Sequence<MediaCollectionModel>,
+        allLocalMedia: List<MediaItemModel>,
         mediaBeingDownloaded: Set<String>,
         mediaBeingUploaded: Set<Long>,
         mediaBeingProcessed: Set<Long>,
-    ): List<MediaCollection> {
+    ): List<MediaCollectionModel> {
         val remainingLocalMedia = allLocalMedia.toMutableList()
 
         val merged = allRemoteDays
@@ -131,7 +131,7 @@ internal class FeedUseCase @Inject constructor(
                     remainingLocalMedia.removeAll(local)
                     when {
                         local.isEmpty() -> item.orDownloading(mediaBeingDownloaded)
-                        else -> MediaItemGroup(
+                        else -> MediaItemGroupModel(
                             remoteInstance = item,
                             localInstances = local.toSet()
                         )
@@ -162,18 +162,18 @@ internal class FeedUseCase @Inject constructor(
             .toList()
     }
 
-    private fun MediaItem.orDownloading(inProgress: Set<String>): MediaItem =
-        orIf<MediaId.Remote>(inProgress, MediaId.Remote::toDownloading)
+    private fun MediaItemModel.orDownloading(inProgress: Set<String>): MediaItemModel =
+        orIf<MediaIdModel.RemoteIdModel>(inProgress, MediaIdModel.RemoteIdModel::toDownloading)
 
-    private fun MediaItem.orUploading(inProgress: Set<Long>): MediaItem =
-        orIf<MediaId.Local>(inProgress, MediaId.Local::toUploading)
+    private fun MediaItemModel.orUploading(inProgress: Set<Long>): MediaItemModel =
+        orIf<MediaIdModel.LocalIdModel>(inProgress, MediaIdModel.LocalIdModel::toUploading)
 
-    private fun MediaItem.orProcessing(inProgress: Set<Long>): MediaItem =
-        orIf<MediaId.Local>(inProgress, MediaId.Local::toProcessing)
+    private fun MediaItemModel.orProcessing(inProgress: Set<Long>): MediaItemModel =
+        orIf<MediaIdModel.LocalIdModel>(inProgress, MediaIdModel.LocalIdModel::toProcessing)
 
-    private inline fun <reified M> MediaItem.orIf(set: Set<Serializable>, map: (M) -> MediaId<*>): MediaItem {
+    private inline fun <reified M> MediaItemModel.orIf(set: Set<Serializable>, map: (M) -> MediaIdModel<*>): MediaItemModel {
         val id = id
-        return if (this is MediaItemInstance && id is M && id.value in set)
+        return if (this is MediaItemInstanceModel && id is M && id.value in set)
             copy(id = map(id))
         else
             this
@@ -182,7 +182,7 @@ internal class FeedUseCase @Inject constructor(
     override suspend fun refreshCluster(clusterId: String) =
         feedRepository.refreshRemoteMediaCollection(clusterId)
 
-    private fun Flow<Sequence<MediaCollection>>.initialize() = distinctUntilChanged()
+    private fun Flow<Sequence<MediaCollectionModel>>.initialize() = distinctUntilChanged()
         .safelyOnStartIgnoring {
             scheduleFeedRefreshNow()
         }
@@ -205,7 +205,7 @@ internal class FeedUseCase @Inject constructor(
         feedRepository.invalidateRemoteFeed()
     }
 
-    private fun GetRemoteMediaCollections.toMediaCollectionSource() = MediaCollectionSource(
+    private fun GetRemoteMediaCollections.toMediaCollectionSource() = MediaCollectionSourceModel(
         id = id,
         date = albumDate,
         location = albumLocation,
@@ -218,11 +218,11 @@ internal class FeedUseCase @Inject constructor(
         lon = gpsLon,
     )
 
-    private suspend fun Group<String, MediaCollectionSource>.toCollection() =
+    private suspend fun Group<String, MediaCollectionSourceModel>.toCollection() =
             mediaUseCase.toMediaCollection(this@toCollection)
 
-    private fun Map<String?, List<MediaItem>>.toMediaCollections() = map { (day, items) ->
-        MediaCollection(
+    private fun Map<String?, List<MediaItemModel>>.toMediaCollections() = map { (day, items) ->
+        MediaCollectionModel(
             id = "local_media_collection_$day",
             mediaItems = items,
             displayTitle = day ?: "-",
@@ -231,7 +231,7 @@ internal class FeedUseCase @Inject constructor(
         )
     }
 
-    private fun observeLocalMediaFeed(feedFetchType: FeedFetchType) =
+    private fun observeLocalMediaFeed(feedFetchTypeModel: FeedFetchTypeModel) =
         combine(
             mediaUseCase.observeLocalMedia()
                 .distinctUntilChanged(),
@@ -242,10 +242,10 @@ internal class FeedUseCase @Inject constructor(
                 .filter { it.folderId !in publishedFolderIds }
                 .map(PortfolioItems::id)
             when (itemsOnDevice) {
-                is Found -> itemsOnDevice.filteredWith(
+                is FoundModel -> itemsOnDevice.filteredWith(
                     publishedFolderIds,
                     publishedItemsNotInPublishedFolders,
-                    feedFetchType,
+                    feedFetchTypeModel,
                 )
                 else -> emptyList()
             }
@@ -258,12 +258,12 @@ internal class FeedUseCase @Inject constructor(
     private fun observeProcessing() = uploadUseCase.observeProcessing()
 
     private fun observeRemoteMediaFeed(
-        feedFetchType: FeedFetchType,
+        feedFetchTypeModel: FeedFetchTypeModel,
         loadSmallInitialChunk: Boolean,
     ) = welcomeUseCase.flow(
         withoutRemoteAccess = flowOf(emptySequence()),
         withRemoteAccess = feedRepository.observeRemoteMediaCollectionsByDate(
-            feedFetchType,
+            feedFetchTypeModel,
             loadSmallInitialChunk
         ).distinctUntilChanged()
             .map {
@@ -275,24 +275,24 @@ internal class FeedUseCase @Inject constructor(
             }.initialize()
         )
 
-    private fun Found.filteredWith(
+    private fun FoundModel.filteredWith(
         publishedFolderIds: Set<Int>,
         publishedItemsIds: List<Long>,
-        feedFetchType: FeedFetchType
-    ): List<MediaItem> {
+        feedFetchTypeModel: FeedFetchTypeModel
+    ): List<MediaItemModel> {
         val primaryFolderItems = primaryFolder?.second ?: emptyList()
         val publishedFoldersItems = mediaFolders.filter { (folder, _) ->
             folder.id in publishedFolderIds
         }.flatMap { (_, mediaItems) -> mediaItems }
         val publishedItems = mediaFolders.flatMap { (_, items) -> items }
             .filter { it.id.value in publishedItemsIds }
-        return (primaryFolderItems + publishedFoldersItems + publishedItems).filter(feedFetchType)
+        return (primaryFolderItems + publishedFoldersItems + publishedItems).filter(feedFetchTypeModel)
     }
 
-    private fun List<MediaItem>.filter(
-        feedFetchType: FeedFetchType
+    private fun List<MediaItemModel>.filter(
+        feedFetchTypeModel: FeedFetchTypeModel
     ) = filter { item ->
-        when (feedFetchType) {
+        when (feedFetchTypeModel) {
             ALL -> true
             ONLY_WITH_DATES -> !item.displayDayDate.isNullOrEmpty()
             ONLY_WITHOUT_DATES -> item.displayDayDate.isNullOrEmpty()

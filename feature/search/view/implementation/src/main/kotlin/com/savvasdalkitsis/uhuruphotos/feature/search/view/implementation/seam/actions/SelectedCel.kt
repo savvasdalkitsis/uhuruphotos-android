@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.actions
 
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.SearchResults
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSourceModel.SearchResultsModel
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation.LightboxNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchActionsContext
@@ -30,7 +30,7 @@ data class SelectedCel(val celState: CelState) : SearchAction() {
         navigator.navigateTo(
             LightboxNavigationRoute(
                 mediaItem = celState.mediaItem,
-                lightboxSequenceDataSource = SearchResults(state.query)
+                lightboxSequenceDataSource = SearchResultsModel(state.query)
             )
         )
     }

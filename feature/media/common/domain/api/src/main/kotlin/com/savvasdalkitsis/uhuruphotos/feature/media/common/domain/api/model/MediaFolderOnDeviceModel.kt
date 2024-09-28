@@ -15,15 +15,15 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model
 
-data class ExifData(
-    val fStop: String? = null,
-    val shutterSpeed: String? = null,
-    val isoSpeed: String? = null,
-    val camera: String? = null,
-    val focalLength: String? = null,
-    val focalLength35Equivalent: String? = null,
-    val subjectDistance: String? = null,
-    val digitalZoomRatio: String? = null,
-    val width: Int? = null,
-    val height: Int? = null,
-)
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaFolder
+
+sealed class MediaFolderOnDeviceModel {
+
+    data class FoundModel(
+        val folder: Pair<LocalMediaFolder, List<MediaItemModel>>,
+    ) : MediaFolderOnDeviceModel()
+
+    data class RequiresPermissionsModel(val deniedPermissions: List<String>) : MediaFolderOnDeviceModel()
+
+    data object ErrorModel : MediaFolderOnDeviceModel()
+}

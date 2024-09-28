@@ -18,13 +18,13 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.local.view.api.ui
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDeviceModel
 import dev.shreyaspatil.permissionflow.compose.rememberPermissionFlowRequestLauncher
 
 @Composable
 fun LocalMediaAccessRequestBanner(
     modifier: Modifier = Modifier,
-    missingPermissions: MediaItemsOnDevice.RequiresPermissions,
+    missingPermissions: MediaItemsOnDeviceModel.RequiresPermissionsModel,
     @StringRes description: Int,
     onNeverRemindMeAgain: () -> Unit,
 ) {

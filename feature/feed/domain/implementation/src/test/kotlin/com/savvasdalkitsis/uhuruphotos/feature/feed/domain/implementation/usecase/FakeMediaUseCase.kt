@@ -15,13 +15,13 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.usecase
 
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSource
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstance
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSourceModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHashModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstanceModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDeviceModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaFolder
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
@@ -36,25 +36,25 @@ fun MediaUseCase.defaults() = apply {
 }
 
 fun MediaUseCase.hasNoLocalMedia() {
-    every { observeLocalMedia() }.returns(flowOf(MediaItemsOnDevice.RequiresPermissions(emptyList())))
+    every { observeLocalMedia() }.returns(flowOf(MediaItemsOnDeviceModel.RequiresPermissionsModel(emptyList())))
 }
 
 fun MediaUseCase.returnsLocalMedia(
-    primaryFolder: Pair<LocalMediaFolder, List<MediaItem>>? = null,
-    mediaFolders: List<Pair<LocalMediaFolder, List<MediaItem>>> = emptyList(),
+    primaryFolder: Pair<LocalMediaFolder, List<MediaItemModel>>? = null,
+    mediaFolders: List<Pair<LocalMediaFolder, List<MediaItemModel>>> = emptyList(),
 ) {
-    every { observeLocalMedia() }.returns(flowOf(MediaItemsOnDevice.Found(primaryFolder, mediaFolders)))
+    every { observeLocalMedia() }.returns(flowOf(MediaItemsOnDeviceModel.FoundModel(primaryFolder, mediaFolders)))
 }
 
 private fun MediaUseCase.mapsRemoteMediaCollections() {
-    val slot = slot<Group<String, MediaCollectionSource>>()
+    val slot = slot<Group<String, MediaCollectionSourceModel>>()
     coEvery { toMediaCollection(capture(slot)) }.answers {
         val groups = slot.captured
         groups.items.map { (id, source) ->
-            MediaCollection(id, source.map {
-                MediaItemInstance(
-                    id = MediaId.Remote(it.id, it.isVideo),
-                    mediaHash = MediaItemHash.fromRemoteMediaHash(it.mediaItemId ?: "missing", 0),
+            MediaCollectionModel(id, source.map {
+                MediaItemInstanceModel(
+                    id = MediaIdModel.RemoteIdModel(it.id, it.isVideo),
+                    mediaHash = MediaItemHashModel.fromRemoteMediaHash(it.mediaItemId ?: "missing", 0),
                     displayDayDate = id,
                 )
             }, id)

@@ -23,9 +23,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.api.state.Aut
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSortingState
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSortingState.Companion.sorted
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.AutoAlbums
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId.Remote
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstance
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel.RemoteIdModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHashModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstanceModel
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.model.RemoteUserModel
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
@@ -89,9 +89,9 @@ class AutoAlbumsUseCase @Inject constructor(
         ).map {
             AutoAlbum(
                 id = it.id,
-                cover = MediaItemInstance(
-                    id = Remote(it.coverPhotoHash, it.coverPhotoIsVideo ?: false),
-                    mediaHash = MediaItemHash.fromRemoteMediaHash(
+                cover = MediaItemInstanceModel(
+                    id = RemoteIdModel(it.coverPhotoHash, it.coverPhotoIsVideo ?: false),
+                    mediaHash = MediaItemHashModel.fromRemoteMediaHash(
                         it.coverPhotoHash,
                         user.id
                     ),

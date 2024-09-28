@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.ac
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.Memory
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSourceModel.MemoryModel
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation.LightboxNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import kotlinx.coroutines.flow.flow
@@ -30,7 +30,7 @@ data class MemorySelected(val cel: CelState, val yearsAgo: Int) : FeedAction() {
         navigator.navigateTo(
             LightboxNavigationRoute(
                 mediaItem = cel.mediaItem,
-                lightboxSequenceDataSource = Memory(yearsAgo)
+                lightboxSequenceDataSource = MemoryModel(yearsAgo)
             )
         )
     }

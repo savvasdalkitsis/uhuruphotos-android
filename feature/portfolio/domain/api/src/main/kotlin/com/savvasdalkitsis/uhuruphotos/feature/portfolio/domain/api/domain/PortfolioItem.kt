@@ -15,12 +15,12 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.portfolio.domain.api.domain
 
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaFolder
 
 data class PortfolioItem(
     val published: Boolean,
     val canBeModified: Boolean,
     val folder: LocalMediaFolder,
-    val items: List<MediaItem>
+    val items: List<MediaItemModel>
 )

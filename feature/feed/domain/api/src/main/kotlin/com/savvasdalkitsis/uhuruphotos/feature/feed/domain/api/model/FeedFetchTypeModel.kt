@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model
 
-enum class FeedFetchType(
+enum class FeedFetchTypeModel(
     val includeMediaWithoutDate: Boolean,
     val includeMediaWithDate: Boolean,
     val onlyVideos: Boolean,

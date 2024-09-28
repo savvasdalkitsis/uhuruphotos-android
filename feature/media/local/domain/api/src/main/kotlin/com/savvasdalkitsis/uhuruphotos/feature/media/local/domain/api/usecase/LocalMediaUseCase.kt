@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase
 
 import android.graphics.Bitmap
 import android.net.Uri
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalFolder
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalFolderModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItems
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalPermissions
@@ -37,7 +37,7 @@ interface LocalMediaUseCase {
 
     fun observeLocalMediaItems(): Flow<LocalMediaItems>
 
-    fun observeLocalMediaFolder(folderId: Int): Flow<LocalFolder>
+    fun observeLocalMediaFolder(folderId: Int): Flow<LocalFolderModel>
 
     suspend fun refreshLocalMediaItem(id: Long, isVideo: Boolean): SimpleResult
 

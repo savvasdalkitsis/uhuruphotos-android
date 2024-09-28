@@ -15,22 +15,22 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation
 
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject
 
 internal class SelectionList @Inject constructor() {
 
-    private var selectedIds = MutableStateFlow(emptySet<MediaId<*>>())
+    private var selectedIds = MutableStateFlow(emptySet<MediaIdModel<*>>())
 
-    val ids: Flow<Set<MediaId<*>>> = selectedIds
+    val ids: Flow<Set<MediaIdModel<*>>> = selectedIds
 
-    suspend fun deselect(id: MediaId<*>) {
+    suspend fun deselect(id: MediaIdModel<*>) {
         selectedIds.emit(selectedIds.value - id)
     }
 
-    suspend fun select(id: MediaId<*>) {
+    suspend fun select(id: MediaIdModel<*>) {
         selectedIds.emit(selectedIds.value + id)
     }
 

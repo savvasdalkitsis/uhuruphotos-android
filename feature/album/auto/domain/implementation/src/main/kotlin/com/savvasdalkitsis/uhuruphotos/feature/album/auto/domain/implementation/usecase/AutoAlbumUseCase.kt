@@ -19,8 +19,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.album.auto.domain.api.usecase.Aut
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.domain.implementation.repository.AutoAlbumRepository
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.GetAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.GetPeopleForAutoAlbum
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSource
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSourceModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.mapValues
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
@@ -37,7 +37,7 @@ internal class AutoAlbumUseCase @Inject constructor(
     private val mediaUseCase: MediaUseCase,
 ) : AutoAlbumUseCase {
 
-    override fun observeAutoAlbum(albumId: Int): Flow<List<MediaCollection>> = with(mediaUseCase) {
+    override fun observeAutoAlbum(albumId: Int): Flow<List<MediaCollectionModel>> = with(mediaUseCase) {
         autoAlbumRepository.observeAutoAlbum(albumId)
             .distinctUntilChanged()
             .map { albums ->
@@ -55,7 +55,7 @@ internal class AutoAlbumUseCase @Inject constructor(
             album to people
         }
 
-    override suspend fun getAutoAlbum(albumId: Int): List<MediaCollection> = with(mediaUseCase) {
+    override suspend fun getAutoAlbum(albumId: Int): List<MediaCollectionModel> = with(mediaUseCase) {
         toMediaCollection(autoAlbumRepository.getAutoAlbum(albumId)
             .mapValues { it.toMediaCollectionSource() })
     }
@@ -66,7 +66,7 @@ internal class AutoAlbumUseCase @Inject constructor(
     override suspend fun deleteAutoAlbum(albumId: Int): SimpleResult =
         autoAlbumRepository.deleteAutoAlbum(albumId)
 
-    private fun GetAutoAlbum.toMediaCollectionSource() = MediaCollectionSource(
+    private fun GetAutoAlbum.toMediaCollectionSource() = MediaCollectionSourceModel(
         id = id,
         date = albumTimestamp,
         location = null,

@@ -19,7 +19,7 @@ import android.location.LocationManager
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.domain.api.usecase.HeatMapUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapMutation.UpdateVisibleMapContent
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.worker.LocalMediaWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUIUseCase
@@ -42,7 +42,7 @@ internal class HeatMapActionsContext @Inject constructor(
     var boundsChecker: suspend (LatLon) -> Boolean = { true }
     var updateVisibleMapContentJob: Deferred<UpdateVisibleMapContent>? = null
 
-    suspend fun updateDisplay(allMedia: List<MediaItem>): UpdateVisibleMapContent {
+    suspend fun updateDisplay(allMedia: List<MediaItemModel>): UpdateVisibleMapContent {
         val photosToDisplay = allMedia
             .filter { photo ->
                 val latLon = photo.latLng.toLatLon()

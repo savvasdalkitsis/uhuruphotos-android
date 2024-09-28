@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.seam.actions
 
-import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchTypeModel
 import com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.seam.StatsActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.seam.StatsMutation.Loading
 import com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.seam.StatsMutation.ShowMediaHeatMap
@@ -37,7 +37,7 @@ data object LoadStats : StatsAction() {
 
     context(StatsActionsContext)
     override fun handle(state: StatsState): Flow<Mutation<StatsState>> = channelFlow {
-        val allMedia = feedUseCase.observeFeed(FeedFetchType.ALL).first()
+        val allMedia = feedUseCase.observeFeed(FeedFetchTypeModel.ALL).first()
             .flatMap { it.mediaItems }
         val mediaWithDates = allMedia.filter { it.mediaDay != null }
         with(statsUseCase) {

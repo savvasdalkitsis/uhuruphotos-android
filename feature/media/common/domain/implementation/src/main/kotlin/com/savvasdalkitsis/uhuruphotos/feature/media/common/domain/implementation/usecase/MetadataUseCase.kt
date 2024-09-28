@@ -19,8 +19,8 @@ import android.content.ContentResolver
 import android.net.Uri
 import coil.annotation.ExperimentalCoilApi
 import coil.disk.DiskCache
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.ExifData
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemMetadata
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.ExifDataModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemMetadataModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MetadataUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.asyncReturn
 import com.savvasdalkitsis.uhuruphotos.foundation.exif.api.model.ExifMetadata
@@ -38,14 +38,14 @@ class MetadataUseCase @Inject constructor(
     private val contentResolver: ContentResolver,
 ) : MetadataUseCase {
 
-    override suspend fun extractMetadata(url: String): MediaItemMetadata? = asyncReturn {
+    override suspend fun extractMetadata(url: String): MediaItemMetadataModel? = asyncReturn {
         when {
             url.startsWith("content://") -> fromUri(url)
             else -> fromUrl(url)
         }?.let { (size, exif) ->
-            MediaItemMetadata(
+            MediaItemMetadataModel(
                 size = "${size.mb.round(2)} MB",
-                exifData = ExifData(
+                exifData = ExifDataModel(
                     fStop = exif.fStop?.let { "ƒ/${it.round(2)}" },
                     shutterSpeed = exif.shutterSpeed?.let {
                         "1/${it.round(2)}"

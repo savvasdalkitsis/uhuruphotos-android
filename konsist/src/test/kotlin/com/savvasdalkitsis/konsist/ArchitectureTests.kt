@@ -55,6 +55,16 @@ class ArchitectureTests {
 
     @Test
     @Ignore("This is violated a lot so will be used to slowly fix the issues")
+    fun `domain model classes have a Model suffix`() {
+        Konsist.scopeFromProject()
+            .classesAndInterfacesAndObjects()
+            .filter { !it.hasModifier(KoModifier.COMPANION) }
+            .withPackage("..model..")
+            .assertTrue { it.hasNameEndingWith("Model") }
+    }
+
+    @Test
+    @Ignore("This is violated a lot so will be used to slowly fix the issues")
     fun `UseCases should not use database layer classes directly`() {
         Konsist.scopeFromProject()
             .assertArchitecture {

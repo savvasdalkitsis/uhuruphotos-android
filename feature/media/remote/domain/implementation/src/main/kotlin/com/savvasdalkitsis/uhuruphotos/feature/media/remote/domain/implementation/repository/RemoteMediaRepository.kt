@@ -33,8 +33,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.Remote
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemDetailsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemSummaryQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaTrashQueries
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResult
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHashModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResultModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummaryStatus
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummaryStatus.Found
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummaryStatus.Processing
@@ -116,8 +116,8 @@ class RemoteMediaRepository @Inject constructor(
 
     suspend fun refreshDetailsNowIfMissing(id: String) =
         when (getMediaItemDetails(id)) {
-            null -> refreshDetailsNow(id).map { MediaOperationResult.CHANGED }
-            else -> Ok(MediaOperationResult.SKIPPED)
+            null -> refreshDetailsNow(id).map { MediaOperationResultModel.CHANGED }
+            else -> Ok(MediaOperationResultModel.SKIPPED)
         }
 
     suspend fun refreshDetailsNow(id: String) = runCatchingWithLog {
@@ -132,7 +132,7 @@ class RemoteMediaRepository @Inject constructor(
             summary.inTrash -> trashMediaItem(summary.id)
             else -> {
                 remoteMediaItemSummaryQueries.insert(summary.toDbModel(containerId))
-                val md5 = MediaItemHash.fromRemoteMediaHash(summary.id, summary.owner.id).md5.value
+                val md5 = MediaItemHashModel.fromRemoteMediaHash(summary.id, summary.owner.id).md5.value
                 lightboxDetailsQueries.touch(md5 = md5)
                 lightboxDetailsQueries.updateRemoteGps(
                     lat = summary.lat?.toDoubleOrNull(),

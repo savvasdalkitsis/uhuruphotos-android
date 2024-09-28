@@ -1,5 +1,5 @@
 /*
-Copyright 2023 Savvas Dalkitsis
+Copyright 2022 Savvas Dalkitsis
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,12 +15,17 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model
 
-data class MediaDay(
-    val day: Int,
-    val dayOfWeek: Int,
-    val month: Int,
-    val year: Int,
-    val monthText: String,
-) {
-    val displayText = "$monthText $year"
+import androidx.compose.runtime.Immutable
+
+@Immutable
+sealed interface MediaItemModel {
+    val id: MediaIdModel<*>
+    val mediaHash: MediaItemHashModel
+    val fallbackColor: String?
+    val displayDayDate: String?
+    val sortableDate: String?
+    val isFavourite: Boolean
+    val ratio: Float
+    val latLng: (Pair<Double, Double>)?
+    val mediaDay: MediaDayModel?
 }

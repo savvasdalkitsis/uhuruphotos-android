@@ -20,7 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Predefi
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryMutation.Loading
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetailsState
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GallerySortingState
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSourceModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
@@ -43,7 +43,7 @@ class GalleryActionsContext @AssistedInject constructor(
     @Assisted
     val shouldRefreshOnLoad: suspend (galleryId: Int) -> Boolean,
     @Assisted
-    val lightboxSequenceDataSource: (galleryId: Int) -> LightboxSequenceDataSource,
+    val lightboxSequenceDataSource: (galleryId: Int) -> LightboxSequenceDataSourceModel,
     @Assisted
     val initialCollageDisplayState: (galleryId: Int) -> CollageDisplayState,
     @Assisted

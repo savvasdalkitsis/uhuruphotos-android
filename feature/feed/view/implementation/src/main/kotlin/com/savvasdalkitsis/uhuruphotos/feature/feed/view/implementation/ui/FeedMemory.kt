@@ -45,9 +45,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.MemoryCelState
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstance
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHashModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstanceModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.Cel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
@@ -149,9 +149,9 @@ private fun FeedMemoryPreview() {
         FeedMemory(memory = MemoryCelState(
             yearsAgo = 10,
             cels = persistentListOf(CelState(
-                MediaItemInstance(
-                    id = MediaId.Local(0L, 0, false, "", ""),
-                    mediaHash = MediaItemHash.fromRemoteMediaHash("hash", 0),
+                MediaItemInstanceModel(
+                    id = MediaIdModel.LocalIdModel(0L, 0, false, "", ""),
+                    mediaHash = MediaItemHashModel.fromRemoteMediaHash("hash", 0),
                 )
             )),
         ), onMemorySelected = { _, _ -> }, onScrollToMemory = {})

@@ -16,33 +16,33 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.usecase
 
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.GetRemoteMediaCollections
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemGroup
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstance
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemGroupModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHashModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstanceModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaFolder
 
 fun mediaCollection(
     id: String,
-    vararg items: MediaId<*>,
+    vararg items: MediaIdModel<*>,
 ) = mediaCollection(id, id, *items)
 
 fun mediaCollection(
     id: String,
     date: String = id,
-    vararg items: MediaId<*>,
-) = MediaCollection(id, items.map { mediaItem(it, date) }, date)
+    vararg items: MediaIdModel<*>,
+) = MediaCollectionModel(id, items.map { mediaItem(it, date) }, date)
 
-fun mediaGroup(remote: MediaItemInstance, vararg locals: MediaItemInstance) = MediaItemGroup(remote, locals.toSet())
-fun mediaItem(id: MediaId<*>, date: String = "") =
-    MediaItemInstance(id, MediaItemHash.fromRemoteMediaHash(id.value.toString(), 0), displayDayDate = date)
+fun mediaGroup(remote: MediaItemInstanceModel, vararg locals: MediaItemInstanceModel) = MediaItemGroupModel(remote, locals.toSet())
+fun mediaItem(id: MediaIdModel<*>, date: String = "") =
+    MediaItemInstanceModel(id, MediaItemHashModel.fromRemoteMediaHash(id.value.toString(), 0), displayDayDate = date)
 fun localMediaItem(id: Long, displayDate: String) = mediaItem(local(id), displayDate)
-fun remote(id: String) = MediaId.Remote(id, false)
-fun downloading(id: String) = MediaId.Downloading(id, false)
-fun local(id: Long) = MediaId.Local(id, 0, false, "", "")
-fun processing(id: Long) = MediaId.Processing(id, 0, false, "", "")
-fun uploading(id: Long) = MediaId.Uploading(id, 0, false, "", "")
+fun remote(id: String) = MediaIdModel.RemoteIdModel(id, false)
+fun downloading(id: String) = MediaIdModel.DownloadingIdModel(id, false)
+fun local(id: Long) = MediaIdModel.LocalIdModel(id, 0, false, "", "")
+fun processing(id: Long) = MediaIdModel.ProcessingIdModel(id, 0, false, "", "")
+fun uploading(id: Long) = MediaIdModel.UploadingIdModel(id, 0, false, "", "")
 
 fun mediaItem(id: String, hash: String = id) = GetRemoteMediaCollections(
     id,

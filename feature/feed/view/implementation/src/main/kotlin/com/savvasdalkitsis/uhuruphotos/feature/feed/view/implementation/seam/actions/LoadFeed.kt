@@ -16,29 +16,29 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions
 
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.SyncState
-import com.savvasdalkitsis.uhuruphotos.feature.battery.domain.api.model.BatteryOptimizationStatus.BATTERY_OPTIMIZED
+import com.savvasdalkitsis.uhuruphotos.feature.battery.domain.api.model.BatteryOptimizationStatusModel.BATTERY_OPTIMIZED
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.ClusterState
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplayState
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.toCluster
-import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchTypeModel
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.HideRequestForLocalStoragePermission
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.HideMemories
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.HideRequestForLocalStoragePermission
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.Loading
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.ShowBatteryOptimizationBanner
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.ShowRequestForCloudSync
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.ShowClusters
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.ShowLocalMediaSyncRunning
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.ShowRequestForLocalStoragePermission
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.ShowLostServerConnection
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.ShowNoPhotosFound
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.ShowRequestForCloudSync
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.ShowRequestForLocalStoragePermission
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.MemoryCelState
-import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job
-import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice.RequiresPermissions
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobModel
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatusModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDeviceModel.RequiresPermissionsModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkable.SelectionMode
 import kotlinx.collections.immutable.toImmutableList
@@ -101,15 +101,15 @@ data object LoadFeed : FeedAction() {
         }
 
     private fun FeedActionsContext.localMediaSyncStatus() =
-        jobsUseCase.observeJobsStatusFilteredBySettings().map { it.jobs[Job.LOCAL_MEDIA_SYNC] }.map {
-            ShowLocalMediaSyncRunning(it == JobStatus.Queued || it is JobStatus.InProgress)
+        jobsUseCase.observeJobsStatusFilteredBySettings().map { it.jobs[JobModel.LOCAL_MEDIA_SYNC] }.map {
+            ShowLocalMediaSyncRunning(it == JobStatusModel.QueuedModel || it is JobStatusModel.InProgressModel)
         }.debounce(4000)
 
     private fun FeedActionsContext.localMediaPermissionHeader() =
         mediaUseCase.observeLocalMedia()
             .mapNotNull {
                 when (it) {
-                    is RequiresPermissions -> ShowRequestForLocalStoragePermission(it)
+                    is RequiresPermissionsModel -> ShowRequestForLocalStoragePermission(it)
                         .takeIf {
                             settingsUIUseCase.getShowBannerAskingForLocalMediaPermissionsOnFeed()
                         }
@@ -134,7 +134,7 @@ data object LoadFeed : FeedAction() {
 
     private fun FeedActionsContext.showClusters() =
         combine(
-            feedUseCase.observeFeed(FeedFetchType.ONLY_WITH_DATES).debounce(200),
+            feedUseCase.observeFeed(FeedFetchTypeModel.ONLY_WITH_DATES).debounce(200),
             selectionList.ids,
             avatarUseCase.getAvatarState(),
             feedUseCase
@@ -159,7 +159,7 @@ data object LoadFeed : FeedAction() {
 
     private val List<ClusterState>.celCount get() = sumOf { it.cels.size }
 
-    private fun List<ClusterState>.selectCels(ids: Set<MediaId<*>>): List<ClusterState> {
+    private fun List<ClusterState>.selectCels(ids: Set<MediaIdModel<*>>): List<ClusterState> {
         val empty = ids.isEmpty()
         return map { cluster ->
             cluster.copy(cels = cluster.cels.map { cel ->

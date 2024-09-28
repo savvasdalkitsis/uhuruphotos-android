@@ -1,5 +1,5 @@
 /*
-Copyright 2022 Savvas Dalkitsis
+Copyright 2024 Savvas Dalkitsis
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,19 +13,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.usecase
+package com.savvasdalkitsis.uhuruphotos.feature.site.domain.api.model
 
-import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobModel
-import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobsStatusModel
-import kotlinx.coroutines.flow.Flow
-
-interface JobsUseCase {
-
-    fun observeJobsStatus(): Flow<JobsStatusModel>
-
-    fun observeJobsStatusFilteredBySettings(): Flow<JobsStatusModel>
-
-    fun startJob(job: JobModel)
-
-    fun cancelJob(job: JobModel)
-}
+data class SiteOptionsModel(
+    val allowUpload: Boolean,
+)

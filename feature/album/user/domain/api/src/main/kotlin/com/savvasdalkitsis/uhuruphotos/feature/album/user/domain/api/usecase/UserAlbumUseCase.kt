@@ -15,17 +15,17 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.api.usecase
 
-import com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.api.model.UserAlbum
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
+import com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.api.model.UserAlbumModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import kotlinx.coroutines.flow.Flow
 
 interface UserAlbumUseCase {
 
-    suspend fun getUserAlbum(albumId: Int): UserAlbum
-    fun observeUserAlbum(albumId: Int): Flow<UserAlbum>
+    suspend fun getUserAlbum(albumId: Int): UserAlbumModel
+    fun observeUserAlbum(albumId: Int): Flow<UserAlbumModel>
     suspend fun refreshUserAlbum(albumId: Int): SimpleResult
-    fun addMediaToAlbum(albumId: Int, media: List<MediaId.Remote>)
-    suspend fun createNewUserAlbum(name: String, media: List<MediaId.Remote> = emptyList())
+    fun addMediaToAlbum(albumId: Int, media: List<MediaIdModel.RemoteIdModel>)
+    suspend fun createNewUserAlbum(name: String, media: List<MediaIdModel.RemoteIdModel> = emptyList())
     suspend fun deleteUserAlbum(albumId: Int): SimpleResult
 }

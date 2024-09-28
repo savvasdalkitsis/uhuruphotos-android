@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.seam
 
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaDay
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaDayModel
 import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.CountryVisit
 import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.DayOfMonth
 import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.DayOfWeek
@@ -65,7 +65,7 @@ sealed class StatsMutation(
         )
     })
 
-    data class ShowMediaHeatMap(val mediaHeatMap: Map<MediaDay, Int>) : StatsMutation({
+    data class ShowMediaHeatMap(val mediaHeatMap: Map<MediaDayModel, Int>) : StatsMutation({
         it.copy(
             isLoadingMediaHeatMap = false,
             mediaHeatMap = mediaHeatMap.toImmutableMap(),

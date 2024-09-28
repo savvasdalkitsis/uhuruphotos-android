@@ -15,12 +15,12 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.lightbox.domain.implementation.usecase
 
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.domain.api.model.LightboxDetails
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.domain.api.model.LightboxDetailsModel
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.domain.api.usecase.LightboxUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.domain.implementation.repository.LightboxRepository
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemMetadata
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHashModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemMetadataModel
 import kotlinx.coroutines.flow.Flow
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
@@ -30,13 +30,13 @@ class LightboxUseCase @Inject constructor(
     private val lightboxRepository: LightboxRepository,
 ) : LightboxUseCase {
 
-    override fun observeLightboxItemDetails(mediaHash: MediaItemHash): Flow<LightboxDetails> =
+    override fun observeLightboxItemDetails(mediaHash: MediaItemHashModel): Flow<LightboxDetailsModel> =
         lightboxRepository.observeDetails(mediaHash.md5)
 
-    override suspend fun refreshMediaDetails(mediaId: MediaId<*>, mediaHash: MediaItemHash) =
+    override suspend fun refreshMediaDetails(mediaId: MediaIdModel<*>, mediaHash: MediaItemHashModel) =
         lightboxRepository.refreshDetails(mediaId, mediaHash)
 
-    override fun saveMetadata(mediaHash: MediaItemHash, metadata: MediaItemMetadata) {
+    override fun saveMetadata(mediaHash: MediaItemHashModel, metadata: MediaItemMetadataModel) {
         lightboxRepository.saveMetadata(mediaHash.md5, metadata)
     }
 }

@@ -15,11 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.actions
 
-import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchTypeModel
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapMutation
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state.HeatMapState
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDeviceModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
@@ -39,7 +39,7 @@ data object Load : HeatMapAction() {
             val initialViewPort = heatMapUseCase.observeViewport().first()
             emit(HeatMapMutation.ChangeInitialMapViewPort(initialViewPort))
         },
-        feedUseCase.observeFeed(FeedFetchType.ALL)
+        feedUseCase.observeFeed(FeedFetchTypeModel.ALL)
             .map { mediaCollections ->
                 mediaCollections
                     .flatMap { it.mediaItems }
@@ -51,7 +51,7 @@ data object Load : HeatMapAction() {
         mediaUseCase.observeLocalMedia()
             .mapNotNull {
                 when (it) {
-                    is MediaItemsOnDevice.RequiresPermissions -> HeatMapMutation.ShowRequestForLocalStoragePermission(it)
+                    is MediaItemsOnDeviceModel.RequiresPermissionsModel -> HeatMapMutation.ShowRequestForLocalStoragePermission(it)
                         .takeIf {
                         settingsUIUseCase.getShowBannerAskingForLocalMediaPermissionsOnHeatmap()
                     }

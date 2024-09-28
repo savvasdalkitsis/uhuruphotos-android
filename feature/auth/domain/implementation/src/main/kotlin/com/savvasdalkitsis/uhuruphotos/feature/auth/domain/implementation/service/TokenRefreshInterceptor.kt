@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.service
 
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.AuthStatus.Unauthenticated
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.AuthStatusModel.UnauthenticatedModel
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.usecase.AuthenticationUseCase
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
@@ -33,7 +33,7 @@ class TokenRefreshInterceptor @Inject constructor(
             response.hasExpiredToken() -> {
                 response.close()
                 when (val auth = runBlocking { authenticationUseCase.refreshToken() }) {
-                    is Unauthenticated -> throw AccessTokenRefreshError(auth.status)
+                    is UnauthenticatedModel -> throw AccessTokenRefreshError(auth.status)
                     else -> chain.proceed(authenticationHeaderInjector.inject(chain))
                 }
             }

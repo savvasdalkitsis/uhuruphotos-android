@@ -16,11 +16,11 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.undated.view.implementation.seam
 
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.toCluster
-import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchTypeModel
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContextFactory
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetailsState
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSourceModel
 import com.savvasdalkitsis.uhuruphotos.feature.undated.domain.api.usecase.UndatedUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simpleOk
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
@@ -42,7 +42,7 @@ internal class UndatedActionsContext @Inject constructor(
             simpleOk
         },
         galleryDetailsStateFlow = { _ ->
-            feedUseCase.observeFeed(FeedFetchType.ONLY_WITHOUT_DATES)
+            feedUseCase.observeFeed(FeedFetchTypeModel.ONLY_WITHOUT_DATES)
                 .map {
                     GalleryDetailsState(
                         title = Title.Resource(string.media_without_date),
@@ -52,7 +52,7 @@ internal class UndatedActionsContext @Inject constructor(
                 }
         },
         shouldRefreshOnLoad = { false },
-        lightboxSequenceDataSource = { LightboxSequenceDataSource.Undated },
+        lightboxSequenceDataSource = { LightboxSequenceDataSourceModel.UndatedModel },
         initialCollageDisplayState = { undatedUseCase.getUndatedGalleryDisplay() },
         collageDisplayPersistence = { _, galleryDisplay ->
             undatedUseCase.setUndatedGalleryDisplay(galleryDisplay)

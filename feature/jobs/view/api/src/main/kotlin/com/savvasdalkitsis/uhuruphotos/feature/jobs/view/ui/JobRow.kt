@@ -34,13 +34,13 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job
-import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus
-import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus.Blocked
-import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus.Failed
-import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus.Idle
-import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus.InProgress
-import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus.Queued
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobModel
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatusModel
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatusModel.BlockedModel
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatusModel.FailedModel
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatusModel.IdleModel
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatusModel.InProgressModel
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatusModel.QueuedModel
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.state.JobState
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
@@ -70,17 +70,17 @@ fun JobRow(
             modifier = Modifier
                 .padding(8.dp)
                 .align(CenterVertically),
-            enabled = state.status !is Blocked,
+            enabled = state.status !is BlockedModel,
             onClick = when (state.status) {
-                Idle, Blocked, Failed -> onStartJob
-                is InProgress, Queued -> onCancelJob
+                IdleModel, BlockedModel, FailedModel -> onStartJob
+                is InProgressModel, QueuedModel -> onCancelJob
             }
         ) {
             Text(
                 modifier = Modifier.animateContentSize(),
                 text = when (state.status) {
-                    Queued, Blocked, Idle, Failed -> stringResource(string.start)
-                    is InProgress -> stringResource(string.cancel)
+                    QueuedModel, BlockedModel, IdleModel, FailedModel -> stringResource(string.start)
+                    is InProgressModel -> stringResource(string.cancel)
                 }
             )
         }
@@ -102,14 +102,14 @@ private fun JobProgressIndicator(
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Text(modifier = Modifier.weight(1f), text = state.title.toText())
-            AnimatedVisibility(visible = state.status is InProgress) {
-                (state.status as? InProgress)?.let { status ->
+            AnimatedVisibility(visible = state.status is InProgressModel) {
+                (state.status as? InProgressModel)?.let { status ->
                     Text("${status.progress}%")
                 }
             }
         }
-        AnimatedVisibility(visible = state.status is InProgress) {
-            (state.status as? InProgress)?.let { status ->
+        AnimatedVisibility(visible = state.status is InProgressModel) {
+            (state.status as? InProgressModel)?.let { status ->
                 LinearProgressIndicator(
                     modifier = Modifier.fillMaxWidth(),
                     strokeCap = StrokeCap.Round,
@@ -123,28 +123,28 @@ private fun JobProgressIndicator(
 @Preview
 @Composable
 private fun JobInProgress() {
-    Job(InProgress(progress = 25))
+    Job(InProgressModel(progress = 25))
 }
 
 @Preview
 @Composable
 private fun JobIdle() {
-    Job(Idle)
+    Job(IdleModel)
 }
 
 @Preview
 @Composable
 private fun JobBlocked() {
-    Job(Blocked)
+    Job(BlockedModel)
 }
 
 @Composable
-private fun Job(status: JobStatus) {
+private fun Job(status: JobStatusModel) {
     PreviewAppTheme {
         JobRow(
             JobState(
                 title = Title.Text("Job title"),
-                job = Job.FULL_FEED_SYNC,
+                job = JobModel.FULL_FEED_SYNC,
                 status
             )
         )

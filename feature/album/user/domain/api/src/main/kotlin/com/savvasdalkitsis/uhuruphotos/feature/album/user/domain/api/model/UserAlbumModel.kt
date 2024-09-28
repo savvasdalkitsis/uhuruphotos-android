@@ -13,14 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model
+package com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.api.model
 
-import androidx.activity.result.IntentSenderRequest
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionModel
 
-sealed class InternalLocalMediaItemDeletion {
-
-    data object Success : InternalLocalMediaItemDeletion()
-    data class Error(val e: Throwable?) : InternalLocalMediaItemDeletion()
-    data class RequiresPermissions(val deniedPermissions: List<String>) : InternalLocalMediaItemDeletion()
-    data class NeedsSystemApproval(val request: IntentSenderRequest) : InternalLocalMediaItemDeletion()
-}
+data class UserAlbumModel(
+    val title: String,
+    val mediaCollections: List<MediaCollectionModel>,
+)

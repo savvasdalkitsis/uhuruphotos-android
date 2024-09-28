@@ -1,5 +1,5 @@
 /*
-Copyright 2024 Savvas Dalkitsis
+Copyright 2022 Savvas Dalkitsis
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,13 +13,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.site.domain.api.service.http.response
+package com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
-
-@JsonClass(generateAdapter = true)
-data class SiteOptionsResponseData(
-    @field:Json(name = "allow_upload")
-    val allowUpload: Boolean,
-)
+data class LocalMediaDeletionRequestModel(val id: Long, val isVideo: Boolean)

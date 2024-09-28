@@ -17,8 +17,8 @@ package com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.useca
 
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.AuthStatus
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.AuthStatus.Authenticated
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.AuthStatusModel
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.AuthStatusModel.AuthenticatedModel
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.AuthenticationLoginUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.Credentials
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.repository.AuthenticationRepository
@@ -48,7 +48,7 @@ class AuthenticationLoginUseCase @Inject constructor(
     override suspend fun login(
         credentials: Credentials,
         rememberCredentials: Boolean,
-    ): Result<AuthStatus, Throwable> = runCatchingWithLog {
+    ): Result<AuthStatusModel, Throwable> = runCatchingWithLog {
         val response = authenticationService.login(credentials.toAuthenticationRequestData)
         with(authenticationRepository) {
             if (getUserId() != response.access.userId) {
@@ -64,7 +64,7 @@ class AuthenticationLoginUseCase @Inject constructor(
                 clearCredentials()
             }
         }
-        return Ok(Authenticated)
+        return Ok(AuthenticatedModel)
     }
 
     override suspend fun logOut() = async {

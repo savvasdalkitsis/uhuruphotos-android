@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.seam.actions
 
 import com.github.michaelbull.result.onSuccess
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHashModel
 import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.seam.ProcessingActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.ui.state.ProcessingState
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
@@ -37,7 +37,7 @@ data object ForceReUploadSelectedItems : ProcessingAction() {
         userUseCase.getRemoteUserOrRefresh().onSuccess { user ->
             selectedItems.forEach { (_, md5) ->
                 try {
-                    val id = MediaItemHash(md5, user.id).hash
+                    val id = MediaItemHashModel(md5, user.id).hash
                     remoteMediaUseCase.trashMediaItemNow(id)
                     remoteMediaUseCase.deleteMediaItemNow(id)
                 } catch (e: Exception) {

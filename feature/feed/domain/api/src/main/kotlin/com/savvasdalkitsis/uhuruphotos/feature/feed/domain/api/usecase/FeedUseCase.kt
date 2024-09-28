@@ -16,18 +16,18 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase
 
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplayState
-import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType
-import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType.ALL
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchTypeModel
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchTypeModel.ALL
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionModel
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import kotlinx.coroutines.flow.Flow
 
 interface FeedUseCase {
 
     fun observeFeed(
-        feedFetchType: FeedFetchType = ALL,
+        feedFetchTypeModel: FeedFetchTypeModel = ALL,
         loadSmallInitialChunk: Boolean = true,
-    ): Flow<List<MediaCollection>>
+    ): Flow<List<MediaCollectionModel>>
 
     fun observeFeedDisplay(): Flow<PredefinedCollageDisplayState>
     fun setFeedDisplay(feedDisplay: PredefinedCollageDisplayState)

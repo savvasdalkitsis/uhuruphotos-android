@@ -18,43 +18,43 @@ package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
-sealed class LightboxSequenceDataSource(
+sealed class LightboxSequenceDataSourceModel(
     val showMediaSyncState: Boolean = false,
     val shouldShowDeleteButton: Boolean = false,
 ) : Parcelable {
 
     @Parcelize
-    data object Single : LightboxSequenceDataSource()
+    data object SingleItemModel : LightboxSequenceDataSourceModel()
     @Parcelize
-    data object Feed : LightboxSequenceDataSource(
+    data object FeedModel : LightboxSequenceDataSourceModel(
         showMediaSyncState = true,
         shouldShowDeleteButton = true,
     )
     @Parcelize
-    data class Memory(val yearsAgo: Int) : LightboxSequenceDataSource(
+    data class MemoryModel(val yearsAgo: Int) : LightboxSequenceDataSourceModel(
         showMediaSyncState = true,
         shouldShowDeleteButton = true,
     )
     @Parcelize
-    data class SearchResults(val query: String) : LightboxSequenceDataSource()
+    data class SearchResultsModel(val query: String) : LightboxSequenceDataSourceModel()
     @Parcelize
-    data class PersonResults(val personId: Int) : LightboxSequenceDataSource()
+    data class PersonResultsModel(val personId: Int) : LightboxSequenceDataSourceModel()
     @Parcelize
-    data class AutoAlbum(val albumId: Int) : LightboxSequenceDataSource()
+    data class AutoAlbumModel(val albumId: Int) : LightboxSequenceDataSourceModel()
     @Parcelize
-    data class UserAlbum(val albumId: Int) : LightboxSequenceDataSource()
+    data class UserAlbumModel(val albumId: Int) : LightboxSequenceDataSourceModel()
     @Parcelize
-    data class LocalAlbum(val albumId: Int) : LightboxSequenceDataSource(
+    data class LocalAlbumModel(val albumId: Int) : LightboxSequenceDataSourceModel(
         shouldShowDeleteButton = true,
     )
     @Parcelize
-    data object FavouriteMedia : LightboxSequenceDataSource()
+    data object FavouriteMediaModel : LightboxSequenceDataSourceModel()
     @Parcelize
-    data object HiddenMedia : LightboxSequenceDataSource()
+    data object HiddenMediaModel : LightboxSequenceDataSourceModel()
     @Parcelize
-    data object Trash : LightboxSequenceDataSource()
+    data object TrashModel : LightboxSequenceDataSourceModel()
     @Parcelize
-    data object Videos : LightboxSequenceDataSource()
+    data object VideosModel : LightboxSequenceDataSourceModel()
     @Parcelize
-    data object Undated : LightboxSequenceDataSource()
+    data object UndatedModel : LightboxSequenceDataSourceModel()
 }

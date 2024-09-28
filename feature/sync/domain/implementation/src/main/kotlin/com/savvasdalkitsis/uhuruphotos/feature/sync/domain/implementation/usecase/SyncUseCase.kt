@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.sync.domain.implementation.usecase
 
-import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchTypeModel
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.sync.domain.api.usecase.SyncUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
@@ -58,7 +58,7 @@ class SyncUseCase @Inject constructor(
     override fun observePendingItems(): Flow<List<UploadItem>> =
         combine(
             observeSyncEnabled(),
-            feedUseCase.observeFeed(FeedFetchType.ALL, loadSmallInitialChunk = false),
+            feedUseCase.observeFeed(FeedFetchTypeModel.ALL, loadSmallInitialChunk = false),
             uploadsUseCase.observeUploadsInFlight().map { uploads ->
                 uploads.jobs.filter { job ->
                     job.latestJobState.state.isFailed

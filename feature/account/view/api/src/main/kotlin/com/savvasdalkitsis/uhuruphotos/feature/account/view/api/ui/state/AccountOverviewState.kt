@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state
 
 import androidx.compose.runtime.Immutable
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.AvatarState
-import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobModel
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.state.JobState
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -28,7 +28,7 @@ data class AccountOverviewState(
     val showAccountOverview: Boolean = false,
     val avatarState: AvatarState = AvatarState(),
     val showLogOutConfirmation: Boolean = false,
-    val showJobStartDialog: Job? = null,
+    val showJobStartDialog: JobModel? = null,
     val showLogIn: Boolean = false,
     val showUserAndServerDetails: Boolean = false,
     val jobs: ImmutableList<JobState> = persistentListOf(),

@@ -15,10 +15,10 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model
 
-data class MediaItemGroup(
-    val remoteInstance: MediaItem? = null,
-    val localInstances: Set<MediaItem> = emptySet(),
-) : MediaItem {
+data class MediaItemGroupModel(
+    val remoteInstance: MediaItemModel? = null,
+    val localInstances: Set<MediaItemModel> = emptySet(),
+) : MediaItemModel {
 
     private val all = listOfNotNull(remoteInstance) + localInstances
     private val any = all.first()
@@ -34,7 +34,7 @@ data class MediaItemGroup(
         }
     }
 
-    override val id: MediaId<*> = MediaId.Group(all.map { it.id }, any.id.isVideo)
+    override val id: MediaIdModel<*> = MediaIdModel.GroupIdModel(all.map { it.id }, any.id.isVideo)
     override val mediaHash = any.mediaHash
     override val fallbackColor: String? = all.prop { fallbackColor }
     override val displayDayDate: String? = all.prop { displayDayDate }
@@ -42,8 +42,8 @@ data class MediaItemGroup(
     override val isFavourite: Boolean = all.any { it.isFavourite }
     override val ratio: Float = all.firstOrNull { it.ratio != 1f }?.ratio ?: 1f
     override val latLng: (Pair<Double, Double>)? = all.prop { latLng }
-    override val mediaDay: MediaDay? = all.prop { mediaDay }
+    override val mediaDay: MediaDayModel? = all.prop { mediaDay }
 
-    private fun <T> List<MediaItem>.prop(instance: MediaItem.() -> T): T? =
+    private fun <T> List<MediaItemModel>.prop(instance: MediaItemModel.() -> T): T? =
         firstOrNull { instance(it) != null }?.let(instance)
 }

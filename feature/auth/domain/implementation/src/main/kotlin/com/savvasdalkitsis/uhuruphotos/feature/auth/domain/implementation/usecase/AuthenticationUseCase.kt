@@ -19,15 +19,15 @@ import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.getOr
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.AuthStatus
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.AuthStatus.Authenticated
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.AuthStatus.Offline
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.AuthStatus.ServerDown
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.AuthStatus.Unauthenticated
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.ServerToken
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.ServerToken.Expired
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.ServerToken.NotFound
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.ServerToken.Valid
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.AuthStatusModel
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.AuthStatusModel.AuthenticatedModel
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.AuthStatusModel.OfflineModel
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.AuthStatusModel.ServerDownModel
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.AuthStatusModel.UnauthenticatedModel
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.ServerTokenModel
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.ServerTokenModel.ExpiredModel
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.ServerTokenModel.NotFoundModel
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.ServerTokenModel.ValidModel
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.AuthenticationLoginUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.AuthenticationUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.repository.AuthenticationRepository
@@ -54,35 +54,35 @@ class AuthenticationUseCase @Inject constructor(
 
     private val mutex = Mutex()
 
-    override suspend fun authenticationStatus(): AuthStatus {
+    override suspend fun authenticationStatus(): AuthStatusModel {
         val accessToken = authenticationRepository.getAccessToken()
         return when {
             accessToken.isNullOrEmpty() || accessToken.isExpired -> refreshToken()
             else -> {
                 authenticationRepository.setUserIdFromToken(accessToken)
-                Authenticated
+                AuthenticatedModel
             }
         }
     }
 
-    override fun observeRefreshToken(): Flow<ServerToken> =
+    override fun observeRefreshToken(): Flow<ServerTokenModel> =
         authenticationRepository.observeRefreshToken().map {
             when {
-                it.isNullOrEmpty() -> NotFound
-                it.isExpired -> Expired
-                else -> Valid(it)
+                it.isNullOrEmpty() -> NotFoundModel
+                it.isExpired -> ExpiredModel
+                else -> ValidModel(it)
             }
         }
 
-    override suspend fun refreshToken(): AuthStatus = mutex.withLock {
+    override suspend fun refreshToken(): AuthStatusModel = mutex.withLock {
         val refreshToken = authenticationRepository.getRefreshToken()
         val refreshStatus = when {
-            refreshToken.isNullOrEmpty() || refreshToken.isExpired -> Unauthenticated()
+            refreshToken.isNullOrEmpty() || refreshToken.isExpired -> UnauthenticatedModel()
             else -> refreshAccessToken(refreshToken)
         }
         return when (refreshStatus) {
-            is Unauthenticated -> attemptAutoLogin().also { newAttempt ->
-                if (newAttempt is Unauthenticated) {
+            is UnauthenticatedModel -> attemptAutoLogin().also { newAttempt ->
+                if (newAttempt is UnauthenticatedModel) {
                     authenticationRepository.clearTokensForAuthenticationLoss()
                 }
             }
@@ -90,15 +90,15 @@ class AuthenticationUseCase @Inject constructor(
         }
     }
 
-    private suspend fun attemptAutoLogin(): AuthStatus = with(authenticationLoginUseCase) {
+    private suspend fun attemptAutoLogin(): AuthStatusModel = with(authenticationLoginUseCase) {
         val credentials = loadSavedCredentials()
         when {
-            credentials == null || credentials.isEmpty -> Unauthenticated()
-            else -> login(credentials, rememberCredentials = true).getOr(Unauthenticated())
+            credentials == null || credentials.isEmpty -> UnauthenticatedModel()
+            else -> login(credentials, rememberCredentials = true).getOr(UnauthenticatedModel())
         }
     }
 
-    override suspend fun refreshAccessToken(refreshToken: String): AuthStatus = try {
+    override suspend fun refreshAccessToken(refreshToken: String): AuthStatusModel = try {
         val response = authenticationService.refreshToken(AuthenticationRefreshRequestData(refreshToken))
         val refreshResponse = response.body()
         when {
@@ -106,17 +106,17 @@ class AuthenticationUseCase @Inject constructor(
                 async {
                     authenticationRepository.saveAccessToken(refreshResponse.access)
                 }
-                Authenticated
+                AuthenticatedModel
             }
-            response.code() >= 500 || response.code() == 404 -> ServerDown
-            else -> Unauthenticated(response.code())
+            response.code() >= 500 || response.code() == 404 -> ServerDownModel
+            else -> UnauthenticatedModel(response.code())
         }
     } catch (e: IOException) {
         log(e)
-        Offline
+        OfflineModel
     } catch (e: Exception) {
         log(e)
-        Unauthenticated()
+        UnauthenticatedModel()
     }
 
     override suspend fun getUserIdFromToken(): Result<String, Throwable> =

@@ -21,7 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.raw
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 
-enum class MediaItemSyncState(
+enum class MediaItemSyncStateModel(
     @DrawableRes
     val icon: Int,
     @DrawableRes

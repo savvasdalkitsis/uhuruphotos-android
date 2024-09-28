@@ -15,9 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.memories.domain.implementation.usecase
 
-import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchTypeModel
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionModel
 import com.savvasdalkitsis.uhuruphotos.feature.memories.domain.api.model.MemoryCollection
 import com.savvasdalkitsis.uhuruphotos.feature.memories.domain.api.usecase.MemoriesUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateParser
@@ -37,7 +37,7 @@ class MemoriesUseCase @Inject constructor(
 ) : MemoriesUseCase {
 
     override fun observeMemories(loadSmallInitialChunk: Boolean): Flow<List<MemoryCollection>> =
-        feedUseCase.observeFeed(FeedFetchType.ONLY_WITH_DATES, loadSmallInitialChunk)
+        feedUseCase.observeFeed(FeedFetchTypeModel.ONLY_WITH_DATES, loadSmallInitialChunk)
             .distinctUntilChanged()
             .map {
                 it.findMemories()
@@ -46,9 +46,9 @@ class MemoriesUseCase @Inject constructor(
     private fun DateTime?.sameAsNow(field: DateTime.() -> Int) =
         this != null && field(this) == field(DateTime.now())
 
-    private val MediaCollection.dateTime get() = dateParser.parseDateOrTimeString(unformattedDate)
+    private val MediaCollectionModel.dateTime get() = dateParser.parseDateOrTimeString(unformattedDate)
 
-    private fun List<MediaCollection>.findMemories(): List<MemoryCollection> =
+    private fun List<MediaCollectionModel>.findMemories(): List<MemoryCollection> =
         filter {
             with(it.dateTime) {
                 sameAsNow { dayOfMonth } && sameAsNow { monthOfYear } && !sameAsNow { year }

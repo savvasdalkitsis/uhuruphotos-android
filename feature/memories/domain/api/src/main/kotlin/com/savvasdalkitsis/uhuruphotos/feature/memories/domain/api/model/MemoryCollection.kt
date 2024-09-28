@@ -15,9 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.memories.domain.api.model
 
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionModel
 
 data class MemoryCollection(
-    val mediaCollection: MediaCollection,
+    val mediaCollection: MediaCollectionModel,
     val yearsAgo: Int,
 )

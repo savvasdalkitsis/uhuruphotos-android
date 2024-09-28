@@ -15,11 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model
 
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaDay
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaDayModel
 
 data class CountryVisit(
-    val startDate: MediaDay,
-    val endDate: MediaDay,
+    val startDate: MediaDayModel,
+    val endDate: MediaDayModel,
     val country: String,
 ) {
     val dateRangeDisplayText = "${startDate.displayText} - ${endDate.displayText}"

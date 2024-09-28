@@ -19,10 +19,10 @@ import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.WorkerParameters
 import com.github.michaelbull.result.coroutines.coroutineBinding
-import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchTypeModel
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.broadcast.CancelFeedDetailsDownloadWorkBroadcastReceiver
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResult.CHANGED
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResultModel.CHANGED
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNotificationWorker
@@ -50,7 +50,7 @@ internal class FeedDetailsDownloadWorker @AssistedInject constructor(
 
     override suspend fun work(): Result {
         updateProgress(0)
-        val items = feedUseCase.observeFeed(FeedFetchType.ALL, loadSmallInitialChunk = false).first()
+        val items = feedUseCase.observeFeed(FeedFetchTypeModel.ALL, loadSmallInitialChunk = false).first()
             .flatMap { it.mediaItems }.mapNotNull { it.id.findRemote }
         val total = items.size
         val result = coroutineBinding {

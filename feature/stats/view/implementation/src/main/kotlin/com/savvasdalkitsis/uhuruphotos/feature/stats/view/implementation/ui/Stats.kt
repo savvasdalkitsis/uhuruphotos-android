@@ -38,7 +38,7 @@ import androidx.compose.ui.unit.dp
 import com.ksurtel.heat_map.HeatMap
 import com.ksurtel.heat_map.Properties
 import com.ksurtel.heat_map.Record
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaDay
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaDayModel
 import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.DayOfMonth
 import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.DayOfWeek
 import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.Month
@@ -202,7 +202,7 @@ private fun StatsPreviewStats() {
             isLoadingMediaHeatMap = false,
             mediaHeatMap = List(11) { it + 1 }.flatMap { month ->
                 List(28) { it + 1 }.map { day ->
-                    MediaDay(day, 0, month, 2023, "") to day
+                    MediaDayModel(day, 0, month, 2023, "") to day
                 }
             }.toMap().toImmutableMap(),
         ))

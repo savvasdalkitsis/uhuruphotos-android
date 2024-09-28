@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.ui.state
 
 import androidx.compose.runtime.Immutable
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaDay
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaDayModel
 import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.CountryVisit
 import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.DayOfMonth
 import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.DayOfWeek
@@ -38,7 +38,7 @@ data class StatsState(
     val mediaByMonth: ImmutableMap<Month, Int> = persistentMapOf(),
     val mediaByDayOfMonth: ImmutableMap<DayOfMonth, Int> = persistentMapOf(),
     val mediaByDayOfWeek: ImmutableMap<DayOfWeek, Int> = persistentMapOf(),
-    val mediaHeatMap: ImmutableMap<MediaDay, Int> = persistentMapOf(),
+    val mediaHeatMap: ImmutableMap<MediaDayModel, Int> = persistentMapOf(),
     val isLoadingTimeline: Boolean = true,
     val timeline: ImmutableList<CountryVisit> = persistentListOf(),
     val photoCount: Int? = null,

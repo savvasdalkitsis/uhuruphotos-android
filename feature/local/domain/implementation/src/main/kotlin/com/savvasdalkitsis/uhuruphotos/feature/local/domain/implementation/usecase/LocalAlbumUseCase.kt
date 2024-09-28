@@ -17,9 +17,9 @@ package com.savvasdalkitsis.uhuruphotos.feature.local.domain.implementation.usec
 
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplayState
 import com.savvasdalkitsis.uhuruphotos.feature.local.domain.api.usecase.LocalAlbumUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaFolderOnDevice
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaFolderOnDeviceModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaFolder
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
@@ -42,12 +42,12 @@ internal class LocalAlbumUseCase @Inject constructor(
     private val preferences: Preferences,
 ) : LocalAlbumUseCase {
 
-    override fun observeLocalAlbum(albumId: Int): Flow<Pair<LocalMediaFolder, List<MediaCollection>>> =
+    override fun observeLocalAlbum(albumId: Int): Flow<Pair<LocalMediaFolder, List<MediaCollectionModel>>> =
         mediaUseCase.observeLocalAlbum(albumId)
             .distinctUntilChanged()
             .mapNotNull { localMedia ->
                 when (localMedia) {
-                    is MediaFolderOnDevice.Found ->
+                    is MediaFolderOnDeviceModel.FoundModel ->
                         localMedia.folder.first to localMedia.folder.second.toMediaCollections()
                     else -> null
                 }
@@ -63,15 +63,15 @@ internal class LocalAlbumUseCase @Inject constructor(
         preferences.set(key(albumId), galleryDisplay)
     }
 
-    override suspend fun getLocalAlbum(albumId: Int): List<MediaCollection> =
+    override suspend fun getLocalAlbum(albumId: Int): List<MediaCollectionModel> =
         observeLocalAlbum(albumId).first().second
 
     private fun key(albumId: Int) = "localFolderGalleryDisplay/$albumId"
 
-    private fun List<MediaItem>.toMediaCollections(): List<MediaCollection> =
+    private fun List<MediaItemModel>.toMediaCollections(): List<MediaCollectionModel> =
         groupBy { it.displayDayDate }
             .map { (date, items) ->
-                MediaCollection(
+                MediaCollectionModel(
                     id = "local_album_$date",
                     unformattedDate = items.first().sortableDate,
                     displayTitle = date ?: "-",

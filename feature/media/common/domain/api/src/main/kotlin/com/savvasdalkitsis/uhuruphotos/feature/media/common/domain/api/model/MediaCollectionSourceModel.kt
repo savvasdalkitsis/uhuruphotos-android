@@ -1,5 +1,5 @@
 /*
-Copyright 2023 Savvas Dalkitsis
+Copyright 2022 Savvas Dalkitsis
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,13 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model
+package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model
 
-sealed class AuthStatus {
-
-    data class Unauthenticated(val status: Int? = null): AuthStatus()
-    data object Authenticated: AuthStatus()
-    data object Offline: AuthStatus()
-    data object ServerDown: AuthStatus()
-
-}
+data class MediaCollectionSourceModel(
+    val id: String,
+    val date: String?,
+    val location: String?,
+    val mediaItemId: String?,
+    val dominantColor: String?,
+    val rating: Int?,
+    val aspectRatio: Float?,
+    val isVideo: Boolean,
+    val lat: String?,
+    val lon: String?,
+)

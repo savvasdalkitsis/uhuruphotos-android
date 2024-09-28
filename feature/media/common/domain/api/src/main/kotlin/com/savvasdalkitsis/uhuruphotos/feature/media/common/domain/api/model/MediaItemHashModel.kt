@@ -22,7 +22,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 @Immutable
-data class MediaItemHash(
+data class MediaItemHashModel(
     val md5: Md5Hash,
     val userId: Int?,
 ) : Parcelable {
@@ -32,7 +32,7 @@ data class MediaItemHash(
     val hash get() = "${md5.value}${userId?.toString().orEmpty()}"
 
     companion object {
-        fun fromRemoteMediaHash(hash: String, userId: Int?) = MediaItemHash(
+        fun fromRemoteMediaHash(hash: String, userId: Int?) = MediaItemHashModel(
             Md5Hash(hash.removeSuffix(userId?.toString().orEmpty())), userId,
         )
     }

@@ -33,10 +33,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.st
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItemState.USER
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryLocalMediaState
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryState
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice.Error
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice.Found
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice.RequiresPermissions
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDeviceModel.ErrorModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDeviceModel.FoundModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDeviceModel.RequiresPermissionsModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.VitrineState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
@@ -46,6 +46,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.flow
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
@@ -55,6 +56,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.merge
 
+@OptIn(FlowPreview::class)
 data object Load : LibraryAction() {
 
     context(LibraryActionsContext) override fun handle(
@@ -92,16 +94,16 @@ data object Load : LibraryAction() {
             localMediaUseCase.areOtherFoldersBeingScanned(),
         ) { media, scanningOtherFolders ->
             when (media) {
-                is Found -> {
+                is FoundModel -> {
                     refreshLocalMedia()
                     val primary = listOfNotNull(media.primaryFolder)
                     val vitrines = (primary + media.mediaFolders).map { it.toVitrine() }
                     LibraryLocalMediaState.FoundState(vitrines.toImmutableList(), scanningOtherFolders)
                 }
 
-                is RequiresPermissions ->
+                is RequiresPermissionsModel ->
                     LibraryLocalMediaState.RequiresPermissionsState(media.deniedPermissions.toImmutableList())
-                is Error -> LibraryLocalMediaState.FoundState(persistentListOf(), scanningOtherFolders)
+                is ErrorModel -> LibraryLocalMediaState.FoundState(persistentListOf(), scanningOtherFolders)
             }
         }.distinctUntilChanged().map(::DisplayLocalAlbums)
 
@@ -167,6 +169,6 @@ data object Load : LibraryAction() {
             }
         }
 
-    private fun Pair<LocalMediaFolder, List<MediaItem>>.toVitrine(): Pair<LocalMediaFolder, VitrineState> =
+    private fun Pair<LocalMediaFolder, List<MediaItemModel>>.toVitrine(): Pair<LocalMediaFolder, VitrineState> =
         first to VitrineState(second.map { it.toCel() })
 }

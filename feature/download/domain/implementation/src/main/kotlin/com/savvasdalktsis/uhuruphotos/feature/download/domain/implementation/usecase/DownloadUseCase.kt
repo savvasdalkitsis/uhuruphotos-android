@@ -30,7 +30,7 @@ import app.cash.sqldelight.coroutines.mapToList
 import com.github.michaelbull.result.onFailure
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.AuthenticationHeadersUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId.Remote
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel.RemoteIdModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.deserializePaths
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
@@ -61,7 +61,7 @@ internal class DownloadUseCase @Inject constructor(
     private val serverUseCase: ServerUseCase,
 ): DownloadUseCase {
 
-    override suspend fun scheduleMediaDownload(ids: Collection<Remote>) {
+    override suspend fun scheduleMediaDownload(ids: Collection<RemoteIdModel>) {
         log { "Queuing download of media items [$ids]" }
         if (ids.isEmpty()) {
             return
@@ -76,7 +76,7 @@ internal class DownloadUseCase @Inject constructor(
         }
     }
 
-    private suspend fun queueDownload(id: Remote): SimpleResult =
+    private suspend fun queueDownload(id: RemoteIdModel): SimpleResult =
         mediaUseCase.refreshDetailsNowIfMissing(id).andThenTry {
             val serverUrl = serverUseCase.getServerUrl()!!
             val remotePath = remoteMediaUseCase.observeRemoteMediaItemDetails(id.value)

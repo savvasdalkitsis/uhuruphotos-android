@@ -19,8 +19,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.isVideo
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.person.GetPersonAlbums
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkScheduler
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSource
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSourceModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.person.domain.api.usecase.PersonUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.person.domain.implementation.repository.PersonRepository
@@ -42,7 +42,7 @@ class PersonUseCase @Inject constructor(
     private val feedWorkScheduler: FeedWorkScheduler,
 ) : PersonUseCase {
 
-    override fun observePersonMedia(id: Int): Flow<List<MediaCollection>> =
+    override fun observePersonMedia(id: Int): Flow<List<MediaCollectionModel>> =
         personRepository.observePersonAlbums(id)
             .distinctUntilChanged()
             .map {
@@ -54,19 +54,19 @@ class PersonUseCase @Inject constructor(
             }
             .initialize()
 
-    private fun Flow<List<MediaCollection>>.initialize(): Flow<List<MediaCollection>> = distinctUntilChanged()
+    private fun Flow<List<MediaCollectionModel>>.initialize(): Flow<List<MediaCollectionModel>> = distinctUntilChanged()
         .safelyOnStartIgnoring {
             if (!feedUseCase.hasFeed()) {
                 feedWorkScheduler.scheduleFeedRefreshNow()
             }
         }
 
-    override suspend fun getPersonMedia(id: Int): List<MediaCollection> = with(mediaUseCase) {
+    override suspend fun getPersonMedia(id: Int): List<MediaCollectionModel> = with(mediaUseCase) {
         toMediaCollection(personRepository.getPersonAlbums(id)
             .mapValues { it.toMediaCollectionSource() })
     }
 
-    private fun GetPersonAlbums.toMediaCollectionSource() = MediaCollectionSource(
+    private fun GetPersonAlbums.toMediaCollectionSource() = MediaCollectionSourceModel(
         id = id,
         date = albumDate,
         location = albumLocation,

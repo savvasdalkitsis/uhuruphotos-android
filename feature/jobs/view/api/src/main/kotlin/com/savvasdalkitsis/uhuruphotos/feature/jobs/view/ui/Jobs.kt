@@ -16,16 +16,16 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui
 
 import androidx.compose.runtime.Composable
-import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobModel
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.state.JobState
 import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 fun Jobs(
     jobs: List<JobState>,
-    blockFilter: List<Job> = persistentListOf(),
-    onStartJob: (Job) -> Unit,
-    onCancelJob: (Job) -> Unit,
+    blockFilter: List<JobModel> = persistentListOf(),
+    onStartJob: (JobModel) -> Unit,
+    onCancelJob: (JobModel) -> Unit,
 ) {
     jobs
         .sortedBy { it.job.order }

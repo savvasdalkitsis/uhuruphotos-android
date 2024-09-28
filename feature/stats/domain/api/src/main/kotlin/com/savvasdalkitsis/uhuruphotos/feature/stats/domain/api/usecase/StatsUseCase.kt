@@ -16,8 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.usecase
 
 import com.github.michaelbull.result.Result
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaDay
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaDayModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemModel
 import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.CountryVisit
 import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.DayOfMonth
 import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.DayOfWeek
@@ -26,11 +26,11 @@ import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.Year
 
 interface StatsUseCase {
 
-    fun List<MediaItem>.breakdownByTypeIsVideo(): Map<Boolean, List<MediaItem>>
-    fun List<MediaItem>.breakdownByYear(): Map<Year, Int>
-    fun List<MediaItem>.breakdownByMonth(): Map<Month, Int>
-    fun List<MediaItem>.breakdownByDayOfMonth(): Map<DayOfMonth, Int>
-    fun List<MediaItem>.timeline(): Result<List<CountryVisit>, Unit>
-    fun List<MediaItem>.breakdownByDayOfWeek(): Map<DayOfWeek, Int>
-    fun List<MediaItem>.breakdownByMediaDay(): Map<MediaDay, Int>
+    fun List<MediaItemModel>.breakdownByTypeIsVideo(): Map<Boolean, List<MediaItemModel>>
+    fun List<MediaItemModel>.breakdownByYear(): Map<Year, Int>
+    fun List<MediaItemModel>.breakdownByMonth(): Map<Month, Int>
+    fun List<MediaItemModel>.breakdownByDayOfMonth(): Map<DayOfMonth, Int>
+    fun List<MediaItemModel>.timeline(): Result<List<CountryVisit>, Unit>
+    fun List<MediaItemModel>.breakdownByDayOfWeek(): Map<DayOfWeek, Int>
+    fun List<MediaItemModel>.breakdownByMediaDay(): Map<MediaDayModel, Int>
 }

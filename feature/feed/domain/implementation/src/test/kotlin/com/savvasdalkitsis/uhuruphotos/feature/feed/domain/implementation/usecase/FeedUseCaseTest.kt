@@ -17,13 +17,13 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.useca
 
 import app.cash.turbine.TurbineTestContext
 import app.cash.turbine.test
-import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchTypeModel
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.FeedCache
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.FeedRepository
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstance
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHashModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstanceModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.domain.api.usecase.PortfolioUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadUseCase
@@ -187,7 +187,7 @@ class FeedUseCaseTest {
         portfolioUseCase.hasPublishedPortfolio(101)
 
         observeFeed().assert(
-            MediaCollection("day1", listOf(
+            MediaCollectionModel("day1", listOf(
                 mediaGroup(mediaItem(remote("1"), "day1").withHash("hash"), local2, local3)
             ), "day1"),
         )
@@ -216,11 +216,11 @@ class FeedUseCaseTest {
             "day1" to listOf(mediaItem("1"), mediaItem("2")),
         )
 
-        underTest.observeFeed(FeedFetchType.ALL, false).collect()
+        underTest.observeFeed(FeedFetchTypeModel.ALL, false).collect()
 
         verify { feedCache.cacheFeed(
             listOf(mediaCollection("day1", remote("1"), remote("2"))),
-            FeedFetchType.ALL,
+            FeedFetchTypeModel.ALL,
             false,
         ) }
     }
@@ -242,20 +242,20 @@ class FeedUseCaseTest {
         }
     }
 
-    private fun observeFeed() = underTest.observeFeed(FeedFetchType.ALL, false)
+    private fun observeFeed() = underTest.observeFeed(FeedFetchTypeModel.ALL, false)
 
     private val String.localOnlyId get() = "local_media_collection_$this"
 
-    private suspend fun Flow<List<MediaCollection>>.assert(vararg collections: MediaCollection) {
+    private suspend fun Flow<List<MediaCollectionModel>>.assert(vararg collections: MediaCollectionModel) {
         test {
             expect(collections.toList())
             awaitComplete()
         }
     }
 
-    private suspend fun TurbineTestContext<List<MediaCollection>>.expect(collections: List<MediaCollection>) {
+    private suspend fun TurbineTestContext<List<MediaCollectionModel>>.expect(collections: List<MediaCollectionModel>) {
         assertThat(awaitItem(), sameBeanAs(collections))
     }
 
-    private fun MediaItemInstance.withHash(hash: String) = copy(mediaHash = MediaItemHash.fromRemoteMediaHash(hash, 0))
+    private fun MediaItemInstanceModel.withHash(hash: String) = copy(mediaHash = MediaItemHashModel.fromRemoteMediaHash(hash, 0))
 }

@@ -13,16 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model
+package com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model
 
-sealed class LocalFolder {
-
-    data class RequiresPermissions(val deniedPermissions: List<String>) : LocalFolder()
-
-    data class Found(
-        val bucket: Pair<LocalMediaFolder, List<LocalMediaItem>>
-    ) : LocalFolder()
-
-    data object Error : LocalFolder()
-
+enum class JobModel(val order: Int) {
+    FULL_FEED_SYNC(0),
+    PRECACHE_THUMBNAILS(1),
+    LOCAL_MEDIA_SYNC(2),
+    FEED_DETAILS_SYNC(3),
 }

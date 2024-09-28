@@ -16,19 +16,19 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase
 
 import com.github.michaelbull.result.Result
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.AuthStatus
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.ServerToken
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.AuthStatusModel
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.ServerTokenModel
 import kotlinx.coroutines.flow.Flow
 
 interface AuthenticationUseCase {
 
-    suspend fun authenticationStatus(): AuthStatus
+    suspend fun authenticationStatus(): AuthStatusModel
 
-    suspend fun refreshToken(): AuthStatus
+    suspend fun refreshToken(): AuthStatusModel
 
-    suspend fun refreshAccessToken(refreshToken: String): AuthStatus
+    suspend fun refreshAccessToken(refreshToken: String): AuthStatusModel
 
     suspend fun getUserIdFromToken(): Result<String, Throwable>
 
-    fun observeRefreshToken(): Flow<ServerToken>
+    fun observeRefreshToken(): Flow<ServerTokenModel>
 }

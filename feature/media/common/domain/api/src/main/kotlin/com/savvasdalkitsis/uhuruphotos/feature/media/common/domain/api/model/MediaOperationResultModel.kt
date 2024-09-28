@@ -1,5 +1,5 @@
 /*
-Copyright 2022 Savvas Dalkitsis
+Copyright 2023 Savvas Dalkitsis
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,11 +13,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model
+package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model
 
-enum class Job(val order: Int) {
-    FULL_FEED_SYNC(0),
-    PRECACHE_THUMBNAILS(1),
-    LOCAL_MEDIA_SYNC(2),
-    FEED_DETAILS_SYNC(3),
+enum class MediaOperationResultModel {
+    SKIPPED, CHANGED
 }

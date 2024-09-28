@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions
 
 import com.github.michaelbull.result.mapEither
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.AuthStatus
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.AuthStatusModel
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.Credentials
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerMutation.SetLoading
@@ -50,7 +50,7 @@ data class Login(
                 ).mapEither(
                     success = { authStatus ->
                         when (authStatus) {
-                            AuthStatus.Authenticated -> navigator.navigateUp()
+                            AuthStatusModel.AuthenticatedModel -> navigator.navigateUp()
                             else -> {
                                 emit(SetLoading(false))
                                 toaster.show(R.string.error_logging_in)

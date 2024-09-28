@@ -24,7 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSin
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingleOrNull
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.GetRemoteMediaCollections
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaCollectionsQueries
-import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchTypeModel
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.service.http.FeedService
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.RemoteMediaDayCompleteResponse
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.RemoteMediaDaySummaryResponse
@@ -70,15 +70,15 @@ class FeedRepository @Inject constructor(
         remoteMediaCollectionsQueries.remoteMediaCollectionCount().awaitSingle() > 0
 
     fun observeRemoteMediaCollectionsByDate(
-        feedFetchType: FeedFetchType,
+        feedFetchTypeModel: FeedFetchTypeModel,
         loadSmallInitialChunk: Boolean,
     ): Flow<Group<String, GetRemoteMediaCollections>> = flow {
         try {
             emitAll(remoteMediaCollectionsQueries.getRemoteMediaCollections(
                 limit = if (loadSmallInitialChunk) 100 else -1,
-                includeNoDates = feedFetchType.includeMediaWithoutDate,
-                includeDates = feedFetchType.includeMediaWithDate,
-                onlyVideos = feedFetchType.onlyVideos,
+                includeNoDates = feedFetchTypeModel.includeMediaWithoutDate,
+                includeDates = feedFetchTypeModel.includeMediaWithDate,
+                onlyVideos = feedFetchTypeModel.onlyVideos,
             ).asFlow()
                 .mapToList(Dispatchers.IO).groupBy(GetRemoteMediaCollections::id)
                 .distinctUntilChanged()
@@ -89,13 +89,13 @@ class FeedRepository @Inject constructor(
     }
 
     suspend fun getRemoteMediaCollectionsByDate(
-        feedFetchType: FeedFetchType,
+        feedFetchTypeModel: FeedFetchTypeModel,
     ): Group<String, GetRemoteMediaCollections> =
         remoteMediaCollectionsQueries.getRemoteMediaCollections(
             limit = -1,
-            includeNoDates = feedFetchType.includeMediaWithoutDate,
-            includeDates = feedFetchType.includeMediaWithDate,
-            onlyVideos = feedFetchType.onlyVideos,
+            includeNoDates = feedFetchTypeModel.includeMediaWithoutDate,
+            includeDates = feedFetchTypeModel.includeMediaWithDate,
+            onlyVideos = feedFetchTypeModel.onlyVideos,
         ).awaitList()
             .groupBy(GetRemoteMediaCollections::id).let(::Group)
 

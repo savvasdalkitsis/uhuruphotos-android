@@ -18,21 +18,21 @@ package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.sea
 import com.github.michaelbull.result.getOr
 import com.github.michaelbull.result.onFailure
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.portfolio.PortfolioItems
-import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.AutoAlbum
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.FavouriteMedia
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.Feed
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.HiddenMedia
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.LocalAlbum
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.Memory
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.PersonResults
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.SearchResults
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.Single
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.Trash
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.Undated
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.UserAlbum
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.Videos
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchTypeModel
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSourceModel
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSourceModel.AutoAlbumModel
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSourceModel.FavouriteMediaModel
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSourceModel.FeedModel
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSourceModel.HiddenMediaModel
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSourceModel.LocalAlbumModel
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSourceModel.MemoryModel
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSourceModel.PersonResultsModel
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSourceModel.SearchResultsModel
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSourceModel.SingleItemModel
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSourceModel.TrashModel
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSourceModel.UndatedModel
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSourceModel.UserAlbumModel
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSourceModel.VideosModel
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.FinishedLoading
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.FinishedLoadingDetails
@@ -45,10 +45,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.MediaItemTypeState
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.SingleMediaItemState
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHashModel
 import com.savvasdalkitsis.uhuruphotos.foundation.launchers.api.onIO
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -68,9 +68,9 @@ import kotlinx.coroutines.flow.onStart
 
 @OptIn(ExperimentalCoroutinesApi::class)
 data class LoadMediaItem(
-    val actionMediaId: MediaId<*>,
-    val actionMediaItemHash: MediaItemHash,
-    val sequenceDataSource: LightboxSequenceDataSource,
+    val actionMediaId: MediaIdModel<*>,
+    val actionMediaItemHash: MediaItemHashModel,
+    val sequenceDataSource: LightboxSequenceDataSourceModel,
 ) : LightboxAction() {
 
     context(LightboxActionsContext) override fun handle(
@@ -80,7 +80,7 @@ data class LoadMediaItem(
             currentMediaId.emit(actionMediaId)
             emit(ShowMedia(listOf(actionMediaId.toSingleMediaItemState(mediaHash = actionMediaItemHash)), 0))
 
-            if (sequenceDataSource == Trash) {
+            if (sequenceDataSource == TrashModel) {
                 mediaItemTypeState = MediaItemTypeState.TRASHED
                 emit(ShowRestoreButton)
             }
@@ -122,7 +122,7 @@ data class LoadMediaItem(
             isInPortfolio(),
         ) { mediaItems, isInPortfolio ->
             val addToPortfolioEnabled = addToPortfolioIconEnabled()
-            val showAddToPortfolioIcon = sequenceDataSource is LocalAlbum
+            val showAddToPortfolioIcon = sequenceDataSource is LocalAlbumModel
                     && sequenceDataSource.albumId != localMediaUseCase.getDefaultFolderId()
             mediaItems.map {
                 it.toSingleMediaItemState(isInPortfolio, showAddToPortfolioIcon, addToPortfolioEnabled)
@@ -130,32 +130,32 @@ data class LoadMediaItem(
         }
 
     context(LightboxActionsContext)
-    private fun observeMediaItemsSequence(): Flow<List<MediaItem>> = when (sequenceDataSource) {
-        Single -> emptyFlow()
-        Feed -> feedUseCase.observeFeed(FeedFetchType.ONLY_WITH_DATES, loadSmallInitialChunk = false).toMediaItems
-        is Memory -> memoriesUseCase.observeMemories(loadSmallInitialChunk = false).map { collections ->
+    private fun observeMediaItemsSequence(): Flow<List<MediaItemModel>> = when (sequenceDataSource) {
+        SingleItemModel -> emptyFlow()
+        FeedModel -> feedUseCase.observeFeed(FeedFetchTypeModel.ONLY_WITH_DATES, loadSmallInitialChunk = false).toMediaItems
+        is MemoryModel -> memoriesUseCase.observeMemories(loadSmallInitialChunk = false).map { collections ->
             collections.find { it.yearsAgo == sequenceDataSource.yearsAgo }?.mediaCollection?.mediaItems
             ?: emptyList()
         }
-        is SearchResults -> searchUseCase.searchFor(sequenceDataSource.query)
+        is SearchResultsModel -> searchUseCase.searchFor(sequenceDataSource.query)
             .mapNotNull { it.getOr(null) }.toMediaItems
-        is PersonResults -> personUseCase.observePersonMedia(sequenceDataSource.personId).toMediaItems
-        is AutoAlbum -> autoAlbumUseCase.observeAutoAlbum(sequenceDataSource.albumId).toMediaItems
-        is UserAlbum -> userAlbumUseCase.observeUserAlbum(sequenceDataSource.albumId)
+        is PersonResultsModel -> personUseCase.observePersonMedia(sequenceDataSource.personId).toMediaItems
+        is AutoAlbumModel -> autoAlbumUseCase.observeAutoAlbum(sequenceDataSource.albumId).toMediaItems
+        is UserAlbumModel -> userAlbumUseCase.observeUserAlbum(sequenceDataSource.albumId)
             .map { it.mediaCollections }.toMediaItems
-        is LocalAlbum -> localAlbumUseCase.observeLocalAlbum(sequenceDataSource.albumId)
+        is LocalAlbumModel -> localAlbumUseCase.observeLocalAlbum(sequenceDataSource.albumId)
                 .map { it.second }.toMediaItems
-        FavouriteMedia -> mediaUseCase.observeFavouriteMedia().map { it.getOr(emptyList()) }
-        HiddenMedia -> mediaUseCase.observeHiddenMedia().map { it.getOr(emptyList()) }
-        Trash -> trashUseCase.observeTrashAlbums().toMediaItems
-        Videos -> feedUseCase.observeFeed(FeedFetchType.VIDEOS).toMediaItems
-        Undated -> feedUseCase.observeFeed(FeedFetchType.ONLY_WITHOUT_DATES).toMediaItems
+        FavouriteMediaModel -> mediaUseCase.observeFavouriteMedia().map { it.getOr(emptyList()) }
+        HiddenMediaModel -> mediaUseCase.observeHiddenMedia().map { it.getOr(emptyList()) }
+        TrashModel -> trashUseCase.observeTrashAlbums().toMediaItems
+        VideosModel -> feedUseCase.observeFeed(FeedFetchTypeModel.VIDEOS).toMediaItems
+        UndatedModel -> feedUseCase.observeFeed(FeedFetchTypeModel.ONLY_WITHOUT_DATES).toMediaItems
     }
 
     context(LightboxActionsContext)
     private fun isInPortfolio(): Flow<(Long) -> Boolean> = when {
         isViewingLocalFolderContributingToPortfolio() -> flowOf { true }
-        sequenceDataSource is LocalAlbum ->
+        sequenceDataSource is LocalAlbumModel ->
             portfolioUseCase.observeIndividualPortfolioItems().map {
                 it.map(PortfolioItems::id)::contains
             }
@@ -165,23 +165,23 @@ data class LoadMediaItem(
     context(LightboxActionsContext)
     private fun addToPortfolioIconEnabled(): Boolean = when {
         isViewingLocalFolderContributingToPortfolio() -> false
-        sequenceDataSource is LocalAlbum -> true
+        sequenceDataSource is LocalAlbumModel -> true
         else -> false
     }
 
     context(LightboxActionsContext)
     private fun isViewingLocalFolderContributingToPortfolio() =
-        sequenceDataSource is LocalAlbum && sequenceDataSource.albumId in
+        sequenceDataSource is LocalAlbumModel && sequenceDataSource.albumId in
                 portfolioUseCase.getPublishedFolderIds()
 
-    private val Flow<List<MediaCollection>>.toMediaItems get() = map { collections ->
+    private val Flow<List<MediaCollectionModel>>.toMediaItems get() = map { collections ->
         collections.flatMap {
             it.mediaItems
         }
     }
 
     context(LightboxActionsContext)
-    private fun MediaItem.toSingleMediaItemState(
+    private fun MediaItemModel.toSingleMediaItemState(
         isInPortfolio: (Long) -> Boolean,
         showAddToPortfolioIcon: Boolean,
         addToPortfolioEnabled: Boolean
@@ -194,15 +194,15 @@ data class LoadMediaItem(
     )
 
     context(LightboxActionsContext)
-    private fun MediaId<*>.toSingleMediaItemState(
+    private fun MediaIdModel<*>.toSingleMediaItemState(
         isFavourite: Boolean = false,
         isInPortfolio: (Long) -> Boolean = { false },
         showAddToPortfolioIcon: Boolean = false,
         addToPortfolioEnabled: Boolean = false,
-        mediaHash: MediaItemHash,
+        mediaHash: MediaItemHashModel,
     ) = SingleMediaItemState(
         id = this,
-        showFavouriteIcon = preferRemote is MediaId.Remote,
+        showFavouriteIcon = preferRemote is MediaIdModel.RemoteIdModel,
         showDeleteButton = sequenceDataSource.shouldShowDeleteButton,
         showEditIcon = shouldShowEditButton,
         showShareIcon = !isVideo,
@@ -215,5 +215,5 @@ data class LoadMediaItem(
         mediaHash = mediaHash,
     )
 
-    private val MediaId<*>.shouldShowEditButton get() = !isVideo && findLocals.isNotEmpty()
+    private val MediaIdModel<*>.shouldShowEditButton get() = !isVideo && findLocals.isNotEmpty()
 }

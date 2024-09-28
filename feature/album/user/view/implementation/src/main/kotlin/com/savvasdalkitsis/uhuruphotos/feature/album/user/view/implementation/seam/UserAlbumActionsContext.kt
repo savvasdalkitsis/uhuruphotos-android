@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.api.usecase.Use
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.toCluster
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContextFactory
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetailsState
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.UserAlbum
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSourceModel.UserAlbumModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
@@ -53,6 +53,6 @@ internal class UserAlbumActionsContext @Inject constructor(
                     )
                 }
         },
-        lightboxSequenceDataSource = { UserAlbum(it) },
+        lightboxSequenceDataSource = { UserAlbumModel(it) },
     )
 }

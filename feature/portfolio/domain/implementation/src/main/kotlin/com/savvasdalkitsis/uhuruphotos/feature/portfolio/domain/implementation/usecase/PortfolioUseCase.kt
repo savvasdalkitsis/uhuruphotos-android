@@ -16,8 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.portfolio.domain.implementation.usecase
 
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.portfolio.PortfolioItems
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDeviceModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaFolder
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.domain.api.domain.PortfolioItem
@@ -42,7 +42,7 @@ class PortfolioUseCase @Inject constructor(
         portfolioRepository.observePublishedPortfolio(),
     ) { media, published ->
         when (media) {
-            is MediaItemsOnDevice.Found -> Found(
+            is MediaItemsOnDeviceModel.FoundModel -> Found(
                 listOfNotNull(media.primaryFolder
                     ?.toPortfolioItem(
                         isPublished = true,
@@ -56,8 +56,8 @@ class PortfolioUseCase @Inject constructor(
                     )
                 }
             )
-            is MediaItemsOnDevice.RequiresPermissions -> RequiresPermissions(media.deniedPermissions)
-            is MediaItemsOnDevice.Error -> Error
+            is MediaItemsOnDeviceModel.RequiresPermissionsModel -> RequiresPermissions(media.deniedPermissions)
+            is MediaItemsOnDeviceModel.ErrorModel -> Error
         }
     }
 
@@ -78,7 +78,7 @@ class PortfolioUseCase @Inject constructor(
     override fun observeIndividualPortfolioItems(): Flow<List<PortfolioItems>> =
         portfolioRepository.observeIndividualPortfolioItems()
 
-    private fun Pair<LocalMediaFolder, List<MediaItem>>.toPortfolioItem(
+    private fun Pair<LocalMediaFolder, List<MediaItemModel>>.toPortfolioItem(
         isPublished: Boolean,
         canBeModified: Boolean,
     ) = PortfolioItem(

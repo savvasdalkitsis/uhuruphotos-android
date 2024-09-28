@@ -18,9 +18,9 @@ package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.
 import android.content.pm.ResolveInfo
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Immutable
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHashModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncStateModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Md5Hash
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -69,7 +69,7 @@ data class LightboxState(
 
 @Immutable
 data class SingleMediaItemState(
-    val id: MediaId<*>,
+    val id: MediaIdModel<*>,
     val isFavourite: Boolean? = null,
     val showFavouriteIcon: Boolean = false,
     val showDeleteButton: Boolean = true,
@@ -80,8 +80,8 @@ data class SingleMediaItemState(
     val addToPortfolioIconEnabled: Boolean = false,
     val inPortfolio: Boolean = false,
     val loadingDetails: Boolean = false,
-    val mediaItemSyncState: MediaItemSyncState? = null,
+    val mediaItemSyncState: MediaItemSyncStateModel? = null,
     val showEditApps: ImmutableList<ResolveInfo> = persistentListOf(),
     val details: LightboxDetailsState = LightboxDetailsState(),
-    val mediaHash: MediaItemHash = MediaItemHash(Md5Hash(""), 0),
+    val mediaHash: MediaItemHashModel = MediaItemHashModel(Md5Hash(""), 0),
 )

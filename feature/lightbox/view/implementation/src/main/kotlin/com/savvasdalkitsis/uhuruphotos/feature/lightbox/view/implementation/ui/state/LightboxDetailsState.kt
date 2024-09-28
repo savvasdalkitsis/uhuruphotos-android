@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state
 
 import androidx.compose.runtime.Immutable
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.domain.api.model.LightboxDetails
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.domain.api.model.LightboxDetailsModel
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.PersonState
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
@@ -77,7 +77,7 @@ data class LightboxDetailsState(
         }
 }
 
-fun LightboxDetails.toLightboxDetailsState(serverUrl: String) = LightboxDetailsState(
+fun LightboxDetailsModel.toLightboxDetailsState(serverUrl: String) = LightboxDetailsState(
         formattedDateTime = formattedDateTime,
         location = location,
         latLon = latLon,

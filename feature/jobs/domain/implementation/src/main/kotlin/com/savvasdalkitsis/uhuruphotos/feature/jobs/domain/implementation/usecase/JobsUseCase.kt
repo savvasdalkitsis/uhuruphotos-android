@@ -21,18 +21,18 @@ import androidx.work.WorkInfo.State.FAILED
 import androidx.work.WorkInfo.State.RUNNING
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkScheduler
-import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job
-import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job.FEED_DETAILS_SYNC
-import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job.FULL_FEED_SYNC
-import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job.LOCAL_MEDIA_SYNC
-import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job.PRECACHE_THUMBNAILS
-import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus
-import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus.Blocked
-import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus.Failed
-import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus.Idle
-import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus.InProgress
-import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus.Queued
-import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobsStatus
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobModel
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobModel.FEED_DETAILS_SYNC
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobModel.FULL_FEED_SYNC
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobModel.LOCAL_MEDIA_SYNC
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobModel.PRECACHE_THUMBNAILS
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatusModel
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatusModel.BlockedModel
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatusModel.FailedModel
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatusModel.IdleModel
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatusModel.InProgressModel
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatusModel.QueuedModel
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobsStatusModel
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.usecase.JobsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.worker.LocalMediaWorkScheduler
@@ -56,7 +56,7 @@ class JobsUseCase @Inject constructor(
     private val welcomeUseCase: WelcomeUseCase,
 ) : JobsUseCase {
 
-    override fun observeJobsStatus(): Flow<JobsStatus> =
+    override fun observeJobsStatus(): Flow<JobsStatusModel> =
         combine(
             welcomeUseCase.observeWelcomeStatus(),
             feedWorkScheduler.observeFeedRefreshJob(),
@@ -64,7 +64,7 @@ class JobsUseCase @Inject constructor(
             localMediaUseCase.observeLocalMediaSyncJob(),
             feedWorkScheduler.observeFeedDetailsRefreshJob(),
         ) { welcomeStatus, feedRefresh, precacheThumbnails, localMedia, feedDetails ->
-            JobsStatus(
+            JobsStatusModel(
                 when {
                     welcomeStatus.hasRemoteAccess -> mapOf(
                         FULL_FEED_SYNC to feedRefresh.jobStatus(blockedBy = precacheThumbnails),
@@ -79,7 +79,7 @@ class JobsUseCase @Inject constructor(
             )
         }
 
-    override fun observeJobsStatusFilteredBySettings(): Flow<JobsStatus> = combine(
+    override fun observeJobsStatusFilteredBySettings(): Flow<JobsStatusModel> = combine(
         observeJobsStatus(),
         settingsUIUseCase.observeShouldShowFeedSyncProgress(),
         settingsUIUseCase.observeShouldShowPrecacheProgress(),
@@ -96,9 +96,9 @@ class JobsUseCase @Inject constructor(
         })
     }
 
-    private fun JobStatus.unless(predicate: Boolean): JobStatus = if (predicate) this else Idle
+    private fun JobStatusModel.unless(predicate: Boolean): JobStatusModel = if (predicate) this else IdleModel
 
-    override fun startJob(job: Job) {
+    override fun startJob(job: JobModel) {
         when (job) {
             FULL_FEED_SYNC -> {
                 feedUseCase.invalidateRemoteFeed()
@@ -110,7 +110,7 @@ class JobsUseCase @Inject constructor(
         }
     }
 
-    override fun cancelJob(job: Job) {
+    override fun cancelJob(job: JobModel) {
         when (job) {
             FULL_FEED_SYNC -> feedWorkScheduler.cancelFeedSync()
             PRECACHE_THUMBNAILS -> feedWorkScheduler.cancelPrecacheThumbnails()
@@ -122,12 +122,12 @@ class JobsUseCase @Inject constructor(
     private fun RefreshJobState?.jobStatus(
         blockedBy: RefreshJobState? = null
     ) = when {
-        this?.status == RUNNING -> InProgress(
+        this?.status == RUNNING -> InProgressModel(
             progress
         )
-        blockedBy?.status == RUNNING -> Blocked
-        this?.status == FAILED -> Failed
-        this?.status == BLOCKED || this?.status == ENQUEUED -> Queued
-        else -> Idle
+        blockedBy?.status == RUNNING -> BlockedModel
+        this?.status == FAILED -> FailedModel
+        this?.status == BLOCKED || this?.status == ENQUEUED -> QueuedModel
+        else -> IdleModel
     }
 }

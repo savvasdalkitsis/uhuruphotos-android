@@ -28,9 +28,9 @@ import coil.request.SuccessResult
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResult
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResult.CHANGED
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResult.SKIPPED
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResultModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResultModel.CHANGED
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResultModel.SKIPPED
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaPrecacher
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.ThumbnailImage
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
@@ -49,7 +49,7 @@ class RemoteMediaPrecacher @Inject constructor(
     override suspend fun precacheMedia(
         url: String,
         video: Boolean,
-    ): Result<MediaOperationResult, Throwable> = try {
+    ): Result<MediaOperationResultModel, Throwable> = try {
         when {
             inDiskCache(url) -> Ok(SKIPPED)
             else -> when (val result = fetch(url)) {

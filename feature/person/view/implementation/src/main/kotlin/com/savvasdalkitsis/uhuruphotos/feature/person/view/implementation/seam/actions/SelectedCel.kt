@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.actions
 
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.PersonResults
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSourceModel.PersonResultsModel
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation.LightboxNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonActionsContext
@@ -30,7 +30,7 @@ data class SelectedCel(val cel: CelState) : PersonAction() {
         navigator.navigateTo(
             LightboxNavigationRoute(
                 mediaItem = cel.mediaItem,
-                lightboxSequenceDataSource = PersonResults(state.personState!!.id)
+                lightboxSequenceDataSource = PersonResultsModel(state.personState!!.id)
             )
         )
     }

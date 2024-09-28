@@ -16,8 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state
 
 import androidx.compose.runtime.Immutable
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
 import kotlinx.collections.immutable.ImmutableList
@@ -33,7 +33,7 @@ data class ClusterState(
     val location: String? = null,
     val showRefreshIcon: Boolean = false,
 ) {
-    val hasAnyCelsWithRemoteMedia = cels.any { it.mediaItem.id.preferRemote is MediaId.Remote }
+    val hasAnyCelsWithRemoteMedia = cels.any { it.mediaItem.id.preferRemote is MediaIdModel.RemoteIdModel }
 }
 
 val previewClusterStateEmpty = ClusterState(
@@ -45,7 +45,7 @@ val previewClusterStateEmpty = ClusterState(
     showRefreshIcon = true,
 )
 
-fun MediaCollection.toCluster() = ClusterState(
+fun MediaCollectionModel.toCluster() = ClusterState(
     id = id,
     cels = mediaItems.map { it.toCel() }.toImmutableList(),
     displayTitle = displayTitle,

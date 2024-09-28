@@ -19,7 +19,7 @@ import androidx.work.BackoffPolicy
 import androidx.work.ExistingWorkPolicy
 import androidx.work.NetworkType
 import androidx.work.WorkInfo
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHashModel
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.work.UploadWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkScheduleUseCase
@@ -55,7 +55,7 @@ class UploadWorkScheduler @Inject constructor(
     }
 
     override fun schedulePostUploadProcessing(
-        hash: MediaItemHash,
+        hash: MediaItemHashModel,
         itemId: Long,
     ) = with(UploadPostCompletionWorker) {
         workScheduleUseCase.scheduleNow(

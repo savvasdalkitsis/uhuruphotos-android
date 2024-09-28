@@ -29,7 +29,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.usecase.JobsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaDeletionRequest
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaDeletionRequestModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItemDeletion.Error
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItemDeletion.RequiresPermissions
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItemDeletion.Success
@@ -94,7 +94,7 @@ internal class FeedActionsContext @Inject constructor(
     ) {
         when (val result = localMediaDeletionUseCase.deleteLocalMediaItems(state.selectedCels
             .flatMap { it.mediaItem.id.findLocals }
-            .map { LocalMediaDeletionRequest(it.value, it.isVideo) }
+            .map { LocalMediaDeletionRequestModel(it.value, it.isVideo) }
         )) {
             is Error -> toaster.show(R.string.error_deleting_media)
             is RequiresPermissions -> emit(AskForPermissions(result.deniedPermissions))

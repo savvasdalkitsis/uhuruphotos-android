@@ -15,13 +15,13 @@ limitations under the License.
  */
 package com.savvasdalktsis.uhuruphotos.feature.download.domain.api.usecase
 
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
 import kotlinx.coroutines.flow.Flow
 
 interface DownloadUseCase {
 
     suspend fun scheduleMediaDownload(
-        ids: Collection<MediaId.Remote>
+        ids: Collection<MediaIdModel.RemoteIdModel>
     )
 
     suspend fun getDownloading(): Set<String>

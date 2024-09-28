@@ -15,19 +15,19 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation
 
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSourceModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHashModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class LightboxNavigationRoute(
-    val id: MediaId<*>,
-    val mediaItemHash: MediaItemHash,
-    val lightboxSequenceDataSource: LightboxSequenceDataSource = LightboxSequenceDataSource.Single,
+    val id: MediaIdModel<*>,
+    val mediaItemHash: MediaItemHashModel,
+    val lightboxSequenceDataSource: LightboxSequenceDataSourceModel = LightboxSequenceDataSourceModel.SingleItemModel,
 ) : NavigationRoute {
 
     @IgnoredOnParcel
@@ -35,8 +35,8 @@ data class LightboxNavigationRoute(
 
     companion object {
         operator fun invoke(
-            mediaItem: MediaItem,
-            lightboxSequenceDataSource: LightboxSequenceDataSource,
+            mediaItem: MediaItemModel,
+            lightboxSequenceDataSource: LightboxSequenceDataSourceModel,
         ) = LightboxNavigationRoute(
             id = mediaItem.id,
             mediaItemHash = mediaItem.mediaHash,

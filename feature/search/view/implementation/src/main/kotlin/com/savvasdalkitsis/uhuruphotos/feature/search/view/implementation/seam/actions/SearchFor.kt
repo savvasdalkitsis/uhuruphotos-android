@@ -26,8 +26,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.sta
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.cancellable
 import kotlinx.coroutines.flow.debounce
@@ -49,18 +47,18 @@ data class SearchFor(val query: String) : SearchAction() {
             .mapNotNull { result ->
                 val clusters = result.getOr(null)?.map { it.toCluster() }
                 when {
-                    clusters != null -> DisplaySearchResults(clusters)
+                    clusters.orEmpty().isNotEmpty() -> DisplaySearchResults(clusters.orEmpty())
                     else -> {
-                        currentCoroutineContext().cancel()
-                        if (!state.clusterStates.isEmpty()) {
+                        if (state.clusterStates.isNotEmpty()) {
                             toaster.show(R.string.error_searching)
+                            null
+                        } else {
+                            ShowErrorScreen
                         }
-                        null
                     }
                 }
             }
         )
-        emit(ShowErrorScreen)
     }
 
 }

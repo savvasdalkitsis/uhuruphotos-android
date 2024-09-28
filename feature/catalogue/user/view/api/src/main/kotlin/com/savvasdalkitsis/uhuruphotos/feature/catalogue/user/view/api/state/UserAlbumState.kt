@@ -16,9 +16,9 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.state
 
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbums
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstance
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHashModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstanceModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.VitrineState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
@@ -64,9 +64,9 @@ private fun celState(
 ): CelState? =
     imageHash?.let {
         val isVideo = coverIsVideo ?: false
-        MediaItemInstance(
-            id = MediaId.Remote(it, isVideo),
-            mediaHash = MediaItemHash.fromRemoteMediaHash(it, 0),
+        MediaItemInstanceModel(
+            id = MediaIdModel.RemoteIdModel(it, isVideo),
+            mediaHash = MediaItemHashModel.fromRemoteMediaHash(it, 0),
             displayDayDate = null,
             ratio = 1f,
         ).toCel()

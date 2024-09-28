@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.sea
 import androidx.work.NetworkType
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.AvatarState
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplayState
-import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobModel
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.state.JobState
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.BiometricsSettingState
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.MapProviderState
@@ -34,7 +34,7 @@ sealed class SettingsMutation(
     mutation: Mutation<SettingsState>,
 ) : Mutation<SettingsState> by mutation {
 
-    data class ShowJobStartDialog(val job: Job) : SettingsMutation({
+    data class ShowJobStartDialog(val job: JobModel) : SettingsMutation({
         it.copy(showJobStartDialog = job)
     })
 

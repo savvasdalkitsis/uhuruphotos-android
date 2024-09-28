@@ -21,8 +21,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.Database
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemDetails
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemSummaryQueries
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResult
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHashModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResultModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummaryStatus
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.RemoteFeedDayResponseData
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.RemoteFeedResponseData
@@ -97,7 +97,7 @@ class RemoteMediaUseCase @Inject constructor(
             remoteMediaItemWorkScheduler.scheduleMediaItemFavourite(id, favourite)
         }.simple()
 
-    override suspend fun refreshDetailsNowIfMissing(id: String): Result<MediaOperationResult, Throwable> =
+    override suspend fun refreshDetailsNowIfMissing(id: String): Result<MediaOperationResultModel, Throwable> =
         remoteMediaRepository.refreshDetailsNowIfMissing(id)
 
     override suspend fun refreshDetailsNow(id: String): SimpleResult =
@@ -230,7 +230,7 @@ class RemoteMediaUseCase @Inject constructor(
         }
     }.simple()
 
-    override suspend fun exists(hash: MediaItemHash): Result<Boolean, Throwable> = runCatchingWithLog {
+    override suspend fun exists(hash: MediaItemHashModel): Result<Boolean, Throwable> = runCatchingWithLog {
         remoteMediaService.exists(hash.hash).exists
     }
 

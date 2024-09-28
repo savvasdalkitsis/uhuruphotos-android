@@ -16,14 +16,14 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase
 
 import com.github.michaelbull.result.Result
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.AuthStatus
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.AuthStatusModel
 
 interface AuthenticationLoginUseCase {
 
     suspend fun login(
         credentials: Credentials,
         rememberCredentials: Boolean
-    ): Result<AuthStatus, Throwable>
+    ): Result<AuthStatusModel, Throwable>
 
     suspend fun logOut()
 

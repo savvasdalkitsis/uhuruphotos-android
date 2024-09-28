@@ -13,19 +13,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model
+package com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model
 
-import androidx.compose.runtime.Immutable
+sealed class LocalFolderModel {
 
-@Immutable
-sealed interface MediaItem {
-    val id: MediaId<*>
-    val mediaHash: MediaItemHash
-    val fallbackColor: String?
-    val displayDayDate: String?
-    val sortableDate: String?
-    val isFavourite: Boolean
-    val ratio: Float
-    val latLng: (Pair<Double, Double>)?
-    val mediaDay: MediaDay?
+    data class RequiresPermissionsModel(val deniedPermissions: List<String>) : LocalFolderModel()
+
+    data class FoundModel(
+        val bucket: Pair<LocalMediaFolder, List<LocalMediaItem>>
+    ) : LocalFolderModel()
+
+    data object ErrorModel : LocalFolderModel()
+
 }

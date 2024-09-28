@@ -13,13 +13,14 @@ SELECT
  search.`query`,
  search.date,
  search.location,
- summary.id AS summaryId,
+ photoId AS summaryId,
  summary.dominantColor,
  summary.aspectRatio,
  summary.type
 FROM search
-LEFT JOIN remoteMediaItemSummary AS summary ON search.photoId = summary.id AND search.`query` = :query AND summary.containerId = :query
-GROUP BY summary.id
+LEFT JOIN remoteMediaItemSummary AS summary ON search.photoId = summary.id
+WHERE search.`query` = :query
+GROUP BY photoId
 ORDER BY CASE search.date
   WHEN 'No timestamp' THEN 0
   ELSE search.date END

@@ -17,48 +17,48 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase
 
 import com.github.michaelbull.result.Result
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSource
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaFolderOnDevice
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResult
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSourceModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaFolderOnDeviceModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDeviceModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResultModel
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import kotlinx.coroutines.flow.Flow
 
 interface MediaUseCase {
 
-    fun observeLocalMedia(): Flow<MediaItemsOnDevice>
+    fun observeLocalMedia(): Flow<MediaItemsOnDeviceModel>
 
-    fun observeLocalAlbum(albumId: Int): Flow<MediaFolderOnDevice>
+    fun observeLocalAlbum(albumId: Int): Flow<MediaFolderOnDeviceModel>
 
-    fun observeFavouriteMedia(): Flow<Result<List<MediaItem>, Throwable>>
+    fun observeFavouriteMedia(): Flow<Result<List<MediaItemModel>, Throwable>>
 
-    fun observeHiddenMedia(): Flow<Result<List<MediaItem>, Throwable>>
+    fun observeHiddenMedia(): Flow<Result<List<MediaItemModel>, Throwable>>
 
-    suspend fun List<DbRemoteMediaItemSummary>.mapToMediaItems(): Result<List<MediaItem>, Throwable>
+    suspend fun List<DbRemoteMediaItemSummary>.mapToMediaItems(): Result<List<MediaItemModel>, Throwable>
 
     suspend fun getFavouriteMediaCount(): Result<Long, Throwable>
 
-    suspend fun getHiddenMedia(): Result<List<MediaItem>, Throwable>
+    suspend fun getHiddenMedia(): Result<List<MediaItemModel>, Throwable>
 
-    suspend fun setMediaItemFavourite(id: MediaId<*>, favourite: Boolean): SimpleResult
+    suspend fun setMediaItemFavourite(id: MediaIdModel<*>, favourite: Boolean): SimpleResult
 
-    suspend fun refreshDetailsNowIfMissing(id: MediaId<*>): Result<MediaOperationResult, Throwable>
+    suspend fun refreshDetailsNowIfMissing(id: MediaIdModel<*>): Result<MediaOperationResultModel, Throwable>
 
-    suspend fun refreshDetailsNow(id: MediaId<*>): SimpleResult
+    suspend fun refreshDetailsNow(id: MediaIdModel<*>): SimpleResult
 
     suspend fun refreshFavouriteMedia(): SimpleResult
 
     suspend fun refreshHiddenMedia(): SimpleResult
 
-    fun trashMediaItem(id: MediaId<*>)
+    fun trashMediaItem(id: MediaIdModel<*>)
 
-    fun restoreMediaItem(id: MediaId<*>)
+    fun restoreMediaItem(id: MediaIdModel<*>)
 
-    suspend fun List<MediaCollectionSource>.toMediaCollections(): List<MediaCollection>
+    suspend fun List<MediaCollectionSourceModel>.toMediaCollections(): List<MediaCollectionModel>
 
-    suspend fun toMediaCollection(groups: Group<String, MediaCollectionSource>): List<MediaCollection>
+    suspend fun toMediaCollection(groups: Group<String, MediaCollectionSourceModel>): List<MediaCollectionModel>
 }

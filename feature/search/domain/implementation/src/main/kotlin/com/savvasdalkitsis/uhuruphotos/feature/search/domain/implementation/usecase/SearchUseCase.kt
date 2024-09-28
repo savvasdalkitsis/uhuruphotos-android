@@ -18,8 +18,8 @@ package com.savvasdalkitsis.uhuruphotos.feature.search.domain.implementation.use
 import com.github.michaelbull.result.Result
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.isVideo
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.search.GetSearchResults
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSource
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSourceModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.search.domain.api.usecase.SearchUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.search.domain.implementation.repository.SearchRepository
@@ -48,12 +48,12 @@ class SearchUseCase @Inject constructor(
     private val mediaUseCase: MediaUseCase,
 ) : SearchUseCase {
 
-    override suspend fun searchResultsFor(query: String): List<MediaCollection> = with(mediaUseCase) {
+    override suspend fun searchResultsFor(query: String): List<MediaCollectionModel> = with(mediaUseCase) {
         toMediaCollection(searchRepository.getSearchResults(query)
             .mapNotNullValues { it.toMediaCollectionSource() })
     }
 
-    override fun searchFor(query: String): Flow<Result<List<MediaCollection>, Throwable>> =
+    override fun searchFor(query: String): Flow<Result<List<MediaCollectionModel>, Throwable>> =
         searchRepository.observeSearchResults(query)
             .distinctUntilChanged()
             .map { groups ->
@@ -67,11 +67,11 @@ class SearchUseCase @Inject constructor(
             }
 
     private fun GetSearchResults.toMediaCollectionSource() = summaryId?.let { id ->
-        MediaCollectionSource(
+        MediaCollectionSourceModel(
             id = id,
             location = location,
-            date = dateDisplayer.dateString(date),
-            mediaItemId = id,
+            date = date,
+            mediaItemId = summaryId,
             dominantColor = dominantColor,
             aspectRatio = aspectRatio,
             isVideo = isVideo,

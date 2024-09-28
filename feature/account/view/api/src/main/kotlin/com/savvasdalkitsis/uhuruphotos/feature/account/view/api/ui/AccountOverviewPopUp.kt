@@ -38,7 +38,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.AccountOverviewState
-import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobModel
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 
 @Composable
@@ -50,8 +50,8 @@ fun AccountOverviewPopUp(
     onLogoutClicked: () -> Unit,
     onLoginClicked: () -> Unit,
     onSettingsClicked: () -> Unit,
-    onStartJob: (Job) -> Unit,
-    onCancelJob: (Job) -> Unit,
+    onStartJob: (JobModel) -> Unit,
+    onCancelJob: (JobModel) -> Unit,
     onViewAllUploadsClicked: () -> Unit = {},
     onCloudSyncChanged: (Boolean) -> Unit = {},
 ) {

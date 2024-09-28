@@ -18,8 +18,8 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase
 import com.github.michaelbull.result.Result
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemDetails
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResult
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHashModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResultModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummaryStatus
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.RemoteFeedDayResponseData
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.RemoteFeedResponseData
@@ -47,7 +47,7 @@ interface RemoteMediaUseCase {
 
     suspend fun setMediaItemFavourite(id: String, favourite: Boolean): SimpleResult
 
-    suspend fun refreshDetailsNowIfMissing(id: String): Result<MediaOperationResult, Throwable>
+    suspend fun refreshDetailsNowIfMissing(id: String): Result<MediaOperationResultModel, Throwable>
 
     suspend fun refreshDetailsNow(id: String): SimpleResult
 
@@ -74,7 +74,7 @@ interface RemoteMediaUseCase {
         clearSummariesBeforeInserting: Boolean = false,
     ): SimpleResult
 
-    suspend fun exists(hash: MediaItemHash): Result<Boolean, Throwable>
+    suspend fun exists(hash: MediaItemHashModel): Result<Boolean, Throwable>
 
     suspend fun refreshMediaCollections(
         incompleteMediaCollections: suspend () -> RemoteFeedResponseData,

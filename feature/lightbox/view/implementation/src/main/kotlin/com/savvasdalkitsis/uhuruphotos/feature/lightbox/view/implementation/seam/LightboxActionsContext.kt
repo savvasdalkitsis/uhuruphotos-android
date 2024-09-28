@@ -45,10 +45,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.s
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.MediaItemTypeState.TRASHED
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.SingleMediaItemState
 import com.savvasdalkitsis.uhuruphotos.feature.local.domain.api.usecase.LocalAlbumUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MetadataUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaDeletionRequest
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaDeletionRequestModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItemDeletion.Error
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItemDeletion.RequiresPermissions
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItemDeletion.Success
@@ -110,7 +110,7 @@ internal class LightboxActionsContext @Inject constructor(
 ) {
 
     var mediaItemTypeState = MediaItemTypeState.default
-    val currentMediaId = MutableSharedFlow<MediaId<*>>(1)
+    val currentMediaId = MutableSharedFlow<MediaIdModel<*>>(1)
 
     fun deletionCategory(item: SingleMediaItemState) = when {
         mediaItemTypeState == TRASHED -> REMOTE_ITEM_TRASHED
@@ -124,7 +124,7 @@ internal class LightboxActionsContext @Inject constructor(
     ): SimpleResult {
         val result = localMediaDeletionUseCase.deleteLocalMediaItems(
             mediaItem.id.findLocals.map { id ->
-                LocalMediaDeletionRequest(id.value, id.isVideo)
+                LocalMediaDeletionRequestModel(id.value, id.isVideo)
             }
         )
         return when(result) {
@@ -167,7 +167,7 @@ internal class LightboxActionsContext @Inject constructor(
     }
 
     suspend fun FlowCollector<LightboxMutation>.refreshMediaDetails(
-        mediaId: MediaId<*>,
+        mediaId: MediaIdModel<*>,
         media: List<SingleMediaItemState>,
     ) {
         media.find(mediaId)?.let { (_, item) ->
@@ -179,7 +179,7 @@ internal class LightboxActionsContext @Inject constructor(
         }
     }
 
-    fun List<SingleMediaItemState>.find(id: MediaId<*>): Pair<Int, SingleMediaItemState>? {
+    fun List<SingleMediaItemState>.find(id: MediaIdModel<*>): Pair<Int, SingleMediaItemState>? {
         val index = indexOfFirst { it.id.matches(id) }
         return if (index >= 0) {
             index to get(index)

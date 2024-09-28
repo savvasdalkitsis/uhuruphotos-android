@@ -18,8 +18,8 @@ package com.savvasdalkitsis.uhuruphotos.feature.trash.domain.implementation.usec
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplayState
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.isVideo
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.GetTrash
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSource
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSourceModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.trash.domain.api.usecase.TrashUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.trash.domain.implementation.repository.TrashRepository
@@ -56,7 +56,7 @@ internal class TrashUseCase @Inject constructor(
 
     override suspend fun hasTrash(): Boolean = trashRepository.hasTrash()
 
-    override fun observeTrashAlbums(): Flow<List<MediaCollection>> = trashRepository.observeTrash()
+    override fun observeTrashAlbums(): Flow<List<MediaCollectionModel>> = trashRepository.observeTrash()
         .distinctUntilChanged()
         .map {
             it.mapValues {
@@ -74,7 +74,7 @@ internal class TrashUseCase @Inject constructor(
             .mapValues { it.toMediaCollectionSource() })
     }
 
-    private fun GetTrash.toMediaCollectionSource() = MediaCollectionSource(
+    private fun GetTrash.toMediaCollectionSource() = MediaCollectionSourceModel(
         id = id,
         date = albumDate,
         location = albumLocation,

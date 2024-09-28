@@ -13,12 +13,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model
+package com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model
 
-sealed class JobStatus {
-    data object Idle : JobStatus()
-    data class InProgress(val progress: Int) : JobStatus()
-    data object Blocked : JobStatus()
-    data object Failed : JobStatus()
-    data object Queued : JobStatus()
+import androidx.activity.result.IntentSenderRequest
+
+sealed class InternalLocalMediaItemDeletionModel {
+
+    data object SuccessModel : InternalLocalMediaItemDeletionModel()
+    data class ErrorModel(val e: Throwable?) : InternalLocalMediaItemDeletionModel()
+    data class RequiresPermissionsModel(val deniedPermissions: List<String>) : InternalLocalMediaItemDeletionModel()
+    data class NeedsSystemApprovalModel(val request: IntentSenderRequest) : InternalLocalMediaItemDeletionModel()
 }

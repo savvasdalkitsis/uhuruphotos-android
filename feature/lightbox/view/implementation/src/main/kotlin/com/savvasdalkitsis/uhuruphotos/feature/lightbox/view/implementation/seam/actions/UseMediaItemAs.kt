@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.sea
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import kotlinx.coroutines.flow.flow
 
@@ -28,8 +28,8 @@ data object UseMediaItemAs : LightboxAction() {
         state: LightboxState
     ) = flow<LightboxMutation> {
         when (val id = state.currentMediaItem.id.preferLocal) {
-            is MediaId.Local -> use(id)
-            is MediaId.Remote -> {
+            is MediaIdModel.LocalIdModel -> use(id)
+            is MediaIdModel.RemoteIdModel -> {
                 val serverUrl = serverUseCase.getServerUrl()
                 if (serverUrl != null) {
                     use(id, serverUrl)
@@ -42,7 +42,7 @@ data object UseMediaItemAs : LightboxAction() {
     }
 
     context(LightboxActionsContext)
-    private suspend fun use(id: MediaId<*>, serverUrl: String? = null) {
+    private suspend fun use(id: MediaIdModel<*>, serverUrl: String? = null) {
         shareUseCase.usePhotoAs(id.fullResUri(serverUrl))
     }
 

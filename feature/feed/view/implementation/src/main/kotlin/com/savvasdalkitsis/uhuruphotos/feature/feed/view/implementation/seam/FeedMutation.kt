@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Predefi
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplayState
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.MemoryCelState
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDeviceModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
 import kotlinx.collections.immutable.persistentListOf
@@ -106,7 +106,7 @@ sealed class FeedMutation(
         it.copy(localMediaSyncRunning = running)
     })
 
-    data class ShowRequestForLocalStoragePermission(val permissions: MediaItemsOnDevice.RequiresPermissions) : FeedMutation({
+    data class ShowRequestForLocalStoragePermission(val permissions: MediaItemsOnDeviceModel.RequiresPermissionsModel) : FeedMutation({
         it.copy(showRequestPermissionForLocalMediaAccess = permissions)
     })
 

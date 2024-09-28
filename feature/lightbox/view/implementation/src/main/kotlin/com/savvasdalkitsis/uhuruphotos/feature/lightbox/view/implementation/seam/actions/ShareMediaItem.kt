@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.sea
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import kotlinx.coroutines.flow.flow
 
@@ -28,8 +28,8 @@ data object ShareMediaItem : LightboxAction() {
         state: LightboxState
     ) = flow<LightboxMutation> {
         when (val id = state.currentMediaItem.id.preferLocal) {
-            is MediaId.Local -> share(id)
-            is MediaId.Remote -> {
+            is MediaIdModel.LocalIdModel -> share(id)
+            is MediaIdModel.RemoteIdModel -> {
                 val serverUrl = serverUseCase.getServerUrl()
                 if (serverUrl != null) {
                     share(id, serverUrl)
@@ -42,7 +42,7 @@ data object ShareMediaItem : LightboxAction() {
     }
 
     context(LightboxActionsContext)
-    private suspend fun share(id: MediaId<*>, serverUrl: String? = null) {
+    private suspend fun share(id: MediaIdModel<*>, serverUrl: String? = null) {
         shareUseCase.share(id.fullResUri(serverUrl))
     }
 }

@@ -22,10 +22,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUse
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.ClusterState
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContextFactory
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetailsState
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.AutoAlbum
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstance
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSourceModel.AutoAlbumModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHashModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstanceModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
@@ -73,12 +73,12 @@ internal class AutoAlbumActionsContext @Inject constructor(
                                         displayTitle = date,
                                         location = null,
                                         cels = photos.map {
-                                            MediaItemInstance(
-                                                id = MediaId.Remote(
+                                            MediaItemInstanceModel(
+                                                id = MediaIdModel.RemoteIdModel(
                                                     it.photoId.toString(),
                                                     it.video ?: false
                                                 ),
-                                                mediaHash = MediaItemHash.fromRemoteMediaHash(
+                                                mediaHash = MediaItemHashModel.fromRemoteMediaHash(
                                                     it.photoId.toString(),
                                                     user.id
                                                 ),
@@ -93,6 +93,6 @@ internal class AutoAlbumActionsContext @Inject constructor(
                         }
                 }
         },
-        lightboxSequenceDataSource = { AutoAlbum(it) },
+        lightboxSequenceDataSource = { AutoAlbumModel(it) },
     )
 }

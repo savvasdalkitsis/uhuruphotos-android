@@ -15,9 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.site.domain.api.usecase
 
-import com.savvasdalkitsis.uhuruphotos.feature.site.domain.api.service.http.response.SiteOptionsResponseData
+import com.savvasdalkitsis.uhuruphotos.feature.site.domain.api.model.SiteOptionsModel
 
 interface SiteUseCase {
 
-    suspend fun getSiteOptions(): Result<SiteOptionsResponseData>
+    suspend fun getSiteOptions(): Result<SiteOptionsModel>
 }

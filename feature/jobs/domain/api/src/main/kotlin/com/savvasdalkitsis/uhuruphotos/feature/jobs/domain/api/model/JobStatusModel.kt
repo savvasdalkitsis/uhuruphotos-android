@@ -13,18 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model
+package com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model
 
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaFolder
-
-sealed class MediaItemsOnDevice {
-
-    data class Found(
-        val primaryFolder: Pair<LocalMediaFolder, List<MediaItem>>?,
-        val mediaFolders: List<Pair<LocalMediaFolder, List<MediaItem>>>,
-    ) : MediaItemsOnDevice()
-
-    data class RequiresPermissions(val deniedPermissions: List<String>) : MediaItemsOnDevice()
-
-    data object Error: MediaItemsOnDevice()
+sealed class JobStatusModel {
+    data object IdleModel : JobStatusModel()
+    data class InProgressModel(val progress: Int) : JobStatusModel()
+    data object BlockedModel : JobStatusModel()
+    data object FailedModel : JobStatusModel()
+    data object QueuedModel : JobStatusModel()
 }

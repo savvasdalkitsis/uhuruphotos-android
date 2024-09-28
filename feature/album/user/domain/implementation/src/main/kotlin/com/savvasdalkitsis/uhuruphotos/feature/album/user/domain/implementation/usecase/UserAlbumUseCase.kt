@@ -15,14 +15,14 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.implementation.usecase
 
-import com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.api.model.UserAlbum
+import com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.api.model.UserAlbumModel
 import com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.api.usecase.UserAlbumUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.implementation.repository.UserAlbumRepository
 import com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.implementation.work.UserAlbumWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.GetUserAlbumMedia
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.isVideo
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSource
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSourceModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import kotlinx.coroutines.flow.Flow
@@ -38,11 +38,11 @@ class UserAlbumUseCase @Inject constructor(
     private val userAlbumWorkScheduler: UserAlbumWorkScheduler,
 ) : UserAlbumUseCase {
 
-    override fun observeUserAlbum(albumId: Int): Flow<UserAlbum> = with(mediaUseCase) {
+    override fun observeUserAlbum(albumId: Int): Flow<UserAlbumModel> = with(mediaUseCase) {
         userAlbumRepository.observeUserAlbum(albumId)
             .distinctUntilChanged()
             .map { entry ->
-                UserAlbum(
+                UserAlbumModel(
                     title = entry.userAlbumTitle,
                     mediaCollections = entry.map {
                         it.toMediaCollectionSource()
@@ -51,9 +51,9 @@ class UserAlbumUseCase @Inject constructor(
             }
         }
 
-    override suspend fun getUserAlbum(albumId: Int): UserAlbum = with(mediaUseCase) {
+    override suspend fun getUserAlbum(albumId: Int): UserAlbumModel = with(mediaUseCase) {
         val album = userAlbumRepository.getUserAlbum(albumId)
-        UserAlbum(
+        UserAlbumModel(
             title = album.userAlbumTitle,
             mediaCollections = album
                 .map { it.toMediaCollectionSource() }
@@ -64,12 +64,12 @@ class UserAlbumUseCase @Inject constructor(
     override suspend fun refreshUserAlbum(albumId: Int) =
         userAlbumRepository.refreshUserAlbum(albumId)
 
-    override fun addMediaToAlbum(albumId: Int, media: List<MediaId.Remote>) {
+    override fun addMediaToAlbum(albumId: Int, media: List<MediaIdModel.RemoteIdModel>) {
         userAlbumRepository.queueMediaAdditionToUserAlbum(albumId, media.map { it.value })
         userAlbumWorkScheduler.scheduleMediaAddition(albumId)
     }
 
-    override suspend fun createNewUserAlbum(name: String, media: List<MediaId.Remote>) {
+    override suspend fun createNewUserAlbum(name: String, media: List<MediaIdModel.RemoteIdModel>) {
         if (media.isNotEmpty()) {
             userAlbumRepository.queueMediaAdditionToNewUserAlbum(name, media.map { it.value })
         }
@@ -79,7 +79,7 @@ class UserAlbumUseCase @Inject constructor(
     override suspend fun deleteUserAlbum(albumId: Int): SimpleResult =
         userAlbumRepository.deleteUserAlbum(albumId)
 
-    private fun GetUserAlbumMedia.toMediaCollectionSource() = MediaCollectionSource(
+    private fun GetUserAlbumMedia.toMediaCollectionSource() = MediaCollectionSourceModel(
         id = id,
         date = photoDate,
         location = location,

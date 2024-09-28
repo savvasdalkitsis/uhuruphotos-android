@@ -16,25 +16,25 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.state
 
 import androidx.compose.runtime.Immutable
-import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job
-import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobModel
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatusModel
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
 
 @Immutable
 data class JobState(
     val title: Title,
-    val job: Job,
-    val status: JobStatus,
+    val job: JobModel,
+    val status: JobStatusModel,
 )
 
-val Map<Job, JobStatus>.toJobState get() = map { (job, status) ->
+val Map<JobModel, JobStatusModel>.toJobState get() = map { (job, status) ->
     JobState(
         title = Title.Resource(when (job) {
-            Job.FULL_FEED_SYNC -> string.full_feed_sync
-            Job.PRECACHE_THUMBNAILS -> string.precache_thumbnails
-            Job.LOCAL_MEDIA_SYNC -> string.scan_local_media
-            Job.FEED_DETAILS_SYNC -> string.full_feed_details_sync
+            JobModel.FULL_FEED_SYNC -> string.full_feed_sync
+            JobModel.PRECACHE_THUMBNAILS -> string.precache_thumbnails
+            JobModel.LOCAL_MEDIA_SYNC -> string.scan_local_media
+            JobModel.FEED_DETAILS_SYNC -> string.full_feed_details_sync
         }),
         job = job,
         status = status,

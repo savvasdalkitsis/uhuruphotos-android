@@ -27,9 +27,9 @@ import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.state.UserAlbumState
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstance
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHashModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstanceModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.Cel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.Vitrine
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
@@ -57,9 +57,9 @@ fun UserAlbumItem(
             )
         } else {
             Cel(
-                state = album.cover.cel1 ?: MediaItemInstance(
-                    id = MediaId.Remote("", false),
-                    mediaHash = MediaItemHash.fromRemoteMediaHash("", 0),
+                state = album.cover.cel1 ?: MediaItemInstanceModel(
+                    id = MediaIdModel.RemoteIdModel("", false),
+                    mediaHash = MediaItemHashModel.fromRemoteMediaHash("", 0),
                 ).toCel(),
                 onSelected = {
                     onAlbumSelected(album)

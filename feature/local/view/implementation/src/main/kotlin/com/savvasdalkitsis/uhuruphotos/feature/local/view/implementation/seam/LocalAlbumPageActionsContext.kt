@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.toCluster
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContextFactory
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetailsState
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.LocalAlbum
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSourceModel.LocalAlbumModel
 import com.savvasdalkitsis.uhuruphotos.feature.local.domain.api.usecase.LocalAlbumUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
 import kotlinx.collections.immutable.toImmutableList
@@ -47,6 +47,6 @@ internal class LocalAlbumPageActionsContext @Inject constructor(
                     )
                 }
         },
-        lightboxSequenceDataSource = { LocalAlbum(it) },
+        lightboxSequenceDataSource = { LocalAlbumModel(it) },
     )
 }

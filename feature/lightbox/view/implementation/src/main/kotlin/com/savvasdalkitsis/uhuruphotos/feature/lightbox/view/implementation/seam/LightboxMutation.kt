@@ -17,11 +17,11 @@ package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.sea
 
 import android.content.pm.ResolveInfo
 import androidx.annotation.StringRes
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.domain.api.model.LightboxDetails
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.domain.api.model.LightboxDetailsModel
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.SingleMediaItemState
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.toLightboxDetailsState
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import kotlinx.collections.immutable.toImmutableList
 import kotlin.math.min
@@ -61,13 +61,13 @@ sealed class LightboxMutation(
         )
     })
 
-    data class LoadingDetails(val id: MediaId<*>) : LightboxMutation({
+    data class LoadingDetails(val id: MediaIdModel<*>) : LightboxMutation({
         it.copyItem(id) { photoState ->
             photoState.copy(loadingDetails = true)
         }
     })
 
-    data class FinishedLoadingDetails(val id: MediaId<*>) : LightboxMutation({
+    data class FinishedLoadingDetails(val id: MediaIdModel<*>) : LightboxMutation({
         it.copyItem(id) { photoState ->
             photoState.copy(loadingDetails = false)
         }
@@ -123,8 +123,8 @@ sealed class LightboxMutation(
     }
 
     data class ReceivedDetails(
-        val id: MediaId<*>,
-        val details: LightboxDetails,
+        val id: MediaIdModel<*>,
+        val details: LightboxDetailsModel,
         val serverUrl: String,
     ) : LightboxMutation({
         it.copyItem(id) { photoState ->
@@ -135,7 +135,7 @@ sealed class LightboxMutation(
     })
 
     data class ShowMediaItemFavourite(
-        val id: MediaId<*>,
+        val id: MediaIdModel<*>,
         val favourite: Boolean,
     ) : LightboxMutation({
         it.copyItem(id) { photoState ->
@@ -143,7 +143,7 @@ sealed class LightboxMutation(
         }
     })
 
-    data class RemoveMediaItemFromSource(val id: MediaId<*>) : LightboxMutation({
+    data class RemoveMediaItemFromSource(val id: MediaIdModel<*>) : LightboxMutation({
         val removed = it.copy(
             media = it.media.filter { photoState -> photoState.id != id }.toImmutableList(),
         )
@@ -152,7 +152,7 @@ sealed class LightboxMutation(
         )
     })
 
-    data class ReplaceMediaItemInSource(val id: MediaId<*>, val newItem: SingleMediaItemState) : LightboxMutation({
+    data class ReplaceMediaItemInSource(val id: MediaIdModel<*>, val newItem: SingleMediaItemState) : LightboxMutation({
         it.copyItem(id) {
             newItem
         }
@@ -162,7 +162,7 @@ sealed class LightboxMutation(
         it.copy(missingPermissions = deniedPermissions.toImmutableList())
     })
 
-    class ShowEditOptions(id: MediaId<*>, apps: List<ResolveInfo>) : LightboxMutation({
+    class ShowEditOptions(id: MediaIdModel<*>, apps: List<ResolveInfo>) : LightboxMutation({
         it.copyItem(id) { photoState ->
             photoState.copy(showEditApps = apps.toImmutableList())
         }
@@ -190,7 +190,7 @@ sealed class LightboxMutation(
 }
 
 private fun LightboxState.copyItem(
-    id: MediaId<*>,
+    id: MediaIdModel<*>,
     copy: (SingleMediaItemState) -> SingleMediaItemState
 ): LightboxState = copy(media = media.map { mediaItem ->
     when (mediaItem.id) {

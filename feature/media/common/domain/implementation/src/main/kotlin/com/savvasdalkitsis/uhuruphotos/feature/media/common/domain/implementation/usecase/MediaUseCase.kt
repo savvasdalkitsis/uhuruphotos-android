@@ -24,25 +24,25 @@ import com.github.michaelbull.result.map
 import com.github.michaelbull.result.mapOr
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.isVideo
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSource
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaDay
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaFolderOnDevice
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId.Downloading
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId.Local
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId.Processing
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId.Remote
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId.Uploading
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstance
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResult
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResult.CHANGED
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResult.SKIPPED
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSourceModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaDayModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaFolderOnDeviceModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel.DownloadingIdModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel.LocalIdModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel.ProcessingIdModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel.RemoteIdModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel.UploadingIdModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHashModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstanceModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDeviceModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResultModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResultModel.CHANGED
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResultModel.SKIPPED
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalFolder
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalFolderModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItems
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.MediaOrientation.ORIENTATION_0
@@ -82,7 +82,7 @@ class MediaUseCase @Inject constructor(
     @ApplicationContext private val context: Context,
 ) : MediaUseCase {
 
-    override fun observeLocalMedia(): Flow<MediaItemsOnDevice> =
+    override fun observeLocalMedia(): Flow<MediaItemsOnDeviceModel> =
         combine(
             localMediaUseCase.observeLocalMediaItems(),
             userUseCase.observeUser(),
@@ -95,7 +95,7 @@ class MediaUseCase @Inject constructor(
         user: User
     ) = when (localMediaItems) {
         is LocalMediaItems.Found -> {
-            MediaItemsOnDevice.Found(
+            MediaItemsOnDeviceModel.FoundModel(
                 primaryFolder = localMediaItems.primaryLocalMediaFolder?.let { (folder, items) ->
                     folder to items.map { it.toMediaItem(user.id) }
                 },
@@ -105,32 +105,32 @@ class MediaUseCase @Inject constructor(
             )
         }
 
-        is LocalMediaItems.RequiresPermissions -> MediaItemsOnDevice.RequiresPermissions(
+        is LocalMediaItems.RequiresPermissions -> MediaItemsOnDeviceModel.RequiresPermissionsModel(
             localMediaItems.deniedPermissions
         )
     }
 
-    override fun observeLocalAlbum(albumId: Int): Flow<MediaFolderOnDevice> =
+    override fun observeLocalAlbum(albumId: Int): Flow<MediaFolderOnDeviceModel> =
         combine(
             localMediaUseCase.observeLocalMediaFolder(albumId),
             userUseCase.observeUser(),
         ) { mediaItems, user ->
             when (mediaItems) {
-                is LocalFolder.Found -> {
-                    MediaFolderOnDevice.Found(
+                is LocalFolderModel.FoundModel -> {
+                    MediaFolderOnDeviceModel.FoundModel(
                         mediaItems.bucket.first to mediaItems.bucket.second.map {
                             it.toMediaItem(user.id)
                         }
                     )
                 }
-                is LocalFolder.RequiresPermissions -> MediaFolderOnDevice.RequiresPermissions(
+                is LocalFolderModel.RequiresPermissionsModel -> MediaFolderOnDeviceModel.RequiresPermissionsModel(
                     mediaItems.deniedPermissions
                 )
-                LocalFolder.Error -> MediaFolderOnDevice.Error
+                LocalFolderModel.ErrorModel -> MediaFolderOnDeviceModel.ErrorModel
             }
         }
 
-    override fun observeFavouriteMedia(): Flow<Result<List<MediaItem>, Throwable>> =
+    override fun observeFavouriteMedia(): Flow<Result<List<MediaItemModel>, Throwable>> =
         remoteMediaUseCase.observeFavouriteRemoteMedia()
             .distinctUntilChanged()
             .map { media ->
@@ -139,23 +139,23 @@ class MediaUseCase @Inject constructor(
                 }
             }
 
-    override fun observeHiddenMedia(): Flow<Result<List<MediaItem>, Throwable>> =
+    override fun observeHiddenMedia(): Flow<Result<List<MediaItemModel>, Throwable>> =
             remoteMediaUseCase.observeHiddenRemoteMedia()
                 .distinctUntilChanged()
                 .mapToPhotos()
 
-    private fun Flow<List<DbRemoteMediaItemSummary>>.mapToPhotos(): Flow<Result<List<MediaItem>, Throwable>> =
+    private fun Flow<List<DbRemoteMediaItemSummary>>.mapToPhotos(): Flow<Result<List<MediaItemModel>, Throwable>> =
         map { it.mapToMediaItems() }
 
-    override suspend fun List<DbRemoteMediaItemSummary>.mapToMediaItems(): Result<List<MediaItem>, Throwable> =
+    override suspend fun List<DbRemoteMediaItemSummary>.mapToMediaItems(): Result<List<MediaItemModel>, Throwable> =
         withUser { user ->
             map { dbRecord ->
                 val favouriteThreshold = user.favoriteMinRating
                 val date = dateDisplayer.dateString(dbRecord.date)
                 val day = dateParser.parseDateOrTimeString(dbRecord.date)
-                MediaItemInstance(
-                    id = Remote(dbRecord.id, dbRecord.isVideo),
-                    mediaHash = MediaItemHash.fromRemoteMediaHash(dbRecord.id, user.id),
+                MediaItemInstanceModel(
+                    id = RemoteIdModel(dbRecord.id, dbRecord.isVideo),
+                    mediaHash = MediaItemHashModel.fromRemoteMediaHash(dbRecord.id, user.id),
                     fallbackColor = dbRecord.dominantColor,
                     displayDayDate = date,
                     sortableDate = dbRecord.date,
@@ -166,14 +166,14 @@ class MediaUseCase @Inject constructor(
             }
         }
 
-    private fun LocalMediaItem.toMediaItem(userId: Int?) = MediaItemInstance(
-        id = Local(
+    private fun LocalMediaItem.toMediaItem(userId: Int?) = MediaItemInstanceModel(
+        id = LocalIdModel(
             id,
             bucket.id,
             video,
             contentUri,
             thumbnailPath?.let { "file://$it" } ?: contentUri),
-        mediaHash = MediaItemHash(md5, userId),
+        mediaHash = MediaItemHashModel(md5, userId),
         fallbackColor = fallbackColor,
         displayDayDate = displayDate,
         sortableDate = sortableDate,
@@ -196,15 +196,15 @@ class MediaUseCase @Inject constructor(
     override suspend fun getFavouriteMediaCount(): Result<Long, Throwable> =
         remoteMediaUseCase.getFavouriteMediaSummariesCount()
 
-    override suspend fun getHiddenMedia(): Result<List<MediaItem>, Throwable> =
+    override suspend fun getHiddenMedia(): Result<List<MediaItemModel>, Throwable> =
         remoteMediaUseCase.getHiddenMediaSummaries().mapToMediaItems()
 
-    override suspend fun setMediaItemFavourite(id: MediaId<*>, favourite: Boolean): SimpleResult =
+    override suspend fun setMediaItemFavourite(id: MediaIdModel<*>, favourite: Boolean): SimpleResult =
         when (id) {
-            is Remote -> setRemoteMediaFavourite(id, favourite)
-            is MediaId.Group -> {
+            is RemoteIdModel -> setRemoteMediaFavourite(id, favourite)
+            is MediaIdModel.GroupIdModel -> {
                 when (val preferred = id.preferRemote) {
-                    is Remote -> setRemoteMediaFavourite(preferred, favourite)
+                    is RemoteIdModel -> setRemoteMediaFavourite(preferred, favourite)
                     else -> Ok(Unit)
                 }
             }
@@ -212,18 +212,18 @@ class MediaUseCase @Inject constructor(
         }
 
     private suspend fun setRemoteMediaFavourite(
-        id: Remote,
+        id: RemoteIdModel,
         favourite: Boolean
     ) = remoteMediaUseCase.setMediaItemFavourite(id.value, favourite)
 
-    override suspend fun refreshDetailsNowIfMissing(id: MediaId<*>) : Result<MediaOperationResult, Throwable> =
+    override suspend fun refreshDetailsNowIfMissing(id: MediaIdModel<*>) : Result<MediaOperationResultModel, Throwable> =
         when (id) {
-            is Remote -> refreshRemoteDetailsNowIfMissing(id)
-            is Downloading -> refreshRemoteDetailsNowIfMissing(id.remote)
-            is Uploading -> refreshLocalDetailsNowIfMissing(id.local)
-            is Processing -> refreshLocalDetailsNowIfMissing(id.local)
-            is Local -> refreshLocalDetailsNowIfMissing(id)
-            is MediaId.Group -> {
+            is RemoteIdModel -> refreshRemoteDetailsNowIfMissing(id)
+            is DownloadingIdModel -> refreshRemoteDetailsNowIfMissing(id.remote)
+            is UploadingIdModel -> refreshLocalDetailsNowIfMissing(id.local)
+            is ProcessingIdModel -> refreshLocalDetailsNowIfMissing(id.local)
+            is LocalIdModel -> refreshLocalDetailsNowIfMissing(id)
+            is MediaIdModel.GroupIdModel -> {
                 val remote = id.findRemote?.let {
                     refreshRemoteDetailsNowIfMissing(it)
                 } ?: Ok(SKIPPED)
@@ -236,14 +236,14 @@ class MediaUseCase @Inject constructor(
             }
         }
 
-    override suspend fun refreshDetailsNow(id: MediaId<*>) : SimpleResult =
+    override suspend fun refreshDetailsNow(id: MediaIdModel<*>) : SimpleResult =
         when (id) {
-            is Remote -> refreshRemoteDetailsNow(id)
-            is Downloading -> refreshRemoteDetailsNow(id.remote)
-            is Uploading -> refreshLocalDetailsNow(id.local)
-            is Processing -> refreshLocalDetailsNow(id.local)
-            is Local -> refreshLocalDetailsNow(id)
-            is MediaId.Group -> {
+            is RemoteIdModel -> refreshRemoteDetailsNow(id)
+            is DownloadingIdModel -> refreshRemoteDetailsNow(id.remote)
+            is UploadingIdModel -> refreshLocalDetailsNow(id.local)
+            is ProcessingIdModel -> refreshLocalDetailsNow(id.local)
+            is LocalIdModel -> refreshLocalDetailsNow(id)
+            is MediaIdModel.GroupIdModel -> {
                 val remote = id.findRemote?.let {
                     refreshRemoteDetailsNow(it)
                 } ?: simpleOk
@@ -254,16 +254,16 @@ class MediaUseCase @Inject constructor(
             }
         }
 
-    private suspend fun refreshLocalDetailsNow(id: Local) =
+    private suspend fun refreshLocalDetailsNow(id: LocalIdModel) =
         localMediaUseCase.refreshLocalMediaItem(id.value, id.isVideo)
 
-    private suspend fun refreshRemoteDetailsNow(id: Remote) =
+    private suspend fun refreshRemoteDetailsNow(id: RemoteIdModel) =
         remoteMediaUseCase.refreshDetailsNow(id.value)
 
-    private suspend fun refreshRemoteDetailsNowIfMissing(id: Remote) =
+    private suspend fun refreshRemoteDetailsNowIfMissing(id: RemoteIdModel) =
         remoteMediaUseCase.refreshDetailsNowIfMissing(id.value)
 
-    private suspend fun refreshLocalDetailsNowIfMissing(id: Local): Result<MediaOperationResult, Throwable> =
+    private suspend fun refreshLocalDetailsNowIfMissing(id: LocalIdModel): Result<MediaOperationResultModel, Throwable> =
         if (localMediaUseCase.getLocalMediaItem(id.value) == null) {
             refreshLocalDetailsNow(id).map { CHANGED }
         } else {
@@ -273,14 +273,16 @@ class MediaUseCase @Inject constructor(
     override suspend fun refreshFavouriteMedia() =
         remoteMediaUseCase.refreshFavouriteMedia()
 
-    override suspend fun toMediaCollection(groups: Group<String, MediaCollectionSource>): List<MediaCollection> =
+    override suspend fun toMediaCollection(groups: Group<String, MediaCollectionSourceModel>): List<MediaCollectionModel> =
         groups.items
             .mapNotNull { (id, source) ->
                 mediaCollection(id, source)
             }
-            .filter { it.mediaItems.isNotEmpty() }
+            .filter {
+                it.mediaItems.isNotEmpty()
+            }
 
-    override suspend fun List<MediaCollectionSource>.toMediaCollections(): List<MediaCollection> =
+    override suspend fun List<MediaCollectionSourceModel>.toMediaCollections(): List<MediaCollectionModel> =
         groupBy { dateDisplayer.dateString(it.date) }
             .mapNotNull { (date, items) ->
                 mediaCollection(date, items)
@@ -288,15 +290,15 @@ class MediaUseCase @Inject constructor(
 
     private suspend fun mediaCollection(
         id: String,
-        source: List<MediaCollectionSource>,
-    ): MediaCollection? = userUseCase.getRemoteUserOrRefresh().mapOr(null) { user ->
+        source: List<MediaCollectionSourceModel>,
+    ): MediaCollectionModel? = userUseCase.getRemoteUserOrRefresh().mapOr(null) { user ->
         val favouriteThreshold = user.favoriteMinRating
         val albumDate = source.firstOrNull()?.date
         val albumLocation = source.firstOrNull()?.location
 
         val date = dateDisplayer.dateString(albumDate)
         val day = dateParser.parseDateOrTimeString(albumDate)
-        MediaCollection(
+        MediaCollectionModel(
             id = id,
             displayTitle = date,
             unformattedDate = albumDate,
@@ -306,9 +308,9 @@ class MediaUseCase @Inject constructor(
                 when {
                     photoId.isNullOrBlank() -> null
                     else -> {
-                        MediaItemInstance(
-                            id = Remote(photoId, item.isVideo),
-                            mediaHash = MediaItemHash.fromRemoteMediaHash(photoId, user.id),
+                        MediaItemInstanceModel(
+                            id = RemoteIdModel(photoId, item.isVideo),
+                            mediaHash = MediaItemHashModel.fromRemoteMediaHash(photoId, user.id),
                             fallbackColor = item.dominantColor,
                             displayDayDate = date,
                             sortableDate = item.date,
@@ -334,14 +336,14 @@ class MediaUseCase @Inject constructor(
     override suspend fun refreshHiddenMedia() =
         remoteMediaUseCase.refreshHiddenMedia()
 
-    override fun trashMediaItem(id: MediaId<*>) {
-        if (id is Remote) {
+    override fun trashMediaItem(id: MediaIdModel<*>) {
+        if (id is RemoteIdModel) {
             remoteMediaUseCase.trashMediaItem(id.value)
         }
     }
 
-    override fun restoreMediaItem(id: MediaId<*>) {
-        if (id is Remote) {
+    override fun restoreMediaItem(id: MediaIdModel<*>) {
+        if (id is RemoteIdModel) {
             remoteMediaUseCase.restoreMediaItem(id.value)
         }
     }
@@ -351,7 +353,7 @@ class MediaUseCase @Inject constructor(
             action(it)
         }
 
-    private fun DateTime.toMediaDay(): MediaDay = MediaDay(
+    private fun DateTime.toMediaDay(): MediaDayModel = MediaDayModel(
         day = dayOfMonth,
         dayOfWeek = dayOfWeek,
         month = monthOfYear,
