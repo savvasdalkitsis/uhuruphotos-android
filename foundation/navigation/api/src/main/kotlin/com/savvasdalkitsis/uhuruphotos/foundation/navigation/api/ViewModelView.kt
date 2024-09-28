@@ -107,7 +107,7 @@ private fun <T : ViewModel> hiltViewModelScoped(key: Any? = null, clazz: KClass<
 
     // The object will be built the first time and retrieved in next calls or recompositions
     return scopedViewModelContainer.getOrBuildViewModel(
-        modelClass = clazz.java,
+        modelClass = clazz,
         positionalMemoizationKey = positionalMemoizationKey,
         externalKey = externalKey,
         factory = createHiltViewModelFactory(viewModelStoreOwner),
