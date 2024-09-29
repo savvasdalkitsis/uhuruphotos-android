@@ -58,6 +58,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.IconOutlineBu
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UpNavButton
 import my.nanihadesuka.compose.InternalLazyColumnScrollbar
 import my.nanihadesuka.compose.ScrollbarSelectionMode
+import my.nanihadesuka.compose.ScrollbarSettings
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -87,11 +88,13 @@ internal fun About(
             .padding(contentPadding)
         ) {
             InternalLazyColumnScrollbar(
-                listState = listState,
-                thickness = 8.dp,
-                selectionMode = ScrollbarSelectionMode.Thumb,
-                thumbColor = MaterialTheme.colors.primary.copy(alpha = 0.7f),
-                thumbSelectedColor = MaterialTheme.colors.primary,
+                state = listState,
+                settings = ScrollbarSettings(
+                    thumbThickness = 8.dp,
+                    selectionMode = ScrollbarSelectionMode.Thumb,
+                    thumbSelectedColor = MaterialTheme.colors.primary,
+                    thumbUnselectedColor = MaterialTheme.colors.primary.copy(alpha = 0.7f),
+                ),
             )
         }
     }
