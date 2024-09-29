@@ -32,7 +32,7 @@ data class ClickedOnMap(val gps: LatLon) : LightboxAction() {
         navigator.navigateTo(geoLocation(gps))
     }
 
-    context(LightboxActionsContext) private fun geoLocation(gps: LatLon) =
+    private fun LightboxActionsContext.geoLocation(gps: LatLon) =
         Intent(Intent.ACTION_VIEW, with(gps) {
             "geo:$lat,$lon?q=$lat,$lon(${context.getString(R.string.media)})".uri
         })

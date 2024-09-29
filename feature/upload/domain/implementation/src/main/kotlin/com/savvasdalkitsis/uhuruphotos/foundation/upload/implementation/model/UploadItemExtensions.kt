@@ -18,5 +18,4 @@ package com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.model
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
 import com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.repository.UploadRepository
 
-context(UploadRepository)
-fun UploadItem.uploadId() = getUploadId(id) ?: ""
+fun UploadRepository.uploadId(uploadItem: UploadItem) = getUploadId(uploadItem.id) ?: ""

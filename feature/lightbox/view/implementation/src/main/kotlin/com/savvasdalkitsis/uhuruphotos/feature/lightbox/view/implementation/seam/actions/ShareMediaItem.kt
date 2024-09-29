@@ -41,8 +41,7 @@ data object ShareMediaItem : LightboxAction() {
         }
     }
 
-    context(LightboxActionsContext)
-    private suspend fun share(id: MediaIdModel<*>, serverUrl: String? = null) {
+    private suspend fun LightboxActionsContext.share(id: MediaIdModel<*>, serverUrl: String? = null) {
         shareUseCase.share(id.fullResUri(serverUrl))
     }
 }

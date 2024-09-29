@@ -41,9 +41,7 @@ data object UseMediaItemAs : LightboxAction() {
         }
     }
 
-    context(LightboxActionsContext)
-    private suspend fun use(id: MediaIdModel<*>, serverUrl: String? = null) {
+    private suspend fun LightboxActionsContext.use(id: MediaIdModel<*>, serverUrl: String? = null) {
         shareUseCase.usePhotoAs(id.fullResUri(serverUrl))
     }
-
 }

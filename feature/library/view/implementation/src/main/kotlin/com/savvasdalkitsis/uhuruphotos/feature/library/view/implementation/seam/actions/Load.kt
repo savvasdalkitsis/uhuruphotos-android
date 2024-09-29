@@ -125,8 +125,7 @@ data object Load : LibraryAction() {
         },
     )
 
-    context(LibraryActionsContext)
-    private suspend fun initialRefresh() {
+    private suspend fun LibraryActionsContext.initialRefresh() {
         if (welcomeUseCase.getWelcomeStatus().hasRemoteAccess) {
             if (autoAlbumsUseCase.getAutoAlbums().isEmpty()) {
                 refreshAutoAlbums()

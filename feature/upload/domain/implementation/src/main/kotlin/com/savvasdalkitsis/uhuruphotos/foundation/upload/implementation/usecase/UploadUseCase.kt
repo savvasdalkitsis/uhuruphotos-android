@@ -161,7 +161,7 @@ class UploadUseCase @Inject constructor(
         val filename = mediaItem.displayName
             ?: throw IllegalArgumentException("No name associated with file ${item.id}")
         val uploadId = with(uploadRepository) {
-            item.uploadId()
+            uploadId(item)
         }.ifEmpty {
             throw IllegalStateException("Upload id not found for item ${item.id}")
         }

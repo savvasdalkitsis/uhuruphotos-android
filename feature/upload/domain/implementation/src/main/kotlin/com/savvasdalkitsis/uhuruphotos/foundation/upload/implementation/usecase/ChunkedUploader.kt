@@ -54,7 +54,7 @@ class ChunkedUploader @Inject constructor(
             do {
                 chunkSize = input.read(chunk)
                 val uploadId = with(uploadRepository) {
-                    item.uploadId()
+                    uploadId(item)
                 }
                 if (chunkSize > 0) {
                     val result = uploadService.uploadChunk(
