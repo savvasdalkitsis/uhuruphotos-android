@@ -52,8 +52,7 @@ data object TrashMediaItem : LightboxAction() {
         }
     }
 
-    context (LightboxActionsContext)
-    private fun trashRemote(mediaItem: SingleMediaItemState) {
+    private fun LightboxActionsContext.trashRemote(mediaItem: SingleMediaItemState) {
         mediaUseCase.trashMediaItem(mediaItem.id)
     }
 }

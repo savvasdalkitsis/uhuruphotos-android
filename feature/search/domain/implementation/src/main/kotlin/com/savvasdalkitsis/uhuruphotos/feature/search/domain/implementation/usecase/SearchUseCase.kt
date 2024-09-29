@@ -25,7 +25,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.search.domain.api.usecase.SearchU
 import com.savvasdalkitsis.uhuruphotos.feature.search.domain.implementation.repository.SearchRepository
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.onStartWithResult
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
-import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.mapNotNullValues
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.currentCoroutineContext
@@ -44,7 +43,6 @@ import kotlin.random.Random
 @AutoBind
 class SearchUseCase @Inject constructor(
     private val searchRepository: SearchRepository,
-    private val dateDisplayer: DateDisplayer,
     private val mediaUseCase: MediaUseCase,
 ) : SearchUseCase {
 
@@ -66,20 +64,18 @@ class SearchUseCase @Inject constructor(
                 searchRepository.refreshSearch(query)
             }
 
-    private fun GetSearchResults.toMediaCollectionSource() = summaryId?.let { id ->
-        MediaCollectionSourceModel(
-            id = id,
-            location = location,
-            date = date,
-            mediaItemId = summaryId,
-            dominantColor = dominantColor,
-            aspectRatio = aspectRatio,
-            isVideo = isVideo,
-            rating = null,
-            lat = null,
-            lon = null,
-        )
-    }
+    private fun GetSearchResults.toMediaCollectionSource() = MediaCollectionSourceModel(
+        id = summaryId,
+        location = location,
+        date = date,
+        mediaItemId = summaryId,
+        dominantColor = dominantColor,
+        aspectRatio = aspectRatio,
+        isVideo = isVideo,
+        rating = null,
+        lat = null,
+        lon = null,
+    )
 
     override fun getRandomSearchSuggestion(): Flow<String> = getSearchSuggestions()
         .flatMapLatest { suggestions ->
