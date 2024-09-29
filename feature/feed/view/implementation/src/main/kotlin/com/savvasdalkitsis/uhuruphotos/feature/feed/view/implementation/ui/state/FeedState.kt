@@ -46,33 +46,29 @@ data class FeedState(
     val syncItemDisplay: FeedMediaItemSyncDisplayState = FeedMediaItemSyncDisplayState.default,
     val showRequestForCloudSync: Boolean = false,
 ) {
-    val selectedCelCount: Int = collageState.clusterStates.sumOf { cluster ->
-        cluster.cels.count { cel ->
-            cel.selectionMode == SelectionMode.SELECTED
-        }
-    }
-    val hasSelection = selectedCelCount > 0
-    val selectedCels: ImmutableList<CelState> = collageState.clusterStates.flatMap { cluster ->
+    val selectedCels: ImmutableList<CelState> = collageState.clusters.flatMap { cluster ->
         cluster.cels.filter { cel ->
             cel.selectionMode == SelectionMode.SELECTED
         }
     }.toImmutableList()
-    val shouldShowShareIcon: Boolean = selectedCels.let { selected ->
-        selected.isNotEmpty() && selected.none { it.mediaItem.id.isVideo }
-    }
-    val shouldShowAddIcon: Boolean = selectedCels.let { selected ->
-        selected.isNotEmpty() && selected.all { it.mediaItem.id.findRemote != null }
-    }
+
+    val selectedCelCount: Int = selectedCels.size
+
+    val hasSelection = selectedCelCount > 0
+
+    val shouldShowShareIcon: Boolean =
+        selectedCels.isNotEmpty() && selectedCels.none { it.mediaItem.id.isVideo }
+
+    val shouldShowAddIcon: Boolean =
+        selectedCels.isNotEmpty() && selectedCels.all { it.mediaItem.id.hasRemote }
+
     val shouldShowDeleteIcon: Boolean = selectedCels.syncStates.size == 1
 
-    val shouldShowDownloadIcon: Boolean = selectedCels.let { selected ->
-        selected.isNotEmpty() && selected.none { it.mediaItem.id.findLocals.isNotEmpty() }
-    }
+    val shouldShowDownloadIcon: Boolean =
+        selectedCels.isNotEmpty() && selectedCels.none { it.mediaItem.id.findLocals.isNotEmpty() }
 
-    val shouldShowUploadIcon: Boolean = selectedCels.let { selected ->
-        selected.isNotEmpty() && selected.none { it.mediaItem.id.findRemote != null }
-    }
-
+    val shouldShowUploadIcon: Boolean =
+        selectedCels.isNotEmpty() && selectedCels.none { it.mediaItem.id.hasRemote }
 }
 
 val List<CelState>.syncStates get() = map { it.mediaItem.id.syncState }.toSet()

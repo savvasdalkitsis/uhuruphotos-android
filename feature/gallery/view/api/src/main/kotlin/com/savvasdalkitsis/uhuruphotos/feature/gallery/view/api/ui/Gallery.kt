@@ -58,7 +58,7 @@ fun Gallery(
                 )
             }
             AnimatedVisibility(state.collageState.collageDisplayState.iconResource != 0
-                    && state.collageState.clusterStates.isNotEmpty()) {
+                    && state.collageState.clusters.isNotEmpty()) {
                 CollageDisplayActionButton(
                     onChange = { action(ChangeCollageDisplay(it)) },
                     currentCollageDisplayState = state.collageState.collageDisplayState

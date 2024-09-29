@@ -31,10 +31,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.reposi
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.FeedRepository
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSourceModel
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemModel
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemGroupModel
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstanceModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDeviceModel.FoundModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.domain.api.usecase.PortfolioUseCase
@@ -50,20 +47,19 @@ import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.observe
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
 import com.savvasdalktsis.uhuruphotos.feature.download.domain.api.usecase.DownloadUseCase
-import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.onEach
 import se.ansman.dagger.auto.AutoBind
-import java.io.Serializable
 import javax.inject.Inject
 
-@OptIn(FlowPreview::class)
+@OptIn(ExperimentalCoroutinesApi::class)
 @AutoBind
 internal class FeedUseCase @Inject constructor(
     private val feedRepository: FeedRepository,
@@ -110,73 +106,9 @@ internal class FeedUseCase @Inject constructor(
         observeDownloading(),
         observeUploading(),
         observeProcessing().map { it.map(ProcessingMediaItems::id).toSet() },
-        ::mergeRemoteWithLocalMedia
-    ).debounce(500)
-
-    private fun mergeRemoteWithLocalMedia(
-        allRemoteDays: Sequence<MediaCollectionModel>,
-        allLocalMedia: List<MediaItemModel>,
-        mediaBeingDownloaded: Set<String>,
-        mediaBeingUploaded: Set<Long>,
-        mediaBeingProcessed: Set<Long>,
-    ): List<MediaCollectionModel> {
-        val remainingLocalMedia = allLocalMedia.toMutableList()
-
-        val merged = allRemoteDays
-            .map { day ->
-                day.copy(mediaItems = day.mediaItems.map { item ->
-                    val local = remainingLocalMedia
-                        .filter { it.mediaHash == item.mediaHash }
-                        .toSet()
-                    remainingLocalMedia.removeAll(local)
-                    when {
-                        local.isEmpty() -> item.orDownloading(mediaBeingDownloaded)
-                        else -> MediaItemGroupModel(
-                            remoteInstance = item,
-                            localInstances = local.toSet()
-                        )
-                    }
-                })
-            }
-            .map { collection ->
-                val local = remainingLocalMedia
-                    .filter { it.displayDayDate == collection.displayTitle }
-                    .toSet()
-                remainingLocalMedia.removeAll(local)
-                when {
-                    local.isEmpty() -> collection
-                    else -> collection.copy(mediaItems = (collection.mediaItems + local)
-                            .sortedByDescending { it.sortableDate }
-                    )
-                }
-            }
-            .toList()
-
-        val localOnlyDays = remainingLocalMedia
-            .map { it.orUploading(mediaBeingUploaded).orProcessing(mediaBeingProcessed) }
-            .groupBy { it.displayDayDate }
-            .toMediaCollections()
-
-        return (merged + localOnlyDays)
-            .sortedByDescending { it.unformattedDate }
-            .toList()
-    }
-
-    private fun MediaItemModel.orDownloading(inProgress: Set<String>): MediaItemModel =
-        orIf<MediaIdModel.RemoteIdModel>(inProgress, MediaIdModel.RemoteIdModel::toDownloading)
-
-    private fun MediaItemModel.orUploading(inProgress: Set<Long>): MediaItemModel =
-        orIf<MediaIdModel.LocalIdModel>(inProgress, MediaIdModel.LocalIdModel::toUploading)
-
-    private fun MediaItemModel.orProcessing(inProgress: Set<Long>): MediaItemModel =
-        orIf<MediaIdModel.LocalIdModel>(inProgress, MediaIdModel.LocalIdModel::toProcessing)
-
-    private inline fun <reified M> MediaItemModel.orIf(set: Set<Serializable>, map: (M) -> MediaIdModel<*>): MediaItemModel {
-        val id = id
-        return if (this is MediaItemInstanceModel && id is M && id.value in set)
-            copy(id = map(id))
-        else
-            this
+        ::FeedMergerUseCase
+    ).mapLatest {
+        it.mergeFeed()
     }
 
     override suspend fun refreshCluster(clusterId: String) =
@@ -220,16 +152,6 @@ internal class FeedUseCase @Inject constructor(
 
     private suspend fun Group<String, MediaCollectionSourceModel>.toCollection() =
             mediaUseCase.toMediaCollection(this@toCollection)
-
-    private fun Map<String?, List<MediaItemModel>>.toMediaCollections() = map { (day, items) ->
-        MediaCollectionModel(
-            id = "local_media_collection_$day",
-            mediaItems = items,
-            displayTitle = day ?: "-",
-            location = null,
-            unformattedDate = items.firstOrNull()?.sortableDate
-        )
-    }
 
     private fun observeLocalMediaFeed(feedFetchTypeModel: FeedFetchTypeModel) =
         combine(

@@ -32,7 +32,7 @@ sealed class GalleryMutation(
             people = galleryDetailsState.people.toImmutableList(),
             collageState = it.collageState.copy(
                 isEmpty = galleryDetailsState.clusterStates.isEmpty(),
-                clusterStates = galleryDetailsState.clusterStates.toImmutableList(),
+                clusters = galleryDetailsState.clusterStates.toImmutableList(),
             )
         )
     })

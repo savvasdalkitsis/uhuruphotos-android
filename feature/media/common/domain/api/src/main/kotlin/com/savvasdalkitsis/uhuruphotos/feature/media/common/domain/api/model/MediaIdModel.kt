@@ -46,7 +46,8 @@ sealed class MediaIdModel<T : Serializable> private constructor(
     abstract val findLocals: Set<LocalIdModel>
     abstract val serializableId: String
 
-    val isBothRemoteAndLocal: Boolean get() = findLocals.isNotEmpty() && findRemote != null
+    val hasRemote: Boolean get() = findRemote != null
+    val isBothRemoteAndLocal: Boolean get() = findLocals.isNotEmpty() && hasRemote
 
     @Parcelize
     data class RemoteIdModel(

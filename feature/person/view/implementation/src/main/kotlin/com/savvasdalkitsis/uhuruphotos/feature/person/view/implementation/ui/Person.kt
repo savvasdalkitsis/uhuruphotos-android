@@ -67,11 +67,11 @@ fun Person(
         },
         actionBarContent = {
             AnimatedVisibility(
-                visible = state.collageState.clusterStates.isNotEmpty() && state.collageState.isLoading
+                visible = state.collageState.clusters.isNotEmpty() && state.collageState.isLoading
             ) {
                 CircularProgressIndicator()
             }
-            AnimatedVisibility(state.collageState.clusterStates.isNotEmpty()) {
+            AnimatedVisibility(state.collageState.clusters.isNotEmpty()) {
                 CollageDisplayActionButton(
                     onChange = { action(ChangeDisplay(it)) },
                     currentCollageDisplayState = state.collageState.collageDisplayState
@@ -79,7 +79,7 @@ fun Person(
             }
         }
     ) { contentPadding ->
-        if (state.collageState.clusterStates.isEmpty()) {
+        if (state.collageState.clusters.isEmpty()) {
             FullLoading()
         } else {
             Collage(

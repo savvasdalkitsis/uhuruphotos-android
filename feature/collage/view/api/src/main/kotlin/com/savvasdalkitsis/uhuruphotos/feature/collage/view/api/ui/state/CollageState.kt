@@ -23,12 +23,12 @@ import kotlinx.collections.immutable.persistentListOf
 data class CollageState(
     val isLoading: Boolean = false,
     val isEmpty: Boolean = false,
-    val clusterStates: ImmutableList<ClusterState> = persistentListOf(),
+    val clusters: ImmutableList<ClusterState> = persistentListOf(),
     val collageDisplayState: CollageDisplayState = PredefinedCollageDisplayState.default,
 ) {
-    val hasMedia get() = clusterStates.sumOf { it.cels.size } > 0
+    val hasMedia = clusters.sumOf { it.cels.size } > 0
 
     override fun toString(): String {
-        return "CollageState(isLoading=$isLoading, isEmpty=$isEmpty, clustersSize=${clusterStates.size}, collageDisplay=$collageDisplayState)"
+        return "CollageState(isLoading=$isLoading, isEmpty=$isEmpty, clustersSize=${clusters.size}, collageDisplay=$collageDisplayState)"
     }
 }

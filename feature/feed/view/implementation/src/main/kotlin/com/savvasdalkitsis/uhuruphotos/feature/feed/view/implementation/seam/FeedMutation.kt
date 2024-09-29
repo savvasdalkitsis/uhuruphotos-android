@@ -65,11 +65,11 @@ sealed class FeedMutation(
     })
 
     data object ShowNoPhotosFound : FeedMutation({
-        it.copyFeed { copy(isLoading = false, isEmpty = true, clusterStates = persistentListOf()) }
+        it.copyFeed { copy(isLoading = false, isEmpty = true, clusters = persistentListOf()) }
     })
 
     data class ShowClusters(val clusterStates: List<ClusterState>) : FeedMutation({
-        it.copyFeed { copy(isLoading = false, isEmpty = false, clusterStates = clusterStates.toImmutableList()) }
+        it.copyFeed { copy(isLoading = false, isEmpty = false, clusters = clusterStates.toImmutableList()) }
     }) {
         override fun toString() = "ShowClusters(${clusterStates.size})"
     }

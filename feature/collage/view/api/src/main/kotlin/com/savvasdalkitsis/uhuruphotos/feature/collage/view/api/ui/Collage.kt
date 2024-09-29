@@ -64,7 +64,7 @@ fun Collage(
     onClusterRefreshClicked: (ClusterState) -> Unit = {},
     onClusterSelectionClicked: (ClusterState) -> Unit = {},
 ) = when {
-    isLoading(state.isLoading, state.clusterStates, state.isEmpty) -> {
+    isLoading(state.isLoading, state.clusters, state.isEmpty) -> {
         if (loadingAnimation != null) {
             FullLoading {
                 DynamicIcon(icon = loadingAnimation)
@@ -73,7 +73,7 @@ fun Collage(
             FullLoading()
         }
     }
-    isEmpty(state.isLoading, state.clusterStates, state.isEmpty) -> emptyContent()
+    isEmpty(state.isLoading, state.clusters, state.isEmpty) -> emptyContent()
     else -> {
         val collageDisplay = state.collageDisplayState
         val animatedThumbnails = LocalAnimatedVideoThumbnails.current
@@ -100,7 +100,7 @@ fun Collage(
             SmartCollage(
                 modifier = collageModifier,
                 contentPadding = contentPadding,
-                state = state.clusterStates,
+                state = state.clusters,
                 showSelectionHeader = showSelectionHeader,
                 maintainAspectRatio = collageDisplay.maintainAspectRatio,
                 miniIcons = collageDisplay.miniIcons,

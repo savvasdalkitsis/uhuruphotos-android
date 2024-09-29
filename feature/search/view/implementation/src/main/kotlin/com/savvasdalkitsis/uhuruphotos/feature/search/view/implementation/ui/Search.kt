@@ -59,7 +59,7 @@ fun Search(
                 contentPadding = contentPadding,
                 state = CollageState(
                     isLoading = state.isLoading,
-                    clusterStates = state.clusterStates,
+                    clusters = state.clusterStates,
                     collageDisplayState = state.searchDisplay,
                 ),
                 loadingAnimation = R.raw.animation_searching,

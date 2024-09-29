@@ -156,7 +156,7 @@ private fun Feed(
         fun scrollToCel(cel: CelState) {
             coroutineScope.launch {
                 var found = false
-                val index = state.collageState.clusterStates.fold(0) { index, cluster ->
+                val index = state.collageState.clusters.fold(0) { index, cluster ->
                     if (found) {
                         index
                     } else if (cluster.cels.contains(cel)) {

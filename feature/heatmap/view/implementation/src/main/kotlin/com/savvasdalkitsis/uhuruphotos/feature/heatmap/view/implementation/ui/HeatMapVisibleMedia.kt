@@ -53,7 +53,7 @@ fun HeatMapVisibleMedia(
             state = CollageState(
                 isLoading = false,
                 collageDisplayState = HeatMapCollageDisplayState,
-                clusterStates = remember(displayTitle, state.photosOnVisibleMap) {
+                clusters = remember(displayTitle, state.photosOnVisibleMap) {
                     persistentListOf(
                         ClusterState(
                             id = "visibleItems",

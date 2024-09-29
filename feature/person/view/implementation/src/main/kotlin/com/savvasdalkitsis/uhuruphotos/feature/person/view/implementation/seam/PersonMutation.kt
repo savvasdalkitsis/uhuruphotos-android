@@ -34,7 +34,7 @@ sealed class PersonMutation(
     data class ShowPersonMedia(val clusterStates: List<ClusterState>) : PersonMutation({
         it.copyFeed { copy(
             isLoading = false,
-            clusterStates = clusterStates.toImmutableList(),
+            clusters = clusterStates.toImmutableList(),
         ) }
     })
 

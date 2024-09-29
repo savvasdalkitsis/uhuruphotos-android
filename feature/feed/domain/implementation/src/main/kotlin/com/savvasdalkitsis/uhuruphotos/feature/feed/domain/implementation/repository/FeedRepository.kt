@@ -59,12 +59,14 @@ class FeedRepository @Inject constructor(
     private val parsingDateTimeFormat: DateTimeFormatter,
 ) {
 
-    private var lastFeedRefresh: String?
-        get() = preferences.getNullableString("lastFeedRefresh", null)
-        set(value) {
-            preferences.set("lastFeedRefresh", value)
+    private val lastFeedRefresh: String? get() =
+        preferences.getNullableString("lastFeedRefresh", null)
+    private fun setLastFeedRefresh(value: String?) {
+        when {
+            value != null -> preferences.set("lastFeedRefresh", value)
+            else -> preferences.remove("lastFeedRefresh")
         }
-
+    }
 
     suspend fun hasRemoteMediaCollections(): Boolean =
         remoteMediaCollectionsQueries.remoteMediaCollectionCount().awaitSingle() > 0
@@ -120,7 +122,7 @@ class FeedRepository @Inject constructor(
                 }
             },
         ).onSuccess {
-            lastFeedRefresh = start
+            setLastFeedRefresh(start)
         }
     }
 
@@ -161,6 +163,6 @@ class FeedRepository @Inject constructor(
     }
 
     fun invalidateRemoteFeed() {
-        lastFeedRefresh = null
+        setLastFeedRefresh(null)
     }
 }
