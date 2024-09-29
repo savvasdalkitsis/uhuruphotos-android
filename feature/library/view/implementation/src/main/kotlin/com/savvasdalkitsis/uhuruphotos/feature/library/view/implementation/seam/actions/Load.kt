@@ -74,20 +74,17 @@ data object Load : LibraryAction() {
         initialRefresh()
     }
 
-    context(LibraryActionsContext)
-    private fun trash() = welcomeUseCase.flow(
+    private fun LibraryActionsContext.trash() = welcomeUseCase.flow(
         withRemoteAccess = flowOf(DisplayTrash(true)),
         withoutRemoteAccess = observeShouldShowUpsellFromSource(TRASH).map(::DisplayTrash)
     )
 
-    context(LibraryActionsContext)
-    private fun hidden() = welcomeUseCase.flow(
+    private fun LibraryActionsContext.hidden() = welcomeUseCase.flow(
         withRemoteAccess = flowOf(DisplayHidden(true)),
         withoutRemoteAccess = observeShouldShowUpsellFromSource(HIDDEN).map(::DisplayHidden)
     )
 
-    context(LibraryActionsContext)
-    private fun localAlbums() =
+    private fun LibraryActionsContext.localAlbums() =
         combine(
             mediaUseCase.observeLocalMedia()
                 .debounce(200),
@@ -107,8 +104,7 @@ data object Load : LibraryAction() {
             }
         }.distinctUntilChanged().map(::DisplayLocalAlbums)
 
-    context(LibraryActionsContext)
-    private fun userAlbums() = welcomeUseCase.flow(
+    private fun LibraryActionsContext.userAlbums() = welcomeUseCase.flow(
         withRemoteAccess = userAlbumsUseCase.observeUserAlbums()
             .mapNotNull { albums ->
                 albums.map { it.toUserAlbumState() }
@@ -120,8 +116,7 @@ data object Load : LibraryAction() {
         },
     )
 
-    context(LibraryActionsContext)
-    private fun autoAlbums() = welcomeUseCase.flow(
+    private fun LibraryActionsContext.autoAlbums() = welcomeUseCase.flow(
         withRemoteAccess = autoAlbumsUseCase.observeAutoAlbums()
             .mapToCover { it.cover.toCel() }
             .map(::DisplayAutoAlbums),
@@ -152,8 +147,7 @@ data object Load : LibraryAction() {
         }
     }
 
-    context(LibraryActionsContext)
-    private fun favouriteMedia() = welcomeUseCase.flow(
+    private fun LibraryActionsContext.favouriteMedia() = welcomeUseCase.flow(
         withRemoteAccess = mediaUseCase.observeFavouriteMedia()
             .mapNotNull { it.getOr(null) }.mapToCover { it.toCel() }
             .map(::DisplayFavouriteMedia),

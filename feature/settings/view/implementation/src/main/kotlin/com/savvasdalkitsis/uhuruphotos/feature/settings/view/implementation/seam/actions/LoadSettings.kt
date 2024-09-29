@@ -144,7 +144,6 @@ data object LoadSettings : SettingsAction() {
         )
     }}
 
-    context(SettingsActionsContext)
     private fun Biometrics.enrollment(
         app: Boolean,
         hiddenPhotos: Boolean,

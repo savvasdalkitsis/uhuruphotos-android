@@ -100,7 +100,6 @@ class UploadsUseCase @Inject constructor(
         else -> 0
     }
 
-    context(UploadWorkScheduler)
     private fun List<WorkInfo>.asState(): UploadJobState? =
         sort().firstOrNull()?.let {
             UploadJobState(it.state, it.progressPc)

@@ -80,8 +80,7 @@ class AuthenticationLoginUseCase @Inject constructor(
         }
     }
 
-    context(AuthenticationRepository)
-    private fun clearCredentials() {
+    private fun AuthenticationRepository.clearCredentials() {
         clearUsername()
         clearPassword()
     }

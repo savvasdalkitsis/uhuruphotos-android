@@ -64,12 +64,10 @@ data object Initialise : DiscoverAction() {
         showSearchSuggestions()
     )
 
-    context(DiscoverActionsContext)
-    private fun showHeatMap() = heatMapUseCase.observeViewport()
+    private fun DiscoverActionsContext.showHeatMap() = heatMapUseCase.observeViewport()
         .map(::ChangeMapViewport)
 
-    context(DiscoverActionsContext)
-    private fun showSearchSuggestions() = welcomeUseCase.flow(
+    private fun DiscoverActionsContext.showSearchSuggestions() = welcomeUseCase.flow(
         withRemoteAccess = merge(
             flowOf(EnableSearch),
             combine(
@@ -82,13 +80,12 @@ data object Initialise : DiscoverAction() {
         withoutRemoteAccess = flowOf(DisableSearch)
     )
 
-    context(DiscoverActionsContext)
-    private fun searchSuggestions() = combine(
+    private fun DiscoverActionsContext.searchSuggestions() = combine(
         searchUseCase.getRecentTextSearches()
             .toSuggestion(::RecentSearchSuggestionState),
         peopleUseCase.observePeopleByPhotoCount()
             .onErrorsIgnore()
-            .toPeople()
+            .toPeople(this)
             .toSuggestion(::PersonSearchSuggestionState),
         userAlbumsUseCase.observeUserAlbums()
             .toSuggestion(::UserAlbumSearchSuggestionState),
@@ -102,21 +99,19 @@ data object Initialise : DiscoverAction() {
         it.map(mapper)
     }
 
-    context(DiscoverActionsContext)
-    private fun showPeopleSuggestion() = welcomeUseCase.flow(
+    private fun DiscoverActionsContext.showPeopleSuggestion() = welcomeUseCase.flow(
         withRemoteAccess = peopleUseCase.observePeopleByPhotoCount()
             .onErrors {
                 toaster.show(R.string.error_refreshing_people)
             }
-            .toPeople()
+            .toPeople(this)
             .map { it.subList(0, max(0, min(10, it.size - 1))) }
             .map { ShowPeople(it) andThen ShowPeopleUpsell(false)},
         withoutRemoteAccess = observeShowPeopleUpsell()
             .map(::ShowPeopleUpsell),
     )
 
-    context(DiscoverActionsContext)
-    private fun showServerSearchSuggestion() = welcomeUseCase.flow(
+    private fun DiscoverActionsContext.showServerSearchSuggestion() = welcomeUseCase.flow(
         withRemoteAccess = settingsUIUseCase.observeSearchSuggestionsEnabledMode().flatMapLatest { enabled ->
             if (enabled)
                 searchUseCase.getRandomSearchSuggestion()
@@ -127,19 +122,16 @@ data object Initialise : DiscoverAction() {
         withoutRemoteAccess = emptyFlow()
     )
 
-    context(DiscoverActionsContext)
-    private fun showLibrary() = settingsUIUseCase.observeShowLibrary()
+    private fun DiscoverActionsContext.showLibrary() = settingsUIUseCase.observeShowLibrary()
         .map(DiscoverMutation::ShowLibrary)
 
-    context(DiscoverActionsContext)
-    private fun showFeedDisplay() = feedUseCase
+    private fun DiscoverActionsContext.showFeedDisplay() = feedUseCase
         .observeFeedDisplay()
         .distinctUntilChanged()
         .map(DiscoverMutation::ChangeFeedDisplay)
 
-    context(DiscoverActionsContext)
-    private fun Flow<List<People>>.toPeople() = mapNotNull { people ->
-        serverUseCase.getServerUrl()?.let { serverUrl ->
+    private fun Flow<List<People>>.toPeople(context: DiscoverActionsContext) = mapNotNull { people ->
+        context.serverUseCase.getServerUrl()?.let { serverUrl ->
             people.map {
                 it.toPerson { url -> "$serverUrl$url" }
             }

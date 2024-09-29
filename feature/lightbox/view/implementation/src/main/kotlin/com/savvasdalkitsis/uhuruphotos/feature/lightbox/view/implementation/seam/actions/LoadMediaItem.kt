@@ -47,8 +47,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.s
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.SingleMediaItemState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHashModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemModel
 import com.savvasdalkitsis.uhuruphotos.foundation.launchers.api.onIO
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -115,8 +115,7 @@ data class LoadMediaItem(
         }
     )
 
-    context(LightboxActionsContext)
-    private fun observeMediaSequence(): Flow<List<SingleMediaItemState>> =
+    private fun LightboxActionsContext.observeMediaSequence(): Flow<List<SingleMediaItemState>> =
         combine(
             observeMediaItemsSequence(),
             isInPortfolio(),
@@ -129,8 +128,7 @@ data class LoadMediaItem(
             }
         }
 
-    context(LightboxActionsContext)
-    private fun observeMediaItemsSequence(): Flow<List<MediaItemModel>> = when (sequenceDataSource) {
+    private fun LightboxActionsContext.observeMediaItemsSequence(): Flow<List<MediaItemModel>> = when (sequenceDataSource) {
         SingleItemModel -> emptyFlow()
         FeedModel -> feedUseCase.observeFeed(FeedFetchTypeModel.ONLY_WITH_DATES, loadSmallInitialChunk = false).toMediaItems
         is MemoryModel -> memoriesUseCase.observeMemories(loadSmallInitialChunk = false).map { collections ->
@@ -152,8 +150,7 @@ data class LoadMediaItem(
         UndatedModel -> feedUseCase.observeFeed(FeedFetchTypeModel.ONLY_WITHOUT_DATES).toMediaItems
     }
 
-    context(LightboxActionsContext)
-    private fun isInPortfolio(): Flow<(Long) -> Boolean> = when {
+    private fun LightboxActionsContext.isInPortfolio(): Flow<(Long) -> Boolean> = when {
         isViewingLocalFolderContributingToPortfolio() -> flowOf { true }
         sequenceDataSource is LocalAlbumModel ->
             portfolioUseCase.observeIndividualPortfolioItems().map {
@@ -162,15 +159,13 @@ data class LoadMediaItem(
         else -> flowOf { false }
     }
 
-    context(LightboxActionsContext)
-    private fun addToPortfolioIconEnabled(): Boolean = when {
+    private fun LightboxActionsContext.addToPortfolioIconEnabled(): Boolean = when {
         isViewingLocalFolderContributingToPortfolio() -> false
         sequenceDataSource is LocalAlbumModel -> true
         else -> false
     }
 
-    context(LightboxActionsContext)
-    private fun isViewingLocalFolderContributingToPortfolio() =
+    private fun LightboxActionsContext.isViewingLocalFolderContributingToPortfolio() =
         sequenceDataSource is LocalAlbumModel && sequenceDataSource.albumId in
                 portfolioUseCase.getPublishedFolderIds()
 
@@ -180,7 +175,6 @@ data class LoadMediaItem(
         }
     }
 
-    context(LightboxActionsContext)
     private fun MediaItemModel.toSingleMediaItemState(
         isInPortfolio: (Long) -> Boolean,
         showAddToPortfolioIcon: Boolean,
@@ -193,7 +187,6 @@ data class LoadMediaItem(
         mediaHash = mediaHash
     )
 
-    context(LightboxActionsContext)
     private fun MediaIdModel<*>.toSingleMediaItemState(
         isFavourite: Boolean = false,
         isInPortfolio: (Long) -> Boolean = { false },
