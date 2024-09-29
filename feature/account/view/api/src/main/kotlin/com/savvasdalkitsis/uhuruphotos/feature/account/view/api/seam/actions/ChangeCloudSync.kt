@@ -22,8 +22,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 data class ChangeCloudSync(val enabled: Boolean) : AccountOverviewAction() {
-    context(AccountOverviewActionsContext)
-    override fun handle(state: AccountOverviewState): Flow<Mutation<AccountOverviewState>> = flow {
+    override fun AccountOverviewActionsContext.handle(state: AccountOverviewState): Flow<Mutation<AccountOverviewState>> = flow {
         syncUseCase.setSyncEnabled(enabled)
     }
 }

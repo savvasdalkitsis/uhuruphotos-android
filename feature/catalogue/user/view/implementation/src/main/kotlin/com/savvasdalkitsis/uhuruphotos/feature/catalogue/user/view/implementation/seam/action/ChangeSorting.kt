@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.Catal
 import kotlinx.coroutines.flow.flow
 
 data class ChangeSorting(val sorting: CatalogueSortingState) : UserAlbumsAction() {
-    context(UserAlbumsActionsContext) override fun handle(
+    override fun UserAlbumsActionsContext.handle(
         state: UserAlbumsState
     ) = flow<UserAlbumsMutation> {
         userAlbumsUseCase.changeUserAlbumsSorting(sorting)

@@ -25,8 +25,7 @@ import kotlinx.coroutines.flow.flowOf
 
 data class SelectedProcessingItem(val item: ProcessingItem) : ProcessingAction() {
 
-    context(ProcessingActionsContext)
-    override fun handle(state: ProcessingState): Flow<Mutation<ProcessingState>> = flowOf(
+    override fun ProcessingActionsContext.handle(state: ProcessingState): Flow<Mutation<ProcessingState>> = flowOf(
         ToggleItemSelected(item),
     )
 }

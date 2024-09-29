@@ -28,7 +28,7 @@ import kotlinx.coroutines.flow.merge
 
 data object LoadPeople : PeopleAction() {
 
-    context(PeopleActionsContext) override fun handle(
+    override fun PeopleActionsContext.handle(
         state: PeopleState
     ) = merge(
         loading.map { Loading(it) },

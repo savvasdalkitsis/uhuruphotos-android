@@ -23,8 +23,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
 data object DeleteAutoAlbumRequested : AutoAlbumAction() {
-    context(AutoAlbumActionsContext)
-    override fun handle(state: AutoAlbumState): Flow<Mutation<AutoAlbumState>> {
+    override fun AutoAlbumActionsContext.handle(state: AutoAlbumState): Flow<Mutation<AutoAlbumState>> {
         return flowOf(AutoAlbumMutation.ShowDeleteConfirmationDialog(true))
     }
 }

@@ -24,7 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.st
 import kotlinx.coroutines.flow.flow
 
 data object AutoAlbumsSelected : LibraryAction() {
-    context(LibraryActionsContext) override fun handle(
+    override fun LibraryActionsContext.handle(
         state: LibraryState
     ) = flow<LibraryMutation> {
         if (welcomeUseCase.getWelcomeStatus().hasRemoteAccess) {

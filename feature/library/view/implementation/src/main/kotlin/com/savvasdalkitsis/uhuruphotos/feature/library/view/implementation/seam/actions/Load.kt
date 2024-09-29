@@ -59,7 +59,7 @@ import kotlinx.coroutines.flow.merge
 @OptIn(FlowPreview::class)
 data object Load : LibraryAction() {
 
-    context(LibraryActionsContext) override fun handle(
+    override fun LibraryActionsContext.handle(
         state: LibraryState
     ) = merge(
         libraryUseCase.getLibraryItems().map(::SetItemOrder),

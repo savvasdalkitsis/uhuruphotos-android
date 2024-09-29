@@ -21,7 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementatio
 import kotlinx.coroutines.flow.flow
 
 data class FilterAlbums(val filter: String) : UserAlbumsAction() {
-    context(UserAlbumsActionsContext) override fun handle(
+    override fun UserAlbumsActionsContext.handle(
         state: UserAlbumsState
     ) = flow<DisplayAlbums> {
         filterText.emit(filter)

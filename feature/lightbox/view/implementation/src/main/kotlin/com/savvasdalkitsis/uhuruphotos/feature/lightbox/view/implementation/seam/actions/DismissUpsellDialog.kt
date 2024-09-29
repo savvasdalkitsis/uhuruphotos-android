@@ -23,8 +23,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
 data object DismissUpsellDialog : LightboxAction() {
-    context(LightboxActionsContext)
-    override fun handle(state: LightboxState): Flow<Mutation<LightboxState>> =
+    override fun LightboxActionsContext.handle(state: LightboxState): Flow<Mutation<LightboxState>> =
         flowOf(ShowUpsellDialog(false))
 
 }

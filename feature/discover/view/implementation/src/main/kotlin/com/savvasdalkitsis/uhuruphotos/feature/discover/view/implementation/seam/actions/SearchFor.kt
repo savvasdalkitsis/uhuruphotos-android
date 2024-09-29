@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.search.view.api.navigation.Search
 import kotlinx.coroutines.flow.flow
 
 data class SearchFor(val query: String) : DiscoverAction() {
-    context(DiscoverActionsContext) override fun handle(
+    override fun DiscoverActionsContext.handle(
         state: DiscoverState
     ) = flow {
         emit(DiscoverMutation.UpdateLatestQuery(query))

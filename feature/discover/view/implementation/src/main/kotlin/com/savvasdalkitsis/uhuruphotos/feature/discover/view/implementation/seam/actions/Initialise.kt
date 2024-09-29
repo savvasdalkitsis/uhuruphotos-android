@@ -53,7 +53,7 @@ import kotlin.math.min
 
 @OptIn(ExperimentalCoroutinesApi::class)
 data object Initialise : DiscoverAction() {
-    context(DiscoverActionsContext) override fun handle(
+    override fun DiscoverActionsContext.handle(
         state: DiscoverState
     ) = merge(
         showLibrary(),

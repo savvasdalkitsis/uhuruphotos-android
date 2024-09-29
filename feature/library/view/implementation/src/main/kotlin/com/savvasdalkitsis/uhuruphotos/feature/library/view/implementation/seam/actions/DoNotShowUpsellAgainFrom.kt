@@ -24,8 +24,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 data class DoNotShowUpsellAgainFrom(val source: LibraryItemState) : LibraryAction() {
-    context(LibraryActionsContext)
-    override fun handle(state: LibraryState): Flow<Mutation<LibraryState>> = flow {
+    override fun LibraryActionsContext.handle(state: LibraryState): Flow<Mutation<LibraryState>> = flow {
         emit(HideUpsellDialog)
         disableUpsellFromSource(source)
     }

@@ -27,7 +27,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 data class ImageCropped(val image: ImageBitmap, val name: String, val uri: Uri) : EditAction() {
-    context(EditActionsContext) override fun handle(
+    override fun EditActionsContext.handle(
         state: EditState
     ): Flow<Mutation<EditState>> = flow {
         emit(EditMutation.Saving)

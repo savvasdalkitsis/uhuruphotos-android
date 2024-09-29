@@ -23,6 +23,5 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
 data object DismissUpsellDialog : LibraryAction() {
-    context(LibraryActionsContext)
-    override fun handle(state: LibraryState): Flow<Mutation<LibraryState>> = flowOf(HideUpsellDialog)
+    override fun LibraryActionsContext.handle(state: LibraryState): Flow<Mutation<LibraryState>> = flowOf(HideUpsellDialog)
 }

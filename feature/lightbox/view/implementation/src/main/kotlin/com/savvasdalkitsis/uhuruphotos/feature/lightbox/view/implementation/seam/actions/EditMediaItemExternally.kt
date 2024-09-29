@@ -28,7 +28,7 @@ import kotlinx.coroutines.flow.flow
 
 data class EditMediaItemExternally(val app: ResolveInfo) : LightboxAction() {
 
-    context(LightboxActionsContext) override fun handle(
+    override fun LightboxActionsContext.handle(
         state: LightboxState
     ) = flow<LightboxMutation> {
         state.currentMediaItem.id.findLocals.firstOrNull()?.let { media ->

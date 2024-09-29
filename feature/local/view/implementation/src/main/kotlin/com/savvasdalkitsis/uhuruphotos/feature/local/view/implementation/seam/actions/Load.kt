@@ -31,7 +31,7 @@ import kotlinx.coroutines.flow.merge
 
 @OptIn(ExperimentalCoroutinesApi::class)
 data class Load(val albumId: Int) : LocalAlbumAction() {
-    context(LocalAlbumActionsContext) override fun handle(
+    override fun LocalAlbumActionsContext.handle(
         state: LocalAlbumState
     ) = merge(
         flow { galleryId = albumId },

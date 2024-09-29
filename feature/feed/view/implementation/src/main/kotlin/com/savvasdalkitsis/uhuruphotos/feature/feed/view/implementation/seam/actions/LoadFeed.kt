@@ -57,7 +57,7 @@ import kotlinx.coroutines.flow.merge
 @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
 data object LoadFeed : FeedAction() {
 
-    context(FeedActionsContext) override fun handle(
+    override fun FeedActionsContext.handle(
         state: FeedState
     ) = merge(
         showLibraryTab(),

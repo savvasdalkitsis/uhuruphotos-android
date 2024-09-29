@@ -21,7 +21,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.album.user.view.implementation.ui
 import kotlinx.coroutines.flow.flowOf
 
 data object DeleteUserAlbumCancelled : UserAlbumAction() {
-    context(UserAlbumActionsContext)
-    override fun handle(state: UserAlbumState) =
+    override fun UserAlbumActionsContext.handle(state: UserAlbumState) =
         flowOf(ShowDeleteConfirmationDialog(false))
 }

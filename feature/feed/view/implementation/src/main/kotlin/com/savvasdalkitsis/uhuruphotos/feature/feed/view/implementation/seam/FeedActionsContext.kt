@@ -49,7 +49,7 @@ import com.savvasdalktsis.uhuruphotos.feature.download.domain.api.usecase.Downlo
 import kotlinx.coroutines.flow.FlowCollector
 import javax.inject.Inject
 
-internal class FeedActionsContext @Inject constructor(
+class FeedActionsContext @Inject constructor(
     val avatarUseCase: AvatarUseCase,
     val downloadUseCase: DownloadUseCase,
     val uploadUseCase: UploadUseCase,

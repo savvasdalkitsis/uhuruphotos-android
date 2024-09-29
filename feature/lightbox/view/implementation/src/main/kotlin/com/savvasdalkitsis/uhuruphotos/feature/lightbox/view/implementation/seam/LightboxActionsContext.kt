@@ -79,7 +79,7 @@ import org.joda.time.format.DateTimeFormatter
 import javax.inject.Inject
 import kotlin.random.Random
 
-internal class LightboxActionsContext @Inject constructor(
+class LightboxActionsContext @Inject constructor(
     val mediaUseCase: MediaUseCase,
     val downloadUseCase: DownloadUseCase,
     val uploadUseCase: UploadUseCase,

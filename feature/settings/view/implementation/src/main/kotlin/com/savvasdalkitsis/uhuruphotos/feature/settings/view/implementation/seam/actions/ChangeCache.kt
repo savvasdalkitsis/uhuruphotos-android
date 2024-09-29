@@ -30,7 +30,7 @@ data class ChangeCache(
     val cacheType: CacheType,
     val sizeInMb: Float,
 ) : SettingsAction() {
-    context(SettingsActionsContext) override fun handle(
+    override fun SettingsActionsContext.handle(
         state: SettingsState
     ) = flow<SettingsMutation> {
         when(cacheType) {

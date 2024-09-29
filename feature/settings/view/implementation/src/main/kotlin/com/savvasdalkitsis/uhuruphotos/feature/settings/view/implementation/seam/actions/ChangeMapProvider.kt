@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider
 import kotlinx.coroutines.flow.flow
 
 data class ChangeMapProvider(val mapProvider: MapProvider) : SettingsAction() {
-    context(SettingsActionsContext) override fun handle(
+    override fun SettingsActionsContext.handle(
         state: SettingsState
     ) = flow<SettingsMutation> {
         settingsUIUseCase.setMapProvider(mapProvider)

@@ -24,7 +24,7 @@ import kotlinx.coroutines.flow.flow
 
 data object UseMediaItemAs : LightboxAction() {
 
-    context(LightboxActionsContext) override fun handle(
+    override fun LightboxActionsContext.handle(
         state: LightboxState
     ) = flow<LightboxMutation> {
         when (val id = state.currentMediaItem.id.preferLocal) {

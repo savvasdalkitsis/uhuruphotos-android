@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.notifications.domain.api.usecase.
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import javax.inject.Inject
 
-internal class NotificationsActionsContext @Inject constructor(
+class NotificationsActionsContext @Inject constructor(
     val notificationsUseCase: NotificationsUseCase,
     val navigator: Navigator,
 )

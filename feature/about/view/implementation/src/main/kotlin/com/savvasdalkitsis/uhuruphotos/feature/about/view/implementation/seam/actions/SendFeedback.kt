@@ -22,7 +22,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 data object SendFeedback : AboutAction() {
-    context(AboutActionsContext) override fun handle(
+    override fun AboutActionsContext.handle(
         state: AboutState
     ): Flow<Mutation<AboutState>> = flow {
         feedbackUseCase.sendFeedback()

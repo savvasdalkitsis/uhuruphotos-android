@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.sta
 import kotlinx.coroutines.flow.flowOf
 
 data class ChangeDisplay(val display: CollageDisplayState) : SearchAction() {
-    context(SearchActionsContext) override fun handle(
+    override fun SearchActionsContext.handle(
         state: SearchState
     ) = flowOf(ChangeSearchDisplay(display))
 }

@@ -27,7 +27,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 
 data object Load : AutoAlbumsAction() {
-    context(AutoAlbumsActionsContext) override fun handle(
+    override fun AutoAlbumsActionsContext.handle(
         state: AutoAlbumsState
     ) = merge(
         combine(

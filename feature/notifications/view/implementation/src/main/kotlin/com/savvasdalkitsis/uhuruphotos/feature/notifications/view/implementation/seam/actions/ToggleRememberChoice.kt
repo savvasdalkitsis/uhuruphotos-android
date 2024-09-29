@@ -23,8 +23,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
 data object ToggleRememberChoice : NotificationsAction() {
-    context(NotificationsActionsContext)
-    override fun handle(state: NotificationsState): Flow<Mutation<NotificationsState>> =
+    override fun NotificationsActionsContext.handle(state: NotificationsState): Flow<Mutation<NotificationsState>> =
         flowOf(NotificationsMutation.SetRememberChoice(!state.rememberChoice))
 
 }

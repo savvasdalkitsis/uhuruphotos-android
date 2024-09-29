@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCa
 import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.usecase.StatsUseCase
 import javax.inject.Inject
 
-internal class StatsActionsContext @Inject constructor(
+class StatsActionsContext @Inject constructor(
     val statsUseCase: StatsUseCase,
     val feedUseCase: FeedUseCase,
 )

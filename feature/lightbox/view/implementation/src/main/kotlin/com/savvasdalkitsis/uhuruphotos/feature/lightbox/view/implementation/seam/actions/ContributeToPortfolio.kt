@@ -27,7 +27,7 @@ data class ContributeToPortfolio(
     val contribute: Boolean,
 ) : LightboxAction() {
 
-    context(LightboxActionsContext) override fun handle(
+    override fun LightboxActionsContext.handle(
         state: LightboxState,
     ) = flow<LightboxMutation> {
         mediaItemState.id.findLocals.firstOrNull()?.let { id ->

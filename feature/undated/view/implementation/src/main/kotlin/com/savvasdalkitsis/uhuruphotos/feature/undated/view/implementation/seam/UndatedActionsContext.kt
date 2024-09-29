@@ -30,7 +30,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-internal class UndatedActionsContext @Inject constructor(
+class UndatedActionsContext @Inject constructor(
     undatedUseCase: UndatedUseCase,
     feedUseCase: FeedUseCase,
     galleryActionsContextFactory: GalleryActionsContextFactory,

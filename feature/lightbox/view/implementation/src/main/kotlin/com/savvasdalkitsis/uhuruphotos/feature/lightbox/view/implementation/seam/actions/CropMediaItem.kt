@@ -22,7 +22,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 data object CropMediaItem : LightboxAction() {
-    context(LightboxActionsContext) override fun handle(
+    override fun LightboxActionsContext.handle(
         state: LightboxState
     ): Flow<Mutation<LightboxState>> = flow {
         cropLocal(state)

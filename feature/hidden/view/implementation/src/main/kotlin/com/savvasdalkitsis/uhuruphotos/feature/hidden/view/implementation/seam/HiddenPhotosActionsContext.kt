@@ -20,7 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.usecase.Biometr
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import javax.inject.Inject
 
-internal class HiddenPhotosActionsContext @Inject constructor(
+class HiddenPhotosActionsContext @Inject constructor(
     val settingsUseCase: SettingsUseCase,
     val biometricsUseCase: BiometricsUseCase,
     val navigator: Navigator,

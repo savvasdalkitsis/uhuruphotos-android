@@ -21,7 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.st
 import kotlinx.coroutines.flow.flow
 
 data object NeverAskForLocalMediaAccessPermission : HeatMapAction() {
-    context(HeatMapActionsContext) override fun handle(
+    override fun HeatMapActionsContext.handle(
         state: HeatMapState
     ) = flow {
         emit(HideRequestLocalStoragePermission)

@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.s
 import kotlinx.coroutines.flow.flow
 
 data class ChangeFeedMediaItemSyncDisplay(val display: FeedMediaItemSyncDisplayState) : SettingsAction() {
-    context(SettingsActionsContext) override fun handle(
+    override fun SettingsActionsContext.handle(
         state: SettingsState
     ) = flow<SettingsMutation> {
         settingsUIUseCase.setFeedMediaItemSyncDisplay(display)

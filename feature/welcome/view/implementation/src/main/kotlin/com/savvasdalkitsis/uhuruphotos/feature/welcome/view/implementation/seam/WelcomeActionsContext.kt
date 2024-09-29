@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
-internal class WelcomeActionsContext @Inject constructor(
+class WelcomeActionsContext @Inject constructor(
     val welcomeUseCase: WelcomeUseCase,
     val authenticationLoginUseCase: AuthenticationLoginUseCase,
     val navigator: Navigator,

@@ -23,8 +23,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
 data object DismissUpsellLogin : DiscoverAction() {
-    context(DiscoverActionsContext)
-    override fun handle(state: DiscoverState): Flow<Mutation<DiscoverState>> =
+    override fun DiscoverActionsContext.handle(state: DiscoverState): Flow<Mutation<DiscoverState>> =
         flowOf(HideLoginUpsellDialogs)
 
 }

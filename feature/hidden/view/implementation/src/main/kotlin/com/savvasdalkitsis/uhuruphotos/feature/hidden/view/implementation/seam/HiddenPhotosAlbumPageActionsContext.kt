@@ -39,7 +39,7 @@ import kotlinx.coroutines.flow.mapNotNull
 import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
-internal class HiddenPhotosAlbumPageActionsContext @Inject constructor(
+class HiddenPhotosAlbumPageActionsContext @Inject constructor(
     mediaUseCase: MediaUseCase,
     hiddenMediaUseCase: HiddenMediaUseCase,
     settingsUseCase: SettingsUseCase,

@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.api.navigation.Sett
 import kotlinx.coroutines.flow.flow
 
 data object FingerPrintActionPressed : HiddenPhotosAction() {
-    context(HiddenPhotosActionsContext) override fun handle(
+    override fun HiddenPhotosActionsContext.handle(
         state: HiddenPhotosState
     ) = flow<HiddenPhotosMutation> {
         navigator.navigateTo(SettingsNavigationRoute)

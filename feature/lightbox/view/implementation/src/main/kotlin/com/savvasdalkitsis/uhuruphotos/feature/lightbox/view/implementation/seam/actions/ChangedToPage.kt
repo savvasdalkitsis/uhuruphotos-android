@@ -23,7 +23,7 @@ import kotlinx.coroutines.flow.flow
 
 data class ChangedToPage(val page: Int) : LightboxAction() {
 
-    context(LightboxActionsContext) override fun handle(
+    override fun LightboxActionsContext.handle(
         state: LightboxState
     ): Flow<LightboxMutation> = flow {
         if (state.media.isNotEmpty()) {

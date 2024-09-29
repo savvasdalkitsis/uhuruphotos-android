@@ -26,7 +26,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 
 data class LoadPerson(val id: Int) : PersonAction() {
-    context(PersonActionsContext) override fun handle(
+    override fun PersonActionsContext.handle(
         state: PersonCollageState
     ) = merge(
         flowOf(PersonMutation.Loading),

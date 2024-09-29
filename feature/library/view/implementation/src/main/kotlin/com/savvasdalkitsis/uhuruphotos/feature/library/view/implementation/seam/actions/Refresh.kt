@@ -22,7 +22,7 @@ import kotlinx.coroutines.flow.flow
 
 data object Refresh : LibraryAction() {
 
-    context(LibraryActionsContext) override fun handle(
+    override fun LibraryActionsContext.handle(
         state: LibraryState
     ) = flow<LibraryMutation> {
         refreshAutoAlbums()

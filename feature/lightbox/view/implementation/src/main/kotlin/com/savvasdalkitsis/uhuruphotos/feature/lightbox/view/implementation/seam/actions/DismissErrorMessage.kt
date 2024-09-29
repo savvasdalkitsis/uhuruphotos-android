@@ -22,7 +22,7 @@ import kotlinx.coroutines.flow.flowOf
 
 data object DismissErrorMessage : LightboxAction() {
 
-    context(LightboxActionsContext) override fun handle(
+    override fun LightboxActionsContext.handle(
         state: LightboxState
     ) = flowOf(LightboxMutation.DismissErrorMessage)
 }

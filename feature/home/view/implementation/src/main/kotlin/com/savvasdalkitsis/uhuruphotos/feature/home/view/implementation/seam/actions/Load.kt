@@ -27,7 +27,7 @@ import kotlinx.coroutines.flow.flow
 
 data object Load : HomeAction() {
 
-    context(HomeActionsContext) override fun handle(
+    override fun HomeActionsContext.handle(
         state: HomeState
     ) = flow {
         emit(HomeMutation.Loading)

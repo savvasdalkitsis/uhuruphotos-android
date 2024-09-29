@@ -22,7 +22,7 @@ import kotlinx.coroutines.flow.flow
 
 data object SwipeToRefresh : PeopleAction() {
 
-    context(PeopleActionsContext) override fun handle(
+    override fun PeopleActionsContext.handle(
         state: PeopleState
     ) = flow<PeopleMutation> {
         refresh()

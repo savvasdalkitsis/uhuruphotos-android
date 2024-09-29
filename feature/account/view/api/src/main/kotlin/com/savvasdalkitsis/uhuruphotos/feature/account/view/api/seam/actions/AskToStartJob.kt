@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobModel
 import kotlinx.coroutines.flow.flowOf
 
 data class AskToStartJob(val job: JobModel) : AccountOverviewAction() {
-    context(AccountOverviewActionsContext) override fun handle(
+    override fun AccountOverviewActionsContext.handle(
         state: AccountOverviewState
     ) = flowOf(ShowJobStartDialog(job))
 }

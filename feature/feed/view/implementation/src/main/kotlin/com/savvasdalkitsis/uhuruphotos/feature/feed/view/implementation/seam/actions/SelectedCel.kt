@@ -27,7 +27,7 @@ import kotlinx.coroutines.flow.flow
 data class SelectedCel(
     val celState: CelState,
 ) : FeedAction() {
-    context(FeedActionsContext) override fun handle(
+    override fun FeedActionsContext.handle(
         state: FeedState
     ) = flow<FeedMutation> {
         when {

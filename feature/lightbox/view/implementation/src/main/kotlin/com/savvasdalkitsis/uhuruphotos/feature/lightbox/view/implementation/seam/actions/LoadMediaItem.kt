@@ -73,7 +73,7 @@ data class LoadMediaItem(
     val sequenceDataSource: LightboxSequenceDataSourceModel,
 ) : LightboxAction() {
 
-    context(LightboxActionsContext) override fun handle(
+    override fun LightboxActionsContext.handle(
         state: LightboxState,
     ) = merge(
         flow {

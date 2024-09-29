@@ -23,7 +23,7 @@ import kotlinx.coroutines.flow.flow
 
 data class DownloadOriginal(val mediaItemState: SingleMediaItemState) : LightboxAction() {
 
-    context(LightboxActionsContext) override fun handle(
+    override fun LightboxActionsContext.handle(
         state: LightboxState
     ) = flow<LightboxMutation> {
         mediaItemState.id.findRemote?.let { id ->

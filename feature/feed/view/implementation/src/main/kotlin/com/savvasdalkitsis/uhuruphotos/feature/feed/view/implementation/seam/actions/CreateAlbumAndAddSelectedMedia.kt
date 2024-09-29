@@ -27,7 +27,7 @@ import kotlinx.coroutines.flow.flow
 data class CreateAlbumAndAddSelectedMedia(
     val name: String,
 ) : FeedAction() {
-    context(FeedActionsContext) override fun handle(
+    override fun FeedActionsContext.handle(
         state: FeedState
     ) = flow {
         emit(StartRefreshing)

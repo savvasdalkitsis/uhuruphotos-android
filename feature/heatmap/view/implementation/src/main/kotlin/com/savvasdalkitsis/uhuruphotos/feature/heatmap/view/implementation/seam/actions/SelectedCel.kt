@@ -26,7 +26,7 @@ import kotlinx.coroutines.flow.flow
 data class SelectedCel(
     val celState: CelState,
 ) : HeatMapAction() {
-    context(HeatMapActionsContext) override fun handle(
+    override fun HeatMapActionsContext.handle(
         state: HeatMapState
     ) = flow<HeatMapMutation> {
         navigator.navigateTo(LightboxNavigationRoute(

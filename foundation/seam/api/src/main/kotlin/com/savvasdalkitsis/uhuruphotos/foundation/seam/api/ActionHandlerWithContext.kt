@@ -24,8 +24,8 @@ class ActionHandlerWithContext<ActionsContext, S, A: Action<S, ActionsContext>>(
     override fun handleAction(
         state: S,
         action: A
-    ): Flow<Mutation<S>> = with(actionsContext) {
-        action.handle(state)
+    ): Flow<Mutation<S>> = with(action) {
+        actionsContext.handle(state)
     }
 
 }

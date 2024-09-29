@@ -30,7 +30,7 @@ import kotlinx.coroutines.flow.flow
 
 data object AskForMediaItemTrashing : LightboxAction() {
 
-    context(LightboxActionsContext) override fun handle(
+    override fun LightboxActionsContext.handle(
         state: LightboxState
     ) = flow {
         when (deletionCategory(state.currentMediaItem)) {

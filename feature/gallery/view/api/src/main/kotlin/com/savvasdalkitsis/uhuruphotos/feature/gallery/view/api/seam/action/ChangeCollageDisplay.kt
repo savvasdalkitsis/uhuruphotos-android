@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.Gallery
 import kotlinx.coroutines.flow.flow
 
 data class ChangeCollageDisplay(val collageDisplayState: CollageDisplayState) : GalleryAction() {
-    context(GalleryActionsContext) override fun handle(
+    override fun GalleryActionsContext.handle(
         state: GalleryState
     ) = flow {
         emit(GalleryMutation.ChangeCollageDisplay(collageDisplayState))

@@ -22,8 +22,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 data object TakeUserToLibrePhotosWebsite : ServerAction() {
-    context(ServerActionsContext)
-    override fun handle(state: ServerState): Flow<Mutation<ServerState>> = flow {
+    override fun ServerActionsContext.handle(state: ServerState): Flow<Mutation<ServerState>> = flow {
         navigator.navigateToWeb("https://docs.librephotos.com/")
     }
 

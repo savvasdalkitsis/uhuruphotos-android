@@ -21,7 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state
 import kotlinx.coroutines.flow.flowOf
 
 data object DismissSelectedMediaTrashing : FeedAction() {
-    context(FeedActionsContext) override fun handle(
+    override fun FeedActionsContext.handle(
         state: FeedState
     ) = flowOf(HideAllConfirmationDialogs)
 }

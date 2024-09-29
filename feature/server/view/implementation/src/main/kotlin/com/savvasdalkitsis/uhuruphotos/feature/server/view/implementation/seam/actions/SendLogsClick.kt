@@ -21,7 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.ui.Ser
 import kotlinx.coroutines.flow.flow
 
 data object SendLogsClick : ServerAction() {
-    context(ServerActionsContext) override fun handle(
+    override fun ServerActionsContext.handle(
         state: ServerState
     ) = flow<ServerMutation> {
         feedbackUseCase.sendFeedback()

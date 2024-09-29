@@ -24,8 +24,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 data object SelectCloudMedia : WelcomeAction() {
-    context(WelcomeActionsContext)
-    override fun handle(state: WelcomeState): Flow<Mutation<WelcomeState>> = flow {
+    override fun WelcomeActionsContext.handle(state: WelcomeState): Flow<Mutation<WelcomeState>> = flow {
         emit(WelcomeMutation.DisplayLibrePhotosHelpDialog(false))
         navigator.navigateTo(ServerNavigationRoute)
     }

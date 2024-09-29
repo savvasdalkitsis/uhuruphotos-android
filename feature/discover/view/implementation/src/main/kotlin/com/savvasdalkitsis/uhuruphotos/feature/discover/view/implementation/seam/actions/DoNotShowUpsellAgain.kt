@@ -23,8 +23,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 data object DoNotShowUpsellAgain : DiscoverAction() {
-    context(DiscoverActionsContext)
-    override fun handle(state: DiscoverState): Flow<Mutation<DiscoverState>> = flow {
+    override fun DiscoverActionsContext.handle(state: DiscoverState): Flow<Mutation<DiscoverState>> = flow {
         emit(HideLoginUpsellDialogs)
         neverShowPeopleUpsell()
     }

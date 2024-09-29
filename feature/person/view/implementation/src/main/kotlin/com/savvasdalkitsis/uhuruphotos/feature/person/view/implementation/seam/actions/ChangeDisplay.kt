@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.ui.sta
 import kotlinx.coroutines.flow.flowOf
 
 data class ChangeDisplay(val display: CollageDisplayState) : PersonAction() {
-    context(PersonActionsContext) override fun handle(
+    override fun PersonActionsContext.handle(
         state: PersonCollageState
     ) = flowOf(PersonMutation.SetFeedDisplay(display))
 }

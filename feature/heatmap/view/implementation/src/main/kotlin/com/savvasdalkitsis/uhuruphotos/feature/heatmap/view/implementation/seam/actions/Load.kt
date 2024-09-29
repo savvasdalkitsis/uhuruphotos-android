@@ -32,7 +32,7 @@ import kotlinx.coroutines.flow.merge
 @OptIn(ExperimentalCoroutinesApi::class)
 data object Load : HeatMapAction() {
 
-    context(HeatMapActionsContext) override fun handle(
+    override fun HeatMapActionsContext.handle(
         state: HeatMapState
     ) = merge(
         flow {

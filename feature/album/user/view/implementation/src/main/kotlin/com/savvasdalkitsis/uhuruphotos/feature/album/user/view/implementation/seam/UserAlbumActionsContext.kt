@@ -27,7 +27,7 @@ import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-internal class UserAlbumActionsContext @Inject constructor(
+class UserAlbumActionsContext @Inject constructor(
     userAlbumDisplay: UserAlbumDisplay,
     val userAlbumUseCase: UserAlbumUseCase,
     galleryActionsContextFactory: GalleryActionsContextFactory,

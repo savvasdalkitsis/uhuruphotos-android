@@ -31,7 +31,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
 import javax.inject.Inject
 
-internal class FavouritesActionsContext @Inject constructor(
+class FavouritesActionsContext @Inject constructor(
     mediaUseCase: MediaUseCase,
     favouritesUseCase: FavouritesUseCase,
     galleryActionsContextFactory: GalleryActionsContextFactory,

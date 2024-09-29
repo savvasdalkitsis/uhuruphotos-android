@@ -23,8 +23,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 data object LogIn : FeedAction() {
-    context(FeedActionsContext)
-    override fun handle(state: FeedState): Flow<Mutation<FeedState>> = flow {
+    override fun FeedActionsContext.handle(state: FeedState): Flow<Mutation<FeedState>> = flow {
         navigator.navigateTo(ServerNavigationRoute)
     }
 }

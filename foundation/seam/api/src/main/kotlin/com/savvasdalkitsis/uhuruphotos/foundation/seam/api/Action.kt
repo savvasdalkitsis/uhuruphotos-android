@@ -19,5 +19,5 @@ import kotlinx.coroutines.flow.Flow
 
 fun interface Action<S, C> {
 
-    context(C) fun handle(state: S): Flow<Mutation<S>>
+    fun C.handle(state: S): Flow<Mutation<S>>
 }

@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.http.api.isValidUrlOrDomain
 import kotlinx.coroutines.flow.flow
 
 data class UrlTyped(val url: String) : ServerAction() {
-    context(ServerActionsContext) override fun handle(
+    override fun ServerActionsContext.handle(
         state: ServerState
     ) = flow {
         emit(SetCurrentUrlTo(url))

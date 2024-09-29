@@ -35,7 +35,7 @@ import kotlinx.coroutines.flow.mapNotNull
 
 @OptIn(FlowPreview::class)
 data class SearchFor(val query: String) : SearchAction() {
-    context(SearchActionsContext) override fun handle(
+    override fun SearchActionsContext.handle(
         state: SearchState
     ): Flow<Mutation<SearchState>> = flow {
         emit(Loading)

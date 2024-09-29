@@ -26,8 +26,7 @@ import kotlinx.coroutines.flow.flowOf
 
 data class TappedProcessingItem(val item: ProcessingItem) : ProcessingAction() {
 
-    context(ProcessingActionsContext)
-    override fun handle(state: ProcessingState): Flow<Mutation<ProcessingState>> =
+    override fun ProcessingActionsContext.handle(state: ProcessingState): Flow<Mutation<ProcessingState>> =
         (item.error.notBlank ?: item.lastResponse.notBlank)?.let {
             flowOf(ShowMessageDialog(item, it))
         } ?: emptyFlow()

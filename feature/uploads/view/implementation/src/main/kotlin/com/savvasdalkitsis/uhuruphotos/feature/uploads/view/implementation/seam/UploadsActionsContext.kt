@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.uploads.domain.api.usecase.Upload
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkPruneUseCase
 import javax.inject.Inject
 
-internal class UploadsActionsContext @Inject constructor(
+class UploadsActionsContext @Inject constructor(
     val uploadsUseCase: UploadsUseCase,
     val workPruneUseCase: WorkPruneUseCase,
 )

@@ -20,7 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.portfolio.domain.api.usecase.Port
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import javax.inject.Inject
 
-internal class PortfolioActionsContext @Inject constructor(
+class PortfolioActionsContext @Inject constructor(
     val portfolioUseCase: PortfolioUseCase,
     val localMediaUseCase: LocalMediaUseCase,
     val navigator: Navigator,

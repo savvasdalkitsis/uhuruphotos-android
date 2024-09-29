@@ -36,7 +36,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import javax.inject.Inject
 
-internal class LibraryActionsContext @Inject constructor(
+class LibraryActionsContext @Inject constructor(
     val autoAlbumsUseCase: AutoAlbumsUseCase,
     val userAlbumsUseCase: UserAlbumsUseCase,
     val mediaUseCase: MediaUseCase,

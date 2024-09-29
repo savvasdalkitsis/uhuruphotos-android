@@ -26,7 +26,7 @@ import kotlinx.coroutines.flow.flow
 
 data class ClickedOnMap(val gps: LatLon) : LightboxAction() {
 
-    context(LightboxActionsContext) override fun handle(
+    override fun LightboxActionsContext.handle(
         state: LightboxState
     ) = flow<LightboxMutation> {
         navigator.navigateTo(geoLocation(gps))

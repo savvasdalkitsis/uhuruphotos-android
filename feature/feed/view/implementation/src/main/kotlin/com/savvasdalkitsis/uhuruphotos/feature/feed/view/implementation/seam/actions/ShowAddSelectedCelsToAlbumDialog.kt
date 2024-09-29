@@ -27,7 +27,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 
 data object ShowAddSelectedCelsToAlbumDialog : FeedAction() {
-    context(FeedActionsContext) override fun handle(
+    override fun FeedActionsContext.handle(
         state: FeedState
     ) = userAlbumsUseCase.observeUserAlbums()
         .map<List<UserAlbums>, FeedMutation> { albums ->

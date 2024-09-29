@@ -21,7 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.s
 import kotlinx.coroutines.flow.flowOf
 
 data class ChangeFocus(val focused: Boolean) : DiscoverAction() {
-    context(DiscoverActionsContext) override fun handle(
+    override fun DiscoverActionsContext.handle(
         state: DiscoverState
     ) = flowOf(FocusChanged(focused))
 }

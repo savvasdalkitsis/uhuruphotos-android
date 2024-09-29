@@ -23,8 +23,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
 data object ShowHelp : ServerAction() {
-    context(ServerActionsContext)
-    override fun handle(state: ServerState): Flow<Mutation<ServerState>> =
+    override fun ServerActionsContext.handle(state: ServerState): Flow<Mutation<ServerState>> =
         flowOf(ServerMutation.ShowHelpDialog)
 
 }

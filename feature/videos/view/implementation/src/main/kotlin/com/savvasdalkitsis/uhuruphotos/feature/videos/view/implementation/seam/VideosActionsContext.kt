@@ -30,7 +30,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-internal class VideosActionsContext @Inject constructor(
+class VideosActionsContext @Inject constructor(
     videosUseCase: VideosUseCase,
     feedUseCase: FeedUseCase,
     galleryActionsContextFactory: GalleryActionsContextFactory,

@@ -20,7 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.system.api.usecase.ApplicationUseCase
 import javax.inject.Inject
 
-internal class AboutActionsContext @Inject constructor(
+class AboutActionsContext @Inject constructor(
     val applicationUseCase: ApplicationUseCase,
     val feedbackUseCase: FeedbackUseCase,
     val navigator: Navigator,

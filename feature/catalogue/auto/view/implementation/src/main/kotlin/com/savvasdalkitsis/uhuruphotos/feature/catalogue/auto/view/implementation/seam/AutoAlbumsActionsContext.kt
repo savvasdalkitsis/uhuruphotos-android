@@ -25,7 +25,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject
 
-internal class AutoAlbumsActionsContext @Inject constructor(
+class AutoAlbumsActionsContext @Inject constructor(
     val autoAlbumsUseCase: AutoAlbumsUseCase,
     val toaster: ToasterUseCase,
     val navigator: Navigator,

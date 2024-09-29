@@ -24,7 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.trash.view.api.navigation.TrashNa
 import kotlinx.coroutines.flow.flow
 
 data object TrashSelected : LibraryAction() {
-    context(LibraryActionsContext) override fun handle(
+    override fun LibraryActionsContext.handle(
         state: LibraryState
     ) = flow<LibraryMutation> {
         if (welcomeUseCase.getWelcomeStatus().hasRemoteAccess) {

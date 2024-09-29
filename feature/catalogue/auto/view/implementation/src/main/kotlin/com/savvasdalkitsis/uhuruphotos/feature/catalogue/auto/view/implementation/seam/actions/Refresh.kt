@@ -21,7 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementatio
 import kotlinx.coroutines.flow.flow
 
 data object Refresh : AutoAlbumsAction() {
-    context(AutoAlbumsActionsContext) override fun handle(
+    override fun AutoAlbumsActionsContext.handle(
         state: AutoAlbumsState
     ) = flow<AutoAlbumsMutation> {
         refreshAlbums()

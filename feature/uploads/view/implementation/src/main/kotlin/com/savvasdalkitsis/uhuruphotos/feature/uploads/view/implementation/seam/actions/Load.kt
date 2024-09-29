@@ -27,8 +27,7 @@ import kotlinx.coroutines.flow.onStart
 
 data object Load : UploadsAction() {
 
-    context(UploadsActionsContext)
-    override fun handle(state: UploadsState): Flow<Mutation<UploadsState>> =
+    override fun UploadsActionsContext.handle(state: UploadsState): Flow<Mutation<UploadsState>> =
         uploadsUseCase.observeUploadsInFlight()
             .map<Uploads, Mutation<UploadsState>> { ShowUploads(it) }
             .onStart { emit(Loading) }

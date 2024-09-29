@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CollageShape
 import kotlinx.coroutines.flow.flow
 
 data class CollageShapeChanged(val shape: CollageShape) : SettingsAction() {
-    context(SettingsActionsContext) override fun handle(
+    override fun SettingsActionsContext.handle(
         state: SettingsState
     ) = flow<SettingsMutation> {
         settingsUIUseCase.setCollageShape(shape)

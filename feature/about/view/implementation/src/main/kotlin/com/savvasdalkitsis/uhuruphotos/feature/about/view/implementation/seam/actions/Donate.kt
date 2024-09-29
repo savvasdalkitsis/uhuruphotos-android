@@ -22,7 +22,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 data object Donate : AboutAction() {
-    context(AboutActionsContext) override fun handle(
+    override fun AboutActionsContext.handle(
         state: AboutState
     ): Flow<Mutation<AboutState>> = flow {
         navigator.navigateToWeb("https://github.com/sponsors/savvasdalkitsis")

@@ -21,7 +21,7 @@ import kotlinx.coroutines.flow.flow
 
 data object Refresh : LightboxAction() {
 
-    context(LightboxActionsContext) override fun handle(
+    override fun LightboxActionsContext.handle(
         state: LightboxState,
     ) = flow {
         refreshMediaDetails(mediaId = state.currentMediaItem.id, state.media.toList())

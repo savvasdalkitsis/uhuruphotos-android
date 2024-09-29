@@ -20,7 +20,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject
 
-internal class SelectionList @Inject constructor() {
+class SelectionList @Inject constructor() {
 
     private var selectedIds = MutableStateFlow(emptySet<MediaIdModel<*>>())
 

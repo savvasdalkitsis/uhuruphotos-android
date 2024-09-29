@@ -38,8 +38,7 @@ import kotlinx.coroutines.flow.flow
 
 data class Load(val route: PortfolioNavigationRoute) : PortfolioAction() {
 
-    context(PortfolioActionsContext)
-    override fun handle(state: PortfolioState): Flow<Mutation<PortfolioState>> = flow {
+    override fun PortfolioActionsContext.handle(state: PortfolioState): Flow<Mutation<PortfolioState>> = flow {
         emit(PortfolioMutation.ChangeTitle(route.title))
         emitAll(
             combine(

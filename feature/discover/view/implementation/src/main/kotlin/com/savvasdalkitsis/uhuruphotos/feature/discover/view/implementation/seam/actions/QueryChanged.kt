@@ -21,7 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.s
 import kotlinx.coroutines.flow.flow
 
 data class QueryChanged(val query: String) : DiscoverAction() {
-    context(DiscoverActionsContext) override fun handle(
+    override fun DiscoverActionsContext.handle(
         state: DiscoverState
     ) = flow<DiscoverMutation> {
         changeQuery(query)

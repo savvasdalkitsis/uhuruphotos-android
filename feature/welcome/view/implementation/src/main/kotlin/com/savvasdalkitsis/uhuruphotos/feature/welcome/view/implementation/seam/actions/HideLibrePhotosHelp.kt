@@ -23,8 +23,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
 data object HideLibrePhotosHelp : WelcomeAction() {
-    context(WelcomeActionsContext)
-    override fun handle(state: WelcomeState): Flow<Mutation<WelcomeState>> = flowOf(
+    override fun WelcomeActionsContext.handle(state: WelcomeState): Flow<Mutation<WelcomeState>> = flowOf(
         WelcomeMutation.DisplayLibrePhotosHelpDialog(false)
     )
 }

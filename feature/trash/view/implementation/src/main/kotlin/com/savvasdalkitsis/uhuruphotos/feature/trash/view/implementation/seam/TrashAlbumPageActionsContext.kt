@@ -35,7 +35,7 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
-internal class TrashAlbumPageActionsContext @Inject constructor(
+class TrashAlbumPageActionsContext @Inject constructor(
     trashUseCase: TrashUseCase,
     settingsUseCase: SettingsUseCase,
     biometricsUseCase: BiometricsUseCase,

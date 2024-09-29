@@ -37,7 +37,7 @@ import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.mapNotNull
 import javax.inject.Inject
 
-internal class AutoAlbumActionsContext @Inject constructor(
+class AutoAlbumActionsContext @Inject constructor(
     val autoAlbumUseCase: AutoAlbumUseCase,
     serverUseCase: ServerUseCase,
     dateDisplayer: DateDisplayer,

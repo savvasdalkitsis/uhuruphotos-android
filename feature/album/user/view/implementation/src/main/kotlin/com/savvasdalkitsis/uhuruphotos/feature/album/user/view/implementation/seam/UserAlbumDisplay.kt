@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.get
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
 import javax.inject.Inject
 
-internal class UserAlbumDisplay @Inject constructor(
+class UserAlbumDisplay @Inject constructor(
     @PlainTextPreferences
     private val preferences: Preferences,
 ) {

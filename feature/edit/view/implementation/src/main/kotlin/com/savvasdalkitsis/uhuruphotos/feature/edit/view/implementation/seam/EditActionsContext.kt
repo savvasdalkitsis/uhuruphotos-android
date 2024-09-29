@@ -20,7 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
 import javax.inject.Inject
 
-internal class EditActionsContext @Inject constructor(
+class EditActionsContext @Inject constructor(
     val toaster: ToasterUseCase,
     val localMediaUseCase: LocalMediaUseCase,
     val navigator: Navigator,

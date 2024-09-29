@@ -21,7 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.ui.Ser
 import kotlinx.coroutines.flow.flowOf
 
 data object TogglePasswordVisibility : ServerAction() {
-    context(ServerActionsContext) override fun handle(
+    override fun ServerActionsContext.handle(
         state: ServerState
     ) = flowOf(SetPasswordVisibility(!state.passwordVisible))
 }

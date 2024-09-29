@@ -23,7 +23,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
 data object ToggleCropOptions : EditAction() {
-    context(EditActionsContext) override fun handle(
+    override fun EditActionsContext.handle(
         state: EditState
     ): Flow<Mutation<EditState>> = flowOf(SetCropOptionsVisible(!state.showCropOptions))
 }

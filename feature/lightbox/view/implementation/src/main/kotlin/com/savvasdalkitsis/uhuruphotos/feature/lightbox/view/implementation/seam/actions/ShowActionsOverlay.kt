@@ -23,7 +23,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
 data class ShowActionsOverlay(val show: Boolean) : LightboxAction() {
-    context(LightboxActionsContext)
-    override fun handle(state: LightboxState): Flow<Mutation<LightboxState>> =
+    override fun LightboxActionsContext.handle(state: LightboxState): Flow<Mutation<LightboxState>> =
         flowOf(LightboxMutation.ShowActionsOverlay(show))
 }

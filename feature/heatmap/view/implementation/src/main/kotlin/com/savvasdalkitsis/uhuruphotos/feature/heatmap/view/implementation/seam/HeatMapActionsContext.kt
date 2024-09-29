@@ -28,7 +28,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import kotlinx.coroutines.Deferred
 import javax.inject.Inject
 
-internal class HeatMapActionsContext @Inject constructor(
+class HeatMapActionsContext @Inject constructor(
     val feedUseCase: FeedUseCase,
     val mediaUseCase: MediaUseCase,
     val settingsUIUseCase: SettingsUIUseCase,

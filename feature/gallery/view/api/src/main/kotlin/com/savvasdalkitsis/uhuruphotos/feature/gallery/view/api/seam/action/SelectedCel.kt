@@ -25,7 +25,7 @@ import kotlinx.coroutines.flow.flow
 data class SelectedCel(
     val cel: CelState,
 ) : GalleryAction() {
-    context(GalleryActionsContext) override fun handle(
+    override fun GalleryActionsContext.handle(
         state: GalleryState
     ) = flow<GalleryMutation> {
         navigator.navigateTo(

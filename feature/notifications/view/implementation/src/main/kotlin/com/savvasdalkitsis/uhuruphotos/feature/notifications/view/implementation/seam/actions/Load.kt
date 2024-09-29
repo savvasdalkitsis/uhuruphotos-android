@@ -24,8 +24,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 data object Load : NotificationsAction() {
-    context(NotificationsActionsContext)
-    override fun handle(state: NotificationsState): Flow<Mutation<NotificationsState>> = flow {
+    override fun NotificationsActionsContext.handle(state: NotificationsState): Flow<Mutation<NotificationsState>> = flow {
         if (notificationsUseCase.needToShowNotificationsOnboardingScreen()) {
             emit(NotificationsMutation.ShowOnboarding)
         } else {

@@ -25,7 +25,7 @@ import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-internal class LocalAlbumPageActionsContext @Inject constructor(
+class LocalAlbumPageActionsContext @Inject constructor(
     localAlbumUseCase: LocalAlbumUseCase,
     galleryActionsContextFactory: GalleryActionsContextFactory,
 ) {

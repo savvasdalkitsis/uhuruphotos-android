@@ -21,7 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.Account
 import kotlinx.coroutines.flow.flowOf
 
 data object DismissAccountOverview : AccountOverviewAction() {
-    context(AccountOverviewActionsContext) override fun handle(
+    override fun AccountOverviewActionsContext.handle(
         state: AccountOverviewState
     ) = flowOf(HideAccountOverview)
 }

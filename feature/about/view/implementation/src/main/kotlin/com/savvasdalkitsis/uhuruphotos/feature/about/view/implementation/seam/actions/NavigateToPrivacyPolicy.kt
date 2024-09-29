@@ -22,7 +22,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 data object NavigateToPrivacyPolicy : AboutAction() {
-    context(AboutActionsContext) override fun handle(
+    override fun AboutActionsContext.handle(
         state: AboutState
     ): Flow<Mutation<AboutState>> = flow {
         navigator.navigateToWeb("https://github.com/savvasdalkitsis/uhuruphotos-android/blob/main/privacy-policy.md")

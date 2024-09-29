@@ -24,8 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import kotlinx.coroutines.flow.flow
 
 data object DeleteAutoAlbum : AutoAlbumAction() {
-    context(AutoAlbumActionsContext)
-    override fun handle(state: AutoAlbumState) = flow<AutoAlbumMutation> {
+    override fun AutoAlbumActionsContext.handle(state: AutoAlbumState) = flow<AutoAlbumMutation> {
         autoAlbumUseCase.deleteAutoAlbum(state.albumId)
             .onSuccess { navigator.navigateUp() }
             .onFailure { toaster.show(string.error_deleting_album) }

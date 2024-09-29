@@ -24,7 +24,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 data object FoldersClicked : AccountOverviewAction() {
-    context(AccountOverviewActionsContext) override fun handle(
+    override fun AccountOverviewActionsContext.handle(
         state: AccountOverviewState
     ): Flow<Mutation<AccountOverviewState>> = flow {
         navigator.navigateTo(PortfolioNavigationRoute(editMode = true, title = string.folders_on_feed))

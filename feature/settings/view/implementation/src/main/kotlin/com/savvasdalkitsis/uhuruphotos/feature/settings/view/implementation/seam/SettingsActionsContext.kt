@@ -35,7 +35,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUse
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-internal class SettingsActionsContext @Inject constructor(
+class SettingsActionsContext @Inject constructor(
     val settingsUseCase: SettingsUseCase,
     val settingsUIUseCase: SettingsUIUseCase,
     val avatarUseCase: AvatarUseCase,

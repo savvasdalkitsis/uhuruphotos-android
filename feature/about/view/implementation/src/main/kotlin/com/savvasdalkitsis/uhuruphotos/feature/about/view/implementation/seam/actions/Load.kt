@@ -24,7 +24,7 @@ import kotlinx.coroutines.flow.flowOf
 
 data object Load : AboutAction() {
 
-    context(AboutActionsContext) override fun handle(
+    override fun AboutActionsContext.handle(
         state: AboutState
     ): Flow<Mutation<AboutState>> = flowOf(DisplayAppVersion(applicationUseCase.appVersion()))
 }

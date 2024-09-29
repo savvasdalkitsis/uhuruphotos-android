@@ -23,7 +23,7 @@ import kotlinx.coroutines.flow.flow
 
 data class ClickedOnDetailsEntry(val text: String) : LightboxAction() {
 
-    context(LightboxActionsContext) override fun handle(
+    override fun LightboxActionsContext.handle(
         state: LightboxState
     ) = flow<LightboxMutation> {
         copyToClipBoard(text)

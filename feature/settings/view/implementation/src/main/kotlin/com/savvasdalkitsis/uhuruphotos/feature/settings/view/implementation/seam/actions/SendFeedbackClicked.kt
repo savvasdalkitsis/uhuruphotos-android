@@ -21,7 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.s
 import kotlinx.coroutines.flow.flow
 
 data object SendFeedbackClicked : SettingsAction() {
-    context(SettingsActionsContext) override fun handle(
+    override fun SettingsActionsContext.handle(
         state: SettingsState
     ) = flow<SettingsMutation> {
         feedbackUseCase.sendFeedback()

@@ -25,7 +25,7 @@ import dagger.hilt.android.scopes.ActivityRetainedScoped
 import javax.inject.Inject
 
 @ActivityRetainedScoped
-internal class ServerActionsContext @Inject constructor(
+class ServerActionsContext @Inject constructor(
     val serverUseCase: ServerUseCase,
     val authenticationLoginUseCase: AuthenticationLoginUseCase,
     val settingsUseCase: SettingsUseCase,

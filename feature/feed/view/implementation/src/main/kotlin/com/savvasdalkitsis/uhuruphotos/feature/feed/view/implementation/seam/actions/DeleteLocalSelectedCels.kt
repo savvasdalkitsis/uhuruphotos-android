@@ -21,7 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state
 import kotlinx.coroutines.flow.flow
 
 data object DeleteLocalSelectedCels : FeedAction() {
-    context(FeedActionsContext) override fun handle(
+    override fun FeedActionsContext.handle(
         state: FeedState
     ) = flow {
         emit(HideAllConfirmationDialogs)

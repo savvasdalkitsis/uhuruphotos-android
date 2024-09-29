@@ -22,8 +22,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 data object ClearFinished : UploadsAction() {
-    context(UploadsActionsContext)
-    override fun handle(state: UploadsState): Flow<Mutation<UploadsState>> = flow {
+    override fun UploadsActionsContext.handle(state: UploadsState): Flow<Mutation<UploadsState>> = flow {
         workPruneUseCase.pruneAllWork()
     }
 
