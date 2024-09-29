@@ -23,24 +23,21 @@ import com.bumble.appyx.core.integrationpoint.IntegrationPointProvider
 
 open class FragmentNodeActivity : FragmentActivity(), IntegrationPointProvider {
 
-    override lateinit var appyxIntegrationPoint: ActivityIntegrationPoint
+    override lateinit var appyxV1IntegrationPoint: ActivityIntegrationPoint
         protected set
-
-    protected open fun createIntegrationPoint(savedInstanceState: Bundle?) =
-        ActivityIntegrationPoint(
-            activity = this,
-            savedInstanceState = savedInstanceState
-        )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        appyxIntegrationPoint = createIntegrationPoint(savedInstanceState)
+        appyxV1IntegrationPoint = ActivityIntegrationPoint(
+            activity = this,
+            savedInstanceState = savedInstanceState
+        )
     }
 
     @Suppress("OVERRIDE_DEPRECATION")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        appyxIntegrationPoint.onActivityResult(requestCode, resultCode, data)
+        appyxV1IntegrationPoint.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun onRequestPermissionsResult(
@@ -49,11 +46,11 @@ open class FragmentNodeActivity : FragmentActivity(), IntegrationPointProvider {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        appyxIntegrationPoint.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        appyxV1IntegrationPoint.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        appyxIntegrationPoint.onSaveInstanceState(outState)
+        appyxV1IntegrationPoint.onSaveInstanceState(outState)
     }
 }
