@@ -1,0 +1,2 @@
+* Fixing bug in feed where local media would sometimes not show up as processing or uploading
+* Small feed loading performance improvements
