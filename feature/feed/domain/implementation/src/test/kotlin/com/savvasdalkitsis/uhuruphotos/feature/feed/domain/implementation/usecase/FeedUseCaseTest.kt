@@ -46,7 +46,7 @@ class FeedUseCaseTest {
     private val preferences: Preferences = mockk()
     private val uploadUseCase: UploadUseCase = mockk<UploadUseCase>().defaults()
     private val downloadUseCase: DownloadUseCase = mockk<DownloadUseCase>().defaults()
-    private val feedWorkScheduler: FeedWorkScheduler = mockk()
+    private val feedWorkScheduler: FeedWorkScheduler = mockk(relaxed = true)
     private val mediaUseCase: MediaUseCase = mockk<MediaUseCase>().defaults()
     private val feedRepository: FeedRepository = mockk<FeedRepository>().defaults()
     private val feedCache: FeedCache = mockk<FeedCache>(relaxed = true).defaults()

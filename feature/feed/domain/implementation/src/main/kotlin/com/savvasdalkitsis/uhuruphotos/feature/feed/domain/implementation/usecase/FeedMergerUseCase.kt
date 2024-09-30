@@ -39,13 +39,15 @@ internal class FeedMergerUseCase(
                     val local = remainingLocalMedia
                         .filter { it.mediaHash == item.mediaHash }
                         .toSet()
-                    remainingLocalMedia.removeAll(local)
                     when {
                         local.isEmpty() -> item.orDownloading(mediaBeingDownloaded)
-                        else -> MediaItemGroupModel(
-                            remoteInstance = item,
-                            localInstances = local.toSet()
-                        )
+                        else -> {
+                            remainingLocalMedia.removeAll(local)
+                            MediaItemGroupModel(
+                                remoteInstance = item,
+                                localInstances = local
+                            )
+                        }
                     }
                 })
             }
@@ -53,18 +55,19 @@ internal class FeedMergerUseCase(
                 val local = remainingLocalMedia
                     .filter { it.displayDayDate == collection.displayTitle }
                     .toSet()
-                remainingLocalMedia.removeAll(local)
                 when {
                     local.isEmpty() -> collection
-                    else -> collection.copy(mediaItems = (collection.mediaItems + local)
-                        .sortedByDescending { it.sortableDate }
-                    )
+                    else -> {
+                        remainingLocalMedia.removeAll(local)
+                        collection.copy(mediaItems = (collection.mediaItems + local)
+                            .sortedByDescending { it.sortableDate }
+                        )
+                    }
                 }
             }
             .toList()
 
         val localOnlyDays = remainingLocalMedia
-            .map { it.orUploading(mediaBeingUploaded).orProcessing(mediaBeingProcessed) }
             .groupBy { it.displayDayDate }
             .toMediaCollections()
 
@@ -93,7 +96,7 @@ internal class FeedMergerUseCase(
     private fun Map<String?, List<MediaItemModel>>.toMediaCollections() = map { (day, items) ->
         MediaCollectionModel(
             id = "local_media_collection_$day",
-            mediaItems = items,
+            mediaItems = items.map { it.orUploading(mediaBeingUploaded).orProcessing(mediaBeingProcessed) },
             displayTitle = day ?: "-",
             location = null,
             unformattedDate = items.firstOrNull()?.sortableDate
