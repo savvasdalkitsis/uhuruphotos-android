@@ -35,35 +35,10 @@ internal class FeedMergerUseCase(
 
         val merged = allRemoteDays
             .map { day ->
-                day.copy(mediaItems = day.mediaItems.map { item ->
-                    val local = remainingLocalMedia
-                        .filter { it.mediaHash == item.mediaHash }
-                        .toSet()
-                    when {
-                        local.isEmpty() -> item.orDownloading(mediaBeingDownloaded)
-                        else -> {
-                            remainingLocalMedia.removeAll(local)
-                            MediaItemGroupModel(
-                                remoteInstance = item,
-                                localInstances = local
-                            )
-                        }
-                    }
-                })
+                day.mergeLocalMediaWithRemote(remainingLocalMedia)
             }
-            .map { collection ->
-                val local = remainingLocalMedia
-                    .filter { it.displayDayDate == collection.displayTitle }
-                    .toSet()
-                when {
-                    local.isEmpty() -> collection
-                    else -> {
-                        remainingLocalMedia.removeAll(local)
-                        collection.copy(mediaItems = (collection.mediaItems + local)
-                            .sortedByDescending { it.sortableDate }
-                        )
-                    }
-                }
+            .map { day ->
+                day.addLocalMediaToDay(remainingLocalMedia)
             }
             .toList()
 
@@ -96,11 +71,49 @@ internal class FeedMergerUseCase(
     private fun Map<String?, List<MediaItemModel>>.toMediaCollections() = map { (day, items) ->
         MediaCollectionModel(
             id = "local_media_collection_$day",
-            mediaItems = items.map { it.orUploading(mediaBeingUploaded).orProcessing(mediaBeingProcessed) },
+            mediaItems = items.orUploadingOrProcessing(),
             displayTitle = day ?: "-",
             location = null,
             unformattedDate = items.firstOrNull()?.sortableDate
         )
     }
 
+    private fun Collection<MediaItemModel>.orUploadingOrProcessing() = map {
+        it.orUploading(mediaBeingUploaded).orProcessing(mediaBeingProcessed)
+    }
+
+    private fun MediaCollectionModel.mergeLocalMediaWithRemote(
+        remainingLocalMedia: MutableList<MediaItemModel>
+    ) = copy(mediaItems = mediaItems.map { item ->
+        val local = remainingLocalMedia
+            .filter { it.mediaHash == item.mediaHash }
+            .toSet()
+        when {
+            local.isEmpty() -> item.orDownloading(mediaBeingDownloaded)
+            else -> {
+                remainingLocalMedia.removeAll(local)
+                MediaItemGroupModel(
+                    remoteInstance = item,
+                    localInstances = local
+                )
+            }
+        }
+    })
+
+    private fun MediaCollectionModel.addLocalMediaToDay(
+        remainingLocalMedia: MutableList<MediaItemModel>
+    ): MediaCollectionModel {
+        val local = remainingLocalMedia
+            .filter { it.displayDayDate == displayTitle }
+            .toSet()
+        return when {
+            local.isEmpty() -> this
+            else -> {
+                remainingLocalMedia.removeAll(local)
+                copy(mediaItems = (mediaItems + local.orUploadingOrProcessing())
+                    .sortedByDescending { it.sortableDate }
+                )
+            }
+        }
+    }
 }

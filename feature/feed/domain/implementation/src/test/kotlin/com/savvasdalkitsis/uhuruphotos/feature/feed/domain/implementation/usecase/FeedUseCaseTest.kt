@@ -30,13 +30,12 @@ import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadU
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.WelcomeUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalktsis.uhuruphotos.feature.download.domain.api.usecase.DownloadUseCase
-import com.shazam.shazamcrest.MatcherAssert.assertThat
-import com.shazam.shazamcrest.matcher.Matchers.sameBeanAs
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.test.runTest
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class FeedUseCaseTest {
@@ -211,6 +210,40 @@ class FeedUseCaseTest {
     }
 
     @Test
+    fun `loads processing items in days with remote items`() = runTest {
+        feedRepository.returnsRemoteFeed(
+            "day1" to listOf(mediaItem("1")),
+        )
+        mediaUseCase.returnsLocalMedia(
+            primaryFolder = localFolder(100) to listOf(
+                localMediaItem(2, "day1"),
+            ),
+        )
+        uploadUseCase.hasProcessingInProgress(2)
+
+        observeFeed().assert(
+            mediaCollection("day1", remote("1"), processing(2)),
+        )
+    }
+
+    @Test
+    fun `loads uploading items in days with remote items`() = runTest {
+        feedRepository.returnsRemoteFeed(
+            "day1" to listOf(mediaItem("1")),
+        )
+        mediaUseCase.returnsLocalMedia(
+            primaryFolder = localFolder(100) to listOf(
+                localMediaItem(2, "day1"),
+            ),
+        )
+        uploadUseCase.hasUploadsInProgress(2)
+
+        observeFeed().assert(
+            mediaCollection("day1", remote("1"), uploading(2)),
+        )
+    }
+
+    @Test
     fun `caches feed`() = runTest {
         feedRepository.returnsRemoteFeed(
             "day1" to listOf(mediaItem("1"), mediaItem("2")),
@@ -254,7 +287,7 @@ class FeedUseCaseTest {
     }
 
     private suspend fun TurbineTestContext<List<MediaCollectionModel>>.expect(collections: List<MediaCollectionModel>) {
-        assertThat(awaitItem(), sameBeanAs(collections))
+        assertEquals(collections, awaitItem())
     }
 
     private fun MediaItemInstanceModel.withHash(hash: String) = copy(mediaHash = MediaItemHashModel.fromRemoteMediaHash(hash, 0))
