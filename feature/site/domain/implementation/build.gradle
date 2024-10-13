@@ -5,9 +5,11 @@ dependencies {
     implementation(
             libs.bundles.autodagger,
             libs.hilt,
+            libs.moshi,
             libs.retrofit.moshi,
             project(":feature:site:domain:api"),
             project(":foundation:network:api"),
     )
     kapt libs.autodagger.kapt
+    ksp libs.moshi.ksp
 }
