@@ -121,3 +121,6 @@
 # Gson
 
 -keep class kotlin.** { *; }
+
+-keep class kotlinx.coroutines.android.AndroidExceptionPreHandler { *; }
+-keep class kotlinx.coroutines.internal.CoroutineExceptionHandlerImplKt { *; }
