@@ -211,8 +211,8 @@ sealed class MediaIdModel<T : Serializable> private constructor(
         fun toProcessing() = ProcessingIdModel(value, folderId, isVideo, contentUri, thumbnailUri)
     }
 
-    @Suppress("DataClassPrivateConstructor")
     @Parcelize
+    @ConsistentCopyVisibility
     data class GroupIdModel private constructor(
         override val value: ArrayList<MediaIdModel<*>>,
         override val isVideo: Boolean,

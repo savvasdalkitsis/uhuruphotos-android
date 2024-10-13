@@ -9,5 +9,5 @@ dependencies {
             project(":feature:heatmap:domain:api"),
             project(":foundation:preferences:api"),
     )
-    kapt libs.autodagger.kapt
+    ksp libs.autodagger.ksp
 }

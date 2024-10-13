@@ -16,6 +16,6 @@ dependencies {
             libs.hilt,
             project(":foundation:launchers:api"),
     )
-    kapt libs.autodagger.kapt
+    ksp libs.autodagger.ksp
 }
 

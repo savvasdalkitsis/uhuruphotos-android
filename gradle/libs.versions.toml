@@ -34,7 +34,6 @@ android-library = { id = 'com.android.library', version.ref = "agp" }
 analysis = "com.autonomousapps.dependency-analysis:2.1.4"
 google-services = { id = "com.google.gms.google-services", version.ref = "google-services" }
 kotlin-android = { id = 'org.jetbrains.kotlin.android', version.ref = "kotlin" }
-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 kotlin-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 ksp = "com.google.devtools.ksp:2.0.21-1.0.25"
 moduleGraph = "com.savvasdalkitsis.module-dependency-graph:0.12"
@@ -90,7 +89,7 @@ androidx-work-hilt = "androidx.hilt:hilt-work:1.2.0"
 appyx = "com.bumble.appyx:core:1.5.0"
 assure = "com.afollestad.assure:coroutines:0.2.0"
 autodagger-core = { module = "se.ansman.dagger.auto:android", version.ref = "autodagger" }
-autodagger-kapt = { module = "se.ansman.dagger.auto:compiler", version.ref = "autodagger" }
+autodagger-ksp = { module = "se.ansman.dagger.auto:compiler", version.ref = "autodagger" }
 autodagger-retrofit = { module = "se.ansman.dagger.auto:retrofit", version.ref = "autodagger" }
 bottomsheet = "com.holix.android:bottomsheetdialog-compose:1.5.0"
 bubble-navigation = "com.github.savvasdalkitsis:BubbleNavigationBarCompose:1.0.2"

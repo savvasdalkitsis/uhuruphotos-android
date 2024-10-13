@@ -39,5 +39,5 @@ dependencies {
             project(":foundation:video:api"),
     )
     ksp libs.moshi.ksp
-    kapt libs.autodagger.kapt
+    ksp libs.autodagger.ksp
 }

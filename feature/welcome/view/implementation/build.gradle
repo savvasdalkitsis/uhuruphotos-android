@@ -32,5 +32,5 @@ dependencies {
     debugImplementation(
             libs.androidx.compose.ui.tooling,
     )
-    kapt libs.autodagger.kapt
+    ksp libs.autodagger.ksp
 }

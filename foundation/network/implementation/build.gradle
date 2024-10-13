@@ -20,6 +20,6 @@ dependencies {
             project(":foundation:log:api"),
             project(":foundation:system:api"),
     )
-    kapt libs.autodagger.kapt
+    ksp libs.autodagger.ksp
     ksp libs.moshi.ksp
 }

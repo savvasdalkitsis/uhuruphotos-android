@@ -15,6 +15,6 @@ dependencies {
             project(":foundation:coroutines:api"),
             project(":foundation:log:api"),
     )
-    kapt libs.autodagger.kapt
+    ksp libs.autodagger.ksp
     ksp libs.moshi.ksp
 }

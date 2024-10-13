@@ -1,6 +1,3 @@
-import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 buildscript {
     dependencies {
         classpath libs.hilt.android.gradle.plugin
@@ -50,7 +47,6 @@ subprojects {
     }
     apply plugin: libs.plugins.powerassert.get().pluginId
     apply plugin: libs.plugins.kotlin.android.get().pluginId
-    apply plugin: libs.plugins.kotlin.kapt.get().pluginId
     apply plugin: libs.plugins.redacted.get().pluginId
     apply plugin: libs.plugins.ksp.get().pluginId
 
@@ -62,19 +58,16 @@ subprojects {
             targetSdk 35
         }
         compileOptions {
-            sourceCompatibility JavaVersion.VERSION_17
-            targetCompatibility JavaVersion.VERSION_17
+            sourceCompatibility JavaVersion.VERSION_21
+            targetCompatibility JavaVersion.VERSION_21
+        }
+        kotlinOptions {
+            kotlinOptions.allWarningsAsErrors = true
         }
     }
 
     dependencies {
-        kapt libs.hilt.dagger.compiler
-        kapt libs.androidx.hilt.compiler
-    }
-
-    tasks.withType(KotlinCompile).configureEach {
-        compilerOptions {
-            languageVersion = KotlinVersion.KOTLIN_1_9
-        }
+        ksp libs.hilt.dagger.compiler
+        ksp libs.androidx.hilt.compiler
     }
 }

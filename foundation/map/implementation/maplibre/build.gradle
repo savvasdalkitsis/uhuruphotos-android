@@ -30,6 +30,6 @@ dependencies {
             project(":foundation:log:api"),
             project(":foundation:map:api"),
     )
-    kapt libs.autodagger.kapt
+    ksp libs.autodagger.ksp
     compileOnly(libs.android.sdk.geojson)
 }

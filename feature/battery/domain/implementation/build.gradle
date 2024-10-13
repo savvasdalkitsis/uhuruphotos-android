@@ -13,5 +13,5 @@ dependencies {
     testImplementation(
             libs.bundles.test,
     )
-    kapt libs.autodagger.kapt
+    ksp libs.autodagger.ksp
 }

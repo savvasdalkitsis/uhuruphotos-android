@@ -15,5 +15,5 @@ dependencies {
             project(":foundation:preferences:api"),
             project(":foundation:video:api"),
     )
-    kapt libs.autodagger.kapt
+    ksp libs.autodagger.ksp
 }
