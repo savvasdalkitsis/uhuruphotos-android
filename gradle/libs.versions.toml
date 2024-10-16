@@ -164,7 +164,7 @@ sqldelight-coroutines = { module = "app.cash.sqldelight:coroutines-extensions", 
 sqldelight-gradle-plugin = { module = "app.cash.sqldelight:gradle-plugin", version.ref = "sqldelight" }
 telephoto = "me.saket.telephoto:zoomable-image-coil:0.13.0"
 timeline = "com.github.yeocak:ComposableTimelineView:0.6"
-turbine = "app.cash.turbine:turbine:1.1.0"
+turbine = "app.cash.turbine:turbine:1.2.0"
 urlvalidator = "commons-validator:commons-validator:1.9.0"
 vico = "com.patrykandpatrick.vico:compose-m2:1.15.0"
 videocache = "com.github.Andrew0000:Android-VideoView-cache:1.0.15"
