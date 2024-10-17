@@ -52,7 +52,7 @@ accompanist-systemui = { module = "com.google.accompanist:accompanist-systemuico
 accompanist-webview = { module = "com.google.accompanist:accompanist-webview", version.ref = "accompanist" }
 android-sdk-geojson = { module = "org.maplibre.gl:android-sdk-geojson", version.ref = "android-sdk-geojson" }
 androidx-activity = "androidx.activity:activity-compose:1.9.2"
-androidx-annotation = "androidx.annotation:annotation:1.8.2"
+androidx-annotation = "androidx.annotation:annotation:1.9.0"
 androidx-compose-animation-base = { module = "androidx.compose.animation:animation", version.ref = "compose" }
 androidx-compose-animation-graphics = { module = "androidx.compose.animation:animation-graphics", version.ref = "compose" }
 androidx-compose-constraintlayout = "androidx.constraintlayout:constraintlayout-compose:1.1.0-beta01"
