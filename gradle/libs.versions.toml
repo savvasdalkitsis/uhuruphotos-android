@@ -132,7 +132,7 @@ lumberjack-extension-notification = { module = "com.github.MFlisar.Lumberjack:ex
 lumberjack-extension-viewer = { module = "com.github.MFlisar.Lumberjack:extension-viewer", version.ref = "lumberjack" }
 mapbox = "com.mapbox.maps:android:11.6.0"
 maplibre = "org.maplibre.gl:android-sdk:11.5.2-pre0"
-maplibre-annotations = "org.maplibre.gl:android-plugin-annotation-v9:3.0.1"
+maplibre-annotations = "org.maplibre.gl:android-plugin-annotation-v9:3.0.2"
 maps = { module = "com.google.android.gms:play-services-maps", version.ref = "gms" }
 maps-compose = "com.google.maps.android:maps-compose:6.1.2"
 maps-utils = "com.google.maps.android:android-maps-utils:3.8.2"
