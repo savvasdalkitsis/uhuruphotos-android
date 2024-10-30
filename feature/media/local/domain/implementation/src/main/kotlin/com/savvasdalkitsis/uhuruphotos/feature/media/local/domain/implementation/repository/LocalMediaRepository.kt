@@ -84,7 +84,14 @@ class LocalMediaRepository @Inject constructor(
         localMediaItemDetailsQueries.getBucketItems(folderId)
             .asFlow().mapToList(Dispatchers.IO).distinctUntilChanged()
 
-    suspend fun getMedia(): List<LocalMediaItemDetails> =
+    suspend fun getMedia(): List<LocalMediaItemDetails> = try {
+        getLocalMedia()
+    } catch (e: Exception) {
+        log(e) { "Error getting local media. Trying again" }
+        getLocalMedia()
+    }
+
+    private suspend fun getLocalMedia() =
         localMediaItemDetailsQueries.getItems().awaitList()
 
     suspend fun refreshFolder(folderId: Int) =
