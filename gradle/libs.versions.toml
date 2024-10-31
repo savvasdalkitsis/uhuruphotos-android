@@ -135,7 +135,7 @@ maplibre = "org.maplibre.gl:android-sdk:11.5.2"
 maplibre-annotations = "org.maplibre.gl:android-plugin-annotation-v9:3.0.2"
 maps = { module = "com.google.android.gms:play-services-maps", version.ref = "gms" }
 maps-compose = "com.google.maps.android:maps-compose:6.1.2"
-maps-utils = "com.google.maps.android:android-maps-utils:3.8.2"
+maps-utils = "com.google.maps.android:android-maps-utils:3.9.0"
 maps-utils-ktx = "com.google.maps.android:maps-utils-ktx:5.1.1"
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 moshi = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "moshi" }
