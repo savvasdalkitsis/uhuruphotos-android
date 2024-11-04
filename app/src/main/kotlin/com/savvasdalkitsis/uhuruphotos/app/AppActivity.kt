@@ -26,6 +26,8 @@ import androidx.compose.runtime.getValue
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import com.bugsnag.android.Bugsnag
+import com.bugsnag.android.performance.BugsnagPerformance
+import com.bugsnag.android.performance.PerformanceConfiguration
 import com.savvasdalkitsis.uhuruphotos.app.navigation.AppNavigator
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ActivityInitializer
@@ -47,6 +49,7 @@ class AppActivity : FragmentNodeActivity() {
         super.onCreate(savedInstanceState)
         installSplashScreen()
         Bugsnag.start(this)
+        BugsnagPerformance.start(PerformanceConfiguration.load(this))
         activityInitializer.onCreated(this)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
@@ -66,5 +69,11 @@ class AppActivity : FragmentNodeActivity() {
     override fun onDestroy() {
         super.onDestroy()
         activityInitializer.onDestroyed(this)
+    }
+
+    companion object {
+        init {
+            BugsnagPerformance.reportApplicationClassLoaded()
+        }
     }
 }

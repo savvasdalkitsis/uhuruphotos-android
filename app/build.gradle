@@ -72,6 +72,7 @@ dependencies {
             libs.androidx.work.hilt,
             libs.bundles.autodagger,
             libs.bugsnag,
+            libs.bugsnag.performance,
             libs.hilt,
             libs.permissions.base,
             project(":feature:auth:domain:api"),

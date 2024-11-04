@@ -94,6 +94,7 @@ autodagger-retrofit = { module = "se.ansman.dagger.auto:retrofit", version.ref =
 bottomsheet = "com.holix.android:bottomsheetdialog-compose:1.5.0"
 bubble-navigation = "com.github.savvasdalkitsis:BubbleNavigationBarCompose:1.0.2"
 bugsnag = "com.bugsnag:bugsnag-android:6.8.0"
+bugsnag-performance = "com.bugsnag:bugsnag-android-performance:1.9.1"
 bugsnag-plugin = "com.bugsnag:bugsnag-android-gradle-plugin:8.1.0"
 capturable = "com.github.SmartToolFactory:Compose-Screenshot:1.0.3"
 coil-base = { module = "io.coil-kt:coil-base", version.ref = "coil" }
