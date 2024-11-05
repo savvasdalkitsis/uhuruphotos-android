@@ -17,7 +17,11 @@ package com.savvasdalkitsis.uhuruphotos.app.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import com.bugsnag.android.performance.BugsnagPerformance
+import com.bugsnag.android.performance.ViewType
 import com.bumble.appyx.core.composable.Children
 import com.bumble.appyx.core.modality.BuildContext
 import com.bumble.appyx.core.node.Node
@@ -46,7 +50,16 @@ class NavigationTree(
             CompositionLocalProvider(
                 LocalBackStack provides { backStack }
             ) {
+               val viewSpan = remember(navTarget.toString())  {
+                   BugsnagPerformance.startViewLoadSpan(
+                        ViewType.COMPOSE,
+                        navTarget.toString(),
+                    )
+                }
                 NavigationTargetRegistry.registry[navTarget::class]!!.NavigationRootView(navTarget)
+                LaunchedEffect(navTarget.toString()) {
+                    viewSpan.end()
+                }
             }
         }
 }

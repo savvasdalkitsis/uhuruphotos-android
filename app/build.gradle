@@ -15,8 +15,8 @@ android {
         applicationId "com.savvasdalkitsis.uhuruphotos"
         minSdk 24
         targetSdk 35
-        versionCode 236
-        versionName "0.0.236"
+        versionCode 237
+        versionName "0.0.237"
 
         manifestPlaceholders = [
                 bugSnagApiKey: System.getenv("BUGSNAG_API_KEY") ?: "DUMMY-KEY",
@@ -72,6 +72,7 @@ dependencies {
             libs.androidx.work.hilt,
             libs.bundles.autodagger,
             libs.bugsnag,
+            libs.bugsnag.performance,
             libs.hilt,
             libs.permissions.base,
             project(":feature:auth:domain:api"),

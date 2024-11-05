@@ -1,7 +1,7 @@
 [versions]
 about = "11.2.3"
 accompanist = "0.36.0"
-agp = "8.7.1"
+agp = "8.7.2"
 android-sdk-geojson = "6.0.1"
 androidx-hilt = "1.2.0"
 autodagger = "1.4.0"
@@ -94,6 +94,7 @@ autodagger-retrofit = { module = "se.ansman.dagger.auto:retrofit", version.ref =
 bottomsheet = "com.holix.android:bottomsheetdialog-compose:1.5.0"
 bubble-navigation = "com.github.savvasdalkitsis:BubbleNavigationBarCompose:1.0.2"
 bugsnag = "com.bugsnag:bugsnag-android:6.8.0"
+bugsnag-performance = "com.bugsnag:bugsnag-android-performance:1.9.1"
 bugsnag-plugin = "com.bugsnag:bugsnag-android-gradle-plugin:8.1.0"
 capturable = "com.github.SmartToolFactory:Compose-Screenshot:1.0.3"
 coil-base = { module = "io.coil-kt:coil-base", version.ref = "coil" }
@@ -131,10 +132,10 @@ lumberjack-extension-feedback = { module = "com.github.MFlisar.Lumberjack:extens
 lumberjack-extension-notification = { module = "com.github.MFlisar.Lumberjack:extension-notification", version.ref = "lumberjack" }
 lumberjack-extension-viewer = { module = "com.github.MFlisar.Lumberjack:extension-viewer", version.ref = "lumberjack" }
 mapbox = "com.mapbox.maps:android:11.6.0"
-maplibre = "org.maplibre.gl:android-sdk:11.5.2"
+maplibre = "org.maplibre.gl:android-sdk:11.6.0"
 maplibre-annotations = "org.maplibre.gl:android-plugin-annotation-v9:3.0.2"
 maps = { module = "com.google.android.gms:play-services-maps", version.ref = "gms" }
-maps-compose = "com.google.maps.android:maps-compose:6.1.2"
+maps-compose = "com.google.maps.android:maps-compose:6.2.0"
 maps-utils = "com.google.maps.android:android-maps-utils:3.9.0"
 maps-utils-ktx = "com.google.maps.android:maps-utils-ktx:5.1.1"
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
