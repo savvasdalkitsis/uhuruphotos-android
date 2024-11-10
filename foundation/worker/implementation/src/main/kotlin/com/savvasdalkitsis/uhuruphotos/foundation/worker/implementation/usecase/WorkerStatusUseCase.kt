@@ -41,16 +41,17 @@ class WorkerStatusUseCase @Inject constructor(
         monitorUniqueJob(jobName).map { it?.state }
 
     override fun monitorUniqueJob(jobName: String): Flow<WorkInfo?> = queryWork {
-        workManager.getWorkInfosForUniqueWorkLiveData(jobName)
+        val data: LiveData<List<WorkInfo>> = workManager.getWorkInfosForUniqueWorkLiveData(jobName)
+        data
     }.map { it.firstOrNull() }
 
     override fun monitorUniqueJobsByTag(tag: String): Flow<List<WorkInfo?>> = queryWork {
         workManager.getWorkInfosLiveData(WorkQuery.fromTags(tag))
     }
 
-    private fun queryWork(query: () -> LiveData<MutableList<WorkInfo?>>?): Flow<List<WorkInfo?>> {
-        var observer: ((MutableList<WorkInfo?>) -> Unit)?
-        var liveData: LiveData<MutableList<WorkInfo?>>?
+    private fun queryWork(query: () -> LiveData<List<WorkInfo>>): Flow<List<WorkInfo?>> {
+        var observer: ((List<WorkInfo?>) -> Unit)?
+        var liveData: LiveData<List<WorkInfo>>?
         return channelFlow {
             observer = {
                 val workInfo = it

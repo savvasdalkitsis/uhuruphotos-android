@@ -25,8 +25,13 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -42,7 +47,12 @@ internal fun FeedMemories(
     onScrollToMemory: (CelState) -> Unit,
     onMemorySelected: (memory: CelState, yearsAgo: Int) -> Unit,
 ) {
+    var width by remember { mutableIntStateOf(0) }
     Column(
+        modifier = Modifier
+            .onGloballyPositioned {
+                width = it.size.width
+            },
         verticalArrangement = spacedBy(8.dp),
     ) {
         Text(
@@ -58,8 +68,10 @@ internal fun FeedMemories(
                 fontSize = 14.sp
             )
         )
+        val scrollState = rememberScrollState()
         Row(
-            modifier = Modifier.horizontalScroll(rememberScrollState()),
+            modifier = Modifier
+                .horizontalScroll(scrollState),
             horizontalArrangement = spacedBy(16.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
@@ -68,7 +80,9 @@ internal fun FeedMemories(
                 FeedMemory(
                     memory = memory,
                     onMemorySelected = onMemorySelected,
-                    onScrollToMemory = onScrollToMemory
+                    onScrollToMemory = onScrollToMemory,
+                    scrollState = scrollState,
+                    parentWidth = width,
                 )
             }
             Spacer(modifier = Modifier.width(0.dp))

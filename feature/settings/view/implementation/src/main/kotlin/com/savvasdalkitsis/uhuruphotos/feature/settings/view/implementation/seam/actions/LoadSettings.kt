@@ -51,6 +51,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayThumbnailMemCacheMaxLimit
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayVideoDiskCacheCurrentUse
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayVideoDiskCacheMaxLimit
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.EnableMemoriesParallax
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.SetAutoHideFeedNavOnScroll
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.SetDiskCacheUpperLimit
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.SetFeedDetailsSyncProgressVisibility
@@ -91,6 +92,7 @@ data object LoadSettings : SettingsAction() {
             observeShareRemoveGpsData().map(::DisplayShareGpsDataEnabled),
             observeShowLibrary().map(::DisplayShowLibrary),
             observeMemoriesEnabled().map(::DisplayShowMemories),
+            observeMemoriesParallaxEnabled().map(::EnableMemoriesParallax),
             observeAnimateVideoThumbnails().map(::DisplayAnimateVideoThumbnailsEnabled),
             observeMaxAnimatedVideoThumbnails().map(::DisplayMaxAnimatedVideoThumbnails),
             observeMapProvider().map { current ->

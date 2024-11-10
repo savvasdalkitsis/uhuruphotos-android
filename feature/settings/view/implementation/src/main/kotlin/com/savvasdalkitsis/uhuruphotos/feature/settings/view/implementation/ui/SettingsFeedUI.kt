@@ -25,6 +25,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaI
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ChangeAutoHideNavOnScrollEnabled
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ChangeFeedMediaItemSyncDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ChangeMemoriesEnabled
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ChangeMemoriesParallaxEnabled
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
@@ -41,6 +42,13 @@ internal fun SettingsFeedUI(
         isChecked = state.showMemories,
     ) {
         action(ChangeMemoriesEnabled(!state.showMemories))
+    }
+    SettingsCheckBox(
+        text = stringResource(string.memories_parallax),
+        icon = drawable.ic_page_sidebar_left,
+        isChecked = state.memoriesParallax,
+    ) {
+        action(ChangeMemoriesParallaxEnabled(!state.memoriesParallax))
     }
     SettingsCheckBox(
         text = stringResource(string.auto_hide_nav_on_scroll),

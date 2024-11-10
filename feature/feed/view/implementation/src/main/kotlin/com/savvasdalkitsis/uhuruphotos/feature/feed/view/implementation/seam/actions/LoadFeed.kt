@@ -44,6 +44,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkable.SelectionM
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -84,14 +85,20 @@ data object LoadFeed : FeedAction() {
             ShowLostServerConnection(it.hasLostRemoteAccess)
         }
 
-    private fun FeedActionsContext.memories() =
-        settingsUIUseCase.observeMemoriesEnabled().flatMapLatest { enabled ->
+    private fun FeedActionsContext.memories(): Flow<FeedMutation> =
+        combine(
+            settingsUIUseCase.observeMemoriesEnabled(),
+            settingsUIUseCase.observeMemoriesParallaxEnabled(),
+        ) { enabled, parallax ->
+            enabled to parallax
+        }.flatMapLatest { (enabled, parallax) ->
             if (enabled) {
                 memoriesUseCase.observeMemories().map { memoryCollections ->
                     memoryCollections.map { (collection, yearsAgo) ->
                         MemoryCelState(
                             yearsAgo = yearsAgo,
                             cels = collection.mediaItems.map { it.toCel() }.toImmutableList(),
+                            parallaxEnabled = parallax,
                         )
                     }
                 }.map(FeedMutation::ShowMemories)

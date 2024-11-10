@@ -52,6 +52,7 @@ data class SettingsState(
     val isSendDatabaseEnabled: Boolean = false,
     val biometrics: BiometricsSettingState? = null,
     val showMemories: Boolean = true,
+    val memoriesParallax: Boolean = true,
     val autoHideFeedNavOnScroll: Boolean = true,
     val feedMediaItemSyncDisplayState: FeedMediaItemSyncDisplayState = FeedMediaItemSyncDisplayState.default,
     val shouldShowFeedSyncProgress: Boolean = false,

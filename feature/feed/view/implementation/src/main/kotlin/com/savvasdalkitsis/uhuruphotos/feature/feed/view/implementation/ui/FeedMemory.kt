@@ -17,10 +17,13 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
@@ -28,6 +31,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -35,13 +39,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawWithCache
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInParent
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.MemoryCelState
@@ -57,18 +65,39 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
+import kotlin.math.max
+import kotlin.math.min
 
 @Composable
 internal fun FeedMemory(
     memory: MemoryCelState,
     onMemorySelected: (memory: CelState, yearsAgo: Int) -> Unit,
     onScrollToMemory: (CelState) -> Unit,
+    scrollState: ScrollState,
+    parentWidth: Int = 0,
 ) {
     var index by remember {
         mutableIntStateOf(0)
     }
+    var offset by remember(memory.parallaxEnabled) { mutableFloatStateOf(0f) }
     Card(
         modifier = Modifier
+            .onGloballyPositioned {
+                if (!memory.parallaxEnabled) {
+                    return@onGloballyPositioned
+                }
+                val x = it.positionInParent().x
+                val width = it.size.width
+                val scroll = scrollState.value
+                val off = if (x - scroll + width > parentWidth) {
+                    max(0f, x - parentWidth - scroll + width)
+                } else if (x - scroll < 0) {
+                    min(0f, x - scroll)
+                } else {
+                    0f
+                }
+                offset = -off / 2
+            }
             .padding(0.dp),
         shape = MaterialTheme.shapes.medium,
         elevation = 4.dp,
@@ -101,12 +130,14 @@ internal fun FeedMemory(
                         },
                     ) {
                         Cel(
+                            modifier = Modifier.scale(1.2f),
                             state = celState,
                             onSelected = {
                                 onMemorySelected(cel, memory.yearsAgo)
                             },
                             aspectRatio = 0.7f,
                             contentScale = ContentScale.Crop,
+                            contentOffset = offset,
                         )
                     }
                 }
@@ -154,7 +185,8 @@ private fun FeedMemoryPreview() {
                     mediaHash = MediaItemHashModel.fromRemoteMediaHash("hash", 0),
                 )
             )),
-        ), onMemorySelected = { _, _ -> }, onScrollToMemory = {})
+        ), onMemorySelected = { _, _ -> }, onScrollToMemory = {}, scrollState = rememberScrollState()
+        )
     }
 
 }

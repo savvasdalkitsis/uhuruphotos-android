@@ -409,4 +409,5 @@
     <string name="delete_album_confirmation">Are you sure you want to delete this album?</string>
     <string name="delete_album_explanation">The media in this album will NOT be deleted</string>
     <string name="error_deleting_album">There was an error deleting the album</string>
+    <string name="memories_parallax">Enable parallax on memories</string>
 </resources>

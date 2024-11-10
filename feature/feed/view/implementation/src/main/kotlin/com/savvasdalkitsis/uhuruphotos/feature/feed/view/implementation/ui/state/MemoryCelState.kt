@@ -23,4 +23,5 @@ import kotlinx.collections.immutable.ImmutableList
 data class MemoryCelState(
     val yearsAgo: Int,
     val cels: ImmutableList<CelState>,
+    val parallaxEnabled: Boolean = true,
 )

@@ -27,6 +27,7 @@ interface SettingsUIUseCase {
     fun getMapProvider(): MapProvider
     fun getAvailableMapProviders(): Set<MapProvider>
     fun getMemoriesEnabled(): Boolean
+    fun getMemoriesParallaxEnabled(): Boolean
     fun getAnimateVideoThumbnails(): Boolean
     fun getMaxAnimatedVideoThumbnails(): Int
     fun getShowBannerAskingForCloudSyncOnFeed(): Boolean
@@ -48,6 +49,7 @@ interface SettingsUIUseCase {
     fun observeShowLibrary(): Flow<Boolean>
     fun observeMapProvider(): Flow<MapProvider>
     fun observeMemoriesEnabled(): Flow<Boolean>
+    fun observeMemoriesParallaxEnabled(): Flow<Boolean>
     fun observeAnimateVideoThumbnails(): Flow<Boolean>
     fun observeMaxAnimatedVideoThumbnails(): Flow<Int>
     fun observeFeedMediaItemSyncDisplay(): Flow<FeedMediaItemSyncDisplayState>
@@ -65,6 +67,7 @@ interface SettingsUIUseCase {
     fun setShowLibrary(show: Boolean)
     fun setMapProvider(provider: MapProvider)
     fun setMemoriesEnabled(enabled: Boolean)
+    fun setMemoriesParallaxEnabled(enabled: Boolean)
     fun setAnimateVideoThumbnails(animate: Boolean)
     fun setMaxAnimatedVideoThumbnails(max: Int)
     fun setShowBannerAskingForCloudSyncOnFeed(show: Boolean)

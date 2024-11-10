@@ -170,6 +170,10 @@ sealed class SettingsMutation(
         it.copy(showMemories = show)
     })
 
+    data class EnableMemoriesParallax(val enabled: Boolean): SettingsMutation({
+        it.copy(memoriesParallax = enabled)
+    })
+
     data class DisplayLoggingEnabled(val enabled: Boolean): SettingsMutation({
         it.copy(isLoggingEnabled = enabled)
     })

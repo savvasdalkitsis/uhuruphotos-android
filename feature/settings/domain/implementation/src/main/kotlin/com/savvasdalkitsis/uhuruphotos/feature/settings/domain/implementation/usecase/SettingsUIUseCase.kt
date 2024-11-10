@@ -60,7 +60,9 @@ internal class SettingsUIUseCase @Inject constructor(
     private val showLibrary = "showLibrary"
     private val showLibraryDefault = true
     private val memoriesEnabled = "memoriesEnabled"
+    private val memoriesParallaxEnabled = "memoriesParallaxEnabled"
     private val memoriesEnabledDefault = true
+    private val memoriesParallaxEnabledDefault = true
     private val animateVideoThumbnails = "animateVideoThumbnails"
     private val animateVideoThumbnailsDefault = true
     private val maxAnimatedVideoThumbnails = "maxAnimatedVideoThumbnails"
@@ -98,6 +100,8 @@ internal class SettingsUIUseCase @Inject constructor(
         .map { it.mapToAvailable() }.toSet()
     override fun getMemoriesEnabled(): Boolean =
         get(memoriesEnabled, memoriesEnabledDefault)
+    override fun getMemoriesParallaxEnabled(): Boolean =
+        get(memoriesParallaxEnabled, memoriesParallaxEnabledDefault)
     override fun getAnimateVideoThumbnails(): Boolean =
         get(animateVideoThumbnails, animateVideoThumbnailsDefault)
     override fun getMaxAnimatedVideoThumbnails(): Int =
@@ -142,6 +146,8 @@ internal class SettingsUIUseCase @Inject constructor(
             .map { it.mapToAvailable() }
     override fun observeMemoriesEnabled(): Flow<Boolean> =
         observe(memoriesEnabled, memoriesEnabledDefault)
+    override fun observeMemoriesParallaxEnabled(): Flow<Boolean> =
+        observe(memoriesParallaxEnabled, memoriesParallaxEnabledDefault)
     override fun observeAnimateVideoThumbnails(): Flow<Boolean> =
         observe(animateVideoThumbnails, animateVideoThumbnailsDefault)
     override fun observeMaxAnimatedVideoThumbnails(): Flow<Int> =
@@ -185,6 +191,10 @@ internal class SettingsUIUseCase @Inject constructor(
 
     override fun setMemoriesEnabled(enabled: Boolean) {
         set(memoriesEnabled, enabled)
+    }
+
+    override fun setMemoriesParallaxEnabled(enabled: Boolean) {
+        set(memoriesParallaxEnabled, enabled)
     }
 
     override fun setAnimateVideoThumbnails(animate: Boolean) {
