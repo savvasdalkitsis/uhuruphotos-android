@@ -131,7 +131,7 @@ lumberjack-logger-file = { module = "com.github.MFlisar.Lumberjack:logger-file",
 lumberjack-extension-feedback = { module = "com.github.MFlisar.Lumberjack:extension-feedback", version.ref = "lumberjack" }
 lumberjack-extension-notification = { module = "com.github.MFlisar.Lumberjack:extension-notification", version.ref = "lumberjack" }
 lumberjack-extension-viewer = { module = "com.github.MFlisar.Lumberjack:extension-viewer", version.ref = "lumberjack" }
-mapbox = "com.mapbox.maps:android:11.6.0"
+mapbox = "com.mapbox.maps:android:11.6.1"
 maplibre = "org.maplibre.gl:android-sdk:11.6.0"
 maplibre-annotations = "org.maplibre.gl:android-plugin-annotation-v9:3.0.2"
 maps = { module = "com.google.android.gms:play-services-maps", version.ref = "gms" }
