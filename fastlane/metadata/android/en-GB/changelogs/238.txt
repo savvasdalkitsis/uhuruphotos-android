@@ -1,0 +1,2 @@
+* Adding memories parallax effect (configurable in settings)
+* Updating dependencies
