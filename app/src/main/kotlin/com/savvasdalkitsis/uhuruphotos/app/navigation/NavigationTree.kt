@@ -20,8 +20,8 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import com.bugsnag.android.performance.BugsnagPerformance
-import com.bugsnag.android.performance.ViewType
+import com.bugsnag.android.performance.BugsnagPerformance.startViewLoadSpan
+import com.bugsnag.android.performance.ViewType.*
 import com.bumble.appyx.core.composable.Children
 import com.bumble.appyx.core.modality.BuildContext
 import com.bumble.appyx.core.node.Node
@@ -50,14 +50,13 @@ class NavigationTree(
             CompositionLocalProvider(
                 LocalBackStack provides { backStack }
             ) {
-               val viewSpan = remember(navTarget.toString())  {
-                   BugsnagPerformance.startViewLoadSpan(
-                        ViewType.COMPOSE,
-                        navTarget.toString(),
-                    )
+                val klass = navTarget::class
+                val screenName = klass.simpleName ?: navTarget.toString()
+                val viewSpan = remember(screenName)  {
+                   startViewLoadSpan(COMPOSE, screenName)
                 }
-                NavigationTargetRegistry.registry[navTarget::class]!!.NavigationRootView(navTarget)
-                LaunchedEffect(navTarget.toString()) {
+                NavigationTargetRegistry.registry[klass]!!.NavigationRootView(navTarget)
+                LaunchedEffect(screenName) {
                     viewSpan.end()
                 }
             }
