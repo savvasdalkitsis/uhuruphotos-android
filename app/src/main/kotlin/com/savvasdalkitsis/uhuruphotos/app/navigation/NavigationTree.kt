@@ -21,7 +21,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import com.bugsnag.android.performance.BugsnagPerformance.startViewLoadSpan
-import com.bugsnag.android.performance.ViewType.*
+import com.bugsnag.android.performance.ViewType.COMPOSE
 import com.bumble.appyx.core.composable.Children
 import com.bumble.appyx.core.modality.BuildContext
 import com.bumble.appyx.core.node.Node
