@@ -85,7 +85,7 @@ class UploadsUseCaseTest {
         emptySet(),
         Data.EMPTY,
         progress?.let {
-            Data(mapOf(ForegroundNotificationWorker.Progress to it))
+            Data.Builder().putAll(mapOf(ForegroundNotificationWorker.Progress to it)).build()
         } ?: Data.EMPTY,
         0,
         0,
