@@ -112,7 +112,7 @@ private fun Feed(
         }
     }
 
-    val showSyncState by remember {
+    val showSyncState by remember(state.syncItemDisplay) {
         derivedStateOf {
             when (state.syncItemDisplay) {
                 SHOW_ON_SCROLL -> gridState.isScrollInProgress
