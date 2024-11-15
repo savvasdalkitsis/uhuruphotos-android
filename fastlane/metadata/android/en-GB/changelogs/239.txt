@@ -1,0 +1,3 @@
+* Fix for sync state on feed settings not working
+* Fixing crash
+* Updating dependencies
