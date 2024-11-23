@@ -430,4 +430,5 @@
     <string name="delete_album_confirmation">¿Estás seguro de que deseas eliminar este álbum?</string>
     <string name="error_deleting_album">Se produjo un error al eliminar el álbum</string>
     <string name="delete_album_explanation">Los medios de este álbum NO se eliminarán</string>
+    <string name="memories_parallax">Activar parallax en las memorias</string>
 </resources>
