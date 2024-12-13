@@ -24,6 +24,7 @@ import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyGridItemSpanScope
 import androidx.compose.foundation.lazy.grid.LazyGridScope
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
@@ -56,12 +57,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.Vi
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import dev.shreyaspatil.permissionflow.compose.rememberPermissionFlowRequestLauncher
 import kotlinx.collections.immutable.toImmutableList
-import org.burnoutcrew.reorderable.ReorderableItem
-import org.burnoutcrew.reorderable.ReorderableLazyGridState
-import org.burnoutcrew.reorderable.SpringDragCancelledAnimation
-import org.burnoutcrew.reorderable.detectReorderAfterLongPress
-import org.burnoutcrew.reorderable.rememberReorderableLazyGridState
-import org.burnoutcrew.reorderable.reorderable
+import sh.calvin.reorderable.ReorderableItem
+import sh.calvin.reorderable.ReorderableLazyGridState
+import sh.calvin.reorderable.rememberReorderableLazyGridState
 
 @Composable
 internal fun LibraryGrid(
@@ -73,7 +71,9 @@ internal fun LibraryGrid(
         return
     val permissionLauncher = rememberPermissionFlowRequestLauncher()
     val data = remember { mutableStateOf(state.items) }
-    val reordering = rememberReorderableLazyGridState(dragCancelledAnimation = SpringDragCancelledAnimation(),
+    val lazyGridState = rememberLazyGridState()
+    val reordering = rememberReorderableLazyGridState(
+        lazyGridState = lazyGridState,
         onMove = { from, to ->
             data.value = data.value.toMutableList().apply {
                 add(to.index, removeAt(from.index))
@@ -84,12 +84,10 @@ internal fun LibraryGrid(
 
     LazyVerticalGrid(
         modifier = Modifier
-            .fillMaxSize()
-            .reorderable(reordering)
-            .detectReorderAfterLongPress(reordering),
+            .fillMaxSize(),
         contentPadding = contentPadding,
         columns = GridCells.Adaptive(160.dp),
-        state = reordering.gridState,
+        state = lazyGridState,
     ) {
         for (item in data.value) {
             when (item) {
@@ -108,8 +106,17 @@ internal fun LibraryGrid(
                         Vibrate(isDragging)
                         val title = stringResource(item.title)
                         when (val media = state.localMedia) {
-                            is FoundState -> LocalFolders(title, media, action)
-                            is RequiresPermissionsState -> LibraryPillItem(title, drawable.ic_folder) {
+                            is FoundState -> LocalFolders(
+                                modifier = Modifier.draggableHandle(),
+                                title = title,
+                                media = media,
+                                action = action
+                            )
+                            is RequiresPermissionsState -> LibraryPillItem(
+                                modifier = Modifier.draggableHandle(),
+                                title = title,
+                                icon = drawable.ic_folder,
+                            ) {
                                 permissionLauncher.launch(media.deniedPermissions.toTypedArray<String>())
                             }
                             null -> {}
@@ -141,7 +148,12 @@ internal fun LazyGridScope.pillItem(
         val title = stringResource(item.title)
         ReorderableItem(reorder, item.title) { isDragging ->
             Vibrate(isDragging)
-            LibraryPillItem(title, icon, onSelected)
+            LibraryPillItem(
+                modifier = Modifier.draggableHandle(),
+                title = title,
+                icon = icon,
+                onSelected = onSelected
+            )
         }
     }
 }

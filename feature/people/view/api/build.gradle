@@ -18,7 +18,7 @@ dependencies {
     )
     implementation(
             libs.androidx.compose.foundation,
-            libs.androidx.compose.material,
+            libs.androidx.compose.material3,
             libs.hilt,
             libs.kotlinx.immutable,
             libs.moshi,

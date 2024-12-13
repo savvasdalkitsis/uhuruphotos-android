@@ -35,12 +35,12 @@ import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlight
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.LocalAnimatedVideoThumbnails
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window.LocalWindowSize
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UhuruFullLoading
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.NoContent
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.smart.SmartGridItemScope
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.smart.SmartGridState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.smart.rememberSmartGridState
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.DynamicIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruIcon
 import kotlinx.collections.immutable.ImmutableList
 
 @Composable
@@ -66,11 +66,11 @@ fun Collage(
 ) = when {
     isLoading(state.isLoading, state.clusters, state.isEmpty) -> {
         if (loadingAnimation != null) {
-            FullLoading {
-                DynamicIcon(icon = loadingAnimation)
+            UhuruFullLoading {
+                UhuruIcon(icon = loadingAnimation)
             }
         } else {
-            FullLoading()
+            UhuruFullLoading()
         }
     }
     isEmpty(state.isLoading, state.clusters, state.isEmpty) -> emptyContent()

@@ -18,7 +18,7 @@ dependencies {
             project(":foundation:result:api"),
     )
     implementation(
-            libs.androidx.compose.material,
+            libs.androidx.compose.material3,
             libs.moshi,
             project(":feature:people:view:api"),
             project(":foundation:compose:api"),

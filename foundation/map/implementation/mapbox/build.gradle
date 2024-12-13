@@ -16,7 +16,7 @@ dependencies {
 
     implementation(
             libs.androidx.compose.foundation.layout,
-            libs.androidx.compose.material,
+            libs.androidx.compose.material3,
             libs.androidx.compose.ui,
             libs.androidx.startup,
             libs.bundles.autodagger,
@@ -25,6 +25,7 @@ dependencies {
             project(":foundation:android:api"),
             project(":foundation:initializer:api"),
             project(":foundation:map:api"),
+            project(":foundation:theme:api"),
     )
     ksp libs.autodagger.ksp
 }

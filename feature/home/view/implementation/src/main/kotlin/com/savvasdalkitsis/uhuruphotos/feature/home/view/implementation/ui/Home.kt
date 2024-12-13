@@ -17,8 +17,8 @@ package com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.ui
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.Button
-import androidx.compose.material.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,17 +27,17 @@ import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.act
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.actions.Load
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.ui.state.HomeState
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.CommonScaffold
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruScaffold
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UhuruFullLoading
 
 @Composable
 internal fun Home(
     state: HomeState,
     action: (HomeAction) -> Unit,
 ) {
-    CommonScaffold {
+    UhuruScaffold {
         if (state.isLoading) {
-            FullLoading()
+            UhuruFullLoading()
         } else if (state.needsAuthentication) {
             Box(
                 modifier = Modifier.fillMaxSize()

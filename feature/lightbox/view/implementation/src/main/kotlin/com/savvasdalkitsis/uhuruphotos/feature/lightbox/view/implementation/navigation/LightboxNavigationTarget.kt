@@ -20,7 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.L
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.viewmodel.LightboxViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeMode
 import se.ansman.dagger.auto.AutoInitialize
 import javax.inject.Inject
 import javax.inject.Singleton

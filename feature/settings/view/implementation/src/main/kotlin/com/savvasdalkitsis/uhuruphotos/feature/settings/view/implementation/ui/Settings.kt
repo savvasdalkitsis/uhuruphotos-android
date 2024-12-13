@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui
 
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass.Companion.Compact
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass.Companion.Medium
 import androidx.compose.runtime.Composable
@@ -24,9 +24,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.Avatar
+import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.UhuruAvatar
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.JobPermissionDialog
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.AboutPressed
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ChangeThemeMode
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ChangeThemeVariant
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.CollageShapeChanged
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.CollageSpacingChanged
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.CollageSpacingEdgeChanged
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.DismissJobDialog
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.StartJob
@@ -38,12 +43,14 @@ import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window.LocalWindowSize
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.staggered.StaggeredGrid
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.group.CollapsibleGroup
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.CommonScaffold
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UpNavButton
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UhuruFullLoading
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.staggered.UhuruStaggeredGrid
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.group.UhuruCollapsibleGroup
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.group.UhuruSuperGroup
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruActionIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruScaffold
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruUpNavButton
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.theme.UhuruThemeSettings
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flowOf
@@ -54,57 +61,61 @@ internal fun Settings(
     state: SettingsState,
     action: (SettingsAction) -> Unit,
 ) {
-    CommonScaffold(
+    UhuruScaffold(
         title = { Text(stringResource(string.settings)) },
         actionBarContent = {
-            ActionIcon(
+            UhuruActionIcon(
                 onClick = { controller.collapseAll() },
                 icon = drawable.ic_expand_all,
                 contentDescription = stringResource(string.expand_all),
             )
-            ActionIcon(
+            UhuruActionIcon(
                 onClick = { controller.expandAll() },
                 icon = drawable.ic_collapse_all,
                 contentDescription = stringResource(string.collapse_all),
             )
-            Avatar(state = state.avatarState)
+            UhuruAvatar(state = state.avatarState)
         },
-        navigationIcon = { UpNavButton() }
+        navigationIcon = { UhuruUpNavButton() }
     ) { contentPadding ->
         if (state.isLoading) {
-            FullLoading()
+            UhuruFullLoading()
         } else {
             val columns = when (LocalWindowSize.current.widthSizeClass) {
                 Compact -> 1
                 Medium -> 2
                 else -> 3
             }
-            StaggeredGrid(
+            UhuruStaggeredGrid(
                 modifier = Modifier.padding(horizontal = 8.dp),
                 contentPadding = contentPadding,
                 syncScrolling = false,
                 itemSpacing = 8.dp,
                 columnCount = columns,
             ) {
-                SuperGroup(controller.ui) {
-                    CollapsibleGroup(groupState = controller.uiFeed) {
+                UhuruSuperGroup(controller.ui) {
+                    UhuruCollapsibleGroup(groupState = controller.uiFeed) {
                         SettingsFeedUI(state, action)
                     }
-                    CollapsibleGroup(groupState = controller.uiCollage) {
-                        SettingsCollageUI(state, action)
+                    UhuruCollapsibleGroup(groupState = controller.uiTheme) {
+                        UhuruThemeSettings(
+                            state = state.themeSettingsState,
+                            onCollageSpacingChanged = { action(CollageSpacingChanged(it)) },
+                            onCollageSpacingEdgeChanged = { action(CollageSpacingEdgeChanged(it)) },
+                            onChangeThemeVariant = { theme, contrast -> action(ChangeThemeVariant(theme, contrast)) },
+                            onChangeThemeMode = { action(ChangeThemeMode(it)) },
+                            onCollageShapeChanged = { action(CollageShapeChanged(it)) }
+                        )
                     }
-                    CollapsibleGroup(groupState = controller.uiTheme) {
-                        SettingsTheme(state, action)
-                    }
-                    CollapsibleGroup(groupState = controller.uiProgress) {
+                    UhuruCollapsibleGroup(groupState = controller.uiProgress) {
                         SettingsProgressUI(state, action)
                     }
                     if (state.hasRemoteAccess) {
-                        CollapsibleGroup(groupState = controller.uiSearch) {
+                        UhuruCollapsibleGroup(groupState = controller.uiSearch) {
                             SettingsSearch(state, action)
                         }
                     }
-                    CollapsibleGroup(groupState = controller.uiLibrary) {
+                    UhuruCollapsibleGroup(groupState = controller.uiLibrary) {
                         SettingsLibrary(state, action)
                     }
 //                    Group(controller.uiVideo) {
@@ -112,53 +123,53 @@ internal fun Settings(
 //                    }
                     val mapProvider = state.mapProviderState
                     if (mapProvider is SelectedState) {
-                        CollapsibleGroup(groupState = controller.uiMaps) {
+                        UhuruCollapsibleGroup(groupState = controller.uiMaps) {
                             SettingsMaps(mapProvider, action)
                         }
                     }
                 }
-                SuperGroup(controller.privacy) {
+                UhuruSuperGroup(controller.privacy) {
                     state.biometrics?.let {
-                        CollapsibleGroup(groupState = controller.privacyBiometrics) {
+                        UhuruCollapsibleGroup(groupState = controller.privacyBiometrics) {
                             SettingsBiometrics(it, action)
                         }
                     }
-                    CollapsibleGroup(groupState = controller.privacyShare) {
+                    UhuruCollapsibleGroup(groupState = controller.privacyShare) {
                         SettingsShare(state, action)
                     }
                 }
-                SuperGroup(controller.jobs) {
-                    CollapsibleGroup(groupState = controller.jobsStatus) {
+                UhuruSuperGroup(controller.jobs) {
+                    UhuruCollapsibleGroup(groupState = controller.jobsStatus) {
                         SettingsJobsStatus(state, action)
                     }
                     if (state.hasRemoteAccess) {
-                        CollapsibleGroup(groupState = controller.jobsCloudSync) {
+                        UhuruCollapsibleGroup(groupState = controller.jobsCloudSync) {
                             SettingsJobsCloudSyncConfiguration(state, action)
                         }
                     }
                 }
-                SuperGroup(controller.advanced) {
-                    CollapsibleGroup(groupState = controller.advancedLightboxPhotoDiskCache) {
+                UhuruSuperGroup(controller.advanced) {
+                    UhuruCollapsibleGroup(groupState = controller.advancedLightboxPhotoDiskCache) {
                         SettingsCache(state.lightboxPhotoDiskCacheState, action)
                     }
-                    CollapsibleGroup(groupState = controller.advancedLightboxPhotoMemoryCache) {
+                    UhuruCollapsibleGroup(groupState = controller.advancedLightboxPhotoMemoryCache) {
                         SettingsCache(state.lightboxPhotoMemCacheState, action)
                     }
-                    CollapsibleGroup(groupState = controller.advancedThumbnailDiskCache) {
+                    UhuruCollapsibleGroup(groupState = controller.advancedThumbnailDiskCache) {
                         SettingsCache(state.thumbnailDiskCacheState, action)
                     }
-                    CollapsibleGroup(groupState = controller.advancedThumbnailMemoryCache) {
+                    UhuruCollapsibleGroup(groupState = controller.advancedThumbnailMemoryCache) {
                         SettingsCache(state.thumbnailMemCacheState, action)
                     }
-                    CollapsibleGroup(groupState = controller.advancedVideoDiskCache) {
+                    UhuruCollapsibleGroup(groupState = controller.advancedVideoDiskCache) {
                         SettingsCache(state.videoDiskCacheState, action)
                     }
-                    CollapsibleGroup(groupState = controller.advancedLocalMedia) {
+                    UhuruCollapsibleGroup(groupState = controller.advancedLocalMedia) {
                         SettingsLocalMedia(action)
                     }
                 }
-                SuperGroup(controller.help) {
-                    CollapsibleGroup(groupState = controller.helpFeedback) {
+                UhuruSuperGroup(controller.help) {
+                    UhuruCollapsibleGroup(groupState = controller.helpFeedback) {
                         SettingsFeedback(state, action)
                     }
                     SettingsOutlineButtonRow(
@@ -186,7 +197,7 @@ private fun SettingsPreview() {
     PreviewAppTheme {
         Settings(
             controller = SettingsViewStateController(preferences()),
-            state = SettingsState(isLoading = false)
+            state = SettingsState(isLoading = false, hasRemoteAccess = true)
         ) {}
     }
 }
@@ -194,6 +205,7 @@ private fun SettingsPreview() {
 @Composable
 private fun preferences() = object : Preferences {
     override fun remove(key: String) {}
+    override fun contains(key: String): Boolean = true
 
     override fun getBoolean(key: String, defaultValue: Boolean): Boolean = false
 
@@ -204,7 +216,7 @@ private fun preferences() = object : Preferences {
 
     override fun getInt(key: String, defaultValue: Int): Int = 0
 
-    override fun getNullableInt(key: String, defaultValue: Int?): Int? = 0
+    override fun getNullableInt(key: String, defaultValue: Int?): Int = 0
 
     override fun observeInt(key: String, defaultValue: Int): Flow<Int> = flowOf(0)
 
@@ -213,7 +225,7 @@ private fun preferences() = object : Preferences {
 
     override fun getDouble(key: String, defaultValue: Double): Double = 0.0
 
-    override fun getNullableDouble(key: String, defaultValue: Double?): Double? = 0.0
+    override fun getNullableDouble(key: String, defaultValue: Double?): Double = 0.0
 
     override fun observeDouble(key: String, defaultValue: Double): Flow<Double> = flowOf(0.0)
 

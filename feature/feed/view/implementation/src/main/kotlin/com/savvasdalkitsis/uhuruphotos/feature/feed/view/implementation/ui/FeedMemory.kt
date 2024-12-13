@@ -20,14 +20,13 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -49,7 +48,6 @@ import androidx.compose.ui.layout.positionInParent
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.MemoryCelState
@@ -61,7 +59,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.Ce
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruActionIcon
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
@@ -100,7 +98,7 @@ internal fun FeedMemory(
             }
             .padding(0.dp),
         shape = MaterialTheme.shapes.medium,
-        elevation = 4.dp,
+//        elevation = 4.dp,
     ) {
         Box(
             modifier = Modifier
@@ -145,10 +143,10 @@ internal fun FeedMemory(
                     .align(Alignment.TopEnd)
                     .padding(2.dp),
                 ) {
-                    ActionIcon(
+                    UhuruActionIcon(
                         modifier = Modifier
                             .clip(CircleShape)
-                            .background(MaterialTheme.colors.background.copy(alpha = 0.4f)),
+                            .background(MaterialTheme.colorScheme.background.copy(alpha = 0.4f)),
                         onClick = { onScrollToMemory(cel) },
                         icon = drawable.ic_down_arrow,
                     )

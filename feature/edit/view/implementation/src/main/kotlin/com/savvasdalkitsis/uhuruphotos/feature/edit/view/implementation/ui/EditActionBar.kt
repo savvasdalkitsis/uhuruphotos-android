@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.ui
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -28,7 +28,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.seam.act
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.ui.state.EditState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruActionIcon
 import io.moyuru.cropify.CropifyState
 
 @Composable
@@ -45,13 +45,13 @@ internal  fun RowScope.EditActionBar(
             )
         }
     }
-    ActionIcon(
+    UhuruActionIcon(
         onClick = { action(ToggleCropOptions) },
         enabled = state.actionBarActionsEnabled,
         icon = R.drawable.ic_crop_free,
         contentDescription = stringResource(string.crop_options),
     )
-    ActionIcon(
+    UhuruActionIcon(
         onClick = { cropState.crop() },
         enabled = state.actionBarActionsEnabled,
         icon = R.drawable.ic_crop,

@@ -25,7 +25,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.s
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
-import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeContrast
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeMode
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.Theme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CollageShape
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.collections.immutable.toImmutableSet
@@ -127,7 +129,15 @@ sealed class SettingsMutation(
     })
 
     data class DisplayThemeMode(val themeMode: ThemeMode): SettingsMutation({
-        it.copy(themeMode = themeMode)
+        it.copy(themeSettingsState = it.themeSettingsState.copy(themeMode = themeMode))
+    })
+
+    data class DisplayThemeVariant(val themeVariant: Theme): SettingsMutation({
+        it.copy(themeSettingsState = it.themeSettingsState.copy(theme = themeVariant))
+    })
+
+    data class DisplayThemeContrast(val themeContrast: ThemeContrast): SettingsMutation({
+        it.copy(themeSettingsState = it.themeSettingsState.copy(themeContrast = themeContrast))
     })
 
     data class DisplayFeedMediaItemSyncDisplay(val display: FeedMediaItemSyncDisplayState): SettingsMutation({
@@ -135,15 +145,15 @@ sealed class SettingsMutation(
     })
 
     data class DisplayCollageSpacing(val spacing: Int): SettingsMutation({
-        it.copy(collageSpacing = spacing)
+        it.copy(themeSettingsState = it.themeSettingsState.copy(collageSpacing = spacing))
     })
 
     data class DisplayCollageSpacingIncludeEdges(val include: Boolean): SettingsMutation({
-        it.copy(collageSpacingIncludeEdges = include)
+        it.copy(themeSettingsState = it.themeSettingsState.copy(collageSpacingIncludeEdges = include))
     })
 
     data class DisplayCollageShape(val shape: CollageShape): SettingsMutation({
-        it.copy(collageShape = shape)
+        it.copy(themeSettingsState = it.themeSettingsState.copy(collageShape = shape))
     })
 
     data class SetRemoteAccess(val hasAccess: Boolean): SettingsMutation({

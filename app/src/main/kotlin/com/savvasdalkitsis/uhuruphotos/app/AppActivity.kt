@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.app
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.CompositionLocalProvider
@@ -24,7 +25,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.core.view.WindowCompat
 import com.bugsnag.android.Bugsnag
 import com.bugsnag.android.performance.BugsnagPerformance
 import com.bugsnag.android.performance.PerformanceConfiguration
@@ -48,10 +48,10 @@ class AppActivity : FragmentNodeActivity() {
         Log.enabled = true
         super.onCreate(savedInstanceState)
         installSplashScreen()
+        enableEdgeToEdge()
         Bugsnag.start(this)
         BugsnagPerformance.start(PerformanceConfiguration.load(this))
         activityInitializer.onCreated(this)
-        WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
             val logging by settingsUseCase.observeLoggingEnabled().collectAsState(initial = false)
             LaunchedEffect(logging) {

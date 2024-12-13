@@ -23,14 +23,14 @@ import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.Catal
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSortingState.DATE_ASC
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSortingState.DATE_DESC
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.DropDownActionIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruDropDownActionIcon
 
 @Composable
 internal fun CatalogueSortingAction(
     sorting: CatalogueSortingState,
     sortingChanged: (CatalogueSortingState) -> Unit,
 ) {
-    DropDownActionIcon(
+    UhuruDropDownActionIcon(
         icon = sorting.icon,
         contentDescription = stringResource(string.sorting),
     ) {

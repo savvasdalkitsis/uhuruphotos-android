@@ -19,9 +19,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -36,7 +37,6 @@ fun OkDialog(
     OkDialog(title, stringResource(string.ok), onDismiss, body)
 }
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun OkDialog(
     title: String,
@@ -44,21 +44,22 @@ fun OkDialog(
     onDismiss: () -> Unit,
     body: @Composable ColumnScope.() -> Unit,
 ) {
-    PaddedDialog(
+    AlertDialog(
         onDismissRequest = onDismiss,
+        confirmButton = {
+            Button(onClick = onDismiss) {
+                Text(ok)
+            }
+        },
+        dismissButton = null,
         title = {
-            Text(title, style = MaterialTheme.typography.h5)
+            Text(title, style = MaterialTheme.typography.headlineMedium)
         },
         text = {
             Column(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 body()
-            }
-        },
-        buttons = {
-            Button(onClick = onDismiss) {
-                Text(ok)
             }
         },
     )

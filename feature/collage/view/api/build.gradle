@@ -15,7 +15,7 @@ dependencies {
             libs.androidx.compose.constraintlayout,
             libs.androidx.compose.foundation,
             libs.androidx.compose.foundation.layout,
-            libs.androidx.compose.material,
+            libs.androidx.compose.material3,
             libs.androidx.compose.material.windowsize,
             libs.androidx.compose.ui,
             libs.androidx.compose.ui.tooling.preview,

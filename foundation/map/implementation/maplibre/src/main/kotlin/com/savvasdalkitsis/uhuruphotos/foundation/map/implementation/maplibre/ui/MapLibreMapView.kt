@@ -18,20 +18,20 @@ package com.savvasdalkitsis.uhuruphotos.foundation.map.implementation.maplibre.u
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
-import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.viewinterop.AndroidView
-import org.maplibre.android.camera.CameraPosition
-import org.maplibre.android.maps.MapView
-import org.maplibre.android.utils.BitmapUtils
 import com.savvasdalkitsis.uhuruphotos.foundation.activity.api.extensions.getActivity
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapOptions
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewScope
 import com.savvasdalkitsis.uhuruphotos.foundation.map.implementation.maplibre.api.MapLibreApi
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.LocalThemeMode
+import org.maplibre.android.camera.CameraPosition
+import org.maplibre.android.maps.MapView
+import org.maplibre.android.utils.BitmapUtils
 
 @Composable
 fun MapLibreMapView(
@@ -43,7 +43,7 @@ fun MapLibreMapView(
     content: @Composable (MapViewScope.() -> Unit)?,
 ) {
 
-    val colors = MaterialTheme.colors
+    val isDark = LocalThemeMode.current.isDark()
     val layoutDirection = LocalLayoutDirection.current
 
     val start = with(contentPadding) {
@@ -78,8 +78,8 @@ fun MapLibreMapView(
                     }
                     map.setStyle(
                         when {
-                            colors.isLight -> "https://api.maptiler.com/maps/basic-v2/style.json?key="
-                            else -> "https://api.maptiler.com/maps/basic-v2-dark/style.json?key="
+                            isDark -> "https://api.maptiler.com/maps/basic-v2-dark/style.json?key="
+                            else -> "https://api.maptiler.com/maps/basic-v2/style.json?key="
                         } + MapLibreApi.getApiKey(context)
                     )
                     map.getStyle { style ->

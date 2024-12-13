@@ -16,8 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobModel
@@ -54,7 +54,7 @@ fun JobPermissionDialog(
             if (job != LOCAL_MEDIA_SYNC) {
                 Text(
                     stringResource(string.process_takes_significant_time_consumes_battery),
-                    style = MaterialTheme.typography.caption
+                    style = MaterialTheme.typography.displayMedium
                 )
             }
         }

@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam.actions
 
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.view.api.navigation.NotificationsNavigationRoute
+import com.savvasdalkitsis.uhuruphotos.feature.theme.view.api.navigation.ThemeNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam.WelcomeActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.ui.state.WelcomeState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
@@ -25,7 +26,12 @@ import kotlinx.coroutines.flow.flow
 data object Save : WelcomeAction() {
     override fun WelcomeActionsContext.handle(state: WelcomeState): Flow<Mutation<WelcomeState>> = flow {
         welcomeUseCase.markWelcomeScreenSeen()
-        navigator.newRoot(NotificationsNavigationRoute)
+        navigator.newRoot(
+            when {
+                themeUseCase.hasSetTheme() -> NotificationsNavigationRoute
+                else -> ThemeNavigationRoute
+            }
+        )
     }
 
 }

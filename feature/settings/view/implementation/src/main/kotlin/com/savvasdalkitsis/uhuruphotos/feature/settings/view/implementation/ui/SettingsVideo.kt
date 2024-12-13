@@ -23,13 +23,14 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkbox.UhuruCheckBoxRow
 
 @Composable
 internal fun ColumnScope.SettingsVideo(
     state: SettingsState,
     action: (SettingsAction) -> Unit,
 ) {
-    SettingsCheckBox(
+    UhuruCheckBoxRow(
         text = stringResource(string.animate_video_thumbnails),
         icon = drawable.ic_play_filled,
         isChecked = state.animateVideoThumbnails,

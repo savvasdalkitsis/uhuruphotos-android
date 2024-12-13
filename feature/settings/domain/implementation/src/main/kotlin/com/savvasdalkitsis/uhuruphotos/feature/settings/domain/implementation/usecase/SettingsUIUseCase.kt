@@ -34,7 +34,9 @@ import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.get
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.observe
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
-import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeContrast
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeMode
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeVariant
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CollageShape
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
@@ -52,7 +54,8 @@ internal class SettingsUIUseCase @Inject constructor(
 ) : SettingsUIUseCase {
 
     private val themeMode = "themeMode"
-    private val themeModeDefault = ThemeMode.default
+    private val themeVariant = "themeVariant"
+    private val themeContrast = "themeContrast"
     private val mapProvider = "mapProvider"
     private val mapProviderDefault = MapProvider.default
     private val searchSuggestionsEnabled = "searchSuggestionsEnabled"
@@ -86,11 +89,8 @@ internal class SettingsUIUseCase @Inject constructor(
     private val autoHideFeedNavOnScroll = "autoHideFeedNavOnScroll"
     private val autoHideFeedNavOnScrollDefault = true
     private val collageSpacing = "collageSpacing"
-    private val collageSpacingDefault = 2
     private val collageSpacingIncludeEdges = "collageSpacingIncludeEdges"
-    private val collageSpacingIncludeEdgesDefault = false
     private val collageShape = "collageShape"
-    private val collageShapeDefault = CollageShape.default
 
     override fun getShowLibrary(): Boolean =
         get(showLibrary, showLibraryDefault)
@@ -132,11 +132,22 @@ internal class SettingsUIUseCase @Inject constructor(
         get(collageShape, collageShapeDefault)
     override fun getCollageSpacingIncludeEdges(): Boolean =
         get(collageSpacingIncludeEdges, collageSpacingIncludeEdgesDefault)
+    override fun getThemeMode(): ThemeMode =
+        get(themeMode, themeModeDefault)
+    override fun getThemeVariant(): ThemeVariant =
+        get(themeVariant, themeVariantDefault)
+    override fun getThemeContrast(): ThemeContrast =
+        get(themeContrast, themeContrastDefault)
+
+    override fun hasThemeVariantSet(): Boolean =
+        preferences.contains(themeVariant)
 
     override fun observeThemeMode(): Flow<ThemeMode> =
         observe(themeMode, themeModeDefault)
-    override fun getThemeMode(): ThemeMode =
-        get(themeMode, themeModeDefault)
+    override fun observeThemeVariant(): Flow<ThemeVariant> =
+        observe(themeVariant, themeVariantDefault)
+    override fun observeThemeContrast(): Flow<ThemeContrast> =
+        observe(themeContrast, themeContrastDefault)
     override fun observeSearchSuggestionsEnabledMode(): Flow<Boolean> =
         observe(searchSuggestionsEnabled, searchSuggestionsEnabledDefault)
     override fun observeShowLibrary(): Flow<Boolean> =
@@ -175,6 +186,14 @@ internal class SettingsUIUseCase @Inject constructor(
 
     override fun setThemeMode(mode: ThemeMode) {
         set(themeMode, mode)
+    }
+
+    override fun setThemeVariant(variant: ThemeVariant) {
+        set(themeVariant, variant)
+    }
+
+    override fun setThemeContrast(contrast: ThemeContrast) {
+        set(themeContrast, contrast)
     }
 
     override fun setSearchSuggestionsEnabled(enabled: Boolean) {

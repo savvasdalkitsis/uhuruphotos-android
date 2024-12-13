@@ -17,15 +17,17 @@ package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkable
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Animatable
-import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Icon
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -45,14 +47,14 @@ import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlight
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.CustomColors
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun Checkable(
     modifier: Modifier = Modifier,
     id: Any,
     shape: Shape = RectangleShape,
+    selectedBorder: BorderStroke? = null,
     selectionMode: SelectionMode,
-    selectionBackgroundColor: Color = Color.LightGray,
+    selectionBackgroundColor: Color = MaterialTheme.colorScheme.surfaceContainerHigh,
     fallbackColor: Color = Color.Transparent,
     editable: Boolean = true,
     selectedScale: Float = 0.85f,
@@ -71,6 +73,11 @@ fun Checkable(
     Box(
         modifier = modifier
             .clip(shape)
+            .then(if (selectedBorder != null && selectionMode == SelectionMode.SELECTED)
+                Modifier.border(selectedBorder, shape)
+            else
+                Modifier
+            )
             .background(backgroundColor)
             .combinedClickable(
                 enabled = editable,

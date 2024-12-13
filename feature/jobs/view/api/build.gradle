@@ -9,7 +9,7 @@ android {
 dependencies {
     api project(":feature:jobs:domain:api")
     implementation(
-            libs.androidx.compose.material,
+            libs.androidx.compose.material3,
             libs.androidx.compose.ui.tooling.preview,
             project(":foundation:strings:api"),
             project(":foundation:ui:api"),

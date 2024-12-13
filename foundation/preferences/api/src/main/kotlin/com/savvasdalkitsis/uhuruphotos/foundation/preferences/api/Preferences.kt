@@ -20,6 +20,7 @@ import kotlinx.coroutines.flow.map
 
 interface Preferences {
     fun remove(key: String)
+    fun contains(key: String): Boolean
 
     fun getBoolean(key: String, defaultValue: Boolean): Boolean
     fun observeBoolean(key: String, defaultValue: Boolean): Flow<Boolean>

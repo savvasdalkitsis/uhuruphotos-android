@@ -19,14 +19,14 @@ import androidx.compose.runtime.Composable
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.AccountOverviewAction
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.AvatarPressed
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.AccountOverviewState
-import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.Avatar
+import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.UhuruAvatar
 
 @Composable
 fun AccountOverviewActionBar(
     state: AccountOverviewState,
     action: (AccountOverviewAction) -> Unit,
 ) {
-    Avatar(
+    UhuruAvatar(
         state = state.avatarState,
         avatarPressed = {
             action(AvatarPressed)

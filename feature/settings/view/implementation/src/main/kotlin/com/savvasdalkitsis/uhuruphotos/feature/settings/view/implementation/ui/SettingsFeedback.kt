@@ -26,6 +26,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkbox.UhuruCheckBoxRow
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.layout.UhuruEntryWithSubtext
 
 @Composable
 internal fun SettingsFeedback(
@@ -44,14 +46,14 @@ internal fun SettingsFeedback(
     ) {
         action(SendFeedbackClicked)
     }
-    SettingsCheckBox(
+    UhuruCheckBoxRow(
         text = stringResource(string.send_database),
         icon = drawable.ic_database_send,
         isChecked = state.isSendDatabaseEnabled,
         onCheckedChange = { action(ChangeSendDatabaseEnabled(it)) }
     )
-    SettingsEntryWithSubtext(subtext = string.degrades_performance) {
-        SettingsCheckBox(
+    UhuruEntryWithSubtext(subtext = string.degrades_performance) {
+        UhuruCheckBoxRow(
             text = stringResource(string.enable_logging),
             icon = drawable.ic_logs,
             isChecked = state.isLoggingEnabled,

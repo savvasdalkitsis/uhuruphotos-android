@@ -29,7 +29,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.act
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.ShowAddSelectedCelsToAlbumDialog
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.UploadSelectedCels
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruActionIcon
 
 @Composable
 internal fun RowScope.FeedActionBar(
@@ -43,31 +43,31 @@ internal fun RowScope.FeedActionBar(
     action: (FeedAction) -> Unit
 ) {
     AnimatedVisibility(visible = shouldShowAddIcon) {
-        ActionIcon(
+        UhuruActionIcon(
             onClick = { action(ShowAddSelectedCelsToAlbumDialog) },
             icon = drawable.ic_add_image
         )
     }
     AnimatedVisibility(visible = shouldShowShareIcon) {
-        ActionIcon(
+        UhuruActionIcon(
             onClick = { action(ShareSelectedCels) },
             icon = drawable.ic_share
         )
     }
     AnimatedVisibility(visible = shouldShowDeleteIcon) {
-        ActionIcon(
+        UhuruActionIcon(
             onClick = { action(AskForSelectedPhotosTrashing) },
             icon = drawable.ic_delete
         )
     }
     AnimatedVisibility(visible = shouldShowDownloadIcon) {
-        ActionIcon(
+        UhuruActionIcon(
             onClick = { action(DownloadSelectedCels) },
             icon = drawable.ic_cloud_download
         )
     }
     AnimatedVisibility(visible = shouldShowUploadIcon) {
-        ActionIcon(
+        UhuruActionIcon(
             onClick = { action(UploadSelectedCels) },
             icon = drawable.ic_cloud_upload
         )

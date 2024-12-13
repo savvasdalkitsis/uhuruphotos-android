@@ -24,8 +24,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -55,7 +56,7 @@ fun NamedVitrine(
         Box(modifier = Modifier.fillMaxWidth()) {
             if (state.isEmpty && iconFallback != -1) Image(
                 modifier = photoGridModifier
-                    .clip(MaterialTheme.shapes.large)
+                    .clip(CardDefaults.shape)
                     .background(CustomColors.emptyItem)
                     .let { if (selectable) it.clickable { onSelected() } else it }
                     .padding(24.dp),
@@ -66,7 +67,7 @@ fun NamedVitrine(
                 state = state,
                 selectable = selectable,
                 onSelected = onSelected,
-                shape = MaterialTheme.shapes.large
+                shape = CardDefaults.shape
             )
         }
         VitrineSubtitle(title)
@@ -84,7 +85,7 @@ fun ColumnScope.VitrineSubtitle(text: String) {
         maxLines = 1,
         overflow = TextOverflow.Ellipsis,
         style = remember {
-            typography.subtitle1.copy(fontWeight = FontWeight.Bold)
+            typography.bodyLarge.copy(fontWeight = FontWeight.Bold)
         },
     )
 }

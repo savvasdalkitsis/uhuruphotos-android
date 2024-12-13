@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.sea
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
-import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeMode
 import kotlinx.coroutines.flow.flow
 
 data class ChangeThemeMode(val themeMode: ThemeMode) : SettingsAction() {

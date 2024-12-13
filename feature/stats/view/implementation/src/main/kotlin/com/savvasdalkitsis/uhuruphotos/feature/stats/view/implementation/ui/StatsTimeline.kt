@@ -22,16 +22,16 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.CountryVisit
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.group.CollapsibleGroup
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.group.UhuruCollapsibleGroup
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.group.state.rememberCollapsibleGroupState
 import com.yeocak.timelineview.TimelineView
 import com.yeocak.timelineview.TimelineView.NodeType.FIRST
@@ -42,7 +42,7 @@ import kotlinx.collections.immutable.ImmutableList
 @Composable
 fun StatsTimeline(isLoading: Boolean, timeline: ImmutableList<CountryVisit>) {
     val groupState = rememberCollapsibleGroupState(R.string.timeline, "stats_timeline")
-    CollapsibleGroup(groupState = groupState) {
+    UhuruCollapsibleGroup(groupState = groupState) {
         if (isLoading) {
             Box(
                 contentAlignment = Alignment.Center,
@@ -62,7 +62,7 @@ fun StatsTimeline(isLoading: Boolean, timeline: ImmutableList<CountryVisit>) {
                     item(index) {
                         Row {
                             TimelineView.SingleNode(
-                                color = MaterialTheme.colors.onBackground,
+                                color = MaterialTheme.colorScheme.onBackground,
                                 nodeType = when (index) {
                                     0 -> FIRST
                                     timeline.size - 1 -> LAST

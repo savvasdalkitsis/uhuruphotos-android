@@ -19,11 +19,11 @@ import androidx.compose.foundation.gestures.detectVerticalDragGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.DropdownMenu
-import androidx.compose.material.DropdownMenuItem
-import androidx.compose.material.Icon
-import androidx.compose.material.RadioButton
-import androidx.compose.material.Text
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.Icon
+import androidx.compose.material3.RadioButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -38,7 +38,7 @@ import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplayState
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplayState
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruActionIcon
 
 @Composable
 fun CollageDisplayActionButton(
@@ -47,7 +47,7 @@ fun CollageDisplayActionButton(
 ) {
     var isOpen by remember { mutableStateOf(false) }
     Box {
-        ActionIcon(
+        UhuruActionIcon(
             modifier = Modifier
                 .pointerInput(currentCollageDisplayState) {
                     detectVerticalDragGestures { _, dragAmount ->
@@ -84,26 +84,27 @@ private fun CollageDisplayDropDownItem(
     onChange: (PredefinedCollageDisplayState) -> Unit
 ) {
     DropdownMenuItem(
+        text = {
+            Row {
+                RadioButton(
+                    selected = currentCollageDisplayState == display,
+                    onClick = { onChange(display) }
+                )
+                Text(
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                        .weight(1f),
+                    text = stringResource(display.friendlyName)
+                )
+                Icon(
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                        .padding(8.dp),
+                    painter = painterResource(id = display.iconResource),
+                    contentDescription = null
+                )
+            }
+        },
         onClick = { onChange(display) }
-    ) {
-        Row {
-            RadioButton(
-                selected = currentCollageDisplayState == display,
-                onClick = { onChange(display) }
-            )
-            Text(
-                modifier = Modifier
-                    .align(Alignment.CenterVertically)
-                    .weight(1f),
-                text = stringResource(display.friendlyName)
-            )
-            Icon(
-                modifier = Modifier
-                    .align(Alignment.CenterVertically)
-                    .padding(8.dp),
-                painter = painterResource(id = display.iconResource),
-                contentDescription = null
-            )
-        }
-    }
+    )
 }

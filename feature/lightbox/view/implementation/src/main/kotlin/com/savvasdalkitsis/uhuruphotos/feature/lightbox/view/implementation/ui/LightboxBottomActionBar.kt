@@ -42,8 +42,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.s
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIconWithText
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruActionIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruActionIconWithText
 
 @Composable
 fun LightboxBottomActionBar(
@@ -77,7 +77,7 @@ fun LightboxBottomActionBarEdit(
             Spacer(Modifier.width(8.dp))
         }
         item("dismiss") {
-            ActionIcon(
+            UhuruActionIcon(
                 onClick = { action(HideEditOptions) },
                 icon = drawable.ic_arrow_up,
                 iconModifier = Modifier.rotate(180f),
@@ -85,7 +85,7 @@ fun LightboxBottomActionBarEdit(
             )
         }
         item("crop") {
-            ActionIconWithText(
+            UhuruActionIconWithText(
                 onClick = { action(CropMediaItem) },
                 icon = drawable.ic_crop,
                 text = stringResource(string.crop),
@@ -94,7 +94,7 @@ fun LightboxBottomActionBarEdit(
         mediaItem.showEditApps.forEach { app ->
             item(app.iconResource) {
                 val pm = LocalContext.current.packageManager
-                ActionIconWithText(
+                UhuruActionIconWithText(
                     onClick = { action(EditMediaItemExternally(app)) },
                     icon = app.loadIcon(pm),
                     text = app.loadLabel(pm).toString(),
@@ -121,7 +121,7 @@ fun LightboxBottomActionBarOptions(
     ) {
         if (mediaItem.showShareIcon) {
             item("share") {
-                ActionIconWithText(
+                UhuruActionIconWithText(
                     modifier = Modifier.animateItem(),
                     onClick = { action(ShareMediaItem) },
                     icon = drawable.ic_share,
@@ -131,7 +131,7 @@ fun LightboxBottomActionBarOptions(
         }
         if (mediaItem.showUseAsIcon) {
             item("useAs") {
-                ActionIconWithText(
+                UhuruActionIconWithText(
                     modifier = Modifier.animateItem(),
                     onClick = { action(UseMediaItemAs) },
                     icon = drawable.ic_open_in_new,
@@ -141,7 +141,7 @@ fun LightboxBottomActionBarOptions(
         }
         if (mediaItem.showEditIcon) {
             item("edit") {
-                ActionIconWithText(
+                UhuruActionIconWithText(
                     modifier = Modifier.animateItem(),
                     onClick = { action(EditMediaItem) },
                     icon = drawable.ic_edit,
@@ -151,7 +151,7 @@ fun LightboxBottomActionBarOptions(
         }
         if (showRestoreButton) {
             item("restore") {
-                ActionIconWithText(
+                UhuruActionIconWithText(
                     modifier = Modifier.animateItem(),
                     onClick = { action(AskForMediaItemRestoration) },
                     icon = drawable.ic_restore_from_trash,
@@ -161,7 +161,7 @@ fun LightboxBottomActionBarOptions(
         }
         if (mediaItem.showDeleteButton) {
             item("delete") {
-                ActionIconWithText(
+                UhuruActionIconWithText(
                     modifier = Modifier.animateItem(),
                     onClick = { action(AskForMediaItemTrashing) },
                     icon = drawable.ic_delete,

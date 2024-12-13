@@ -28,9 +28,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -49,7 +49,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.s
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
-import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeMode
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SectionHeader
 import kotlinx.collections.immutable.toImmutableSet
 
@@ -87,7 +87,7 @@ private fun LightboxSearchCaption(
     Row(
         modifier = Modifier
             .clip(MaterialTheme.shapes.large)
-            .background(color = MaterialTheme.colors.onBackground)
+            .background(color = MaterialTheme.colorScheme.onBackground)
             .defaultMinSize(minHeight = 48.dp)
             .padding(horizontal = 8.dp, vertical = 2.dp)
             .clickable { action(SearchCaptionSelected(caption)) },
@@ -98,16 +98,16 @@ private fun LightboxSearchCaption(
             Icon(
                 modifier = Modifier.size(24.dp),
                 painter = painterResource(icon),
-                tint = MaterialTheme.colors.background,
+                tint = MaterialTheme.colorScheme.background,
                 contentDescription = null,
             )
         }
         Text(
             modifier = Modifier
                 .defaultMinSize(minWidth = 24.dp)
-                .background(color = MaterialTheme.colors.onBackground)
+                .background(color = MaterialTheme.colorScheme.onBackground)
                 .padding(6.dp),
-            color = MaterialTheme.colors.background,
+            color = MaterialTheme.colorScheme.background,
             text = caption,
             textAlign = TextAlign.Center
         )
@@ -125,7 +125,7 @@ private fun CaptionsPreview() {
 @Preview
 @Composable
 private fun CaptionsPreviewDark() {
-    PreviewAppTheme(theme = ThemeMode.DARK_MODE) {
+    PreviewAppTheme(themeMode = ThemeMode.DARK_MODE) {
         CaptionsPreviewContent()
     }
 }

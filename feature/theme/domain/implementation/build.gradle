@@ -1,0 +1,13 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.theme.domain.implementation'
+}
+
+dependencies {
+    implementation(
+            libs.bundles.autodagger,
+            libs.hilt,
+            project(":feature:theme:domain:api"),
+            project(":feature:settings:domain:api"),
+    )
+    ksp libs.autodagger.ksp
+}

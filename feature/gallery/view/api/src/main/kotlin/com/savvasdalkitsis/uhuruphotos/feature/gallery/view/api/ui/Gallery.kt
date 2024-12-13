@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -33,10 +33,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.Gallery
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.PeopleBanner
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.NoContent
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruActionIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.refresh.SwipeRefresh
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.CommonScaffold
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UpNavButton
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruScaffold
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruUpNavButton
 
 @Composable
 fun Gallery(
@@ -45,13 +45,13 @@ fun Gallery(
     emptyContent: @Composable () -> Unit = { NoContent(string.no_media) },
     action: (GalleryAction) -> Unit
 ) {
-    CommonScaffold(
+    UhuruScaffold(
         title = { Text(state.title.toText()) },
         expandableTopBar = true,
-        navigationIcon = { UpNavButton() },
+        navigationIcon = { UhuruUpNavButton() },
         actionBarContent = {
             state.sorting?.let { sorting ->
-                ActionIcon(
+                UhuruActionIcon(
                     onClick = { action(ChangeGallerySorting(sorting.toggle())) },
                     icon = sorting.icon,
                     contentDescription = stringResource(string.sorting)

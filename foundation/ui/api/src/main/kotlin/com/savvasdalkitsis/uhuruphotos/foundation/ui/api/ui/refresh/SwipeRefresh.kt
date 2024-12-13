@@ -16,21 +16,20 @@ limitations under the License.
 
 package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.refresh
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.pullrefresh.PullRefreshIndicator
-import androidx.compose.material.pullrefresh.pullRefresh
-import androidx.compose.material.pullrefresh.rememberPullRefreshState
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SwipeRefresh(
     indicatorPadding: PaddingValues,
@@ -38,20 +37,25 @@ fun SwipeRefresh(
     onRefresh: () -> Unit,
     content: @Composable BoxScope.() -> Unit,
 ) {
-    val refreshState = rememberPullRefreshState(refreshing = isRefreshing, onRefresh = onRefresh)
-    Box(modifier = Modifier
-        .recomposeHighlighter()
-        .fillMaxSize()
-        .pullRefresh(refreshState)
+    val refreshState = rememberPullToRefreshState()
+    PullToRefreshBox(
+        modifier = Modifier
+            .recomposeHighlighter()
+            .fillMaxSize(),
+        state = refreshState,
+        isRefreshing = isRefreshing,
+        onRefresh = onRefresh,
+        indicator = {
+            PullToRefreshDefaults.Indicator(
+                modifier = Modifier
+                    .recomposeHighlighter()
+                    .align(Alignment.TopCenter)
+                    .padding(indicatorPadding),
+                state = refreshState,
+                isRefreshing = isRefreshing,
+            )
+        }
     ) {
         content()
-        PullRefreshIndicator(
-            modifier = Modifier
-                .recomposeHighlighter()
-                .align(Alignment.TopCenter)
-                .padding(indicatorPadding),
-            refreshing = isRefreshing,
-            state = refreshState,
-        )
     }
 }

@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,7 +39,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.viewm
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.blurIf
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UhuruFullLoading
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.Logo
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.dialogs.UpsellDialog
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.refresh.SwipeRefresh
@@ -95,7 +95,7 @@ private fun Library(
         when {
             state.loading
                     && state.autoAlbums == null
-                    && state.userAlbums == null -> FullLoading()
+                    && state.userAlbums == null -> UhuruFullLoading()
             else -> SwipeRefresh(
                 indicatorPadding = contentPadding,
                 isRefreshing = state.loading,

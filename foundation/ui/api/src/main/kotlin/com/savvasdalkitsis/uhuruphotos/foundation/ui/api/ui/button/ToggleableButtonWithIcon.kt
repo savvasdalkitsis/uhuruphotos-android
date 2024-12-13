@@ -19,9 +19,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Checkbox
-import androidx.compose.material.OutlinedButton
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -61,7 +61,10 @@ fun ToggleableButtonWithIcon(
                 text = text,
                 animateIfAvailable = animateIfAvailable,
             )
-            Checkbox(checked = checked, onCheckedChange = onCheckedChange)
+            Checkbox(
+                checked = checked,
+                onCheckedChange = onCheckedChange,
+            )
         }
     }
 }
@@ -76,6 +79,21 @@ private fun ToggleableButtonWithIconPreview() {
                 icon = drawable.ic_info,
                 text = "Info",
                 checked = true,
+            ) {}
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun ToggleableButtonWithIconUnselectedPreview() {
+    PreviewAppTheme {
+        Box(Modifier.padding(8.dp)) {
+            ToggleableButtonWithIcon(
+                modifier = Modifier.fillMaxWidth(),
+                icon = drawable.ic_info,
+                text = "Info",
+                checked = false,
             ) {}
         }
     }

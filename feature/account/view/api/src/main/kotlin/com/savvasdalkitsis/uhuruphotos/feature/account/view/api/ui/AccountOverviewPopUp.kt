@@ -27,8 +27,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedCard
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -63,7 +64,7 @@ fun AccountOverviewPopUp(
                 modifier = Modifier
                     .recomposeHighlighter()
                     .fillMaxSize()
-                    .background(MaterialTheme.colors.background.copy(alpha = 0.3f))
+                    .background(MaterialTheme.colorScheme.background.copy(alpha = 0.3f))
                     .clickable { onDismiss() }
             )
             Popup(
@@ -87,12 +88,13 @@ fun AccountOverviewPopUp(
                     exit = fadeOut() + scaleOut(transformOrigin = TransformOrigin(1f, 0f)),
                     visibleState = show
                 ) {
-                    Card(
+                    OutlinedCard(
                         modifier = Modifier
                             .recomposeHighlighter()
                             .widthIn(max = 480.dp),
-                        elevation = 4.dp,
-                        shape = MaterialTheme.shapes.large,
+                        colors = CardDefaults.elevatedCardColors(),
+                        elevation = CardDefaults.elevatedCardElevation(),
+                        shape = CardDefaults.elevatedShape,
                     ) {
                         AccountOverview(
                             state = state,

@@ -22,14 +22,14 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Icon
-import androidx.compose.material.LocalContentColor
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.NavigationRail
-import androidx.compose.material.NavigationRailItem
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationRail
+import androidx.compose.material3.NavigationRailItem
+import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass.Companion.Compact
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
@@ -46,8 +46,6 @@ import com.bumble.appyx.navmodel.backstack.BackStack
 import com.bumble.appyx.navmodel.backstack.activeElement
 import com.bumble.appyx.navmodel.backstack.operation.push
 import com.bumble.appyx.navmodel.backstack.operation.singleTop
-import com.commandiron.bubble_navigation_bar_compose.BubbleNavigationBar
-import com.commandiron.bubble_navigation_bar_compose.BubbleNavigationBarItem
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplayState
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.api.navigation.DiscoverNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.navigation.FeedNavigationRoute
@@ -58,7 +56,6 @@ import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.LocalBackStack
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.CustomColors
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window.LocalWindowSize
 
 @Composable
@@ -77,7 +74,7 @@ fun HomeNavigationBar(
 
     when (homeNavigationStyle()) {
         BOTTOM_BAR -> {
-            BubbleNavigationBar(
+            NavigationBar(
                 containerColor = Color.Transparent,
                 contentColor = Color.Transparent,
             ) {
@@ -91,8 +88,8 @@ fun HomeNavigationBar(
         }
         NAVIGATION_RAIL -> NavigationRail(
             modifier = Modifier.padding(top = contentPadding.calculateTopPadding()),
-            elevation = 0.dp,
-            backgroundColor = Color.Transparent,
+//            elevation = 0.dp,
+//            backgroundColor = Color.Transparent,
         ) {
             Column(
                 modifier = Modifier.verticalScroll(rememberScrollState())
@@ -178,12 +175,12 @@ private fun <R: NavigationRoute> BottomNavItem(
         derivedStateOf { backStack().activeElement }
     }
     with(rowScope) {
-        BubbleNavigationBarItem(
-            title = stringResource(label),
-            iconPainter = icon,
-            selectedColor = MaterialTheme.colors.primary,
-            unSelectedBackgroundColor = MaterialTheme.colors.background,
-            unSelectedIconColor = CustomColors.emptyItem,
+        NavigationBarItem(
+            label = { Text(stringResource(label)) },
+            icon = { Icon(icon, contentDescription = null) },
+//            selectedColor = MaterialTheme.colorScheme.primary,
+//            unSelectedBackgroundColor = MaterialTheme.colorScheme.background,
+//            unSelectedIconColor = CustomColors.emptyItem,
             selected = activeRoute == route,
             onClick = selectNavigationItem(
                 activeRoute,
@@ -207,7 +204,7 @@ private fun <R: NavigationRoute> NavRailNavItem(
         derivedStateOf { backStack().activeElement }
     }
     NavigationRailItem(
-        selectedContentColor = LocalContentColor.current,
+//        selectedContentColor = LocalContentColor.current,
         icon = { Icon(icon, contentDescription = null) },
         label = { Text(stringResource(label)) },
         selected = activeRoute == route,

@@ -15,10 +15,13 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.dialogs
 
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.Arrangement.spacedBy
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.OutlinedButton
-import androidx.compose.material.Text
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -27,13 +30,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.LoginButton
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.WhatIsLibrePhotosButton
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun UpsellDialog(
     onDismiss: () -> Unit,
@@ -43,20 +46,9 @@ fun UpsellDialog(
     var showHelpDialog by remember {
         mutableStateOf(false)
     }
-    MultiButtonDialog(
-        title = stringResource(R.string.advanced_feature_title),
-        dismissButton = {
-            OutlinedButton(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .recomposeHighlighter(),
-                onClick = onDismiss,
-            ) {
-                Text(stringResource(R.string.ok))
-            }
-        },
-        onDismiss = onDismiss,
-        extraButtons = {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        confirmButton = {
             WhatIsLibrePhotosButton {
                 showHelpDialog = true
             }
@@ -70,11 +62,31 @@ fun UpsellDialog(
                     Text(stringResource(R.string.do_not_show_again))
                 }
             }
+            LoginButton(onLogin = onLogin)
         },
-        confirmButton = { LoginButton(onLogin = onLogin) },
-    ) {
-        Text(stringResource(R.string.advanced_feature_body))
-    }
+        dismissButton = {
+            OutlinedButton(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .recomposeHighlighter(),
+                onClick = onDismiss,
+            ) {
+                Text(stringResource(R.string.ok))
+            }
+        },
+        title = {
+            Text(
+                text = stringResource(R.string.advanced_feature_title),
+                style = MaterialTheme.typography.headlineMedium)
+        },
+        text = {
+            Column(
+                verticalArrangement = spacedBy(8.dp)
+            ) {
+                Text(stringResource(R.string.advanced_feature_body))
+            }
+        },
+    )
     if (showHelpDialog) {
         WhatIsLibrePhotosDialog {
             showHelpDialog = false

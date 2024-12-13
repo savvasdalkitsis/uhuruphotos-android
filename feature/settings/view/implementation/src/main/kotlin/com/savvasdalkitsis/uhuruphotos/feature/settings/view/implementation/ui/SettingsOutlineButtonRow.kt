@@ -22,14 +22,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.Icon
-import androidx.compose.material.OutlinedButton
-import androidx.compose.material.Text
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruIcon
 
 @Composable
 internal fun SettingsOutlineButtonRow(
@@ -52,7 +51,7 @@ internal fun SettingsOutlineButtonRow(
             onClick = onClick
         ) {
             icon?.let {
-                Icon(painter = painterResource(id = it), contentDescription = null)
+                UhuruIcon(icon = it)
                 Spacer(modifier = Modifier.width(8.dp))
             }
             Text(buttonText)

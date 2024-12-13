@@ -25,7 +25,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.state.T
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either.Right
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruActionIcon
 
 @Composable
 internal fun TrashAlbumPage(
@@ -36,7 +36,7 @@ internal fun TrashAlbumPage(
         state = state.first,
         additionalActionBarContent = {
             if (state.second.displayFingerPrintAction) {
-                ActionIcon(
+                UhuruActionIcon(
                     onClick = {
                         action(Right(FingerPrintActionPressed))
                     },

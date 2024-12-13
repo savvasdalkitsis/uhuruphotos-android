@@ -9,13 +9,20 @@ android {
 dependencies {
     api(
             project(":foundation:activity:api"),
+            libs.androidx.compose.material3,
     )
     implementation(
             libs.accompanist.systemui,
-            libs.androidx.compose.material,
+            libs.androidx.compose.material3,
             libs.androidx.compose.material.windowsize,
             libs.androidx.compose.ui,
+            libs.androidx.compose.ui.tooling.preview,
+            libs.google.fonts,
             project(":foundation:icons:api"),
             project(":foundation:image:api"),
+            project(":foundation:strings:api"),
+    )
+    debugImplementation(
+            libs.androidx.compose.ui.tooling,
     )
 }

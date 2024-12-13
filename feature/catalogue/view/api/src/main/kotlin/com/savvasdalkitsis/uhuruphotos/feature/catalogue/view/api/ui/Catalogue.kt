@@ -23,9 +23,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyGridScope
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Text
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
@@ -47,8 +47,8 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.BackPressHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.NoContent
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.refresh.SwipeRefresh
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.AppBarHorizontalPadding
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.CommonScaffold
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UpNavButton
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruScaffold
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruUpNavButton
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.search.SearchField
 import kotlinx.coroutines.launch
 
@@ -84,9 +84,9 @@ fun Catalogue(
     BackPressHandler {
         back()
     }
-    CommonScaffold(
+    UhuruScaffold(
         title = { Text(text = stringResource(title)) },
-        navigationIcon = { UpNavButton() },
+        navigationIcon = { UhuruUpNavButton() },
         actionBarContent = {
             IconButton(onClick = { showSearch = true }) {
                 Icon(
@@ -103,7 +103,7 @@ fun Catalogue(
                     .padding(horizontal = AppBarHorizontalPadding),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                UpNavButton(
+                UhuruUpNavButton(
                     icon = {
                         Icon(painter = painterResource(drawable.ic_close), contentDescription = "close")
                     }

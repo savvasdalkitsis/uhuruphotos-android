@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui
 
-import androidx.compose.material.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ChangeCloudSyncChargingRequirements
@@ -24,20 +24,21 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkbox.UhuruCheckBoxRow
 
 @Composable
 internal fun SettingsJobsCloudSyncConfiguration(
     state: SettingsState,
     action: (SettingsAction) -> Unit,
 ) {
-    SettingsCheckBox(
+    UhuruCheckBoxRow(
         text = stringResource(string.requires_charging),
         icon = drawable.ic_power,
         isChecked = state.cloudSyncRequiresCharging,
     ) { selected ->
         action(ChangeCloudSyncChargingRequirements(selected))
     }
-    Divider()
+    HorizontalDivider()
     SettingsNetworkRequirements(state.cloudSyncNetworkRequirement, action) {
         ChangeCloudSyncNetworkRequirements(it)
     }

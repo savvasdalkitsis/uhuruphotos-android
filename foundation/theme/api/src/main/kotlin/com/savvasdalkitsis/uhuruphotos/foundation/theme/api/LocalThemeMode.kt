@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.foundation.theme.api
 
 import androidx.compose.runtime.compositionLocalOf
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeMode
 
 val LocalThemeMode = compositionLocalOf<ThemeMode> {
     TODO("Not Implemented")

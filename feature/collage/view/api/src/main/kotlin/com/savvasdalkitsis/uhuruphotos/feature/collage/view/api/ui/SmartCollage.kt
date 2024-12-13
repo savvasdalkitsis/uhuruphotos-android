@@ -30,7 +30,8 @@ import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -106,7 +107,7 @@ internal fun SmartCollage(
         }
         val spacing = LocalCollageSpacingProvider.current.dp
         val currentShape = LocalCollageShapeProvider.current
-        val small = MaterialTheme.shapes.small
+        val small = CardDefaults.outlinedShape
         val shape = remember(currentShape) {
             when (currentShape) {
                 RECTANGLE -> RectangleShape
@@ -283,7 +284,7 @@ private fun BoxScope.StickyHeader(
         }
         FeedClusterHeader(
             modifier = Modifier
-                .background(MaterialTheme.colors.background.copy(alpha = 0.8f))
+                .background(MaterialTheme.colorScheme.surfaceContainer.copy(alpha = 0.8f))
                 .clickable(interactionSource = interactionSource, indication = null) {},
             clusterState = clusterState,
             showSelectionHeader = showSelectionHeader,

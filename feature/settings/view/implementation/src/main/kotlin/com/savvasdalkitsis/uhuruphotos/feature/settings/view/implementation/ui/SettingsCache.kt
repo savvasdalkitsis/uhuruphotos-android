@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui
 
-import androidx.compose.material.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.minCacheSize
@@ -24,6 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.CacheState
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.slider.UhuruSliderRow
 import kotlin.math.max
 
 @Composable
@@ -37,8 +38,8 @@ internal fun SettingsCache(
         buttonText = stringResource(string.clear),
         onClick = { action(ClearCache(cacheState.cacheType)) }
     )
-    Divider()
-    SettingsSliderRow(
+    HorizontalDivider()
+    UhuruSliderRow(
         text = { stringResource(string.max_limit, it.toInt()) },
         subtext = string.changes_effect_after_restart,
         initialValue = initialMaxLimit,

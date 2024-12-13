@@ -22,13 +22,14 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkbox.UhuruCheckBoxRow
 
 @Composable
 internal fun SettingsLibrary(
     state: SettingsState,
     action: (SettingsAction) -> Unit,
 ) {
-    SettingsCheckBox(
+    UhuruCheckBoxRow(
         text = stringResource(string.show_library_on_home),
         icon = drawable.ic_photo_album,
         isChecked = state.showLibrary,

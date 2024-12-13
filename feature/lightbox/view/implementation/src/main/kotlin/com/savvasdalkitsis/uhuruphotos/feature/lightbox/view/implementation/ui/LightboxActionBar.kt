@@ -19,7 +19,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -41,8 +41,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.foundation.dismiss.api.ui.PullToDismissState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ToggleableActionIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruActionIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruToggleableActionIcon
 import kotlinx.coroutines.launch
 
 @Composable
@@ -66,7 +66,7 @@ fun RowScope.LightboxActionBar(
     }
     if (item.showAddToPortfolioIcon) {
         LightboxDismissProgressAware(dismissState) {
-            ToggleableActionIcon(
+            UhuruToggleableActionIcon(
                 modifier = Modifier.alpha(
                     if (item.addToPortfolioIconEnabled) 1f else 0.7f
                 ),
@@ -82,7 +82,7 @@ fun RowScope.LightboxActionBar(
     }
     item.mediaItemSyncState?.let { syncState ->
         LightboxDismissProgressAware(dismissState) {
-            ActionIcon(
+            UhuruActionIcon(
                 modifier = Modifier.alpha(syncState.lightBoxIconAlpha),
                 onClick = {
                     if (syncState == REMOTE_ONLY) {
@@ -101,7 +101,7 @@ fun RowScope.LightboxActionBar(
     AnimatedVisibility(visible = item.showFavouriteIcon && item.isFavourite != null) {
         if (item.showFavouriteIcon && item.isFavourite != null) {
             LightboxDismissProgressAware(dismissState) {
-                ActionIcon(
+                UhuruActionIcon(
                     onClick = { action(SetFavourite(!item.isFavourite)) },
                     icon = if (item.isFavourite) drawable.ic_favourite else drawable.ic_not_favourite,
                     contentDescription = stringResource(
@@ -126,7 +126,7 @@ fun RowScope.LightboxActionBar(
     }
     AnimatedVisibility(visible = showInfoButton) {
         LightboxDismissProgressAware(dismissState) {
-            ActionIcon(
+            UhuruActionIcon(
                 onClick = {
                     scope.launch {
                         scrollState.animateScrollTo(threshold + 1)

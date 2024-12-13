@@ -26,8 +26,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -46,8 +46,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.Year
 import com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.ui.state.StatsState
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.CommonScaffold
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UpNavButton
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.NoContent
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruScaffold
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruUpNavButton
+import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.collections.immutable.toImmutableMap
 import java.time.LocalDate
 
@@ -55,9 +57,9 @@ import java.time.LocalDate
 internal fun Stats(
     state: StatsState,
 ) {
-    CommonScaffold(
+    UhuruScaffold(
         title = { Text(stringResource(string.stats)) },
-        navigationIcon = { UpNavButton() }
+        navigationIcon = { UhuruUpNavButton() }
     ) { contentPadding ->
         Column(
             modifier = Modifier
@@ -102,20 +104,27 @@ internal fun Stats(
                     title = string.media_heatmap,
                     uniqueId = "heatmap",
                 ) {
-                    HeatMap(
-                        properties = remember {
-                            Properties()
-                        },
-                        records = remember(state.mediaHeatMap) {
-                            state.mediaHeatMap.map { (day, count) ->
-                                Record(
-                                    date = LocalDate.of(day.year, day.month, day.day),
-                                    value = count.toDouble(),
-                                )
-                            }
-                        },
-                        onSquareClick = {},
-                    )
+                    if (state.mediaHeatMap.isEmpty()) {
+                        NoContent(
+                            message = string.no_media,
+                            refreshable = false,
+                        )
+                    } else {
+                        HeatMap(
+                            properties = remember {
+                                Properties()
+                            },
+                            records = remember(state.mediaHeatMap) {
+                                state.mediaHeatMap.map { (day, count) ->
+                                    Record(
+                                        date = LocalDate.of(day.year, day.month, day.day),
+                                        value = count.toDouble(),
+                                    )
+                                }
+                            },
+                            onSquareClick = {},
+                        )
+                    }
                 }
             }
 //            StatsTimeline(state.isLoadingTimeline, state.timeline)
@@ -137,14 +146,14 @@ private fun StatsHeader(state: StatsState) {
                     .fillMaxWidth(),
                 text = stringResource(string.photos),
                 textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.h5,
+                style = MaterialTheme.typography.headlineMedium,
             )
             Text(
                 modifier = Modifier
                     .fillMaxWidth(),
                 text = state.photoCount?.toString() ?: "-",
                 textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.subtitle2,
+                style = MaterialTheme.typography.bodyLarge,
             )
         }
         Column(
@@ -157,14 +166,14 @@ private fun StatsHeader(state: StatsState) {
                     .fillMaxWidth(),
                 text = stringResource(string.videos),
                 textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.h5,
+                style = MaterialTheme.typography.headlineMedium,
             )
             Text(
                 modifier = Modifier
                     .fillMaxWidth(),
                 text = state.videoCount?.toString() ?: "-",
                 textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.subtitle2,
+                style = MaterialTheme.typography.bodyLarge,
             )
         }
     }
@@ -205,6 +214,25 @@ private fun StatsPreviewStats() {
                     MediaDayModel(day, 0, month, 2023, "") to day
                 }
             }.toMap().toImmutableMap(),
+        ))
+    }
+}
+
+@Preview
+@Composable
+private fun StatsPreviewStatsEmpty() {
+    PreviewAppTheme {
+        Stats(state = StatsState(
+            isLoadingMediaByYear = false,
+            mediaByYear = persistentMapOf(),
+            isLoadingMediaByMonth = false,
+            mediaByMonth = persistentMapOf(),
+            isLoadingMediaByDayOfMonth = false,
+            mediaByDayOfMonth = persistentMapOf(),
+            isLoadingMediaByDayOfWeek = false,
+            mediaByDayOfWeek = persistentMapOf(),
+            isLoadingMediaHeatMap = false,
+            mediaHeatMap = persistentMapOf(),
         ))
     }
 }

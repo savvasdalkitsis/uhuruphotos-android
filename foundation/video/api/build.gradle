@@ -12,7 +12,7 @@ dependencies {
             libs.androidx.media3.core,
     )
     implementation(
-            libs.androidx.compose.material,
+            libs.androidx.compose.material3,
             libs.androidx.media3.ui,
             libs.hilt,
             project(":foundation:image:api"),

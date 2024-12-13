@@ -18,8 +18,8 @@ package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.LocalTextStyle
-import androidx.compose.material.Text
+import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
@@ -31,7 +31,7 @@ import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.DynamicIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruIcon
 
 @Composable
 fun TextWithIcon(
@@ -53,7 +53,7 @@ fun TextWithIcon(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = verticalAlignment,
     ) {
-        DynamicIcon(
+        UhuruIcon(
             modifier = iconModifier
                 .recomposeHighlighter(),
             icon = icon,

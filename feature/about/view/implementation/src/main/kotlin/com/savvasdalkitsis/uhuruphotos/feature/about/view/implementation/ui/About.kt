@@ -29,10 +29,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedButton
-import androidx.compose.material.Text
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -52,10 +52,10 @@ import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlight
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
-import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.CommonScaffold
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeMode
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.IconOutlineButton
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UpNavButton
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruScaffold
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruUpNavButton
 import my.nanihadesuka.compose.InternalLazyColumnScrollbar
 import my.nanihadesuka.compose.ScrollbarSelectionMode
 import my.nanihadesuka.compose.ScrollbarSettings
@@ -66,9 +66,9 @@ internal fun About(
     state: AboutState,
     action: (AboutAction) -> Unit,
 ) {
-    CommonScaffold(
+    UhuruScaffold(
         title = { Text(stringResource(string.about)) },
-        navigationIcon = { UpNavButton() },
+        navigationIcon = { UhuruUpNavButton() },
     ) { contentPadding ->
         val listState = rememberLazyListState()
         LibrariesContainer(
@@ -92,8 +92,8 @@ internal fun About(
                 settings = ScrollbarSettings(
                     thumbThickness = 8.dp,
                     selectionMode = ScrollbarSelectionMode.Thumb,
-                    thumbSelectedColor = MaterialTheme.colors.primary,
-                    thumbUnselectedColor = MaterialTheme.colors.primary.copy(alpha = 0.7f),
+                    thumbSelectedColor = MaterialTheme.colorScheme.primary,
+                    thumbUnselectedColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.7f),
                 ),
             )
         }
@@ -109,7 +109,7 @@ private fun AboutHeader(
         modifier = Modifier
             .recomposeHighlighter()
             .fillMaxWidth()
-            .background(MaterialTheme.colors.background)
+            .background(MaterialTheme.colorScheme.background)
             .padding(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = spacedBy(8.dp),
@@ -125,11 +125,11 @@ private fun AboutHeader(
         )
         Text(
             text = "UhuruPhotos",
-            style = MaterialTheme.typography.h3,
+            style = MaterialTheme.typography.headlineLarge,
         )
         Text(
             text = state.appVersion,
-            style = MaterialTheme.typography.subtitle1,
+            style = MaterialTheme.typography.bodyLarge,
         )
         Row(
             modifier = Modifier
@@ -212,7 +212,7 @@ private fun AboutHeaderPreview() {
 @Preview
 @Composable
 private fun AboutHeaderDarkPreview() {
-    PreviewAppTheme(theme = ThemeMode.DARK_MODE) {
+    PreviewAppTheme(themeMode = ThemeMode.DARK_MODE) {
         AboutHeader(AboutState("0.0.999")) {}
     }
 }

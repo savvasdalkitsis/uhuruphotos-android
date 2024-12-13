@@ -75,8 +75,11 @@ class AutoAlbumRepository @Inject constructor(
             )
             autoAlbumPeopleQueries.removePeopleForAlbum(albumId.toString())
             for (person in album.people) {
-                peopleQueries.insertPerson(person.toDbModel())
-                autoAlbumPeopleQueries.insert(person.id, albumId.toString())
+                val dbModel = person.toDbModel()
+                if (dbModel != null) {
+                    peopleQueries.insertPerson(dbModel)
+                    autoAlbumPeopleQueries.insert(dbModel.id, albumId.toString())
+                }
             }
             autoAlbumPhotosQueries.removePhotosForAlbum(albumId.toString())
             for (photo in album.photos) {

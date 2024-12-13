@@ -15,41 +15,79 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.tooling.preview.Preview
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ChangeMapProvider
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.MapProviderState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeMode
+import kotlinx.collections.immutable.toImmutableSet
 
 @Composable
-internal fun SettingsMaps(
+internal fun ColumnScope.SettingsMaps(
     mapProviderState: MapProviderState.SelectedState,
     action: (SettingsAction) -> Unit,
 ) {
-    SettingsTextDropDownButtonRow(
-        content = {
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Icon(painter = painterResource(drawable.ic_map), contentDescription = null)
-                Text("${stringResource(string.map_provider)}: ${mapProviderState.current.name}")
-            }
-        },
-        buttonText = stringResource(string.change),
-        action = action,
-    ) {
+    BottomAppBar {
         mapProviderState.available.forEach { provider ->
-            Item(text = provider.name, action = ChangeMapProvider(provider))
+            BottomItem(provider, mapProviderState, action)
+        }
+    }
+}
+
+@Composable
+private fun RowScope.BottomItem(
+    expectedState: MapProvider,
+    state: MapProviderState.SelectedState,
+    action: (SettingsAction) -> Unit
+) {
+    NavigationBarItem(
+        label = { Text(expectedState.name) },
+        icon = {
+            Icon(painter = painterResource(drawable.ic_map), contentDescription = null)
+        },
+        selected = state.current == expectedState,
+        onClick = { action(ChangeMapProvider(expectedState)) }
+    )
+}
+
+@Preview
+@Composable
+fun SettingsMapPreview() {
+    PreviewAppTheme {
+        Column {
+            SettingsMaps(
+                mapProviderState = MapProviderState.SelectedState(
+                    current = MapProvider.Google,
+                    available = MapProvider.entries.toImmutableSet()
+                ),
+            ){}
+        }
+    }
+}
+
+@Preview
+@Composable
+fun SettingsMapPreviewDark() {
+    PreviewAppTheme(themeMode = ThemeMode.DARK_MODE) {
+        Column {
+            SettingsMaps(
+                mapProviderState = MapProviderState.SelectedState(
+                    current = MapProvider.Google,
+                    available = MapProvider.entries.toImmutableSet()
+                ),
+            ){}
         }
     }
 }

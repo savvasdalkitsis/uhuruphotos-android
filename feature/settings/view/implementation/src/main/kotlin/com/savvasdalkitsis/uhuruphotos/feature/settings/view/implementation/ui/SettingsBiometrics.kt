@@ -27,6 +27,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.s
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.BiometricsSettingState.NotEnrolledState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkbox.UhuruCheckBoxRow
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.layout.UhuruEntryWithSubtext
 
 @Composable
 internal fun SettingsBiometrics(
@@ -40,10 +42,10 @@ internal fun SettingsBiometrics(
             action(EnrollToBiometrics)
         }
         is EnrolledState -> {
-            SettingsEntryWithSubtext(
+            UhuruEntryWithSubtext(
                 subtext = string.changes_effect_after_restart
             ) {
-                SettingsCheckBox(
+                UhuruCheckBoxRow(
                     text = stringResource(string.require_biometrics_for_app_access),
                     icon = drawable.ic_fingerprint,
                     isChecked = biometrics.requiredForAppAccess,
@@ -52,7 +54,7 @@ internal fun SettingsBiometrics(
                     }
                 )
             }
-            SettingsCheckBox(
+            UhuruCheckBoxRow(
                 text = stringResource(string.require_biometrics_for_hidden_media_access),
                 icon = drawable.ic_invisible,
                 isChecked = biometrics.requiredForHiddenPhotosAccess,
@@ -60,7 +62,7 @@ internal fun SettingsBiometrics(
                     action(ChangeBiometricsHiddenPhotosAccessRequirement(!biometrics.requiredForHiddenPhotosAccess))
                 }
             )
-            SettingsCheckBox(
+            UhuruCheckBoxRow(
                 text = stringResource(string.require_biometrics_for_trash_access),
                 icon = drawable.ic_delete,
                 isChecked = biometrics.requiredForTrashAccess,

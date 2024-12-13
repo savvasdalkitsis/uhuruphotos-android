@@ -18,16 +18,15 @@ package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.Icon
-import androidx.compose.material.OutlinedButton
-import androidx.compose.material.Text
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruIcon
 
 @Composable
 fun WhatIsLibrePhotosButton(
@@ -39,9 +38,8 @@ fun WhatIsLibrePhotosButton(
             .fillMaxWidth(),
         onClick = onClick,
     ) {
-        Icon(
-            painter = painterResource(id = drawable.ic_help),
-            contentDescription = null
+        UhuruIcon(
+            icon = drawable.ic_help,
         )
         Spacer(modifier = Modifier.width(8.dp))
         Text(stringResource(string.what_is_libre_photos))

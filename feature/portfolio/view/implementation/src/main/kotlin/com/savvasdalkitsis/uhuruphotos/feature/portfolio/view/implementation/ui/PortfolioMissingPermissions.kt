@@ -20,21 +20,24 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.R
 import com.savvasdalkitsis.uhuruphotos.foundation.permissions.api.ui.PermissionsState
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.DynamicIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewThemeData
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewThemeDataProvider
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruIcon
 
 @Composable
 fun BoxScope.PortfolioMissingPermissions(
@@ -48,10 +51,10 @@ fun BoxScope.PortfolioMissingPermissions(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = spacedBy(8.dp),
     ) {
-        DynamicIcon(icon = R.raw.animation_media_file)
+        UhuruIcon(icon = R.raw.animation_media_file)
         Text(
             text = stringResource(string.missing_permissions),
-            style = MaterialTheme.typography.h5,
+            style = MaterialTheme.typography.headlineMedium,
         )
         Button(onClick = { permissionsState.askForPermissions() }) {
             Text(text = stringResource(string.grant_permissions))
@@ -61,8 +64,8 @@ fun BoxScope.PortfolioMissingPermissions(
 
 @Preview
 @Composable
-private fun PortfolioMissingPermissionsPreview() {
-    PreviewAppTheme {
+private fun UhuruIconPreview(@PreviewParameter(PreviewThemeDataProvider::class) data: PreviewThemeData) {
+    PreviewAppTheme(data) {
         Box {
             PortfolioMissingPermissions()
         }

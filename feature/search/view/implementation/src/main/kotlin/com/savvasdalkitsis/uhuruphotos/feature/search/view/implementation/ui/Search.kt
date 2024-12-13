@@ -15,13 +15,16 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui
 
-import androidx.compose.material.Button
-import androidx.compose.material.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.Collage
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.CollageDisplayActionButton
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplayState
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.actions.ChangeDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.actions.SearchAction
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.actions.SearchFor
@@ -29,16 +32,20 @@ import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.a
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchState
 import com.savvasdalkitsis.uhuruphotos.foundation.search.view.implementation.R
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewThemeData
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewThemeDataProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.NoContent
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.CommonScaffold
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UpNavButton
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruScaffold
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruUpNavButton
+import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 fun Search(
     state: SearchState,
     action: (SearchAction) -> Unit
 ) {
-    CommonScaffold(
+    UhuruScaffold(
         title = { Text(state.query.ifEmpty { stringResource(string.searching) }) },
         actionBarContent = {
             CollageDisplayActionButton(
@@ -46,7 +53,7 @@ fun Search(
                 currentCollageDisplayState = state.searchDisplay
             )
         },
-        navigationIcon = { UpNavButton() }
+        navigationIcon = { UhuruUpNavButton() }
     ) { contentPadding ->
         if (state.isError) {
             NoContent(string.error_searching) {
@@ -69,5 +76,21 @@ fun Search(
                 onChangeDisplay = { action(ChangeDisplay(it)) },
             )
         }
+    }
+}
+
+@Preview
+@Composable
+fun SearchPreview(@PreviewParameter(PreviewThemeDataProvider::class) theme: PreviewThemeData) {
+    PreviewAppTheme(theme) {
+        Search(
+            state = SearchState(
+                query = "Search",
+                isLoading = true,
+                isError = false,
+                clusterStates = persistentListOf(),
+                searchDisplay = PredefinedCollageDisplayState.default,
+            )
+        ) {}
     }
 }

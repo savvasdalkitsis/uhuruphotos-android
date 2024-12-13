@@ -45,8 +45,12 @@ import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewFactoryProvi
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewStateFactory
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.LocalNavigator
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.LocalTheme
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.LocalThemeContrast
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.LocalThemeMode
-import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeContrast
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeMode
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeVariant
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window.LocalSystemUiController
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CollageShape
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.shared.LocalSharedElementTransition
@@ -81,6 +85,8 @@ class CompositionLocalProviders @Inject constructor(
         )
         val screenshotState = rememberScreenshotState()
         val themeMode by settingsUIUseCase.observeThemeMode().collectAsState(ThemeMode.default)
+        val themeVariant by settingsUIUseCase.observeThemeVariant().collectAsState(ThemeVariant.default)
+        val themeContrast by settingsUIUseCase.observeThemeContrast().collectAsState(ThemeContrast.NORMAL)
         val collageShape by settingsUIUseCase.observeCollageShape().collectAsState(CollageShape.default)
         val collageSpacing by settingsUIUseCase.observeCollageSpacing().collectAsState(2)
         val collageSpacingEdges by settingsUIUseCase.observeCollageSpacingIncludeEdges().collectAsState(false)
@@ -98,6 +104,8 @@ class CompositionLocalProviders @Inject constructor(
             LocalNavigator provides navigator,
             LocalServerUrl provides serverUseCase.getServerUrl(),
             LocalThemeMode provides themeMode,
+            LocalTheme provides themeVariant,
+            LocalThemeContrast provides themeContrast,
             LocalCollageShapeProvider provides collageShape,
             LocalCollageSpacingProvider provides collageSpacing,
             LocalCollageSpacingEdgesProvider provides collageSpacingEdges,

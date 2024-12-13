@@ -9,7 +9,7 @@ android {
 dependencies {
     implementation(
             libs.androidx.compose.foundation,
-            libs.androidx.compose.material,
+            libs.androidx.compose.material3,
             project(":foundation:icons:api"),
             project(":foundation:navigation:api"),
             project(":foundation:strings:api"),

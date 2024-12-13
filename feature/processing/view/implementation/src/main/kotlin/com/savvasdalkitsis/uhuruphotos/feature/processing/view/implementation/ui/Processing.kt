@@ -31,21 +31,18 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.LinearProgressIndicator
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import coil.ImageLoader
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Md5Hash
 import com.savvasdalkitsis.uhuruphotos.feature.processing.domain.api.model.ProcessingItem
 import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.seam.actions.DismissMessageDialog
@@ -55,20 +52,19 @@ import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.se
 import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.seam.actions.TappedProcessingItem
 import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.ui.state.ProcessingState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
-import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.LocalThumbnailImageLoader
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Thumbnail
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.CustomColors
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.R
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UhuruFullLoading
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkable.Checkable
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.CommonScaffold
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.DynamicIcon
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.dialogs.OkDialog
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkable.SelectionMode
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UpNavButton
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.dialogs.OkDialog
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruActionIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruScaffold
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruUpNavButton
 import kotlinx.collections.immutable.persistentListOf
 
 @Composable
@@ -77,12 +73,12 @@ internal fun Processing(
     action: (ProcessingAction) -> Unit,
 ) {
     val showForceReUpload = state.showForceReUpload
-    CommonScaffold(
+    UhuruScaffold(
         title = { Text(text = stringResource(string.processing_media_on_server)) },
-        navigationIcon = { UpNavButton() },
+        navigationIcon = { UhuruUpNavButton() },
         actionBarContent = {
             AnimatedVisibility(visible = showForceReUpload) {
-                ActionIcon(
+                UhuruActionIcon(
                     onClick = { action(ForceReUploadSelectedItems) },
                     icon = drawable.ic_cloud_upload_progress
                 )
@@ -90,9 +86,9 @@ internal fun Processing(
         }
     ) { contentPadding ->
         when {
-            state.isLoading -> FullLoading()
-            state.items.isEmpty() -> FullLoading {
-                DynamicIcon(icon = R.raw.animation_empty)
+            state.isLoading -> UhuruFullLoading()
+            state.items.isEmpty() -> UhuruFullLoading {
+                UhuruIcon(icon = R.raw.animation_empty)
             }
             else -> LazyColumn(
                 modifier = Modifier.padding(contentPadding),
@@ -179,7 +175,7 @@ fun ProcessingItemRow(
             Text(
                 text = item.displayName ?: "",
                 textAlign = TextAlign.Start,
-                style = MaterialTheme.typography.body2,
+                style = MaterialTheme.typography.bodyMedium,
             )
             Row(
                 modifier = Modifier
@@ -192,12 +188,12 @@ fun ProcessingItemRow(
             Row(
                 modifier = Modifier.fillMaxWidth()
             ) {
-                DynamicIcon(icon = drawable.ic_cloud_in_progress)
+                UhuruIcon(icon = drawable.ic_cloud_in_progress)
                 Spacer(modifier = Modifier.weight(1f))
                 Text(
                     text = stringResource(string.processing),
                     textAlign = TextAlign.End,
-                    style = MaterialTheme.typography.body2,
+                    style = MaterialTheme.typography.bodyMedium,
                 )
             }
         }
@@ -220,8 +216,21 @@ private fun RowScope.ProgressLine(error: Boolean) {
                 .fillMaxHeight()
                 .weight(1f),
             strokeCap = StrokeCap.Round,
-            color = MaterialTheme.colors.primary,
+            color = MaterialTheme.colorScheme.primary,
         )
+    }
+}
+
+@Preview
+@Composable
+private fun ProcessingPreviewEmpty() {
+    PreviewAppTheme {
+        Processing(
+            ProcessingState(
+                isLoading = false,
+                items = persistentListOf(),
+            )
+        ) {}
     }
 }
 
@@ -229,64 +238,60 @@ private fun RowScope.ProgressLine(error: Boolean) {
 @Composable
 private fun ProcessingPreview() {
     PreviewAppTheme {
-        CompositionLocalProvider(
-            LocalThumbnailImageLoader provides ImageLoader(LocalContext.current)
-        ) {
-            Processing(
-                ProcessingState(
-                    isLoading = false,
-                    items = persistentListOf(
-                        ProcessingItem(
-                            localItemId = 1,
-                            displayName = "PXL_20230801_103507882.jpg",
-                            contentUri = "",
-                            md5 = Md5Hash(""),
-                        ),
-                        ProcessingItem(
-                            localItemId = 2,
-                            displayName = "PXL_20230801_103507850.jpg",
-                            contentUri = "",
-                            md5 = Md5Hash(""),
-                        ),
-                        ProcessingItem(
-                            localItemId = 3,
-                            displayName = "PXL_20230801_103507810.mp4",
-                            contentUri = "",
-                            md5 = Md5Hash(""),
-                        ),
-                        ProcessingItem(
-                            localItemId = 30,
-                            displayName = "PXL_20230801_103507810.mp4",
-                            contentUri = "",
-                            md5 = Md5Hash(""),
-                        ),
-                        ProcessingItem(
-                            localItemId = 4,
-                            displayName = "PXL_20230801_103507810.mp4",
-                            contentUri = "",
-                            md5 = Md5Hash(""),
-                        ),
-                        ProcessingItem(
-                            localItemId = 5,
-                            displayName = "PXL_20230801_103507800.jpg",
-                            contentUri = "",
-                            md5 = Md5Hash(""),
-                        ),
-                        ProcessingItem(
-                            localItemId = 6,
-                            displayName = "PXL_20230801_103507100.jpg",
-                            contentUri = "",
-                            md5 = Md5Hash(""),
-                        ),
-                        ProcessingItem(
-                            localItemId = 7,
-                            displayName = "PXL_20230801_103507100.jpg",
-                            contentUri = "",
-                            md5 = Md5Hash(""),
-                        ),
+        Processing(
+            ProcessingState(
+                isLoading = false,
+                items = persistentListOf(
+                    ProcessingItem(
+                        localItemId = 1,
+                        displayName = "PXL_20230801_103507882.jpg",
+                        contentUri = "",
+                        md5 = Md5Hash(""),
+                    ),
+                    ProcessingItem(
+                        localItemId = 2,
+                        displayName = "PXL_20230801_103507850.jpg",
+                        contentUri = "",
+                        md5 = Md5Hash(""),
+                    ),
+                    ProcessingItem(
+                        localItemId = 3,
+                        displayName = "PXL_20230801_103507810.mp4",
+                        contentUri = "",
+                        md5 = Md5Hash(""),
+                    ),
+                    ProcessingItem(
+                        localItemId = 30,
+                        displayName = "PXL_20230801_103507810.mp4",
+                        contentUri = "",
+                        md5 = Md5Hash(""),
+                    ),
+                    ProcessingItem(
+                        localItemId = 4,
+                        displayName = "PXL_20230801_103507810.mp4",
+                        contentUri = "",
+                        md5 = Md5Hash(""),
+                    ),
+                    ProcessingItem(
+                        localItemId = 5,
+                        displayName = "PXL_20230801_103507800.jpg",
+                        contentUri = "",
+                        md5 = Md5Hash(""),
+                    ),
+                    ProcessingItem(
+                        localItemId = 6,
+                        displayName = "PXL_20230801_103507100.jpg",
+                        contentUri = "",
+                        md5 = Md5Hash(""),
+                    ),
+                    ProcessingItem(
+                        localItemId = 7,
+                        displayName = "PXL_20230801_103507100.jpg",
+                        contentUri = "",
+                        md5 = Md5Hash(""),
                     ),
                 ),
-            ) {}
-        }
+            ),
+        ) {}
     }
 }

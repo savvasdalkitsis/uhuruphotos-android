@@ -44,7 +44,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayShareGpsDataEnabled
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayShowLibrary
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayShowMemories
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayThemeContrast
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayThemeMode
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayThemeVariant
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayThumbnailDiskCacheCurrentUse
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayThumbnailDiskCacheMaxLimit
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayThumbnailMemCacheCurrentUse
@@ -88,6 +90,8 @@ data object LoadSettings : SettingsAction() {
             observeCloudSyncNetworkRequirements().map(::DisplayCloudSyncNetworkRequirements),
             observeCloudSyncRequiresCharging().map(::DisplayCloudSyncRequiresCharging),
             observeThemeMode().map(::DisplayThemeMode),
+            observeThemeVariant().map(::DisplayThemeVariant),
+            observeThemeContrast().map(::DisplayThemeContrast),
             observeSearchSuggestionsEnabledMode().map(::DisplaySearchSuggestionsEnabled),
             observeShareRemoveGpsData().map(::DisplayShareGpsDataEnabled),
             observeShowLibrary().map(::DisplayShowLibrary),

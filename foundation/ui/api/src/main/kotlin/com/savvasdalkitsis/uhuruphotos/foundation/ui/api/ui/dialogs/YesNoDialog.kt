@@ -19,10 +19,11 @@ import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedButton
-import androidx.compose.material.Text
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -50,24 +51,28 @@ fun YesNoDialog(
     no: String,
     body: @Composable ColumnScope.() -> Unit,
 ) {
-    PaddedDialog(
+    AlertDialog(
         onDismissRequest = onNo,
+        confirmButton = {
+            Button(onClick = onYes) {
+                Text(yes)
+            }
+        },
+        dismissButton = {
+            OutlinedButton(
+                onClick = onNo,
+            ) {
+                Text(no)
+            }
+        },
         title = {
-            Text(title, style = MaterialTheme.typography.h5)
+            Text(title, style = MaterialTheme.typography.headlineMedium)
         },
         text = {
             Column(
                 verticalArrangement = spacedBy(8.dp)
             ) {
                 body()
-            }
-        },
-        buttons = {
-            Button(onClick = onYes) {
-                Text(yes)
-            }
-            OutlinedButton(onClick = onNo) {
-                Text(no)
             }
         },
     )

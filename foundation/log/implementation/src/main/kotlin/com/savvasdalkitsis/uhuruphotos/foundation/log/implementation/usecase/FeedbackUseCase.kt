@@ -30,9 +30,9 @@ import com.savvasdalkitsis.uhuruphotos.foundation.log.api.usecase.FeedbackUseCas
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.usecase.FeedbackUseCase.Companion.EMAIL
 import com.savvasdalkitsis.uhuruphotos.foundation.log.implementation.R
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode.DARK_MODE
-import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode.FOLLOW_SYSTEM
-import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode.LIGHT_MODE
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeMode.DARK_MODE
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeMode.FOLLOW_SYSTEM
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeMode.LIGHT_MODE
 import dagger.hilt.android.qualifiers.ApplicationContext
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject

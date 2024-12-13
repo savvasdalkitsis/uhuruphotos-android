@@ -17,14 +17,13 @@ package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Button
-import androidx.compose.material.DropdownMenu
-import androidx.compose.material.DropdownMenuItem
-import androidx.compose.material.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -79,13 +78,13 @@ internal fun SettingsTextDropDownButtonRow(
             DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
                 with(object : DropDownMenuScope {
                     @Composable
-                    override fun Item(itemContent: @Composable RowScope.() -> Unit, action: SettingsAction) {
-                        DropdownMenuItem(onClick = {
+                    override fun Item(itemContent: @Composable () -> Unit, action: SettingsAction) {
+                        DropdownMenuItem(
+                            text = { itemContent() },
+                            onClick = {
                             action(action)
                             expanded = false
-                        }) {
-                            itemContent()
-                        }
+                        })
                     }
                 }) {
                     dropDownItems()
@@ -97,7 +96,7 @@ internal fun SettingsTextDropDownButtonRow(
 
 internal interface DropDownMenuScope {
     @Composable
-    fun Item(itemContent: @Composable RowScope.() -> Unit, action: SettingsAction)
+    fun Item(itemContent: @Composable () -> Unit, action: SettingsAction)
 
     @Composable
     fun Item(text: String, action: SettingsAction) = Item({ Text(text) }, action)

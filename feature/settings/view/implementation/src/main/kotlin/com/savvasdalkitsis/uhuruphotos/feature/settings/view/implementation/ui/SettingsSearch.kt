@@ -23,6 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkbox.UhuruCheckBoxRow
 
 @Composable
 internal fun SettingsSearch(
@@ -30,7 +31,7 @@ internal fun SettingsSearch(
     action: (SettingsAction) -> Unit,
 ) {
     val checked = state.searchSuggestionsEnabled
-    SettingsCheckBox(
+    UhuruCheckBoxRow(
         text = stringResource(string.enable_suggestions),
         icon = when {
             checked -> drawable.ic_lightbulb

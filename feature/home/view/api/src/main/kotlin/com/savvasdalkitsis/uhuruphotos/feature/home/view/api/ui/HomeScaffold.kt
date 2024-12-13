@@ -26,7 +26,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Predefi
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.ui.NavigationStyle.BOTTOM_BAR
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.ui.NavigationStyle.NAVIGATION_RAIL
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.Logo
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.CommonScaffold
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruScaffold
 
 @Composable
 fun HomeScaffold(
@@ -40,7 +40,7 @@ fun HomeScaffold(
     onReselected: () -> Unit = {},
     content: @Composable (PaddingValues) -> Unit,
 ) {
-    CommonScaffold(
+    UhuruScaffold(
         modifier = modifier,
         title = title,
         bottomBarDisplayed = !selectionMode && showBottomNavigationBar,

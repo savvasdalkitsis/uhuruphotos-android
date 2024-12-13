@@ -14,7 +14,7 @@ dependencies {
 
     implementation(
             libs.androidx.compose.hilt.navigation,
-            libs.androidx.compose.material,
+            libs.androidx.compose.material3,
             libs.androidx.compose.ui.tooling.preview,
             libs.bundles.autodagger,
             libs.okhttp,

@@ -31,6 +31,9 @@ class Preferences @Inject constructor(
         flowSharedPreferences.sharedPreferences.edit().remove(key).apply()
     }
 
+    override fun contains(key: String): Boolean =
+        flowSharedPreferences.sharedPreferences.contains(key)
+
     override fun getBoolean(key: String, defaultValue: Boolean): Boolean =
         bool(key, defaultValue).get()
 

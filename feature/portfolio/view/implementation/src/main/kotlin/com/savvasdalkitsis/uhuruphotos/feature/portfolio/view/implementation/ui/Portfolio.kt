@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui
 
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -28,11 +28,11 @@ import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui.
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui.state.PortfolioItemsState.RequiresPermissionsState
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui.state.PortfolioState
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.CommonScaffold
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruScaffold
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UhuruFullLoading
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkable.SelectionMode.SELECTED
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkable.SelectionMode.UNSELECTED
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UpNavButton
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruUpNavButton
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 
@@ -41,13 +41,13 @@ internal fun Portfolio(
     state: PortfolioState,
     action: (PortfolioAction) -> Unit = {},
 ) {
-    CommonScaffold(
+    UhuruScaffold(
         title = { Text(text = state.title?.let { stringResource(it) } ?: "") },
-        navigationIcon = { UpNavButton() },
+        navigationIcon = { UhuruUpNavButton() },
     ) { contentPadding ->
         when(state.localMedia) {
             is FoundState -> PortfolioGrid(contentPadding, state.localMedia, state.showScanOther, action)
-            LoadingState -> FullLoading()
+            LoadingState -> UhuruFullLoading()
             is RequiresPermissionsState -> PortfolioMissingPermissions(state.localMedia.deniedPermissions)
         }
     }

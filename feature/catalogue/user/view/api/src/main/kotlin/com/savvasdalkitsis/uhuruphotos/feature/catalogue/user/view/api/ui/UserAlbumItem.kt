@@ -17,8 +17,8 @@ package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
@@ -74,7 +74,7 @@ fun UserAlbumItem(
             text = album.title.toText(),
             maxLines = 2,
             overflow = TextOverflow.Ellipsis,
-            style = MaterialTheme.typography.subtitle1
+            style = MaterialTheme.typography.bodyLarge
                 .copy(fontWeight = FontWeight.Bold),
         )
         album.photoCount?.let {
@@ -82,7 +82,7 @@ fun UserAlbumItem(
                 text = pluralStringResource(R.plurals.item_count, it, it),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
-                style = MaterialTheme.typography.subtitle1,
+                style = MaterialTheme.typography.bodyLarge,
             )
         }
     }

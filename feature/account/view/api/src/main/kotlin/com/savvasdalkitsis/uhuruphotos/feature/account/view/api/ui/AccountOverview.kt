@@ -21,38 +21,27 @@ import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedButton
-import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstrainedLayoutReference
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintLayoutScope
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.AccountOverviewState
-import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.Avatar
+import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.UhuruAvatar
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.AvatarState
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.SyncState
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.previewAvatarState
@@ -71,11 +60,12 @@ import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.raw
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
-import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeMode
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.IconOutlineButton
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.ToggleableButtonWithIcon
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.group.CollapsibleGroup
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.group.UhuruCollapsibleGroup
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.group.state.rememberCollapsibleGroupState
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruActionIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
 import kotlinx.collections.immutable.persistentListOf
 
@@ -135,7 +125,7 @@ private fun ConstraintLayoutScope.Header(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Avatar(
+        UhuruAvatar(
             state = state.avatarState,
             size = 48.dp
         )
@@ -147,14 +137,13 @@ private fun ConstraintLayoutScope.Header(
             ) {
                 Text(
                     text = state.avatarState.userFullName,
-                    style = TextStyle.Default.copy(
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 14.sp
-                    )
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.primary,
                 )
                 Text(
                     text = state.avatarState.serverUrl,
-                    style = MaterialTheme.typography.caption.copy(color = Color.Gray),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.secondary,
                 )
             }
         } else {
@@ -163,10 +152,11 @@ private fun ConstraintLayoutScope.Header(
                     .recomposeHighlighter()
                     .weight(1f),
                 text = "UhuruPhotos",
-                style = MaterialTheme.typography.h5,
+                style = MaterialTheme.typography.titleLarge,
+                color = MaterialTheme.colorScheme.primary,
             )
         }
-        ActionIcon(
+        UhuruActionIcon(
             onClick = onClose,
             icon = drawable.ic_close,
             contentDescription = stringResource(string.close)
@@ -202,7 +192,7 @@ private fun ConstraintLayoutScope.Content(
             modifier = Modifier
                 .padding(horizontal = 12.dp)
         ) {
-            CollapsibleGroup(
+            UhuruCollapsibleGroup(
                 modifier = Modifier,
                 groupState = rememberCollapsibleGroupState(
                     title = string.jobs,
@@ -227,10 +217,7 @@ private fun ConstraintLayoutScope.Content(
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp),
                 iconModifier = Modifier.size(48.dp),
-                icon = if (MaterialTheme.colors.isLight)
-                    raw.animation_syncing
-                else
-                    raw.animation_syncing_dark,
+                icon = raw.animation_syncing,
                 animateIfAvailable = state.cloudBackUpEnabled,
                 text = stringResource(string.cloud_sync),
                 checked = state.cloudBackUpEnabled,
@@ -244,34 +231,24 @@ private fun ConstraintLayoutScope.Content(
                 .padding(horizontal = 16.dp),
             horizontalArrangement = spacedBy(8.dp)
         ) {
-            OutlinedButton(
+            IconOutlineButton(
                 modifier = Modifier
                     .recomposeHighlighter()
                     .weight(1f)
                     .fillMaxWidth(),
                 onClick = onFoldersClicked,
-            ) {
-                Icon(
-                    painter = painterResource(id = drawable.ic_folder),
-                    contentDescription = null
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-                Text(text = stringResource(string.feed_folders))
-            }
-            OutlinedButton(
+                icon = drawable.ic_folder,
+                text = stringResource(string.feed_folders),
+            )
+            IconOutlineButton(
                 modifier = Modifier
                     .recomposeHighlighter()
                     .weight(1f)
                     .fillMaxWidth(),
                 onClick = onAboutClicked,
-            ) {
-                Icon(
-                    painter = painterResource(id = drawable.ic_info),
-                    contentDescription = null
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-                Text(text = stringResource(string.about))
-            }
+                icon = drawable.ic_info,
+                text = stringResource(string.about),
+            )
         }
     }
 }
@@ -298,7 +275,7 @@ private fun ConstraintLayoutScope.Footer(
             },
         horizontalArrangement = spacedBy(8.dp),
     ) {
-        OutlinedButton(
+        IconOutlineButton(
             modifier = Modifier
                 .recomposeHighlighter()
                 .weight(1f),
@@ -306,34 +283,20 @@ private fun ConstraintLayoutScope.Footer(
                 onLoginClicked
             else
                 onLogoutClicked,
-        ) {
-            Icon(
-                painter = painterResource(
-                    id = if (state.showLogIn)
-                        drawable.ic_login
-                    else
-                        drawable.ic_logout
-                ),
-                contentDescription = null
-            )
-            Spacer(modifier = Modifier.width(8.dp))
-            Text(
-                text = if (state.showLogIn)
-                    stringResource(string.login)
-                else
-                    stringResource(string.log_out)
-            )
-        }
-        OutlinedButton(
+            icon = drawable.ic_login,
+            text = if (state.showLogIn)
+                stringResource(string.login)
+            else
+                stringResource(string.log_out),
+        )
+        IconOutlineButton(
             modifier = Modifier
                 .recomposeHighlighter()
                 .weight(1f),
-            onClick = onSettingsClicked
-        ) {
-            Icon(Icons.Default.Settings, contentDescription = null)
-            Spacer(modifier = Modifier.width(8.dp))
-            Text(text = stringResource(string.settings))
-        }
+            onClick = onSettingsClicked,
+            icon = drawable.ic_settings,
+            text = stringResource(string.settings),
+        )
     }
 }
 
@@ -348,6 +311,7 @@ private fun AccountOverviewPreview() {
                 showUserAndServerDetails = true,
                 showUploads = true,
                 showCloudSync = true,
+                cloudBackUpEnabled = true,
                 avatarState = previewAvatarState,
                 jobs = persistentListOf(
                     JobState(Title.Text("Feed"), FULL_FEED_SYNC, IdleModel),
@@ -363,7 +327,7 @@ private fun AccountOverviewPreview() {
 @Preview
 @Composable
 private fun AccountOverviewDarkPreview() {
-    PreviewAppTheme(theme = ThemeMode.DARK_MODE) {
+    PreviewAppTheme(themeMode = ThemeMode.DARK_MODE) {
         AccountOverview(
             modifier = Modifier.fillMaxWidth(),
             state = AccountOverviewState(
@@ -371,6 +335,7 @@ private fun AccountOverviewDarkPreview() {
                 showUserAndServerDetails = true,
                 showUploads = true,
                 showCloudSync = true,
+                cloudBackUpEnabled = true,
                 avatarState = previewAvatarState,
                 jobs = persistentListOf(
                     JobState(Title.Text("Feed"), FULL_FEED_SYNC, IdleModel),

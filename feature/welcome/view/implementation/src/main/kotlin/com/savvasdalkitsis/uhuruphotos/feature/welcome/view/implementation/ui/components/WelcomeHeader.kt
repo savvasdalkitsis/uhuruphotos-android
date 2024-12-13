@@ -18,8 +18,8 @@ package com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.ui.c
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -34,27 +34,27 @@ internal fun WelcomeHeader() {
     ) {
         Text(
             text = stringResource(R.string.welcome_to_uhuruphotos),
-            style = MaterialTheme.typography.h4,
+            style = MaterialTheme.typography.headlineLarge,
         )
         Text(
             text = stringResource(R.string.welcome_description),
-            style = MaterialTheme.typography.body1,
+            style = MaterialTheme.typography.bodyMedium,
         )
         Text(
             text = stringResource(R.string.welcome_description_2),
-            style = MaterialTheme.typography.body2,
+            style = MaterialTheme.typography.bodyMedium,
         )
         Text(
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center,
             text = stringResource(R.string.what_would_like_to_do),
-            style = MaterialTheme.typography.h5,
+            style = MaterialTheme.typography.headlineMedium,
         )
         Text(
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center,
             text = stringResource(R.string.more_than_one),
-            style = MaterialTheme.typography.subtitle2,
+            style = MaterialTheme.typography.bodyLarge,
         )
     }
 }

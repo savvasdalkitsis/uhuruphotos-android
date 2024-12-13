@@ -21,6 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.Hom
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.HomeMutation
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.ui.state.HomeState
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.view.api.navigation.NotificationsNavigationRoute
+import com.savvasdalkitsis.uhuruphotos.feature.theme.view.api.navigation.ThemeNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.api.navigation.WelcomeNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import kotlinx.coroutines.flow.flow
@@ -45,6 +46,7 @@ data object Load : HomeAction() {
             else -> navigator.newRoot(
                 when {
                     welcomeUseCase.needToShowWelcomeScreen() -> WelcomeNavigationRoute
+                    !themeUseCase.hasSetTheme() -> ThemeNavigationRoute
                     notificationsUseCase.needToShowNotificationsOnboardingScreen() -> NotificationsNavigationRoute
                     else -> FeedNavigationRoute
                 }

@@ -17,7 +17,7 @@ dependencies {
             project(":foundation:map:api"),
     )
     implementation(
-            libs.androidx.compose.material,
+            libs.androidx.compose.material3,
             libs.androidx.compose.ui.tooling.preview,
             libs.moshi,
             project(":feature:media:common:domain:api"),

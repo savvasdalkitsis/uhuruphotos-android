@@ -31,9 +31,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.LinearProgressIndicator
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Stable
@@ -67,11 +67,11 @@ import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.CustomColors
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.R
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.CommonScaffold
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.DynamicIcon
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UpNavButton
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UhuruFullLoading
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruActionIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruScaffold
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruUpNavButton
 import kotlinx.collections.immutable.persistentListOf
 
 
@@ -81,16 +81,16 @@ internal fun Uploads(
     action: (UploadsAction) -> Unit,
 ) {
     val navigator = LocalNavigator.current
-    CommonScaffold(
+    UhuruScaffold(
         title = { Text(text = stringResource(string.uploads)) },
-        navigationIcon = { UpNavButton() },
+        navigationIcon = { UhuruUpNavButton() },
         actionBarContent = {
-            ActionIcon(
+            UhuruActionIcon(
                 icon = drawable.ic_cloud_in_progress,
                 onClick = { navigator?.navigateTo(ProcessingNavigationRoute) },
             )
             AnimatedVisibility(visible = !state.isLoading) {
-                ActionIcon(
+                UhuruActionIcon(
                     icon = drawable.ic_clear_all,
                     onClick = { action(ClearFinished) },
                 )
@@ -98,9 +98,9 @@ internal fun Uploads(
         }
     ) { contentPadding ->
         when {
-            state.isLoading -> FullLoading()
-            state.jobs.isEmpty() -> FullLoading {
-                DynamicIcon(icon = R.raw.animation_empty)
+            state.isLoading -> UhuruFullLoading()
+            state.jobs.isEmpty() -> UhuruFullLoading {
+                UhuruIcon(icon = R.raw.animation_empty)
             }
             else -> LazyColumn(
                 modifier = Modifier.padding(contentPadding),
@@ -139,7 +139,7 @@ fun UploadJobRow(job: UploadJob) {
             Text(
                 text = job.displayName ?: "",
                 textAlign = TextAlign.Start,
-                style = MaterialTheme.typography.body2,
+                style = MaterialTheme.typography.bodyMedium,
             )
             Row(
                 modifier = Modifier
@@ -155,13 +155,13 @@ fun UploadJobRow(job: UploadJob) {
                 Text(
                     text = stringResource(job.latestJobState.state.displayName),
                     textAlign = TextAlign.Start,
-                    style = MaterialTheme.typography.body2,
+                    style = MaterialTheme.typography.bodyMedium,
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 Text(
                     text = stringResource(string.uploading),
                     textAlign = TextAlign.End,
-                    style = MaterialTheme.typography.body2,
+                    style = MaterialTheme.typography.bodyMedium,
                 )
             }
         }
@@ -189,7 +189,7 @@ private fun RowScope.Segment(
             modifier = Modifier
                 .fillMaxHeight()
                 .weight(weight),
-            progress = jobState.progressPercent!!,
+            progress = { jobState.progressPercent!! },
             strokeCap = StrokeCap.Round,
         )
         else -> LinearProgressIndicator(
@@ -200,7 +200,7 @@ private fun RowScope.Segment(
             color = if (jobState.state == ENQUEUED)
                 CustomColors.syncQueued
             else
-                MaterialTheme.colors.primary,
+                MaterialTheme.colorScheme.primary,
         )
     }
 }

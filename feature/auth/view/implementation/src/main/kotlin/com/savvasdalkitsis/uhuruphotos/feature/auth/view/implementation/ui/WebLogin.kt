@@ -24,8 +24,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.google.accompanist.web.WebView
 import com.google.accompanist.web.rememberWebViewState
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.CommonScaffold
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruScaffold
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UhuruFullLoading
 
 private const val USER_AGENT =
     "Mozilla/5.0 (Linux; Android 12; Pixel 6 Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/" +
@@ -36,10 +36,10 @@ private const val USER_AGENT =
 @Composable
 fun WebLogin(state: WebLoginState) {
     if (state.url == null) {
-        FullLoading()
+        UhuruFullLoading()
     } else {
         val webState = rememberWebViewState(url = state.url)
-        CommonScaffold { contentPadding ->
+        UhuruScaffold { contentPadding ->
             Column {
                 Spacer(modifier = Modifier.height(contentPadding.calculateTopPadding()))
                 WebView(

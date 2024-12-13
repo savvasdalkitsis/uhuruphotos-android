@@ -27,11 +27,11 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Button
-import androidx.compose.material.Icon
-import androidx.compose.material.OutlinedButton
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.runtime.Composable
@@ -40,7 +40,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -58,16 +57,17 @@ import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.layout.plus
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UhuruFullLoading
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.IconOutlineButton
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.ToggleableButtonWithIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.WhatIsLibrePhotosButton
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.dialogs.OkDialog
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.group.CollapsibleGroup
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.group.UhuruCollapsibleGroup
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.group.state.rememberCollapsibleGroupState
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.CommonScaffold
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UpNavButton
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruActionIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruScaffold
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruUpNavButton
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -75,13 +75,13 @@ internal fun Server(
     state: ServerState,
     action: (ServerAction) -> Unit = {},
 ) {
-    CommonScaffold(
+    UhuruScaffold(
         modifier = Modifier
             .imeNestedScroll(),
         title = { Text(stringResource(string.libre_photos_server))},
-        navigationIcon = { UpNavButton() },
+        navigationIcon = { UhuruUpNavButton() },
         actionBarContent = {
-            ActionIcon(
+            UhuruActionIcon(
                 onClick = { action(ShowHelp) },
                 icon = drawable.ic_help,
                 contentDescription = stringResource(string.help)
@@ -89,7 +89,7 @@ internal fun Server(
         }
     ) { contentPadding ->
         if (state.isLoading) {
-            FullLoading()
+            UhuruFullLoading()
         } else {
             var serverTextFieldValue by remember(state.prefilledUrl) {
                 mutableStateOf(state.prefilledUrl)
@@ -100,7 +100,7 @@ internal fun Server(
                     .fillMaxSize()
                     .verticalScroll(rememberScrollState())
             ) {
-                CollapsibleGroup(
+                UhuruCollapsibleGroup(
                     groupState = rememberCollapsibleGroupState(
                         title = string.server_url,
                         uniqueKey = "serverUrl",
@@ -185,9 +185,8 @@ internal fun Server(
                         modifier = Modifier.fillMaxWidth(),
                         onClick = { action(SendLogsClick) }
                     ) {
-                        Icon(
-                            painter = painterResource(id = drawable.ic_feedback),
-                            contentDescription = null
+                        UhuruIcon(
+                            icon =  drawable.ic_feedback,
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(text = stringResource(string.send_feedback_with_logs))

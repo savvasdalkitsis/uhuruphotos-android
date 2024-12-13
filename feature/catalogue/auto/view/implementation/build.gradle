@@ -9,7 +9,7 @@ android {
 dependencies {
     implementation(
             libs.androidx.compose.foundation,
-            libs.androidx.compose.material,
+            libs.androidx.compose.material3,
             libs.bundles.autodagger,
             libs.hilt,
             project(":feature:album:auto:view:api"),

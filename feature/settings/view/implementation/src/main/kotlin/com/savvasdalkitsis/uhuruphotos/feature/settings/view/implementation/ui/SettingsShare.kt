@@ -22,6 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkbox.UhuruCheckBoxRow
 
 @Composable
 internal fun SettingsShare(
@@ -29,7 +30,7 @@ internal fun SettingsShare(
     action: (SettingsAction) -> Unit,
 ) {
     val checked = state.shareRemoveGpsDataEnabled
-    SettingsCheckBox(
+    UhuruCheckBoxRow(
         text = stringResource(string.remove_gps_data_when_sharing),
         icon = when {
             checked -> drawable.ic_gps_off

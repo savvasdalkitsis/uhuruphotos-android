@@ -410,4 +410,14 @@
     <string name="delete_album_explanation">The media in this album will NOT be deleted</string>
     <string name="error_deleting_album">There was an error deleting the album</string>
     <string name="memories_parallax">Enable parallax on memories</string>
+    <string name="blue">Blue</string>
+    <string name="yellow">Yellow</string>
+    <string name="green">Green</string>
+    <string name="red">Red</string>
+    <string name="dynamic">Dynamic</string>
+    <string name="contrast_normal">Normal</string>
+    <string name="contrast_medium">Medium</string>
+    <string name="contrast_high">High</string>
+    <string name="choose_app_theme">Choose app theme</string>
+    <string name="continue_">Continue</string>
 </resources>

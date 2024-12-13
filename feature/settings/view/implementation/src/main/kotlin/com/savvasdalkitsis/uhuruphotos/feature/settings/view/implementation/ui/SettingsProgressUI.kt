@@ -25,6 +25,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkbox.UhuruCheckBoxRow
 
 @Composable
 internal fun SettingsProgressUI(
@@ -32,21 +33,21 @@ internal fun SettingsProgressUI(
     action: (SettingsAction) -> Unit,
 ) {
     if (state.hasRemoteAccess) {
-        SettingsCheckBox(
+        UhuruCheckBoxRow(
             text = stringResource(string.show_feed_sync_progress),
             icon = drawable.ic_feed,
             isChecked = state.shouldShowFeedSyncProgress,
         ) {
             action(ChangeShouldShowFullSyncProgress(!state.shouldShowFeedSyncProgress))
         }
-        SettingsCheckBox(
+        UhuruCheckBoxRow(
             text = stringResource(string.show_feed_details_sync_progress),
             icon = drawable.ic_feed,
             isChecked = state.shouldShowFeedDetailsSyncProgress,
         ) {
             action(ChangeShouldShowFeedDetailsSyncProgress(!state.shouldShowFeedDetailsSyncProgress))
         }
-        SettingsCheckBox(
+        UhuruCheckBoxRow(
             text = stringResource(string.show_precache_progress),
             icon = drawable.ic_photo,
             isChecked = state.shouldShowPrecacheProgress,
@@ -54,7 +55,7 @@ internal fun SettingsProgressUI(
             action(ChangeShouldShowPrecacheProgress(!state.shouldShowPrecacheProgress))
         }
     }
-    SettingsCheckBox(
+    UhuruCheckBoxRow(
         text = stringResource(string.show_local_progress),
         icon = drawable.ic_folder,
         isChecked = state.shouldShowLocalSyncProgress,

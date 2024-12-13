@@ -22,8 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaI
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobModel
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.state.JobState
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.model.CacheType
-import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CollageShape
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.theme.state.ThemeSettingsState
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
@@ -41,7 +40,7 @@ data class SettingsState(
     val cloudSyncNetworkRequirement: NetworkType? = null,
     val cloudSyncRequiresCharging: Boolean = false,
     val uploadsInProgress: Boolean = false,
-    val themeMode: ThemeMode = ThemeMode.default,
+    val themeSettingsState: ThemeSettingsState = ThemeSettingsState(),
     val searchSuggestionsEnabled: Boolean = true,
     val shareRemoveGpsDataEnabled: Boolean = false,
     val showLibrary: Boolean = true,
@@ -60,7 +59,4 @@ data class SettingsState(
     val shouldShowPrecacheProgress: Boolean = false,
     val shouldShowLocalSyncProgress: Boolean = false,
     val hasRemoteAccess: Boolean = false,
-    val collageSpacing: Int = 2,
-    val collageSpacingIncludeEdges: Boolean = false,
-    val collageShape: CollageShape = CollageShape.default,
 )

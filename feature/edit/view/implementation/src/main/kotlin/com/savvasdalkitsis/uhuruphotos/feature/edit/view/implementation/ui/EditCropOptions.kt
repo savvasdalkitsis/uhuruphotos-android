@@ -26,7 +26,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.seam.act
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.seam.actions.SelectCropRatio
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.ui.state.CropRatioState
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIconWithText
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruActionIconWithText
 
 @Composable
 internal fun EditCropOptions(
@@ -38,7 +38,7 @@ internal fun EditCropOptions(
         horizontalArrangement = Arrangement.SpaceEvenly,
     ) {
         for (ratio in CropRatioState.entries) {
-            ActionIconWithText(
+            UhuruActionIconWithText(
                 onClick = { action(SelectCropRatio(ratio)) },
                 icon = ratio.icon,
                 iconModifier = Modifier.rotate(ratio.rotation),

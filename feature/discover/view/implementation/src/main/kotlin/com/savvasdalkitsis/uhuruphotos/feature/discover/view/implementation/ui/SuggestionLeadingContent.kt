@@ -22,13 +22,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.api.ui.AutoAlbumItem
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.state.toUserAlbumState
@@ -39,27 +37,26 @@ import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.s
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.ServerSearchSuggestionState
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.UserAlbumSearchSuggestionState
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.PersonImage
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.search.SearchSuggestion
 import kotlinx.collections.immutable.persistentMapOf
 
 val suggestionLeadingContent = persistentMapOf<String, @Composable (SearchSuggestion) -> Unit>(
     RecentSearchSuggestionState.TYPE to {
-        Icon(
+        UhuruIcon(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(4.dp),
-            painter = painterResource(id = R.drawable.ic_history),
-            contentDescription = null
+            icon = drawable.ic_history,
         )
     },
     ServerSearchSuggestionState.TYPE to {
-        Icon(
+        UhuruIcon(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(4.dp),
-            painter = painterResource(id = R.drawable.ic_assistant),
-            contentDescription = null
+            icon = drawable.ic_assistant,
         )
     },
     PersonSearchSuggestionState.TYPE to {
@@ -95,14 +92,13 @@ val suggestionLeadingContent = persistentMapOf<String, @Composable (SearchSugges
                         .padding(2.dp)
                         .align(Alignment.TopEnd)
                 ) {
-                    Icon(
+                    UhuruIcon(
                         modifier = Modifier
                             .size(24.dp)
                             .clip(CircleShape)
-                            .background(MaterialTheme.colors.background)
+                            .background(MaterialTheme.colorScheme.surfaceContainerLow)
                             .padding(2.dp),
-                        painter = painterResource(id = R.drawable.ic_creation),
-                        contentDescription = null,
+                        icon = drawable.ic_creation,
                     )
                 }
             }

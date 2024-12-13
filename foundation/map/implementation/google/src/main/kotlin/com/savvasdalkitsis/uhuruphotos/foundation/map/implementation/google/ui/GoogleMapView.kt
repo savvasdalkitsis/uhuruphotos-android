@@ -16,7 +16,6 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.foundation.map.implementation.google.ui
 
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -28,6 +27,7 @@ import com.google.maps.android.compose.MapUiSettings
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapOptions
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewScope
 import com.savvasdalkitsis.uhuruphotos.foundation.map.implementation.google.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.LocalThemeMode
 
 @Composable
 internal fun GoogleMapView(
@@ -46,8 +46,8 @@ internal fun GoogleMapView(
     }
     val options = mapOptions(MapOptions())
     val properties = when {
-        MaterialTheme.colors.isLight -> MapProperties()
-        else -> MapProperties(mapStyleOptions = darkModeStyle)
+        LocalThemeMode.current.isDark() -> MapProperties(mapStyleOptions = darkModeStyle)
+        else -> MapProperties()
     }.copy(
         isMyLocationEnabled = options.enableMyLocation
     )

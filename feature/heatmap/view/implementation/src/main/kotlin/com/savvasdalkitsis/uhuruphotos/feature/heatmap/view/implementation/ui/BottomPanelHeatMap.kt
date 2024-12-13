@@ -21,8 +21,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.BottomSheetScaffold
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.BottomSheetScaffold
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -41,7 +42,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.sheet.SheetHandle
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.sheet.SheetSize
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.sheet.adjustingSheetSize
 
-@OptIn(ExperimentalPermissionsApi::class)
+@OptIn(ExperimentalPermissionsApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun BottomPanelHeatMap(
     state: HeatMapState,

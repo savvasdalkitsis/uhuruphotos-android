@@ -17,11 +17,20 @@ package com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase
 
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplayState
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider
-import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeContrast
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeMode
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeVariant
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CollageShape
 import kotlinx.coroutines.flow.Flow
 
 interface SettingsUIUseCase {
+    val themeModeDefault get() = ThemeMode.default
+    val themeVariantDefault get() = ThemeVariant.default
+    val themeContrastDefault get() = ThemeContrast.default
+    val collageSpacingDefault get() = 6
+    val collageSpacingIncludeEdgesDefault get() = true
+    val collageShapeDefault get() = CollageShape.default
+
 
     fun getShowLibrary(): Boolean
     fun getMapProvider(): MapProvider
@@ -40,11 +49,17 @@ interface SettingsUIUseCase {
     fun getShouldShowLocalSyncProgress(): Boolean
     fun getAutoHideFeedNavOnScroll(): Boolean
     fun getThemeMode(): ThemeMode
+    fun getThemeVariant(): ThemeVariant
+    fun getThemeContrast(): ThemeContrast
     fun getCollageSpacing(): Int
     fun getCollageSpacingIncludeEdges(): Boolean
     fun getCollageShape(): CollageShape
 
+    fun hasThemeVariantSet(): Boolean
+
     fun observeThemeMode(): Flow<ThemeMode>
+    fun observeThemeVariant(): Flow<ThemeVariant>
+    fun observeThemeContrast(): Flow<ThemeContrast>
     fun observeSearchSuggestionsEnabledMode(): Flow<Boolean>
     fun observeShowLibrary(): Flow<Boolean>
     fun observeMapProvider(): Flow<MapProvider>
@@ -63,6 +78,8 @@ interface SettingsUIUseCase {
     fun observeCollageShape(): Flow<CollageShape>
 
     fun setThemeMode(mode: ThemeMode)
+    fun setThemeVariant(variant: ThemeVariant)
+    fun setThemeContrast(contrast: ThemeContrast)
     fun setSearchSuggestionsEnabled(enabled: Boolean)
     fun setShowLibrary(show: Boolean)
     fun setMapProvider(provider: MapProvider)

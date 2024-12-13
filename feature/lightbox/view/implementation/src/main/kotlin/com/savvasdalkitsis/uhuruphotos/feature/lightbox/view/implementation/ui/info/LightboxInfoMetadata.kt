@@ -22,8 +22,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Text
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -50,7 +50,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_shutte
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_videocam
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SectionHeader
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruActionIcon
 
 @Composable
 internal fun LightboxInfoMetadata(
@@ -74,7 +74,7 @@ internal fun LightboxInfoMetadata(
                             .align(Alignment.Center)
                     )
                 } else {
-                    ActionIcon(
+                    UhuruActionIcon(
                         modifier = Modifier
                             .align(Alignment.Center),
                         iconModifier = Modifier.alpha(0.6f),

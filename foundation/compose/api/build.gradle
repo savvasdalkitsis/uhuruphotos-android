@@ -12,7 +12,7 @@ dependencies {
             libs.androidx.compose.ui,
     )
     implementation(
-            libs.androidx.compose.material,
+            libs.androidx.compose.material3,
             project(":foundation:log:api"),
     )
 }

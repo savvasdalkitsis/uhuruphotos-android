@@ -19,7 +19,7 @@ import androidx.compose.runtime.Composable
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.AppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.LocalThemeMode
-import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeMode
 import kotlin.reflect.KClass
 
 @Suppress("UNCHECKED_CAST")
@@ -38,7 +38,7 @@ class ViewModelNavigationTarget<S : Any, A : Any, VM : NavigationViewModel<S, A,
     @Composable
     override fun NavigationRootView(route: R) {
         ViewModelView(route, viewModelClass, viewModelScopedToComposable) { state, actions ->
-            AppTheme(theme = theme()) {
+            AppTheme(themeMode = theme()) {
                 view(state, actions)
             }
         }

@@ -19,8 +19,8 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Text
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -33,16 +33,16 @@ import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.a
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.actions.SelectedCel
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.ui.state.PersonCollageState
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Thumbnail
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.CommonScaffold
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UpNavButton
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UhuruFullLoading
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruScaffold
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruUpNavButton
 
 @Composable
 fun Person(
     state: PersonCollageState,
     action: (PersonAction) -> Unit,
 ) {
-    CommonScaffold(
+    UhuruScaffold(
         title = {
             val person = state.personState
             when {
@@ -51,7 +51,7 @@ fun Person(
             }
         },
         navigationIcon = {
-            UpNavButton(furtherContent = {
+            UhuruUpNavButton(furtherContent = {
                 AnimatedVisibility(visible = state.personState != null) {
                     Thumbnail(
                         modifier = Modifier
@@ -80,7 +80,7 @@ fun Person(
         }
     ) { contentPadding ->
         if (state.collageState.clusters.isEmpty()) {
-            FullLoading()
+            UhuruFullLoading()
         } else {
             Collage(
                 contentPadding = contentPadding,

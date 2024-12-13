@@ -19,10 +19,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedButton
-import androidx.compose.material.Text
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -51,7 +51,7 @@ internal fun WelcomeLibrePhotosHelpDialog(action: (WelcomeAction) -> Unit) {
         Text(stringResource(string.need_a_libre_photos_server_1))
         Text(
             stringResource(string.what_is_libre_photos),
-            style = MaterialTheme.typography.subtitle2.copy(fontWeight = FontWeight.Bold),
+            style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
         )
         Text(stringResource(string.libre_photos_description))
         OutlinedButton(
@@ -69,7 +69,7 @@ internal fun WelcomeLibrePhotosHelpDialog(action: (WelcomeAction) -> Unit) {
         }
         Text(
             stringResource(string.need_a_libre_photos_server_2),
-            style = MaterialTheme.typography.subtitle2.copy(fontWeight = FontWeight.Bold),
+            style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
         )
     }
 }

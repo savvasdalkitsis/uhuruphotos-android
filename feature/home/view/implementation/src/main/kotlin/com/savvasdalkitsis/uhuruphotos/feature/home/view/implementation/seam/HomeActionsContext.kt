@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam
 
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.domain.api.usecase.NotificationsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.theme.domain.api.usecase.ThemeUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.WelcomeUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.usecase.BiometricsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
@@ -28,4 +29,5 @@ class HomeActionsContext @Inject constructor(
     val navigator: Navigator,
     val notificationsUseCase: NotificationsUseCase,
     val welcomeUseCase: WelcomeUseCase,
+    val themeUseCase: ThemeUseCase,
 )

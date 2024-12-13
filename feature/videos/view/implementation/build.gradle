@@ -9,7 +9,7 @@ android {
 dependencies {
     implementation(
             libs.androidx.compose.hilt.navigation,
-            libs.androidx.compose.material,
+            libs.androidx.compose.material3,
             libs.bundles.autodagger,
             project(":feature:feed:domain:api"),
             project(":feature:gallery:view:api"),

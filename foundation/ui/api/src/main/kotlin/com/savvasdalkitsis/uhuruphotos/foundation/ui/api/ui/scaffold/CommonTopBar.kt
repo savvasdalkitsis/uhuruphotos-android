@@ -24,28 +24,30 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.insets.insetsEnd
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.insets.insetsStart
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.insets.insetsTop
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CommonTopBar(
     topBarDisplayed: Boolean = true,
-    toolbarColor: @Composable () -> Color = { MaterialTheme.colors.background.copy(alpha = 0.8f) },
+    toolbarColor: @Composable () -> Color = { MaterialTheme.colorScheme.background.copy(alpha = 0.8f) },
     title: @Composable () -> Unit,
     expandable: Boolean = false,
     navigationIcon: @Composable (() -> Unit)? = null,
     actionBarContent: @Composable (RowScope.() -> Unit) = {},
     alternativeTopBar: @Composable () -> Unit = {},
     showAlternativeTopBar: Boolean = false,
+    scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 ) {
     AnimatedVisibility(
         visible = topBarDisplayed,
@@ -63,8 +65,6 @@ fun CommonTopBar(
                     .recomposeHighlighter()
                     .weight(1f)
             ) {
-                Spacer(modifier = Modifier.height(insetsTop()))
-
                 AnimatedContent(
                     targetState = showAlternativeTopBar,
                     label = "topBar",
@@ -74,12 +74,12 @@ fun CommonTopBar(
                         else -> ExpandableTopAppBar(
                             title = title,
                             backgroundColor = Color.Transparent,
-                            elevation = 0.dp,
                             navigationIcon = navigationIcon,
                             expandable = expandable,
                             actions = {
                                 actionBarContent()
-                            }
+                            },
+                            scrollBehavior = scrollBehavior,
                         )
                     }
                 }

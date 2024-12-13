@@ -15,9 +15,16 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui
 
-import androidx.compose.material.Divider
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplayState
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplayState.ALWAYS_OFF
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplayState.ALWAYS_ON
@@ -30,27 +37,32 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeMode
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkbox.UhuruCheckBoxRow
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.UhuruTextRow
 
 @Composable
-internal fun SettingsFeedUI(
+internal fun ColumnScope.SettingsFeedUI(
     state: SettingsState,
     action: (SettingsAction) -> Unit,
 ) {
-    SettingsCheckBox(
+    UhuruCheckBoxRow(
         text = stringResource(string.enable_memories),
         icon = drawable.ic_thought_bubble,
         isChecked = state.showMemories,
     ) {
         action(ChangeMemoriesEnabled(!state.showMemories))
     }
-    SettingsCheckBox(
+    UhuruCheckBoxRow(
         text = stringResource(string.memories_parallax),
         icon = drawable.ic_page_sidebar_left,
         isChecked = state.memoriesParallax,
     ) {
         action(ChangeMemoriesParallaxEnabled(!state.memoriesParallax))
     }
-    SettingsCheckBox(
+    UhuruCheckBoxRow(
         text = stringResource(string.auto_hide_nav_on_scroll),
         icon = drawable.ic_swipe_vertical,
         isChecked = state.autoHideFeedNavOnScroll,
@@ -58,22 +70,53 @@ internal fun SettingsFeedUI(
         action(ChangeAutoHideNavOnScrollEnabled(!state.autoHideFeedNavOnScroll))
     }
     if (state.hasRemoteAccess) {
-        Divider()
-        SettingsTextRow(stringResource(string.show_media_sync_status))
-        SettingsTextDropDownButtonRow(
-            content = {
-                SyncDisplayRow(state.feedMediaItemSyncDisplayState)
-            },
-            buttonText = stringResource(string.change),
-            action = action,
-        ) {
-            @Composable
-            fun item(display: FeedMediaItemSyncDisplayState) {
-                Item({ SyncDisplayRow(display) }, ChangeFeedMediaItemSyncDisplay(display))
-            }
-            item(SHOW_ON_SCROLL)
-            item(ALWAYS_OFF)
-            item(ALWAYS_ON)
+        HorizontalDivider()
+        UhuruTextRow(stringResource(string.show_media_sync_status))
+        BottomAppBar {
+            BottomItem(SHOW_ON_SCROLL, state, action)
+            BottomItem(ALWAYS_OFF, state, action)
+            BottomItem(ALWAYS_ON, state, action)
+        }
+    }
+}
+
+@Composable
+private fun RowScope.BottomItem(
+    expectedState: FeedMediaItemSyncDisplayState,
+    state: SettingsState,
+    action: (SettingsAction) -> Unit
+) {
+    NavigationBarItem(
+        label = { Text(stringResource(expectedState.friendlyName)) },
+        icon = {
+            UhuruIcon(icon = expectedState.icon)
+        },
+        selected = state.feedMediaItemSyncDisplayState == expectedState,
+        onClick = { action(ChangeFeedMediaItemSyncDisplay(expectedState)) }
+    )
+}
+
+@Preview
+@Composable
+private fun SettingsFeedUIPreview() {
+    PreviewAppTheme {
+        Column {
+            SettingsFeedUI(
+                state = SettingsState(isLoading = false, hasRemoteAccess = true)
+            ) {}
+        }
+    }
+}
+
+
+@Preview
+@Composable
+private fun SettingsFeedUIPreviewDark() {
+    PreviewAppTheme(themeMode = ThemeMode.DARK_MODE) {
+        Column {
+            SettingsFeedUI(
+                state = SettingsState(isLoading = false, hasRemoteAccess = true)
+            ) {}
         }
     }
 }

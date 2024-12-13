@@ -25,8 +25,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -69,14 +69,14 @@ fun SmartGridScrollbarThumb(
                     Box(
                         modifier = Modifier
                             .clip(MaterialTheme.shapes.small)
-                            .background(MaterialTheme.colors.onBackground.copy(alpha = 0.8f))
+                            .background(MaterialTheme.colorScheme.onBackground.copy(alpha = 0.8f))
                             .padding(8.dp)
                             .animateContentSize(),
                     ) {
                         val haptic = LocalHapticFeedback.current
                         Text(
                             text = scrollText,
-                            color = MaterialTheme.colors.onPrimary,
+                            color = MaterialTheme.colorScheme.onPrimary,
                         )
                         LaunchedEffect(scrollText) {
                             haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
@@ -93,7 +93,7 @@ private fun InternalScrollbarThumb(
     gridState: SmartGridState,
     indicatorContent: (@Composable (index: Int, isThumbSelected: Boolean) -> Unit)? = null,
 ) {
-    val primary = MaterialTheme.colors.primary
+    val primary = MaterialTheme.colorScheme.primary
     val thumbColor = remember {
         primary.copy(alpha = 0.7f)
     }

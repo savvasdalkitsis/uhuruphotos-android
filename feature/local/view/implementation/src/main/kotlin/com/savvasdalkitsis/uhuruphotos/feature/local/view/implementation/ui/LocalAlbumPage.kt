@@ -20,8 +20,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Button
-import androidx.compose.material.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -37,7 +37,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.NoContent
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ToggleableActionIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruToggleableActionIcon
 import dev.shreyaspatil.permissionflow.compose.rememberPermissionFlowRequestLauncher
 
 @Composable
@@ -53,7 +53,7 @@ fun LocalAlbumPage(
         action = { action(Either.Left(it)) },
         additionalActionBarContent = {
             albumState.contributingToPortfolio?.let { contributing ->
-                ToggleableActionIcon(
+                UhuruToggleableActionIcon(
                     onClick = {
                         action(Either.Right(SetContributingToPortfolio(!contributing)))
                     },

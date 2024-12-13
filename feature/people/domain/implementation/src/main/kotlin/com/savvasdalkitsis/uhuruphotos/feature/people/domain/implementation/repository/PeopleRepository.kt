@@ -49,9 +49,8 @@ class PeopleRepository @Inject constructor(
         .asFlow().mapToOne(Dispatchers.IO).distinctUntilChanged()
 
     suspend fun refreshPerson(id: Int) = runCatchingWithLog {
-        val person = peopleService.getPerson(id)
-        async {
-            peopleQueries.insertPerson(person.toDbModel())
+        peopleService.getPerson(id).toDbModel()?.let {
+            peopleQueries.insertPerson(it)
         }
     }.simple()
 
@@ -60,8 +59,8 @@ class PeopleRepository @Inject constructor(
         async {
             peopleQueries.transaction {
                 peopleQueries.clearAll()
-                for (person in people) {
-                    peopleQueries.insertPerson(person.toDbModel())
+                people.mapNotNull { it.toDbModel() }.forEach {
+                    peopleQueries.insertPerson(it)
                 }
             }
         }

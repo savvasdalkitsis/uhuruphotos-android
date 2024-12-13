@@ -24,14 +24,16 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedButton
-import androidx.compose.material.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.view.implementation.R
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.view.implementation.seam.actions.Allow
@@ -42,24 +44,26 @@ import com.savvasdalkitsis.uhuruphotos.feature.notifications.view.implementation
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeMode
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeVariant
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.layout.plus
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.CommonScaffold
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.DynamicIcon
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.Logo
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UhuruFullLoading
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.ToggleableButtonWithIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruScaffold
 
 @Composable
 internal fun Notifications(
     state: NotificationsState,
     action: (NotificationsAction) -> Unit,
 ) {
-    CommonScaffold(
+    UhuruScaffold(
         title = { Text(stringResource(string.notifications)) },
         navigationIcon = { Logo() },
     ) { contentPadding ->
         if (state.isLoading) {
-            FullLoading()
+            UhuruFullLoading()
         } else {
             Column(
                 modifier = Modifier
@@ -69,15 +73,15 @@ internal fun Notifications(
                 Text(
                     modifier = Modifier.padding(8.dp),
                     text = stringResource(string.notifications_explanation),
-                    style = MaterialTheme.typography.h6,
+                    style = MaterialTheme.typography.headlineSmall,
                 )
                 Text(
                     modifier = Modifier.padding(8.dp),
                     text = stringResource(string.notifications_explanation_subtext),
-                    style = MaterialTheme.typography.subtitle2,
+                    style = MaterialTheme.typography.bodyLarge,
                 )
                 Spacer(modifier = Modifier.weight(1f))
-                DynamicIcon(
+                UhuruIcon(
                     modifier = Modifier.height(320.dp),
                     icon = R.raw.animation_notifications,
                 )
@@ -110,10 +114,33 @@ internal fun Notifications(
     }
 }
 
+private data class PreviewData(
+    val themeMode: ThemeMode,
+    val themeVariant: ThemeVariant,
+)
+
+private class PreviewDataProvider : PreviewParameterProvider<PreviewData> {
+    override val values: Sequence<PreviewData> =
+        ThemeMode.entries.flatMap { themeMode ->
+            ThemeVariant.entries.flatMap { themeVariant ->
+                listOf(
+                    PreviewData(themeMode, themeVariant),
+                    PreviewData(themeMode, themeVariant),
+                    PreviewData(themeMode, themeVariant),
+                    PreviewData(themeMode, themeVariant),
+                )
+            }
+        }.asSequence()
+}
+
 @Preview
 @Composable
-private fun NotificationsPreview() {
-    PreviewAppTheme {
+private fun UhuruIconPreview(@PreviewParameter(PreviewDataProvider::class) data: PreviewData) {
+    PreviewAppTheme(
+        themeMode = data.themeMode,
+        theme = data.themeVariant,
+    ) {
+
         Notifications(state = NotificationsState(isLoading = false)) {}
     }
 }

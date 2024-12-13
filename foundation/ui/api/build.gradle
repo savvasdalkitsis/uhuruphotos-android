@@ -10,7 +10,7 @@ dependencies {
 
     api(
             libs.androidx.compose.constraintlayout,
-            libs.androidx.compose.material,
+            libs.androidx.compose.material3,
             libs.androidx.compose.material.icons,
             libs.androidx.compose.ui,
             libs.capturable,
@@ -31,6 +31,8 @@ dependencies {
             libs.androidx.compose.ui.util,
             libs.androidx.splash,
             libs.androidx.window,
+            libs.bundles.androidx.compose.animation,
+            libs.kotlin.reflect,
             libs.lottie,
             libs.remember,
             project(":foundation:compose:api"),

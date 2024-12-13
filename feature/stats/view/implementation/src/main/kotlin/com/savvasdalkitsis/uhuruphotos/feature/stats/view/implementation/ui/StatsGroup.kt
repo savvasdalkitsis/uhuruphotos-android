@@ -20,12 +20,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
-import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.group.CollapsibleGroup
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.group.UhuruCollapsibleGroup
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.group.state.rememberCollapsibleGroupState
 
 @Composable
@@ -36,7 +36,7 @@ fun StatsGroup(
     content: @Composable () -> Unit,
 ) {
     val groupState = rememberCollapsibleGroupState(title, "stats_media_per_$uniqueId")
-    CollapsibleGroup(groupState = groupState) {
+    UhuruCollapsibleGroup(groupState = groupState) {
         AnimatedContent(targetState = isLoading, label = "") { loading ->
             when {
                 loading -> Box(

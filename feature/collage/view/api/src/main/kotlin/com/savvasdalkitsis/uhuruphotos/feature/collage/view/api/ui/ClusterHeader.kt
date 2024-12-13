@@ -21,25 +21,22 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.ClusterState
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.previewClusterStateEmpty
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkable.SelectionMode.UNSELECTED
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruActionIcon
 
 @Composable
 internal fun ClusterHeader(
@@ -65,9 +62,10 @@ internal fun ClusterHeader(
                     }
                 }
             }
-            ActionIcon(
+            UhuruActionIcon(
                 onClick = onSelectionHeaderClicked,
                 icon = icon,
+                tint = MaterialTheme.colorScheme.primary,
             )
         }
         Column(
@@ -82,12 +80,7 @@ internal fun ClusterHeader(
         ) {
             Text(
                 text = title,
-                style = remember {
-                    TextStyle.Default.copy(
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 14.sp
-                    )
-                }
+                style = MaterialTheme.typography.titleMedium
             )
             val locationDisplay by remember {
                 derivedStateOf {
@@ -98,17 +91,16 @@ internal fun ClusterHeader(
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = it,
-                    style = remember {
-                        TextStyle.Default.copy(fontWeight = FontWeight.Light)
-                    }
+                    color = MaterialTheme.colorScheme.primary,
+                    style = MaterialTheme.typography.labelLarge
                 )
             }
         }
         if (state.showRefreshIcon) {
-            ActionIcon(
-                iconModifier = Modifier.alpha(0.6f),
+            UhuruActionIcon(
                 onClick = onRefreshClicked,
                 icon = drawable.ic_refresh,
+                tint = MaterialTheme.colorScheme.primary,
             )
         }
     }

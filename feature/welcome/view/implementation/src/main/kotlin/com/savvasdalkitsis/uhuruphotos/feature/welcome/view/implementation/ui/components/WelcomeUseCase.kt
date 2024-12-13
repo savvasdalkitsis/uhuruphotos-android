@@ -22,7 +22,8 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.Card
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -32,8 +33,8 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ContentTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.CustomColors
-import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.DynamicIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeMode
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.TextWithIcon
 
 @Composable
@@ -44,12 +45,13 @@ internal fun RowScope.WelcomeUseCase(
     tint: Color? = null,
     onClick: () -> Unit,
 ) {
-    ContentTheme(theme = ThemeMode.LIGHT_MODE) {
+    ContentTheme(themeMode = ThemeMode.LIGHT_MODE) {
         Card(
             modifier = Modifier
                 .weight(1f)
                 .fillMaxHeight(),
-            elevation = 4.dp
+            elevation = CardDefaults.elevatedCardElevation(),
+            shape = CardDefaults.elevatedShape,
         ) {
             ConstraintLayout(modifier = Modifier
                 .clickable(enabled = !selected) { onClick() }
@@ -68,7 +70,7 @@ internal fun RowScope.WelcomeUseCase(
                     tint = if (selected) CustomColors.selected else null,
                     text = stringResource(text),
                 )
-                DynamicIcon(
+                UhuruIcon(
                     modifier = Modifier.constrainAs(iconC) {
                         top.linkTo(parent.top)
                         start.linkTo(parent.start)

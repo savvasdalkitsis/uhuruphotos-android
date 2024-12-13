@@ -22,8 +22,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,31 +36,32 @@ import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlight
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.R
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.DynamicIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruIcon
 
 @Composable
 fun NoContent(
     @StringRes message: Int,
+    refreshable: Boolean = true,
     additionalContent: (@Composable () -> Unit)? = null,
 ) {
     Box(
         modifier = Modifier
             .recomposeHighlighter()
             .fillMaxSize()
-            .verticalScroll(rememberScrollState()) // for swipe to refresh
+            .then(if (refreshable) Modifier.verticalScroll(rememberScrollState()) else Modifier)
             .padding(16.dp),
     ) {
         Column(
             modifier = Modifier.align(Alignment.Center),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            DynamicIcon(
+            UhuruIcon(
                 icon = R.raw.animation_empty,
             )
             Text(
                 text = stringResource(id = message),
                 textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.h4
+                style = MaterialTheme.typography.headlineLarge
                     .copy(fontWeight = FontWeight.Bold),
             )
             additionalContent?.invoke()

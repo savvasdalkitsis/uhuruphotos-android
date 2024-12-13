@@ -29,7 +29,7 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -77,7 +77,7 @@ fun LightboxCanvas(
         modifier = Modifier
             .fillMaxSize(),
     ) {
-        val originalBackground = MaterialTheme.colors.background
+        val originalBackground = MaterialTheme.colorScheme.background
         val background by remember {
             derivedStateOf {
                 originalBackground.copy(alpha = dismissState.dismissAlpha)

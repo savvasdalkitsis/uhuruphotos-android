@@ -19,7 +19,7 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -33,12 +33,12 @@ import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 
 @Composable fun String?.toColor(): Color = when {
-    isNullOrBlank() -> MaterialTheme.colors.background
+    isNullOrBlank() -> MaterialTheme.colorScheme.background
     else -> try {
         Color(android.graphics.Color.parseColor(this))
     } catch (e: Exception) {
         log(e)
-        MaterialTheme.colors.background
+        MaterialTheme.colorScheme.background
     }
 }
 

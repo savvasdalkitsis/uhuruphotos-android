@@ -23,9 +23,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -45,21 +45,21 @@ import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.permissions.api.ui.PermissionsState
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
-import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.ActionIcon
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.CommonScaffold
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeMode
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UhuruFullLoading
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.Logo
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruActionIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruScaffold
 
 @Composable
 internal fun Welcome(
     state: WelcomeState,
     action: (WelcomeAction) -> Unit,
 ) {
-    CommonScaffold(
+    UhuruScaffold(
         title = { Logo() },
         actionBarContent = {
-            ActionIcon(
+            UhuruActionIcon(
                 onClick = { action(Help) },
                 icon = drawable.ic_help,
             )
@@ -80,7 +80,7 @@ internal fun Welcome(
         ) {
             WelcomeHeader()
             when {
-                state.isLoading -> FullLoading(modifier = Modifier.weight(1f))
+                state.isLoading -> UhuruFullLoading(modifier = Modifier.weight(1f))
                 else -> {
                     Spacer(modifier = Modifier.weight(1f))
                     WelcomeLoadedContent(state, action, permissionState)
@@ -88,7 +88,7 @@ internal fun Welcome(
             }
             Text(
                 text = stringResource(string.welcome_footnote),
-                style = MaterialTheme.typography.caption,
+                style = MaterialTheme.typography.bodySmall,
             )
             Button(
                 modifier = Modifier.fillMaxWidth(),
@@ -127,7 +127,7 @@ private fun WelcomePreview(@PreviewParameter(WelcomePreviews::class) state: Welc
 @Preview
 @Composable
 private fun WelcomePreviewDark(@PreviewParameter(WelcomePreviews::class) state: WelcomeState) {
-    PreviewAppTheme(theme = ThemeMode.DARK_MODE) {
+    PreviewAppTheme(themeMode = ThemeMode.DARK_MODE) {
         Welcome(
             state = state,
         ) {}

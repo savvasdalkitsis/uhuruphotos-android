@@ -18,13 +18,12 @@ package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.Icon
-import androidx.compose.material.OutlinedButton
-import androidx.compose.material.Text
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruIcon
 
 @Composable
 fun IconOutlineButton(
@@ -37,9 +36,8 @@ fun IconOutlineButton(
         modifier = modifier,
         onClick = onClick,
     ) {
-        Icon(
-            painter = painterResource(id = icon),
-            contentDescription = null
+        UhuruIcon(
+            icon = icon,
         )
         Spacer(modifier = Modifier.width(8.dp))
         Text(text)

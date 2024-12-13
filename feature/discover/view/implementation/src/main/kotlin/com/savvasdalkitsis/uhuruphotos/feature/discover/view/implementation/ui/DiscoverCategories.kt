@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -31,8 +31,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.ActionRowWithIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SectionHeader
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.ActionRowWithIcon
 
 @Composable
 fun DiscoverCategories(
@@ -56,14 +56,14 @@ fun DiscoverCategories(
         ) {
             action(VideoCategorySelected)
         }
-        Divider(startIndent = 48.dp)
+        HorizontalDivider(Modifier.padding(start = 48.dp))
         ActionRowWithIcon(
             icon = drawable.ic_calendar_remove,
             text = stringResource(string.media_without_date),
         ) {
             action(MediaWithoutDateCategorySelected)
         }
-        Divider(startIndent = 48.dp)
+        HorizontalDivider(Modifier.padding(start = 48.dp))
         ActionRowWithIcon(
             icon = drawable.ic_chart,
             text = stringResource(string.stats),

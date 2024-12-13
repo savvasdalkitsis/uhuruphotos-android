@@ -20,8 +20,9 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -44,7 +45,8 @@ internal fun SearchSuggestions(
             modifier = Modifier
                 .clip(MaterialTheme.shapes.large)
                 .padding(horizontal = 16.dp, vertical = 8.dp),
-            elevation = 2.dp,
+            shape = CardDefaults.elevatedShape,
+            colors = CardDefaults.elevatedCardColors(),
         ) {
             val height = when (LocalConfiguration.current.orientation) {
                 ORIENTATION_LANDSCAPE -> 120.dp

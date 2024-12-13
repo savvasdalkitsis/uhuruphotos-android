@@ -15,10 +15,17 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui
 
-enum class CollageShape {
-    RECTANGLE, ROUNDED_RECTANGLE;
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+
+enum class CollageShape(
+    val icon: Int,
+    val text: Int,
+) {
+    RECTANGLE(drawable.ic_rectangle, string.rectangle),
+    ROUNDED_RECTANGLE(drawable.ic_rounded_rectangle, string.rounded_rectangle);
 
     companion object {
-        val default = RECTANGLE
+        val default = ROUNDED_RECTANGLE
     }
 }

@@ -11,7 +11,7 @@ dependencies {
     implementation(
             libs.accompanist.permissions,
             libs.androidx.compose.foundation.layout,
-            libs.androidx.compose.material,
+            libs.androidx.compose.material3,
             libs.androidx.compose.ui,
             libs.bundles.autodagger,
             libs.hilt,

@@ -29,9 +29,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
 import com.savvasdalkitsis.uhuruphotos.foundation.dismiss.api.ui.rememberPullToDismissState
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window.LocalWindowSize
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.CommonScaffold
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UpNavButton
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruScaffold
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UhuruFullLoading
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruUpNavButton
 import me.saket.telephoto.zoomable.ZoomableState
 
 @Composable
@@ -45,7 +45,7 @@ internal fun LightboxScaffold(
     val dismissState = rememberPullToDismissState(
         onDismiss = { action(UpPressed) },
     )
-    CommonScaffold(
+    UhuruScaffold(
         title = { },
         bottomBarContent = {
             AnimatedVisibility(
@@ -67,7 +67,7 @@ internal fun LightboxScaffold(
         bottomBarDisplayed = state.showUI,
         navigationIcon = {
             LightboxDismissProgressAware(dismissState) {
-                UpNavButton { action(UpPressed) }
+                UhuruUpNavButton { action(UpPressed) }
             }
         },
     ) { contentPadding ->
@@ -78,7 +78,7 @@ internal fun LightboxScaffold(
         }
 
         when {
-            state.isLoading && thumbnailUri.isEmpty() -> FullLoading()
+            state.isLoading && thumbnailUri.isEmpty() -> UhuruFullLoading()
             else -> LightboxCanvas(action, state, index, contentPadding, scrollState, zoomableState, dismissState)
         }
     }

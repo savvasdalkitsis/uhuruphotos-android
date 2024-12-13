@@ -9,7 +9,7 @@ android {
 dependencies {
     implementation(
             libs.androidx.compose.foundation,
-            libs.androidx.compose.material,
+            libs.androidx.compose.material3,
             libs.retrofit.core,
             project(":feature:collage:view:api"),
             project(":feature:lightbox:view:api"),
