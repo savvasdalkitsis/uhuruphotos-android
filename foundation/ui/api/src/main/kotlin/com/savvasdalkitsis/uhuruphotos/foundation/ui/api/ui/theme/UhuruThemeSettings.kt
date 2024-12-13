@@ -143,14 +143,12 @@ private fun ThemeItem(
     state: ThemeSettingsState,
     onThemeVariantChanged: (ThemeVariant, ThemeContrast) -> Unit = { _, _ -> },
 ) {
-    val selectionBackgroundColor = MaterialTheme.colorScheme.surfaceContainerHigh
     ContentTheme(
         themeMode = state.themeMode,
         theme = themeVariant,
         themeContrast = themeContrast,
     ) {
         Checkable(
-            selectionBackgroundColor = selectionBackgroundColor,
             id = themeVariant.label,
             shape = CardDefaults.outlinedShape,
             selectedBorder = CardDefaults.outlinedCardBorder(),

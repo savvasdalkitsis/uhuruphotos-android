@@ -63,7 +63,7 @@ fun Checkable(
     content: @Composable BoxScope.() -> Unit,
 ) {
     val scale = remember(id) { Animatable(1f) }
-    val backgroundColor = remember(selectionMode) {
+    val backgroundColor = remember(selectionMode, selectionBackgroundColor) {
         when (selectionMode) {
             SelectionMode.SELECTED -> selectionBackgroundColor
             else -> fallbackColor
