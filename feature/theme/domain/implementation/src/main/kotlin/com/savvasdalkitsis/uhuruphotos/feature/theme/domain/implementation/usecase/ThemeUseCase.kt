@@ -24,5 +24,5 @@ import javax.inject.Inject
 class ThemeUseCase @Inject constructor(
     private val settingsUIUseCase: SettingsUIUseCase,
 ) : ThemeUseCase {
-    override fun hasSetTheme(): Boolean = !settingsUIUseCase.hasThemeVariantSet()
+    override fun hasSetTheme(): Boolean = settingsUIUseCase.hasThemeVariantSet()
 }
