@@ -51,7 +51,7 @@ class SyncInitializer @Inject constructor(
             ) { pending, networkRequirement, requiresCharging ->
                 Triple(pending, networkRequirement, requiresCharging)
             }.collectLatest { (pending, networkRequirement, requiresCharging) ->
-                uploadUseCase.scheduleUpload(
+                uploadUseCase.scheduleUploads(
                     networkType = networkRequirement,
                     requiresCharging = requiresCharging,
                     items = pending.toTypedArray()

@@ -44,7 +44,7 @@ class App :
 
     override val workManagerConfiguration: Configuration
         get()  = Configuration.Builder()
-            .setWorkerCoroutineContext(Dispatchers.IO.limitedParallelism(2))
+            .setWorkerCoroutineContext(Dispatchers.IO)
             .setWorkerFactory(workerFactory)
             .build()
 }

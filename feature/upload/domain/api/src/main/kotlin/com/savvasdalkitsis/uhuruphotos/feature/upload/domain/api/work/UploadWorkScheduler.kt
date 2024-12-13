@@ -30,6 +30,12 @@ interface UploadWorkScheduler {
         requiresCharging: Boolean,
     )
 
+    fun scheduleUploads(
+        force: Boolean,
+        networkType: NetworkType,
+        requiresCharging: Boolean,
+    )
+
     fun schedulePostUploadProcessing(hash: MediaItemHashModel, itemId: Long)
 
     fun monitorUploadJobs(): Flow<List<WorkInfo?>>

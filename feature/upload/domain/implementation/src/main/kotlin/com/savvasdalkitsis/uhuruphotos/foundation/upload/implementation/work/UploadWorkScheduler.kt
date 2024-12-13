@@ -40,18 +40,35 @@ class UploadWorkScheduler @Inject constructor(
         item: UploadItem,
         networkType: NetworkType,
         requiresCharging: Boolean,
-    ) = with(UploadWorker) {
+    ) = with(UploadIndividualWorker) {
         log { "Will schedule upload of $item" }
         workScheduleUseCase.scheduleNow(
             workName = workName(item.id),
             klass = UploadWorker::class,
-            existingWorkPolicy = ExistingWorkPolicy.KEEP,
+            existingWorkPolicy = ExistingWorkPolicy.REPLACE,
             networkRequirement = networkType,
             requiresCharging = requiresCharging,
             tags = setOf(UPLOAD_WORK_TAG, tagFor(item.id)),
         ) {
             putLong(KEY_ITEM_ID, item.id)
             putString(KEY_CONTENT_URI, item.contentUri)
+            putBoolean(KEY_FORCE, force)
+        }
+    }
+
+    override fun scheduleUploads(
+        force: Boolean,
+        networkType: NetworkType,
+        requiresCharging: Boolean,
+    ) = with(UploadsWorker) {
+        log { "Will schedule upload of local items" }
+        workScheduleUseCase.scheduleNow(
+            workName = WORK_NAME,
+            klass = UploadsWorker::class,
+            existingWorkPolicy = ExistingWorkPolicy.REPLACE,
+            networkRequirement = networkType,
+            requiresCharging = requiresCharging,
+        ) {
             putBoolean(KEY_FORCE, force)
         }
     }

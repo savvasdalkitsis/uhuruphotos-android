@@ -83,7 +83,6 @@ class UploadUseCase @Inject constructor(
             },
         )
 
-
     override suspend fun scheduleUpload(
         force: Boolean,
         networkType: NetworkType,
@@ -94,6 +93,16 @@ class UploadUseCase @Inject constructor(
         for (item in items) {
             uploadWorkScheduler.scheduleUpload(force, item, networkType, requiresCharging)
         }
+    }
+
+    override suspend fun scheduleUploads(
+        force: Boolean,
+        networkType: NetworkType,
+        requiresCharging: Boolean,
+        vararg items: UploadItem
+    ) {
+        uploadRepository.setUploading(*items)
+        uploadWorkScheduler.scheduleUploads(force, networkType, requiresCharging)
     }
 
     override suspend fun scheduleUpload(
