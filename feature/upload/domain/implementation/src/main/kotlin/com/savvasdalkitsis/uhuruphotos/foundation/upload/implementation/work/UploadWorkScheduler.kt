@@ -22,6 +22,7 @@ import androidx.work.WorkInfo
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHashModel
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.work.UploadWorkScheduler
+import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkScheduleUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkerStatusUseCase
 import kotlinx.coroutines.flow.Flow
@@ -40,6 +41,7 @@ class UploadWorkScheduler @Inject constructor(
         networkType: NetworkType,
         requiresCharging: Boolean,
     ) = with(UploadWorker) {
+        log { "Will schedule upload of $item" }
         workScheduleUseCase.scheduleNow(
             workName = workName(item.id),
             klass = UploadWorker::class,
@@ -58,6 +60,7 @@ class UploadWorkScheduler @Inject constructor(
         hash: MediaItemHashModel,
         itemId: Long,
     ) = with(UploadPostCompletionWorker) {
+        log { "Will schedule post completion of $hash" }
         workScheduleUseCase.scheduleNow(
             workName = workName(hash.hash),
             klass = UploadPostCompletionWorker::class,

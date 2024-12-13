@@ -26,6 +26,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.Rem
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummaryStatus.Processing
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNotificationWorker
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
@@ -54,6 +55,7 @@ class UploadPostCompletionWorker @AssistedInject constructor(
 
     override suspend fun work(): Result = coroutineBinding {
         val hash = params.inputData.getString(KEY_HASH)!!
+        log { "Post completion of item $hash" }
         when (val status = mediaUseCase.getRemoteMediaItemSummary(hash).bind()) {
             is Found -> {
                 feedUseCase.refreshCluster(status.containerId).bind()
@@ -64,6 +66,8 @@ class UploadPostCompletionWorker @AssistedInject constructor(
                 uploadUseCase.saveLastResponseForProcessingItem(itemId, status.response.toString())
                 failOrRetry(itemId)
             }
+        }.also {
+            log { "Result of post completion for $hash was $it" }
         }
     }.onFailure {
         uploadUseCase.saveErrorForProcessingItem(itemId, it)
