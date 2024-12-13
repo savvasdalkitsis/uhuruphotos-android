@@ -20,7 +20,6 @@ import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
 import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationInitializer
 import dagger.hilt.android.HiltAndroidApp
-import kotlinx.coroutines.Dispatchers
 import se.ansman.dagger.auto.AutoDaggerInitializer
 import javax.inject.Inject
 
@@ -43,8 +42,7 @@ class App :
     }
 
     override val workManagerConfiguration: Configuration
-        get()  = Configuration.Builder()
-            .setWorkerCoroutineContext(Dispatchers.IO)
+        get() = Configuration.Builder()
             .setWorkerFactory(workerFactory)
             .build()
 }
