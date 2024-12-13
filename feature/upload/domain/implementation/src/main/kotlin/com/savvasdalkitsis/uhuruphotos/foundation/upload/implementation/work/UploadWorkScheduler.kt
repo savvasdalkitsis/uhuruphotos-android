@@ -45,7 +45,7 @@ class UploadWorkScheduler @Inject constructor(
         workScheduleUseCase.scheduleNow(
             workName = workName(item.id),
             klass = UploadWorker::class,
-            existingWorkPolicy = ExistingWorkPolicy.REPLACE,
+            existingWorkPolicy = ExistingWorkPolicy.KEEP,
             networkRequirement = networkType,
             requiresCharging = requiresCharging,
             tags = setOf(UPLOAD_WORK_TAG, tagFor(item.id)),
