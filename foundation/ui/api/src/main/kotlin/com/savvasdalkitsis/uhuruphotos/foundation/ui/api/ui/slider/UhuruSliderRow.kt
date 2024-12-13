@@ -26,7 +26,7 @@ fun UhuruSliderRow(
     UhuruEntryWithSubtext(
         subtext = subtext,
     ) {
-        var sliderValue by remember { mutableFloatStateOf(initialValue) }
+        var sliderValue by remember(initialValue) { mutableFloatStateOf(initialValue) }
         UhuruTextRow(text(sliderValue))
         Slider(
             modifier = Modifier

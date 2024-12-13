@@ -7,11 +7,16 @@ import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.theme.state.ThemeSettingsState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.onStart
 
 internal data object Load : ThemeAction() {
     override fun ThemeActionsContext.handle(state: ThemeState) : Flow<Mutation<ThemeState>> = with(settingsUIUseCase) {
-        combine(
+        setThemeMode(themeModeDefault)
+        setThemeVariant(themeVariantDefault)
+        setThemeContrast(themeContrastDefault)
+        setCollageSpacing(collageSpacingDefault)
+        setCollageSpacingIncludeEdges(collageSpacingIncludeEdgesDefault)
+        setCollageShape(collageShapeDefault)
+        return combine(
             combine(
                 observeThemeMode(),
                 observeThemeVariant(),
@@ -36,13 +41,6 @@ internal data object Load : ThemeAction() {
                     collageShape = shape,
                 )
             )
-        }.onStart {
-            setThemeMode(themeModeDefault)
-            setThemeVariant(themeVariantDefault)
-            setThemeContrast(themeContrastDefault)
-            setCollageSpacing(collageSpacingDefault)
-            setCollageSpacingIncludeEdges(collageSpacingIncludeEdgesDefault)
-            setCollageShape(collageShapeDefault)
         }
     }
 }
