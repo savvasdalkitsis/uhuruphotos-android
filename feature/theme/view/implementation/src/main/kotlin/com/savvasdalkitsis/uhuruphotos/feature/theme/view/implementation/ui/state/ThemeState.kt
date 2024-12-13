@@ -15,8 +15,10 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.theme.view.implementation.ui.state
 
+import androidx.compose.runtime.Immutable
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.theme.state.ThemeSettingsState
 
+@Immutable
 data class ThemeState(
     val settings: ThemeSettingsState = ThemeSettingsState(),
 )
