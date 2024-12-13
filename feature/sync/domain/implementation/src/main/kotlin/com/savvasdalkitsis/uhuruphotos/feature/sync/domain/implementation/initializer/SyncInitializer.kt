@@ -22,6 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadIte
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.domain.api.usecase.UploadsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
+import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -53,6 +54,7 @@ class SyncInitializer @Inject constructor(
             ) { pending, networkRequirement, requiresCharging ->
                 Triple(pending, networkRequirement, requiresCharging)
             }.collectLatest { (pending, networkRequirement, requiresCharging) ->
+                log { "Will schedule upload of ${pending.map { it.contentUri }} items" }
                 uploadUseCase.scheduleUpload(
                     networkType = networkRequirement,
                     requiresCharging = requiresCharging,

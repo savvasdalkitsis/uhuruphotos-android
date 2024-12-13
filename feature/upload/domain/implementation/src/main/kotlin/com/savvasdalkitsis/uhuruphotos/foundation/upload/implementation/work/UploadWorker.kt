@@ -48,12 +48,14 @@ class UploadWorker @AssistedInject constructor(
             id = params.inputData.getLong(KEY_ITEM_ID, -1),
             contentUri = params.inputData.getString(KEY_CONTENT_URI)!!
         )
+        log { "Uploading item $item" }
         val force = params.inputData.getBoolean(KEY_FORCE, false)
         updateProgress(0)
 
         val result = uploadUseCase.upload(item = item, force = force) { current, total ->
             updateProgress(current, total)
         }
+        log { "Result of uploading item $item was $result" }
 
         return when {
             result.isOk -> Result.success()
