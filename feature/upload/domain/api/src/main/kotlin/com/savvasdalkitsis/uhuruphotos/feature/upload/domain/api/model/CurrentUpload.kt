@@ -1,5 +1,5 @@
 /*
-Copyright 2023 Savvas Dalkitsis
+Copyright 2024 Savvas Dalkitsis
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,14 +13,15 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.uploads.domain.api.usecase
+package com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model
 
-import com.savvasdalkitsis.uhuruphotos.feature.uploads.domain.api.model.Uploads
-import kotlinx.coroutines.flow.Flow
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
-interface UploadsUseCase {
-
-    fun observeUploadsInFlight(): Flow<Uploads>
-    fun observeIndividualUploadsInFlight(): Flow<Uploads>
-
-}
+@JsonClass(generateAdapter = true)
+data class CurrentUpload(
+    @field:Json(name = "item")
+    val item: UploadItem,
+    @field:Json(name = "progressPercent")
+    val progressPercent: Float,
+)

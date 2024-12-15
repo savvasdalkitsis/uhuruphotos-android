@@ -15,7 +15,13 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model
 
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
+
+@JsonClass(generateAdapter = true)
 data class UploadItem(
+    @field:Json(name = "id")
     val id: Long,
+    @field:Json(name = "contentUri")
     val contentUri: String,
 )

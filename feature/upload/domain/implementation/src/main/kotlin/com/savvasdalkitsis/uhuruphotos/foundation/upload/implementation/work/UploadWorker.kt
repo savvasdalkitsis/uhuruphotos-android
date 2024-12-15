@@ -24,6 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 
+@Deprecated("This class is no longer used. Left for backwards compatibility")
 @HiltWorker
 class UploadWorker @AssistedInject constructor(
     @Assisted context: Context,
@@ -41,10 +42,6 @@ class UploadWorker @AssistedInject constructor(
     override suspend fun work(): Result = Result.success()
 
     companion object {
-        const val KEY_ITEM_ID = "itemId"
-        const val KEY_CONTENT_URI = "contentUri"
-        const val KEY_FORCE = "force"
-        fun workName(id: Long) = "uploadFile/$id"
         private const val NOTIFICATION_ID = 1288
     }
 }

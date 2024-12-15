@@ -23,7 +23,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface UploadWorkScheduler {
 
-    fun scheduleUpload(
+    fun scheduleIndividualUpload(
         force: Boolean,
         item: UploadItem,
         networkType: NetworkType,
@@ -38,7 +38,7 @@ interface UploadWorkScheduler {
 
     fun schedulePostUploadProcessing(hash: MediaItemHashModel, itemId: Long)
 
-    fun monitorUploadJobs(): Flow<List<WorkInfo?>>
+    fun monitorIndividualUploadJobs(): Flow<List<WorkInfo?>>
 
     fun mediaItemIdFrom(workInfo: WorkInfo): Long?
 }

@@ -5,7 +5,9 @@ android {
 dependencies {
     api(
             libs.kotlinx.immutable,
+            libs.moshi,
             project(":feature:media:common:domain:api"),
     )
+    ksp libs.moshi.ksp
     implementation project(":foundation:strings:api")
 }

@@ -35,7 +35,7 @@ class UploadWorkScheduler @Inject constructor(
     private val workerStatusUseCase: WorkerStatusUseCase,
 ) : UploadWorkScheduler {
 
-    override fun scheduleUpload(
+    override fun scheduleIndividualUpload(
         force: Boolean,
         item: UploadItem,
         networkType: NetworkType,
@@ -90,7 +90,7 @@ class UploadWorkScheduler @Inject constructor(
         }
     }
 
-    override fun monitorUploadJobs(): Flow<List<WorkInfo?>> =
+    override fun monitorIndividualUploadJobs(): Flow<List<WorkInfo?>> =
         workerStatusUseCase.monitorUniqueJobsByTag(UPLOAD_WORK_TAG)
 
     private fun tagFor(itemId: Long) = "$UPLOAD_WORK_TAG_ITEM_ID_PREFIX::$itemId"

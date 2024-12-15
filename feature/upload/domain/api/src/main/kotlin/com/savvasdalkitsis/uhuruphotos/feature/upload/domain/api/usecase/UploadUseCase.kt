@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase
 
 import androidx.work.NetworkType
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.upload.ProcessingMediaItems
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.CurrentUpload
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadCapability
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
@@ -52,4 +53,6 @@ interface UploadUseCase {
         response: String,
     )
     fun saveErrorForProcessingItem(itemId: Long, error: Throwable)
+    fun setCurrentlyUploading(currentUpload: CurrentUpload?)
+    fun observeCurrentlyUploading(): Flow<CurrentUpload?>
 }

@@ -65,7 +65,7 @@ class SyncInitializer @Inject constructor(
             ) { networkRequirement, requiresCharging ->
                 networkRequirement to requiresCharging
             }.collectLatest { (networkRequirement, requiresCharging) ->
-                val inFlight = uploadsUseCase.observeUploadsInFlight().map { uploads ->
+                val inFlight = uploadsUseCase.observeIndividualUploadsInFlight().map { uploads ->
                     uploads.jobs
                         .filter { !it.latestJobState.state.isFinished }
                         .map {

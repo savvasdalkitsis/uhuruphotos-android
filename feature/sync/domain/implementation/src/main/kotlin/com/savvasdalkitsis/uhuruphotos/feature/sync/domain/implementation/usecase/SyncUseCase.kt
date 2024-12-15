@@ -59,7 +59,7 @@ class SyncUseCase @Inject constructor(
         combine(
             observeSyncEnabled(),
             feedUseCase.observeFeed(FeedFetchTypeModel.ALL, loadSmallInitialChunk = false),
-            uploadsUseCase.observeUploadsInFlight().map { uploads ->
+            uploadsUseCase.observeIndividualUploadsInFlight().map { uploads ->
                 uploads.jobs.filter { job ->
                     job.latestJobState.state.isFailed
                 }.map { it.localItemId }

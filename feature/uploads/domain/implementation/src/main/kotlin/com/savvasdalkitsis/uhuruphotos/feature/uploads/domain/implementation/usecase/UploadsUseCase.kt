@@ -30,6 +30,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.uploads.domain.api.usecase.Upload
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNotificationWorker
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.model.isFailed
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
@@ -40,8 +41,30 @@ class UploadsUseCase @Inject constructor(
     private val localMediaUseCase: LocalMediaUseCase,
     private val uploadUseCase: UploadUseCase,
 ) : UploadsUseCase {
-    override fun observeUploadsInFlight(): Flow<Uploads> = with(uploadWorkScheduler) {
-        monitorUploadJobs().map {
+
+    override fun observeUploadsInFlight(): Flow<Uploads> =
+        combine(
+            uploadUseCase.observeUploading(),
+            uploadUseCase.observeCurrentlyUploading(),
+        ) { items, current ->
+            items.mapNotNull { itemId ->
+                localMediaUseCase.getLocalMediaItem(itemId)?.let { mediaItem ->
+                    UploadJob(
+                        localItemId = itemId,
+                        displayName = mediaItem.displayName,
+                        contentUri = mediaItem.contentUri,
+                        latestJobState = UploadJobState(
+                            if (current?.item?.id == itemId) RUNNING else ENQUEUED,
+                            current?.progressPercent
+                        ),
+                    )
+                }
+            }
+            .sortedBy(UploadJob::displayName)
+        }.map(::Uploads)
+
+    override fun observeIndividualUploadsInFlight(): Flow<Uploads> = with(uploadWorkScheduler) {
+        monitorIndividualUploadJobs().map {
             it.filterNotNull()
                 .groupBy(::mediaItemIdFrom)
                 .mapNotNull { (itemId, info) ->

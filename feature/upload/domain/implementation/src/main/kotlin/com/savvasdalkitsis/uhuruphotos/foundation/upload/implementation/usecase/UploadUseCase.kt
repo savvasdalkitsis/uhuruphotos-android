@@ -29,6 +29,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.Lo
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.site.domain.api.usecase.SiteUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.CurrentUpload
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadCapability
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadCapability.CanUpload
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadCapability.CannotUpload
@@ -91,7 +92,7 @@ class UploadUseCase @Inject constructor(
     ) {
         uploadRepository.setUploading(*items)
         for (item in items) {
-            uploadWorkScheduler.scheduleUpload(force, item, networkType, requiresCharging)
+            uploadWorkScheduler.scheduleIndividualUpload(force, item, networkType, requiresCharging)
         }
     }
 
@@ -157,6 +158,13 @@ class UploadUseCase @Inject constructor(
             item.id
         )
     }
+
+    override fun setCurrentlyUploading(currentUpload: CurrentUpload?) {
+        uploadRepository.setCurrentlyUploading(currentUpload)
+    }
+
+    override fun observeCurrentlyUploading(): Flow<CurrentUpload?> =
+        uploadRepository.observeCurrentlyUploading()
 
     private suspend fun exists(md5: Md5Hash, user: User): Result<Boolean, Throwable> =
         remoteMediaUseCase.exists(MediaItemHashModel(md5, user.id))

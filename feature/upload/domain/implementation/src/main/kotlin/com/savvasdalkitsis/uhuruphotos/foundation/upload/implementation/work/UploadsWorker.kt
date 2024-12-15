@@ -19,12 +19,14 @@ import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.WorkerParameters
 import com.savvasdalkitsis.uhuruphotos.feature.sync.domain.api.usecase.SyncUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.CurrentUpload
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNotificationWorker
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.math.toProgressPercent
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.collectLatest
@@ -53,11 +55,14 @@ class UploadsWorker @AssistedInject constructor(
             for (item in items) {
                 log { "Uploading item $item" }
                 updateProgress(0)
+                item.updateCurrentUploading(0f)
 
                 val result = uploadUseCase.upload(item = item, force = force) { current, total ->
                     updateProgress(current, total)
+                    item.updateCurrentUploading(current.toProgressPercent(total))
                 }
                 log { "Result of uploading item $item was $result" }
+                uploadUseCase.setCurrentlyUploading(null)
                 if (result.isErr) {
                     log(result.error) { "Failed to upload item $item" }
                     itemsFailed += item
@@ -68,6 +73,10 @@ class UploadsWorker @AssistedInject constructor(
             itemsFailed.isEmpty() -> Result.success()
             else -> itemsFailed.failOrRetry()
         }
+    }
+
+    private fun UploadItem.updateCurrentUploading(percent: Float) {
+        uploadUseCase.setCurrentlyUploading(CurrentUpload(this, percent))
     }
 
     private fun Set<UploadItem>.failOrRetry() = if (params.runAttemptCount < 4) {

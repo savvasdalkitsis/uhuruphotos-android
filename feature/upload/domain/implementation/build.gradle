@@ -21,7 +21,9 @@ dependencies {
             project(":feature:welcome:domain:api"),
             project(":foundation:initializer:api"),
             project(":foundation:log:api"),
+            project(":foundation:math:api"),
             project(":foundation:notification:api"),
+            project(":foundation:preferences:api"),
             project(":foundation:strings:api"),
     )
     ksp libs.autodagger.ksp

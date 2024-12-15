@@ -24,7 +24,13 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.upload.Proces
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.upload.ProcessingMediaItemsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.upload.UploadingMediaItems
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.upload.UploadingMediaItemsQueries
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.CurrentUpload
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.observe
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.adapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -34,7 +40,9 @@ import javax.inject.Inject
 class UploadRepository @Inject constructor(
     private val uploadingMediaItemsQueries: UploadingMediaItemsQueries,
     private val processingMediaItemsQueries: ProcessingMediaItemsQueries,
+    private val preferences: Preferences,
     private val database: Database,
+    private val moshi: Moshi,
 ) {
 
     fun setUploading(vararg items: UploadItem) {
@@ -100,6 +108,20 @@ class UploadRepository @Inject constructor(
 
     fun setLastResponseForProcessing(id: Long, response: String) {
         processingMediaItemsQueries.setResponse(response, id)
+    }
+
+    private val currentUploadKey = "currentUploadKey"
+
+    fun setCurrentlyUploading(currentUpload: CurrentUpload?) {
+        if (currentUpload == null) {
+            preferences.remove(currentUploadKey)
+        } else {
+            preferences.set(currentUploadKey, moshi.adapter(CurrentUpload::class.java).toJson(currentUpload))
+        }
+    }
+
+    fun observeCurrentlyUploading(): Flow<CurrentUpload?> = preferences.observeNullableString(currentUploadKey, null).map {
+        it?.let { moshi.adapter(CurrentUpload::class.java).fromJson(it) }
     }
 
 }
