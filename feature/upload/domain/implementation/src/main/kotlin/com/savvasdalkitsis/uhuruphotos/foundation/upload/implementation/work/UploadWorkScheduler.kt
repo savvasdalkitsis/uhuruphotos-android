@@ -44,7 +44,7 @@ class UploadWorkScheduler @Inject constructor(
         log { "Will schedule upload of $item" }
         workScheduleUseCase.scheduleNow(
             workName = workName(item.id),
-            klass = UploadWorker::class,
+            klass = UploadIndividualWorker::class,
             existingWorkPolicy = ExistingWorkPolicy.REPLACE,
             networkRequirement = networkType,
             requiresCharging = requiresCharging,

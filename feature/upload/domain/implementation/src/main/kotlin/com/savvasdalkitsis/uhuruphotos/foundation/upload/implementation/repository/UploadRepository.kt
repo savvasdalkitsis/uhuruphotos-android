@@ -26,11 +26,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.upload.Upload
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.upload.UploadingMediaItemsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.CurrentUpload
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
-import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.observe
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
 import com.squareup.moshi.Moshi
-import com.squareup.moshi.adapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -40,6 +39,7 @@ import javax.inject.Inject
 class UploadRepository @Inject constructor(
     private val uploadingMediaItemsQueries: UploadingMediaItemsQueries,
     private val processingMediaItemsQueries: ProcessingMediaItemsQueries,
+    @PlainTextPreferences
     private val preferences: Preferences,
     private val database: Database,
     private val moshi: Moshi,
