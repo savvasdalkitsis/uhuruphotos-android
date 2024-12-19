@@ -18,17 +18,9 @@ package com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.work
 import androidx.work.NetworkType
 import androidx.work.WorkInfo
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHashModel
-import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
 import kotlinx.coroutines.flow.Flow
 
 interface UploadWorkScheduler {
-
-    fun scheduleIndividualUpload(
-        force: Boolean,
-        item: UploadItem,
-        networkType: NetworkType,
-        requiresCharging: Boolean,
-    )
 
     fun scheduleUploads(
         force: Boolean,

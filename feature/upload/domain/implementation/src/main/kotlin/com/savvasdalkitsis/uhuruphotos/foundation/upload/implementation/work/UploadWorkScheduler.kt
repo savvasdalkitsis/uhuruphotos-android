@@ -20,7 +20,6 @@ import androidx.work.ExistingWorkPolicy
 import androidx.work.NetworkType
 import androidx.work.WorkInfo
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHashModel
-import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.work.UploadWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkScheduleUseCase
@@ -34,27 +33,6 @@ class UploadWorkScheduler @Inject constructor(
     private val workScheduleUseCase: WorkScheduleUseCase,
     private val workerStatusUseCase: WorkerStatusUseCase,
 ) : UploadWorkScheduler {
-
-    override fun scheduleIndividualUpload(
-        force: Boolean,
-        item: UploadItem,
-        networkType: NetworkType,
-        requiresCharging: Boolean,
-    ) = with(UploadIndividualWorker) {
-        log { "Will schedule upload of $item" }
-        workScheduleUseCase.scheduleNow(
-            workName = workName(item.id),
-            klass = UploadIndividualWorker::class,
-            existingWorkPolicy = ExistingWorkPolicy.REPLACE,
-            networkRequirement = networkType,
-            requiresCharging = requiresCharging,
-            tags = setOf(UPLOAD_WORK_TAG, tagFor(item.id)),
-        ) {
-            putLong(KEY_ITEM_ID, item.id)
-            putString(KEY_CONTENT_URI, item.contentUri)
-            putBoolean(KEY_FORCE, force)
-        }
-    }
 
     override fun scheduleUploads(
         force: Boolean,
@@ -92,8 +70,6 @@ class UploadWorkScheduler @Inject constructor(
 
     override fun monitorIndividualUploadJobs(): Flow<List<WorkInfo?>> =
         workerStatusUseCase.monitorUniqueJobsByTag(UPLOAD_WORK_TAG)
-
-    private fun tagFor(itemId: Long) = "$UPLOAD_WORK_TAG_ITEM_ID_PREFIX::$itemId"
 
     override fun mediaItemIdFrom(workInfo: WorkInfo): Long? = workInfo.tags.firstOrNull {
         it.startsWith(UPLOAD_WORK_TAG_ITEM_ID_PREFIX)

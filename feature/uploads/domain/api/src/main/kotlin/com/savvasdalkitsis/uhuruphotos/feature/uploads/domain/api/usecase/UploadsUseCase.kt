@@ -21,6 +21,4 @@ import kotlinx.coroutines.flow.Flow
 interface UploadsUseCase {
 
     fun observeUploadsInFlight(): Flow<Uploads>
-    fun observeIndividualUploadsInFlight(): Flow<Uploads>
-
 }

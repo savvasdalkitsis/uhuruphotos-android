@@ -91,9 +91,6 @@ class UploadUseCase @Inject constructor(
         vararg items: UploadItem
     ) {
         uploadRepository.setUploading(*items)
-        for (item in items) {
-            uploadWorkScheduler.scheduleIndividualUpload(force, item, networkType, requiresCharging)
-        }
     }
 
     override suspend fun scheduleUploads(
@@ -163,7 +160,7 @@ class UploadUseCase @Inject constructor(
         uploadRepository.setCurrentlyUploading(currentUpload)
     }
 
-    override fun observeCurrentlyUploading(): Flow<CurrentUpload?> =
+    override fun observeCurrentUpload(): Flow<CurrentUpload?> =
         uploadRepository.observeCurrentlyUploading()
 
     private suspend fun exists(md5: Md5Hash, user: User): Result<Boolean, Throwable> =

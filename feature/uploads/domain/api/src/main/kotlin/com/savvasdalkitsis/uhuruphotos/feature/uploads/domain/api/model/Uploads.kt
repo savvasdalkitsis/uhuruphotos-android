@@ -20,5 +20,5 @@ import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadJob
 data class Uploads(
     val jobs: List<UploadJob>
 ) {
-    val inProgress = jobs.isNotEmpty() && !jobs.all { it.latestJobState.state.isFinished }
+    val inProgress = jobs.isNotEmpty() && !jobs.all { it.status.isFinished }
 }

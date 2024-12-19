@@ -19,5 +19,5 @@ data class UploadJob(
     val localItemId: Long,
     val displayName: String?,
     val contentUri: String,
-    val latestJobState: UploadJobState,
+    val status: UploadStatus = UploadStatus.InQueue,
 )

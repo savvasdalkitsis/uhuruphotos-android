@@ -18,21 +18,17 @@ package com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.work
 import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.WorkerParameters
-import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
-import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNotificationWorker
-import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 
 @HiltWorker
+@Deprecated("This class is no longer used. Left for backwards compatibility")
 class UploadIndividualWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted private val params: WorkerParameters,
-    private val uploadUseCase: UploadUseCase,
     foregroundInfoBuilder: ForegroundInfoBuilder,
 ) : ForegroundNotificationWorker<Nothing>(
     context,
@@ -44,39 +40,10 @@ class UploadIndividualWorker @AssistedInject constructor(
 ) {
 
     override suspend fun work(): Result {
-        val item = UploadItem(
-            id = params.inputData.getLong(KEY_ITEM_ID, -1),
-            contentUri = params.inputData.getString(KEY_CONTENT_URI)!!
-        )
-        log { "Uploading item $item" }
-        val force = params.inputData.getBoolean(KEY_FORCE, false)
-        updateProgress(0)
-
-        val result = uploadUseCase.upload(item = item, force = force) { current, total ->
-            updateProgress(current, total)
-        }
-        log { "Result of uploading item $item was $result" }
-
-        return when {
-            result.isOk -> Result.success()
-            else -> result.failOrRetry(item.id)
-        }
-    }
-
-    private fun SimpleResult.failOrRetry(itemId: Long) = if (params.runAttemptCount < 4) {
-        log(error) { "Failed to upload item $itemId, retrying" }
-        Result.retry()
-    } else {
-        log(error) { "Failed to upload item $itemId, not retrying" }
-        uploadUseCase.markAsNotUploading(itemId)
-        Result.failure()
+        return Result.success()
     }
 
     companion object {
-        const val KEY_ITEM_ID = "itemId"
-        const val KEY_CONTENT_URI = "contentUri"
-        const val KEY_FORCE = "force"
-        fun workName(id: Long) = "uploadFile/$id"
         private const val NOTIFICATION_ID = 1293
     }
 }

@@ -16,8 +16,20 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model
 
 import androidx.work.WorkInfo
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 
 data class UploadJobState(
     val state: WorkInfo.State,
     val progressPercent: Float?,
 )
+
+sealed class UploadStatus(
+    val isFinished: Boolean,
+    val displayName: Int,
+) {
+    data object InQueue : UploadStatus(false, string.queued)
+    data class Uploading(val progressPercent: Float): UploadStatus(false, string.uploading)
+    data object Processing: UploadStatus(false, string.processing)
+    data object Finished: UploadStatus(true, string.succeeded)
+    data class Failed(val lastResponse: String?): UploadStatus(true, string.failed)
+}

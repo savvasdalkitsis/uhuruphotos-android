@@ -25,11 +25,9 @@ import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPrefe
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.observe
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
-import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.model.isFailed
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.map
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 
@@ -59,28 +57,20 @@ class SyncUseCase @Inject constructor(
         combine(
             observeSyncEnabled(),
             feedUseCase.observeFeed(FeedFetchTypeModel.ALL, loadSmallInitialChunk = false),
-            uploadsUseCase.observeIndividualUploadsInFlight().map { uploads ->
-                uploads.jobs.filter { job ->
-                    job.latestJobState.state.isFailed
-                }.map { it.localItemId }
-            },
+            uploadsUseCase.observeUploadsInFlight(),
         )
-        { enabled, feed, failedUploads ->
+        { enabled, feed, existingUploads ->
             if (!enabled)
                 emptyList()
             else
-                feed.flatMap { it.mediaItems }
+                (feed.flatMap { it.mediaItems }
                     .mapNotNull { item -> item.id.findLocals.firstOrNull()?.takeIf { item.id.findRemote == null } }
                     .map { item ->
                         UploadItem(item.value, item.contentUri)
+                    } + existingUploads.jobs.map { item ->
+                        UploadItem(item.localItemId, item.contentUri)
                     }
-                    .sortedWith { a, b ->
-                        when {
-                            a.id in failedUploads -> 1
-                            b.id in failedUploads -> -1
-                            else -> 0
-                        }
-                    }
+                ).distinct()
         }.distinctUntilChanged()
 
 }
