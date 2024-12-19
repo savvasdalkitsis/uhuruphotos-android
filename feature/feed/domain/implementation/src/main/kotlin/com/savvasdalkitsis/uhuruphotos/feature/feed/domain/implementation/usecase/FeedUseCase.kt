@@ -18,7 +18,6 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.useca
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplayState
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.isVideo
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.GetRemoteMediaCollections
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.upload.ProcessingMediaItems
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.portfolio.PortfolioItems
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchTypeModel
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchTypeModel.ALL
@@ -35,7 +34,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDeviceModel.FoundModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.domain.api.usecase.PortfolioUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.uploads.domain.api.usecase.UploadsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.WelcomeUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.flow
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.andThenSwitchTo
@@ -67,7 +66,7 @@ internal class FeedUseCase @Inject constructor(
     private val mediaUseCase: MediaUseCase,
     private val feedWorkScheduler: FeedWorkScheduler,
     private val downloadUseCase: DownloadUseCase,
-    private val uploadUseCase: UploadUseCase,
+    private val uploadsUseCase: UploadsUseCase,
     @PlainTextPreferences
     private val preferences: Preferences,
     private val welcomeUseCase: WelcomeUseCase,
@@ -105,7 +104,6 @@ internal class FeedUseCase @Inject constructor(
         observeLocalMediaFeed(feedFetchTypeModel),
         observeDownloading(),
         observeUploading(),
-        observeProcessing().map { it.map(ProcessingMediaItems::id).toSet() },
         ::FeedMergerUseCase
     ).mapLatest {
         it.mergeFeed()
@@ -175,9 +173,7 @@ internal class FeedUseCase @Inject constructor(
 
     private fun observeDownloading() = downloadUseCase.observeDownloading()
 
-    private fun observeUploading() = uploadUseCase.observeUploading()
-
-    private fun observeProcessing() = uploadUseCase.observeProcessing()
+    private fun observeUploading() = uploadsUseCase.observeUploadsInFlight()
 
     private fun observeRemoteMediaFeed(
         feedFetchTypeModel: FeedFetchTypeModel,

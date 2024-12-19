@@ -56,6 +56,8 @@ import coil.ImageLoader
 import com.savvasdalkitsis.uhuruphotos.feature.processing.view.api.navigation.ProcessingNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadJob
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadJobState
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadStatus
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadStatus.*
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.view.implementation.seam.actions.ClearFinished
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.view.implementation.seam.actions.UploadsAction
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.view.implementation.ui.state.UploadsState
@@ -146,20 +148,15 @@ fun UploadJobRow(job: UploadJob) {
                     .height(4.dp),
                 horizontalArrangement = spacedBy(2.dp),
             ) {
-                Segment(weight = 1f, job.latestJobState)
+                Segment(job.status)
             }
             Spacer(modifier = Modifier.weight(1f))
             Row(
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text(
-                    text = stringResource(job.latestJobState.state.displayName),
-                    textAlign = TextAlign.Start,
-                    style = MaterialTheme.typography.bodyMedium,
-                )
                 Spacer(modifier = Modifier.weight(1f))
                 Text(
-                    text = stringResource(string.uploading),
+                    text = stringResource(job.status.displayName),
                     textAlign = TextAlign.End,
                     style = MaterialTheme.typography.bodyMedium,
                 )
@@ -170,37 +167,46 @@ fun UploadJobRow(job: UploadJob) {
 
 @Composable
 private fun RowScope.Segment(
-    weight: Float,
-    jobState: UploadJobState,
+    status: UploadStatus,
 ) {
-    when {
-        jobState.state.isFinished -> Box(modifier = Modifier
-            .fillMaxHeight()
-            .weight(weight)
-            .background(
-                if (jobState.state == SUCCEEDED)
-                    CustomColors.syncSuccess
-                else
-                    CustomColors.syncError,
-                RoundedCornerShape(2.dp)
+    when(status) {
+        InQueue -> LinearProgressIndicator(
+            modifier = Modifier
+                .fillMaxHeight()
+                .weight(1f),
+            strokeCap = StrokeCap.Round,
+            color = CustomColors.syncQueued,
+        )
+        is Uploading -> LinearProgressIndicator(
+            modifier = Modifier
+                .fillMaxHeight()
+                .weight(1f),
+            progress = { status.progressPercent },
+            strokeCap = StrokeCap.Round,
+        )
+        Processing -> {
+            Box(modifier = Modifier
+                .fillMaxHeight()
+                .weight(0.8f)
+                .background(CustomColors.syncSuccess, RoundedCornerShape(2.dp))
             )
+            LinearProgressIndicator(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .weight(0.2f),
+                strokeCap = StrokeCap.Round,
+                color = CustomColors.syncQueued,
+            )
+        }
+        is Failed -> Box(modifier = Modifier
+            .fillMaxHeight()
+            .weight(1f)
+            .background(CustomColors.syncError, RoundedCornerShape(2.dp))
         )
-        jobState.progressPercent != null -> LinearProgressIndicator(
-            modifier = Modifier
-                .fillMaxHeight()
-                .weight(weight),
-            progress = { jobState.progressPercent!! },
-            strokeCap = StrokeCap.Round,
-        )
-        else -> LinearProgressIndicator(
-            modifier = Modifier
-                .fillMaxHeight()
-                .weight(weight),
-            strokeCap = StrokeCap.Round,
-            color = if (jobState.state == ENQUEUED)
-                CustomColors.syncQueued
-            else
-                MaterialTheme.colorScheme.primary,
+        Finished -> Box(modifier = Modifier
+            .fillMaxHeight()
+            .weight(1f)
+            .background(CustomColors.syncSuccess, RoundedCornerShape(2.dp))
         )
     }
 }
@@ -223,7 +229,8 @@ private fun UploadsPreview() {
                             latestJobState = UploadJobState(
                                 state = ENQUEUED,
                                 progressPercent = null,
-                            )
+                            ),
+                            status = Uploading(0.2f),
                         ),
                         UploadJob(
                             localItemId = 2,
@@ -232,7 +239,8 @@ private fun UploadsPreview() {
                             latestJobState = UploadJobState(
                                 state = RUNNING,
                                 progressPercent = null,
-                            )
+                            ),
+                            status = InQueue,
                         ),
                         UploadJob(
                             localItemId = 3,
@@ -241,7 +249,8 @@ private fun UploadsPreview() {
                             latestJobState = UploadJobState(
                                 state = RUNNING,
                                 progressPercent = null,
-                            )
+                            ),
+                            status = InQueue,
                         ),
                         UploadJob(
                             localItemId = 30,
@@ -250,7 +259,8 @@ private fun UploadsPreview() {
                             latestJobState = UploadJobState(
                                 state = RUNNING,
                                 progressPercent = 0.1f,
-                            )
+                            ),
+                            status = InQueue,
                         ),
                         UploadJob(
                             localItemId = 4,
@@ -259,7 +269,8 @@ private fun UploadsPreview() {
                             latestJobState = UploadJobState(
                                 state = FAILED,
                                 progressPercent = null,
-                            )
+                            ),
+                            status = Failed(""),
                         ),
                         UploadJob(
                             localItemId = 5,
@@ -268,7 +279,8 @@ private fun UploadsPreview() {
                             latestJobState = UploadJobState(
                                 state = RUNNING,
                                 progressPercent = null,
-                            )
+                            ),
+                            status = InQueue,
                         ),
                         UploadJob(
                             localItemId = 6,
@@ -277,7 +289,8 @@ private fun UploadsPreview() {
                             latestJobState = UploadJobState(
                                 state = RUNNING,
                                 progressPercent = null,
-                            )
+                            ),
+                            status = Processing,
                         ),
                         UploadJob(
                             localItemId = 7,
@@ -286,7 +299,8 @@ private fun UploadsPreview() {
                             latestJobState = UploadJobState(
                                 state = SUCCEEDED,
                                 progressPercent = null,
-                            )
+                            ),
+                            status = Finished,
                         ),
                     ),
                 )

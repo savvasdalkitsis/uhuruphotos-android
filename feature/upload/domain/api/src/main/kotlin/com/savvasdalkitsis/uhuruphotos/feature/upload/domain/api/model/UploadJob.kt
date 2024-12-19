@@ -20,4 +20,5 @@ data class UploadJob(
     val displayName: String?,
     val contentUri: String,
     val latestJobState: UploadJobState,
+    val status: UploadStatus = UploadStatus.InQueue,
 )

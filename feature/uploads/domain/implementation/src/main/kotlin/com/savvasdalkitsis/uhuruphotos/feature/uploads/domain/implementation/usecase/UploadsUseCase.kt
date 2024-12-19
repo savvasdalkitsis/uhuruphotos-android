@@ -21,8 +21,11 @@ import androidx.work.WorkInfo.State.ENQUEUED
 import androidx.work.WorkInfo.State.RUNNING
 import androidx.work.WorkInfo.State.SUCCEEDED
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.processing.domain.api.usecase.ProcessingUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadJob
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadJobState
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadStatus
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadStatus.*
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.work.UploadWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.domain.api.model.Uploads
@@ -40,28 +43,44 @@ class UploadsUseCase @Inject constructor(
     private val uploadWorkScheduler: UploadWorkScheduler,
     private val localMediaUseCase: LocalMediaUseCase,
     private val uploadUseCase: UploadUseCase,
+    private val processingUseCase: ProcessingUseCase,
 ) : UploadsUseCase {
 
     override fun observeUploadsInFlight(): Flow<Uploads> =
         combine(
             uploadUseCase.observeUploading(),
-            uploadUseCase.observeCurrentlyUploading(),
-        ) { items, current ->
-            items.mapNotNull { itemId ->
+            processingUseCase.observeProcessingMedia(),
+            uploadUseCase.observeCurrentUpload(),
+        ) { uploading, processing, currentUpload ->
+            uploading.mapNotNull { itemId ->
                 localMediaUseCase.getLocalMediaItem(itemId)?.let { mediaItem ->
                     UploadJob(
                         localItemId = itemId,
                         displayName = mediaItem.displayName,
                         contentUri = mediaItem.contentUri,
                         latestJobState = UploadJobState(
-                            if (current?.item?.id == itemId) RUNNING else ENQUEUED,
-                            current?.progressPercent
+                            if (currentUpload?.item?.id == itemId) RUNNING else ENQUEUED,
+                            currentUpload?.progressPercent
                         ),
+                        status = when {
+                            currentUpload?.item?.id == itemId ->
+                                Uploading(currentUpload.progressPercent)
+                            else -> InQueue
+                        }
                     )
                 }
+            } + processing.jobs.map { item ->
+                UploadJob(
+                    localItemId = item.localItemId,
+                    displayName = item.displayName,
+                    contentUri = item.contentUri,
+                    latestJobState = UploadJobState(ENQUEUED, null),
+                    status = if (item.hasError) Failed(item.lastResponse) else Processing,
+                )
             }
-            .sortedBy(UploadJob::displayName)
-        }.map(::Uploads)
+        }.map {
+            Uploads(it.sortedBy(UploadJob::displayName))
+        }
 
     override fun observeIndividualUploadsInFlight(): Flow<Uploads> = with(uploadWorkScheduler) {
         monitorIndividualUploadJobs().map {

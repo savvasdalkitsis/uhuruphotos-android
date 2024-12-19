@@ -54,5 +54,5 @@ interface UploadUseCase {
     )
     fun saveErrorForProcessingItem(itemId: Long, error: Throwable)
     fun setCurrentlyUploading(currentUpload: CurrentUpload?)
-    fun observeCurrentlyUploading(): Flow<CurrentUpload?>
+    fun observeCurrentUpload(): Flow<CurrentUpload?>
 }

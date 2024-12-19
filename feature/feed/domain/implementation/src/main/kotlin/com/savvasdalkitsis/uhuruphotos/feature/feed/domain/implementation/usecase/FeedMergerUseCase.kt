@@ -20,15 +20,22 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemGroupModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstanceModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemModel
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadStatus
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadStatus.*
+import com.savvasdalkitsis.uhuruphotos.feature.uploads.domain.api.model.Uploads
 import java.io.Serializable
 
 internal class FeedMergerUseCase(
     private val allRemoteDays: Sequence<MediaCollectionModel>,
     private val allLocalMedia: List<MediaItemModel>,
     private val mediaBeingDownloaded: Set<String>,
-    private val mediaBeingUploaded: Set<Long>,
-    private val mediaBeingProcessed: Set<Long>,
+    mediaBeingUploaded: Uploads,
 ) {
+
+    private val processing = mediaBeingUploaded.filter { it == Processing }
+    private val uploading = mediaBeingUploaded.filter { it != Processing }
+    private fun Uploads.filter(predicate: (UploadStatus) -> Boolean) =
+        jobs.filter { predicate(it.status) }.map { it.localItemId }.toSet()
 
     fun mergeFeed(): List<MediaCollectionModel> {
         val remainingLocalMedia = allLocalMedia.toMutableList()
@@ -54,12 +61,6 @@ internal class FeedMergerUseCase(
     private fun MediaItemModel.orDownloading(inProgress: Set<String>): MediaItemModel =
         orIf<MediaIdModel.RemoteIdModel>(inProgress, MediaIdModel.RemoteIdModel::toDownloading)
 
-    private fun MediaItemModel.orUploading(inProgress: Set<Long>): MediaItemModel =
-        orIf<MediaIdModel.LocalIdModel>(inProgress, MediaIdModel.LocalIdModel::toUploading)
-
-    private fun MediaItemModel.orProcessing(inProgress: Set<Long>): MediaItemModel =
-        orIf<MediaIdModel.LocalIdModel>(inProgress, MediaIdModel.LocalIdModel::toProcessing)
-
     private inline fun <reified M> MediaItemModel.orIf(set: Set<Serializable>, map: (M) -> MediaIdModel<*>): MediaItemModel {
         val id = id
         return if (this is MediaItemInstanceModel && id is M && id.value in set)
@@ -79,7 +80,12 @@ internal class FeedMergerUseCase(
     }
 
     private fun Collection<MediaItemModel>.orUploadingOrProcessing() = map {
-        it.orUploading(mediaBeingUploaded).orProcessing(mediaBeingProcessed)
+        it.orIf<MediaIdModel.LocalIdModel>(processing + uploading) { model ->
+            when (model.value) {
+                in processing -> model.toProcessing()
+                else -> model.toUploading()
+            }
+        }
     }
 
     private fun MediaCollectionModel.mergeLocalMediaWithRemote(
