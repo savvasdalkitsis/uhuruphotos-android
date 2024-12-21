@@ -20,12 +20,17 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobModel
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobModel.FEED_DETAILS_SYNC
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobModel.FULL_FEED_SYNC
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobModel.LOCAL_MEDIA_SYNC
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobModel.PRECACHE_THUMBNAILS
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewThemeData
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewThemeDataProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.dialogs.YesNoDialog
 
 @Composable
@@ -45,18 +50,36 @@ fun JobPermissionDialog(
         onYes = { onStartJob(job) },
     ) {
         Column {
-            Text(stringResource(when(job) {
-                FULL_FEED_SYNC -> string.are_you_sure_you_want_to_perform_full_sync
-                PRECACHE_THUMBNAILS -> string.are_you_sure_you_want_to_perform_precache
-                LOCAL_MEDIA_SYNC -> string.are_you_sure_you_want_to_start_local_scan
-                FEED_DETAILS_SYNC -> string.are_you_sure_you_want_to_perform_feed_details_sync
-            }))
+            Text(
+                text = stringResource(when(job) {
+                    FULL_FEED_SYNC -> string.are_you_sure_you_want_to_perform_full_sync
+                    PRECACHE_THUMBNAILS -> string.are_you_sure_you_want_to_perform_precache
+                    LOCAL_MEDIA_SYNC -> string.are_you_sure_you_want_to_start_local_scan
+                    FEED_DETAILS_SYNC -> string.are_you_sure_you_want_to_perform_feed_details_sync
+                }),
+                style = MaterialTheme.typography.labelLarge,
+            )
             if (job != LOCAL_MEDIA_SYNC) {
                 Text(
                     stringResource(string.process_takes_significant_time_consumes_battery),
-                    style = MaterialTheme.typography.displayMedium
+                    style = MaterialTheme.typography.labelSmall
                 )
             }
         }
+    }
+}
+
+@Preview
+@Composable
+private fun JobPermissionDialogPreview(@PreviewParameter(PreviewThemeDataProvider::class) data: PreviewThemeData) {
+    PreviewAppTheme(
+        themeMode = data.themeMode,
+        theme = data.themeVariant,
+    ) {
+        JobPermissionDialog(
+            FULL_FEED_SYNC,
+            {},
+            { }
+        )
     }
 }
