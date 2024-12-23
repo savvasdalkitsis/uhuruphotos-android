@@ -31,7 +31,7 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
-
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 @HiltWorker
 class UploadsWorker @AssistedInject constructor(
     @Assisted context: Context,
@@ -49,20 +49,21 @@ class UploadsWorker @AssistedInject constructor(
 ) {
 
     override suspend fun work(): Result {
-        val force = params.inputData.getBoolean(KEY_FORCE, false)
         val itemsFailed = mutableSetOf<UploadItem>()
         syncUseCase.observePendingItems().distinctUntilChanged().collectLatest { items ->
-            for (item in items) {
-                log { "Uploading item $item" }
-                updateProgress(0)
-                item.updateCurrentUploading(0f)
+            uploadUseCase.markAsUploading(items = items.toTypedArray())
+            for ((index, item) in items.withIndex()) {
+                val xOfX = applicationContext.getString(string.x_of_x, index + 1, items.size)
+                log { "Uploading item $item ($xOfX)" }
+                updateProgress(0, xOfX)
+                item.updateCurrentUpload(0f)
 
-                val result = uploadUseCase.upload(item = item, force = force) { current, total ->
-                    updateProgress(current, total)
-                    item.updateCurrentUploading(current.toProgressPercent(total))
+                val result = uploadUseCase.upload(item) { current, total ->
+                    updateProgress(current, total, " ($xOfX)")
+                    item.updateCurrentUpload(current.toProgressPercent(total))
                 }
                 log { "Result of uploading item $item was $result" }
-                uploadUseCase.setCurrentlyUploading(null)
+                uploadUseCase.setCurrentUpload(null)
                 if (result.isErr) {
                     log(result.error) { "Failed to upload item $item" }
                     itemsFailed += item
@@ -75,8 +76,8 @@ class UploadsWorker @AssistedInject constructor(
         }
     }
 
-    private fun UploadItem.updateCurrentUploading(percent: Float) {
-        uploadUseCase.setCurrentlyUploading(CurrentUpload(this, percent))
+    private fun UploadItem.updateCurrentUpload(percent: Float) {
+        uploadUseCase.setCurrentUpload(CurrentUpload(this, percent))
     }
 
     private fun Set<UploadItem>.failOrRetry() = if (params.runAttemptCount < 4) {
@@ -87,7 +88,6 @@ class UploadsWorker @AssistedInject constructor(
     }
 
     companion object {
-        const val KEY_FORCE = "force"
         const val WORK_NAME = "uploadFiles"
         private const val NOTIFICATION_ID = 1292
     }

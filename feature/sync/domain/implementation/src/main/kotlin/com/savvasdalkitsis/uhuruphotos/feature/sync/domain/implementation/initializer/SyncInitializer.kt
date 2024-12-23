@@ -40,16 +40,15 @@ class SyncInitializer @Inject constructor(
     override fun onAppCreated(app: Application) {
         GlobalScope.launch(Dispatchers.Default) {
             combine(
-                syncUseCase.observePendingItems().distinctUntilChanged(),
+                syncUseCase.observePendingItems(),
                 settingsUseCase.observeCloudSyncNetworkRequirements(),
                 settingsUseCase.observeCloudSyncRequiresCharging(),
-            ) { pending, networkRequirement, requiresCharging ->
-                Triple(pending, networkRequirement, requiresCharging)
-            }.collectLatest { (pending, networkRequirement, requiresCharging) ->
+            ) { _, networkRequirement, requiresCharging ->
+                networkRequirement to requiresCharging
+            }.distinctUntilChanged().collectLatest { (networkRequirement, requiresCharging) ->
                 uploadUseCase.scheduleUploads(
                     networkType = networkRequirement,
                     requiresCharging = requiresCharging,
-                    items = pending.toTypedArray()
                 )
             }
         }

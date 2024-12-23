@@ -44,7 +44,7 @@ data object ForceReUploadSelectedItems : ProcessingAction() {
                 }
             }
         }
-        uploadUseCase.scheduleUpload(force = true, items = selectedItems
+        uploadUseCase.markAsUploading(force = true, items = selectedItems
             .map {  (item, _) -> item }
             .toTypedArray()
         )

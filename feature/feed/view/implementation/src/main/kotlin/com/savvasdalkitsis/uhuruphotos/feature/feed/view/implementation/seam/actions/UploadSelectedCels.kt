@@ -28,7 +28,7 @@ data object UploadSelectedCels : FeedAction() {
     ) = flow<FeedMutation> {
         toaster.show(R.string.media_sync_status_uploading)
         selectionList.clear()
-        uploadUseCase.scheduleUpload(items = (state.selectedCels.mapNotNull {
+        uploadUseCase.markAsUploading(items = (state.selectedCels.mapNotNull {
             it.mediaItem.id.findLocals.firstOrNull()
         }.map { UploadItem(
             id = it.value,

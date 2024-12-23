@@ -18,8 +18,6 @@ package com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.work
 import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.WorkerParameters
-import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
-import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNotificationWorker
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
@@ -31,7 +29,6 @@ import dagger.assisted.AssistedInject
 class InitiateUploadWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted private val params: WorkerParameters,
-    private val uploadUseCase: UploadUseCase,
     foregroundInfoBuilder: ForegroundInfoBuilder,
 ) : ForegroundNotificationWorker<Nothing>(
     context,
@@ -43,17 +40,10 @@ class InitiateUploadWorker @AssistedInject constructor(
 ) {
 
     override suspend fun work(): Result {
-        val item = UploadItem(
-            id = params.inputData.getLong(KEY_ID, -1),
-            contentUri = params.inputData.getString(KEY_CONTENT_URI)!!
-        )
-        uploadUseCase.scheduleUpload(items = arrayOf(item))
         return Result.success()
     }
 
     companion object {
-        const val KEY_ID = "id"
-        const val KEY_CONTENT_URI = "contentUri"
         private const val NOTIFICATION_ID = 1283
     }
 }

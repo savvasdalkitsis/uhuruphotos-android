@@ -18,14 +18,9 @@ package com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.work
 import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.WorkerParameters
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
-import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNotificationWorker
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.repository.UploadRepository
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 
@@ -34,9 +29,6 @@ import dagger.assisted.AssistedInject
 class UploadCompletionWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted private val params: WorkerParameters,
-    private val uploadUseCase: UploadUseCase,
-    private val uploadRepository: UploadRepository,
-    private val localMediaUseCase: LocalMediaUseCase,
     foregroundInfoBuilder: ForegroundInfoBuilder,
 ) : ForegroundNotificationWorker<Nothing>(
     context,
@@ -48,29 +40,10 @@ class UploadCompletionWorker @AssistedInject constructor(
 ) {
 
     override suspend fun work(): Result {
-        val itemId = params.inputData.getLong(KEY_ITEM_ID, -1)
-        uploadRepository.setCompleted(itemId)
-
-        return try {
-            val mediaItem = localMediaUseCase.getLocalMediaItem(itemId)
-                ?: throw IllegalArgumentException("Could not find associated local media with id: $itemId")
-            uploadUseCase.scheduleUpload(items = arrayOf(UploadItem(itemId, mediaItem.contentUri)))
-            Result.success()
-        } catch (e: Exception) {
-            log(e) { "Failed to schedule upload for item $itemId" }
-            failOrRetry(itemId)
-        }
-    }
-
-    private fun failOrRetry(itemId: Long) = if (params.runAttemptCount < 4) {
-        Result.retry()
-    } else {
-        uploadUseCase.markAsNotUploading(itemId)
-        Result.failure()
+        return Result.success()
     }
 
     companion object {
-        const val KEY_ITEM_ID = "itemId"
         private const val NOTIFICATION_ID = 1286
     }
 }

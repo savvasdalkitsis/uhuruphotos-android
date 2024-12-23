@@ -112,7 +112,7 @@ class UploadRepository @Inject constructor(
 
     private val currentUploadKey = "currentUploadKey"
 
-    fun setCurrentlyUploading(currentUpload: CurrentUpload?) {
+    fun setCurrentlyUpload(currentUpload: CurrentUpload?) {
         if (currentUpload == null) {
             preferences.remove(currentUploadKey)
         } else {
@@ -120,7 +120,7 @@ class UploadRepository @Inject constructor(
         }
     }
 
-    fun observeCurrentlyUploading(): Flow<CurrentUpload?> = preferences.observeNullableString(currentUploadKey, null).map {
+    fun observeCurrentlyUpload(): Flow<CurrentUpload?> = preferences.observeNullableString(currentUploadKey, null).map {
         it?.let { moshi.adapter(CurrentUpload::class.java).fromJson(it) }
     }
 

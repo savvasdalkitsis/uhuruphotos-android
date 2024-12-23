@@ -27,7 +27,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Loca
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Md5Hash
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.site.domain.api.usecase.SiteUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.CurrentUpload
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadCapability
@@ -62,7 +61,6 @@ class UploadUseCase @Inject constructor(
     private val remoteMediaUseCase: RemoteMediaUseCase,
     private val uploadWorkScheduler: UploadWorkScheduler,
     private val chunkedUploader: ChunkedUploader,
-    private val settingsUseCase: SettingsUseCase,
     private val welcomeUseCase: WelcomeUseCase,
 ) : UploadUseCase {
 
@@ -84,32 +82,18 @@ class UploadUseCase @Inject constructor(
             },
         )
 
-    override suspend fun scheduleUpload(
-        force: Boolean,
-        networkType: NetworkType,
-        requiresCharging: Boolean,
-        vararg items: UploadItem
-    ) {
-        uploadRepository.setUploading(*items)
-    }
-
     override suspend fun scheduleUploads(
-        force: Boolean,
         networkType: NetworkType,
         requiresCharging: Boolean,
-        vararg items: UploadItem
     ) {
-        uploadRepository.setUploading(*items)
-        uploadWorkScheduler.scheduleUploads(force, networkType, requiresCharging)
+        uploadWorkScheduler.scheduleUploads(networkType, requiresCharging)
     }
 
-    override suspend fun scheduleUpload(
+    override suspend fun markAsUploading(
         force: Boolean,
         vararg items: UploadItem,
     ) {
-        val networkRequirements = settingsUseCase.getCloudSyncNetworkRequirements()
-        val requiresCharging = settingsUseCase.getCloudSyncRequiresCharging()
-        scheduleUpload(force, networkRequirements, requiresCharging, *items)
+        uploadRepository.setUploading(*items)
     }
 
     override fun markAsNotUploading(vararg mediaIds: Long) {
@@ -130,18 +114,18 @@ class UploadUseCase @Inject constructor(
 
     override fun observeUploading(): Flow<Set<Long>> = uploadRepository.observeUploading()
 
-    override fun observeProcessing(): Flow<Set<ProcessingMediaItems>> = uploadRepository.observeProcessing()
+    override fun observeProcessing(): Flow<Set<ProcessingMediaItems>> =
+        uploadRepository.observeProcessing()
 
     override suspend fun upload(
         item: UploadItem,
-        force: Boolean,
         progress: suspend (current: Long, total: Long) -> Unit,
     ): SimpleResult = coroutineBinding {
         val mediaItem = localMediaItem(item).bind()
         val user = userUseCase.getRemoteUserOrRefresh().bind()
 
-        if (force || !exists(mediaItem.md5, user).bind()) {
-            if (force || !uploadRepository.isCompleted(item.id)) {
+        if (!exists(mediaItem.md5, user).bind()) {
+            if (!uploadRepository.isCompleted(item.id)) {
                 chunkedUploader.uploadInChunks(item, mediaItem.size, user, progress).bind()
             }
 
@@ -156,12 +140,12 @@ class UploadUseCase @Inject constructor(
         )
     }
 
-    override fun setCurrentlyUploading(currentUpload: CurrentUpload?) {
-        uploadRepository.setCurrentlyUploading(currentUpload)
+    override fun setCurrentUpload(currentUpload: CurrentUpload?) {
+        uploadRepository.setCurrentlyUpload(currentUpload)
     }
 
     override fun observeCurrentUpload(): Flow<CurrentUpload?> =
-        uploadRepository.observeCurrentlyUploading()
+        uploadRepository.observeCurrentlyUpload()
 
     private suspend fun exists(md5: Md5Hash, user: User): Result<Boolean, Throwable> =
         remoteMediaUseCase.exists(MediaItemHashModel(md5, user.id))

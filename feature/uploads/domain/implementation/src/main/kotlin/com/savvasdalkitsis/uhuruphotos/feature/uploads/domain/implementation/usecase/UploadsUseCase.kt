@@ -66,6 +66,12 @@ class UploadsUseCase @Inject constructor(
                 )
             }
         }.map {
-            Uploads(it.sortedBy(UploadJob::displayName))
+            Uploads(it.sortedWith { a, b ->
+                when {
+                    a.status is Uploading -> -1
+                    b.status is Uploading -> 1
+                    else -> 0
+                }
+            })
         }
 }

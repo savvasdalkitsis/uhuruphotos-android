@@ -18,7 +18,10 @@ package com.savvasdalkitsis.uhuruphotos.feature.sync.domain.implementation.useca
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchTypeModel
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.sync.domain.api.usecase.SyncUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadCapability
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadCapability.CanUpload
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.domain.api.usecase.UploadsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.WelcomeUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
@@ -28,6 +31,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flow
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 
@@ -37,6 +41,7 @@ class SyncUseCase @Inject constructor(
     @PlainTextPreferences
     private val preferences: Preferences,
     private val feedUseCase: FeedUseCase,
+    private val uploadUseCase: UploadUseCase,
     private val uploadsUseCase: UploadsUseCase,
 ) : SyncUseCase {
 
@@ -44,9 +49,10 @@ class SyncUseCase @Inject constructor(
 
     override fun observeSyncEnabled(): Flow<Boolean> = combine(
         welcomeUseCase.observeWelcomeStatus(),
-        preferences.observe(enabledKey, false)
-    ) { welcomeStatus, pref ->
-        welcomeStatus.allGranted && pref
+        preferences.observe(enabledKey, false),
+        flow<UploadCapability> { uploadUseCase.canUpload() },
+    ) { welcomeStatus, pref, canUpload ->
+        canUpload == CanUpload && welcomeStatus.allGranted && pref
     }
 
     override fun setSyncEnabled(enabled: Boolean) {
