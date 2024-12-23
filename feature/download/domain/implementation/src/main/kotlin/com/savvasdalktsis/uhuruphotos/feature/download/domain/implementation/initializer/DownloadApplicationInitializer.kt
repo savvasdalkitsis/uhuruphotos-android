@@ -18,9 +18,8 @@ package com.savvasdalktsis.uhuruphotos.feature.download.domain.implementation.in
 import android.app.Application
 import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
 import com.savvasdalktsis.uhuruphotos.feature.download.domain.api.usecase.DownloadUseCase
-import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.isActive
@@ -29,7 +28,6 @@ import se.ansman.dagger.auto.AutoBindIntoSet
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@OptIn(DelicateCoroutinesApi::class)
 @AutoBindIntoSet
 @Singleton
 class DownloadInitializer @Inject constructor(
@@ -37,7 +35,7 @@ class DownloadInitializer @Inject constructor(
 ) : ApplicationCreated {
 
     override fun onAppCreated(app: Application) {
-        GlobalScope.launch(Dispatchers.Default) {
+        MainScope().launch(Dispatchers.IO) {
             downloadUseCase.observeDownloading().collectLatest {
                 if (it.isNotEmpty()) {
                     while (isActive) {

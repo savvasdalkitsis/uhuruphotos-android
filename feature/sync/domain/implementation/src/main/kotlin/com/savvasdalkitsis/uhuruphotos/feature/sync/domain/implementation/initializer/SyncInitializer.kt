@@ -20,9 +20,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.Setti
 import com.savvasdalkitsis.uhuruphotos.feature.sync.domain.api.usecase.SyncUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
-import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -30,7 +29,6 @@ import kotlinx.coroutines.launch
 import se.ansman.dagger.auto.AutoBindIntoSet
 import javax.inject.Inject
 
-@OptIn(DelicateCoroutinesApi::class)
 @AutoBindIntoSet
 class SyncInitializer @Inject constructor(
     private val syncUseCase: SyncUseCase,
@@ -38,7 +36,7 @@ class SyncInitializer @Inject constructor(
     private val settingsUseCase: SettingsUseCase,
 ) : ApplicationCreated {
     override fun onAppCreated(app: Application) {
-        GlobalScope.launch(Dispatchers.Default) {
+        MainScope().launch(Dispatchers.IO) {
             combine(
                 syncUseCase.observePendingItems(),
                 settingsUseCase.observeCloudSyncNetworkRequirements(),
