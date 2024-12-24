@@ -137,7 +137,6 @@ class LocalMediaRepository @Inject constructor(
         forceProcess: Boolean = false,
         onNewItem: (LocalMediaItemDetails) -> Unit,
     ) {
-        onProgressChange(0, 0)
         val existingIds = when {
             forceProcess -> emptySet()
             else -> if (bucketId != null) {
