@@ -15,8 +15,10 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model
 
+import dev.zacsweers.redacted.annotations.Redacted
+
 sealed class ServerTokenModel {
     data object ExpiredModel : ServerTokenModel()
     data object NotFoundModel : ServerTokenModel()
-    data class ValidModel(val value: String) : ServerTokenModel()
+    data class ValidModel(@Redacted val value: String) : ServerTokenModel()
 }

@@ -7,4 +7,7 @@ dependencies {
             project(":feature:auth:domain:api"),
             project(":feature:local:domain:api"),
     )
+    implementation(
+            project(":foundation:log:api"),
+    )
 }
