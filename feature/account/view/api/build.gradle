@@ -10,6 +10,7 @@ dependencies {
     api(
             project(":feature:avatar:view:api"),
             project(":feature:jobs:domain:api"),
+            project(":feature:sync:domain:api"),
     )
     implementation(
             libs.androidx.compose.foundation.layout,
@@ -24,7 +25,6 @@ dependencies {
             project(":feature:portfolio:view:api"),
             project(":feature:server:view:api"),
             project(":feature:settings:view:api"),
-            project(":feature:sync:domain:api"),
             project(":feature:uploads:domain:api"),
             project(":feature:uploads:view:api"),
             project(":feature:user:domain:api"),
