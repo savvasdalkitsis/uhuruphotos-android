@@ -19,6 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.Authentic
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.domain.api.usecase.AvatarUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.usecase.JobsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.sync.domain.api.usecase.SyncUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.domain.api.usecase.UploadsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.WelcomeUseCase
@@ -31,6 +32,7 @@ class AccountOverviewActionsContext @Inject constructor(
     val jobsUseCase: JobsUseCase,
     val navigator: Navigator,
     val welcomeUseCase: WelcomeUseCase,
+    val uploadUseCase: UploadUseCase,
     val uploadsUseCase: UploadsUseCase,
     val syncUseCase: SyncUseCase,
     val userUseCase: UserUseCase,

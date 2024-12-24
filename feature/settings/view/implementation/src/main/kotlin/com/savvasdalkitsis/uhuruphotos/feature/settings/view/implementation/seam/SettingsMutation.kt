@@ -23,6 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.state.JobState
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.BiometricsSettingState
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.MapProviderState
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadCapability
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeContrast
@@ -162,6 +163,10 @@ sealed class SettingsMutation(
 
     data class SetUploadsInProgress(val inProgress: Boolean): SettingsMutation({
         it.copy(uploadsInProgress = inProgress)
+    })
+
+    data class SetUploadCapability(val capability: UploadCapability): SettingsMutation({
+        it.copy(uploadCapability = capability)
     })
 
     data class DisplaySearchSuggestionsEnabled(val enabled: Boolean): SettingsMutation({

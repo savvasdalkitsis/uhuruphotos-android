@@ -24,6 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.search.domain.api.usecase.SearchU
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.CacheSettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUIUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.domain.api.usecase.UploadsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.WelcomeUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.usecase.BiometricsUseCase
@@ -48,6 +49,7 @@ class SettingsActionsContext @Inject constructor(
     val toaster: ToasterUseCase,
     val navigator: Navigator,
     val welcomeUseCase: WelcomeUseCase,
+    val uploadUseCase: UploadUseCase,
     val uploadsUseCase: UploadsUseCase,
     val localMediaUseCase: LocalMediaUseCase,
     val localMediaWorkScheduler: LocalMediaWorkScheduler,

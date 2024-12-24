@@ -26,6 +26,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOver
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewMutation.ShowUserAndServerDetails
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.AccountOverviewState
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.state.toJobState
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadCapability
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadCapability.*
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.api.navigation.WelcomeNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.launchers.api.onIO
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.andThen
@@ -56,7 +58,10 @@ data object Load : AccountOverviewAction() {
             ShowJobs(it.jobs.toJobState)
         },
         uploadsUseCase.observeUploadsInFlight().map { uploads ->
-            ShowUploadsProgress(uploads.inProgress)
+            ShowUploadsProgress(when (uploadUseCase.canUpload()) {
+                CanUpload -> uploads.inProgress
+                CannotUpload, UnableToCheck, NotSetUpWithAServer -> false
+            })
         },
         syncUseCase.observeSyncStatus().map { syncStatus ->
             ShowCloudSyncStatus(syncStatus)

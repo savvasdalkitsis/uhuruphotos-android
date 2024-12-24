@@ -50,6 +50,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.group.UhuruSuperGrou
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruActionIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruUpNavButton
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.UhuruTextRow
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.theme.UhuruThemeSettings
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
@@ -142,8 +143,10 @@ internal fun Settings(
                     UhuruCollapsibleGroup(groupState = controller.jobsStatus) {
                         SettingsJobsStatus(state, action)
                     }
-                    if (state.hasRemoteAccess) {
-                        UhuruCollapsibleGroup(groupState = controller.jobsCloudSync) {
+                    UhuruCollapsibleGroup(groupState = controller.jobsCloudSync) {
+                        UhuruTextRow(stringResource(string.upload_capability))
+                        UhuruTextRow(state.uploadCapability.name)
+                        if (state.hasRemoteAccess) {
                             SettingsJobsCloudSyncConfiguration(state, action)
                         }
                     }

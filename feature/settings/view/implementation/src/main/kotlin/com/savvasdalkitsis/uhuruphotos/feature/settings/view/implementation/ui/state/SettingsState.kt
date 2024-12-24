@@ -22,6 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaI
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobModel
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.state.JobState
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.model.CacheType
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadCapability
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.theme.state.ThemeSettingsState
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -59,4 +60,5 @@ data class SettingsState(
     val shouldShowPrecacheProgress: Boolean = false,
     val shouldShowLocalSyncProgress: Boolean = false,
     val hasRemoteAccess: Boolean = false,
+    val uploadCapability: UploadCapability = UploadCapability.NotSetUpWithAServer,
 )
