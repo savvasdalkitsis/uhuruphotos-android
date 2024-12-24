@@ -31,6 +31,6 @@ class AboutNavigationTarget @Inject constructor(
     AboutViewModel::class,
     AboutNavigationRoute::class,
     view = { state, action ->
-        About(state, action)
+        About(state = state, action = action)
     }
 )

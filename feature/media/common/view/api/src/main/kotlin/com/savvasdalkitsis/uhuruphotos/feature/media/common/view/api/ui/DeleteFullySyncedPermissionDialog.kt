@@ -24,7 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.IconOutlineButton
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.UhuruIconOutlineButton
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.dialogs.CancelDialog
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.AlertText
 
@@ -39,14 +39,14 @@ fun DeleteFullySyncedPermissionDialog(
         onDismiss = onDismiss,
         body = {
             Text(stringResource(string.what_would_like_to_do))
-            IconOutlineButton(
+            UhuruIconOutlineButton(
                 modifier = Modifier
                     .fillMaxWidth(),
                 icon = drawable.ic_delete,
                 text = stringResource(string.delete_fully_synced_media_local),
                 onClick = onDeleteLocal,
             )
-            IconOutlineButton(
+            UhuruIconOutlineButton(
                 modifier = Modifier
                     .fillMaxWidth(),
                 icon = drawable.ic_folder_network,

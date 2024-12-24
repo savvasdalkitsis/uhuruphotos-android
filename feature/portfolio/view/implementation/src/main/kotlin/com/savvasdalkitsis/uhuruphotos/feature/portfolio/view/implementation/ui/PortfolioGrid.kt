@@ -31,7 +31,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui.
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.layout.plus
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.IconOutlineButton
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.UhuruIconOutlineButton
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 
@@ -56,7 +56,7 @@ fun BoxScope.PortfolioGrid(
         }
     }
     if (showScanOther) {
-        IconOutlineButton(
+        UhuruIconOutlineButton(
             modifier = Modifier.align(Alignment.Center),
             icon = drawable.ic_folder,
             text = "Scan other device folders",

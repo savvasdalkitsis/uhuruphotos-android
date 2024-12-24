@@ -49,7 +49,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.act
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.HideAddToAlbumDialog
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.layout.plus
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.IconOutlineButton
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.UhuruIconOutlineButton
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.search.SearchField
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.sheet.SheetHandle
 import kotlinx.collections.immutable.ImmutableList
@@ -120,7 +120,7 @@ internal fun AddToAlbumDialog(
 
 private fun LazyGridScope.createNewButtonItem(action: (FeedAction) -> Unit) {
     item("create_new", span = { GridItemSpan(maxLineSpan) }) {
-        IconOutlineButton(
+        UhuruIconOutlineButton(
             modifier = Modifier.padding(horizontal = 16.dp),
             icon = com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_photo_album,
             text = stringResource(R.string.create_album),

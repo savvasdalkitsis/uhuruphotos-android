@@ -15,33 +15,32 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.ui
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.mikepenz.aboutlibraries.ui.compose.LibrariesContainer
+import com.mikepenz.aboutlibraries.ui.compose.LibraryColors
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.actions.AboutAction
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.actions.Donate
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.actions.NavigateToGithub
@@ -52,15 +51,15 @@ import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlight
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
-import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeMode
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.IconOutlineButton
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewThemeData
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewThemeDataProvider
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.UhuruIconOutlineButton
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruUpNavButton
 import my.nanihadesuka.compose.InternalLazyColumnScrollbar
 import my.nanihadesuka.compose.ScrollbarSelectionMode
 import my.nanihadesuka.compose.ScrollbarSettings
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun About(
     state: AboutState,
@@ -71,12 +70,26 @@ internal fun About(
         navigationIcon = { UhuruUpNavButton() },
     ) { contentPadding ->
         val listState = rememberLazyListState()
+        val backgroundColor = MaterialTheme.colorScheme.background
+        val contentColor = contentColorFor(MaterialTheme.colorScheme.background)
+        val badgeBackgroundColor = MaterialTheme.colorScheme.primary
+        val badgeContentColor = contentColorFor(MaterialTheme.colorScheme.primary)
+        val dialogConfirmButtonColor = MaterialTheme.colorScheme.primary
         LibrariesContainer(
             modifier = Modifier
                 .recomposeHighlighter()
                 .fillMaxSize(),
             contentPadding = contentPadding,
             lazyListState = listState,
+            colors = remember {
+                object: LibraryColors {
+                    override val backgroundColor = backgroundColor
+                    override val contentColor = contentColor
+                    override val badgeBackgroundColor = badgeBackgroundColor
+                    override val badgeContentColor = badgeContentColor
+                    override val dialogConfirmButtonColor = dialogConfirmButtonColor
+                }
+            },
             header = {
                 stickyHeader {
                     AboutHeader(state, action)
@@ -118,8 +131,8 @@ private fun AboutHeader(
             modifier = Modifier
                 .recomposeHighlighter()
                 .size(80.dp)
-                .background(Color.White, CircleShape),
-            tint = Color.Black,
+                .background(MaterialTheme.colorScheme.surfaceContainerLow, CircleShape),
+            tint = MaterialTheme.colorScheme.onSurface,
             painter = painterResource(drawable.ic_logo),
             contentDescription = null,
         )
@@ -137,36 +150,22 @@ private fun AboutHeader(
                 .fillMaxWidth(),
             horizontalArrangement = spacedBy(8.dp),
         ) {
-            OutlinedButton(
+            UhuruIconOutlineButton(
                 modifier = Modifier
                     .recomposeHighlighter()
                     .weight(1f),
-                onClick = { action(NavigateToGithub )},
-            ) {
-                Icon(
-                    painter = painterResource(drawable.ic_github),
-                    contentDescription = null
-                )
-                Spacer(modifier = Modifier
-                    .recomposeHighlighter()
-                    .width(8.dp))
-                Text(text = "Github")
-            }
-            OutlinedButton(
+                icon = drawable.ic_github,
+                text = "Github",
+                onClick = { action(NavigateToGithub ) },
+            )
+            UhuruIconOutlineButton(
                 modifier = Modifier
                     .recomposeHighlighter()
                     .weight(1f),
+                icon = drawable.ic_money,
+                text = stringResource(string.donate),
                 onClick = { action(Donate) },
-            ) {
-                Icon(
-                    painter = painterResource(drawable.ic_money),
-                    contentDescription = null
-                )
-                Spacer(modifier = Modifier
-                    .recomposeHighlighter()
-                    .width(8.dp))
-                Text(text = stringResource(string.donate))
-            }
+            )
         }
         Row(
             modifier = Modifier
@@ -174,24 +173,15 @@ private fun AboutHeader(
                 .fillMaxWidth(),
             horizontalArrangement = spacedBy(8.dp),
         ) {
-            OutlinedButton(
+            UhuruIconOutlineButton(
                 modifier = Modifier
                     .recomposeHighlighter()
                     .weight(1f),
+                icon = drawable.ic_feedback,
+                text = stringResource(string.feedback),
                 onClick = { action(SendFeedback) },
-            ) {
-                Icon(
-                    painter = painterResource(drawable.ic_feedback),
-                    contentDescription = null
-                )
-                Spacer(
-                    modifier = Modifier
-                        .recomposeHighlighter()
-                        .width(8.dp)
-                )
-                Text(text = stringResource(string.feedback))
-            }
-            IconOutlineButton(
+            )
+            UhuruIconOutlineButton(
                 modifier = Modifier.weight(1f),
                 icon = drawable.ic_book_open,
                 onClick = { action(NavigateToPrivacyPolicy) },
@@ -203,16 +193,11 @@ private fun AboutHeader(
 
 @Preview
 @Composable
-private fun AboutHeaderPreview() {
-    PreviewAppTheme {
-        AboutHeader(AboutState("0.0.999")) {}
-    }
-}
-
-@Preview
-@Composable
-private fun AboutHeaderDarkPreview() {
-    PreviewAppTheme(themeMode = ThemeMode.DARK_MODE) {
-        AboutHeader(AboutState("0.0.999")) {}
+private fun AboutHeaderPreview(@PreviewParameter(PreviewThemeDataProvider::class) data: PreviewThemeData) {
+    PreviewAppTheme(
+        themeMode = data.themeMode,
+        theme = data.themeVariant,
+    ) {
+        About(AboutState("0.0.999")) {}
     }
 }

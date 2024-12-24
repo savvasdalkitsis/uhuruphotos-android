@@ -54,7 +54,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatusMo
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatusModel.QueuedModel
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.Jobs
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.state.JobState
-import com.savvasdalkitsis.uhuruphotos.feature.sync.domain.api.model.SyncStatus
 import com.savvasdalkitsis.uhuruphotos.feature.sync.domain.api.model.SyncStatus.*
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.view.api.ui.UploadsRow
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
@@ -63,7 +62,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.raw
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeMode
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.IconOutlineButton
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.UhuruIconOutlineButton
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.ToggleableButtonWithIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.group.UhuruCollapsibleGroup
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.group.state.rememberCollapsibleGroupState
@@ -234,7 +233,7 @@ private fun ConstraintLayoutScope.Content(
                 .padding(horizontal = 16.dp),
             horizontalArrangement = spacedBy(8.dp)
         ) {
-            IconOutlineButton(
+            UhuruIconOutlineButton(
                 modifier = Modifier
                     .recomposeHighlighter()
                     .weight(1f)
@@ -243,7 +242,7 @@ private fun ConstraintLayoutScope.Content(
                 icon = drawable.ic_folder,
                 text = stringResource(string.feed_folders),
             )
-            IconOutlineButton(
+            UhuruIconOutlineButton(
                 modifier = Modifier
                     .recomposeHighlighter()
                     .weight(1f)
@@ -278,7 +277,7 @@ private fun ConstraintLayoutScope.Footer(
             },
         horizontalArrangement = spacedBy(8.dp),
     ) {
-        IconOutlineButton(
+        UhuruIconOutlineButton(
             modifier = Modifier
                 .recomposeHighlighter()
                 .weight(1f),
@@ -292,7 +291,7 @@ private fun ConstraintLayoutScope.Footer(
             else
                 stringResource(string.log_out),
         )
-        IconOutlineButton(
+        UhuruIconOutlineButton(
             modifier = Modifier
                 .recomposeHighlighter()
                 .weight(1f),

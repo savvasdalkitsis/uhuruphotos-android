@@ -48,7 +48,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeMode
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SectionHeader
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.IconOutlineButton
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.UhuruIconOutlineButton
 import kotlinx.collections.immutable.persistentListOf
 
 @Composable
@@ -90,7 +90,7 @@ internal fun LocalFolders(
             }
             if (!media.scanningOtherFolders) {
                 item("other") {
-                    IconOutlineButton(
+                    UhuruIconOutlineButton(
                         modifier = Modifier
                             .widthIn(min = 216.dp)
                             .padding(bottom = 38.dp)

@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruIcon
 
 @Composable
-fun IconOutlineButton(
+fun UhuruIconOutlineButton(
     modifier: Modifier = Modifier,
     @DrawableRes icon: Int,
     text: String,

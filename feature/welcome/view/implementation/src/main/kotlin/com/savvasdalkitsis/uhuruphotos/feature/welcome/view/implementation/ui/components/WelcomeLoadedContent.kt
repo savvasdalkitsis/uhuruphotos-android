@@ -35,7 +35,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.ui.st
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.permissions.api.ui.PermissionsState
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.IconOutlineButton
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.UhuruIconOutlineButton
 
 @Composable
 internal fun WelcomeLoadedContent(
@@ -50,7 +50,7 @@ internal fun WelcomeLoadedContent(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(32.dp),
         ) {
-            IconOutlineButton(
+            UhuruIconOutlineButton(
                 modifier = Modifier.weight(1f),
                 icon = drawable.ic_book_open,
                 onClick = { action(NavigateToPrivacyPolicy) },
