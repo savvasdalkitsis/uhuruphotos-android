@@ -20,6 +20,7 @@ import androidx.compose.runtime.Immutable
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.AvatarState
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobModel
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.state.JobState
+import com.savvasdalkitsis.uhuruphotos.feature.sync.domain.api.model.SyncStatus
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
@@ -35,5 +36,5 @@ data class AccountOverviewState(
     val showUploads: Boolean = false,
     val uploadsInProgress: Boolean = false,
     val showCloudSync: Boolean = false,
-    val cloudBackUpEnabled: Boolean = false,
+    val cloudBackUpStatus: SyncStatus = SyncStatus.NotAvailable,
 )

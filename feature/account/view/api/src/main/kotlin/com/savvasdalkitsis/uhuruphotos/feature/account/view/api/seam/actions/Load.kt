@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewMutation.AvatarUpdate
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewMutation.ShowCloudSync
-import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewMutation.ShowCloudSyncEnabled
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewMutation.ShowCloudSyncStatus
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewMutation.ShowJobs
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewMutation.ShowLogin
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewMutation.ShowUploads
@@ -58,8 +58,8 @@ data object Load : AccountOverviewAction() {
         uploadsUseCase.observeUploadsInFlight().map { uploads ->
             ShowUploadsProgress(uploads.inProgress)
         },
-        syncUseCase.observeSyncEnabled().map { enabled ->
-            ShowCloudSyncEnabled(enabled)
+        syncUseCase.observeSyncStatus().map { syncStatus ->
+            ShowCloudSyncStatus(syncStatus)
         }
     ).onStart {
         onIO {

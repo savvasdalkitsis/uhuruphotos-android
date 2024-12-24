@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -27,10 +28,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewThemeData
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewThemeDataProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruIcon
 
 @Composable
@@ -44,6 +48,7 @@ fun TextWithIcon(
     style: TextStyle = LocalTextStyle.current,
     verticalAlignment: Alignment.Vertical = CenterVertically,
     animateIfAvailable: Boolean = true,
+    enabled: Boolean = true,
     text: String,
 ) {
     Row(
@@ -57,7 +62,10 @@ fun TextWithIcon(
             modifier = iconModifier
                 .recomposeHighlighter(),
             icon = icon,
-            tint = tint,
+            tint = if (enabled)
+                tint
+            else
+                MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f),
             animateIfAvailable = animateIfAvailable,
             contentDescription = null
         )
@@ -65,6 +73,10 @@ fun TextWithIcon(
             modifier = textModifier
                 .recomposeHighlighter(),
             text = text,
+            color = if (enabled)
+                Color.Unspecified
+            else
+                MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f),
             style = style,
         )
     }
@@ -72,8 +84,25 @@ fun TextWithIcon(
 
 @Preview
 @Composable
-private fun TextWithIconPreview() {
-    PreviewAppTheme {
+private fun TextWithIconPreview(@PreviewParameter(PreviewThemeDataProvider::class) data: PreviewThemeData) {
+    PreviewAppTheme(
+        themeMode = data.themeMode,
+        theme = data.themeVariant,
+    ) {
         TextWithIcon(icon = drawable.ic_airplane, text = "Some text")
+    }
+}
+@Preview
+@Composable
+private fun TextWithIconDisabledPreview(@PreviewParameter(PreviewThemeDataProvider::class) data: PreviewThemeData) {
+    PreviewAppTheme(
+        themeMode = data.themeMode,
+        theme = data.themeVariant,
+    ) {
+        TextWithIcon(
+            icon = drawable.ic_airplane,
+            text = "Some text",
+            enabled = false,
+        )
     }
 }

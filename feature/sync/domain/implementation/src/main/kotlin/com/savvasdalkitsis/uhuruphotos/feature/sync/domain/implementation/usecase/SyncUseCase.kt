@@ -17,9 +17,11 @@ package com.savvasdalkitsis.uhuruphotos.feature.sync.domain.implementation.useca
 
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchTypeModel
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.sync.domain.api.model.SyncStatus
+import com.savvasdalkitsis.uhuruphotos.feature.sync.domain.api.model.SyncStatus.*
 import com.savvasdalkitsis.uhuruphotos.feature.sync.domain.api.usecase.SyncUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadCapability
-import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadCapability.CanUpload
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadCapability.*
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.domain.api.usecase.UploadsUseCase
@@ -47,12 +49,15 @@ class SyncUseCase @Inject constructor(
 
     private val enabledKey = "syncEnabledKey"
 
-    override fun observeSyncEnabled(): Flow<Boolean> = combine(
+    override fun observeSyncStatus(): Flow<SyncStatus> = combine(
         welcomeUseCase.observeWelcomeStatus(),
         preferences.observe(enabledKey, false),
         flow<UploadCapability> { uploadUseCase.canUpload() },
     ) { welcomeStatus, pref, canUpload ->
-        canUpload == CanUpload && welcomeStatus.allGranted && pref
+        when (canUpload) {
+            CanUpload -> if (welcomeStatus.allGranted && pref) Enabled else Disabled
+            CannotUpload, UnableToCheck, NotSetUpWithAServer -> NotAvailable
+        }
     }
 
     override fun setSyncEnabled(enabled: Boolean) {
@@ -61,12 +66,12 @@ class SyncUseCase @Inject constructor(
 
     override fun observePendingItems(): Flow<List<UploadItem>> =
         combine(
-            observeSyncEnabled(),
+            observeSyncStatus(),
             feedUseCase.observeFeed(FeedFetchTypeModel.ALL, loadSmallInitialChunk = false),
             uploadsUseCase.observeUploadsInFlight(),
         )
-        { enabled, feed, existingUploads ->
-            if (!enabled)
+        { syncStatus, feed, existingUploads ->
+            if (syncStatus != Enabled)
                 emptyList()
             else
                 (feed.flatMap { it.mediaItems }

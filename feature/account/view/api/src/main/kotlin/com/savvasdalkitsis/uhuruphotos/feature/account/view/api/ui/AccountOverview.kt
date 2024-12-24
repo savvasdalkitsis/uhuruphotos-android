@@ -54,6 +54,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatusMo
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatusModel.QueuedModel
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.Jobs
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.state.JobState
+import com.savvasdalkitsis.uhuruphotos.feature.sync.domain.api.model.SyncStatus
+import com.savvasdalkitsis.uhuruphotos.feature.sync.domain.api.model.SyncStatus.*
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.view.api.ui.UploadsRow
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
@@ -218,9 +220,10 @@ private fun ConstraintLayoutScope.Content(
                     .padding(horizontal = 16.dp),
                 iconModifier = Modifier.size(48.dp),
                 icon = raw.animation_syncing,
-                animateIfAvailable = state.cloudBackUpEnabled,
+                animateIfAvailable = state.cloudBackUpStatus == Enabled,
                 text = stringResource(string.cloud_sync),
-                checked = state.cloudBackUpEnabled,
+                checked = state.cloudBackUpStatus == Enabled,
+                enabled = state.cloudBackUpStatus != NotAvailable,
                 onCheckedChange = onCloudSyncChanged,
             )
         }
@@ -311,7 +314,7 @@ private fun AccountOverviewPreview() {
                 showUserAndServerDetails = true,
                 showUploads = true,
                 showCloudSync = true,
-                cloudBackUpEnabled = true,
+                cloudBackUpStatus = Enabled,
                 avatarState = previewAvatarState,
                 jobs = persistentListOf(
                     JobState(Title.Text("Feed"), FULL_FEED_SYNC, IdleModel),
@@ -335,7 +338,7 @@ private fun AccountOverviewDarkPreview() {
                 showUserAndServerDetails = true,
                 showUploads = true,
                 showCloudSync = true,
-                cloudBackUpEnabled = true,
+                cloudBackUpStatus = Enabled,
                 avatarState = previewAvatarState,
                 jobs = persistentListOf(
                     JobState(Title.Text("Feed"), FULL_FEED_SYNC, IdleModel),

@@ -21,16 +21,20 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.copy
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewThemeData
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewThemeDataProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.TextWithIcon
 
 @Composable
@@ -40,12 +44,14 @@ fun ToggleableButtonWithIcon(
     iconModifier: Modifier = Modifier,
     iconTint: Color? = null,
     animateIfAvailable: Boolean = true,
+    enabled: Boolean = true,
     text: String,
     checked: Boolean,
     onCheckedChange: (Boolean) -> Unit,
 ) {
     OutlinedButton(
         modifier = modifier,
+        enabled = enabled,
         onClick = { onCheckedChange(!checked) },
         contentPadding = ButtonDefaults.ContentPadding.copy(top = 0.dp, bottom = 0.dp, end = 0.dp),
     ) {
@@ -59,20 +65,26 @@ fun ToggleableButtonWithIcon(
                 icon = icon,
                 tint = iconTint,
                 text = text,
+                enabled = enabled,
                 animateIfAvailable = animateIfAvailable,
             )
-            Checkbox(
-                checked = checked,
-                onCheckedChange = onCheckedChange,
-            )
+            if (enabled) {
+                Checkbox(
+                    checked = checked,
+                    onCheckedChange = onCheckedChange,
+                )
+            }
         }
     }
 }
 
 @Preview
 @Composable
-private fun ToggleableButtonWithIconPreview() {
-    PreviewAppTheme {
+private fun ToggleableButtonWithIconPreview(@PreviewParameter(PreviewThemeDataProvider::class) data: PreviewThemeData) {
+    PreviewAppTheme(
+        theme = data.themeVariant,
+        themeMode = data.themeMode,
+    ) {
         Box(Modifier.padding(8.dp)) {
             ToggleableButtonWithIcon(
                 modifier = Modifier.fillMaxWidth(),
@@ -86,14 +98,36 @@ private fun ToggleableButtonWithIconPreview() {
 
 @Preview
 @Composable
-private fun ToggleableButtonWithIconUnselectedPreview() {
-    PreviewAppTheme {
+private fun ToggleableButtonWithIconUnselectedPreview(@PreviewParameter(PreviewThemeDataProvider::class) data: PreviewThemeData) {
+    PreviewAppTheme(
+        theme = data.themeVariant,
+        themeMode = data.themeMode,
+    ) {
         Box(Modifier.padding(8.dp)) {
             ToggleableButtonWithIcon(
                 modifier = Modifier.fillMaxWidth(),
                 icon = drawable.ic_info,
                 text = "Info",
                 checked = false,
+            ) {}
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun ToggleableButtonWithIconDisabledPreview(@PreviewParameter(PreviewThemeDataProvider::class) data: PreviewThemeData) {
+    PreviewAppTheme(
+        theme = data.themeVariant,
+        themeMode = data.themeMode,
+    ) {
+        Box(Modifier.padding(8.dp)) {
+            ToggleableButtonWithIcon(
+                modifier = Modifier.fillMaxWidth(),
+                icon = drawable.ic_info,
+                text = "Info",
+                checked = false,
+                enabled = false,
             ) {}
         }
     }

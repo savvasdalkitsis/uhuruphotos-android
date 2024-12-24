@@ -1,5 +1,5 @@
 /*
-Copyright 2023 Savvas Dalkitsis
+Copyright 2024 Savvas Dalkitsis
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,15 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.sync.domain.api.usecase
+package com.savvasdalkitsis.uhuruphotos.feature.sync.domain.api.model
 
-import com.savvasdalkitsis.uhuruphotos.feature.sync.domain.api.model.SyncStatus
-import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
-import kotlinx.coroutines.flow.Flow
-
-interface SyncUseCase {
-
-    fun observeSyncStatus(): Flow<SyncStatus>
-    fun observePendingItems(): Flow<List<UploadItem>>
-    fun setSyncEnabled(enabled: Boolean)
+enum class SyncStatus {
+    Enabled,
+    Disabled,
+    NotAvailable,
 }

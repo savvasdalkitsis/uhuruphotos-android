@@ -19,6 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.Account
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.AvatarState
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobModel
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.state.JobState
+import com.savvasdalkitsis.uhuruphotos.feature.sync.domain.api.model.SyncStatus
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import kotlinx.collections.immutable.toImmutableList
 
@@ -70,8 +71,8 @@ sealed class AccountOverviewMutation(
         it.copy(uploadsInProgress = inProgress)
     })
 
-    data class ShowCloudSyncEnabled(val enabled: Boolean) : AccountOverviewMutation({
-        it.copy(cloudBackUpEnabled = enabled)
+    data class ShowCloudSyncStatus(val syncStatus: SyncStatus) : AccountOverviewMutation({
+        it.copy(cloudBackUpStatus = syncStatus)
     })
 
     data class ShowJobStartDialog(val job: JobModel) : AccountOverviewMutation({
