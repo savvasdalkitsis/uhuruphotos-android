@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.uploads.view.implementation.ui
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Box
@@ -45,7 +44,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.ImageLoader
-import com.savvasdalkitsis.uhuruphotos.feature.processing.view.api.navigation.ProcessingNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadJob
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadStatus
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadStatus.Failed
@@ -53,46 +51,26 @@ import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadSta
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadStatus.InQueue
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadStatus.Processing
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadStatus.Uploading
-import com.savvasdalkitsis.uhuruphotos.feature.uploads.view.implementation.seam.actions.ClearFinished
-import com.savvasdalkitsis.uhuruphotos.feature.uploads.view.implementation.seam.actions.UploadsAction
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.view.implementation.ui.state.UploadsState
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.LocalThumbnailImageLoader
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Thumbnail
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.LocalNavigator
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.CustomColors
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.R
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UhuruFullLoading
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruActionIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruUpNavButton
 import kotlinx.collections.immutable.persistentListOf
 
-
 @Composable
 internal fun Uploads(
     state: UploadsState,
-    action: (UploadsAction) -> Unit,
 ) {
-    val navigator = LocalNavigator.current
     UhuruScaffold(
-        title = { Text(text = stringResource(string.uploads)) },
+        title = { Text(text = "${stringResource(string.uploads)} (${state.jobs.size})") },
         navigationIcon = { UhuruUpNavButton() },
-        actionBarContent = {
-            UhuruActionIcon(
-                icon = drawable.ic_cloud_in_progress,
-                onClick = { navigator?.navigateTo(ProcessingNavigationRoute) },
-            )
-            AnimatedVisibility(visible = !state.isLoading) {
-                UhuruActionIcon(
-                    icon = drawable.ic_clear_all,
-                    onClick = { action(ClearFinished) },
-                )
-            }
-        }
     ) { contentPadding ->
         when {
             state.isLoading -> UhuruFullLoading()
@@ -114,6 +92,7 @@ internal fun Uploads(
 
 @Composable
 fun UploadJobRow(job: UploadJob) {
+    val status = job.status
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -143,15 +122,21 @@ fun UploadJobRow(job: UploadJob) {
                     .height(4.dp),
                 horizontalArrangement = spacedBy(2.dp),
             ) {
-                Segment(job.status)
+                Segment(status)
             }
             Spacer(modifier = Modifier.weight(1f))
             Row(
                 modifier = Modifier.fillMaxWidth()
             ) {
+                if (status is Uploading) {
+                    Text(
+                        text = "${status.progressDisplay} %",
+                        style = MaterialTheme.typography.bodyMedium,
+                    )
+                }
                 Spacer(modifier = Modifier.weight(1f))
                 Text(
-                    text = stringResource(job.status.displayName),
+                    text = stringResource(status.displayName),
                     textAlign = TextAlign.End,
                     style = MaterialTheme.typography.bodyMedium,
                 )
@@ -221,7 +206,7 @@ private fun UploadsPreview() {
                             localItemId = 1,
                             displayName = "PXL_20230801_103507882.jpg",
                             contentUri = "",
-                            status = Uploading(0.2f),
+                            status = Uploading(0.2f, "20.00%"),
                         ),
                         UploadJob(
                             localItemId = 2,
@@ -267,7 +252,7 @@ private fun UploadsPreview() {
                         ),
                     ),
                 )
-            ) {}
+            )
         }
     }
 }

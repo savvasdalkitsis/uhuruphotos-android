@@ -30,7 +30,7 @@ class UploadsNavigationTarget @Inject constructor(
 ) : NavigationTarget<UploadsNavigationRoute> by ViewModelNavigationTarget(
     UploadsViewModel::class,
     UploadsNavigationRoute::class,
-    view = { state, action ->
-        Uploads(state, action)
+    view = { state, _ ->
+        Uploads(state)
     }
 )

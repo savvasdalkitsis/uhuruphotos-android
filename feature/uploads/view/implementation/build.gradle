@@ -14,7 +14,6 @@ dependencies {
             libs.bundles.autodagger,
             libs.kotlinx.immutable,
             libs.seeker,
-            project(":feature:processing:view:api"),
             project(":feature:settings:domain:api"),
             project(":feature:uploads:domain:api"),
             project(":feature:uploads:view:api"),

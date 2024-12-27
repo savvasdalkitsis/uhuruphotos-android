@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.uploads.domain.implementation.usecase
 
+import android.content.Context
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.processing.domain.api.usecase.ProcessingUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadJob
@@ -25,6 +26,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadSta
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.domain.api.model.Uploads
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.domain.api.usecase.UploadsUseCase
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
@@ -36,6 +38,7 @@ class UploadsUseCase @Inject constructor(
     private val localMediaUseCase: LocalMediaUseCase,
     private val uploadUseCase: UploadUseCase,
     private val processingUseCase: ProcessingUseCase,
+    @ApplicationContext private val context: Context,
 ) : UploadsUseCase {
 
     override fun observeUploadsInFlight(): Flow<Uploads> =
@@ -52,7 +55,14 @@ class UploadsUseCase @Inject constructor(
                         contentUri = mediaItem.contentUri,
                         status = when {
                             currentUpload?.item?.id == itemId ->
-                                Uploading(currentUpload.progressPercent)
+                                Uploading(
+                                    progressPercent = currentUpload.progressPercent,
+                                    progressDisplay = String.format(
+                                        locale = context.resources.configuration.locales[0],
+                                        format = "%.2f%%",
+                                        currentUpload.progressPercent * 100,
+                                    )
+                                )
                             else -> InQueue
                         }
                     )
@@ -70,6 +80,8 @@ class UploadsUseCase @Inject constructor(
                 when {
                     a.status is Uploading -> -1
                     b.status is Uploading -> 1
+                    a.status is Processing -> -1
+                    b.status is Processing -> 1
                     else -> 0
                 }
             })
