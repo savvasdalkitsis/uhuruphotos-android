@@ -47,6 +47,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.model.up
 import com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.repository.UploadRepository
 import com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.service.http.UploadService
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import okhttp3.MultipartBody.Part.Companion.createFormData
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
@@ -63,6 +64,10 @@ class UploadUseCase @Inject constructor(
     private val chunkedUploader: ChunkedUploader,
     private val welcomeUseCase: WelcomeUseCase,
 ) : UploadUseCase {
+
+    override fun observeSingleCanUpload(): Flow<UploadCapability> = flow {
+        emit(canUpload())
+    }
 
     override suspend fun canUpload(): UploadCapability =
         welcomeUseCase.get(

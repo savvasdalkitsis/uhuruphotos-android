@@ -109,7 +109,7 @@ data object LoadSettings : SettingsAction() {
             uploadsUseCase.observeUploadsInFlight().map { uploads ->
                 SetUploadsInProgress(uploads.inProgress)
             },
-            flow<UploadCapability> { uploadUseCase.canUpload() }
+            uploadUseCase.observeSingleCanUpload()
                 .map(::SetUploadCapability),
         )
     }}
