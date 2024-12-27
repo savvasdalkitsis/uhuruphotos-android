@@ -130,7 +130,7 @@ fun UploadJobRow(job: UploadJob) {
             ) {
                 if (status is Uploading) {
                     Text(
-                        text = "${status.progressDisplay} %",
+                        text = status.progressDisplay,
                         style = MaterialTheme.typography.bodyMedium,
                     )
                 }

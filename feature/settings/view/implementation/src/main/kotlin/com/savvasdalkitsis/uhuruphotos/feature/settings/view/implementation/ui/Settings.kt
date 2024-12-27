@@ -144,8 +144,7 @@ internal fun Settings(
                         SettingsJobsStatus(state, action)
                     }
                     UhuruCollapsibleGroup(groupState = controller.jobsCloudSync) {
-                        UhuruTextRow(stringResource(string.upload_capability))
-                        UhuruTextRow(state.uploadCapability.name)
+                        UhuruTextRow("${stringResource(string.upload_capability)}: ${state.uploadCapability.name}")
                         if (state.hasRemoteAccess) {
                             SettingsJobsCloudSyncConfiguration(state, action)
                         }

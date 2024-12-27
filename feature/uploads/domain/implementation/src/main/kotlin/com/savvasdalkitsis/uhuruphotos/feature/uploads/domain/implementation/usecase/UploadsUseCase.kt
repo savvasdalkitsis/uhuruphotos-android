@@ -78,10 +78,10 @@ class UploadsUseCase @Inject constructor(
         }.map {
             Uploads(it.sortedWith { a, b ->
                 when {
-                    a.status is Uploading -> -1
-                    b.status is Uploading -> 1
                     a.status is Processing -> -1
                     b.status is Processing -> 1
+                    a.status is Uploading -> -1
+                    b.status is Uploading -> 1
                     else -> 0
                 }
             })
