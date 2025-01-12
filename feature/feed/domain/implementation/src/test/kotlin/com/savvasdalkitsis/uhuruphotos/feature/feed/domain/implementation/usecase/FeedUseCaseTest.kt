@@ -26,7 +26,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstanceModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.domain.api.usecase.PortfolioUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.uploads.domain.api.usecase.UploadsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.WelcomeUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalktsis.uhuruphotos.feature.download.domain.api.usecase.DownloadUseCase
@@ -43,7 +43,7 @@ class FeedUseCaseTest {
     private val portfolioUseCase: PortfolioUseCase = mockk<PortfolioUseCase>().defaults()
     private val welcomeUseCase: WelcomeUseCase = mockk<WelcomeUseCase>().defaults()
     private val preferences: Preferences = mockk()
-    private val uploadUseCase: UploadUseCase = mockk<UploadUseCase>().defaults()
+    private val uploadsUseCase: UploadsUseCase = mockk<UploadsUseCase>().defaults()
     private val downloadUseCase: DownloadUseCase = mockk<DownloadUseCase>().defaults()
     private val feedWorkScheduler: FeedWorkScheduler = mockk(relaxed = true)
     private val mediaUseCase: MediaUseCase = mockk<MediaUseCase>().defaults()
@@ -55,7 +55,7 @@ class FeedUseCaseTest {
         mediaUseCase,
         feedWorkScheduler,
         downloadUseCase,
-        uploadUseCase,
+        uploadsUseCase,
         preferences,
         welcomeUseCase,
         portfolioUseCase,
@@ -111,7 +111,7 @@ class FeedUseCaseTest {
                 localMediaItem(1, "day1"),
             ),
         )
-        uploadUseCase.hasUploadsInProgress(1)
+        uploadsUseCase.hasUploadsInProgress(1)
 
         observeFeed().assert(
             mediaCollection("day1".localOnlyId, "day1", uploading(1)),
@@ -201,7 +201,7 @@ class FeedUseCaseTest {
                 localMediaItem(3, "day2"),
             ),
         )
-        uploadUseCase.hasProcessingInProgress(1, 2, 3)
+        uploadsUseCase.hasProcessingInProgress(1, 2, 3)
 
         observeFeed().assert(
             mediaCollection("day1".localOnlyId, "day1", processing(1), processing(2)),
@@ -219,7 +219,7 @@ class FeedUseCaseTest {
                 localMediaItem(2, "day1"),
             ),
         )
-        uploadUseCase.hasProcessingInProgress(2)
+        uploadsUseCase.hasProcessingInProgress(2)
 
         observeFeed().assert(
             mediaCollection("day1", remote("1"), processing(2)),
@@ -236,7 +236,7 @@ class FeedUseCaseTest {
                 localMediaItem(2, "day1"),
             ),
         )
-        uploadUseCase.hasUploadsInProgress(2)
+        uploadsUseCase.hasUploadsInProgress(2)
 
         observeFeed().assert(
             mediaCollection("day1", remote("1"), uploading(2)),
