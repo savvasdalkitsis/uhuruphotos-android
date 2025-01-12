@@ -21,7 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstanceModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemModel
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadStatus
-import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadStatus.*
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadStatus.Processing
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.domain.api.model.Uploads
 import java.io.Serializable
 
