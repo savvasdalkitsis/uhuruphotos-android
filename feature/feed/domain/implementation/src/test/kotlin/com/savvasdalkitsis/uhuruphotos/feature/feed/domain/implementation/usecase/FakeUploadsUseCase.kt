@@ -15,9 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.usecase
 
-import androidx.work.WorkInfo
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadJob
-import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadJobState
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadStatus
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.domain.api.model.Uploads
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.domain.api.usecase.UploadsUseCase
@@ -34,7 +32,7 @@ fun UploadsUseCase.hasNoUploadsInProgress() {
 }
 
 fun UploadsUseCase.hasUploadsInProgress(vararg ids: Long) {
-    every { observeUploadsInFlight() }.returns(flowOf(Uploads(ids.map { UploadJob(it, null, "", UploadJobState(WorkInfo.State.RUNNING, 0f), UploadStatus.InQueue) })))
+    every { observeUploadsInFlight() }.returns(flowOf(Uploads(ids.map { UploadJob(it, null, "", UploadStatus.InQueue) })))
 }
 
 fun UploadsUseCase.hasNoProcessingInProgress() {
@@ -42,5 +40,5 @@ fun UploadsUseCase.hasNoProcessingInProgress() {
 }
 
 fun UploadsUseCase.hasProcessingInProgress(vararg ids: Long) {
-    every { observeUploadsInFlight() }.returns(flowOf(Uploads(ids.map { UploadJob(it, null, "", UploadJobState(WorkInfo.State.RUNNING, 0f), UploadStatus.Processing) })))
+    every { observeUploadsInFlight() }.returns(flowOf(Uploads(ids.map { UploadJob(it, null, "", UploadStatus.Processing) })))
 }
