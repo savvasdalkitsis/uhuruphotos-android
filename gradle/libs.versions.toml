@@ -32,7 +32,7 @@ sqldelight = "2.0.2"
 about = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "about" }
 android-app = { id = 'com.android.application', version.ref = "agp" }
 android-library = { id = 'com.android.library', version.ref = "agp" }
-analysis = "com.autonomousapps.dependency-analysis:2.4.2"
+analysis = "com.autonomousapps.dependency-analysis:2.13.0"
 google-services = { id = "com.google.gms.google-services", version.ref = "google-services" }
 kotlin-android = { id = 'org.jetbrains.kotlin.android', version.ref = "kotlin" }
 kotlin-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
