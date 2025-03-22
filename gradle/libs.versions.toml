@@ -40,7 +40,7 @@ ksp = "com.google.devtools.ksp:2.0.21-1.0.27"
 moduleGraph = "com.savvasdalkitsis.module-dependency-graph:0.12"
 powerassert = { id = "org.jetbrains.kotlin.plugin.power-assert", version.ref = "kotlin" }
 redacted = "dev.zacsweers.redacted:1.10.0"
-sonarqube = "org.sonarqube:6.0.1.5171"
+sonarqube = "org.sonarqube:5.1.0.4882"
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
 
 [libraries]
