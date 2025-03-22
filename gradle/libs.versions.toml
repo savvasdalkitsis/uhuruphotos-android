@@ -150,7 +150,7 @@ palette = "androidx.palette:palette-ktx:1.0.0"
 permissions-base = { module = "dev.shreyaspatil.permission-flow:permission-flow-android", version.ref = "permissions" }
 permissions-compose = { module = "dev.shreyaspatil.permission-flow:permission-flow-compose", version.ref = "permissions" }
 play = "com.google.android.gms:play-services-base:18.6.0"
-remember = "dev.burnoo:compose-remember-preference:1.1.0"
+remember = "dev.burnoo:compose-remember-preference:1.1.1"
 reorder = "sh.calvin.reorderable:reorderable:2.4.0"
 resaca-core = { module = "io.github.sebaslogen:resaca", version.ref = "resaca" }
 resaca-hilt = { module = "io.github.sebaslogen:resacahilt", version.ref = "resaca" }
