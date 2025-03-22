@@ -430,4 +430,15 @@
     <string name="delete_album_confirmation">¿Estás seguro de que deseas eliminar este álbum?</string>
     <string name="error_deleting_album">Se produjo un error al eliminar el álbum</string>
     <string name="delete_album_explanation">Los medios de este álbum NO se eliminarán</string>
+    <string name="memories_parallax">Activar parallax en las memorias</string>
+    <string name="dynamic">Dinámico</string>
+    <string name="contrast_normal">Normal</string>
+    <string name="contrast_medium">Medio</string>
+    <string name="contrast_high">Alto</string>
+    <string name="choose_app_theme">Elige el tema de la aplicación</string>
+    <string name="continue_">Continuar</string>
+    <string name="blue">Azul</string>
+    <string name="green">Verde</string>
+    <string name="red">Rojo</string>
+    <string name="yellow">Amarillo</string>
 </resources>
