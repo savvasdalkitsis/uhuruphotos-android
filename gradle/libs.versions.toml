@@ -24,7 +24,7 @@ moshi = "1.15.1"
 okhttp = "5.0.0-alpha.11"
 permissions = "2.0.0"
 resaca = "4.4.4"
-result = "2.0.0"
+result = "2.0.1"
 retrofit = "2.11.0"
 sqldelight = "2.0.2"
 
