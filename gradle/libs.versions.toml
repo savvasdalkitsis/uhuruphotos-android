@@ -1,6 +1,6 @@
 [versions]
 about = "11.2.3"
-accompanist = "0.36.0"
+accompanist = "0.37.2"
 agp = "8.7.3"
 android-sdk-geojson = "6.0.1"
 androidx-hilt = "1.2.0"
