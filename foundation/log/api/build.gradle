@@ -1,7 +1,3 @@
-plugins {
-    alias(libs.plugins.kotlin.compose.compiler)
-}
-
 android {
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.log.api'
 }
