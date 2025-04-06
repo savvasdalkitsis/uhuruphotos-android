@@ -1,0 +1,3 @@
+* Material 3 theme!
+* Remembering credentials now works
+* Updating dependencies
