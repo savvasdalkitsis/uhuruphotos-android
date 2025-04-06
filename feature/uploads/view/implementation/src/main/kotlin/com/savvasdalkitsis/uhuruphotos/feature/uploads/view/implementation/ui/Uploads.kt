@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.uploads.view.implementation.ui
 
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Box
@@ -35,6 +36,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.layout.ContentScale
@@ -157,13 +160,16 @@ private fun RowScope.Segment(
             strokeCap = StrokeCap.Round,
             color = CustomColors.syncQueued,
         )
-        is Uploading -> LinearProgressIndicator(
-            modifier = Modifier
-                .fillMaxHeight()
-                .weight(1f),
-            progress = { status.progressPercent },
-            strokeCap = StrokeCap.Round,
-        )
+        is Uploading -> {
+            val progress by animateFloatAsState(status.progressPercent)
+            LinearProgressIndicator(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .weight(1f),
+                progress = { progress },
+                strokeCap = StrokeCap.Round,
+            )
+        }
         Processing -> {
             Box(modifier = Modifier
                 .fillMaxHeight()
