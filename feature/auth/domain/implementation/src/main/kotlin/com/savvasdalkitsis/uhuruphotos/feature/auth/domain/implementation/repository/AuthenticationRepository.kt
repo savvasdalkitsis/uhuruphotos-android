@@ -40,9 +40,9 @@ class AuthenticationRepository @Inject constructor(
     @EncryptedPreferences
     private val encryptedPreferences: Preferences,
 ) {
-    private val userKey = "userIdFromToken"
-    private val keyUserName = "auth:keyUserName"
-    private val keyPassword = "auth:keyPassword"
+    private val userKey = Key("userIdFromToken")
+    private val keyUserName = Key("auth:keyUserName")
+    private val keyPassword = Key("auth:keyPassword")
 
     fun clearTokensForAuthenticationLoss() {
         tokenQueries.delete(TokenType.ACCESS)
@@ -72,13 +72,13 @@ class AuthenticationRepository @Inject constructor(
     }
 
     fun setUserIdFromToken(token: String) {
-        preferences.set(userKey, token.userId)
+        preferences.set(userKey.key, token.userId)
     }
 
-    fun getUserId() = preferences.get<String?>(userKey, null)
+    fun getUserId() = preferences.get<String?>(userKey.key, null)
 
     fun saveUsername(username: String) {
-        username.secretPref = username
+        keyUserName.secretPref = username
     }
 
     fun getUsername() = keyUserName.secretPref
@@ -86,15 +86,15 @@ class AuthenticationRepository @Inject constructor(
     fun getPassword() = keyPassword.secretPref
 
     fun savePassword(password: String) {
-        password.secretPref = password
+        keyPassword.secretPref = password
     }
 
     fun clearUsername() {
-        encryptedPreferences.remove(keyUserName)
+        encryptedPreferences.remove(keyUserName.key)
     }
 
     fun clearPassword() {
-        encryptedPreferences.remove(keyPassword)
+        encryptedPreferences.remove(keyPassword.key)
     }
 
     fun observeRefreshToken() =
@@ -109,7 +109,10 @@ class AuthenticationRepository @Inject constructor(
         return this@userId["user_id"]
     }
 
-    private var String.secretPref
-        get() = encryptedPreferences.getNullableString(this, null)
-        set(value) { encryptedPreferences.set(this, value) }
+    @JvmInline
+    private value class Key(val key: String)
+
+    private var Key.secretPref
+        get() = encryptedPreferences.getNullableString(key, null)
+        set(value) { encryptedPreferences.set(key, value) }
 }
