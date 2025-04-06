@@ -9,7 +9,6 @@ android {
 dependencies {
     api project(":foundation:result:api")
     implementation(
-            libs.androidx.compose.foundation.layout,
             libs.bundles.lumberjack,
             project(":foundation:strings:api"),
     )
