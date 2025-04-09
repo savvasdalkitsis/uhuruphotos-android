@@ -106,7 +106,7 @@ crop = "com.github.moyuruaizawa:cropify:0.3.1"
 exif = "androidx.exifinterface:exifinterface:1.4.0"
 flowpreferences = "com.fredporciuncula:flow-preferences:1.9.1"
 gif = "com.squareup:gifencoder:0.10.1"
-google-fonts = "androidx.compose.ui:ui-text-google-fonts:1.8.0-rc01"
+google-fonts = "androidx.compose.ui:ui-text-google-fonts:1.8.0-rc03"
 google-services = { module = "com.google.gms:google-services", version.ref = "google-services" }
 gson = "com.google.code.gson:gson:2.11.0"
 heatmap = "com.github.k-surtel:heat-map:1.0.1"
