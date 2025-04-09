@@ -40,6 +40,10 @@ subprojects {
 
     if (displayName in [
             "project ':konsist'",
+            "project ':foundation:biometrics:api'",
+            "project ':foundation:group:api'",
+            "project ':foundation:lang:api'",
+            "project ':foundation:math:api'",
             "project ':foundation:result:api'",
     ]) {
         return

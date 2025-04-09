@@ -1,9 +1,14 @@
-android {
-    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api'
+plugins {
+    alias(libs.plugins.kotlin.multiplatform)
 }
 
-dependencies {
-    api(
-            project(":foundation:result:api"),
-    )
+kotlin {
+    jvm("desktop")
+    sourceSets {
+        commonMain {
+            dependencies {
+                api(project(":foundation:result:api"))
+            }
+        }
+    }
 }

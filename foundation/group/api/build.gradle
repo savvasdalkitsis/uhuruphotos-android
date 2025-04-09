@@ -1,9 +1,14 @@
-android {
-    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.group.api'
+plugins {
+    alias(libs.plugins.kotlin.multiplatform)
 }
 
-dependencies {
-    api(
-            libs.kotlinx.coroutines,
-    )
+kotlin {
+    jvm("desktop")
+    sourceSets {
+        commonMain {
+            dependencies {
+                api(libs.kotlinx.coroutines)
+            }
+        }
+    }
 }
