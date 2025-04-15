@@ -21,34 +21,44 @@ import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode
 import com.michaelflisar.lumberjack.core.L
+import com.michaelflisar.lumberjack.core.interfaces.IFileConverter
+import com.michaelflisar.lumberjack.core.interfaces.IFileLoggingSetup
 import com.michaelflisar.lumberjack.extensions.feedback.sendFeedback
 import com.michaelflisar.lumberjack.extensions.viewer.showLog
-import com.michaelflisar.lumberjack.loggers.file.FileLoggerSetup
+import com.michaelflisar.lumberjack.loggers.file.FileConverter
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUIUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.usecase.FeedbackUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.usecase.FeedbackUseCase.Companion.EMAIL
 import com.savvasdalkitsis.uhuruphotos.foundation.log.implementation.R
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeMode.DARK_MODE
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeMode.FOLLOW_SYSTEM
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeMode.LIGHT_MODE
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.parcelize.IgnoredOnParcel
+import kotlinx.parcelize.Parcelize
+import org.jetbrains.compose.resources.getString
 import se.ansman.dagger.auto.AutoBind
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.logs
+import java.io.File
 import javax.inject.Inject
 
 @AutoBind
 internal class FeedbackUseCase @Inject constructor(
     @ApplicationContext private val context: Context,
-    private val loggerSetup: FileLoggerSetup,
     private val settingsUseCase: SettingsUseCase,
     private val settingsUIUseCase: SettingsUIUseCase,
 ) : FeedbackUseCase {
 
+    private val logsFolder = File(context.filesDir, "logs")
+    private val remapped = File(context.filesDir, "remapped")
+
     override fun sendFeedback() {
+        remapped.mkdirs()
         L.sendFeedback(
             context = context,
-            attachments = listOfNotNull(loggerSetup.getLatestLogFiles()) +
+            attachments = logsFolder.listFiles().orEmpty().toList() +
                     if (settingsUseCase.getSendDatabaseEnabled())
                         listOf(context.getDatabasePath("uhuruPhotos.db"))
                     else
@@ -57,7 +67,7 @@ internal class FeedbackUseCase @Inject constructor(
         )
     }
 
-    override fun showLogs() {
+    override suspend fun showLogs() {
         setDefaultNightMode(
             when (settingsUIUseCase.getThemeMode()) {
                 FOLLOW_SYSTEM -> MODE_NIGHT_FOLLOW_SYSTEM
@@ -67,15 +77,50 @@ internal class FeedbackUseCase @Inject constructor(
         )
         L.showLog(
             context = context,
-            fileLoggingSetup = loggerSetup,
+            fileLoggingSetup = SharedSetup(logsFolder, remapped),
             receiver = EMAIL,
             theme = R.style.AppTheme,
-            title = context.getString(string.logs)
+            title = getString(string.logs)
         )
 
     }
 
     override suspend fun clearLogs() {
-        loggerSetup.clearLogFiles()
+        logsFolder.deleteRecursively()
+    }
+}
+
+@Parcelize
+class SharedSetup(
+    private val logsFolder: File,
+    private val remappedFolder: File,
+) : IFileLoggingSetup {
+
+    @IgnoredOnParcel
+    override val fileConverter: IFileConverter = FileConverter
+
+    override suspend fun clearLogFiles() {
+        logsFolder.deleteRecursively()
+    }
+
+    override fun getAllExistingLogFiles(): List<File> =
+        logsFolder.listFiles().orEmpty().toList().map { remap(it) }
+
+    override fun getLatestLogFiles(): File? =
+        logsFolder.listFiles().orEmpty()
+            .maxByOrNull { it.lastModified() }
+            ?.let { remap(it) }
+
+    private fun remap(originalFile: File): File {
+        remappedFolder.mkdirs()
+        val newFile = File(remappedFolder, originalFile.name)
+        newFile.printWriter().use { w ->
+            originalFile.readLines().forEach { line ->
+                w.println(Regex("""(.*?)/(.*?): (.*)""").replace(line) {
+                    "[${it.groupValues[1]}] 2000-01-01 00:00:00.000 [${it.groupValues[2]}.kt:0]: ${it.groupValues[3]}"
+                })
+            }
+        }
+        return newFile
     }
 }

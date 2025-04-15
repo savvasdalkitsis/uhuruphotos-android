@@ -1,11 +1,25 @@
-android {
-    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.log.api'
+plugins {
+    alias(libs.plugins.kotlin.multiplatform)
 }
 
-dependencies {
-    api project(":foundation:result:api")
-    implementation(
-            libs.bundles.lumberjack,
-            project(":foundation:strings:api"),
-    )
+kotlin {
+    jvm("desktop")
+    androidTarget()
+    sourceSets {
+        commonMain {
+            dependencies {
+                api(project(":foundation:result:api"))
+                implementation(libs.log4k)
+            }
+        }
+        androidMain {
+            dependencies {
+                implementation(libs.bundles.lumberjack)
+            }
+        }
+    }
+}
+
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.log.api'
 }

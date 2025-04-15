@@ -21,7 +21,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.AccountOverviewActionBar
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.AccountOverviewContent
@@ -38,11 +37,13 @@ import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.viewm
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.viewmodel.LibraryCompositeState
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.blurIf
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UhuruFullLoading
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.Logo
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UhuruFullLoading
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.dialogs.UpsellDialog
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.refresh.SwipeRefresh
+import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.library
 
 @Composable
 internal fun Library(

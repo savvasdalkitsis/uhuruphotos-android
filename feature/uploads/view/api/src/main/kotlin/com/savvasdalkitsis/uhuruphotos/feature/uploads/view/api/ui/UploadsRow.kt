@@ -31,9 +31,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.uploads
+import uhuruphotos_android.foundation.strings.api.generated.resources.view_all
 
 @Composable
 fun UploadsRow(

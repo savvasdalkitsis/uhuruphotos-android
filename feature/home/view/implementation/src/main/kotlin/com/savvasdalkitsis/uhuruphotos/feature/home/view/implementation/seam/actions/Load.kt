@@ -23,8 +23,11 @@ import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.ui.state
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.view.api.navigation.NotificationsNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.theme.view.api.navigation.ThemeNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.api.navigation.WelcomeNavigationRoute
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import kotlinx.coroutines.flow.flow
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.authenticate
+import uhuruphotos_android.foundation.strings.api.generated.resources.authenticate_for_access
+import uhuruphotos_android.foundation.strings.api.generated.resources.authenticate_for_access_description
 
 data object Load : HomeAction() {
 
@@ -34,9 +37,9 @@ data object Load : HomeAction() {
         emit(HomeMutation.Loading)
         val proceed = when {
             settingsUseCase.getBiometricsRequiredForAppAccess() -> biometricsUseCase.authenticate(
-                R.string.authenticate,
-                R.string.authenticate_for_access,
-                R.string.authenticate_for_access_description,
+                string.authenticate,
+                string.authenticate_for_access,
+                string.authenticate_for_access_description,
                 true,
             )
             else -> Ok(Unit)

@@ -15,10 +15,13 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes
 
-import androidx.annotation.StringRes
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import org.jetbrains.compose.resources.StringResource
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.contrast_high
+import uhuruphotos_android.foundation.strings.api.generated.resources.contrast_medium
+import uhuruphotos_android.foundation.strings.api.generated.resources.contrast_normal
 
-enum class ThemeContrast(@StringRes val label: Int) {
+enum class ThemeContrast(val label: StringResource) {
     NORMAL(string.contrast_normal),
     MEDIUM(string.contrast_medium),
     HIGH(string.contrast_high);

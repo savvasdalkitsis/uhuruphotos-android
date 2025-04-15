@@ -16,6 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.ui.state
 
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplayState
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res
+import uhuruphotos_android.foundation.strings.api.generated.resources.auto_albums
 
 data object AutoAlbumCollageDisplayState: CollageDisplayState {
     override val miniIcons: Boolean = false
@@ -26,7 +28,7 @@ data object AutoAlbumCollageDisplayState: CollageDisplayState {
     override val iconResource = 0
     override val maintainAspectRatio = false
     override val allowsAnimatedVideoThumbnails = true
-    override val friendlyName = 0
+    override val friendlyName = Res.string.auto_albums
     override val zoomIn = this
     override val zoomOut = this
     override val allowsPinchGestures = false

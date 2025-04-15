@@ -31,19 +31,26 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.LocalNavigator
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.AlertText
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.group.UhuruCollapsibleGroup
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.dialogs.YesNoDialog
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.group.UhuruCollapsibleGroup
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.group.state.rememberCollapsibleGroupState
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.AlertText
 import dev.shreyaspatil.permissionflow.compose.rememberPermissionFlowRequestLauncher
+import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.cancel
+import uhuruphotos_android.foundation.strings.api.generated.resources.having_problems
+import uhuruphotos_android.foundation.strings.api.generated.resources.local_media_scan_warning
+import uhuruphotos_android.foundation.strings.api.generated.resources.missing_permissions
+import uhuruphotos_android.foundation.strings.api.generated.resources.navigate_to_settings
+import uhuruphotos_android.foundation.strings.api.generated.resources.need_permissions_to_manage_gallery
+import uhuruphotos_android.foundation.strings.api.generated.resources.ok
 
 @Composable
 internal fun PermissionsShowAccessRequestDialog(

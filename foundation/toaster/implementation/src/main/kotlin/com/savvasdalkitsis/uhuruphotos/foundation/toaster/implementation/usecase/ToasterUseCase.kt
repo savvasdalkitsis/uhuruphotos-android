@@ -17,11 +17,12 @@ package com.savvasdalkitsis.uhuruphotos.foundation.toaster.implementation.usecas
 
 import android.content.Context
 import android.widget.Toast
-import androidx.annotation.StringRes
 import com.savvasdalkitsis.uhuruphotos.foundation.launchers.api.onMain
-import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
 import dagger.hilt.android.qualifiers.ApplicationContext
+import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.getString
 import se.ansman.dagger.auto.AutoBind
+import usecase.ToasterUseCase
 import javax.inject.Inject
 
 @AutoBind
@@ -29,9 +30,9 @@ class ToasterUseCase @Inject constructor(
     @ApplicationContext private val context: Context,
 ) : ToasterUseCase {
 
-    override fun show(@StringRes message: Int) {
+    override fun show(message: StringResource) {
         onMain {
-            Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+            Toast.makeText(context, getString(message), Toast.LENGTH_LONG).show()
         }
     }
 }

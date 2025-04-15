@@ -18,15 +18,16 @@ package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.sea
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import kotlinx.coroutines.flow.flow
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.cloud_sync_charging_changed
 
 data class ChangeCloudSyncChargingRequirements(val requiredCharging: Boolean) : SettingsAction() {
     override fun SettingsActionsContext.handle(
         state: SettingsState
     ) = flow<SettingsMutation> {
         settingsUseCase.setCloudSyncRequiresCharging(requiredCharging)
-        toaster.show(R.string.cloud_sync_charging_changed)
+        toaster.show(string.cloud_sync_charging_changed)
     }
 
 }

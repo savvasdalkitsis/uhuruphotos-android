@@ -19,13 +19,16 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.DismissUnsecuredServerDialog
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.Login
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.ServerAction
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.dialogs.YesNoDialog
+import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.unsecured_server
+import uhuruphotos_android.foundation.strings.api.generated.resources.unsecured_server_are_you_sure
+import uhuruphotos_android.foundation.strings.api.generated.resources.unsecured_server_not_encrypted
 
 @Composable
 internal fun UnsecuredServerConfirmationDialog(

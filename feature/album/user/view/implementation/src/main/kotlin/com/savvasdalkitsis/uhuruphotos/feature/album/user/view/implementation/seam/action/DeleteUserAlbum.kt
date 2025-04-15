@@ -20,13 +20,14 @@ import com.github.michaelbull.result.onSuccess
 import com.savvasdalkitsis.uhuruphotos.feature.album.user.view.implementation.seam.UserAlbumActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.album.user.view.implementation.seam.UserAlbumMutation
 import com.savvasdalkitsis.uhuruphotos.feature.album.user.view.implementation.ui.state.UserAlbumState
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import kotlinx.coroutines.flow.flow
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.error_deleting_album
 
 data object DeleteUserAlbum : UserAlbumAction() {
     override fun UserAlbumActionsContext.handle(state: UserAlbumState) = flow<UserAlbumMutation> {
         userAlbumUseCase.deleteUserAlbum(state.albumId)
             .onSuccess { navigator.navigateUp() }
-            .onFailure { toaster.show(R.string.error_deleting_album) }
+            .onFailure { toaster.show(string.error_deleting_album) }
     }
 }

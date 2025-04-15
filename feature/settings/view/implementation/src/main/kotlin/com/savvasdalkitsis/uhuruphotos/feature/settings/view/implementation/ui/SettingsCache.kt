@@ -17,14 +17,18 @@ package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui
 
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.minCacheSize
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ChangeCache
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ClearCache
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.CacheState
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.slider.UhuruSliderRow
+import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.changes_effect_after_restart
+import uhuruphotos_android.foundation.strings.api.generated.resources.clear
+import uhuruphotos_android.foundation.strings.api.generated.resources.currently_used
+import uhuruphotos_android.foundation.strings.api.generated.resources.max_limit
 import kotlin.math.max
 
 @Composable

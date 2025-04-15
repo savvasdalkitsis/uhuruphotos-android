@@ -17,11 +17,14 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.pluralStringResource
-import androidx.compose.ui.res.stringResource
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.dialogs.YesNoDialog
+import org.jetbrains.compose.resources.pluralStringResource
+import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.plurals
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.delete_media
+import uhuruphotos_android.foundation.strings.api.generated.resources.delete_media_confirmation
+import uhuruphotos_android.foundation.strings.api.generated.resources.operation_irreverisble
 
 @Composable
 fun DeletePermissionDialog(
@@ -31,7 +34,7 @@ fun DeletePermissionDialog(
 ) {
     YesNoDialog(
         title = pluralStringResource(
-            R.plurals.delete_media,
+            plurals.delete_media,
             mediaItemCount,
             mediaItemCount
         ),
@@ -40,8 +43,8 @@ fun DeletePermissionDialog(
         body = {
             Text(
                 pluralStringResource(
-                    R.plurals.delete_media_confirmation,
-                    count = mediaItemCount,
+                    plurals.delete_media_confirmation,
+                    quantity = mediaItemCount,
                     mediaItemCount
                 )
             )

@@ -15,18 +15,17 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.biometrics.implementation.usecase
 
-import androidx.annotation.StringRes
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE
 import androidx.biometric.BiometricManager.BIOMETRIC_SUCCESS
-import com.afollestad.assure.Prompt
-import com.afollestad.assure.authenticate
 import com.savvasdalkitsis.uhuruphotos.foundation.activity.api.holder.CurrentActivityHolder
 import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.model.Biometrics
 import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.model.Biometrics.Enrolled
 import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.model.Biometrics.NoHardware
 import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.model.Biometrics.NotEnrolled
 import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.usecase.BiometricsUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.implementation.assure.authenticate
+import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.implementation.assure.Prompt
 import com.savvasdalkitsis.uhuruphotos.foundation.launchers.api.awaitOnMain
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
@@ -39,6 +38,8 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.suspendCancellableCoroutine
+import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.getString
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 import kotlin.coroutines.resume
@@ -65,22 +66,22 @@ internal class BiometricsUseCase @Inject constructor(
     }
 
     override suspend fun authenticate(
-        @StringRes
-        title: Int,
-        @StringRes
-        subtitle: Int,
-        @StringRes
-        description: Int,
+        title: StringResource,
+        subtitle: StringResource,
+        description: StringResource,
         confirmRequired: Boolean,
     ): SimpleResult = runCatchingWithLog {
         with(currentActivityHolder.currentActivity!!) {
             awaitOnMain {
+                val t = getString(title)
+                val s = getString(subtitle)
+                val d = getString(description)
                 suspendCancellableCoroutine { continuation ->
                     authenticate(
                         Prompt(
-                            title = title,
-                            subtitle = subtitle,
-                            description = description,
+                            title = t,
+                            subtitle = s,
+                            description = d,
                             confirmRequired = confirmRequired,
                             deviceCredentialsAllowed = true,
                         )

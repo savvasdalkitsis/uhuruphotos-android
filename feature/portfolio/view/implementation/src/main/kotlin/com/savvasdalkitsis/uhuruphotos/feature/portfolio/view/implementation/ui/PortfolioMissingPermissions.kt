@@ -27,17 +27,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.R
 import com.savvasdalkitsis.uhuruphotos.foundation.permissions.api.ui.PermissionsState
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewThemeData
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewThemeDataProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruIcon
+import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.grant_permissions
+import uhuruphotos_android.foundation.strings.api.generated.resources.missing_permissions
 
 @Composable
 fun BoxScope.PortfolioMissingPermissions(

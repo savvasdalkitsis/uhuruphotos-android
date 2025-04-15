@@ -18,13 +18,14 @@ package com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.usecase
 import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.model.Biometrics
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import kotlinx.coroutines.flow.Flow
+import org.jetbrains.compose.resources.StringResource
 
 interface BiometricsUseCase {
     fun getBiometrics(): Biometrics
     suspend fun authenticate(
-        title: Int,
-        subtitle: Int,
-        description: Int,
+        title: StringResource,
+        subtitle: StringResource,
+        description: StringResource,
         confirmRequired: Boolean,
     ): SimpleResult
 

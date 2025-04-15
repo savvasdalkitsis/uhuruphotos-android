@@ -4,6 +4,7 @@ plugins {
 
 kotlin {
     jvm("desktop")
+    androidTarget()
     sourceSets {
         commonMain {
             dependencies {
@@ -11,4 +12,8 @@ kotlin {
             }
         }
     }
+}
+
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.group.api'
 }

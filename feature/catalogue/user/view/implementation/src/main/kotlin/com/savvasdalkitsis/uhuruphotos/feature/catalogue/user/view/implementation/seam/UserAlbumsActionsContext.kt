@@ -17,12 +17,13 @@ package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementati
 
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.domain.api.usecase.UserAlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
-import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.error_loading_user_albums
+import usecase.ToasterUseCase
 import javax.inject.Inject
 
 class UserAlbumsActionsContext @Inject constructor(
@@ -39,7 +40,7 @@ class UserAlbumsActionsContext @Inject constructor(
         _loading.emit(true)
         val result = userAlbumsUseCase.refreshUserAlbums()
         if (result.isErr) {
-            toaster.show(R.string.error_loading_user_albums)
+            toaster.show(string.error_loading_user_albums)
         }
         // delaying to give ui time to receive the new albums before
         // dismissing the loading bar since no albums logic relies on that

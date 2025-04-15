@@ -22,11 +22,13 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import org.jetbrains.compose.resources.StringResource
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.dynamic
 
 object DynamicTheme : Theme {
 
-    override val label: Int = string.dynamic
+    override val label: StringResource = string.dynamic
 
     @Composable
     @RequiresApi(Build.VERSION_CODES.S)

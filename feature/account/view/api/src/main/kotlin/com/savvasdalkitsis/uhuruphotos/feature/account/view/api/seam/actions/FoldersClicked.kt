@@ -19,15 +19,17 @@ import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOver
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.AccountOverviewState
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.api.navigation.PortfolioNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import org.jetbrains.compose.resources.getString
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.folders_on_feed
 
 data object FoldersClicked : AccountOverviewAction() {
     override fun AccountOverviewActionsContext.handle(
         state: AccountOverviewState
     ): Flow<Mutation<AccountOverviewState>> = flow {
-        navigator.navigateTo(PortfolioNavigationRoute(editMode = true, title = string.folders_on_feed))
+        navigator.navigateTo(PortfolioNavigationRoute(editMode = true, title = getString(string.folders_on_feed)))
     }
 
 }

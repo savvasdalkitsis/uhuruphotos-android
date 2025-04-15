@@ -36,7 +36,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.holix.android.bottomsheetdialog.compose.BottomSheetDialog
 import com.holix.android.bottomsheetdialog.compose.BottomSheetDialogProperties
@@ -47,12 +46,15 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.act
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.FeedAction
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.FilterAlbums
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.HideAddToAlbumDialog
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.layout.plus
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.UhuruIconOutlineButton
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.search.SearchField
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.sheet.SheetHandle
 import kotlinx.collections.immutable.ImmutableList
+import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.add_to_album
+import uhuruphotos_android.foundation.strings.api.generated.resources.create_album
 
 @Composable
 internal fun AddToAlbumDialog(
@@ -80,7 +82,7 @@ internal fun AddToAlbumDialog(
                 SheetHandle()
                 Text(
                     modifier = Modifier.padding(vertical = 8.dp),
-                    text = stringResource(R.string.add_to_album),
+                    text = stringResource(string.add_to_album),
                     style = MaterialTheme.typography.headlineMedium,
                 )
                 SearchField(
@@ -123,7 +125,7 @@ private fun LazyGridScope.createNewButtonItem(action: (FeedAction) -> Unit) {
         UhuruIconOutlineButton(
             modifier = Modifier.padding(horizontal = 16.dp),
             icon = com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_photo_album,
-            text = stringResource(R.string.create_album),
+            text = stringResource(string.create_album),
         ) {
             action(AskForNewAlbumName)
         }

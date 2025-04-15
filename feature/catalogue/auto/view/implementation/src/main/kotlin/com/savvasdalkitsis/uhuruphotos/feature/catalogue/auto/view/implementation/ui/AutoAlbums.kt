@@ -27,7 +27,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementatio
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam.actions.FilterAlbums
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam.actions.Refresh
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.Catalogue
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.auto_generated_albums
+import uhuruphotos_android.foundation.strings.api.generated.resources.no_auto_albums
 
 @Composable
 internal fun AutoAlbums(

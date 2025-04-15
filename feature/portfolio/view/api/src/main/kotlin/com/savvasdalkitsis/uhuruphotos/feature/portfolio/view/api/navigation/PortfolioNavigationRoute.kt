@@ -21,5 +21,5 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class PortfolioNavigationRoute(
     val editMode: Boolean,
-    val title: Int,
+    val title: String,
 ) : NavigationRoute

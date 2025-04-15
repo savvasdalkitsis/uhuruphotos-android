@@ -17,7 +17,6 @@ package com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.VitrineState
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaFolder
@@ -28,10 +27,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui.
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui.state.PortfolioItemsState.RequiresPermissionsState
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui.state.PortfolioState
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UhuruFullLoading
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkable.SelectionMode.SELECTED
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkable.SelectionMode.UNSELECTED
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruUpNavButton
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
@@ -42,7 +41,7 @@ internal fun Portfolio(
     action: (PortfolioAction) -> Unit = {},
 ) {
     UhuruScaffold(
-        title = { Text(text = state.title?.let { stringResource(it) } ?: "") },
+        title = { Text(text = state.title ?: "") },
         navigationIcon = { UhuruUpNavButton() },
     ) { contentPadding ->
         when(state.localMedia) {

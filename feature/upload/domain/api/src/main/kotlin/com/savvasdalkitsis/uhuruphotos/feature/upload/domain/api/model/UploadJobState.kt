@@ -15,11 +15,17 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model
 
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import org.jetbrains.compose.resources.StringResource
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.failed
+import uhuruphotos_android.foundation.strings.api.generated.resources.processing
+import uhuruphotos_android.foundation.strings.api.generated.resources.queued
+import uhuruphotos_android.foundation.strings.api.generated.resources.succeeded
+import uhuruphotos_android.foundation.strings.api.generated.resources.uploading
 
 sealed class UploadStatus(
     val isFinished: Boolean,
-    val displayName: Int,
+    val displayName: StringResource,
 ) {
     data object InQueue : UploadStatus(false, string.queued)
     data class Uploading(val progressPercent: Float, val progressDisplay: String): UploadStatus(false, string.uploading)

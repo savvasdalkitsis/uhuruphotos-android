@@ -17,9 +17,11 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.pluralStringResource
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.dialogs.YesNoDialog
+import org.jetbrains.compose.resources.pluralStringResource
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.plurals
+import uhuruphotos_android.foundation.strings.api.generated.resources.trash_media
+import uhuruphotos_android.foundation.strings.api.generated.resources.trash_media_confirmation
 
 @Composable
 fun TrashPermissionDialog(
@@ -29,7 +31,7 @@ fun TrashPermissionDialog(
 ) {
     YesNoDialog(
         title = pluralStringResource(
-            R.plurals.trash_media,
+            plurals.trash_media,
             mediaItemCount,
             mediaItemCount
         ),
@@ -38,8 +40,8 @@ fun TrashPermissionDialog(
     ) {
         Text(
             pluralStringResource(
-                R.plurals.trash_media_confirmation,
-                count = mediaItemCount,
+                plurals.trash_media_confirmation,
+                quantity = mediaItemCount,
                 mediaItemCount
             )
         )

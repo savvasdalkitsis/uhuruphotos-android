@@ -44,7 +44,6 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.api.navigation.LocalServerUrl
@@ -54,7 +53,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.CelSelec
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelSelectionModeState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CollageShape.RECTANGLE
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CollageShape.ROUNDED_RECTANGLE
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.smart.SmartGrid
@@ -65,6 +63,9 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.smart.rememberS
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.shared.state.rememberSharedElementTransitionState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.shared.state.sharedElementTransition
 import kotlinx.collections.immutable.ImmutableList
+import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.no_date
 
 @Composable
 internal fun SmartCollage(

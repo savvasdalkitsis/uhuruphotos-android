@@ -16,13 +16,15 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions
 
 import android.content.Intent
-import android.net.Uri
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import kotlinx.coroutines.flow.flow
+import org.jetbrains.compose.resources.getString
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.media
+import androidx.core.net.toUri
 
 data class ClickedOnMap(val gps: LatLon) : LightboxAction() {
 
@@ -32,10 +34,9 @@ data class ClickedOnMap(val gps: LatLon) : LightboxAction() {
         navigator.navigateTo(geoLocation(gps))
     }
 
-    private fun LightboxActionsContext.geoLocation(gps: LatLon) =
+    private suspend fun geoLocation(gps: LatLon) =
         Intent(Intent.ACTION_VIEW, with(gps) {
-            "geo:$lat,$lon?q=$lat,$lon(${context.getString(R.string.media)})".uri
+            "geo:$lat,$lon?q=$lat,$lon(${getString(string.media)})".toUri()
         })
 
-    private val String.uri get () = Uri.parse(this)
 }

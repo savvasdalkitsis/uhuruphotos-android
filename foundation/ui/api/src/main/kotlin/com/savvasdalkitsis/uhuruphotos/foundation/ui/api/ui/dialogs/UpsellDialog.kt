@@ -28,14 +28,18 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.LoginButton
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.WhatIsLibrePhotosButton
+import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.advanced_feature_body
+import uhuruphotos_android.foundation.strings.api.generated.resources.advanced_feature_title
+import uhuruphotos_android.foundation.strings.api.generated.resources.do_not_show_again
+import uhuruphotos_android.foundation.strings.api.generated.resources.ok
 
 @Composable
 fun UpsellDialog(
@@ -59,7 +63,7 @@ fun UpsellDialog(
                         .recomposeHighlighter(),
                     onClick = onNeverAgain
                 ) {
-                    Text(stringResource(R.string.do_not_show_again))
+                    Text(stringResource(string.do_not_show_again))
                 }
             }
             LoginButton(onLogin = onLogin)
@@ -71,19 +75,19 @@ fun UpsellDialog(
                     .recomposeHighlighter(),
                 onClick = onDismiss,
             ) {
-                Text(stringResource(R.string.ok))
+                Text(stringResource(string.ok))
             }
         },
         title = {
             Text(
-                text = stringResource(R.string.advanced_feature_title),
+                text = stringResource(string.advanced_feature_title),
                 style = MaterialTheme.typography.headlineMedium)
         },
         text = {
             Column(
                 verticalArrangement = spacedBy(8.dp)
             ) {
-                Text(stringResource(R.string.advanced_feature_body))
+                Text(stringResource(string.advanced_feature_body))
             }
         },
     )

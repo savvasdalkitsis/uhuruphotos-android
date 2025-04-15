@@ -15,11 +15,17 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state
 
-import androidx.annotation.StringRes
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import org.jetbrains.compose.resources.StringResource
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.auto_albums
+import uhuruphotos_android.foundation.strings.api.generated.resources.favourite_photos
+import uhuruphotos_android.foundation.strings.api.generated.resources.hidden_media
+import uhuruphotos_android.foundation.strings.api.generated.resources.local_albums
+import uhuruphotos_android.foundation.strings.api.generated.resources.trash
+import uhuruphotos_android.foundation.strings.api.generated.resources.user_albums
 
 enum class LibraryItemState(
-    @StringRes val title: Int,
+    val title: StringResource,
 ) {
     TRASH(string.trash),
     HIDDEN(string.hidden_media),

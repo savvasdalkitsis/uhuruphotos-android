@@ -15,15 +15,39 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.controller
 
-import androidx.annotation.StringRes
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.get
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.group.state.CollapsibleGroupState
+import org.jetbrains.compose.resources.StringResource
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.advanced
+import uhuruphotos_android.foundation.strings.api.generated.resources.biometrics
+import uhuruphotos_android.foundation.strings.api.generated.resources.cloud_sync
+import uhuruphotos_android.foundation.strings.api.generated.resources.collage
+import uhuruphotos_android.foundation.strings.api.generated.resources.feed
+import uhuruphotos_android.foundation.strings.api.generated.resources.feedback
+import uhuruphotos_android.foundation.strings.api.generated.resources.help
+import uhuruphotos_android.foundation.strings.api.generated.resources.jobs
+import uhuruphotos_android.foundation.strings.api.generated.resources.library
+import uhuruphotos_android.foundation.strings.api.generated.resources.lightbox_photo_disk_cache
+import uhuruphotos_android.foundation.strings.api.generated.resources.lightbox_photo_memory_cache
+import uhuruphotos_android.foundation.strings.api.generated.resources.local_media
+import uhuruphotos_android.foundation.strings.api.generated.resources.maps
+import uhuruphotos_android.foundation.strings.api.generated.resources.privacy_security
+import uhuruphotos_android.foundation.strings.api.generated.resources.progress
+import uhuruphotos_android.foundation.strings.api.generated.resources.search
+import uhuruphotos_android.foundation.strings.api.generated.resources.share
+import uhuruphotos_android.foundation.strings.api.generated.resources.status
+import uhuruphotos_android.foundation.strings.api.generated.resources.theme
+import uhuruphotos_android.foundation.strings.api.generated.resources.thumbnail_disk_cache
+import uhuruphotos_android.foundation.strings.api.generated.resources.thumbnail_memory_cache
+import uhuruphotos_android.foundation.strings.api.generated.resources.ui
+import uhuruphotos_android.foundation.strings.api.generated.resources.video
+import uhuruphotos_android.foundation.strings.api.generated.resources.video_disk_cache
 import javax.inject.Inject
 
 class SettingsViewStateController @Inject constructor(
@@ -67,7 +91,7 @@ class SettingsViewStateController @Inject constructor(
     }
 
     private fun group(
-        @StringRes title: Int,
+        title: StringResource,
         key: String,
     ): CollapsibleGroupState = CollapsibleGroupState(title, preferencesState(key))
         .also { allGroups += it }

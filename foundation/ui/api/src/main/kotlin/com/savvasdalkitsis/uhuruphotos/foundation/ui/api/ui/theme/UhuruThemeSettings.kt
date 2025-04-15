@@ -41,12 +41,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ContentTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeContrast
@@ -61,6 +59,12 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkbox.UhuruCheckB
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.slider.UhuruSliderRow
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.UhuruTextRow
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.theme.state.ThemeSettingsState
+import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.collage_shape
+import uhuruphotos_android.foundation.strings.api.generated.resources.collage_spacing
+import uhuruphotos_android.foundation.strings.api.generated.resources.collage_spacing_include_edges
+import uhuruphotos_android.foundation.strings.api.generated.resources.theme
 
 @Composable
 fun ColumnScope.UhuruThemeSettings(

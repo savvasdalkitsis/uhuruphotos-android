@@ -26,7 +26,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -35,9 +34,16 @@ import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam.
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam.actions.TakeUserToLibrePhotosWebsite
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam.actions.WelcomeAction
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.dialogs.YesNoDialog
+import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.enable_cloud_sync
+import uhuruphotos_android.foundation.strings.api.generated.resources.libre_photos_description
+import uhuruphotos_android.foundation.strings.api.generated.resources.need_a_libre_photos_server_1
+import uhuruphotos_android.foundation.strings.api.generated.resources.need_a_libre_photos_server_2
+import uhuruphotos_android.foundation.strings.api.generated.resources.take_me_to_website
+import uhuruphotos_android.foundation.strings.api.generated.resources.what_is_libre_photos
 
 @Composable
 internal fun WelcomeLibrePhotosHelpDialog(action: (WelcomeAction) -> Unit) {

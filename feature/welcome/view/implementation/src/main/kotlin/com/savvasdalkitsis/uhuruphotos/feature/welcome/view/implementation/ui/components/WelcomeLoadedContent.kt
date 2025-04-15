@@ -24,7 +24,7 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
+import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.R.raw
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam.actions.LogOut
@@ -34,8 +34,13 @@ import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam.
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.ui.state.WelcomeState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.permissions.api.ui.PermissionsState
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.UhuruIconOutlineButton
+import uhuruphotos_android.foundation.strings.api.generated.resources.backup_media_on_cloud
+import uhuruphotos_android.foundation.strings.api.generated.resources.log_out
+import uhuruphotos_android.foundation.strings.api.generated.resources.manage_media_on_cloud
+import uhuruphotos_android.foundation.strings.api.generated.resources.manage_media_on_device
+import uhuruphotos_android.foundation.strings.api.generated.resources.privacy_policy
 
 @Composable
 internal fun WelcomeLoadedContent(

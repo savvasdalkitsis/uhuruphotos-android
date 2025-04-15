@@ -16,7 +16,6 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 
 import android.content.pm.ResolveInfo
-import androidx.annotation.StringRes
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.domain.api.model.LightboxDetailsModel
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.SingleMediaItemState
@@ -24,6 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.s
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import kotlinx.collections.immutable.toImmutableList
+import org.jetbrains.compose.resources.StringResource
 import kotlin.math.min
 
 sealed class LightboxMutation(
@@ -42,7 +42,7 @@ sealed class LightboxMutation(
         it.copy(errorMessage = null)
     })
 
-    data class ShowErrorMessage(@StringRes val message: Int) : LightboxMutation({
+    data class ShowErrorMessage(val message: StringResource) : LightboxMutation({
         it.copy(
             isLoading = false,
             errorMessage = message,

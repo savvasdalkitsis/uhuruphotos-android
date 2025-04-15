@@ -15,17 +15,17 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.local.view.api.ui
 
-import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDeviceModel
 import dev.shreyaspatil.permissionflow.compose.rememberPermissionFlowRequestLauncher
+import org.jetbrains.compose.resources.StringResource
 
 @Composable
 fun LocalMediaAccessRequestBanner(
     modifier: Modifier = Modifier,
     missingPermissions: MediaItemsOnDeviceModel.RequiresPermissionsModel,
-    @StringRes description: Int,
+    description: StringResource,
     onNeverRemindMeAgain: () -> Unit,
 ) {
     val permissionLauncher = rememberPermissionFlowRequestLauncher()

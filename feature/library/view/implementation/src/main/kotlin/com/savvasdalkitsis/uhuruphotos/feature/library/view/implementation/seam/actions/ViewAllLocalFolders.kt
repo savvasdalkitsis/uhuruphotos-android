@@ -19,12 +19,14 @@ import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryState
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.api.navigation.PortfolioNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import org.jetbrains.compose.resources.getString
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.local_albums
 
 data object ViewAllLocalFolders : LibraryAction() {
     override fun LibraryActionsContext.handle(state: LibraryState): Flow<Mutation<LibraryState>> = flow {
-        navigator.navigateTo(PortfolioNavigationRoute(editMode = false, title = string.local_albums))
+        navigator.navigateTo(PortfolioNavigationRoute(editMode = false, title = getString(string.local_albums)))
     }
 }

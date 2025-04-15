@@ -19,7 +19,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobModel
@@ -27,11 +26,21 @@ import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobModel.FE
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobModel.FULL_FEED_SYNC
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobModel.LOCAL_MEDIA_SYNC
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobModel.PRECACHE_THUMBNAILS
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewThemeData
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewThemeDataProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.dialogs.YesNoDialog
+import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.are_you_sure_you_want_to_perform_feed_details_sync
+import uhuruphotos_android.foundation.strings.api.generated.resources.are_you_sure_you_want_to_perform_full_sync
+import uhuruphotos_android.foundation.strings.api.generated.resources.are_you_sure_you_want_to_perform_precache
+import uhuruphotos_android.foundation.strings.api.generated.resources.are_you_sure_you_want_to_start_local_scan
+import uhuruphotos_android.foundation.strings.api.generated.resources.perform_full_feed_details_sync
+import uhuruphotos_android.foundation.strings.api.generated.resources.perform_full_feed_sync
+import uhuruphotos_android.foundation.strings.api.generated.resources.precache_thumbnails
+import uhuruphotos_android.foundation.strings.api.generated.resources.process_takes_significant_time_consumes_battery
+import uhuruphotos_android.foundation.strings.api.generated.resources.scan_local_media
 
 @Composable
 fun JobPermissionDialog(

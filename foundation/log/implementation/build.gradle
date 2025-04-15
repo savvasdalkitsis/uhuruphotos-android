@@ -1,3 +1,7 @@
+plugins {
+    id 'kotlin-parcelize'
+}
+
 android {
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.log.implementation'
 }
@@ -7,6 +11,7 @@ dependencies {
             libs.bundles.autodagger,
             libs.bundles.lumberjack,
             libs.hilt,
+            libs.log4k,
             project(":feature:settings:domain:api"),
             project(":foundation:icons:api"),
             project(":foundation:initializer:api"),

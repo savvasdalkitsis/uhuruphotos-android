@@ -16,8 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state
 
 import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
 import androidx.compose.runtime.Immutable
+import org.jetbrains.compose.resources.StringResource
 
 @Immutable
 interface CollageDisplayState {
@@ -29,7 +29,7 @@ interface CollageDisplayState {
     @get:DrawableRes val iconResource: Int
     val maintainAspectRatio: Boolean
     val allowsAnimatedVideoThumbnails: Boolean
-    @get:StringRes val friendlyName: Int
+    val friendlyName: StringResource
     val zoomIn: CollageDisplayState
     val zoomOut: CollageDisplayState
     val allowsPinchGestures: Boolean

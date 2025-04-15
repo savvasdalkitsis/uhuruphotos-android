@@ -35,7 +35,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
@@ -49,7 +48,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.ac
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.ui.state.AboutState
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewThemeData
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewThemeDataProvider
@@ -59,6 +57,12 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruUpNavB
 import my.nanihadesuka.compose.InternalLazyColumnScrollbar
 import my.nanihadesuka.compose.ScrollbarSelectionMode
 import my.nanihadesuka.compose.ScrollbarSettings
+import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.about
+import uhuruphotos_android.foundation.strings.api.generated.resources.donate
+import uhuruphotos_android.foundation.strings.api.generated.resources.feedback
+import uhuruphotos_android.foundation.strings.api.generated.resources.privacy_policy
 
 @Composable
 internal fun About(
@@ -79,6 +83,7 @@ internal fun About(
             modifier = Modifier
                 .recomposeHighlighter()
                 .fillMaxSize(),
+            showLicenseBadges = false,
             contentPadding = contentPadding,
             lazyListState = listState,
             colors = remember {

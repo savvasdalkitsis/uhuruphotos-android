@@ -15,16 +15,21 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.notification.api
 
-import androidx.annotation.StringRes
 import androidx.core.app.NotificationManagerCompat.IMPORTANCE_LOW
 import androidx.core.app.NotificationManagerCompat.IMPORTANCE_MIN
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import org.jetbrains.compose.resources.StringResource
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.background_jobs
+import uhuruphotos_android.foundation.strings.api.generated.resources.crash_reports
+import uhuruphotos_android.foundation.strings.api.generated.resources.jobs
+import uhuruphotos_android.foundation.strings.api.generated.resources.send_crash_logs
+import uhuruphotos_android.foundation.strings.api.generated.resources.uploads
 
 enum class NotificationChannels(
     val id: String,
     val importance: Int,
-    @StringRes val label: Int,
-    @StringRes val description: Int,
+    val label: StringResource,
+    val description: StringResource,
 ) {
     Jobs(
         id = "UHURU_PHOTOS_BACKGROUND_JOBS_CHANNEL_ID",

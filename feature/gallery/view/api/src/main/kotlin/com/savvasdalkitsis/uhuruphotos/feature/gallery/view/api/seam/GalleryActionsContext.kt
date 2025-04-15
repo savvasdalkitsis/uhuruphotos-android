@@ -27,12 +27,13 @@ import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.observe
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
-import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.error_loading_album
+import usecase.ToasterUseCase
 import kotlin.properties.Delegates
 
 class GalleryActionsContext @AssistedInject constructor(
@@ -72,7 +73,7 @@ class GalleryActionsContext @AssistedInject constructor(
         _loading.emit(Loading(true))
         val result = galleryRefresher(galleryId.id)
         if (result.isErr) {
-            toaster.show(R.string.error_loading_album)
+            toaster.show(string.error_loading_album)
         }
         _loading.emit(Loading(false))
     }

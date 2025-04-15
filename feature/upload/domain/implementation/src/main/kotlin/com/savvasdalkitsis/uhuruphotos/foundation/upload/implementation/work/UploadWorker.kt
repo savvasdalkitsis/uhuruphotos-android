@@ -20,9 +20,10 @@ import androidx.hilt.work.HiltWorker
 import androidx.work.WorkerParameters
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNotificationWorker
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.media_sync_status_uploading
 
 @Deprecated("This class is no longer used. Left for backwards compatibility")
 @HiltWorker

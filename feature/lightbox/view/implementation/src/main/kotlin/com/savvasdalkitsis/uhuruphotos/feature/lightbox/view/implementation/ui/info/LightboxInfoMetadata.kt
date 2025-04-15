@@ -28,7 +28,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.ClickedOnDetailsEntry
@@ -48,9 +47,12 @@ import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_refres
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_save
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_shutter_speed
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_videocam
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SectionHeader
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruActionIcon
+import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.details
+import uhuruphotos_android.foundation.strings.api.generated.resources.nothing_here_yet
 
 @Composable
 internal fun LightboxInfoMetadata(

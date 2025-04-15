@@ -26,11 +26,12 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNotificationWorker
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.refreshing_feed_details
 
 @HiltWorker
 internal class FeedDetailsDownloadWorker @AssistedInject constructor(
@@ -43,7 +44,7 @@ internal class FeedDetailsDownloadWorker @AssistedInject constructor(
     context,
     params,
     foregroundInfoBuilder,
-    notificationTitle = R.string.refreshing_feed_details,
+    notificationTitle = string.refreshing_feed_details,
     notificationId = NOTIFICATION_ID,
     cancelBroadcastReceiver = CancelFeedDetailsDownloadWorkBroadcastReceiver::class.java,
 ) {

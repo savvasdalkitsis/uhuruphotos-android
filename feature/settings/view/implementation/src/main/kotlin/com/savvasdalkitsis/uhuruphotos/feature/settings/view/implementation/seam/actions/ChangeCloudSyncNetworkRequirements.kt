@@ -19,14 +19,15 @@ import androidx.work.NetworkType
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import kotlinx.coroutines.flow.flow
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.cloud_sync_network_changed
 
 data class ChangeCloudSyncNetworkRequirements(val networkType: NetworkType) : SettingsAction() {
     override fun SettingsActionsContext.handle(
         state: SettingsState
     ) = flow<SettingsMutation> {
         settingsUseCase.setCloudSyncNetworkRequirements(networkType)
-        toaster.show(R.string.cloud_sync_network_changed)
+        toaster.show(string.cloud_sync_network_changed)
     }
 }

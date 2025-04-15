@@ -25,17 +25,20 @@ import androidx.core.app.NotificationCompat
 import androidx.work.ForegroundInfo
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.getString
 import se.ansman.dagger.auto.AutoBind
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.cancel
 import javax.inject.Inject
 
 @AutoBind
 internal class ForegroundInfoBuilder @Inject constructor(
 ) : ForegroundInfoBuilder {
 
-    override fun build(
+    override suspend fun build(
         context: Context,
-        title: Int,
+        title: StringResource,
         notificationId: Int,
         channel: String,
         progress: Int?,
@@ -60,9 +63,9 @@ internal class ForegroundInfoBuilder @Inject constructor(
         }
     }
 
-    override fun <BR: BroadcastReceiver> buildNotification(
+    override suspend fun <BR: BroadcastReceiver> buildNotification(
         context: Context,
-        title: Int,
+        title: StringResource,
         channel: String,
         progress: Int?,
         showProgress: Boolean,
@@ -70,7 +73,7 @@ internal class ForegroundInfoBuilder @Inject constructor(
         text: String?,
         cancelBroadcastReceiver: Class<BR>?,
     ) = NotificationCompat.Builder(context, channel)
-        .setContentTitle(context.getString(title))
+        .setContentTitle(getString(title))
         .setContentText(text)
         .setContentIntent(PendingIntent.getActivity(
             context,
@@ -90,7 +93,7 @@ internal class ForegroundInfoBuilder @Inject constructor(
         }
         .run {
             if (cancelBroadcastReceiver != null) {
-                addAction(drawable.ic_cancel, context.getString(string.cancel),
+                addAction(drawable.ic_cancel, getString(string.cancel),
                     PendingIntent.getBroadcast(
                         context,
                         1,

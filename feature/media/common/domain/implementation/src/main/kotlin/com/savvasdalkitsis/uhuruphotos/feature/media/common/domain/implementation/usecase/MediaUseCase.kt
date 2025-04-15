@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.implementation.usecase
 
-import android.content.Context
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.combine
@@ -62,14 +61,26 @@ import com.savvasdalkitsis.uhuruphotos.foundation.log.api.andThenTry
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simple
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simpleOk
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
+import org.jetbrains.compose.resources.getString
 import org.joda.time.DateTime
 import se.ansman.dagger.auto.AutoBind
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.month_april_short
+import uhuruphotos_android.foundation.strings.api.generated.resources.month_august_short
+import uhuruphotos_android.foundation.strings.api.generated.resources.month_december_short
+import uhuruphotos_android.foundation.strings.api.generated.resources.month_february_short
+import uhuruphotos_android.foundation.strings.api.generated.resources.month_january_short
+import uhuruphotos_android.foundation.strings.api.generated.resources.month_july_short
+import uhuruphotos_android.foundation.strings.api.generated.resources.month_june_short
+import uhuruphotos_android.foundation.strings.api.generated.resources.month_march_short
+import uhuruphotos_android.foundation.strings.api.generated.resources.month_may_short
+import uhuruphotos_android.foundation.strings.api.generated.resources.month_november_short
+import uhuruphotos_android.foundation.strings.api.generated.resources.month_october_short
+import uhuruphotos_android.foundation.strings.api.generated.resources.month_september_short
 import javax.inject.Inject
 
 @AutoBind
@@ -79,7 +90,6 @@ class MediaUseCase @Inject constructor(
     private val userUseCase: UserUseCase,
     private val dateDisplayer: DateDisplayer,
     private val dateParser: DateParser,
-    @ApplicationContext private val context: Context,
 ) : MediaUseCase {
 
     override fun observeLocalMedia(): Flow<MediaItemsOnDeviceModel> =
@@ -90,7 +100,7 @@ class MediaUseCase @Inject constructor(
             combineLocalMediaItemsWithUser(localMediaItems, user)
         }
 
-    private fun combineLocalMediaItemsWithUser(
+    private suspend fun combineLocalMediaItemsWithUser(
         localMediaItems: LocalMediaItems,
         user: User
     ) = when (localMediaItems) {
@@ -166,7 +176,7 @@ class MediaUseCase @Inject constructor(
             }
         }
 
-    private fun LocalMediaItem.toMediaItem(userId: Int?) = MediaItemInstanceModel(
+    private suspend fun LocalMediaItem.toMediaItem(userId: Int?) = MediaItemInstanceModel(
         id = LocalIdModel(
             id,
             bucket.id,
@@ -353,12 +363,12 @@ class MediaUseCase @Inject constructor(
             action(it)
         }
 
-    private fun DateTime.toMediaDay(): MediaDayModel = MediaDayModel(
+    private suspend fun DateTime.toMediaDay(): MediaDayModel = MediaDayModel(
         day = dayOfMonth,
         dayOfWeek = dayOfWeek,
         month = monthOfYear,
         year = year,
-        monthText = context.getString(when (monthOfYear) {
+        monthText = getString(when (monthOfYear) {
             1 -> string.month_january_short
             2 -> string.month_february_short
             3 -> string.month_march_short

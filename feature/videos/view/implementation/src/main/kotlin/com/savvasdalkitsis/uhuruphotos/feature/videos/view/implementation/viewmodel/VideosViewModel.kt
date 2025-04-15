@@ -23,9 +23,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.videos.view.api.navigation.Videos
 import com.savvasdalkitsis.uhuruphotos.feature.videos.view.implementation.seam.VideosActionsContext
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
 import dagger.hilt.android.lifecycle.HiltViewModel
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.videos
 import javax.inject.Inject
 
 @HiltViewModel

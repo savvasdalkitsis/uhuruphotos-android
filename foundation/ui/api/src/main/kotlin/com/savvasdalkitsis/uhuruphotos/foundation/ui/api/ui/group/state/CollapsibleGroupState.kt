@@ -15,14 +15,13 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.group.state
 
-import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import dev.burnoo.compose.rememberpreference.rememberBooleanPreference
+import org.jetbrains.compose.resources.StringResource
 
 data class CollapsibleGroupState(
-    @get:StringRes
-    val title: Int,
+    val title: StringResource,
     val collapsed: MutableState<Boolean>,
 ) {
 
@@ -40,7 +39,7 @@ data class CollapsibleGroupState(
 
 @Composable
 fun rememberCollapsibleGroupState(
-    @StringRes title: Int,
+    title: StringResource,
     uniqueKey: String,
     initiallyCollapsed: Boolean = false
 ): CollapsibleGroupState {

@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam
 
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.domain.api.usecase.PortfolioUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
+import usecase.ToasterUseCase
 import javax.inject.Inject
 import kotlin.properties.Delegates
 

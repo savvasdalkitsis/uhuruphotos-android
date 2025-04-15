@@ -18,7 +18,6 @@ package com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.u
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.seam.action.DeleteAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.seam.action.DeleteAutoAlbumCancelled
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.seam.action.DeleteAutoAlbumRequested
@@ -27,10 +26,14 @@ import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.vi
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.Gallery
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.dialogs.YesNoDialog
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruActionIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.AlertText
+import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.delete_album
+import uhuruphotos_android.foundation.strings.api.generated.resources.delete_album_confirmation
+import uhuruphotos_android.foundation.strings.api.generated.resources.delete_album_explanation
 
 @Composable
 internal fun AutoAlbum(

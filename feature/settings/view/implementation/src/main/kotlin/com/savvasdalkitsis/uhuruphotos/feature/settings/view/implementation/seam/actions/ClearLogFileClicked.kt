@@ -18,15 +18,16 @@ package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.sea
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import kotlinx.coroutines.flow.flow
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.logs_cleared
 
 data object ClearLogFileClicked : SettingsAction() {
     override fun SettingsActionsContext.handle(
         state: SettingsState
     ) = flow<SettingsMutation> {
         feedbackUseCase.clearLogs()
-        toaster.show(R.string.logs_cleared)
+        toaster.show(string.logs_cleared)
     }
 
 }

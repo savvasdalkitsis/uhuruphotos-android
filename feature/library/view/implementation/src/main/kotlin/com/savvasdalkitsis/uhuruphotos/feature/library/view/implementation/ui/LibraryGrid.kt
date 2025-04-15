@@ -32,7 +32,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
-import androidx.compose.ui.res.stringResource
+import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.R
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.AutoAlbumsSelected
@@ -101,7 +101,7 @@ internal fun LibraryGrid(
                         action(HiddenPhotosSelected)
                     }
                 }
-                LOCAL -> item(item.title, { GridItemSpan(maxLineSpan) }) {
+                LOCAL -> item(item.title.key, { GridItemSpan(maxLineSpan) }) {
                     ReorderableItem(reordering, item.title) { isDragging ->
                         Vibrate(isDragging)
                         val title = stringResource(item.title)
@@ -144,7 +144,7 @@ internal fun LazyGridScope.pillItem(
     span: (LazyGridItemSpanScope.() -> GridItemSpan)? = null,
     onSelected: () -> Unit,
 ) {
-    item(item.title, span) {
+    item(item.title.key, span) {
         val title = stringResource(item.title)
         ReorderableItem(reorder, item.title) { isDragging ->
             Vibrate(isDragging)
@@ -166,7 +166,7 @@ internal fun LazyGridScope.libraryItem(
     onSelected: () -> Unit,
 ) {
     vitrineState?.let {
-        item(item.title) {
+        item(item.title.key) {
             val title = stringResource(item.title)
             ReorderableItem(reordering, item.title) { isDragging ->
                 Vibrate(isDragging)

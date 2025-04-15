@@ -43,6 +43,7 @@ powerassert = { id = "org.jetbrains.kotlin.plugin.power-assert", version.ref = "
 redacted = "dev.zacsweers.redacted:1.10.0"
 sonarqube = "org.sonarqube:5.1.0.4882"
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
+jetbrains-compose = { id = "org.jetbrains.compose", version = "1.7.3" }
 
 [libraries]
 about = { module = "com.mikepenz:aboutlibraries-compose", version.ref = "about" }
@@ -89,10 +90,10 @@ androidx-window = "androidx.window:window:1.3.0"
 androidx-work = "androidx.work:work-runtime-ktx:2.10.0"
 androidx-work-hilt = "androidx.hilt:hilt-work:1.2.0"
 appyx = "com.bumble.appyx:core:1.5.0"
-assure = "com.afollestad.assure:coroutines:0.2.0"
 autodagger-core = { module = "se.ansman.dagger.auto:android", version.ref = "autodagger" }
 autodagger-ksp = { module = "se.ansman.dagger.auto:compiler", version.ref = "autodagger" }
 autodagger-retrofit = { module = "se.ansman.dagger.auto:retrofit", version.ref = "autodagger" }
+biometric = "androidx.biometric:biometric:1.1.0"
 bottomsheet = "com.holix.android:bottomsheetdialog-compose:1.6.0"
 bubble-navigation = "com.github.savvasdalkitsis:BubbleNavigationBarCompose:1.0.2"
 bugsnag = "com.bugsnag:bugsnag-android:6.12.1"
@@ -126,6 +127,7 @@ kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-androi
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx" }
 kotlinx-immutable = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.8"
 leaks = "com.squareup.leakcanary:leakcanary-android:2.14"
+log4k = "de.peilicke.sascha:log4k:1.4.1"
 lottie = "com.airbnb.android:lottie-compose:6.6.4"
 lumberjack-core = { module = "com.github.MFlisar.Lumberjack:core", version.ref = "lumberjack" }
 lumberjack-implementation = { module = "com.github.MFlisar.Lumberjack:implementation-lumberjack", version.ref = "lumberjack" }

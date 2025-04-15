@@ -22,13 +22,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
+import org.jetbrains.compose.resources.stringResource
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.actions.HomeAction
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.actions.Load
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.ui.state.HomeState
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UhuruFullLoading
+import uhuruphotos_android.foundation.strings.api.generated.resources.authenticate
 
 @Composable
 internal fun Home(

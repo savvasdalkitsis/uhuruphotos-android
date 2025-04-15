@@ -17,8 +17,9 @@ package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.dialogs
 
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.cancel
 
 @Composable
 fun CancelDialog(

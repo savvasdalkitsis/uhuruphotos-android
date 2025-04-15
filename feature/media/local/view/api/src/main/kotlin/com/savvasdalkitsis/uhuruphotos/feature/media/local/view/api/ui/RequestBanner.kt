@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.local.view.api.ui
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -28,19 +27,22 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.AlertText
+import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.do_not_ask_again
+import uhuruphotos_android.foundation.strings.api.generated.resources.grant_permissions
 
 @Composable
 fun RequestBanner(
     modifier: Modifier = Modifier,
-    @StringRes description: Int,
-    @StringRes warning: Int? = null,
-    @StringRes grantText: Int = string.grant_permissions,
+    description: StringResource,
+    warning: StringResource? = null,
+    grantText: StringResource = string.grant_permissions,
     onAccessGranted: () -> Unit,
     onNeverRemindMeAgain: () -> Unit,
 ) {
@@ -78,8 +80,8 @@ fun RequestBanner(
 @Composable
 fun RequestBanner(
     modifier: Modifier = Modifier,
-    @StringRes description: Int,
-    @StringRes warning: Int? = null,
+    description: StringResource,
+    warning: StringResource? = null,
     grantButton: @Composable (RowScope.() -> Unit),
     denyButton: @Composable (RowScope.() -> Unit),
 ){

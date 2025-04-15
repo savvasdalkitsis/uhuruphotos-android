@@ -30,10 +30,13 @@ import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.Welcom
 import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.usecase.BiometricsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.usecase.FeedbackUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.system.api.usecase.SystemUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
 import kotlinx.coroutines.flow.flow
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.authenticate
+import uhuruphotos_android.foundation.strings.api.generated.resources.authenticate_to_change
+import uhuruphotos_android.foundation.strings.api.generated.resources.authenticate_to_change_description
+import usecase.ToasterUseCase
 import javax.inject.Inject
 
 class SettingsActionsContext @Inject constructor(

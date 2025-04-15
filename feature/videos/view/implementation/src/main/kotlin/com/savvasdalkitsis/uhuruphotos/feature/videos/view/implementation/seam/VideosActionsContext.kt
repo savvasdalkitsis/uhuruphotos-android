@@ -23,11 +23,12 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.Gallery
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSourceModel
 import com.savvasdalkitsis.uhuruphotos.feature.videos.domain.api.usecase.VideosUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simpleOk
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.map
+import uhuruphotos_android.foundation.strings.api.generated.resources.videos
 import javax.inject.Inject
 
 class VideosActionsContext @Inject constructor(

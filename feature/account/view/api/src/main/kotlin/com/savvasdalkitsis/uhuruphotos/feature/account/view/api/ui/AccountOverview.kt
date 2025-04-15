@@ -34,7 +34,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstrainedLayoutReference
@@ -60,7 +59,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.uploads.view.api.ui.UploadsRow
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.raw
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeMode
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.ToggleableButtonWithIcon
@@ -70,6 +68,16 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.group.state.remember
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruActionIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
 import kotlinx.collections.immutable.persistentListOf
+import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.about
+import uhuruphotos_android.foundation.strings.api.generated.resources.close
+import uhuruphotos_android.foundation.strings.api.generated.resources.cloud_sync
+import uhuruphotos_android.foundation.strings.api.generated.resources.feed_folders
+import uhuruphotos_android.foundation.strings.api.generated.resources.jobs
+import uhuruphotos_android.foundation.strings.api.generated.resources.log_out
+import uhuruphotos_android.foundation.strings.api.generated.resources.login
+import uhuruphotos_android.foundation.strings.api.generated.resources.settings
 
 @Composable
 internal fun AccountOverview(

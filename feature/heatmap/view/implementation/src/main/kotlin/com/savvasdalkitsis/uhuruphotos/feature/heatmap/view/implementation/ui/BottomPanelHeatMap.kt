@@ -36,11 +36,12 @@ import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state.HeatMapState
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.view.api.ui.LocalMediaAccessRequestBanner
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewState
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.insets.insetsTop
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.sheet.SheetHandle
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.sheet.SheetSize
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.sheet.adjustingSheetSize
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.missing_local_media_permissions_photo_map
 
 @OptIn(ExperimentalPermissionsApi::class, ExperimentalMaterial3Api::class)
 @Composable

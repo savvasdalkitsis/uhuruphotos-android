@@ -23,9 +23,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.undated.view.api.navigation.Undat
 import com.savvasdalkitsis.uhuruphotos.feature.undated.view.implementation.seam.UndatedActionsContext
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
 import dagger.hilt.android.lifecycle.HiltViewModel
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.media_without_date
 import javax.inject.Inject
 
 @HiltViewModel

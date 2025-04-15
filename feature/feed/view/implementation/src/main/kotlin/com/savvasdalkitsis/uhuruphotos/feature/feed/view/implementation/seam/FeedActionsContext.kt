@@ -42,11 +42,12 @@ import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadU
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.WelcomeUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.share.api.usecase.ShareUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
-import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.usecase.UiUseCase
 import com.savvasdalktsis.uhuruphotos.feature.download.domain.api.usecase.DownloadUseCase
 import kotlinx.coroutines.flow.FlowCollector
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.error_deleting_media
+import usecase.ToasterUseCase
 import javax.inject.Inject
 
 class FeedActionsContext @Inject constructor(
@@ -96,7 +97,7 @@ class FeedActionsContext @Inject constructor(
             .flatMap { it.mediaItem.id.findLocals }
             .map { LocalMediaDeletionRequestModel(it.value, it.isVideo) }
         )) {
-            is Error -> toaster.show(R.string.error_deleting_media)
+            is Error -> toaster.show(string.error_deleting_media)
             is RequiresPermissions -> emit(AskForPermissions(result.deniedPermissions))
             Success -> onSuccess()
         }

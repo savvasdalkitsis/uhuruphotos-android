@@ -17,9 +17,11 @@ package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.pluralStringResource
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.dialogs.YesNoDialog
+import org.jetbrains.compose.resources.pluralStringResource
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.plurals
+import uhuruphotos_android.foundation.strings.api.generated.resources.restore_media
+import uhuruphotos_android.foundation.strings.api.generated.resources.restore_media_confirmation
 
 @Composable
 internal fun RestorePermissionDialog(
@@ -29,7 +31,7 @@ internal fun RestorePermissionDialog(
 ) {
     YesNoDialog(
         title = pluralStringResource(
-            R.plurals.restore_media,
+            plurals.restore_media,
             mediaItemCount,
             mediaItemCount
         ),
@@ -38,8 +40,8 @@ internal fun RestorePermissionDialog(
         body = {
             Text(
                 pluralStringResource(
-                    R.plurals.restore_media_confirmation,
-                    count = mediaItemCount,
+                    plurals.restore_media_confirmation,
+                    quantity = mediaItemCount,
                     mediaItemCount
                 )
             )

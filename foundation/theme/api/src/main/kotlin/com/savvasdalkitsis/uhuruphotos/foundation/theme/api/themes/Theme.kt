@@ -17,10 +17,11 @@ package com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes
 
 import androidx.compose.material3.ColorScheme
 import androidx.compose.runtime.Composable
+import org.jetbrains.compose.resources.StringResource
 
 interface Theme {
 
-    val label: Int
+    val label: StringResource
     @Composable
     fun getColorScheme(themeMode: ThemeMode, themeContrast: ThemeContrast): ColorScheme
 

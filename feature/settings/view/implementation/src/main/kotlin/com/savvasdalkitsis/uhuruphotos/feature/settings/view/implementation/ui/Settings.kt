@@ -21,7 +21,6 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass.Companion
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass.Companion.Medium
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.UhuruAvatar
@@ -40,7 +39,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.s
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window.LocalWindowSize
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UhuruFullLoading
@@ -55,6 +53,13 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.theme.UhuruThemeSett
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flowOf
+import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.about
+import uhuruphotos_android.foundation.strings.api.generated.resources.collapse_all
+import uhuruphotos_android.foundation.strings.api.generated.resources.expand_all
+import uhuruphotos_android.foundation.strings.api.generated.resources.settings
+import uhuruphotos_android.foundation.strings.api.generated.resources.upload_capability
 
 @Composable
 internal fun Settings(

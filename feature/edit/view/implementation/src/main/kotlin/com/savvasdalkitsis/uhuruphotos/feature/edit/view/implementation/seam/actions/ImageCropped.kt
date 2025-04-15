@@ -22,9 +22,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.seam.Edi
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.seam.EditMutation
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.ui.state.EditState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.error_editing_photo
 
 data class ImageCropped(val image: ImageBitmap, val name: String, val uri: Uri) : EditAction() {
     override fun EditActionsContext.handle(
@@ -32,7 +33,7 @@ data class ImageCropped(val image: ImageBitmap, val name: String, val uri: Uri) 
     ): Flow<Mutation<EditState>> = flow {
         emit(EditMutation.Saving)
         if (!localMediaUseCase.savePhoto(image.asAndroidBitmap(), "CROPPED_$name", uri)) {
-            toaster.show(R.string.error_editing_photo)
+            toaster.show(string.error_editing_photo)
         }
         navigator.navigateUp()
     }

@@ -2,8 +2,14 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.toaster.api'
 }
 
-dependencies {
-    api(
-            libs.androidx.annotation,
-    )
+kotlin {
+    jvm("desktop")
+    androidTarget()
+    sourceSets {
+        commonMain {
+            dependencies {
+                api(project(":foundation:strings:api"))
+            }
+        }
+    }
 }

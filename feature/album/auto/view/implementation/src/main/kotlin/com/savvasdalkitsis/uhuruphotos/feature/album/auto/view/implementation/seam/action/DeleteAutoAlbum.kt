@@ -20,8 +20,9 @@ import com.github.michaelbull.result.onSuccess
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.seam.AutoAlbumActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.seam.AutoAlbumMutation
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.ui.state.AutoAlbumState
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import kotlinx.coroutines.flow.flow
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.error_deleting_album
 
 data object DeleteAutoAlbum : AutoAlbumAction() {
     override fun AutoAlbumActionsContext.handle(state: AutoAlbumState) = flow<AutoAlbumMutation> {

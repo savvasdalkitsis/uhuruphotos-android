@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.sea
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
-import android.net.Uri
+import androidx.core.net.toUri
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.onFailure
@@ -67,8 +67,6 @@ import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import com.savvasdalkitsis.uhuruphotos.foundation.share.api.usecase.ShareUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.usecase.UiUseCase
 import com.savvasdalktsis.uhuruphotos.feature.download.domain.api.usecase.DownloadUseCase
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -76,6 +74,9 @@ import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.flow
 import org.joda.time.format.DateTimeFormatter
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.error_loading_photo_details
+import usecase.ToasterUseCase
 import javax.inject.Inject
 import kotlin.random.Random
 
@@ -195,7 +196,7 @@ class LightboxActionsContext @Inject constructor(
             ?: "PHOTO_${Random.nextInt()}"
         state.currentMediaItem.id.findLocals.firstOrNull()?.let { media ->
             navigator.navigateTo(EditNavigationRoute(
-                uri = Uri.parse(media.contentUri).toString(),
+                uri = media.contentUri.toUri().toString(),
                 fileName = state.currentMediaItem.fileName(),
                 timestamp = try {
                     displayingDateTimeFormat.parseDateTime(state.currentMediaItem.details.formattedDateTime).millis

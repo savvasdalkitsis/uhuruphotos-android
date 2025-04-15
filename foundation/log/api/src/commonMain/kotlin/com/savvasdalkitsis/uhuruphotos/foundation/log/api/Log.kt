@@ -19,14 +19,11 @@ import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.andThen
-import com.michaelflisar.lumberjack.core.L
 
 fun log(tag: String = "", msg: () -> String) {
-    tryIgnore {
-        if (tag.isNotEmpty()) {
-            L.tag(tag).v(msg)
-        } else {
-            L.v(msg)
+    if (Log.enabled) {
+        tryIgnore {
+            saschpe.log4k.Log.verbose(tag = tag, message = msg)
         }
     }
 }
@@ -34,7 +31,7 @@ fun log(tag: String = "", msg: () -> String) {
 fun log(t: Throwable) {
     try {
         tempEnable {
-            L.w(t)
+            saschpe.log4k.Log.warn(throwable = t)
         }
     } catch (_: Exception) {
         t.printStackTrace()
@@ -44,7 +41,7 @@ fun log(t: Throwable) {
 fun log(t: Throwable, msg: () -> String) {
     try {
         tempEnable {
-            L.w(t, msg)
+            saschpe.log4k.Log.warn(throwable = t, message = msg)
         }
     } catch (_: Exception) {
         println("$msg")
@@ -55,7 +52,7 @@ fun log(t: Throwable, msg: () -> String) {
 fun logError(t: Throwable) {
     try {
         tempEnable {
-            L.e(t)
+            saschpe.log4k.Log.error(throwable = t)
         }
     }  catch (_: Exception) {
         t.printStackTrace()
@@ -63,11 +60,7 @@ fun logError(t: Throwable) {
 }
 
 data object Log {
-    var enabled: Boolean
-        get() = L.isEnabled()
-        set(value) {
-            L.enable(value)
-        }
+    var enabled: Boolean = false
 }
 
 private inline fun tryIgnore(block: () -> Unit) {

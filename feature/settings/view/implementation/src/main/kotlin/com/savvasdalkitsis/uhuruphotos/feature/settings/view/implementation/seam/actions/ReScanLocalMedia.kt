@@ -18,9 +18,10 @@ package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.sea
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.scanning_local_media
 
 data object ReScanLocalMedia : SettingsAction() {
     override fun SettingsActionsContext.handle(state: SettingsState): Flow<Mutation<SettingsState>> = flow {

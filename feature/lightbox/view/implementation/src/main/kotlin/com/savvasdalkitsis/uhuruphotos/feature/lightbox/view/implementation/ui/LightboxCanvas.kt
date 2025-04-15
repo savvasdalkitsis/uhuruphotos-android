@@ -62,6 +62,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.dismiss.api.ui.pullToDismiss
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.dialogs.UpsellDialog
 import dev.shreyaspatil.permissionflow.compose.rememberPermissionFlowRequestLauncher
 import me.saket.telephoto.zoomable.ZoomableState
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun LightboxCanvas(
@@ -117,7 +118,7 @@ fun LightboxCanvas(
         Column {
             Spacer(modifier = Modifier.height(contentPadding.calculateTopPadding()))
             InfoBar(offeredMessage = state.errorMessage?.let {
-                InfoBarMessage(textStringResId = it)
+                InfoBarMessage(text = stringResource(it))
             }) {
                 action(DismissErrorMessage)
             }

@@ -27,10 +27,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.group.UhuruCollapsibleGroup
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.group.state.rememberCollapsibleGroupState
+import org.jetbrains.compose.resources.StringResource
 
 @Composable
 fun StatsGroup(
-    title: Int,
+    title: StringResource,
     uniqueId: String,
     isLoading: Boolean,
     content: @Composable () -> Unit,

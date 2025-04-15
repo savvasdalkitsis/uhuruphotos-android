@@ -16,11 +16,14 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui
 
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import org.jetbrains.compose.resources.StringResource
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.rectangle
+import uhuruphotos_android.foundation.strings.api.generated.resources.rounded_rectangle
 
 enum class CollageShape(
     val icon: Int,
-    val text: Int,
+    val text: StringResource,
 ) {
     RECTANGLE(drawable.ic_rectangle, string.rectangle),
     ROUNDED_RECTANGLE(drawable.ic_rounded_rectangle, string.rounded_rectangle);

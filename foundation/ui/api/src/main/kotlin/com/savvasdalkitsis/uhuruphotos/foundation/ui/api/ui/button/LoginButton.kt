@@ -24,10 +24,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R
+import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.login
 
 @Composable
 fun LoginButton(
@@ -45,6 +47,6 @@ fun LoginButton(
             contentDescription = null
         )
         Spacer(modifier = Modifier.width(8.dp))
-        Text(stringResource(com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string.login))
+        Text(stringResource(string.login))
     }
 }

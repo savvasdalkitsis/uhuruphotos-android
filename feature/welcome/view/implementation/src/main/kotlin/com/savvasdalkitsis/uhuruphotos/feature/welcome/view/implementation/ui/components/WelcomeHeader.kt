@@ -22,10 +22,15 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
+import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.more_than_one
+import uhuruphotos_android.foundation.strings.api.generated.resources.welcome_description
+import uhuruphotos_android.foundation.strings.api.generated.resources.welcome_description_2
+import uhuruphotos_android.foundation.strings.api.generated.resources.welcome_to_uhuruphotos
+import uhuruphotos_android.foundation.strings.api.generated.resources.what_would_like_to_do
 
 @Composable
 internal fun WelcomeHeader() {
@@ -33,27 +38,27 @@ internal fun WelcomeHeader() {
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         Text(
-            text = stringResource(R.string.welcome_to_uhuruphotos),
+            text = stringResource(string.welcome_to_uhuruphotos),
             style = MaterialTheme.typography.headlineLarge,
         )
         Text(
-            text = stringResource(R.string.welcome_description),
+            text = stringResource(string.welcome_description),
             style = MaterialTheme.typography.bodyMedium,
         )
         Text(
-            text = stringResource(R.string.welcome_description_2),
+            text = stringResource(string.welcome_description_2),
             style = MaterialTheme.typography.bodyMedium,
         )
         Text(
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center,
-            text = stringResource(R.string.what_would_like_to_do),
+            text = stringResource(string.what_would_like_to_do),
             style = MaterialTheme.typography.headlineMedium,
         )
         Text(
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center,
-            text = stringResource(R.string.more_than_one),
+            text = stringResource(string.more_than_one),
             style = MaterialTheme.typography.bodyLarge,
         )
     }

@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.home.view.api.ui
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
@@ -40,7 +39,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.bumble.appyx.navmodel.backstack.BackStack
 import com.bumble.appyx.navmodel.backstack.activeElement
@@ -55,8 +53,13 @@ import com.savvasdalkitsis.uhuruphotos.feature.library.view.api.navigation.Libra
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.LocalBackStack
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window.LocalWindowSize
+import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.discover
+import uhuruphotos_android.foundation.strings.api.generated.resources.feed
+import uhuruphotos_android.foundation.strings.api.generated.resources.library
 
 @Composable
 fun homeNavigationStyle() = when (LocalWindowSize.current.widthSizeClass) {
@@ -138,7 +141,7 @@ private fun Items(
 
 @Composable
 private fun <R: NavigationRoute> NavItem(
-    @StringRes label: Int,
+    label: StringResource,
     route: R,
     icon: Painter,
     onReselected: () -> Unit,
@@ -165,7 +168,7 @@ private fun <R: NavigationRoute> NavItem(
 @Composable
 private fun <R: NavigationRoute> BottomNavItem(
     rowScope: RowScope,
-    @StringRes label: Int,
+    label: StringResource,
     route: R,
     icon: Painter,
     onReselected: () -> Unit,
@@ -194,7 +197,7 @@ private fun <R: NavigationRoute> BottomNavItem(
 
 @Composable
 private fun <R: NavigationRoute> NavRailNavItem(
-    @StringRes label: Int,
+    label: StringResource,
     route: R,
     icon: Painter,
     onReselected: () -> Unit,

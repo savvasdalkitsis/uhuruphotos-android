@@ -15,11 +15,16 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state
 
-
 import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import org.jetbrains.compose.resources.StringResource
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.big
+import uhuruphotos_android.foundation.strings.api.generated.resources.comfortable
+import uhuruphotos_android.foundation.strings.api.generated.resources.compact
+import uhuruphotos_android.foundation.strings.api.generated.resources.full
+import uhuruphotos_android.foundation.strings.api.generated.resources.tiny
+import uhuruphotos_android.foundation.strings.api.generated.resources.yearly
 import kotlin.math.max
 import kotlin.math.min
 
@@ -32,7 +37,7 @@ enum class PredefinedCollageDisplayState(
     @DrawableRes override val iconResource: Int,
     override val maintainAspectRatio: Boolean,
     override val allowsAnimatedVideoThumbnails: Boolean = true,
-    @StringRes override val friendlyName: Int,
+    override val friendlyName: StringResource,
     override val usingStaggeredGrid: Boolean = true,
 ) : CollageDisplayState {
     YEARLY(

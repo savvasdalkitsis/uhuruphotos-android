@@ -22,7 +22,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.icu.text.NumberFormat.getIntegerInstance
 import android.icu.text.NumberFormat.getPercentInstance
-import androidx.annotation.StringRes
 import androidx.core.app.NotificationManagerCompat
 import androidx.work.CoroutineWorker
 import androidx.work.ForegroundInfo
@@ -33,12 +32,13 @@ import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.math.toProgressPercent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import org.jetbrains.compose.resources.StringResource
 
 abstract class ForegroundNotificationWorker<BR>(
     context: Context,
     params: WorkerParameters,
     private val foregroundInfoBuilder: ForegroundInfoBuilder,
-    @StringRes private val notificationTitle: Int,
+    private val notificationTitle: StringResource,
     private val notificationId: Int,
     private val notificationChannelId: String = NotificationChannels.Jobs.id,
     private val cancelBroadcastReceiver: Class<BR>? = null,
@@ -71,7 +71,7 @@ abstract class ForegroundNotificationWorker<BR>(
         }
     }
 
-    open fun getFinishedNotification(result: Result): Pair<Int, Notification>? = null
+    open suspend fun getFinishedNotification(result: Result): Pair<Int, Notification>? = null
 
     abstract suspend fun work(): Result
 
@@ -106,7 +106,7 @@ abstract class ForegroundNotificationWorker<BR>(
         }
     }
 
-    private fun ifNotificationsEnabled(block: () -> Unit) {
+    private suspend fun ifNotificationsEnabled(block: suspend () -> Unit) {
         if (notificationManager.areNotificationsEnabled()) {
             block()
         }

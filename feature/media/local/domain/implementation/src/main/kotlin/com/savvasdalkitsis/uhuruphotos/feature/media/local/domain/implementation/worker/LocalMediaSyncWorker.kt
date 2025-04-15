@@ -26,10 +26,14 @@ import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNotificationWorker
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.NotificationChannels
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.delay
+import org.jetbrains.compose.resources.getString
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.local_media_scan_completed
+import uhuruphotos_android.foundation.strings.api.generated.resources.local_media_scan_completed_description
+import uhuruphotos_android.foundation.strings.api.generated.resources.scanning_local_media
 
 @HiltWorker
 internal class LocalMediaSyncWorker @AssistedInject constructor(
@@ -60,7 +64,7 @@ internal class LocalMediaSyncWorker @AssistedInject constructor(
     }
 
     @SuppressLint("RestrictedApi")
-    override fun getFinishedNotification(
+    override suspend fun getFinishedNotification(
         result: Result,
     ): Pair<Int, Notification>? =
         if (result is Result.Success && !localMediaUseCase.hasLocalMediaBeenSyncedBefore()) {
@@ -71,7 +75,7 @@ internal class LocalMediaSyncWorker @AssistedInject constructor(
                 channel = NotificationChannels.Jobs.id,
                 showProgress = false,
                 autoCancel = true,
-                text = context.getString(string.local_media_scan_completed_description),
+                text = getString(string.local_media_scan_completed_description),
             )
         } else {
             null

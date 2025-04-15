@@ -25,7 +25,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.theme.view.implementation.seam.actions.ChangeThemeMode
@@ -36,12 +35,15 @@ import com.savvasdalkitsis.uhuruphotos.feature.theme.view.implementation.seam.ac
 import com.savvasdalkitsis.uhuruphotos.feature.theme.view.implementation.seam.actions.Continue
 import com.savvasdalkitsis.uhuruphotos.feature.theme.view.implementation.seam.actions.ThemeAction
 import com.savvasdalkitsis.uhuruphotos.feature.theme.view.implementation.ui.state.ThemeState
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeMode
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.Logo
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.theme.UhuruThemeSettings
+import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.choose_app_theme
+import uhuruphotos_android.foundation.strings.api.generated.resources.continue_
 
 @Composable
 internal fun Theme(

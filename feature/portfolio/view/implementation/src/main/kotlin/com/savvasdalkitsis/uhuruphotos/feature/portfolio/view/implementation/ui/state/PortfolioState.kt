@@ -20,6 +20,6 @@ import androidx.compose.runtime.Immutable
 @Immutable
 data class PortfolioState(
     val localMedia: PortfolioItemsState = PortfolioItemsState.LoadingState,
-    val title: Int? = null,
+    val title: String? = null,
     val showScanOther: Boolean = false,
 )

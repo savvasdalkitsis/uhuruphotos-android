@@ -15,15 +15,15 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.date.api
 
-import android.content.Context
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule.DisplayingDateFormat
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule.DisplayingDateTimeFormat
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule.DisplayingTimeFormat
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import dagger.hilt.android.qualifiers.ApplicationContext
 import net.danlew.android.joda.DateUtils
+import org.jetbrains.compose.resources.getString
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormatter
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.today
 import javax.inject.Inject
 
 class DateDisplayer @Inject constructor(
@@ -34,22 +34,20 @@ class DateDisplayer @Inject constructor(
     private val displayingDateTimeFormat: DateTimeFormatter,
     @DisplayingTimeFormat
     private val displayingTimeFormat: DateTimeFormatter,
-    @ApplicationContext
-    private val context: Context,
 ) {
 
-    fun dateString(date: String?): String = format(date, displayingDateFormat, appendTimeIfToday = false)
+    suspend fun dateString(date: String?): String = format(date, displayingDateFormat, appendTimeIfToday = false)
 
-    fun dateTimeString(date: String?): String = format(date, displayingDateTimeFormat, appendTimeIfToday = true)
+    suspend fun dateTimeString(date: String?): String = format(date, displayingDateTimeFormat, appendTimeIfToday = true)
 
-    private fun format(date: String?, formatter: DateTimeFormatter, appendTimeIfToday: Boolean) =
+    private suspend fun format(date: String?, formatter: DateTimeFormatter, appendTimeIfToday: Boolean) =
         dateParser.parseDateOrTimeString(date)?.let {
             format(it, formatter, appendTimeIfToday)
         } ?: ""
 
-    private fun format(date: DateTime, formatter: DateTimeFormatter, appendTimeIfToday: Boolean): String =
+    private suspend fun format(date: DateTime, formatter: DateTimeFormatter, appendTimeIfToday: Boolean): String =
         if (DateUtils.isToday(date)) {
-            context.getString(string.today) + if (appendTimeIfToday) {
+            getString(string.today) + if (appendTimeIfToday) {
                 " " + displayingTimeFormat.print(date.toLocalDateTime())
             } else {
                 ""

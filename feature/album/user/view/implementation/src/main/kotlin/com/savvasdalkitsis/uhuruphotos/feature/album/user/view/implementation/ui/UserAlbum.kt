@@ -18,23 +18,26 @@ package com.savvasdalkitsis.uhuruphotos.feature.album.user.view.implementation.u
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.savvasdalkitsis.uhuruphotos.feature.album.user.view.implementation.viewmodel.UserAlbumCompositeAction
-import com.savvasdalkitsis.uhuruphotos.feature.album.user.view.implementation.viewmodel.UserAlbumCompositeState
 import com.savvasdalkitsis.uhuruphotos.feature.album.user.view.implementation.seam.action.DeleteUserAlbum
 import com.savvasdalkitsis.uhuruphotos.feature.album.user.view.implementation.seam.action.DeleteUserAlbumCancelled
 import com.savvasdalkitsis.uhuruphotos.feature.album.user.view.implementation.seam.action.DeleteUserAlbumRequested
 import com.savvasdalkitsis.uhuruphotos.feature.album.user.view.implementation.ui.state.UserAlbumState
+import com.savvasdalkitsis.uhuruphotos.feature.album.user.view.implementation.viewmodel.UserAlbumCompositeAction
+import com.savvasdalkitsis.uhuruphotos.feature.album.user.view.implementation.viewmodel.UserAlbumCompositeState
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.Gallery
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.dialogs.YesNoDialog
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruActionIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.AlertText
+import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.delete_album
+import uhuruphotos_android.foundation.strings.api.generated.resources.delete_album_confirmation
+import uhuruphotos_android.foundation.strings.api.generated.resources.delete_album_explanation
 
 @Composable
 internal fun UserAlbum(

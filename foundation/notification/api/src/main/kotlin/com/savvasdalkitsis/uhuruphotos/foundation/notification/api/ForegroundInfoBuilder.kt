@@ -18,21 +18,21 @@ package com.savvasdalkitsis.uhuruphotos.foundation.notification.api
 import android.app.Notification
 import android.content.BroadcastReceiver
 import android.content.Context
-import androidx.annotation.StringRes
 import androidx.work.ForegroundInfo
+import org.jetbrains.compose.resources.StringResource
 
 interface ForegroundInfoBuilder {
-    fun build(
+    suspend fun build(
         context: Context,
-        @StringRes title: Int,
+        title: StringResource,
         notificationId: Int,
         channel: String,
         progress: Int? = null,
     ): ForegroundInfo
 
-    fun <BR: BroadcastReceiver> buildNotification(
+    suspend fun <BR: BroadcastReceiver> buildNotification(
         context: Context,
-        title: Int,
+        title: StringResource,
         channel: String,
         progress: Int? = null,
         showProgress: Boolean = true,

@@ -30,7 +30,6 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
@@ -42,7 +41,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.notifications.view.implementation
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.view.implementation.seam.actions.ToggleRememberChoice
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.view.implementation.ui.state.NotificationsState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeMode
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeVariant
@@ -52,6 +50,14 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UhuruFullLoading
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.ToggleableButtonWithIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruScaffold
+import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.allow
+import uhuruphotos_android.foundation.strings.api.generated.resources.notifications
+import uhuruphotos_android.foundation.strings.api.generated.resources.notifications_explanation
+import uhuruphotos_android.foundation.strings.api.generated.resources.notifications_explanation_subtext
+import uhuruphotos_android.foundation.strings.api.generated.resources.remember_choice
+import uhuruphotos_android.foundation.strings.api.generated.resources.skip
 
 @Composable
 internal fun Notifications(

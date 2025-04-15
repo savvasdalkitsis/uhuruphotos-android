@@ -15,9 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state
 
-import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
+import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.stringResource
 
 sealed class Title {
     @Composable
@@ -28,13 +28,13 @@ sealed class Title {
         override fun toText(): String = title
     }
 
-    data class Resource(@StringRes val title: Int) : Title() {
+    data class Resource(val title: StringResource) : Title() {
         @Composable
         override fun toText(): String = stringResource(title)
     }
 
 }
 
-fun String?.toTitleOr(@StringRes title: Int): Title = this?.let { Title.Text(it) } ?: Title.Resource(
+fun String?.toTitleOr(title: StringResource): Title = this?.let { Title.Text(it) } ?: Title.Resource(
     title
 )

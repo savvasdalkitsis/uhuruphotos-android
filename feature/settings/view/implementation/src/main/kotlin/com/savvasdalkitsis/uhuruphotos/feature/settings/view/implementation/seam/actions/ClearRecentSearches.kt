@@ -18,14 +18,15 @@ package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.sea
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import kotlinx.coroutines.flow.flow
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.recent_searches_cleared
 
 data object ClearRecentSearches : SettingsAction() {
     override fun SettingsActionsContext.handle(
         state: SettingsState
     ) = flow<SettingsMutation> {
         searchUseCase.clearRecentSearchSuggestions()
-        toaster.show(R.string.recent_searches_cleared)
+        toaster.show(string.recent_searches_cleared)
     }
 }

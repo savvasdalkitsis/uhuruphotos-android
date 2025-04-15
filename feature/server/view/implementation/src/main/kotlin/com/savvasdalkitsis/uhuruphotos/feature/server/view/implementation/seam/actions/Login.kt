@@ -24,8 +24,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.S
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.ui.ServerState
 import com.savvasdalkitsis.uhuruphotos.foundation.http.api.isHttpUrl
 import com.savvasdalkitsis.uhuruphotos.foundation.http.api.isValidUrlOrDomain
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import kotlinx.coroutines.flow.flow
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.error_logging_in
 
 data class Login(
     val allowUnsecuredServers: Boolean,
@@ -53,13 +54,13 @@ data class Login(
                             AuthStatusModel.AuthenticatedModel -> navigator.navigateUp()
                             else -> {
                                 emit(SetLoading(false))
-                                toaster.show(R.string.error_logging_in)
+                                toaster.show(string.error_logging_in)
                             }
                         }
                     },
                     failure = {
                         emit(SetLoading(false))
-                        toaster.show(R.string.error_logging_in)
+                        toaster.show(string.error_logging_in)
                     }
                 )
             }

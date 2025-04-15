@@ -18,8 +18,9 @@ package com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.state
 import androidx.compose.runtime.Immutable
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobModel
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatusModel
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
+import uhuruphotos_android.foundation.strings.api.generated.resources.*
 
 @Immutable
 data class JobState(

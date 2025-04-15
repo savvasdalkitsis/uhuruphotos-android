@@ -16,6 +16,7 @@ plugins {
     alias(libs.plugins.android.app) apply false
     alias(libs.plugins.android.library) apply false
     alias(libs.plugins.google.services) apply false
+    alias(libs.plugins.jetbrains.compose) apply false
     alias(libs.plugins.kotlin.android) apply false
     alias(libs.plugins.kotlin.multiplatform) apply false
     alias(libs.plugins.ksp) apply false
@@ -38,24 +39,29 @@ sonarqube {
 
 subprojects {
 
+    if (displayName == "project ':konsist'") {
+        return
+    }
     if (displayName in [
-            "project ':konsist'",
             "project ':foundation:biometrics:api'",
             "project ':foundation:group:api'",
             "project ':foundation:lang:api'",
+            "project ':foundation:log:api'",
             "project ':foundation:math:api'",
             "project ':foundation:result:api'",
+            "project ':foundation:strings:api'",
+            "project ':foundation:toaster:api'",
     ]) {
-        return
+        apply plugin: libs.plugins.kotlin.multiplatform.get().pluginId
+    } else {
+        apply plugin: libs.plugins.kotlin.android.get().pluginId
     }
-
     if (name == "app") {
         apply plugin: libs.plugins.android.app.get().pluginId
     } else {
         apply plugin: libs.plugins.android.library.get().pluginId
     }
     apply plugin: libs.plugins.powerassert.get().pluginId
-    apply plugin: libs.plugins.kotlin.android.get().pluginId
     apply plugin: libs.plugins.redacted.get().pluginId
     apply plugin: libs.plugins.ksp.get().pluginId
 
@@ -69,9 +75,6 @@ subprojects {
         compileOptions {
             sourceCompatibility JavaVersion.VERSION_21
             targetCompatibility JavaVersion.VERSION_21
-        }
-        kotlinOptions {
-            kotlinOptions.allWarningsAsErrors = true
         }
     }
 

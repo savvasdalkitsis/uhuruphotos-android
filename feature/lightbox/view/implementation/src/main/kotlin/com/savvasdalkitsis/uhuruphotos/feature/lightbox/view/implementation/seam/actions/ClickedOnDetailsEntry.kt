@@ -18,8 +18,9 @@ package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.sea
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import kotlinx.coroutines.flow.flow
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.copied_to_clipboard
 
 data class ClickedOnDetailsEntry(val text: String) : LightboxAction() {
 
@@ -27,7 +28,7 @@ data class ClickedOnDetailsEntry(val text: String) : LightboxAction() {
         state: LightboxState
     ) = flow<LightboxMutation> {
         copyToClipBoard(text)
-        toaster.show(R.string.copied_to_clipboard)
+        toaster.show(string.copied_to_clipboard)
     }
 
 }

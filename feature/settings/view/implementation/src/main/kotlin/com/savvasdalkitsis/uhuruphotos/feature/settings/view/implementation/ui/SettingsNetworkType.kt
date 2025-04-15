@@ -16,9 +16,13 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
 import androidx.work.NetworkType
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.any_connected
+import uhuruphotos_android.foundation.strings.api.generated.resources.metered
+import uhuruphotos_android.foundation.strings.api.generated.resources.not_roaming
+import uhuruphotos_android.foundation.strings.api.generated.resources.unmetered
 
 @Composable
 internal fun NetworkType?.friendlyName(): String =  when (this) {

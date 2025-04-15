@@ -20,6 +20,9 @@ import androidx.core.app.NotificationChannelCompat.Builder
 import androidx.core.app.NotificationManagerCompat
 import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.NotificationChannels
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.getString
 import se.ansman.dagger.auto.AutoBindIntoSet
 import javax.inject.Inject
 
@@ -31,13 +34,17 @@ internal class NotificationInitializer @Inject constructor(
     override fun priority() = -1
 
     override fun onAppCreated(app: Application) {
-        NotificationChannels.entries.forEach { channel ->
-            notificationManager.createNotificationChannel(
-                Builder(channel.id, channel.importance)
-                    .setName(app.getString(channel.label))
-                    .setDescription(app.getString(channel.description))
-                    .build()
-            )
+        MainScope().launch {
+            NotificationChannels.entries.forEach { channel ->
+                val label = getString(channel.label)
+                val desc = getString(channel.description)
+                notificationManager.createNotificationChannel(
+                    Builder(channel.id, channel.importance)
+                        .setName(label)
+                        .setDescription(desc)
+                        .build()
+                )
+            }
         }
     }
 }

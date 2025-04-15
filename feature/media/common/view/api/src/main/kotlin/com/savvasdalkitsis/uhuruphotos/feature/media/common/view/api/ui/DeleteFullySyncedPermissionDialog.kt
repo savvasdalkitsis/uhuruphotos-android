@@ -19,14 +19,19 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.UhuruIconOutlineButton
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.dialogs.CancelDialog
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.AlertText
+import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.delete_fully_synced_media_both
+import uhuruphotos_android.foundation.strings.api.generated.resources.delete_fully_synced_media_local
+import uhuruphotos_android.foundation.strings.api.generated.resources.media_sync_status_fully_synced
+import uhuruphotos_android.foundation.strings.api.generated.resources.operation_irreverisble
+import uhuruphotos_android.foundation.strings.api.generated.resources.what_would_like_to_do
 
 @Composable
 fun DeleteFullySyncedPermissionDialog(

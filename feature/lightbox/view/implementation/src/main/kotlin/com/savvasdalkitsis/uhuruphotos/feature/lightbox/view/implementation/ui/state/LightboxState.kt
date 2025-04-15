@@ -16,7 +16,6 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state
 
 import android.content.pm.ResolveInfo
-import androidx.annotation.StringRes
 import androidx.compose.runtime.Immutable
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHashModel
@@ -24,13 +23,14 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Md5Hash
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import org.jetbrains.compose.resources.StringResource
 
 @Immutable
 data class LightboxState(
     private val _currentIndex: Int = 0,
     val media: ImmutableList<SingleMediaItemState> = persistentListOf(),
     val isLoading: Boolean = false,
-    @StringRes val errorMessage: Int? = null,
+    val errorMessage: StringResource? = null,
     val showUI: Boolean = true,
     val showDeleteConfirmationDialog: Boolean = false,
     val showTrashingConfirmationDialog: Boolean = false,

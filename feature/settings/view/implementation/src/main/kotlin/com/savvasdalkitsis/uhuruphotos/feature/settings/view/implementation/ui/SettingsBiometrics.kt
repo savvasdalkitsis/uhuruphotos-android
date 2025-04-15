@@ -16,7 +16,6 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ChangeBiometricsAppAccessRequirement
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ChangeBiometricsHiddenPhotosAccessRequirement
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ChangeBiometricsTrashAccessRequirement
@@ -26,9 +25,15 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.s
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.BiometricsSettingState.EnrolledState
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.BiometricsSettingState.NotEnrolledState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkbox.UhuruCheckBoxRow
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.layout.UhuruEntryWithSubtext
+import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.biometrics_enroll
+import uhuruphotos_android.foundation.strings.api.generated.resources.changes_effect_after_restart
+import uhuruphotos_android.foundation.strings.api.generated.resources.require_biometrics_for_app_access
+import uhuruphotos_android.foundation.strings.api.generated.resources.require_biometrics_for_hidden_media_access
+import uhuruphotos_android.foundation.strings.api.generated.resources.require_biometrics_for_trash_access
 
 @Composable
 internal fun SettingsBiometrics(

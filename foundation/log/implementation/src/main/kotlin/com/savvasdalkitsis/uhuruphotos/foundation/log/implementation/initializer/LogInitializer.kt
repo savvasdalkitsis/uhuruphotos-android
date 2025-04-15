@@ -20,10 +20,6 @@ import android.content.Context
 import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.lumberjack.extensions.notification.NotificationClickHandler
 import com.michaelflisar.lumberjack.extensions.notification.showNotification
-import com.michaelflisar.lumberjack.implementation.LumberjackLogger
-import com.michaelflisar.lumberjack.implementation.interfaces.ILumberjackLogger
-import com.michaelflisar.lumberjack.implementation.plant
-import com.michaelflisar.lumberjack.loggers.file.FileLoggerSetup
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R
 import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
@@ -32,24 +28,31 @@ import com.savvasdalkitsis.uhuruphotos.foundation.log.api.logError
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.usecase.FeedbackUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.NotificationChannels
 import dagger.hilt.android.qualifiers.ApplicationContext
+import saschpe.log4k.ConsoleLogger
+import saschpe.log4k.FileLogger
+import saschpe.log4k.FileLogger.Limit.Files
+import saschpe.log4k.FileLogger.Rotate.After
 import se.ansman.dagger.auto.AutoBindIntoSet
+import java.io.File
 import javax.inject.Inject
 
 @AutoBindIntoSet
 internal class LogInitializer @Inject constructor(
-    private val trees: Set<@JvmSuppressWildcards ILumberjackLogger>,
     @ApplicationContext private val context: Context,
-    private val fileLoggerSetup: FileLoggerSetup,
     private val settingsUseCase: SettingsUseCase,
 ) : ApplicationCreated {
 
     override fun onAppCreated(app: Application) {
-        L.init(LumberjackLogger)
-        for (tree in trees) {
-            L.plant(tree)
-        }
         Log.enabled = settingsUseCase.getLoggingEnabled()
         val default = Thread.getDefaultUncaughtExceptionHandler()
+
+        val logsFolder = File(app.filesDir, "logs")
+        saschpe.log4k.Log.loggers += FileLogger(
+            rotate = After(lines = 1000),
+            limit = Files(1),
+            logPath = logsFolder.absolutePath,
+        )
+        saschpe.log4k.Log.loggers += ConsoleLogger()
         Thread.setDefaultUncaughtExceptionHandler { t, e ->
             logError(e)
             try {
@@ -61,7 +64,7 @@ internal class LogInitializer @Inject constructor(
                     clickHandler = NotificationClickHandler.SendFeedback(
                         context = context,
                         receiver = FeedbackUseCase.EMAIL,
-                        attachments = listOfNotNull(fileLoggerSetup.getLatestLogFiles()),
+                        attachments = logsFolder.listFiles().orEmpty().toList(),
                     ),
                 )
                 default?.uncaughtException(t, e)

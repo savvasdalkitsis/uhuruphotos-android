@@ -29,10 +29,11 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaPrecacher
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNotificationWorker
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.delay
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.precaching_thumbnails
 
 @HiltWorker
 internal class PrecacheFeedThumbnailsWorker @AssistedInject constructor(
@@ -46,7 +47,7 @@ internal class PrecacheFeedThumbnailsWorker @AssistedInject constructor(
     context,
     params,
     foregroundInfoBuilder,
-    notificationTitle = R.string.precaching_thumbnails,
+    notificationTitle = string.precaching_thumbnails,
     notificationId = NOTIFICATION_ID,
     cancelBroadcastReceiver = CancelPrecacheWorkBroadcastReceiver::class.java,
 ) {

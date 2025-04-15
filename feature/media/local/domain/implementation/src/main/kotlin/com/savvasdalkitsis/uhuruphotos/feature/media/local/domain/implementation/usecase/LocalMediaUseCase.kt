@@ -277,9 +277,9 @@ class LocalMediaUseCase @Inject constructor(
     private fun Long.contentUri(isVideo: Boolean) =
         MediaStoreContentUriResolver.getContentUriForItem(this, isVideo).toString()
 
-    private fun List<LocalMediaItemDetails>.toItems() = map { it.toItem() }
+    private suspend fun List<LocalMediaItemDetails>.toItems() = map { it.toItem() }
 
-    private fun LocalMediaItemDetails.toItem(): LocalMediaItem {
+    private suspend fun LocalMediaItemDetails.toItem(): LocalMediaItem {
         val date = localMediaDateTimeFormat.parseDateTime(dateTaken)
         val dateTimeString = parsingDateTimeFormat.print(date)
         return LocalMediaItem(

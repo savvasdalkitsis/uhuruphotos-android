@@ -16,10 +16,16 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model
 
 import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.raw
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import org.jetbrains.compose.resources.StringResource
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.media_sync_status_downloading
+import uhuruphotos_android.foundation.strings.api.generated.resources.media_sync_status_fully_synced
+import uhuruphotos_android.foundation.strings.api.generated.resources.media_sync_status_local_only
+import uhuruphotos_android.foundation.strings.api.generated.resources.media_sync_status_processing
+import uhuruphotos_android.foundation.strings.api.generated.resources.media_sync_status_remote_only
+import uhuruphotos_android.foundation.strings.api.generated.resources.media_sync_status_uploading
 
 enum class MediaItemSyncStateModel(
     @DrawableRes
@@ -27,8 +33,7 @@ enum class MediaItemSyncStateModel(
     @DrawableRes
     val lightBoxIcon: Int,
     val lightBoxIconAlpha: Float = 0.7f,
-    @StringRes
-    val contentDescription: Int,
+    val contentDescription: StringResource,
     val enabled: Boolean = false,
 ) {
     LOCAL_ONLY(

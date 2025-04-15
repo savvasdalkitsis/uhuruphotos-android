@@ -23,7 +23,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.state.UserAlbumState
@@ -33,7 +32,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.Cel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.Vitrine
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
+import org.jetbrains.compose.resources.pluralStringResource
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.plurals
+import uhuruphotos_android.foundation.strings.api.generated.resources.item_count
 
 @Composable
 fun UserAlbumItem(
@@ -79,7 +80,7 @@ fun UserAlbumItem(
         )
         album.photoCount?.let {
             Text(
-                text = pluralStringResource(R.plurals.item_count, it, it),
+                text = pluralStringResource(plurals.item_count, it, it),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 style = MaterialTheme.typography.bodyLarge,

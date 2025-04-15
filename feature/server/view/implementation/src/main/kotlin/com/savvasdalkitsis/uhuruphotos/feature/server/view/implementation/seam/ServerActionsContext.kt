@@ -20,7 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUse
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.usecase.FeedbackUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
-import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
+import usecase.ToasterUseCase
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import javax.inject.Inject
 

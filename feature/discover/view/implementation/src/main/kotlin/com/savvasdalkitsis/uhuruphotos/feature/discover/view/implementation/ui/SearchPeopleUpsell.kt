@@ -18,14 +18,15 @@ package com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.DiscoverAction
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.UpsellLoginFromPeople
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.PeopleBanner
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.PersonState
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import kotlinx.collections.immutable.toImmutableList
+import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.person
 
 @Composable
 fun SearchPeopleUpsell(

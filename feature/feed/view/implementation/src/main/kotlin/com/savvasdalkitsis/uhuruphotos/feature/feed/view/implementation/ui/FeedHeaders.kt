@@ -24,7 +24,6 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.DisableBatteryOptimizations
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.EnableCloudSync
@@ -40,8 +39,17 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.Ce
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.view.api.ui.LocalMediaAccessRequestBanner
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.view.api.ui.RequestBanner
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.LoginButton
+import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.battery_optimizations_warning
+import uhuruphotos_android.foundation.strings.api.generated.resources.connection_to_server_lost
+import uhuruphotos_android.foundation.strings.api.generated.resources.disable
+import uhuruphotos_android.foundation.strings.api.generated.resources.disable_battery_optimizations
+import uhuruphotos_android.foundation.strings.api.generated.resources.enable
+import uhuruphotos_android.foundation.strings.api.generated.resources.enable_cloud_sync
+import uhuruphotos_android.foundation.strings.api.generated.resources.forget_server
+import uhuruphotos_android.foundation.strings.api.generated.resources.missing_local_media_permissions
 
 @Composable
 fun FeedHeaders(

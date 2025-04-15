@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.domain.implementation.usecase
 
-import android.content.Context
 import com.github.michaelbull.result.mapOr
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.domain.api.usecase.AutoAlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.domain.implementation.repository.AutoAlbumsRepository
@@ -33,12 +32,13 @@ import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.get
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.observe
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNotNull
+import org.jetbrains.compose.resources.getString
 import se.ansman.dagger.auto.AutoBind
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.missing_album_title
 import javax.inject.Inject
 
 @AutoBind
@@ -47,7 +47,6 @@ class AutoAlbumsUseCase @Inject constructor(
     @PlainTextPreferences
     private val preferences: Preferences,
     private val userUseCase: UserUseCase,
-    @ApplicationContext private val context: Context,
 ) : AutoAlbumsUseCase {
 
     private val key = "autoAlbumsSorting"
@@ -78,7 +77,7 @@ class AutoAlbumsUseCase @Inject constructor(
                 .toAutoAlbums(preferences.get(key, CatalogueSortingState.default), user)
         }
 
-    private fun List<AutoAlbums>.toAutoAlbums(
+    private suspend fun List<AutoAlbums>.toAutoAlbums(
         sorting: CatalogueSortingState,
         user: RemoteUserModel,
     ): List<AutoAlbum> =
@@ -99,7 +98,7 @@ class AutoAlbumsUseCase @Inject constructor(
                     sortableDate = it.timestamp,
                     ratio = 1f,
                 ),
-                title = it.title ?: context.getString(string.missing_album_title),
+                title = it.title ?: getString(string.missing_album_title),
                 photoCount = it.photoCount,
             )
         }

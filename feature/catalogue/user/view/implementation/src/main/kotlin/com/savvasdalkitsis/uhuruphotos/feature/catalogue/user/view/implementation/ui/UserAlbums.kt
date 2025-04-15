@@ -27,7 +27,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementatio
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.action.UserAlbumSelected
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.action.UserAlbumsAction
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.Catalogue
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.no_user_albums
+import uhuruphotos_android.foundation.strings.api.generated.resources.user_albums
 
 @Composable
 internal fun UserAlbums(

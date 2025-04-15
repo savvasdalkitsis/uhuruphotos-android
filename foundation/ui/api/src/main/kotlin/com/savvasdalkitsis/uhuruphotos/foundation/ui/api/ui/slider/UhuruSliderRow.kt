@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.slider
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Slider
@@ -28,11 +27,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.layout.UhuruEntryWithSubtext
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.UhuruTextRow
+import org.jetbrains.compose.resources.StringResource
 
 @Composable
 fun UhuruSliderRow(
     text: @Composable (Float) -> String,
-    @StringRes subtext: Int? = null,
+    subtext: StringResource? = null,
     initialValue: Float,
     range: ClosedFloatingPointRange<Float>,
     steps: Int = 0,

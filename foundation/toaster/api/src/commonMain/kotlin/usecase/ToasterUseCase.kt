@@ -13,11 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase
+package usecase
 
-import androidx.annotation.StringRes
+import org.jetbrains.compose.resources.StringResource
 
 fun interface ToasterUseCase {
 
-    fun show(@StringRes message: Int)
+    fun show(message: StringResource)
 }

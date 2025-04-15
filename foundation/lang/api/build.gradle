@@ -4,4 +4,9 @@ plugins {
 
 kotlin {
     jvm("desktop")
+    androidTarget()
+}
+
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.lang.api'
 }

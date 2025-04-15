@@ -31,7 +31,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobModel
@@ -42,9 +41,12 @@ import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatusMo
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatusModel.InProgressModel
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatusModel.QueuedModel
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.state.JobState
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
+import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.cancel
+import uhuruphotos_android.foundation.strings.api.generated.resources.start
 
 @Composable
 fun JobRow(

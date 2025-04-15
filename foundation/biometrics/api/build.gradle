@@ -4,11 +4,17 @@ plugins {
 
 kotlin {
     jvm("desktop")
+    androidTarget()
     sourceSets {
         commonMain {
             dependencies {
                 api(project(":foundation:result:api"))
+                api(project(":foundation:strings:api"))
             }
         }
     }
+}
+
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api'
 }

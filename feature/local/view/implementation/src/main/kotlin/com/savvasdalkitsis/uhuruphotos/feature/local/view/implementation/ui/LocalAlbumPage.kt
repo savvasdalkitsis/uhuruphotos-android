@@ -25,7 +25,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
+import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.GalleryAction
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.Gallery
@@ -35,10 +35,13 @@ import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam.ac
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.ui.state.LocalAlbumState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.NoContent
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruToggleableActionIcon
 import dev.shreyaspatil.permissionflow.compose.rememberPermissionFlowRequestLauncher
+import uhuruphotos_android.foundation.strings.api.generated.resources.grant_permissions
+import uhuruphotos_android.foundation.strings.api.generated.resources.missing_permissions
+import uhuruphotos_android.foundation.strings.api.generated.resources.no_media
 
 @Composable
 fun LocalAlbumPage(
