@@ -43,6 +43,7 @@ subprojects {
         return
     }
     if (displayName in [
+            "project ':foundation:coroutines:api'",
             "project ':foundation:biometrics:api'",
             "project ':foundation:group:api'",
             "project ':foundation:icons:api'",
