@@ -28,12 +28,13 @@ import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.seam.actions.PortfolioAction
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.seam.actions.StartScanningOtherFolders
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui.state.PortfolioItemsState
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.layout.plus
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.UhuruIconOutlineButton
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_folder
 
 @Composable
 fun BoxScope.PortfolioGrid(

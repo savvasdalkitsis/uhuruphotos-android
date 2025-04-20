@@ -37,7 +37,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.controller.SettingsViewStateController
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.MapProviderState.SelectedState
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window.LocalWindowSize
@@ -54,6 +53,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flowOf
 import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_collapse_all
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_expand_all
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_info
 import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
 import uhuruphotos_android.foundation.strings.api.generated.resources.about
 import uhuruphotos_android.foundation.strings.api.generated.resources.collapse_all

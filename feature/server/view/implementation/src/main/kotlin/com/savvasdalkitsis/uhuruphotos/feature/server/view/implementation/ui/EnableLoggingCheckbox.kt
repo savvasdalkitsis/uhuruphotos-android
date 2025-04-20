@@ -21,10 +21,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.ServerAction
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.SetLoggingEnabled
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R
-import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.ToggleableButtonWithIcon
 import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_logs
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
 import uhuruphotos_android.foundation.strings.api.generated.resources.enable_logging
 
 @Composable
@@ -35,7 +36,7 @@ internal fun EnableLoggingCheckbox(
     ToggleableButtonWithIcon(
         modifier = Modifier
             .padding(vertical = 4.dp),
-        icon = R.drawable.ic_logs,
+        icon = drawable.ic_logs,
         text = stringResource(string.enable_logging),
         checked = state.isLoggingEnabled,
     ) {

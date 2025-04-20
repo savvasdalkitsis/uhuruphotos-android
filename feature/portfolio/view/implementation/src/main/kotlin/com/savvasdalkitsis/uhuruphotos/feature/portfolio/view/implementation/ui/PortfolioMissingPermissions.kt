@@ -30,7 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.R
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.animation.AnimationResource
 import com.savvasdalkitsis.uhuruphotos.foundation.permissions.api.ui.PermissionsState
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewThemeData
@@ -53,7 +53,7 @@ fun BoxScope.PortfolioMissingPermissions(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = spacedBy(8.dp),
     ) {
-        UhuruIcon(icon = R.raw.animation_media_file)
+        UhuruIcon(icon = AnimationResource.animation_media_file)
         Text(
             text = stringResource(string.missing_permissions),
             style = MaterialTheme.typography.headlineMedium,

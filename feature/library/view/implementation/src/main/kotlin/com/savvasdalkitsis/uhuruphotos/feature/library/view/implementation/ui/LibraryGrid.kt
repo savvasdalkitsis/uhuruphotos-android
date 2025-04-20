@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -32,9 +31,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
-import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.R
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.AutoAlbumsSelected
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.FavouritePhotosSelected
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.HiddenPhotosSelected
@@ -54,12 +51,20 @@ import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.st
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.NamedVitrine
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.VitrineState
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import dev.shreyaspatil.permissionflow.compose.rememberPermissionFlowRequestLauncher
 import kotlinx.collections.immutable.toImmutableList
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.stringResource
 import sh.calvin.reorderable.ReorderableItem
 import sh.calvin.reorderable.ReorderableLazyGridState
 import sh.calvin.reorderable.rememberReorderableLazyGridState
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_album_auto
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_album_favourites
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_album_user
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_delete
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_folder
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_invisible
 
 @Composable
 internal fun LibraryGrid(
@@ -123,13 +128,13 @@ internal fun LibraryGrid(
                         }
                     }
                 }
-                AUTO -> libraryItem(reordering, state.autoAlbums, item, R.drawable.ic_album_auto) {
+                AUTO -> libraryItem(reordering, state.autoAlbums, item, drawable.ic_album_auto) {
                     action(AutoAlbumsSelected)
                 }
-                USER -> libraryItem(reordering, state.userAlbums, item, R.drawable.ic_album_user) {
+                USER -> libraryItem(reordering, state.userAlbums, item, drawable.ic_album_user) {
                     action(UserAlbumsSelected)
                 }
-                FAVOURITE -> libraryItem(reordering, state.favouritePhotos, item, R.drawable.ic_album_favourites) {
+                FAVOURITE -> libraryItem(reordering, state.favouritePhotos, item, drawable.ic_album_favourites) {
                     action(FavouritePhotosSelected)
                 }
             }
@@ -140,7 +145,7 @@ internal fun LibraryGrid(
 internal fun LazyGridScope.pillItem(
     reorder: ReorderableLazyGridState,
     item: LibraryItemState,
-    @DrawableRes icon: Int,
+    icon: DrawableResource,
     span: (LazyGridItemSpanScope.() -> GridItemSpan)? = null,
     onSelected: () -> Unit,
 ) {
@@ -162,7 +167,7 @@ internal fun LazyGridScope.libraryItem(
     reordering: ReorderableLazyGridState,
     vitrineState: VitrineState?,
     item: LibraryItemState,
-    iconFallback: Int,
+    iconFallback: DrawableResource,
     onSelected: () -> Unit,
 ) {
     vitrineState?.let {

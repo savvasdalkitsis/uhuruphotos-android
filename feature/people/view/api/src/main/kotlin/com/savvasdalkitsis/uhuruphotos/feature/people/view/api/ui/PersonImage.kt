@@ -24,10 +24,16 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.R
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.PersonState
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Thumbnail
+import org.jetbrains.compose.resources.painterResource
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_person_1
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_person_2
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_person_3
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_person_4
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_person_5
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_person_6
 
 @Composable
 fun PersonImage(
@@ -47,12 +53,12 @@ fun PersonImage(
     } else {
         val avatars = remember {
             listOf(
-                R.drawable.ic_person_1,
-                R.drawable.ic_person_2,
-                R.drawable.ic_person_3,
-                R.drawable.ic_person_4,
-                R.drawable.ic_person_5,
-                R.drawable.ic_person_6,
+                drawable.ic_person_1,
+                drawable.ic_person_2,
+                drawable.ic_person_3,
+                drawable.ic_person_4,
+                drawable.ic_person_5,
+                drawable.ic_person_6,
             )
         }
         val icon = remember(personState.id) {

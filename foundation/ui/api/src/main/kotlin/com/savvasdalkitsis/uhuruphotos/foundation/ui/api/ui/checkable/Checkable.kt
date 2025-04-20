@@ -40,12 +40,14 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType.Companion.LongPress
 import androidx.compose.ui.platform.LocalHapticFeedback
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.CustomColors
+import org.jetbrains.compose.resources.painterResource
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_check_circle
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_outline_unselected
 
 @Composable
 fun Checkable(
@@ -109,10 +111,10 @@ fun Checkable(
                             Color.Transparent
                     ),
                 painter = painterResource(
-                    id = if (selectionMode == SelectionMode.SELECTED)
-                        R.drawable.ic_check_circle
+                    if (selectionMode == SelectionMode.SELECTED)
+                        drawable.ic_check_circle
                     else
-                        R.drawable.ic_outline_unselected
+                        drawable.ic_outline_unselected
                 ),
                 tint = if (selectionMode == SelectionMode.SELECTED)
                     CustomColors.selected

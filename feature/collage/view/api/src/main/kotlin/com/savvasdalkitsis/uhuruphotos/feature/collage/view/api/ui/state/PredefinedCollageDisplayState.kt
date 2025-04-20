@@ -15,9 +15,15 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state
 
-import androidx.annotation.DrawableRes
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_collage_big
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_collage_comfortable
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_collage_compact
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_collage_full
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_collage_tiny
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_month
 import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
 import uhuruphotos_android.foundation.strings.api.generated.resources.big
 import uhuruphotos_android.foundation.strings.api.generated.resources.comfortable
@@ -34,7 +40,7 @@ enum class PredefinedCollageDisplayState(
     override val compactColumnsLandscape: Int,
     override val wideColumnsPortrait: Int,
     override val wideColumnsLandscape: Int,
-    @DrawableRes override val iconResource: Int,
+    override val iconResource: DrawableResource,
     override val maintainAspectRatio: Boolean,
     override val allowsAnimatedVideoThumbnails: Boolean = true,
     override val friendlyName: StringResource,

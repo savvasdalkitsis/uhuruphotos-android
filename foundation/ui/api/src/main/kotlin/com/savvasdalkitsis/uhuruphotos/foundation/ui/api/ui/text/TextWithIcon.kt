@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
@@ -31,11 +32,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.animation.AnimationResource
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewThemeData
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewThemeDataProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruIcon
+import org.jetbrains.compose.resources.DrawableResource
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_airplane
 
 @Composable
 fun TextWithIcon(
@@ -43,11 +47,83 @@ fun TextWithIcon(
     iconModifier: Modifier = Modifier
         .size(24.dp),
     textModifier: Modifier = Modifier,
-    icon: Int,
+    icon: AnimationResource,
     tint: Color? = null,
     style: TextStyle = LocalTextStyle.current,
     verticalAlignment: Alignment.Vertical = CenterVertically,
     animateIfAvailable: Boolean = true,
+    enabled: Boolean = true,
+    text: String,
+) {
+    TextWithIcon(
+        modifier,
+        textModifier,
+        iconSlot = {
+            UhuruIcon(
+                modifier = iconModifier
+                    .recomposeHighlighter(),
+                icon = icon,
+                tint = if (enabled)
+                    tint
+                else
+                    MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f),
+                animateIfAvailable = animateIfAvailable,
+                contentDescription = null
+            )
+
+        },
+        style = style,
+        verticalAlignment = verticalAlignment,
+        enabled = enabled,
+        text = text,
+    )
+}
+
+@Composable
+fun TextWithIcon(
+    modifier: Modifier = Modifier,
+    iconModifier: Modifier = Modifier
+        .size(24.dp),
+    textModifier: Modifier = Modifier,
+    icon: DrawableResource,
+    tint: Color? = null,
+    style: TextStyle = LocalTextStyle.current,
+    verticalAlignment: Alignment.Vertical = CenterVertically,
+    animateIfAvailable: Boolean = true,
+    enabled: Boolean = true,
+    text: String,
+) {
+    TextWithIcon(
+        modifier,
+        textModifier,
+        iconSlot = {
+            UhuruIcon(
+                modifier = iconModifier
+                    .recomposeHighlighter(),
+                icon = icon,
+                tint = if (enabled)
+                    tint
+                else
+                    MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f),
+                animateIfAvailable = animateIfAvailable,
+                contentDescription = null
+            )
+
+        },
+        style = style,
+        verticalAlignment = verticalAlignment,
+        enabled = enabled,
+        text = text,
+    )
+}
+
+@Composable
+private fun TextWithIcon(
+    modifier: Modifier = Modifier,
+    textModifier: Modifier = Modifier,
+    iconSlot: @Composable() (RowScope.() -> Unit),
+    style: TextStyle = LocalTextStyle.current,
+    verticalAlignment: Alignment.Vertical = CenterVertically,
     enabled: Boolean = true,
     text: String,
 ) {
@@ -58,17 +134,7 @@ fun TextWithIcon(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = verticalAlignment,
     ) {
-        UhuruIcon(
-            modifier = iconModifier
-                .recomposeHighlighter(),
-            icon = icon,
-            tint = if (enabled)
-                tint
-            else
-                MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f),
-            animateIfAvailable = animateIfAvailable,
-            contentDescription = null
-        )
+        iconSlot()
         Text(
             modifier = textModifier
                 .recomposeHighlighter(),

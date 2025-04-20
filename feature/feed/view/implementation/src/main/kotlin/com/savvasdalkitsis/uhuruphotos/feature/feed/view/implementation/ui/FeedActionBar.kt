@@ -28,8 +28,13 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.act
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.ShareSelectedCels
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.ShowAddSelectedCelsToAlbumDialog
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.UploadSelectedCels
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruActionIcon
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_add_image
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_cloud_download
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_cloud_upload
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_delete
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_share
 
 @Composable
 internal fun RowScope.FeedActionBar(

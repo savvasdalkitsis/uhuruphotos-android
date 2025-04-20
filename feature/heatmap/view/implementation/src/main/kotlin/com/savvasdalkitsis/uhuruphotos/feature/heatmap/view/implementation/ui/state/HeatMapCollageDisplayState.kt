@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state
 
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplayState
+import org.jetbrains.compose.resources.DrawableResource
 import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
 import uhuruphotos_android.foundation.strings.api.generated.resources.media_heatmap
 
@@ -25,7 +26,7 @@ data object HeatMapCollageDisplayState : CollageDisplayState {
     override val compactColumnsLandscape = 3
     override val wideColumnsPortrait = 7
     override val wideColumnsLandscape = 3
-    override val iconResource: Int
+    override val iconResource: DrawableResource
         get() = throw IllegalStateException("This is not used")
     override val maintainAspectRatio = false
     override val allowsAnimatedVideoThumbnails = false

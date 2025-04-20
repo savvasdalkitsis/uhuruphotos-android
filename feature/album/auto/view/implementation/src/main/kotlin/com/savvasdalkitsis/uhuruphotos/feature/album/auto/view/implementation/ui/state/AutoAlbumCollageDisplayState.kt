@@ -25,7 +25,7 @@ data object AutoAlbumCollageDisplayState: CollageDisplayState {
     override val compactColumnsLandscape = 5
     override val wideColumnsPortrait = 6
     override val wideColumnsLandscape = 8
-    override val iconResource = 0
+    override val iconResource = null
     override val maintainAspectRatio = false
     override val allowsAnimatedVideoThumbnails = true
     override val friendlyName = Res.string.auto_albums

@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -29,12 +28,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruIcon
+import org.jetbrains.compose.resources.DrawableResource
 
 @Composable
 internal fun SettingsOutlineButtonRow(
     enabled: Boolean = true,
     buttonText: String,
-    @DrawableRes icon: Int? = null,
+    icon: DrawableResource? = null,
     onClick: (() -> Unit),
 ) {
     Box(

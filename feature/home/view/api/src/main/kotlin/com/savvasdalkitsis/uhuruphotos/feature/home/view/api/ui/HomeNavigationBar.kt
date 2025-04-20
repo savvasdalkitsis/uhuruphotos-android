@@ -38,7 +38,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
-import androidx.compose.ui.res.painterResource
+import org.jetbrains.compose.resources.painterResource
 import androidx.compose.ui.unit.dp
 import com.bumble.appyx.navmodel.backstack.BackStack
 import com.bumble.appyx.navmodel.backstack.activeElement
@@ -50,12 +50,13 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.navigation.FeedNavi
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.ui.NavigationStyle.BOTTOM_BAR
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.ui.NavigationStyle.NAVIGATION_RAIL
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.api.navigation.LibraryNavigationRoute
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.LocalBackStack
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window.LocalWindowSize
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_photo_album
 import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
 import uhuruphotos_android.foundation.strings.api.generated.resources.discover
 import uhuruphotos_android.foundation.strings.api.generated.resources.feed
@@ -114,13 +115,16 @@ private fun Items(
     onReselected: () -> Unit,
     rowScope: RowScope? = null,
 ) {
-    NavItem(
-        label = string.feed,
-        route = FeedNavigationRoute,
-        painterResource(id = homeFeedDisplay.iconResource),
-        onReselected,
-        rowScope,
-    )
+    val icon = homeFeedDisplay.iconResource
+    if (icon != null) {
+        NavItem(
+            label = string.feed,
+            route = FeedNavigationRoute,
+            painterResource(icon),
+            onReselected,
+            rowScope,
+        )
+    }
     NavItem(
         label = string.discover,
         route = DiscoverNavigationRoute,

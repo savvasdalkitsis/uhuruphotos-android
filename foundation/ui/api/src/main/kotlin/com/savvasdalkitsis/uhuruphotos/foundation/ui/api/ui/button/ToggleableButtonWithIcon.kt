@@ -17,11 +17,11 @@ package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -31,16 +31,89 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.copy
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.animation.AnimationResource
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewThemeData
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewThemeDataProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.TextWithIcon
+import org.jetbrains.compose.resources.DrawableResource
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_info
 
 @Composable
 fun ToggleableButtonWithIcon(
     modifier: Modifier = Modifier,
-    icon: Int,
+    icon: AnimationResource,
+    iconModifier: Modifier = Modifier,
+    iconTint: Color? = null,
+    animateIfAvailable: Boolean = true,
+    enabled: Boolean = true,
+    text: String,
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit,
+) {
+    ToggleableButtonWithIcon(
+        modifier = modifier,
+        iconSlot = {
+            TextWithIcon(
+                modifier = Modifier.weight(1f),
+                iconModifier = iconModifier,
+                icon = icon,
+                tint = iconTint,
+                text = text,
+                enabled = enabled,
+                animateIfAvailable = animateIfAvailable,
+            )
+        },
+        iconModifier = iconModifier,
+        iconTint = iconTint,
+        animateIfAvailable = animateIfAvailable,
+        enabled = enabled,
+        text = text,
+        checked = checked,
+        onCheckedChange = onCheckedChange,
+    )
+}
+
+@Composable
+fun ToggleableButtonWithIcon(
+    modifier: Modifier = Modifier,
+    icon: DrawableResource,
+    iconModifier: Modifier = Modifier,
+    iconTint: Color? = null,
+    animateIfAvailable: Boolean = true,
+    enabled: Boolean = true,
+    text: String,
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit,
+) {
+    ToggleableButtonWithIcon(
+        modifier = modifier,
+        iconSlot = {
+            TextWithIcon(
+                modifier = Modifier.weight(1f),
+                iconModifier = iconModifier,
+                icon = icon,
+                tint = iconTint,
+                text = text,
+                enabled = enabled,
+                animateIfAvailable = animateIfAvailable,
+            )
+        },
+        iconModifier = iconModifier,
+        iconTint = iconTint,
+        animateIfAvailable = animateIfAvailable,
+        enabled = enabled,
+        text = text,
+        checked = checked,
+        onCheckedChange = onCheckedChange,
+    )
+}
+
+@Composable
+private fun ToggleableButtonWithIcon(
+    modifier: Modifier = Modifier,
+    iconSlot: @Composable RowScope.() -> Unit,
     iconModifier: Modifier = Modifier,
     iconTint: Color? = null,
     animateIfAvailable: Boolean = true,
@@ -59,15 +132,7 @@ fun ToggleableButtonWithIcon(
             modifier = Modifier.padding(0.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            TextWithIcon(
-                modifier = Modifier.weight(1f),
-                iconModifier = iconModifier,
-                icon = icon,
-                tint = iconTint,
-                text = text,
-                enabled = enabled,
-                animateIfAvailable = animateIfAvailable,
-            )
+            iconSlot()
             if (enabled) {
                 Checkbox(
                     checked = checked,

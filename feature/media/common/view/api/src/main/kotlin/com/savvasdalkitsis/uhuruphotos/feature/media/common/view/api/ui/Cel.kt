@@ -41,7 +41,6 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.api.navigation.LocalServerUrl
@@ -53,11 +52,14 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.Ce
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.toColor
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Thumbnail
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkable.Checkable
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkable.SelectionMode
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruIcon
+import org.jetbrains.compose.resources.painterResource
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_favourite
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_play_filled
 
 @Composable
 fun Cel(
@@ -185,7 +187,7 @@ private fun Cel(
                 modifier = Modifier
                     .size(size)
                     .align(alignment),
-                painter = painterResource(id = drawable.ic_play_filled),
+                painter = painterResource(drawable.ic_play_filled),
                 tint = Color.White,
                 contentDescription = null
             )
@@ -196,7 +198,7 @@ private fun Cel(
                     .size(iconSize)
                     .align(TopEnd)
                     .padding(2.dp),
-                painter = painterResource(id = drawable.ic_favourite),
+                painter = painterResource(drawable.ic_favourite),
                 tint = Color.White,
                 contentDescription = null
             )

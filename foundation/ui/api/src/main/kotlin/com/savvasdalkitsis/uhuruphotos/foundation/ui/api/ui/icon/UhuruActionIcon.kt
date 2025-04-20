@@ -15,21 +15,23 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon
 
-import android.graphics.drawable.Drawable
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.sizeIn
-import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.drawablepainter.rememberDrawablePainter
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.animation.AnimationResource
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.painterResource
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_feed
 
 @Composable
 fun UhuruActionIcon(
@@ -38,7 +40,35 @@ fun UhuruActionIcon(
     enabled: Boolean = true,
     tint: Color? = MaterialTheme.colorScheme.onBackground,
     onClick: () -> Unit,
-    @DrawableRes icon: Int,
+    icon: Either<DrawableResource, AnimationResource>,
+    contentDescription: String? = null
+) {
+    when (icon) {
+        is Either.Left<DrawableResource, *> -> UhuruActionIcon(modifier, iconModifier, enabled, tint, onClick, icon.value, contentDescription)
+        is Either.Right<*, AnimationResource> -> UhuruActionIcon(modifier, iconModifier, enabled, tint, onClick, icon.value, contentDescription)
+    }
+}
+@Composable
+fun UhuruActionIcon(
+    modifier: Modifier = Modifier,
+    iconModifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    tint: Color? = MaterialTheme.colorScheme.onBackground,
+    onClick: () -> Unit,
+    icon: DrawableResource,
+    contentDescription: String? = null
+) {
+    UhuruActionIcon(modifier, iconModifier, enabled, tint, onClick, painterResource(icon), contentDescription)
+}
+
+@Composable
+fun UhuruActionIcon(
+    modifier: Modifier = Modifier,
+    iconModifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    tint: Color? = MaterialTheme.colorScheme.onBackground,
+    onClick: () -> Unit,
+    painter: Painter,
     contentDescription: String? = null
 ) {
     UhuruActionIcon(
@@ -50,8 +80,9 @@ fun UhuruActionIcon(
     ) {
         UhuruIcon(
             modifier = iconModifier
+                .recomposeHighlighter()
                 .sizeIn(maxWidth = 26.dp, maxHeight = 26.dp),
-            icon = icon,
+            painter = painter,
             contentDescription = contentDescription,
             tint = tint,
         )
@@ -63,8 +94,9 @@ fun UhuruActionIcon(
     modifier: Modifier = Modifier,
     iconModifier: Modifier = Modifier,
     enabled: Boolean = true,
+    tint: Color? = MaterialTheme.colorScheme.onBackground,
     onClick: () -> Unit,
-    icon: Drawable,
+    animation: AnimationResource,
     contentDescription: String? = null
 ) {
     UhuruActionIcon(
@@ -74,13 +106,13 @@ fun UhuruActionIcon(
         onClick = onClick,
         enabled = enabled,
     ) {
-        Icon(
+        UhuruIcon(
             modifier = iconModifier
                 .recomposeHighlighter()
                 .sizeIn(maxWidth = 26.dp, maxHeight = 26.dp),
-            painter = rememberDrawablePainter(icon),
+            icon = animation,
             contentDescription = contentDescription,
-            tint = Color.Unspecified,
+            tint = tint,
         )
     }
 }

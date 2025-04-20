@@ -37,13 +37,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.group.state.CollapsibleGroupState
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_arrow_up
 import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
 import uhuruphotos_android.foundation.strings.api.generated.resources.jobs
 
@@ -78,7 +79,7 @@ fun UhuruCollapsibleGroup(
                     )
                     Icon(
                         modifier = Modifier.rotate(arrowAngle.value),
-                        painter = painterResource(id = drawable.ic_arrow_up),
+                        painter = painterResource(drawable.ic_arrow_up),
                         tint = MaterialTheme.colorScheme.onPrimaryContainer,
                         contentDescription = null,
                     )

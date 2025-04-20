@@ -18,7 +18,8 @@ package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.SingleMediaItemState
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_location_place
 
 @Composable
 internal fun LightboxInfoLocation(mediaItem: SingleMediaItemState) {

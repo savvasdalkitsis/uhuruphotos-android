@@ -16,7 +16,6 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui
 
 import android.content.res.Configuration
-import androidx.annotation.RawRes
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
@@ -32,6 +31,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.CelSelec
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelSelectionModeState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.animation.AnimationResource
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.LocalAnimatedVideoThumbnails
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window.LocalWindowSize
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.NoContent
@@ -58,7 +58,7 @@ fun Collage(
     collageHeader: @Composable (SmartGridItemScope.() -> Unit)? = null,
     collageFooter: @Composable (SmartGridItemScope.() -> Unit)? = null,
     emptyContent: @Composable () -> Unit = { NoContent(string.no_media) },
-    @RawRes loadingAnimation: Int? = null,
+    loadingAnimation: AnimationResource? = null,
     onCelSelected: CelSelected = { _ -> },
     onChangeDisplay: (CollageDisplayState) -> Unit = {},
     onCelLongPressed: (CelState) -> Unit = {},

@@ -57,8 +57,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.sync.domain.api.model.SyncStatus.
 import com.savvasdalkitsis.uhuruphotos.feature.sync.domain.api.model.SyncStatus.NotAvailable
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.view.api.ui.UploadsRow
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.raw
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.animation.AnimationResource
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeMode
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.ToggleableButtonWithIcon
@@ -69,6 +68,12 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruActionIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
 import kotlinx.collections.immutable.persistentListOf
 import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_close
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_folder
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_info
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_login
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_settings
 import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
 import uhuruphotos_android.foundation.strings.api.generated.resources.about
 import uhuruphotos_android.foundation.strings.api.generated.resources.close
@@ -227,7 +232,7 @@ private fun ConstraintLayoutScope.Content(
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp),
                 iconModifier = Modifier.size(48.dp),
-                icon = raw.animation_syncing,
+                icon = AnimationResource.animation_syncing,
                 animateIfAvailable = state.cloudBackUpStatus == Enabled,
                 text = stringResource(string.cloud_sync),
                 checked = state.cloudBackUpStatus == Enabled,

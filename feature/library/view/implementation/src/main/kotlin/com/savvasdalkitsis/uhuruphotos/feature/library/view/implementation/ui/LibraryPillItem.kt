@@ -28,16 +28,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.VitrineSubtitle
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.CustomColors
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.painterResource
 
 @Composable
 internal fun LibraryPillItem(
     modifier: Modifier,
     title: String,
-    icon: Int,
+    icon: DrawableResource,
     onSelected: () -> Unit
 ) {
     Column(

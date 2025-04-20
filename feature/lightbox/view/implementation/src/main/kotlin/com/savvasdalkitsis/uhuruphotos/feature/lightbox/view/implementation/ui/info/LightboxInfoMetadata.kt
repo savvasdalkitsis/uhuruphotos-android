@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.info
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Box
@@ -34,25 +33,14 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.LightboxAction
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.Refresh
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.SingleMediaItemState
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_aspect_ratio
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_camera
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_camera_roll
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_file_tree
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_fingerprint
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_folder_network
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_image_aspect_ratio
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_iso
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_lens
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_refresh
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_save
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_shutter_speed
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_videocam
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SectionHeader
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruActionIcon
+import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.icons.api.generated.resources.*
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
+import uhuruphotos_android.foundation.strings.api.generated.resources.*
 import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
-import uhuruphotos_android.foundation.strings.api.generated.resources.details
-import uhuruphotos_android.foundation.strings.api.generated.resources.nothing_here_yet
 
 @Composable
 internal fun LightboxInfoMetadata(
@@ -81,36 +69,36 @@ internal fun LightboxInfoMetadata(
                             .align(Alignment.Center),
                         iconModifier = Modifier.alpha(0.6f),
                         onClick = { action(Refresh) },
-                        icon = ic_refresh,
+                        icon = drawable.ic_refresh,
                     )
                 }
             }
         }
         mediaItem.details.wh?.let { (w, h) -> "$w x $h" }
-            .Entry(ic_image_aspect_ratio, action)
+            .Entry(drawable.ic_image_aspect_ratio, action)
         mediaItem.details.megapixels
-            .Entry(ic_aspect_ratio, action)
+            .Entry(drawable.ic_aspect_ratio, action)
         mediaItem.details.size
-            .Entry(ic_save, action)
+            .Entry(drawable.ic_save, action)
         mediaItem.details.camera
-            .Entry(ic_camera, action)
+            .Entry(drawable.ic_camera, action)
         mediaItem.details.fStop
-            .Entry(ic_lens, action)
+            .Entry(drawable.ic_lens, action)
         mediaItem.details.shutterSpeed
-            .Entry(ic_shutter_speed, action)
+            .Entry(drawable.ic_shutter_speed, action)
         mediaItem.details.focalLength
-            .Entry(ic_videocam, action)
+            .Entry(drawable.ic_videocam, action)
         mediaItem.details.focalLength35Equivalent
-            .Entry(ic_camera_roll, action)
+            .Entry(drawable.ic_camera_roll, action)
         mediaItem.details.isoSpeed
-            .Entry(ic_iso, action)
+            .Entry(drawable.ic_iso, action)
         mediaItem.details.hash
-            ?.Entry(ic_fingerprint, action)
+            ?.Entry(drawable.ic_fingerprint, action)
         mediaItem.details.remotePaths.forEach {
-            it.Entry(ic_folder_network, action)
+            it.Entry(drawable.ic_folder_network, action)
         }
         mediaItem.details.localPaths.forEach {
-            it.Entry(ic_file_tree, action)
+            it.Entry(drawable.ic_file_tree, action)
         }
         if (mediaItem.details.isEmpty) {
             Text(stringResource(string.nothing_here_yet))
@@ -120,7 +108,7 @@ internal fun LightboxInfoMetadata(
 
 @Composable
 private fun String?.Entry(
-    @DrawableRes icon: Int,
+    icon: DrawableResource,
     action: (LightboxAction) -> Unit
 ) {
     this?.let {

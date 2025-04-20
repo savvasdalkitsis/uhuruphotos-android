@@ -26,12 +26,13 @@ import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.sea
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.seam.actions.NavigateToFolder
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.seam.actions.PortfolioAction
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui.state.PortfolioCelState
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.CustomColors
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkable.Checkable
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkable.SelectionMode.SELECTED
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkable.SelectionMode.UNDEFINED
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkable.SelectionMode.UNSELECTED
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_folder
 
 @Composable
 fun PortfolioCel(
@@ -59,7 +60,7 @@ fun PortfolioCel(
             photoGridModifier = Modifier
                 .fillMaxWidth()
                 .aspectRatio(1f),
-            iconFallback = R.drawable.ic_folder,
+            iconFallback = drawable.ic_folder,
             title = cel.folder.displayName,
             selectable = false,
         ) {

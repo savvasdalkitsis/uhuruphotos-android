@@ -18,8 +18,9 @@ package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui
 import androidx.compose.runtime.Composable
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ReScanLocalMedia
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.SettingsAction
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
 import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_folder
 import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
 import uhuruphotos_android.foundation.strings.api.generated.resources.local_media_rescan
 

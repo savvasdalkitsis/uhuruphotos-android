@@ -20,12 +20,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.UhuruIconOutlineButton
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.dialogs.CancelDialog
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.AlertText
 import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_delete
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_folder_network
 import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
 import uhuruphotos_android.foundation.strings.api.generated.resources.delete_fully_synced_media_both
 import uhuruphotos_android.foundation.strings.api.generated.resources.delete_fully_synced_media_local

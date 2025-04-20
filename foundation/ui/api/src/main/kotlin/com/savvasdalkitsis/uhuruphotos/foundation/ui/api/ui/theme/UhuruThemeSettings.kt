@@ -40,11 +40,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+import org.jetbrains.compose.resources.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ContentTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeContrast
@@ -60,6 +60,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.slider.UhuruSliderRo
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.UhuruTextRow
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.theme.state.ThemeSettingsState
 import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_border_outside
 import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
 import uhuruphotos_android.foundation.strings.api.generated.resources.collage_shape
 import uhuruphotos_android.foundation.strings.api.generated.resources.collage_spacing

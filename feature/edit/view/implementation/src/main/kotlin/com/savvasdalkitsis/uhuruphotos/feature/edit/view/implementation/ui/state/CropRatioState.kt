@@ -15,12 +15,15 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.ui.state
 
-import androidx.annotation.DrawableRes
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import org.jetbrains.compose.resources.DrawableResource
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_crop_16_9
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_crop_3_2
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_crop_square
 
 enum class CropRatioState(
     val ratio: Float,
-    @DrawableRes val icon: Int,
+    val icon: DrawableResource,
     val label: String,
     val rotation: Float = 0f,
 ) {

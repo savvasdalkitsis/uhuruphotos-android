@@ -52,6 +52,8 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.search.SearchField
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.sheet.SheetHandle
 import kotlinx.collections.immutable.ImmutableList
 import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_photo_album
 import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
 import uhuruphotos_android.foundation.strings.api.generated.resources.add_to_album
 import uhuruphotos_android.foundation.strings.api.generated.resources.create_album
@@ -124,7 +126,7 @@ private fun LazyGridScope.createNewButtonItem(action: (FeedAction) -> Unit) {
     item("create_new", span = { GridItemSpan(maxLineSpan) }) {
         UhuruIconOutlineButton(
             modifier = Modifier.padding(horizontal = 16.dp),
-            icon = com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_photo_album,
+            icon = drawable.ic_photo_album,
             text = stringResource(string.create_album),
         ) {
             action(AskForNewAlbumName)

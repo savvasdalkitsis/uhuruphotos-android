@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.sizeIn
@@ -28,9 +27,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.CustomColors
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
+import org.jetbrains.compose.resources.DrawableResource
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_feed
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_outline_selected
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_outline_unselected
 
 @Composable
 fun UhuruToggleableActionIcon(
@@ -38,7 +41,7 @@ fun UhuruToggleableActionIcon(
     iconModifier: Modifier = Modifier,
     enabled: Boolean = true,
     onClick: () -> Unit,
-    @DrawableRes icon: Int,
+    icon: DrawableResource,
     selected: Boolean,
     contentDescription: String? = null
 ) {
@@ -63,9 +66,9 @@ fun UhuruToggleableActionIcon(
                     .background(MaterialTheme.colorScheme.background)
                     .align(Alignment.BottomEnd),
                 icon = if (selected)
-                    R.drawable.ic_outline_selected
+                    drawable.ic_outline_selected
                 else
-                    R.drawable.ic_outline_unselected,
+                    drawable.ic_outline_unselected,
                 contentDescription = contentDescription,
                 tint = if (selected)
                     CustomColors.selected
@@ -82,7 +85,7 @@ private fun ToggleableActionIconSelectedPreview() {
     PreviewAppTheme {
         UhuruToggleableActionIcon(
             onClick = { },
-            icon = R.drawable.ic_feed,
+            icon = drawable.ic_feed,
             selected = true,
         )
     }
@@ -94,7 +97,7 @@ private fun ToggleableActionIconUnselectedPreview() {
     PreviewAppTheme {
         UhuruToggleableActionIcon(
             onClick = { },
-            icon = R.drawable.ic_feed,
+            icon = drawable.ic_feed,
             selected = false,
         )
     }

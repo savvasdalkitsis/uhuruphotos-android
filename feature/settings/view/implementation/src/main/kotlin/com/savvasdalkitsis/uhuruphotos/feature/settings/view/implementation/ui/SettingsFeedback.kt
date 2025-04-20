@@ -23,10 +23,13 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ViewLogsClicked
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkbox.UhuruCheckBoxRow
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.layout.UhuruEntryWithSubtext
 import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_database_send
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_feedback
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_logs
 import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
 import uhuruphotos_android.foundation.strings.api.generated.resources.clear_log_file
 import uhuruphotos_android.foundation.strings.api.generated.resources.degrades_performance

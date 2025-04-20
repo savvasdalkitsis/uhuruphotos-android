@@ -42,13 +42,14 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.NamedVit
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.VitrineState
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaFolder
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeMode
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SectionHeader
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.UhuruIconOutlineButton
 import kotlinx.collections.immutable.persistentListOf
 import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_folder
 import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
 import uhuruphotos_android.foundation.strings.api.generated.resources.local_albums
 import uhuruphotos_android.foundation.strings.api.generated.resources.view_all
@@ -84,7 +85,7 @@ internal fun LocalFolders(
                         state = vitrineState,
                         photoGridModifier = Modifier.width(120.dp),
                         title = bucket.displayName,
-                        iconFallback = -1,
+                        iconFallback = null,
                     ) {
                         action(LocalBucketSelected(bucket))
                     }

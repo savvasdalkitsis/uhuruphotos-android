@@ -29,6 +29,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.LinearProgressIndicator
@@ -53,11 +54,11 @@ import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadSta
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadStatus.Processing
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadStatus.Uploading
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.view.implementation.ui.state.UploadsState
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.animation.AnimationResource
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.LocalThumbnailImageLoader
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Thumbnail
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.CustomColors
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.R
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UhuruFullLoading
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruScaffold
@@ -78,7 +79,10 @@ internal fun Uploads(
         when {
             state.isLoading -> UhuruFullLoading()
             state.jobs.isEmpty() -> UhuruFullLoading {
-                UhuruIcon(icon = R.raw.animation_empty)
+                UhuruIcon(
+                    modifier = Modifier.size(128.dp),
+                    icon = AnimationResource.animation_empty,
+                )
             }
             else -> LazyColumn(
                 modifier = Modifier.padding(contentPadding),

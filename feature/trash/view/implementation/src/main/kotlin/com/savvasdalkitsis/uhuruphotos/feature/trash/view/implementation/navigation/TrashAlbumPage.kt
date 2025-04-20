@@ -22,10 +22,11 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.Gallery
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.actions.FingerPrintActionPressed
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.actions.TrashAction
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.state.TrashState
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either.Right
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruActionIcon
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_fingerprint
 
 @Composable
 internal fun TrashAlbumPage(

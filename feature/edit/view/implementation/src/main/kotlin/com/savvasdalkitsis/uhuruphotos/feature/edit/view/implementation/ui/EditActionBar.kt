@@ -25,10 +25,12 @@ import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.seam.actions.EditAction
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.seam.actions.ToggleCropOptions
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.ui.state.EditState
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruActionIcon
 import io.moyuru.cropify.CropifyState
 import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_crop
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_crop_free
 import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
 import uhuruphotos_android.foundation.strings.api.generated.resources.crop
 import uhuruphotos_android.foundation.strings.api.generated.resources.crop_options
@@ -50,13 +52,13 @@ internal  fun RowScope.EditActionBar(
     UhuruActionIcon(
         onClick = { action(ToggleCropOptions) },
         enabled = state.actionBarActionsEnabled,
-        icon = R.drawable.ic_crop_free,
+        icon = drawable.ic_crop_free,
         contentDescription = stringResource(string.crop_options),
     )
     UhuruActionIcon(
         onClick = { cropState.crop() },
         enabled = state.actionBarActionsEnabled,
-        icon = R.drawable.ic_crop,
+        icon = drawable.ic_crop,
         contentDescription = stringResource(string.crop),
     )
 }

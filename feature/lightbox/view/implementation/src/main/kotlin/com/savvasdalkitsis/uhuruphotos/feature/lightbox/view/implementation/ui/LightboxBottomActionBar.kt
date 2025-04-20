@@ -28,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.drawablepainter.rememberDrawablePainter
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.AskForMediaItemRestoration
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.AskForMediaItemTrashing
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.CropMediaItem
@@ -39,10 +40,17 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.UseMediaItemAs
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.SingleMediaItemState
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruActionIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruActionIconWithText
 import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_arrow_up
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_crop
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_delete
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_edit
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_open_in_new
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_restore_from_trash
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_share
 import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
 import uhuruphotos_android.foundation.strings.api.generated.resources.crop
 import uhuruphotos_android.foundation.strings.api.generated.resources.delete
@@ -103,7 +111,7 @@ fun LightboxBottomActionBarEdit(
                 val pm = LocalContext.current.packageManager
                 UhuruActionIconWithText(
                     onClick = { action(EditMediaItemExternally(app)) },
-                    icon = app.loadIcon(pm),
+                    painter = rememberDrawablePainter(app.loadIcon(pm)),
                     text = app.loadLabel(pm).toString(),
                 )
             }

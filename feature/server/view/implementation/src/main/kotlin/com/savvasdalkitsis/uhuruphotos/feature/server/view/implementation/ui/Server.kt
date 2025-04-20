@@ -52,7 +52,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.a
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.ShowHelp
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.TakeUserToLibrePhotosWebsite
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.UrlTyped
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.layout.plus
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UhuruFullLoading
@@ -67,6 +66,10 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruUpNavButton
 import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_feedback
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_help
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_lock_add
 import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
 import uhuruphotos_android.foundation.strings.api.generated.resources.help
 import uhuruphotos_android.foundation.strings.api.generated.resources.libre_photos_description

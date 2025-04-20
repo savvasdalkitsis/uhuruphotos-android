@@ -15,60 +15,78 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon
 
+
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.airbnb.lottie.LottieProperty
-import com.airbnb.lottie.compose.rememberLottieDynamicProperties
 import com.airbnb.lottie.compose.rememberLottieDynamicProperty
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.animation.AnimationResource
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeMode
+import io.github.alexzhirkevich.compottie.ExperimentalCompottieApi
+import io.github.alexzhirkevich.compottie.dynamic.DynamicShapeLayer
+import io.github.alexzhirkevich.compottie.dynamic.rememberLottieDynamicProperties
 
+@OptIn(ExperimentalCompottieApi::class)
 @Composable
 fun autoTint() = with(colorScheme) {
-    rememberLottieDynamicProperties(
-        *prop(primary, "primary"),
-        *prop(onPrimary, "onPrimary"),
-        *prop(primaryContainer, "primaryContainer"),
-        *prop(onPrimaryContainer, "onPrimaryContainer"),
-        *prop(inversePrimary, "inversePrimary"),
-        *prop(secondary, "secondary"),
-        *prop(onSecondary, "onSecondary"),
-        *prop(secondaryContainer, "secondaryContainer"),
-        *prop(onSecondaryContainer, "onSecondaryContainer"),
-        *prop(tertiary, "tertiary"),
-        *prop(onTertiary, "onTertiary"),
-        *prop(tertiaryContainer, "tertiaryContainer"),
-        *prop(onTertiaryContainer, "onTertiaryContainer"),
-        *prop(background, "background"),
-        *prop(onBackground, "onBackground"),
-        *prop(surface, "surface"),
-        *prop(onSurface, "onSurface"),
-        *prop(surfaceVariant, "surfaceVariant"),
-        *prop(onSurfaceVariant, "onSurfaceVariant"),
-        *prop(surfaceTint, "surfaceTint"),
-        *prop(inverseSurface, "inverseSurface"),
-        *prop(inverseOnSurface, "inverseOnSurface"),
-        *prop(error, "error"),
-        *prop(onError, "onError"),
-        *prop(errorContainer, "errorContainer"),
-        *prop(onErrorContainer, "onErrorContainer"),
-        *prop(outline, "outline"),
-        *prop(outlineVariant, "outlineVariant"),
-        *prop(scrim, "scrim"),
-        *prop(surfaceBright, "surfaceBright"),
-        *prop(surfaceDim, "surfaceDim"),
-        *prop(surfaceContainer, "surfaceContainer"),
-        *prop(surfaceContainerHigh, "surfaceContainerHigh"),
-        *prop(surfaceContainerHighest, "surfaceContainerHighest"),
-        *prop(surfaceContainerLow, "surfaceContainerLow"),
-        *prop(surfaceContainerLowest, "surfaceContainerLowest"),
-    )
+    rememberLottieDynamicProperties() {
+        shapeLayer("**") {
+            prop(primary, "primary")
+            prop(onPrimary, "onPrimary")
+            prop(primaryContainer, "primaryContainer")
+            prop(onPrimaryContainer, "onPrimaryContainer")
+            prop(inversePrimary, "inversePrimary")
+            prop(secondary, "secondary")
+            prop(onSecondary, "onSecondary")
+            prop(secondaryContainer, "secondaryContainer")
+            prop(onSecondaryContainer, "onSecondaryContainer")
+            prop(tertiary, "tertiary")
+            prop(onTertiary, "onTertiary")
+            prop(tertiaryContainer, "tertiaryContainer")
+            prop(onTertiaryContainer, "onTertiaryContainer")
+            prop(background, "background")
+            prop(onBackground, "onBackground")
+            prop(surface, "surface")
+            prop(onSurface, "onSurface")
+            prop(surfaceVariant, "surfaceVariant")
+            prop(onSurfaceVariant, "onSurfaceVariant")
+            prop(surfaceTint, "surfaceTint")
+            prop(inverseSurface, "inverseSurface")
+            prop(inverseOnSurface, "inverseOnSurface")
+            prop(error, "error")
+            prop(onError, "onError")
+            prop(errorContainer, "errorContainer")
+            prop(onErrorContainer, "onErrorContainer")
+            prop(outline, "outline")
+            prop(outlineVariant, "outlineVariant")
+            prop(scrim, "scrim")
+            prop(surfaceBright, "surfaceBright")
+            prop(surfaceDim, "surfaceDim")
+            prop(surfaceContainer, "surfaceContainer")
+            prop(surfaceContainerHigh, "surfaceContainerHigh")
+            prop(surfaceContainerHighest, "surfaceContainerHighest")
+            prop(surfaceContainerLow, "surfaceContainerLow")
+            prop(surfaceContainerLowest, "surfaceContainerLowest")
+        }
+    }
+}
+
+private fun DynamicShapeLayer.prop(forceColor: Color, key: String) {
+        fill("**", key) {
+            color { forceColor }
+//            colorFilter { ColorFilter.tint(forceColor) }
+//            gradient { LottieGradient.Linear(listOf(0f to forceColor, 1f to forceColor)) }
+        }
+//    }
 }
 
 @Composable
@@ -95,7 +113,8 @@ private fun prop(color: Color, key: String) = arrayOf(
 fun AutoTintPreview() {
     PreviewAppTheme {
         UhuruIcon(
-            icon = R.raw.animation_syncing,
+            modifier = Modifier.size(48.dp),
+            icon = AnimationResource.animation_empty,
         )
     }
 }
@@ -105,7 +124,8 @@ fun AutoTintPreview() {
 fun AutoTintPreviewDar() {
     PreviewAppTheme(themeMode = ThemeMode.DARK_MODE) {
         UhuruIcon(
-            icon = R.raw.animation_syncing,
+            modifier = Modifier.size(48.dp),
+            icon = AnimationResource.animation_empty,
         )
     }
 }

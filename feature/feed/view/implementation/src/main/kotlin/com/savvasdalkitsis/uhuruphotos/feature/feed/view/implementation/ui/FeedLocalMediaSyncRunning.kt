@@ -28,10 +28,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.TextWithIcon
 import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_folder
 import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
 import uhuruphotos_android.foundation.strings.api.generated.resources.scanning_local_media
 
@@ -47,7 +48,7 @@ internal fun FeedLocalMediaSyncRunning() {
             horizontalArrangement = spacedBy(8.dp),
         ) {
             TextWithIcon(
-                icon = R.drawable.ic_folder,
+                icon = drawable.ic_folder,
                 text = stringResource(string.scanning_local_media),
             )
             CircularProgressIndicator(modifier = Modifier.size(24.dp))

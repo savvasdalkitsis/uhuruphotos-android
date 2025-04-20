@@ -25,7 +25,7 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import org.jetbrains.compose.resources.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -33,10 +33,11 @@ import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam.
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam.actions.SelectCloudMedia
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam.actions.TakeUserToLibrePhotosWebsite
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam.actions.WelcomeAction
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.dialogs.YesNoDialog
 import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_help
 import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
 import uhuruphotos_android.foundation.strings.api.generated.resources.enable_cloud_sync
 import uhuruphotos_android.foundation.strings.api.generated.resources.libre_photos_description
@@ -67,7 +68,7 @@ internal fun WelcomeLibrePhotosHelpDialog(action: (WelcomeAction) -> Unit) {
             onClick = { action(TakeUserToLibrePhotosWebsite) }
         ) {
             Icon(
-                painter = painterResource(id = drawable.ic_help),
+                painter = painterResource(drawable.ic_help),
                 contentDescription = null
             )
             Spacer(modifier = Modifier.width(8.dp))

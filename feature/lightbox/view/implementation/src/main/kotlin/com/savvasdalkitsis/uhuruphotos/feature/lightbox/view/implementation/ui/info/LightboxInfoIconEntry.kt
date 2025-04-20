@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.info
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
@@ -26,13 +25,14 @@ import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.painterResource
 
 @Composable
 internal fun LightboxInfoIconEntry(
     modifier: Modifier = Modifier,
-    @DrawableRes icon: Int,
+    icon: DrawableResource,
     content: @Composable BoxScope.() -> Unit,
 ) {
     Row(
@@ -44,7 +44,7 @@ internal fun LightboxInfoIconEntry(
             modifier = Modifier
                 .align(Alignment.CenterVertically)
                 .padding(8.dp),
-            painter = painterResource(id = icon),
+            painter = painterResource(icon),
             contentDescription = null
         )
         Box(modifier = Modifier.weight(1f)) {

@@ -24,12 +24,13 @@ import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.se
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.viewmodel.AutoAlbumCompositeAction
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.viewmodel.AutoAlbumCompositeState
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.Gallery
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.dialogs.YesNoDialog
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruActionIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.AlertText
 import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_delete
 import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
 import uhuruphotos_android.foundation.strings.api.generated.resources.delete_album
 import uhuruphotos_android.foundation.strings.api.generated.resources.delete_album_confirmation
@@ -45,7 +46,7 @@ internal fun AutoAlbum(
         additionalActionBarContent = {
             UhuruActionIcon(
                 onClick = { action(Either.Right(DeleteAutoAlbumRequested)) },
-                icon = R.drawable.ic_delete,
+                icon = drawable.ic_delete,
             )
         },
         action = { action(Either.Left(it)) },

@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.OutlinedButton
@@ -24,11 +23,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruIcon
+import org.jetbrains.compose.resources.DrawableResource
 
 @Composable
 fun UhuruIconOutlineButton(
     modifier: Modifier = Modifier,
-    @DrawableRes icon: Int,
+    icon: DrawableResource,
     text: String,
     onClick: () -> Unit,
 ) {

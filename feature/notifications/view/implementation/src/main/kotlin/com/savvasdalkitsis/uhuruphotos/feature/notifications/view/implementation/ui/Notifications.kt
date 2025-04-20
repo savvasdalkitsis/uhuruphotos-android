@@ -34,13 +34,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.feature.notifications.view.implementation.R
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.view.implementation.seam.actions.Allow
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.view.implementation.seam.actions.NotificationsAction
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.view.implementation.seam.actions.Skip
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.view.implementation.seam.actions.ToggleRememberChoice
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.view.implementation.ui.state.NotificationsState
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.animation.AnimationResource
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeMode
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeVariant
@@ -51,6 +50,8 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.ToggleableBut
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruScaffold
 import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_remember
 import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
 import uhuruphotos_android.foundation.strings.api.generated.resources.allow
 import uhuruphotos_android.foundation.strings.api.generated.resources.notifications
@@ -89,7 +90,7 @@ internal fun Notifications(
                 Spacer(modifier = Modifier.weight(1f))
                 UhuruIcon(
                     modifier = Modifier.height(320.dp),
-                    icon = R.raw.animation_notifications,
+                    icon = AnimationResource.animation_notifications,
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 ToggleableButtonWithIcon(

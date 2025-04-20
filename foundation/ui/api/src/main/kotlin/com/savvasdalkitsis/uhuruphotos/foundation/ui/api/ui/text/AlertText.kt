@@ -21,9 +21,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.CustomColors
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_alert
 
 @Composable
 fun AlertText(
@@ -33,7 +34,7 @@ fun AlertText(
 ) {
     TextWithIcon(
         modifier = modifier,
-        icon = R.drawable.ic_alert,
+        icon = drawable.ic_alert,
         text = text,
         style = style,
         tint = CustomColors.alert,

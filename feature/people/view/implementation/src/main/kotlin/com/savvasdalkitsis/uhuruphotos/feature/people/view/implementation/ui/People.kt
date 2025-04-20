@@ -34,13 +34,15 @@ import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.a
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.state.PeopleState
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.state.SortOrderState.ASCENDING
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.state.SortOrderState.DESCENDING
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window.LocalWindowSize
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruActionIcon
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UhuruFullLoading
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruActionIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.refresh.SwipeRefresh
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruUpNavButton
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_sort_az_ascending
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_sort_az_descending
 
 @Composable
 fun People(

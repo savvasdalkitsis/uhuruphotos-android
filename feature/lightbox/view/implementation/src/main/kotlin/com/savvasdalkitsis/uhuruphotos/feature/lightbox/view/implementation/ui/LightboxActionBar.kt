@@ -38,11 +38,15 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.s
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncStateModel.LOCAL_ONLY
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncStateModel.REMOTE_ONLY
 import com.savvasdalkitsis.uhuruphotos.foundation.dismiss.api.ui.PullToDismissState
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruActionIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruToggleableActionIcon
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_favourite
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_feed
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_info
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_not_favourite
 import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
 import uhuruphotos_android.foundation.strings.api.generated.resources.favourite
 import uhuruphotos_android.foundation.strings.api.generated.resources.info

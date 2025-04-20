@@ -15,8 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon
 
-import android.graphics.drawable.Drawable
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -26,17 +24,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
+import org.jetbrains.compose.resources.DrawableResource
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_feed
 
 @Composable
 fun UhuruActionIconWithText(
     modifier: Modifier = Modifier,
     iconModifier: Modifier = Modifier,
     onClick: () -> Unit,
-    @DrawableRes icon: Int,
+    icon: DrawableResource,
     text: String,
 ) {
     Column(
@@ -66,7 +67,7 @@ fun UhuruActionIconWithText(
     modifier: Modifier = Modifier,
     iconModifier: Modifier = Modifier,
     onClick: () -> Unit,
-    icon: Drawable,
+    painter: Painter,
     text: String,
 ) {
     Column(
@@ -78,7 +79,7 @@ fun UhuruActionIconWithText(
             modifier = Modifier.align(CenterHorizontally),
             iconModifier = iconModifier,
             onClick = onClick,
-            icon = icon,
+            painter = painter,
             contentDescription = text,
         )
         Text(
@@ -97,7 +98,7 @@ private fun UhuruActionIconWithTextPreview() {
     PreviewAppTheme {
         UhuruActionIconWithText(
             onClick = { },
-            icon = R.drawable.ic_feed,
+            icon = drawable.ic_feed,
             text = "Text"
         )
     }

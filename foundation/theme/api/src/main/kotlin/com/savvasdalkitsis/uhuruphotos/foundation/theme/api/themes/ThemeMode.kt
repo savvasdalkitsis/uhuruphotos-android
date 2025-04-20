@@ -15,14 +15,17 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import org.jetbrains.compose.resources.DrawableResource
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_brightness_auto
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_dark_mode
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_light_mode
 
 enum class ThemeMode(
     val friendlyName: String,
-    @DrawableRes val icon: Int,
+    val icon: DrawableResource,
 ) {
 
     FOLLOW_SYSTEM("Follow system", drawable.ic_brightness_auto),

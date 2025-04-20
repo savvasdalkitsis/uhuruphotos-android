@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkbox
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -29,15 +28,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeMode
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruIcon
+import org.jetbrains.compose.resources.DrawableResource
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_info
 
 @Composable
 fun UhuruCheckBoxRow(
     text: String,
-    @DrawableRes icon: Int,
+    icon: DrawableResource,
     isChecked: Boolean,
     onCheckedChange: (Boolean) -> Unit
 ) {
@@ -66,7 +67,7 @@ fun UhuruCheckBoxRow(
 @Composable
 private fun SettingsCheckBoxPreview() {
     PreviewAppTheme {
-        UhuruCheckBoxRow(text = "Setting", icon = R.drawable.ic_info, isChecked = true) {}
+        UhuruCheckBoxRow(text = "Setting", icon = drawable.ic_info, isChecked = true) {}
     }
 }
 
@@ -74,7 +75,7 @@ private fun SettingsCheckBoxPreview() {
 @Composable
 private fun SettingsCheckBoxPreviewDark() {
     PreviewAppTheme(themeMode = ThemeMode.DARK_MODE) {
-        UhuruCheckBoxRow(text = "Setting", icon = R.drawable.ic_info, isChecked = true) {}
+        UhuruCheckBoxRow(text = "Setting", icon = drawable.ic_info, isChecked = true) {}
     }
 }
 
@@ -82,7 +83,7 @@ private fun SettingsCheckBoxPreviewDark() {
 @Composable
 private fun SettingsCheckBoxUnselectedPreview() {
     PreviewAppTheme {
-        UhuruCheckBoxRow(text = "Setting", icon = R.drawable.ic_info, isChecked = false) {}
+        UhuruCheckBoxRow(text = "Setting", icon = drawable.ic_info, isChecked = false) {}
     }
 }
 
@@ -90,6 +91,6 @@ private fun SettingsCheckBoxUnselectedPreview() {
 @Composable
 private fun SettingsCheckBoxUnselectedPreviewDark() {
     PreviewAppTheme(themeMode = ThemeMode.DARK_MODE) {
-        UhuruCheckBoxRow(text = "Setting", icon = R.drawable.ic_info, isChecked = false) {}
+        UhuruCheckBoxRow(text = "Setting", icon = drawable.ic_info, isChecked = false) {}
     }
 }

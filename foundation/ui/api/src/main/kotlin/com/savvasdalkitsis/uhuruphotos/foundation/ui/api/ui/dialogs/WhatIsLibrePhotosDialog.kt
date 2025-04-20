@@ -24,13 +24,14 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.LocalNavigator
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_help
 import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
 import uhuruphotos_android.foundation.strings.api.generated.resources.libre_photos_description
 import uhuruphotos_android.foundation.strings.api.generated.resources.take_me_to_website
@@ -55,7 +56,7 @@ fun WhatIsLibrePhotosDialog(
             }
         ) {
             Icon(
-                painter = painterResource(id = drawable.ic_help),
+                painter = painterResource(drawable.ic_help),
                 contentDescription = null
             )
             Spacer(modifier = Modifier.width(8.dp))

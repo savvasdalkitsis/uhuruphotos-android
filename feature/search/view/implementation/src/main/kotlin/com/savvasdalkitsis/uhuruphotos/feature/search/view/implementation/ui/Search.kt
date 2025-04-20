@@ -29,7 +29,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.a
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.actions.SearchFor
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.actions.SelectedCel
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchState
-import com.savvasdalkitsis.uhuruphotos.foundation.search.view.implementation.R
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.animation.AnimationResource
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewThemeData
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewThemeDataProvider
@@ -72,7 +72,7 @@ fun Search(
                     clusters = state.clusterStates,
                     collageDisplayState = state.searchDisplay,
                 ),
-                loadingAnimation = R.raw.animation_searching,
+                loadingAnimation = AnimationResource.animation_syncing,
                 onCelSelected = { cel ->
                     action(SelectedCel(cel))
                 },

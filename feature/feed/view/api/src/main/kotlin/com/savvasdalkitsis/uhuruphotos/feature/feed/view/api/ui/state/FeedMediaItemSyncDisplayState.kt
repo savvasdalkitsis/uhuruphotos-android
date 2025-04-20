@@ -15,9 +15,12 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state
 
-import androidx.annotation.DrawableRes
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_invisible
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_swipe_vertical
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_visible
 import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
 import uhuruphotos_android.foundation.strings.api.generated.resources.show_always
 import uhuruphotos_android.foundation.strings.api.generated.resources.show_never
@@ -25,7 +28,7 @@ import uhuruphotos_android.foundation.strings.api.generated.resources.show_on_sc
 
 enum class FeedMediaItemSyncDisplayState(
     val friendlyName: StringResource,
-    @DrawableRes val icon: Int,
+    val icon: DrawableResource,
 ) {
     SHOW_ON_SCROLL(string.show_on_scroll, drawable.ic_swipe_vertical),
     ALWAYS_ON(string.show_always, drawable.ic_visible),

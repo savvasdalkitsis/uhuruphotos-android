@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -25,13 +24,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
+import org.jetbrains.compose.resources.DrawableResource
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_airplane
 
 @Composable
 fun ActionRowWithIcon(
     modifier: Modifier = Modifier,
-    @DrawableRes icon: Int,
+    icon: DrawableResource,
     text: String,
     onClick: () -> Unit,
 ) {
@@ -53,6 +54,6 @@ fun ActionRowWithIcon(
 @Composable
 private fun ActionRowWithIconPreview() {
     PreviewAppTheme {
-        ActionRowWithIcon(icon = R.drawable.ic_airplane, text = "Some text") {}
+        ActionRowWithIcon(icon = drawable.ic_airplane, text = "Some text") {}
     }
 }

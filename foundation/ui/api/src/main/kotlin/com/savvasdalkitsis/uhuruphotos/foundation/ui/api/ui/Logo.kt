@@ -23,10 +23,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import org.jetbrains.compose.resources.painterResource
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_logo
 
 @Composable
 fun Logo(
@@ -46,7 +47,7 @@ fun Logo(
             }
             .size(64.dp)
             .padding(2.dp),
-        painter = painterResource(id = drawable.ic_logo),
+        painter = painterResource(drawable.ic_logo),
         contentDescription = null
     )
 }

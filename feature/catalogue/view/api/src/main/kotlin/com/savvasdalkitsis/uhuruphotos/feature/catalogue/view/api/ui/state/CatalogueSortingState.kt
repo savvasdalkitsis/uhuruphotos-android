@@ -15,10 +15,14 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state
 
-import androidx.annotation.DrawableRes
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import org.jetbrains.compose.resources.DrawableResource
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_sort_az_ascending
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_sort_az_descending
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_sort_date_ascending
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_sort_date_descending
 
-enum class CatalogueSortingState(@DrawableRes val icon: Int) {
+enum class CatalogueSortingState(val icon: DrawableResource) {
 
     DATE_DESC(drawable.ic_sort_date_descending),
     DATE_ASC(drawable.ic_sort_date_ascending),

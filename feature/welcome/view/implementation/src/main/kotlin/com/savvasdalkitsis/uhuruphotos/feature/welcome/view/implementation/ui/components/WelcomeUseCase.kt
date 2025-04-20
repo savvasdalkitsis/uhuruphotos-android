@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.ui.components
 
-import androidx.annotation.RawRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -28,7 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.animation.AnimationResource
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ContentTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.CustomColors
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeMode
@@ -36,10 +35,13 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.TextWithIcon
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_checkbox_selected
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_checkbox_unselected
 
 @Composable
 internal fun RowScope.WelcomeUseCase(
-    @RawRes icon: Int,
+    icon: AnimationResource,
     text: StringResource,
     selected: Boolean,
     tint: Color? = null,
@@ -66,7 +68,7 @@ internal fun RowScope.WelcomeUseCase(
                         bottom.linkTo(parent.bottom)
                     },
                     iconModifier = Modifier.size(24.dp),
-                    icon = if (selected) R.drawable.ic_checkbox_selected else R.drawable.ic_checkbox_unselected,
+                    icon = if (selected) drawable.ic_checkbox_selected else drawable.ic_checkbox_unselected,
                     tint = if (selected) CustomColors.selected else null,
                     text = stringResource(text),
                 )

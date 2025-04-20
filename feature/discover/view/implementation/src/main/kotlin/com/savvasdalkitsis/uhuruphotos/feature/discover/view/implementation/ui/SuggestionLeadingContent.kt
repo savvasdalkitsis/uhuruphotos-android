@@ -37,10 +37,13 @@ import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.s
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.ServerSearchSuggestionState
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.UserAlbumSearchSuggestionState
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.PersonImage
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.search.SearchSuggestion
 import kotlinx.collections.immutable.persistentMapOf
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_assistant
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_creation
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_history
 
 val suggestionLeadingContent = persistentMapOf<String, @Composable (SearchSuggestion) -> Unit>(
     RecentSearchSuggestionState.TYPE to {

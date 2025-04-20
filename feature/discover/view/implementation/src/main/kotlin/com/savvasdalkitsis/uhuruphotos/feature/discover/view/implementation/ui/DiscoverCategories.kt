@@ -27,11 +27,14 @@ import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.MediaWithoutDateCategorySelected
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.StatsCategorySelected
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.VideoCategorySelected
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SectionHeader
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.ActionRowWithIcon
 import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_calendar_remove
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_chart
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_play_filled
 import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
 import uhuruphotos_android.foundation.strings.api.generated.resources.categories
 import uhuruphotos_android.foundation.strings.api.generated.resources.media_without_date

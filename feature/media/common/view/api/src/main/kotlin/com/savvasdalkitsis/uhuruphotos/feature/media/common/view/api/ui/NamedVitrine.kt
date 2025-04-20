@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -32,19 +31,20 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.VitrineState
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.CustomColors
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.painterResource
 
 @Composable
 fun NamedVitrine(
     modifier: Modifier = Modifier,
     state: VitrineState,
     photoGridModifier: Modifier,
-    @DrawableRes iconFallback: Int,
+    iconFallback: DrawableResource?,
     title: String,
     selectable: Boolean = true,
     onSelected: () -> Unit,
@@ -54,7 +54,7 @@ fun NamedVitrine(
             .padding(8.dp),
     ) {
         Box(modifier = Modifier.fillMaxWidth()) {
-            if (state.isEmpty && iconFallback != -1) Image(
+            if (state.isEmpty && iconFallback != null) Image(
                 modifier = photoGridModifier
                     .clip(CardDefaults.shape)
                     .background(CustomColors.emptyItem)

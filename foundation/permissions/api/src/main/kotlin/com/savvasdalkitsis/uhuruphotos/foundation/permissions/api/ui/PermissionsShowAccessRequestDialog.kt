@@ -30,10 +30,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.LocalNavigator
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
@@ -42,7 +40,10 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.group.UhuruCollapsib
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.group.state.rememberCollapsibleGroupState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.AlertText
 import dev.shreyaspatil.permissionflow.compose.rememberPermissionFlowRequestLauncher
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_settings
 import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
 import uhuruphotos_android.foundation.strings.api.generated.resources.cancel
 import uhuruphotos_android.foundation.strings.api.generated.resources.having_problems
@@ -89,7 +90,7 @@ internal fun PermissionsShowAccessRequestDialog(
                 }
             ) {
                 Icon(
-                    painter = painterResource(id = drawable.ic_settings),
+                    painter = painterResource(drawable.ic_settings),
                     contentDescription = null
                 )
                 Spacer(modifier = Modifier.width(8.dp))

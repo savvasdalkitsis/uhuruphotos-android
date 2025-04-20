@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -27,11 +26,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
+import org.jetbrains.compose.resources.DrawableResource
 
 @Composable
 fun UhuruDropDownActionIcon(
     modifier: Modifier = Modifier,
-    @DrawableRes icon: Int,
+    icon: DrawableResource,
     contentDescription: String? = null,
     items: @Composable DropDownActionIconScope.() -> Unit,
 ) {

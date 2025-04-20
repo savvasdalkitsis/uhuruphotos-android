@@ -9,6 +9,7 @@ android {
 dependencies {
 
     implementation(
+            libs.accompanist.drawable,
             libs.accompanist.systemui,
             libs.androidx.compose.hilt.navigation,
             libs.androidx.compose.material3,

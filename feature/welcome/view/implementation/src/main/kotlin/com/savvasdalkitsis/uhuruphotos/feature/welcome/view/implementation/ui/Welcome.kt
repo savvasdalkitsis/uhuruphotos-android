@@ -40,7 +40,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.ui.co
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.ui.components.WelcomeLibrePhotosHelpDialog
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.ui.components.WelcomeLoadedContent
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.ui.state.WelcomeState
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.permissions.api.ui.PermissionsState
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeMode
@@ -49,6 +49,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UhuruFullLoading
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruActionIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruScaffold
 import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_help
 import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
 import uhuruphotos_android.foundation.strings.api.generated.resources.save
 import uhuruphotos_android.foundation.strings.api.generated.resources.welcome_footnote

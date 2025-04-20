@@ -33,6 +33,7 @@ dependencies {
             libs.androidx.window,
             libs.bundles.androidx.compose.animation,
             libs.kotlin.reflect,
+            libs.compottie,
             libs.lottie,
             libs.remember,
             project(":foundation:compose:api"),

@@ -15,10 +15,17 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model
 
-import androidx.annotation.DrawableRes
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.raw
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.animation.AnimationResource
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
+import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_cloud
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_cloud_done
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_cloud_download
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_cloud_in_progress
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_cloud_off
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_cloud_upload
 import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
 import uhuruphotos_android.foundation.strings.api.generated.resources.media_sync_status_downloading
 import uhuruphotos_android.foundation.strings.api.generated.resources.media_sync_status_fully_synced
@@ -28,46 +35,44 @@ import uhuruphotos_android.foundation.strings.api.generated.resources.media_sync
 import uhuruphotos_android.foundation.strings.api.generated.resources.media_sync_status_uploading
 
 enum class MediaItemSyncStateModel(
-    @DrawableRes
-    val icon: Int,
-    @DrawableRes
-    val lightBoxIcon: Int,
+    val icon: DrawableResource,
+    val lightBoxIcon: Either<DrawableResource, AnimationResource>,
     val lightBoxIconAlpha: Float = 0.7f,
     val contentDescription: StringResource,
     val enabled: Boolean = false,
 ) {
     LOCAL_ONLY(
         icon = drawable.ic_cloud_off,
-        lightBoxIcon = drawable.ic_cloud_upload,
+        lightBoxIcon = Either.Left(drawable.ic_cloud_upload),
         lightBoxIconAlpha = 1f,
         contentDescription = string.media_sync_status_local_only,
         enabled = true,
     ),
     REMOTE_ONLY(
         icon = drawable.ic_cloud,
-        lightBoxIcon = drawable.ic_cloud_download,
+        lightBoxIcon = Either.Left(drawable.ic_cloud_download),
         lightBoxIconAlpha = 1f,
         contentDescription = string.media_sync_status_remote_only,
         enabled = true,
     ),
     DOWNLOADING(
         icon = drawable.ic_cloud_download,
-        lightBoxIcon = raw.ic_animated_cloud_download,
+        lightBoxIcon = Either.Right(AnimationResource.ic_animated_cloud_download),
         contentDescription = string.media_sync_status_downloading,
     ),
     UPLOADING(
         icon = drawable.ic_cloud_upload,
-        lightBoxIcon = raw.ic_animated_cloud_upload,
+        lightBoxIcon = Either.Right(AnimationResource.ic_animated_cloud_upload),
         contentDescription = string.media_sync_status_uploading,
     ),
     PROCESSING(
         icon = drawable.ic_cloud_in_progress,
-        lightBoxIcon = drawable.ic_cloud_in_progress,
+        lightBoxIcon = Either.Left(drawable.ic_cloud_in_progress),
         contentDescription = string.media_sync_status_processing,
     ),
     SYNCED(
         icon = drawable.ic_cloud_done,
-        lightBoxIcon = drawable.ic_cloud_done,
+        lightBoxIcon = Either.Left(drawable.ic_cloud_done),
         contentDescription = string.media_sync_status_fully_synced,
     );
 }

@@ -59,7 +59,7 @@ fun Gallery(
                     contentDescription = stringResource(string.sorting)
                 )
             }
-            AnimatedVisibility(state.collageState.collageDisplayState.iconResource != 0
+            AnimatedVisibility(state.collageState.collageDisplayState.iconResource != null
                     && state.collageState.clusters.isNotEmpty()) {
                 CollageDisplayActionButton(
                     onChange = { action(ChangeCollageDisplay(it)) },

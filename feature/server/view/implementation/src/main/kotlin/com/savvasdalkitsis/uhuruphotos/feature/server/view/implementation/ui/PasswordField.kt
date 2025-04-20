@@ -37,9 +37,11 @@ import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.a
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.ServerAction
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.TogglePasswordVisibility
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.UserPasswordChangedTo
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruActionIcon
 import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_invisible
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_visible
 import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
 import uhuruphotos_android.foundation.strings.api.generated.resources.password
 
