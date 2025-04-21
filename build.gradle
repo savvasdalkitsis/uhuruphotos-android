@@ -42,6 +42,15 @@ subprojects {
     if (displayName == "project ':konsist'") {
         return
     }
+    if ((
+            displayName.startsWith("project ':feature") ||
+            displayName.startsWith("project ':foundation")
+    ) && !(
+            displayName.endsWith(":api'") ||
+            displayName.endsWith(":implementation'")
+    )) {
+        return
+    }
     if (displayName in [
             "project ':foundation:coroutines:api'",
             "project ':foundation:biometrics:api'",
