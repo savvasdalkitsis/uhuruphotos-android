@@ -43,7 +43,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.DayOfWeek
 import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.Month
 import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.Year
 import com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.ui.state.StatsState
-import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.NoContent
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruScaffold
@@ -51,7 +50,19 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruUpNavB
 import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.collections.immutable.toImmutableMap
 import org.jetbrains.compose.resources.stringResource
-import uhuruphotos_android.foundation.strings.api.generated.resources.*
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.day
+import uhuruphotos_android.foundation.strings.api.generated.resources.media_heatmap
+import uhuruphotos_android.foundation.strings.api.generated.resources.media_per_day_of_month
+import uhuruphotos_android.foundation.strings.api.generated.resources.media_per_day_of_week
+import uhuruphotos_android.foundation.strings.api.generated.resources.media_per_month
+import uhuruphotos_android.foundation.strings.api.generated.resources.media_per_year
+import uhuruphotos_android.foundation.strings.api.generated.resources.month
+import uhuruphotos_android.foundation.strings.api.generated.resources.no_media
+import uhuruphotos_android.foundation.strings.api.generated.resources.photos
+import uhuruphotos_android.foundation.strings.api.generated.resources.stats
+import uhuruphotos_android.foundation.strings.api.generated.resources.videos
+import uhuruphotos_android.foundation.strings.api.generated.resources.year
 import java.time.LocalDate
 
 @Composable

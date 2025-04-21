@@ -37,10 +37,23 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SectionHeader
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruActionIcon
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.stringResource
-import uhuruphotos_android.foundation.icons.api.generated.resources.*
 import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
-import uhuruphotos_android.foundation.strings.api.generated.resources.*
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_aspect_ratio
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_camera
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_camera_roll
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_file_tree
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_fingerprint
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_folder_network
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_image_aspect_ratio
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_iso
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_lens
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_refresh
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_save
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_shutter_speed
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_videocam
 import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.details
+import uhuruphotos_android.foundation.strings.api.generated.resources.nothing_here_yet
 
 @Composable
 internal fun LightboxInfoMetadata(
