@@ -105,7 +105,7 @@ coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 coil-gif = { module = "io.coil-kt:coil-gif", version.ref = "coil" }
 coil-video = { module = "io.coil-kt:coil-video", version.ref = "coil" }
 compottie = "io.github.alexzhirkevich:compottie:2.0.0-rc04"
-crop = "com.github.moyuruaizawa:cropify:0.3.1"
+crop = "com.github.moyuruaizawa:cropify:0.5.1"
 desugar = "com.android.tools:desugar_jdk_libs:2.1.5"
 exif = "androidx.exifinterface:exifinterface:1.4.0"
 flowpreferences = "com.fredporciuncula:flow-preferences:1.9.1"
