@@ -17,20 +17,13 @@ package com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes
 
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
-import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeContrast.HIGH
-import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeContrast.MEDIUM
-import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeContrast.NORMAL
-import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeMode.DARK_MODE
-import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeMode.LIGHT_MODE
-import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res
 import uhuruphotos_android.foundation.strings.api.generated.resources.red
 
 data object RedTheme : StaticTheme() {
 
-    override val label = string.red
+    override val label = Res.string.red
 
     override val lightScheme = lightColorScheme(
         primary = Color(0xFF8F4C36),
@@ -259,40 +252,4 @@ data object RedTheme : StaticTheme() {
         surfaceContainerHigh = Color(0xFF322825),
         surfaceContainerHighest = Color(0xFF3D322F),
     )
-}
-
-@Preview
-@Composable
-private fun PreviewThemeNormal() {
-    PreviewTheme(RedTheme, LIGHT_MODE, NORMAL)
-}
-
-@Preview
-@Composable
-private fun PreviewThemeMedium() {
-    PreviewTheme(RedTheme, LIGHT_MODE, MEDIUM)
-}
-
-@Preview
-@Composable
-private fun PreviewThemeHome() {
-    PreviewTheme(RedTheme, LIGHT_MODE, HIGH)
-}
-
-@Preview
-@Composable
-private fun PreviewThemeDark() {
-    PreviewTheme(RedTheme, DARK_MODE, NORMAL)
-}
-
-@Preview
-@Composable
-private fun PreviewThemeDarkMedium() {
-    PreviewTheme(RedTheme, DARK_MODE, MEDIUM)
-}
-
-@Preview
-@Composable
-private fun PreviewThemeDarkHome() {
-    PreviewTheme(RedTheme, DARK_MODE, HIGH)
 }

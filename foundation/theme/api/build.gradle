@@ -1,28 +1,40 @@
 plugins {
+    alias(libs.plugins.jetbrains.compose)
     alias(libs.plugins.kotlin.compose.compiler)
+}
+
+kotlin {
+    jvm("desktop")
+    androidTarget()
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation(compose.runtime)
+                implementation(compose.foundation)
+                implementation(compose.material3)
+                implementation(compose.ui)
+                implementation(project(":foundation:icons:api"))
+                implementation(project(":foundation:strings:api"))
+            }
+        }
+        androidMain {
+            dependencies {
+                api(project(":foundation:activity:api"))
+                implementation(libs.accompanist.systemui)
+                implementation(libs.androidx.compose.material.windowsize)
+                implementation(libs.androidx.compose.ui.tooling.preview)
+                implementation(libs.google.fonts)
+                implementation(project(":foundation:image:api"))
+            }
+        }
+        androidDebug {
+            dependencies {
+                implementation(libs.androidx.compose.ui.tooling)
+            }
+        }
+    }
 }
 
 android {
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.theme.api'
-}
-
-dependencies {
-    api(
-            project(":foundation:activity:api"),
-            libs.androidx.compose.material3,
-    )
-    implementation(
-            libs.accompanist.systemui,
-            libs.androidx.compose.material3,
-            libs.androidx.compose.material.windowsize,
-            libs.androidx.compose.ui,
-            libs.androidx.compose.ui.tooling.preview,
-            libs.google.fonts,
-            project(":foundation:icons:api"),
-            project(":foundation:image:api"),
-            project(":foundation:strings:api"),
-    )
-    debugImplementation(
-            libs.androidx.compose.ui.tooling,
-    )
 }

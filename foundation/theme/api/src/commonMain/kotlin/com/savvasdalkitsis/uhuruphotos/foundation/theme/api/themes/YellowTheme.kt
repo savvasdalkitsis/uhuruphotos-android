@@ -17,20 +17,13 @@ package com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes
 
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
-import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeContrast.HIGH
-import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeContrast.MEDIUM
-import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeContrast.NORMAL
-import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeMode.DARK_MODE
-import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeMode.LIGHT_MODE
-import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res
 import uhuruphotos_android.foundation.strings.api.generated.resources.yellow
 
 data object YellowTheme : StaticTheme() {
 
-    override val label = string.yellow
+    override val label = Res.string.yellow
 
     override val lightScheme = lightColorScheme(
         primary = Color(0xFF6D5E0F),
@@ -259,40 +252,4 @@ data object YellowTheme : StaticTheme() {
         surfaceContainerHigh = Color(0xFF2D2A21),
         surfaceContainerHighest = Color(0xFF38352B),
     )
-}
-
-@Preview
-@Composable
-private fun PreviewThemeNormal() {
-    PreviewTheme(YellowTheme, LIGHT_MODE, NORMAL)
-}
-
-@Preview
-@Composable
-private fun PreviewThemeMedium() {
-    PreviewTheme(YellowTheme, LIGHT_MODE, MEDIUM)
-}
-
-@Preview
-@Composable
-private fun PreviewThemeHome() {
-    PreviewTheme(YellowTheme, LIGHT_MODE, HIGH)
-}
-
-@Preview
-@Composable
-private fun PreviewThemeDark() {
-    PreviewTheme(YellowTheme, DARK_MODE, NORMAL)
-}
-
-@Preview
-@Composable
-private fun PreviewThemeDarkMedium() {
-    PreviewTheme(YellowTheme, DARK_MODE, MEDIUM)
-}
-
-@Preview
-@Composable
-private fun PreviewThemeDarkHome() {
-    PreviewTheme(YellowTheme, DARK_MODE, HIGH)
 }

@@ -17,20 +17,13 @@ package com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes
 
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
-import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeContrast.HIGH
-import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeContrast.MEDIUM
-import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeContrast.NORMAL
-import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeMode.DARK_MODE
-import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeMode.LIGHT_MODE
-import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res
 import uhuruphotos_android.foundation.strings.api.generated.resources.blue
 
 data object BlueTheme : StaticTheme() {
 
-    override val label = string.blue
+    override val label = Res.string.blue
 
     override val lightScheme = lightColorScheme(
         primary = Color(0xFF415F91),
@@ -259,40 +252,4 @@ data object BlueTheme : StaticTheme() {
         surfaceContainerHigh = Color(0xFF282A2F),
         surfaceContainerHighest = Color(0xFF33353A),
     )
-}
-
-@Preview
-@Composable
-private fun PreviewThemeNormal() {
-    PreviewTheme(BlueTheme, LIGHT_MODE, NORMAL)
-}
-
-@Preview
-@Composable
-private fun PreviewThemeMedium() {
-    PreviewTheme(BlueTheme, LIGHT_MODE, MEDIUM)
-}
-
-@Preview
-@Composable
-private fun PreviewThemeHome() {
-    PreviewTheme(BlueTheme, LIGHT_MODE, HIGH)
-}
-
-@Preview
-@Composable
-private fun PreviewThemeDark() {
-    PreviewTheme(BlueTheme, DARK_MODE, NORMAL)
-}
-
-@Preview
-@Composable
-private fun PreviewThemeDarkMedium() {
-    PreviewTheme(BlueTheme, DARK_MODE, MEDIUM)
-}
-
-@Preview
-@Composable
-private fun PreviewThemeDarkHome() {
-    PreviewTheme(BlueTheme, DARK_MODE, HIGH)
 }

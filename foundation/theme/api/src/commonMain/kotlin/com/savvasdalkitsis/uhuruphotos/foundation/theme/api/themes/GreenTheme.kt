@@ -17,14 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes
 
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
-import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeContrast.HIGH
-import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeContrast.MEDIUM
-import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeContrast.NORMAL
-import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeMode.DARK_MODE
-import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeMode.LIGHT_MODE
 import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
 import uhuruphotos_android.foundation.strings.api.generated.resources.green
 
@@ -260,40 +253,4 @@ data object GreenTheme : StaticTheme() {
         surfaceContainerHighest = Color(0xFF33362E),
     )
 
-}
-
-@Preview
-@Composable
-private fun PreviewThemeNormal() {
-    PreviewTheme(GreenTheme, LIGHT_MODE, NORMAL)
-}
-
-@Preview
-@Composable
-private fun PreviewThemeMedium() {
-    PreviewTheme(GreenTheme, LIGHT_MODE, MEDIUM)
-}
-
-@Preview
-@Composable
-private fun PreviewThemeHome() {
-    PreviewTheme(GreenTheme, LIGHT_MODE, HIGH)
-}
-
-@Preview
-@Composable
-private fun PreviewThemeDark() {
-    PreviewTheme(GreenTheme, DARK_MODE, NORMAL)
-}
-
-@Preview
-@Composable
-private fun PreviewThemeDarkMedium() {
-    PreviewTheme(GreenTheme, DARK_MODE, MEDIUM)
-}
-
-@Preview
-@Composable
-private fun PreviewThemeDarkHome() {
-    PreviewTheme(GreenTheme, DARK_MODE, HIGH)
 }

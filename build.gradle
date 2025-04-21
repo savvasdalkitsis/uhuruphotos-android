@@ -68,6 +68,7 @@ subprojects {
             "project ':foundation:share:api'",
             "project ':foundation:strings:api'",
             "project ':foundation:system:api'",
+            "project ':foundation:theme:api'",
             "project ':foundation:toaster:api'",
     ]) {
         apply plugin: libs.plugins.kotlin.multiplatform.get().pluginId

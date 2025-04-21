@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import org.jetbrains.compose.resources.DrawableResource
-import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res
 import uhuruphotos_android.foundation.icons.api.generated.resources.ic_brightness_auto
 import uhuruphotos_android.foundation.icons.api.generated.resources.ic_dark_mode
 import uhuruphotos_android.foundation.icons.api.generated.resources.ic_light_mode
@@ -28,9 +28,9 @@ enum class ThemeMode(
     val icon: DrawableResource,
 ) {
 
-    FOLLOW_SYSTEM("Follow system", drawable.ic_brightness_auto),
-    DARK_MODE("Dark mode", drawable.ic_dark_mode),
-    LIGHT_MODE("Light mode", drawable.ic_light_mode);
+    FOLLOW_SYSTEM("Follow system", Res.drawable.ic_brightness_auto),
+    DARK_MODE("Dark mode", Res.drawable.ic_dark_mode),
+    LIGHT_MODE("Light mode", Res.drawable.ic_light_mode);
 
     @Composable
     fun isDark(): Boolean = when (this) {
