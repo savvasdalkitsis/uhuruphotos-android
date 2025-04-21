@@ -2,12 +2,16 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.seam.api'
 }
 
-dependencies {
-
-    implementation(
-            libs.androidx.lifecycle,
-            libs.kotlinx.coroutines,
-            project(":foundation:launchers:api"),
-            project(":foundation:log:api"),
-    )
+kotlin {
+    jvm("desktop")
+    androidTarget()
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation(libs.kotlinx.coroutines)
+                implementation(project(":foundation:launchers:api"))
+                implementation(project(":foundation:log:api"))
+            }
+        }
+    }
 }
