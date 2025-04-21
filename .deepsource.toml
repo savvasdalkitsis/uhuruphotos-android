@@ -11,4 +11,3 @@ name = "kotlin"
 
   [analyzers.meta]
   runtime_version = "17"
-  language_version = "1.9"

@@ -7,6 +7,9 @@ android {
 }
 
 dependencies {
+    api(
+            project(":feature:person:view:api"),
+    )
     implementation(
             libs.androidx.compose.foundation,
             libs.androidx.compose.material3,
@@ -16,7 +19,6 @@ dependencies {
             project(":feature:media:common:domain:api"),
             project(":feature:media:common:view:api"),
             project(":feature:people:view:api"),
-            project(":feature:person:view:api"),
             project(":foundation:coroutines:api"),
             project(":foundation:icons:api"),
             project(":foundation:log:api"),

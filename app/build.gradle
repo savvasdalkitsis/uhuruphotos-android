@@ -10,6 +10,9 @@ android {
     buildFeatures {
         compose true
     }
+    compileOptions {
+        coreLibraryDesugaringEnabled true
+    }
 
     defaultConfig {
         applicationId "com.savvasdalkitsis.uhuruphotos"
@@ -62,6 +65,7 @@ android {
 }
 
 dependencies {
+    coreLibraryDesugaring(libs.desugar)
     implementation(
             libs.accompanist.systemui,
             libs.androidx.activity,

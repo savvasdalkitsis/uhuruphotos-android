@@ -1,24 +1,24 @@
 [versions]
 about = "11.6.3"
 accompanist = "0.36.0"
-agp = "8.9.0"
+agp = "8.9.1"
 android-sdk-geojson = "6.0.1"
 androidx-hilt = "1.2.0"
 autodagger = "1.4.0"
 coil = "2.7.0"
 compose = "1.7.8"
-crypto = "1.1.0-alpha06"
-datastore = "1.1.3"
-gms = "19.1.0"
+crypto = "1.1.0-alpha07"
+datastore = "1.1.4"
+gms = "19.2.0"
 google-services = "4.4.2"
-hilt = "2.52"
+hilt = "2.55"
 hilt-compiler = "1.2.0"
-kotlin = "2.0.21"
-kotlinx = "1.9.0"
+kotlin = "2.1.20"
+kotlinx = "1.10.1"
 lifecycle = "2.8.7"
 lumberjack = "6.0.7"
-material3 = "1.3.1"
-media3 = "1.5.1"
+material3 = "1.3.2"
+media3 = "1.6.1"
 mockk = "1.13.17"
 moshi = "1.15.2"
 okhttp = "5.0.0-alpha.11"
@@ -37,11 +37,11 @@ google-services = { id = "com.google.gms.google-services", version.ref = "google
 kotlin-android = { id = 'org.jetbrains.kotlin.android', version.ref = "kotlin" }
 kotlin-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
-ksp = "com.google.devtools.ksp:2.0.21-1.0.27"
+ksp = "com.google.devtools.ksp:2.1.20-2.0.0"
 moduleGraph = "com.savvasdalkitsis.module-dependency-graph:0.12"
 powerassert = { id = "org.jetbrains.kotlin.plugin.power-assert", version.ref = "kotlin" }
-redacted = "dev.zacsweers.redacted:1.10.0"
-sonarqube = "org.sonarqube:5.1.0.4882"
+redacted = "dev.zacsweers.redacted:1.13.0"
+sonarqube = "org.sonarqube:6.0.1.5171"
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
 jetbrains-compose = { id = "org.jetbrains.compose", version = "1.7.3" }
 
@@ -70,7 +70,7 @@ androidx-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compos
 androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
 androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
 androidx-compose-ui-util = { module = "androidx.compose.ui:ui-util", version.ref = "compose" }
-androidx-core = "androidx.core:core-ktx:1.15.0"
+androidx-core = "androidx.core:core-ktx:1.16.0"
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hilt-compiler" }
 androidx-lifecycle = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle" }
@@ -106,10 +106,11 @@ coil-gif = { module = "io.coil-kt:coil-gif", version.ref = "coil" }
 coil-video = { module = "io.coil-kt:coil-video", version.ref = "coil" }
 compottie = "io.github.alexzhirkevich:compottie:2.0.0-rc04"
 crop = "com.github.moyuruaizawa:cropify:0.3.1"
+desugar = "com.android.tools:desugar_jdk_libs:2.1.5"
 exif = "androidx.exifinterface:exifinterface:1.4.0"
 flowpreferences = "com.fredporciuncula:flow-preferences:1.9.1"
 gif = "com.squareup:gifencoder:0.10.1"
-google-fonts = "androidx.compose.ui:ui-text-google-fonts:1.8.0-rc01"
+google-fonts = "androidx.compose.ui:ui-text-google-fonts:1.8.0-rc03"
 google-services = { module = "com.google.gms:google-services", version.ref = "google-services" }
 gson = "com.google.code.gson:gson:2.11.0"
 heatmap = "com.github.k-surtel:heat-map:1.0.1"
@@ -153,7 +154,7 @@ okhttp-url = { module = "com.squareup.okhttp3:okhttp-urlconnection", version.ref
 palette = "androidx.palette:palette-ktx:1.0.0"
 permissions-base = { module = "dev.shreyaspatil.permission-flow:permission-flow-android", version.ref = "permissions" }
 permissions-compose = { module = "dev.shreyaspatil.permission-flow:permission-flow-compose", version.ref = "permissions" }
-play = "com.google.android.gms:play-services-base:18.6.0"
+play = "com.google.android.gms:play-services-base:18.7.0"
 remember = "dev.burnoo:compose-remember-preference:1.1.1"
 reorder = "sh.calvin.reorderable:reorderable:2.4.3"
 resaca-core = { module = "io.github.sebaslogen:resaca", version.ref = "resaca" }
