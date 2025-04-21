@@ -35,7 +35,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 @Composable fun String?.toColor(): Color = when {
     isNullOrBlank() -> MaterialTheme.colorScheme.background
     else -> try {
-        Color(android.graphics.Color.parseColor(this))
+        Color(parseColor(this))
     } catch (e: Exception) {
         log(e)
         MaterialTheme.colorScheme.background
@@ -54,4 +54,46 @@ fun PaddingValues.copy(
 fun Modifier.blurIf(condition: Boolean): Modifier = composed {
     val blur: Float by animateFloatAsState(if (condition) 8f else 0f, label = "blurAnimation")
     this.blur(blur.dp)
+}
+
+private val sColorNameMap = mapOf<String, Int>(
+    "black" to 0x000000,
+    "darkgray" to 0x444444,
+    "gray" to 0x888888,
+    "lightgray" to 0xCCCCCC,
+    "white" to 0xFFFFFF,
+    "red" to 0xFF0000,
+    "green" to 0x00FF00,
+    "blue" to 0x0000FF,
+    "yellow" to 0xFFFF00,
+    "cyan" to 0x00FFFF,
+    "magenta" to 0xFF00FF,
+    "aqua" to 0x00FFFF,
+    "fuchsia" to 0xFF00FF,
+    "darkgrey" to 0x444444,
+    "grey" to 0x888888,
+    "lightgrey" to 0xCCCCCC,
+    "lime" to 0x00FF00,
+    "maroon" to 0x800000,
+    "navy" to 0x000080,
+    "olive" to 0x808000,
+    "purple" to 0x800080,
+    "silver" to 0xC0C0C0,
+    "teal" to 0x008080,
+)
+
+fun parseColor(colorString: String): Int {
+    if (colorString[0] == '#') {
+        var color = colorString.substring(1).toLong(16)
+        if (colorString.length == 7) {
+            color = color or 0x00000000ff000000L
+        } else require(colorString.length == 9) { "Unknown color" }
+        return color.toInt()
+    } else {
+        val color: Int? = sColorNameMap[colorString.lowercase()]
+        if (color != null) {
+            return color
+        }
+    }
+    throw IllegalArgumentException("Unknown color")
 }

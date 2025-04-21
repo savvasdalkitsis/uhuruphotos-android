@@ -31,7 +31,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.core.math.MathUtils.clamp
+import com.savvasdalkitsis.uhuruphotos.math.clamp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 

@@ -61,7 +61,7 @@ private val recomposeModifier =
         // as the key is really just to cause the timer to restart every composition).
         LaunchedEffect(totalCompositions[0]) {
             delay(3000)
-            totalCompositionsAtLastTimeout.value = totalCompositions[0]
+            totalCompositionsAtLastTimeout.longValue = totalCompositions[0]
         }
 
         Modifier.drawWithCache {
@@ -72,7 +72,7 @@ private val recomposeModifier =
                 // Below is to draw the highlight, if necessary. A lot of the logic is copied from
                 // Modifier.border
                 val numCompositionsSinceTimeout =
-                    totalCompositions[0] - totalCompositionsAtLastTimeout.value
+                    totalCompositions[0] - totalCompositionsAtLastTimeout.longValue
 
                 val hasValidBorderParams = size.minDimension > 0f
                 if (!hasValidBorderParams || numCompositionsSinceTimeout <= 0) {

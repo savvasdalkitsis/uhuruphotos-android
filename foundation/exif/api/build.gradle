@@ -1,3 +1,8 @@
 android {
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.exif.api'
 }
+
+kotlin {
+    jvm("desktop")
+    androidTarget()
+}
