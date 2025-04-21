@@ -48,6 +48,7 @@ subprojects {
             "project ':foundation:group:api'",
             "project ':foundation:icons:api'",
             "project ':foundation:lang:api'",
+            "project ':foundation:launchers:api'",
             "project ':foundation:log:api'",
             "project ':foundation:math:api'",
             "project ':foundation:result:api'",

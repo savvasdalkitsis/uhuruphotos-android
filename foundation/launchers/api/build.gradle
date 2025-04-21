@@ -2,8 +2,14 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.launchers.api'
 }
 
-dependencies {
-    implementation(
-            libs.kotlinx.coroutines,
-    )
+kotlin {
+    jvm("desktop")
+    androidTarget()
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation(libs.kotlinx.coroutines)
+            }
+        }
+    }
 }
