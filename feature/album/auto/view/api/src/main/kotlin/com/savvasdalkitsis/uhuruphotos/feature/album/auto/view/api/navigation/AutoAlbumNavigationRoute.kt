@@ -17,9 +17,9 @@ package com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.api.navigation
 
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
 import kotlinx.parcelize.IgnoredOnParcel
-import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
 
-@Parcelize
+@Serializable
 data class AutoAlbumNavigationRoute(
     val albumId: Int,
 ) : NavigationRoute {

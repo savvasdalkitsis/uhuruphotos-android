@@ -13,8 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
+@file:OptIn(ExperimentalSharedTransitionApi::class)
+
 package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionLayout
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -55,7 +60,7 @@ import uhuruphotos_android.foundation.strings.api.generated.resources.local_albu
 import uhuruphotos_android.foundation.strings.api.generated.resources.view_all
 
 @Composable
-internal fun LocalFolders(
+internal fun SharedTransitionScope.LocalFolders(
     modifier: Modifier = Modifier,
     title: String,
     media: LibraryLocalMediaState.FoundState,
@@ -113,21 +118,25 @@ internal fun LocalFolders(
 @Preview
 @Composable
 private fun LocalFoldersPreview() {
-    PreviewAppTheme {
-        LocalFoldersAll()
+    SharedTransitionLayout {
+        PreviewAppTheme {
+            LocalFoldersAll()
+        }
     }
 }
 
 @Preview
 @Composable
 private fun LocalFoldersPreviewDark() {
-    PreviewAppTheme(ThemeMode.DARK_MODE) {
-        LocalFoldersAll()
+    SharedTransitionLayout {
+        PreviewAppTheme(ThemeMode.DARK_MODE) {
+            LocalFoldersAll()
+        }
     }
 }
 
 @Composable
-private fun LocalFoldersAll() {
+private fun SharedTransitionScope.LocalFoldersAll() {
     LocalFolders(title = stringResource(string.local_albums), media = LibraryLocalMediaState.FoundState(persistentListOf(
         LocalMediaFolder(0, "Folder 1") to VitrineState(
             celState("#ff0000"),
@@ -176,15 +185,17 @@ private fun LocalFoldersPreviewWithoutOtherDark() {
 
 @Composable
 private fun LocalFoldersWithoutOther() {
-    LocalFolders(title = stringResource(string.local_albums), media = LibraryLocalMediaState.FoundState(persistentListOf(
-        LocalMediaFolder(0, "Folder 1") to VitrineState(
-            celState("#ff0000"),
-            celState("#00ff00"),
-            celState("#0000ff"),
-            celState("#00ffff"),
-        ),
-    ), false)) {
+    SharedTransitionLayout {
+        LocalFolders(title = stringResource(string.local_albums), media = LibraryLocalMediaState.FoundState(persistentListOf(
+            LocalMediaFolder(0, "Folder 1") to VitrineState(
+                celState("#ff0000"),
+                celState("#00ff00"),
+                celState("#0000ff"),
+                celState("#00ffff"),
+            ),
+        ), false)) {
 
+        }
     }
 }
 

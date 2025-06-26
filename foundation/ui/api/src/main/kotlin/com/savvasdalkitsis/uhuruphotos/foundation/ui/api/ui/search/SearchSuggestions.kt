@@ -13,9 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
+@file:OptIn(ExperimentalSharedTransitionApi::class)
+
 package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.search
 
 import android.content.res.Configuration.ORIENTATION_LANDSCAPE
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
@@ -34,9 +38,9 @@ import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.persistentMapOf
 
 @Composable
-internal fun SearchSuggestions(
+internal fun SharedTransitionScope.SearchSuggestions(
     suggestions: ImmutableList<SearchSuggestion>,
-    leadingContent: ImmutableMap<String, @Composable (SearchSuggestion) -> Unit> = persistentMapOf(),
+    leadingContent: ImmutableMap<String, @Composable SharedTransitionScope.(SearchSuggestion) -> Unit> = persistentMapOf(),
     trailingContent: ImmutableMap<String, @Composable (SearchSuggestion) -> Unit> = persistentMapOf(),
     onSearchAction: (SearchSuggestion) -> Unit,
 ) {
@@ -66,7 +70,7 @@ internal fun SearchSuggestions(
                                 onSearchAction(suggestion)
                             },
                             leadingContent = {
-                                leadingContent[suggestion.type]?.invoke(suggestion)
+                                leadingContent[suggestion.type]?.invoke(this, suggestion)
                             },
                             trailingContent = {
                                 trailingContent[suggestion.type]?.invoke(suggestion)

@@ -13,9 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
+@file:OptIn(ExperimentalSharedTransitionApi::class)
+
 package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.search
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.clickable
@@ -62,13 +66,13 @@ import uhuruphotos_android.foundation.strings.api.generated.resources.search_for
 import uhuruphotos_android.foundation.strings.api.generated.resources.search_icon
 
 @Composable
-fun SearchField(
+fun SharedTransitionScope.SearchField(
     queryCacheKey: String,
     latestQuery: String,
     enabled: Boolean = true,
     showSearchIcon: Boolean = true,
     searchSuggestions: ImmutableList<SearchSuggestion> = persistentListOf(),
-    suggestionLeadingContent: ImmutableMap<String, @Composable (SearchSuggestion) -> Unit> = persistentMapOf(),
+    suggestionLeadingContent: ImmutableMap<String, @Composable SharedTransitionScope.(SearchSuggestion) -> Unit> = persistentMapOf(),
     suggestionTrailingContent: ImmutableMap<String, @Composable (SearchSuggestion) -> Unit> = persistentMapOf(),
     autoFocus: Boolean = false,
     onDisabledClick: () -> Unit = {},

@@ -13,9 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
+@file:OptIn(ExperimentalSharedTransitionApi::class)
+
 package com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui
 
 import android.content.res.Configuration.ORIENTATION_LANDSCAPE
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalConfiguration
@@ -30,7 +34,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.rememberMapViewStat
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
-fun HeatMap(
+fun SharedTransitionScope.HeatMap(
     state: HeatMapState,
     action: (HeatMapAction) -> Unit
 ) {

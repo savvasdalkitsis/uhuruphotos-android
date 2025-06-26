@@ -16,8 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.foundation.navigation.api
 
 import androidx.compose.runtime.compositionLocalOf
-import com.bumble.appyx.navmodel.backstack.BackStack
 
-val LocalBackStack = compositionLocalOf<() -> BackStack<NavigationRoute>> {
+val LocalBackStack = compositionLocalOf<() -> List<Navigator>> {
     throw IllegalStateException("Not initialized")
 }

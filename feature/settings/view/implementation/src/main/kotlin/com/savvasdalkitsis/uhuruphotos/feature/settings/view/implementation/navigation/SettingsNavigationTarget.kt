@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.navigation
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.api.navigation.SettingsNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.Settings
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.controller.SettingsViewStateController
@@ -25,6 +26,7 @@ import se.ansman.dagger.auto.AutoInitialize
 import javax.inject.Inject
 import javax.inject.Singleton
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @AutoInitialize
 @Singleton
 class SettingsNavigationTarget @Inject constructor(

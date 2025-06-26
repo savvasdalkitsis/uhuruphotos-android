@@ -28,6 +28,7 @@ import kotlinx.parcelize.Parcelize
 import java.io.Serializable
 
 @Immutable
+@kotlinx.serialization.Serializable
 sealed class MediaIdModel<T : Serializable> private constructor(
 ) : Parcelable {
 

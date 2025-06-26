@@ -13,8 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
+@file:OptIn(ExperimentalSharedTransitionApi::class)
+
 package com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.ui
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -45,7 +49,7 @@ import uhuruphotos_android.foundation.strings.api.generated.resources.missing_pe
 import uhuruphotos_android.foundation.strings.api.generated.resources.no_media
 
 @Composable
-fun LocalAlbumPage(
+fun SharedTransitionScope.LocalAlbumPage(
     state: Pair<GalleryState, LocalAlbumState>,
     action: (Either<GalleryAction, LocalAlbumAction>) -> Unit
 ) {

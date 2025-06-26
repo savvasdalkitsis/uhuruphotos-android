@@ -17,13 +17,13 @@ package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation
 
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSourceModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHashModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
 import kotlinx.parcelize.IgnoredOnParcel
-import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
 
-@Parcelize
+@Serializable
 data class LightboxNavigationRoute(
     val id: MediaIdModel<*>,
     val mediaItemHash: MediaItemHashModel,

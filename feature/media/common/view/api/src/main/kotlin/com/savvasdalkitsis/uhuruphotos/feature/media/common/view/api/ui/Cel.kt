@@ -13,9 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
+@file:OptIn(ExperimentalSharedTransitionApi::class)
+
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -43,6 +47,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import androidx.navigation3.ui.LocalNavAnimatedContentScope
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.api.navigation.LocalServerUrl
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelSelectionModeState
@@ -62,7 +67,7 @@ import uhuruphotos_android.foundation.icons.api.generated.resources.ic_favourite
 import uhuruphotos_android.foundation.icons.api.generated.resources.ic_play_filled
 
 @Composable
-fun Cel(
+fun SharedTransitionScope.Cel(
     modifier: Modifier = Modifier,
     state: CelState,
     onSelected: CelSelected,
@@ -106,7 +111,7 @@ fun Cel(
 }
 
 @Composable
-private fun Cel(
+private fun SharedTransitionScope.Cel(
     modifier: Modifier = Modifier,
     state: CelState,
     aspectRatio: Float = state.mediaItem.ratio,
@@ -132,7 +137,7 @@ private fun Cel(
 }
 
 @Composable
-private fun Cel(
+private fun SharedTransitionScope.Cel(
     modifier: Modifier = Modifier,
     aspectRatio: Float,
     contentScale: ContentScale = ContentScale.FillBounds,
@@ -164,10 +169,14 @@ private fun Cel(
             .recomposeHighlighter()
     ) {
         val serverUrl = LocalServerUrl.current
+        val animatedContentScope = LocalNavAnimatedContentScope.current
         Thumbnail(
             modifier = Modifier.fillMaxWidth().offset {
                 IntOffset(contentOffset.toInt(), 0)
-            },
+            }.sharedElement(
+                rememberSharedContentState("image-${id.value}"),
+                animatedContentScope,
+            ),
             url = remember(serverUrl, id) {
                 id.thumbnailUri(serverUrl)
             },

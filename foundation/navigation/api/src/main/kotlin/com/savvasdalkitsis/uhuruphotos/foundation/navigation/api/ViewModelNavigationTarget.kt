@@ -15,6 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.navigation.api
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.runtime.Composable
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.AppTheme
@@ -22,13 +24,14 @@ import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.LocalThemeMode
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeMode
 import kotlin.reflect.KClass
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Suppress("UNCHECKED_CAST")
 class ViewModelNavigationTarget<S : Any, A : Any, VM : NavigationViewModel<S, A, R>, R: NavigationRoute>(
     private val viewModelClass: KClass<VM>,
     route: KClass<R>,
     private val viewModelScopedToComposable: Boolean = true,
     private val theme: @Composable () -> ThemeMode = { LocalThemeMode.current },
-    private val view: @Composable (S, (A) -> Unit) -> Unit,
+    private val view: @Composable SharedTransitionScope.(S, (A) -> Unit) -> Unit,
 ) : NavigationTarget<R> {
 
     init {
@@ -36,7 +39,7 @@ class ViewModelNavigationTarget<S : Any, A : Any, VM : NavigationViewModel<S, A,
     }
 
     @Composable
-    override fun NavigationRootView(route: R) {
+    override fun SharedTransitionScope.NavigationRootView(route: R) {
         ViewModelView(route, viewModelClass, viewModelScopedToComposable) { state, actions ->
             AppTheme(themeMode = theme()) {
                 view(state, actions)

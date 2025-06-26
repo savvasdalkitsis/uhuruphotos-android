@@ -69,8 +69,7 @@ dependencies {
     implementation(
             libs.accompanist.systemui,
             libs.androidx.activity,
-            libs.androidx.compose.hilt.navigation,
-            libs.androidx.compose.material.windowsize,
+                        libs.androidx.compose.material.windowsize,
             libs.androidx.compose.ui,
             libs.androidx.splash,
             libs.androidx.work.hilt,

@@ -9,8 +9,7 @@ android {
 dependencies {
     implementation(
             libs.accompanist.webview,
-            libs.androidx.compose.navigation,
-            libs.bundles.autodagger,
+                        libs.bundles.autodagger,
             project(":feature:auth:domain:api"),
             project(":feature:auth:view:api"),
             project(":feature:settings:domain:api"),

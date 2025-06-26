@@ -16,11 +16,9 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.foundation.navigation.implementation
 
 import android.content.Intent
-import android.net.Uri
-import com.bumble.appyx.navmodel.backstack.BackStack
-import com.bumble.appyx.navmodel.backstack.operation.newRoot
-import com.bumble.appyx.navmodel.backstack.operation.pop
-import com.bumble.appyx.navmodel.backstack.operation.push
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.snapshots.SnapshotStateList
+import androidx.core.net.toUri
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.navigation.HomeNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.launchers.api.onMain
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
@@ -29,6 +27,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.reflect.KClass
 
 @AutoBind
 @Singleton
@@ -36,10 +35,11 @@ class Navigator @Inject internal constructor(
     private val intentLauncher: IntentLauncher,
 ) : Navigator {
 
-    override lateinit var backStack: BackStack<NavigationRoute>
+    private val _backStack = mutableStateListOf<NavigationRoute>(HomeNavigationRoute)
+    override val backStack: SnapshotStateList<NavigationRoute> = _backStack
 
     override fun navigateToWeb(webUrl: String) = navigateTo(
-        Intent(Intent.ACTION_VIEW, Uri.parse(webUrl))
+        Intent(Intent.ACTION_VIEW, webUrl.toUri())
     )
 
     override fun navigateTo(intent: Intent) {
@@ -56,24 +56,22 @@ class Navigator @Inject internal constructor(
 
     override fun <R : NavigationRoute> navigateTo(route: R) {
         log { "Navigating to $route" }
-        onMain {
-            backStack.push(route)
+        mutateBackStack {
+            add(route)
         }
     }
 
     override fun navigateBack() {
-        onMain {
-            backStack.pop()
+        mutateBackStack {
+            removeLastOrNull()
         }
     }
 
     override fun navigateUp() {
-        onMain {
-            if (backStack.elements.value.size > 1) {
-                navigateBack()
-            } else {
-                clearBackStack()
-            }
+        if (_backStack.size > 1) {
+            navigateBack()
+        } else {
+            clearBackStack()
         }
     }
 
@@ -82,8 +80,28 @@ class Navigator @Inject internal constructor(
     }
 
     override fun <R : NavigationRoute> newRoot(route: R) {
+        mutateBackStack {
+            clear()
+            add(route)
+        }
+    }
+
+    override fun <R : NavigationRoute> singleTop(route: R, routeType: KClass<R>) {
+        mutateBackStack {
+            if (any { it::class == routeType }) {
+                while (last()::class != routeType) {
+                    removeLastOrNull()
+                }
+                removeLastOrNull()
+            }
+            add(route)
+        }
+    }
+
+    private fun mutateBackStack(action: SnapshotStateList<NavigationRoute>.() -> Unit) {
         onMain {
-            backStack.newRoot(route)
+            _backStack.action()
+            log { "Back stack is now: ${_backStack.joinToString(", ")}" }
         }
     }
 }

@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.navigation
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.api.navigation.PortfolioNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui.Portfolio
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.viewmodel.PortfolioViewModel
@@ -24,6 +25,7 @@ import se.ansman.dagger.auto.AutoInitialize
 import javax.inject.Inject
 import javax.inject.Singleton
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @AutoInitialize
 @Singleton
 class PortfolioNavigationTarget @Inject constructor(

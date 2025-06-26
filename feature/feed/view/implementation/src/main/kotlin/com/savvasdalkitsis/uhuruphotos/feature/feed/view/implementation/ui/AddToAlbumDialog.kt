@@ -14,8 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
  */
 
+@file:OptIn(ExperimentalSharedTransitionApi::class)
+
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
@@ -59,7 +63,7 @@ import uhuruphotos_android.foundation.strings.api.generated.resources.add_to_alb
 import uhuruphotos_android.foundation.strings.api.generated.resources.create_album
 
 @Composable
-internal fun AddToAlbumDialog(
+internal fun SharedTransitionScope.AddToAlbumDialog(
     albums: ImmutableList<UserAlbumState>,
     action: (FeedAction) -> Unit,
 ) {

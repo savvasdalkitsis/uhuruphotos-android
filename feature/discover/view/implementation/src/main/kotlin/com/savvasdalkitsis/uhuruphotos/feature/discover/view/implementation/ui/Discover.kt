@@ -13,8 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
+@file:OptIn(ExperimentalSharedTransitionApi::class)
+
 package com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -28,7 +32,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.DiscoverState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.dialogs.UpsellDialog
 
-@Composable fun Discover(
+@Composable fun SharedTransitionScope.Discover(
     state: DiscoverState,
     action: (DiscoverAction) -> Unit,
     contentPadding: PaddingValues,

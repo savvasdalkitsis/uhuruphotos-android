@@ -13,8 +13,7 @@ dependencies {
             project(":feature:auth:view:api"),
     )
     implementation(
-            libs.androidx.compose.hilt.navigation,
-            libs.androidx.compose.ui,
+                        libs.androidx.compose.ui,
             libs.bundles.autodagger,
             libs.gson,
             libs.hilt,

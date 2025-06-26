@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.navigation
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.api.navigation.PersonNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.ui.Person
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.viewmodel.PersonViewModel
@@ -24,6 +25,7 @@ import se.ansman.dagger.auto.AutoInitialize
 import javax.inject.Inject
 import javax.inject.Singleton
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @AutoInitialize
 @Singleton
 class PersonNavigationTarget @Inject constructor(

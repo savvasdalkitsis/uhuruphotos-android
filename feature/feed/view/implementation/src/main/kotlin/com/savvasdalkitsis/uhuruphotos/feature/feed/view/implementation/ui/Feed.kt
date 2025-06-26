@@ -13,9 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
+@file:OptIn(ExperimentalSharedTransitionApi::class)
+
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -61,7 +65,7 @@ import dev.shreyaspatil.permissionflow.compose.rememberPermissionFlowRequestLaun
 import kotlinx.coroutines.launch
 
 @Composable
-internal fun Feed(
+internal fun SharedTransitionScope.Feed(
     state: FeedCompositeState,
     actions: (FeedCompositeAction) -> Unit,
 ) {
@@ -86,7 +90,7 @@ internal fun Feed(
 }
 
 @Composable
-private fun Feed(
+private fun SharedTransitionScope.Feed(
     state: FeedState,
     isShowingPopUp: Boolean,
     action: (FeedAction) -> Unit,

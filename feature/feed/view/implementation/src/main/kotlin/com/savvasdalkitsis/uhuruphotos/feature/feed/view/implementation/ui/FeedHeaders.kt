@@ -13,9 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
+@file:OptIn(ExperimentalSharedTransitionApi::class)
+
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -52,7 +56,7 @@ import uhuruphotos_android.foundation.strings.api.generated.resources.forget_ser
 import uhuruphotos_android.foundation.strings.api.generated.resources.missing_local_media_permissions
 
 @Composable
-fun FeedHeaders(
+fun SharedTransitionScope.FeedHeaders(
     state: FeedState,
     visible: Boolean,
     onScrollToMemory: (CelState) -> Unit,

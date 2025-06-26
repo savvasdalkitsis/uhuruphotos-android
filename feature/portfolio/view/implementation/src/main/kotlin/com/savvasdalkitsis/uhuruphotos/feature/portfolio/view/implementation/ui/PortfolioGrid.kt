@@ -13,8 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
+@file:OptIn(ExperimentalSharedTransitionApi::class)
+
 package com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionLayout
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.PaddingValues
@@ -41,18 +46,21 @@ fun BoxScope.PortfolioGrid(
     contentPadding: PaddingValues = PaddingValues(),
     localMedia: PortfolioItemsState.FoundState,
     showScanOther: Boolean,
+    sharedTransitionScope: SharedTransitionScope,
     action: (PortfolioAction) -> Unit
 ) {
     val padding = 4.dp
-    LazyVerticalGrid(
-        contentPadding = contentPadding + PaddingValues(horizontal = padding),
-        columns = GridCells.Adaptive(minSize = 120.dp),
-        horizontalArrangement = spacedBy(padding),
-        verticalArrangement = spacedBy(padding),
-    ) {
-        localMedia.buckets.forEachIndexed { index, cel ->
-            item(index) {
-                PortfolioCel(cel, action)
+    with (sharedTransitionScope) {
+        LazyVerticalGrid(
+            contentPadding = contentPadding + PaddingValues(horizontal = padding),
+            columns = GridCells.Adaptive(minSize = 120.dp),
+            horizontalArrangement = spacedBy(padding),
+            verticalArrangement = spacedBy(padding),
+        ) {
+            localMedia.buckets.forEachIndexed { index, cel ->
+                item(index) {
+                    PortfolioCel(cel, action)
+                }
             }
         }
     }
@@ -69,25 +77,33 @@ fun BoxScope.PortfolioGrid(
 @Preview
 @Composable
 private fun PortfolioGridPreview() {
-    PreviewAppTheme {
-        PortfolioGrid(
-            localMedia = PortfolioItemsState.FoundState(
-                List(50) { state(it) }.toImmutableList()
-            ),
-            showScanOther = false,
-        ) {}
+    SharedTransitionLayout {
+        val scope = this
+        PreviewAppTheme {
+            PortfolioGrid(
+                localMedia = PortfolioItemsState.FoundState(
+                    List(50) { state(it) }.toImmutableList()
+                ),
+                showScanOther = false,
+                sharedTransitionScope = scope,
+            ) {}
+        }
     }
 }
 
 @Preview
 @Composable
 private fun PortfolioGridNotOthersPreview() {
-    PreviewAppTheme {
-        PortfolioGrid(
-            localMedia = PortfolioItemsState.FoundState(
-                persistentListOf(state(1))
-            ),
-            showScanOther = true,
-        ) {}
+    SharedTransitionLayout {
+        val scope = this
+        PreviewAppTheme {
+            PortfolioGrid(
+                localMedia = PortfolioItemsState.FoundState(
+                    persistentListOf(state(1))
+                ),
+                showScanOther = true,
+                sharedTransitionScope = scope,
+            ) {}
+        }
     }
 }

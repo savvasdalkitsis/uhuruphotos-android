@@ -13,8 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
+@file:OptIn(ExperimentalSharedTransitionApi::class)
+
 package com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.navigation
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.runtime.Composable
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.GalleryAction
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.Gallery
@@ -22,14 +26,14 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.Gallery
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.actions.FingerPrintActionPressed
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.actions.TrashAction
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.state.TrashState
-import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either.Right
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruActionIcon
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
 import uhuruphotos_android.foundation.icons.api.generated.resources.ic_fingerprint
 
 @Composable
-internal fun TrashAlbumPage(
+internal fun SharedTransitionScope.TrashAlbumPage(
     state: Pair<GalleryState, TrashState>,
     action: (Either<GalleryAction, TrashAction>) -> Unit
 ) {

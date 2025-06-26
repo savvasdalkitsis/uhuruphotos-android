@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.navigation
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.navigation.HomeNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.ui.Home
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.viewmodel.HomeViewModel
@@ -24,6 +25,7 @@ import se.ansman.dagger.auto.AutoInitialize
 import javax.inject.Inject
 import javax.inject.Singleton
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @AutoInitialize
 @Singleton
 class HomeNavigationTarget @Inject constructor(

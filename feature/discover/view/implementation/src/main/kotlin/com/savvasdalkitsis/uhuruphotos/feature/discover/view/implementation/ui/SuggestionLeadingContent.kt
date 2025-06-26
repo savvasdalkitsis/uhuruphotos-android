@@ -13,8 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
+@file:OptIn(ExperimentalSharedTransitionApi::class)
+
 package com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -37,15 +41,15 @@ import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.s
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.ServerSearchSuggestionState
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.UserAlbumSearchSuggestionState
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.PersonImage
-import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.search.SearchSuggestion
 import kotlinx.collections.immutable.persistentMapOf
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
 import uhuruphotos_android.foundation.icons.api.generated.resources.ic_assistant
 import uhuruphotos_android.foundation.icons.api.generated.resources.ic_creation
 import uhuruphotos_android.foundation.icons.api.generated.resources.ic_history
 
-val suggestionLeadingContent = persistentMapOf<String, @Composable (SearchSuggestion) -> Unit>(
+val suggestionLeadingContent = persistentMapOf<String, @Composable SharedTransitionScope.(SearchSuggestion) -> Unit>(
     RecentSearchSuggestionState.TYPE to {
         UhuruIcon(
             modifier = Modifier

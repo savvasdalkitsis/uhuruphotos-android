@@ -85,11 +85,11 @@ subprojects {
     apply plugin: libs.plugins.ksp.get().pluginId
 
     android {
-        compileSdk 35
+        compileSdk 36
 
         defaultConfig {
             minSdk 24
-            targetSdk 35
+            targetSdk 36
         }
         compileOptions {
             sourceCompatibility JavaVersion.VERSION_21

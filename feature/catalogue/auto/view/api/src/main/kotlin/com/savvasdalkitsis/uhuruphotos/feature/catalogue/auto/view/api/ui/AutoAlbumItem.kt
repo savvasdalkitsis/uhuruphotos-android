@@ -13,8 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
+@file:OptIn(ExperimentalSharedTransitionApi::class)
+
 package com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.api.ui
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.MaterialTheme
@@ -33,7 +37,7 @@ import uhuruphotos_android.foundation.strings.api.generated.resources.Res.plural
 import uhuruphotos_android.foundation.strings.api.generated.resources.item_count
 
 @Composable
-fun AutoAlbumItem(
+fun SharedTransitionScope.AutoAlbumItem(
     modifier: Modifier = Modifier,
     album: AutoAlbum,
     shape: Shape = MaterialTheme.shapes.large,

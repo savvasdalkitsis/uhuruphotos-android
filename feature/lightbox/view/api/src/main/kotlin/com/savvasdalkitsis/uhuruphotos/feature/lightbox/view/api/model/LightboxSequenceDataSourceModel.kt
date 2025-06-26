@@ -17,44 +17,59 @@ package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
 
+@Serializable
 sealed class LightboxSequenceDataSourceModel(
     val showMediaSyncState: Boolean = false,
     val shouldShowDeleteButton: Boolean = false,
 ) : Parcelable {
 
     @Parcelize
+    @Serializable
     data object SingleItemModel : LightboxSequenceDataSourceModel()
     @Parcelize
+    @Serializable
     data object FeedModel : LightboxSequenceDataSourceModel(
         showMediaSyncState = true,
         shouldShowDeleteButton = true,
     )
     @Parcelize
+    @Serializable
     data class MemoryModel(val yearsAgo: Int) : LightboxSequenceDataSourceModel(
         showMediaSyncState = true,
         shouldShowDeleteButton = true,
     )
     @Parcelize
+    @Serializable
     data class SearchResultsModel(val query: String) : LightboxSequenceDataSourceModel()
     @Parcelize
+    @Serializable
     data class PersonResultsModel(val personId: Int) : LightboxSequenceDataSourceModel()
     @Parcelize
+    @Serializable
     data class AutoAlbumModel(val albumId: Int) : LightboxSequenceDataSourceModel()
     @Parcelize
+    @Serializable
     data class UserAlbumModel(val albumId: Int) : LightboxSequenceDataSourceModel()
     @Parcelize
+    @Serializable
     data class LocalAlbumModel(val albumId: Int) : LightboxSequenceDataSourceModel(
         shouldShowDeleteButton = true,
     )
     @Parcelize
+    @Serializable
     data object FavouriteMediaModel : LightboxSequenceDataSourceModel()
     @Parcelize
+    @Serializable
     data object HiddenMediaModel : LightboxSequenceDataSourceModel()
     @Parcelize
+    @Serializable
     data object TrashModel : LightboxSequenceDataSourceModel()
     @Parcelize
+    @Serializable
     data object VideosModel : LightboxSequenceDataSourceModel()
     @Parcelize
+    @Serializable
     data object UndatedModel : LightboxSequenceDataSourceModel()
 }

@@ -13,8 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
+@file:OptIn(ExperimentalSharedTransitionApi::class)
+
 package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -67,7 +71,7 @@ import uhuruphotos_android.foundation.icons.api.generated.resources.ic_folder
 import uhuruphotos_android.foundation.icons.api.generated.resources.ic_invisible
 
 @Composable
-internal fun LibraryGrid(
+internal fun SharedTransitionScope.LibraryGrid(
     contentPadding: PaddingValues,
     state: LibraryState,
     action: (LibraryAction) -> Unit
@@ -128,13 +132,13 @@ internal fun LibraryGrid(
                         }
                     }
                 }
-                AUTO -> libraryItem(reordering, state.autoAlbums, item, drawable.ic_album_auto) {
+                AUTO -> libraryItem(reordering, state.autoAlbums, item, drawable.ic_album_auto, this@LibraryGrid) {
                     action(AutoAlbumsSelected)
                 }
-                USER -> libraryItem(reordering, state.userAlbums, item, drawable.ic_album_user) {
+                USER -> libraryItem(reordering, state.userAlbums, item, drawable.ic_album_user, this@LibraryGrid) {
                     action(UserAlbumsSelected)
                 }
-                FAVOURITE -> libraryItem(reordering, state.favouritePhotos, item, drawable.ic_album_favourites) {
+                FAVOURITE -> libraryItem(reordering, state.favouritePhotos, item, drawable.ic_album_favourites, this@LibraryGrid) {
                     action(FavouritePhotosSelected)
                 }
             }
@@ -168,6 +172,7 @@ internal fun LazyGridScope.libraryItem(
     vitrineState: VitrineState?,
     item: LibraryItemState,
     iconFallback: DrawableResource,
+    sharedTransitionScope: SharedTransitionScope,
     onSelected: () -> Unit,
 ) {
     vitrineState?.let {
@@ -175,13 +180,15 @@ internal fun LazyGridScope.libraryItem(
             val title = stringResource(item.title)
             ReorderableItem(reordering, item.title) { isDragging ->
                 Vibrate(isDragging)
-                NamedVitrine(
-                    state = vitrineState,
-                    photoGridModifier = Modifier.fillMaxWidth(),
-                    iconFallback = iconFallback,
-                    title = title,
-                    onSelected = onSelected
-                )
+                with (sharedTransitionScope) {
+                    NamedVitrine(
+                        state = vitrineState,
+                        photoGridModifier = Modifier.fillMaxWidth(),
+                        iconFallback = iconFallback,
+                        title = title,
+                        onSelected = onSelected
+                    )
+                }
             }
         }
     }

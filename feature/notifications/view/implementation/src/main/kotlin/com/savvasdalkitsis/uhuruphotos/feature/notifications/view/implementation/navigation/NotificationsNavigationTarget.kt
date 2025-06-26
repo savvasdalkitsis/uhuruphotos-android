@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.notifications.view.implementation.navigation
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.view.api.navigation.NotificationsNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.view.implementation.ui.Notifications
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.view.implementation.viewmodel.NotificationsViewModel
@@ -24,6 +25,7 @@ import se.ansman.dagger.auto.AutoInitialize
 import javax.inject.Inject
 import javax.inject.Singleton
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @AutoInitialize
 @Singleton
 class NotificationsNavigationTarget @Inject constructor(

@@ -17,6 +17,7 @@ kotlin = "2.1.20"
 kotlinx = "1.10.1"
 lifecycle = "2.8.7"
 lumberjack = "6.0.7"
+nav3 = "1.0.0-alpha01"
 material3 = "1.3.2"
 media3 = "1.6.1"
 mockk = "1.13.17"
@@ -26,6 +27,7 @@ permissions = "2.0.0"
 resaca = "4.4.4"
 result = "2.0.1"
 retrofit = "2.11.0"
+serialization = "1.8.1"
 sqldelight = "2.0.2"
 
 [plugins]
@@ -37,6 +39,7 @@ google-services = { id = "com.google.gms.google-services", version.ref = "google
 kotlin-android = { id = 'org.jetbrains.kotlin.android', version.ref = "kotlin" }
 kotlin-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin"}
 ksp = "com.google.devtools.ksp:2.1.20-2.0.0"
 moduleGraph = "com.savvasdalkitsis.module-dependency-graph:0.12"
 powerassert = { id = "org.jetbrains.kotlin.plugin.power-assert", version.ref = "kotlin" }
@@ -61,11 +64,9 @@ androidx-compose-animation-graphics = { module = "androidx.compose.animation:ani
 androidx-compose-constraintlayout = "androidx.constraintlayout:constraintlayout-compose:1.1.1"
 androidx-compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose" }
 androidx-compose-foundation-layout = { module = "androidx.compose.foundation:foundation-layout", version.ref = "compose" }
-androidx-compose-hilt-navigation = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "androidx-hilt" }
 androidx-compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "material3" }
 androidx-compose-material-icons = { module = "androidx.compose.material:material-icons-core", version.ref = "compose" }
 androidx-compose-material-windowsize = { module = "androidx.compose.material3:material3-window-size-class", version.ref = "material3" }
-androidx-compose-navigation = "androidx.navigation:navigation-compose:2.8.9"
 androidx-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
 androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
 androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
@@ -75,6 +76,9 @@ androidx-datastore-preferences = { module = "androidx.datastore:datastore-prefer
 androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hilt-compiler" }
 androidx-lifecycle = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle" }
 androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-android", version.ref = "lifecycle" }
+androidx-navigation3-runtime = { module = "androidx.navigation3:navigation3-runtime", version.ref = "nav3" }
+androidx-navigation3-ui = { module = "androidx.navigation3:navigation3-ui", version.ref = "nav3" }
+androidx-navigation3-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-navigation3", version.ref = "nav3" }
 androidx-media3-core = { module = "androidx.media3:media3-exoplayer", version.ref = "media3" }
 androidx-media3-database = { module = "androidx.media3:media3-database", version.ref = "media3" }
 androidx-media3-hls = { module = "androidx.media3:media3-exoplayer-hls", version.ref = "media3" }
@@ -128,6 +132,7 @@ kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref =
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx" }
 kotlinx-immutable = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.8"
+kotlinx-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "serialization" }
 leaks = "com.squareup.leakcanary:leakcanary-android:2.14"
 log4k = "de.peilicke.sascha:log4k:1.4.1"
 lottie = "com.airbnb.android:lottie-compose:6.6.4"
@@ -189,6 +194,11 @@ androidx-media3 = [
     "androidx-media3-hls",
     "androidx-media3-okhttp",
     "androidx-media3-ui",
+]
+androidx-navigation = [
+    "androidx-navigation3-runtime",
+    "androidx-navigation3-ui",
+    "androidx-navigation3-viewmodel",
 ]
 androidx-security-crypto = [
     "androidx-security-crypto-core",

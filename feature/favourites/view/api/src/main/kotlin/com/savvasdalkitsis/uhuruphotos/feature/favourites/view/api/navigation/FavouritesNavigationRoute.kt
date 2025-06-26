@@ -17,9 +17,9 @@ package com.savvasdalkitsis.uhuruphotos.feature.favourites.view.api.navigation
 
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
 import kotlinx.parcelize.IgnoredOnParcel
-import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
 
-@Parcelize
+@Serializable
 data object FavouritesNavigationRoute : NavigationRoute {
 
     @IgnoredOnParcel

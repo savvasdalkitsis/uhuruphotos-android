@@ -19,7 +19,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import coil.ImageLoader
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
@@ -53,12 +52,8 @@ import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeMode
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeVariant
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window.LocalSystemUiController
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CollageShape
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.shared.LocalSharedElementTransition
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.shared.state.SharedElementTransition
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.ExoplayerProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.LocalExoPlayerProvider
-import com.smarttoolfactory.screenshot.ScreenshotBox
-import com.smarttoolfactory.screenshot.rememberScreenshotState
 import javax.inject.Inject
 
 class CompositionLocalProviders @Inject constructor(
@@ -83,16 +78,12 @@ class CompositionLocalProviders @Inject constructor(
         val animateVideoThumbnails = settingsUIUseCase.observeAnimateVideoThumbnails().collectAsState(
             initial = true
         )
-        val screenshotState = rememberScreenshotState()
         val themeMode by settingsUIUseCase.observeThemeMode().collectAsState(ThemeMode.default)
         val themeVariant by settingsUIUseCase.observeThemeVariant().collectAsState(ThemeVariant.default)
         val themeContrast by settingsUIUseCase.observeThemeContrast().collectAsState(ThemeContrast.NORMAL)
         val collageShape by settingsUIUseCase.observeCollageShape().collectAsState(CollageShape.default)
         val collageSpacing by settingsUIUseCase.observeCollageSpacing().collectAsState(2)
         val collageSpacingEdges by settingsUIUseCase.observeCollageSpacingIncludeEdges().collectAsState(false)
-        val sharedElementTransition = remember(screenshotState) {
-            SharedElementTransition(screenshotState)
-        }
         @Suppress("DEPRECATION") val systemUiController = rememberSystemUiController()
         CompositionLocalProvider(
             LocalExoPlayerProvider provides exoplayerProvider,
@@ -109,12 +100,10 @@ class CompositionLocalProviders @Inject constructor(
             LocalCollageShapeProvider provides collageShape,
             LocalCollageSpacingProvider provides collageSpacing,
             LocalCollageSpacingEdgesProvider provides collageSpacingEdges,
-            LocalSharedElementTransition provides sharedElementTransition,
             LocalMapViewStateFactory provides CompositeMapViewStateFactory(mapViewStateFactories),
             LocalMapViewFactoryProvider provides CompositeMapViewFactoryProvider(mapViewFactoryProviders),
             LocalSystemUiController provides systemUiController,
-        ) {
-            ScreenshotBox(screenshotState = screenshotState, content = content)
-        }
+            content = content
+        )
     }
 }

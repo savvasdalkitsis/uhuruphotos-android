@@ -49,7 +49,9 @@ abstract class ForegroundNotificationWorker<BR>(
     @SuppressLint("MissingPermission")
     final override suspend fun doWork(): Result = withContext(dispatcher) {
         try {
-            setForeground(getForegroundInfo())
+            if (notificationManager.getNotificationChannel(notificationChannelId) != null) {
+                setForeground(getForegroundInfo())
+            }
         } catch (_: Exception) {
             // ignore
         }

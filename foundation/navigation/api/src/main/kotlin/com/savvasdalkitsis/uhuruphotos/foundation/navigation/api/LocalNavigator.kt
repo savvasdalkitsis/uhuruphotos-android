@@ -17,6 +17,6 @@ package com.savvasdalkitsis.uhuruphotos.foundation.navigation.api
 
 import androidx.compose.runtime.compositionLocalOf
 
-val LocalNavigator = compositionLocalOf<Navigator?> {
-    null
+val LocalNavigator = compositionLocalOf<Navigator> {
+    throw NotImplementedError()
 }

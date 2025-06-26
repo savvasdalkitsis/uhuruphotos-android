@@ -13,8 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
+@file:OptIn(ExperimentalSharedTransitionApi::class)
+
 package com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionLayout
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
@@ -36,7 +41,7 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 
 @Composable
-internal fun Portfolio(
+internal fun SharedTransitionScope.Portfolio(
     state: PortfolioState,
     action: (PortfolioAction) -> Unit = {},
 ) {
@@ -45,7 +50,7 @@ internal fun Portfolio(
         navigationIcon = { UhuruUpNavButton() },
     ) { contentPadding ->
         when(state.localMedia) {
-            is FoundState -> PortfolioGrid(contentPadding, state.localMedia, state.showScanOther, action)
+            is FoundState -> PortfolioGrid(contentPadding, state.localMedia, state.showScanOther, this@Portfolio, action)
             LoadingState -> UhuruFullLoading()
             is RequiresPermissionsState -> PortfolioMissingPermissions(state.localMedia.deniedPermissions)
         }
@@ -55,39 +60,47 @@ internal fun Portfolio(
 @Preview
 @Composable
 private fun PortfolioPreview() {
-    PreviewAppTheme {
-        Portfolio(state = PortfolioState(
-            FoundState(
-                List(50) { state(it) }.toImmutableList()
-            )
-        ))
+    SharedTransitionLayout {
+        PreviewAppTheme {
+            Portfolio(state = PortfolioState(
+                FoundState(
+                    List(50) { state(it) }.toImmutableList()
+                )
+            ))
+        }
     }
 }
 
 @Preview
 @Composable
 private fun PortfolioNotOthersPreview() {
-    PreviewAppTheme {
-        Portfolio(state = PortfolioState(
-            localMedia = FoundState(persistentListOf(state(1))),
-            showScanOther = true,
-        ))
+    SharedTransitionLayout {
+        PreviewAppTheme {
+            Portfolio(state = PortfolioState(
+                localMedia = FoundState(persistentListOf(state(1))),
+                showScanOther = true,
+            ))
+        }
     }
 }
 
 @Preview
 @Composable
 private fun PortfolioLoadingPreview() {
-    PreviewAppTheme {
-        Portfolio(state = PortfolioState(LoadingState))
+    SharedTransitionLayout {
+        PreviewAppTheme {
+            Portfolio(state = PortfolioState(LoadingState))
+        }
     }
 }
 
 @Preview
 @Composable
 private fun PortfolioNoPermissionsPreview() {
-    PreviewAppTheme {
-        Portfolio(state = PortfolioState(RequiresPermissionsState(persistentListOf())))
+    SharedTransitionLayout {
+        PreviewAppTheme {
+            Portfolio(state = PortfolioState(RequiresPermissionsState(persistentListOf())))
+        }
     }
 }
 

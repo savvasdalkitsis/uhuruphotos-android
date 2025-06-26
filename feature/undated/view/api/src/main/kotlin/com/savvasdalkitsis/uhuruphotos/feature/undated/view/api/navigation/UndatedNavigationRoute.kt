@@ -16,12 +16,10 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.undated.view.api.navigation
 
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
-import kotlinx.parcelize.IgnoredOnParcel
-import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
 
-@Parcelize
+@Serializable
 data object UndatedNavigationRoute : NavigationRoute {
 
-    @IgnoredOnParcel
     override val animatePopTransitionTo: Boolean = false
 }

@@ -13,15 +13,18 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
+@file:OptIn(ExperimentalSharedTransitionApi::class)
+
 package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.animation.core.SnapSpec
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -34,13 +37,12 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.LightboxAction
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.ShowActionsOverlay
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.shared.LocalSharedElementTransition
 import kotlinx.coroutines.flow.collectLatest
 import me.saket.telephoto.zoomable.ZoomSpec
 import me.saket.telephoto.zoomable.rememberZoomableState
 
 @Composable
-internal fun Lightbox(
+internal fun SharedTransitionScope.Lightbox(
     state: LightboxState,
     action: (LightboxAction) -> Unit
 ) {
@@ -80,9 +82,9 @@ internal fun Lightbox(
             LaunchedEffect(showingActionsOverlay) {
                 action(ShowActionsOverlay(showingActionsOverlay))
             }
-            if (pagerState.settledPage == index) {
-                LightboxBackHandler(showingActionsOverlay, scrollState, zoomableState, action)
-            } else {
+            val isCurrentPageForHandler = pagerState.currentPage == index
+            LightboxBackHandler(isCurrentPageForHandler, showingActionsOverlay, scrollState, zoomableState, action)
+            if (!isCurrentPageForHandler) {
                 LaunchedEffect(Unit) {
                     zoomableState.resetZoom(SnapSpec())
                     scrollState.scrollTo(0)
@@ -93,12 +95,6 @@ internal fun Lightbox(
     LaunchedEffect(pagerState) {
         snapshotFlow { pagerState.currentPage }.collectLatest { page ->
             action(ChangedToPage(page))
-        }
-    }
-    val sharedElementTransition = LocalSharedElementTransition.current
-    DisposableEffect(Unit) {
-        onDispose {
-            sharedElementTransition.clear()
         }
     }
 }

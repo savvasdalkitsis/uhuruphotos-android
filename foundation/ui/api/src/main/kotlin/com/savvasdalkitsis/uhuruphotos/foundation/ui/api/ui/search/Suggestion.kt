@@ -13,8 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
+@file:OptIn(ExperimentalSharedTransitionApi::class)
+
 package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.search
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -31,11 +35,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun Suggestion(
+fun SharedTransitionScope.Suggestion(
     modifier: Modifier = Modifier,
     text: String,
     onClick: () -> Unit,
-    leadingContent: @Composable () -> Unit,
+    leadingContent: @Composable SharedTransitionScope.() -> Unit,
     trailingContent: @Composable RowScope.() -> Unit = {},
 ) {
     Row(

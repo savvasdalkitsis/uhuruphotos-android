@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.kotlin.compose.compiler)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -9,9 +10,9 @@ android {
 dependencies {
 
     api(
-            libs.androidx.compose.navigation,
-            libs.appyx,
+                        libs.appyx,
             libs.bundles.resaca,
+            libs.bundles.androidx.navigation,
             libs.hilt,
             project(":foundation:log:api"),
             project(":foundation:seam:api"),

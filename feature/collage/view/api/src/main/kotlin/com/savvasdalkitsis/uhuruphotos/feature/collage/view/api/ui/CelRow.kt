@@ -13,8 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
+@file:OptIn(ExperimentalSharedTransitionApi::class)
+
 package com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.runtime.Composable
@@ -27,7 +31,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.CelSelec
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 
 @Composable
-internal fun CelRow(
+internal fun SharedTransitionScope.CelRow(
     modifier: Modifier = Modifier,
     maintainAspectRatio: Boolean = true,
     miniIcons: Boolean = false,

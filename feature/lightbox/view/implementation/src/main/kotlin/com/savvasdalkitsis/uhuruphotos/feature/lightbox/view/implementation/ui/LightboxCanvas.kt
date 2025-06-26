@@ -13,8 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
+@file:OptIn(ExperimentalSharedTransitionApi::class)
+
 package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -39,6 +43,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.times
+import androidx.navigation3.ui.LocalNavAnimatedContentScope
 import com.radusalagean.infobarcompose.InfoBar
 import com.radusalagean.infobarcompose.InfoBarMessage
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.DeleteLocalKeepRemoteMediaItem
@@ -65,7 +70,7 @@ import me.saket.telephoto.zoomable.ZoomableState
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun LightboxCanvas(
+fun SharedTransitionScope.LightboxCanvas(
     action: (LightboxAction) -> Unit,
     state: LightboxState,
     index: Int,
@@ -86,33 +91,36 @@ fun LightboxCanvas(
         }
 
         val mediaItem = state.media[index]
-        LightboxPreviousScreenBackground(dismissState) {
-            Column(
+        Column(
+            modifier = Modifier
+                .alpha(1 - dismissState.postDismissProgress)
+                .fillMaxSize()
+                .background(background)
+                .recomposeHighlighter()
+                .pullToDismiss(dismissState)
+                .verticalScroll(scrollState)
+        ) {
+            PullToDismissSpacer(
                 modifier = Modifier
-                    .alpha(1 - dismissState.postDismissProgress)
-                    .fillMaxSize()
-                    .background(background)
                     .recomposeHighlighter()
-                    .pullToDismiss(dismissState)
-                    .verticalScroll(scrollState)
-            ) {
-                PullToDismissSpacer(
-                    modifier = Modifier
-                        .recomposeHighlighter()
-                        .fillMaxWidth(),
-                    dismissState = dismissState,
+                    .fillMaxWidth(),
+                dismissState = dismissState,
+            )
+            val animatedContentScope = LocalNavAnimatedContentScope.current
+            Box(modifier = Modifier
+                .scale(0.3f + 0.7f * (1 - dismissState.progress / 2))
+                .offset(y = dismissState.progress * 100.dp)
+                .requiredWidth(this@BoxWithConstraints.maxWidth)
+                .requiredHeight(this@BoxWithConstraints.maxHeight)
+                .fillMaxSize()
+                .sharedElement(
+                    rememberSharedContentState("image-${mediaItem.id.value}"),
+                    animatedContentScope,
                 )
-                Box(modifier = Modifier
-                    .scale(0.3f + 0.7f * (1 - dismissState.progress / 2))
-                    .offset(y = dismissState.progress * 100.dp)
-                    .requiredWidth(this@BoxWithConstraints.maxWidth)
-                    .requiredHeight(this@BoxWithConstraints.maxHeight)
-                    .fillMaxSize()
-                ) {
-                    LightboxCanvasContent(mediaItem, zoomableState, action)
-                }
-                LightboxDetailsSheet(mediaItem, state.showRestoreButton, action)
+            ) {
+                LightboxCanvasContent(mediaItem, zoomableState, action)
             }
+            LightboxDetailsSheet(mediaItem, state.showRestoreButton, action)
         }
 
         Column {

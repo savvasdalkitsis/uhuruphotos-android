@@ -13,8 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
+@file:OptIn(ExperimentalSharedTransitionApi::class)
+
 package com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
@@ -39,7 +43,7 @@ import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
 import uhuruphotos_android.foundation.strings.api.generated.resources.discover
 
 @Composable
-internal fun DiscoverPage(
+internal fun SharedTransitionScope.DiscoverPage(
     state: DiscoverCompositeState,
     actions: (DiscoverCompositeAction) -> Unit,
 ) {
@@ -63,7 +67,7 @@ internal fun DiscoverPage(
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun DiscoverPage(
+private fun SharedTransitionScope.DiscoverPage(
     state: DiscoverState,
     isShowingPopUp: Boolean,
     action: (DiscoverAction) -> Unit,

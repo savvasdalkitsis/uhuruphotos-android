@@ -15,9 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.navigation.api
 
-import android.os.Parcelable
+import androidx.navigation3.runtime.NavKey
 
-interface NavigationRoute : Parcelable {
+interface NavigationRoute : NavKey {
     val animateTransitionTo: Boolean get() = true
     val animatePopTransitionTo: Boolean get() = true
 }

@@ -8,8 +8,7 @@ android {
 
 dependencies {
     implementation(
-            libs.androidx.compose.hilt.navigation,
-            libs.androidx.compose.material3,
+                        libs.androidx.compose.material3,
             libs.bundles.autodagger,
             libs.bundles.permissions,
             project(":feature:album:auto:view:api"),

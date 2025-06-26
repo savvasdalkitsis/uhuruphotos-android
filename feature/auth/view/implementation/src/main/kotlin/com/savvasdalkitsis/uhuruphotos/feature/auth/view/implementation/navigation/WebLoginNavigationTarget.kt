@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.navigation
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.api.navigation.WebLoginNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.ui.WebLogin
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.viewmodel.WebLoginViewModel
@@ -24,6 +25,7 @@ import se.ansman.dagger.auto.AutoInitialize
 import javax.inject.Inject
 import javax.inject.Singleton
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @AutoInitialize
 @Singleton
 class WebLoginNavigationTarget @Inject constructor(

@@ -61,7 +61,7 @@ class AppActivity : FragmentNodeActivity() {
             CompositionLocalProvider(
                 LocalWindowSize provides windowSizeClass,
             ) {
-                navigator.NavigationTargets(appyxV1IntegrationPoint)
+                navigator.NavigationTargets()
             }
         }
     }

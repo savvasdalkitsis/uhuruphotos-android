@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.navigation
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.api.navigation.WelcomeNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.ui.Welcome
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.viewmodel.WelcomeViewModel
@@ -24,6 +25,7 @@ import se.ansman.dagger.auto.AutoInitialize
 import javax.inject.Inject
 import javax.inject.Singleton
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @AutoInitialize
 @Singleton
 class WelcomeNavigationTarget @Inject constructor(

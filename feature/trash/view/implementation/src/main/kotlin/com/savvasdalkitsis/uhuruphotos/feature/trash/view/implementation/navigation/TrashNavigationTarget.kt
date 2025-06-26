@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.navigation
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.api.navigation.TrashNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.viewmodel.TrashViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
@@ -23,6 +24,7 @@ import se.ansman.dagger.auto.AutoInitialize
 import javax.inject.Inject
 import javax.inject.Singleton
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @AutoInitialize
 @Singleton
 class TrashNavigationTarget @Inject constructor(

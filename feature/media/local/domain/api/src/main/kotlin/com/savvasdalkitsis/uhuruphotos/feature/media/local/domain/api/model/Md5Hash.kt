@@ -17,7 +17,9 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
 
 @JvmInline
 @Parcelize
+@Serializable
 value class Md5Hash(val value: String): Parcelable

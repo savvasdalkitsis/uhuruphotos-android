@@ -1,5 +1,6 @@
 plugins {
     id 'kotlin-parcelize'
+    alias(libs.plugins.kotlin.serialization)
 }
 
 plugins {
@@ -14,7 +15,6 @@ android {
 dependencies {
     api(
             libs.androidx.compose.foundation,
-            libs.androidx.compose.navigation,
             libs.androidx.compose.ui,
             project(":feature:avatar:view:api"),
             project(":feature:discover:view:api"),

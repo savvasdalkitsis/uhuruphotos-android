@@ -13,8 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
+@file:OptIn(ExperimentalSharedTransitionApi::class)
+
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -37,7 +41,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.Vi
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.CustomColors
 
 @Composable
-fun Vitrine(
+fun SharedTransitionScope.Vitrine(
     modifier: Modifier = Modifier,
     state: VitrineState,
     selectable: Boolean = true,
@@ -52,29 +56,31 @@ fun Vitrine(
             .let { if(selectable) it.clickable(onClick = onSelected) else it },
     ) {
         Row {
-            GridItem(state.cel1)
-            GridItem(state.cel2)
+            GridItem(state.cel1, this@Vitrine)
+            GridItem(state.cel2, this@Vitrine)
         }
         Row {
-            GridItem(state.cel3)
-            GridItem(state.cel4)
+            GridItem(state.cel3, this@Vitrine)
+            GridItem(state.cel4, this@Vitrine)
         }
     }
 }
 
 @Composable
-private fun RowScope.GridItem(celState: CelState?) {
+private fun RowScope.GridItem(celState: CelState?, sharedTransitionScope: SharedTransitionScope) {
     if (celState != null) {
-        Cel(
-            modifier = Modifier
-                .weight(1f),
-            state = celState,
-            onSelected = { _ -> },
-            aspectRatio = 1f,
-            contentScale = ContentScale.Crop,
-            miniIcons = true,
-            selectionMode = CelSelectionModeState.NONE,
-        )
+        with (sharedTransitionScope) {
+            Cel(
+                modifier = Modifier
+                    .weight(1f),
+                state = celState,
+                onSelected = { _ -> },
+                aspectRatio = 1f,
+                contentScale = ContentScale.Crop,
+                miniIcons = true,
+                selectionMode = CelSelectionModeState.NONE,
+            )
+        }
     } else {
         Box(modifier = Modifier
             .fillMaxSize()

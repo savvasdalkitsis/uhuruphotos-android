@@ -13,8 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
+@file:OptIn(ExperimentalSharedTransitionApi::class)
+
 package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.Text
@@ -46,7 +50,7 @@ import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
 import uhuruphotos_android.foundation.strings.api.generated.resources.library
 
 @Composable
-internal fun Library(
+internal fun SharedTransitionScope.Library(
     state: LibraryCompositeState,
     actions: (LibraryCompositeAction) -> Unit,
 ) {
@@ -68,7 +72,7 @@ internal fun Library(
 }
 
 @Composable
-private fun Library(
+private fun SharedTransitionScope.Library(
     state: LibraryState,
     homeFeedDisplay: CollageDisplayState,
     isShowingPopUp: Boolean,

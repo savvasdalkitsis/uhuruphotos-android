@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.undated.view.implementation.navigation
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
 import com.savvasdalkitsis.uhuruphotos.feature.undated.view.api.navigation.UndatedNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.undated.view.implementation.ui.Undated
 import com.savvasdalkitsis.uhuruphotos.feature.undated.view.implementation.viewmodel.UndatedViewModel
@@ -24,6 +25,7 @@ import se.ansman.dagger.auto.AutoInitialize
 import javax.inject.Inject
 import javax.inject.Singleton
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @AutoInitialize
 @Singleton
 class UndatedNavigationTarget @Inject constructor(

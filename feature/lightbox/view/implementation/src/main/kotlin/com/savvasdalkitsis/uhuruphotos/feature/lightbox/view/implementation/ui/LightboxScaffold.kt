@@ -13,9 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
+@file:OptIn(ExperimentalSharedTransitionApi::class)
+
 package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.ScrollState
@@ -29,13 +33,13 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
 import com.savvasdalkitsis.uhuruphotos.foundation.dismiss.api.ui.rememberPullToDismissState
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window.LocalWindowSize
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UhuruFullLoading
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruUpNavButton
 import me.saket.telephoto.zoomable.ZoomableState
 
 @Composable
-internal fun LightboxScaffold(
+internal fun SharedTransitionScope.LightboxScaffold(
     state: LightboxState,
     index: Int,
     action: (LightboxAction) -> Unit,

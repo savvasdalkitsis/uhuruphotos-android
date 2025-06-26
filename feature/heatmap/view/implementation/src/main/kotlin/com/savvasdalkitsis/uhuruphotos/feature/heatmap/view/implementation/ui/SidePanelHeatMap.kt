@@ -15,6 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsetsSides.Companion.Bottom
@@ -33,9 +35,9 @@ import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.insets.systemPadding
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruScaffold
 
-@OptIn(ExperimentalPermissionsApi::class)
+@OptIn(ExperimentalPermissionsApi::class, ExperimentalSharedTransitionApi::class)
 @Composable
-fun SidePanelHeatMap(
+fun SharedTransitionScope.SidePanelHeatMap(
     state: HeatMapState,
     action: (HeatMapAction) -> Unit,
     locationPermissionState: PermissionState,

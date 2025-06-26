@@ -13,8 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
+@file:OptIn(ExperimentalSharedTransitionApi::class)
+
 package com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.AutoAlbumSelected
@@ -31,7 +35,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.s
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.search.SearchField
 
 @Composable
-fun DiscoverSearchField(
+fun SharedTransitionScope.DiscoverSearchField(
     state: DiscoverState,
     action: (DiscoverAction) -> Unit,
 ) {

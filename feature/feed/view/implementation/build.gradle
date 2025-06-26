@@ -10,10 +10,8 @@ dependencies {
 
     implementation(
             libs.androidx.compose.foundation.layout,
-            libs.androidx.compose.hilt.navigation,
-            libs.androidx.compose.material3,
-            libs.androidx.compose.navigation,
-            libs.androidx.compose.ui,
+                        libs.androidx.compose.material3,
+                        libs.androidx.compose.ui,
             libs.androidx.compose.ui.tooling.preview,
             libs.androidx.lifecycle,
             libs.bottomsheet,

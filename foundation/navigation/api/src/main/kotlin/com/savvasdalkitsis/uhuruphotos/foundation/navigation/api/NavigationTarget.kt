@@ -15,10 +15,13 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.navigation.api
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.runtime.Composable
 
 interface NavigationTarget<R : NavigationRoute> {
 
+    @OptIn(ExperimentalSharedTransitionApi::class)
     @Composable
-    fun NavigationRootView(route: R)
+    fun SharedTransitionScope.NavigationRootView(route: R)
 }

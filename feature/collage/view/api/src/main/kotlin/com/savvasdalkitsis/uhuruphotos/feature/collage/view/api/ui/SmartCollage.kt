@@ -13,9 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
+@file:OptIn(ExperimentalSharedTransitionApi::class)
+
 package com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
@@ -46,7 +50,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.feature.auth.view.api.navigation.LocalServerUrl
+import androidx.navigation3.ui.LocalNavAnimatedContentScope
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.ClusterState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.Cel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.CelSelected
@@ -60,15 +64,13 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.smart.SmartGrid
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.smart.SmartGridScrollbarThumb
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.smart.SmartGridState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.smart.rememberSmartGridState
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.shared.state.rememberSharedElementTransitionState
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.shared.state.sharedElementTransition
 import kotlinx.collections.immutable.ImmutableList
 import org.jetbrains.compose.resources.stringResource
 import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
 import uhuruphotos_android.foundation.strings.api.generated.resources.no_date
 
 @Composable
-internal fun SmartCollage(
+internal fun SharedTransitionScope.SmartCollage(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues,
     state: ImmutableList<ClusterState>,
@@ -169,7 +171,6 @@ internal fun SmartCollage(
                         onClusterSelectionClicked = onClusterSelectionClicked,
                     )
                 }
-
                 for (cel in cluster.cels) {
                     val id = cel.mediaItem.id
                     item("item:$clusterIndex:${id.serializableId}") {
@@ -179,29 +180,13 @@ internal fun SmartCollage(
                                 else -> 1f
                             }
                         }
-                        val contentUrl = id.thumbnailUri(LocalServerUrl.current)
-                        val sharedElementTransitionState =
-                            rememberSharedElementTransitionState(id.value, contentUrl, aspectRatio)
                         Cel(
                             modifier = Modifier
                                 .animateItem()
-                                .clip(shape)
-                                .then(
-                                    if (maintainAspectRatio) {
-                                        Modifier.sharedElementTransition(sharedElementTransitionState)
-                                    } else {
-                                        Modifier
-                                    }
-                                ),
+                                .clip(shape),
                             state = cel,
                             onSelected = {
-                                if (maintainAspectRatio) {
-                                    sharedElementTransitionState.startElementTransition {
-                                        onCelSelected(cel)
-                                    }
-                                } else {
-                                    onCelSelected(cel)
-                                }
+                                onCelSelected(cel)
                             },
                             aspectRatio = aspectRatio,
                             contentScale = remember(maintainAspectRatio) {

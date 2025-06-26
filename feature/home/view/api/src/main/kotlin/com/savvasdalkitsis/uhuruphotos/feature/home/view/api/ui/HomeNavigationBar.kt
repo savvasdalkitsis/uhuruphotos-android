@@ -38,24 +38,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
-import org.jetbrains.compose.resources.painterResource
 import androidx.compose.ui.unit.dp
-import com.bumble.appyx.navmodel.backstack.BackStack
-import com.bumble.appyx.navmodel.backstack.activeElement
-import com.bumble.appyx.navmodel.backstack.operation.push
-import com.bumble.appyx.navmodel.backstack.operation.singleTop
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplayState
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.api.navigation.DiscoverNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.navigation.FeedNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.ui.NavigationStyle.BOTTOM_BAR
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.ui.NavigationStyle.NAVIGATION_RAIL
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.api.navigation.LibraryNavigationRoute
-import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.LocalBackStack
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.LocalNavigator
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.singleTop
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window.LocalWindowSize
 import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
 import uhuruphotos_android.foundation.icons.api.generated.resources.ic_photo_album
 import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
 import uhuruphotos_android.foundation.strings.api.generated.resources.discover
@@ -177,9 +175,9 @@ private fun <R: NavigationRoute> BottomNavItem(
     icon: Painter,
     onReselected: () -> Unit,
 ) {
-    val backStack = LocalBackStack.current
+    val navigator = LocalNavigator.current
     val activeRoute by remember {
-        derivedStateOf { backStack().activeElement }
+        derivedStateOf { navigator.backStack.last() }
     }
     with(rowScope) {
         NavigationBarItem(
@@ -192,7 +190,7 @@ private fun <R: NavigationRoute> BottomNavItem(
             onClick = selectNavigationItem(
                 activeRoute,
                 route,
-                backStack,
+                navigator,
                 onReselected
             )
         )
@@ -206,30 +204,29 @@ private fun <R: NavigationRoute> NavRailNavItem(
     icon: Painter,
     onReselected: () -> Unit,
 ) {
-    val backStack = LocalBackStack.current
+    val navigator = LocalNavigator.current
     val activeRoute by remember {
-        derivedStateOf { backStack().activeElement }
+        derivedStateOf { navigator.backStack.last() }
     }
     NavigationRailItem(
 //        selectedContentColor = LocalContentColor.current,
         icon = { Icon(icon, contentDescription = null) },
         label = { Text(stringResource(label)) },
         selected = activeRoute == route,
-        onClick = selectNavigationItem(activeRoute, route, backStack, onReselected)
+        onClick = selectNavigationItem(activeRoute, route, navigator, onReselected)
     )
 }
 
 private fun <R: NavigationRoute> selectNavigationItem(
     activeRoute: NavigationRoute?,
     route: R,
-    backStack: () -> BackStack<NavigationRoute>,
+    navigator: Navigator,
     onReselected: () -> Unit,
-): () -> Unit = { with(backStack()) {
-        if (activeRoute != route) {
-            singleTop(FeedNavigationRoute)
-            push(route)
-        } else {
-            onReselected()
-        }
+): () -> Unit = {
+    if (activeRoute != route) {
+        navigator.singleTop(FeedNavigationRoute)
+        navigator.navigateTo(route)
+    } else {
+        onReselected()
     }
 }

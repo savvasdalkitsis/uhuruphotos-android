@@ -13,9 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
+@file:OptIn(ExperimentalSharedTransitionApi::class)
+
 package com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -41,7 +45,7 @@ import uhuruphotos_android.foundation.strings.api.generated.resources.no_media
 import uhuruphotos_android.foundation.strings.api.generated.resources.sorting
 
 @Composable
-fun Gallery(
+fun SharedTransitionScope.Gallery(
     state: GalleryState,
     additionalActionBarContent: @Composable RowScope.() -> Unit = {},
     emptyContent: @Composable () -> Unit = { NoContent(string.no_media) },

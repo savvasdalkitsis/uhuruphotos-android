@@ -14,8 +14,7 @@ dependencies {
 
     api(
             libs.accompanist.navigation,
-            libs.androidx.compose.hilt.navigation,
-            libs.hilt,
+                        libs.hilt,
             libs.kotlin.reflect,
             project(":foundation:navigation:api"),
     )
@@ -32,6 +31,9 @@ dependencies {
             project(":foundation:toaster:api"),
             project(":foundation:ui:api"),
             project(":foundation:seam:api"),
+    )
+    testImplementation(
+            libs.bundles.test,
     )
 
     ksp libs.autodagger.ksp

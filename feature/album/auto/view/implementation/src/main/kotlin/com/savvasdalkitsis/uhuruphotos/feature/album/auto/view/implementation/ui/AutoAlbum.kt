@@ -13,8 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
+@file:OptIn(ExperimentalSharedTransitionApi::class)
+
 package com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.ui
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -37,7 +41,7 @@ import uhuruphotos_android.foundation.strings.api.generated.resources.delete_alb
 import uhuruphotos_android.foundation.strings.api.generated.resources.delete_album_explanation
 
 @Composable
-internal fun AutoAlbum(
+internal fun SharedTransitionScope.AutoAlbum(
     state: AutoAlbumCompositeState,
     action: (AutoAlbumCompositeAction) -> Unit
 ) {

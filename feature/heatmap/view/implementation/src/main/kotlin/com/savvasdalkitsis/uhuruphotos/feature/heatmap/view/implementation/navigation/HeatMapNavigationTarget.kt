@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.navigation
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.api.navigation.HeatMapNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.HeatMap
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.viewmodel.HeatMapViewModel
@@ -24,6 +25,7 @@ import se.ansman.dagger.auto.AutoInitialize
 import javax.inject.Inject
 import javax.inject.Singleton
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @AutoInitialize
 @Singleton
 class HeatMapNavigationTarget @Inject constructor(

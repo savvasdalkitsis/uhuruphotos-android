@@ -1,6 +1,7 @@
 plugins {
     id 'kotlin-parcelize'
     alias(libs.plugins.kotlin.compose.compiler)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -9,8 +10,7 @@ android {
 
 dependencies {
     api(
-            libs.androidx.compose.navigation,
-            project(":foundation:navigation:api"),
+                        project(":foundation:navigation:api"),
             project(":feature:media:common:domain:api"),
     )
     implementation(

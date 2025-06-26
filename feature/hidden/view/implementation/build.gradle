@@ -8,8 +8,7 @@ android {
 
 dependencies {
     implementation(
-            libs.androidx.compose.hilt.navigation,
-            libs.bundles.autodagger,
+                        libs.bundles.autodagger,
             project(":feature:collage:view:api"),
             project(":feature:db:domain:api"),
             project(":feature:gallery:view:api"),

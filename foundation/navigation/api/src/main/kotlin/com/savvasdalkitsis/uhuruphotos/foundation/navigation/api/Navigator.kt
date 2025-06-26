@@ -16,10 +16,11 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.foundation.navigation.api
 
 import android.content.Intent
-import com.bumble.appyx.navmodel.backstack.BackStack
+import androidx.compose.runtime.snapshots.SnapshotStateList
+import kotlin.reflect.KClass
 
 interface Navigator {
-    var backStack: BackStack<NavigationRoute>
+    val backStack: SnapshotStateList<NavigationRoute>
 
     fun navigateToWeb(webUrl: String)
     fun navigateTo(intent: Intent)
@@ -29,4 +30,9 @@ interface Navigator {
     fun navigateBack()
     fun navigateUp()
     fun clearBackStack()
+    fun <R : NavigationRoute> singleTop(route: R, routeType: KClass<R>)
+}
+
+inline fun <reified R : NavigationRoute> Navigator.singleTop(route: R) {
+    singleTop(route, R::class)
 }

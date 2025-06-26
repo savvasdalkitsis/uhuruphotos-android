@@ -13,9 +13,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
+@file:OptIn(ExperimentalSharedTransitionApi::class)
+
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui
 
 import androidx.compose.animation.Crossfade
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionLayout
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
@@ -69,7 +74,7 @@ import kotlin.math.max
 import kotlin.math.min
 
 @Composable
-internal fun FeedMemory(
+internal fun SharedTransitionScope.FeedMemory(
     memory: MemoryCelState,
     onMemorySelected: (memory: CelState, yearsAgo: Int) -> Unit,
     onScrollToMemory: (CelState) -> Unit,
@@ -176,17 +181,19 @@ internal fun FeedMemory(
 @Preview
 @Composable
 private fun FeedMemoryPreview() {
-    PreviewAppTheme {
-        FeedMemory(memory = MemoryCelState(
-            yearsAgo = 10,
-            cels = persistentListOf(CelState(
-                MediaItemInstanceModel(
-                    id = MediaIdModel.LocalIdModel(0L, 0, false, "", ""),
-                    mediaHash = MediaItemHashModel.fromRemoteMediaHash("hash", 0),
-                )
-            )),
-        ), onMemorySelected = { _, _ -> }, onScrollToMemory = {}, scrollState = rememberScrollState()
-        )
+    SharedTransitionLayout {
+        PreviewAppTheme {
+            FeedMemory(memory = MemoryCelState(
+                yearsAgo = 10,
+                cels = persistentListOf(CelState(
+                    MediaItemInstanceModel(
+                        id = MediaIdModel.LocalIdModel(0L, 0, false, "", ""),
+                        mediaHash = MediaItemHashModel.fromRemoteMediaHash("hash", 0),
+                    )
+                )),
+            ), onMemorySelected = { _, _ -> }, onScrollToMemory = {}, scrollState = rememberScrollState()
+            )
+        }
     }
 
 }

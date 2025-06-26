@@ -7,8 +7,7 @@ android {
 }
 dependencies {
     api(
-            libs.androidx.compose.navigation,
-            libs.androidx.work,
+                        libs.androidx.work,
             libs.kotlinx.coroutines,
             project(":feature:auth:view:api"),
             project(":feature:db:domain:api"),
