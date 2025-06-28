@@ -23,7 +23,9 @@ import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam.actions.LogOut
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam.actions.NavigateToPrivacyPolicy
@@ -32,6 +34,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam.
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.ui.state.WelcomeState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.animation.AnimationResource
 import com.savvasdalkitsis.uhuruphotos.foundation.permissions.api.ui.PermissionsState
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.button.UhuruIconOutlineButton
 import org.jetbrains.compose.resources.stringResource
 import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
@@ -74,6 +77,7 @@ internal fun WelcomeLoadedContent(
         Row(
             modifier = Modifier.sizeIn(maxHeight = 240.dp),
             horizontalArrangement = Arrangement.spacedBy(32.dp),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             WelcomeUseCase(
                 AnimationResource.animation_local_media,
@@ -90,5 +94,21 @@ internal fun WelcomeLoadedContent(
                 action(ShowLibrePhotosHelp)
             }
         }
+    }
+}
+
+@Preview
+@Composable
+private fun WelcomeLoadedContentPreview() {
+    PreviewAppTheme {
+        WelcomeLoadedContent(
+            state = WelcomeState(
+                isLoading = false,
+                localMediaSelected = true,
+                cloudMediaSelected = true,
+            ),
+            action = {},
+            permissionState = PermissionsState()
+        )
     }
 }

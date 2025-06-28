@@ -61,6 +61,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.TrashPer
 import com.savvasdalkitsis.uhuruphotos.feature.upload.view.api.ui.UploadErrorDialog
 import com.savvasdalkitsis.uhuruphotos.feature.upload.view.api.ui.state.UploadErrorDialogModeState
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
+import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.sharedElement
 import com.savvasdalkitsis.uhuruphotos.foundation.dismiss.api.ui.PullToDismissSpacer
 import com.savvasdalkitsis.uhuruphotos.foundation.dismiss.api.ui.PullToDismissState
 import com.savvasdalkitsis.uhuruphotos.foundation.dismiss.api.ui.pullToDismiss
@@ -114,8 +115,8 @@ fun SharedTransitionScope.LightboxCanvas(
                 .requiredHeight(this@BoxWithConstraints.maxHeight)
                 .fillMaxSize()
                 .sharedElement(
-                    rememberSharedContentState("image-${mediaItem.id.mediaHash.hash}"),
-                    animatedContentScope,
+                    scope = this@LightboxCanvas,
+                    id = "image-${mediaItem.id.mediaHash.hash}",
                 )
             ) {
                 LightboxCanvasContent(mediaItem, zoomableState, action)

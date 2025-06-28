@@ -13,8 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
+@file:OptIn(ExperimentalSharedTransitionApi::class)
+
 package com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -25,13 +29,14 @@ import com.google.accompanist.permissions.isGranted
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.actions.CameraViewPortChanged
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.actions.HeatMapAction
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state.HeatMapState
+import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.sharedElement
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapView
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.insets.insetsTop
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
-fun HeatMapContent(
+fun SharedTransitionScope.HeatMapContent(
     modifier: Modifier = Modifier,
     action: (HeatMapAction) -> Unit,
     locationPermissionState: PermissionState,
@@ -47,7 +52,11 @@ fun HeatMapContent(
     val locationPermissionGranted = locationPermissionState.status.isGranted
 
     MapView(
-        modifier = modifier,
+        modifier = modifier
+            .sharedElement(
+                scope = this,
+                id = "map",
+            ),
         mapViewState = mapViewState,
         mapOptions = {
             copy(

@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.ui.components
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
@@ -25,11 +26,13 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.animation.AnimationResource
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ContentTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.CustomColors
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeMode
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.TextWithIcon
@@ -38,6 +41,8 @@ import org.jetbrains.compose.resources.stringResource
 import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
 import uhuruphotos_android.foundation.icons.api.generated.resources.ic_checkbox_selected
 import uhuruphotos_android.foundation.icons.api.generated.resources.ic_checkbox_unselected
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res
+import uhuruphotos_android.foundation.strings.api.generated.resources.start
 
 @Composable
 internal fun RowScope.WelcomeUseCase(
@@ -56,6 +61,7 @@ internal fun RowScope.WelcomeUseCase(
             shape = CardDefaults.elevatedShape,
         ) {
             ConstraintLayout(modifier = Modifier
+                .fillMaxHeight()
                 .clickable(enabled = !selected) { onClick() }
                 .padding(8.dp)
             ) {
@@ -83,6 +89,22 @@ internal fun RowScope.WelcomeUseCase(
                     icon = icon,
                 )
             }
+        }
+    }
+}
+
+// preview
+@Composable
+@Preview
+private fun WelcomeUseCasePreview() {
+    PreviewAppTheme {
+        Row {
+            WelcomeUseCase(
+                icon = AnimationResource.animation_cloud,
+                text = Res.string.start,
+                selected = false,
+                onClick = {},
+            )
         }
     }
 }

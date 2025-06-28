@@ -28,8 +28,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
-import androidx.navigation3.ui.LocalNavAnimatedContentScope
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.PersonState
+import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.sharedElement
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Thumbnail
 import org.jetbrains.compose.resources.painterResource
 import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
@@ -47,13 +47,12 @@ fun SharedTransitionScope.PersonImage(
     personState: PersonState
 ) {
     if (personState.imageUrl != null) {
-        val animatedVisibilityScope = LocalNavAnimatedContentScope.current
         Thumbnail(
             modifier = modifier
                 .aspectRatio(1f)
                 .sharedElement(
-                    sharedContentState = rememberSharedContentState("person-${personState.id}"),
-                    animatedVisibilityScope = animatedVisibilityScope,
+                    scope = this,
+                    id = "person-${personState.id}",
                 )
                 .clip(shape),
             url = personState.imageUrl,

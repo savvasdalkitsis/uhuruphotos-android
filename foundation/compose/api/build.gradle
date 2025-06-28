@@ -9,7 +9,9 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
+                api(compose.animation)
                 api(compose.foundation)
+                api(compose.ui)
                 api(compose.ui)
                 implementation(compose.material3)
                 implementation(project(":foundation:log:api"))
@@ -20,4 +22,8 @@ kotlin {
 
 android {
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.compose.api'
+
+    dependencies {
+        implementation(libs.bundles.androidx.navigation)
+    }
 }

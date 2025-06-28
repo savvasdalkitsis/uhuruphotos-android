@@ -47,7 +47,6 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
-import androidx.navigation3.ui.LocalNavAnimatedContentScope
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.api.navigation.LocalServerUrl
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelSelectionModeState
@@ -56,6 +55,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.Ce
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelSelectionModeState.SELECTABLE
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
+import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.sharedElement
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.toColor
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Thumbnail
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkable.Checkable
@@ -169,14 +169,10 @@ private fun SharedTransitionScope.Cel(
             .recomposeHighlighter()
     ) {
         val serverUrl = LocalServerUrl.current
-        val animatedContentScope = LocalNavAnimatedContentScope.current
         Thumbnail(
             modifier = Modifier.fillMaxWidth().offset {
                 IntOffset(contentOffset.toInt(), 0)
-            }.sharedElement(
-                rememberSharedContentState("image-${id.mediaHash.hash}"),
-                animatedContentScope,
-            ),
+            }.sharedElement(this@Cel, "image-${id.mediaHash.hash}"),
             url = remember(serverUrl, id) {
                 id.thumbnailUri(serverUrl)
             },

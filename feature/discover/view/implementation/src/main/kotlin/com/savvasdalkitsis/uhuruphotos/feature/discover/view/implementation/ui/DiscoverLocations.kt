@@ -13,8 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
+@file:OptIn(ExperimentalSharedTransitionApi::class)
+
 package com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -37,6 +41,7 @@ import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.DiscoverAction
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.LoadHeatMap
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.DiscoverState
+import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.sharedElement
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapView
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.rememberMapViewState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SectionHeader
@@ -46,7 +51,7 @@ import uhuruphotos_android.foundation.strings.api.generated.resources.locations
 import uhuruphotos_android.foundation.strings.api.generated.resources.media_map
 
 @Composable
-fun DiscoverLocations(
+fun SharedTransitionScope.DiscoverLocations(
     state: DiscoverState,
     action: (DiscoverAction) -> Unit = {},
 ) {
@@ -69,7 +74,12 @@ fun DiscoverLocations(
                 .clickable { action(LoadHeatMap) },
         ) {
             MapView(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .sharedElement(
+                        scope = this@DiscoverLocations,
+                        id = "map",
+                    ),
                 mapViewState = rememberMapViewState(
                     initialPosition = state.mapViewport.center,
                     initialZoom = state.mapViewport.zoom,
