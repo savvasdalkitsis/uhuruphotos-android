@@ -32,6 +32,7 @@ class LocalAlbumNavigationTarget @Inject constructor(
 ) : NavigationTarget<LocalAlbumNavigationRoute> by ViewModelNavigationTarget(
     LocalAlbumViewModel::class,
     LocalAlbumNavigationRoute::class,
+    viewModelScopedToComposable = true,
     view = { state, action ->
         LocalAlbumPage(state, action)
     }

@@ -32,7 +32,6 @@ class FeedNavigationTarget @Inject constructor(
 ) : NavigationTarget<FeedNavigationRoute> by ViewModelNavigationTarget(
     FeedViewModel::class,
     FeedNavigationRoute::class,
-    viewModelScopedToComposable = false,
     view = { state, action ->
         Feed(state, action)
     }

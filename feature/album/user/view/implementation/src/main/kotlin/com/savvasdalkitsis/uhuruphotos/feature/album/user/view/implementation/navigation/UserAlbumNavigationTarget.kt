@@ -32,6 +32,7 @@ class UserAlbumNavigationTarget @Inject constructor(
 ) : NavigationTarget<UserAlbumNavigationRoute> by ViewModelNavigationTarget(
     UserAlbumViewModel::class,
     UserAlbumNavigationRoute::class,
+    viewModelScopedToComposable = true,
     view = { state, action ->
         UserAlbum(state, action)
     }

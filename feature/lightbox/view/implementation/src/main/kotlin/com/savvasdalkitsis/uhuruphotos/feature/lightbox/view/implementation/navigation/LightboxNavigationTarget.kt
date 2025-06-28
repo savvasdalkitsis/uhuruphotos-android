@@ -34,6 +34,7 @@ class LightboxNavigationTarget @Inject constructor(
     LightboxViewModel::class,
     LightboxNavigationRoute::class,
     theme = { ThemeMode.DARK_MODE },
+    viewModelScopedToComposable = false,
     view = { state, action ->
         Lightbox(state, action)
     }

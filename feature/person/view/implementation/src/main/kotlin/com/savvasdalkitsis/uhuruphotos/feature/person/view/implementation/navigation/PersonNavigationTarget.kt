@@ -32,6 +32,7 @@ class PersonNavigationTarget @Inject constructor(
 ) : NavigationTarget<PersonNavigationRoute> by ViewModelNavigationTarget(
     PersonViewModel::class,
     PersonNavigationRoute::class,
+    viewModelScopedToComposable = true,
     view = { state, action ->
         Person(state, action)
     }

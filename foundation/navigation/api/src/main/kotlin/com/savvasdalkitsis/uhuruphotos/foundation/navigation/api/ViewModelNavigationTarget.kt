@@ -29,7 +29,7 @@ import kotlin.reflect.KClass
 class ViewModelNavigationTarget<S : Any, A : Any, VM : NavigationViewModel<S, A, R>, R: NavigationRoute>(
     private val viewModelClass: KClass<VM>,
     route: KClass<R>,
-    private val viewModelScopedToComposable: Boolean = true,
+    private val viewModelScopedToComposable: Boolean = false,
     private val theme: @Composable () -> ThemeMode = { LocalThemeMode.current },
     private val view: @Composable SharedTransitionScope.(S, (A) -> Unit) -> Unit,
 ) : NavigationTarget<R> {

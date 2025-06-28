@@ -32,6 +32,7 @@ class SearchNavigationTarget @Inject constructor(
 ) : NavigationTarget<SearchNavigationRoute> by ViewModelNavigationTarget(
     SearchViewModel::class,
     SearchNavigationRoute::class,
+    viewModelScopedToComposable = true,
     view = { state, action ->
         Search(state, action)
     }
