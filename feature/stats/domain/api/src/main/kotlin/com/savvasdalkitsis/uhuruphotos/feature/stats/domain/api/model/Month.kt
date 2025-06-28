@@ -15,9 +15,13 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
 @JvmInline
+@Parcelize
 value class Month(
     val month: Int,
-) : Period {
+) : Period, Parcelable {
     override val value: Int get() = month
 }

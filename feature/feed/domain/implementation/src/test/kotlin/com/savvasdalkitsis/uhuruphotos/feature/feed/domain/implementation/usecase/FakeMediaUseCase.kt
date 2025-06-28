@@ -18,9 +18,9 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.useca
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSourceModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHashModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstanceModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDeviceModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaFolder
@@ -53,7 +53,7 @@ private fun MediaUseCase.mapsRemoteMediaCollections() {
         groups.items.map { (id, source) ->
             MediaCollectionModel(id, source.map {
                 MediaItemInstanceModel(
-                    id = MediaIdModel.RemoteIdModel(it.id, it.isVideo),
+                    id = MediaIdModel.RemoteIdModel(it.id, it.isVideo, MediaItemHashModel.fromRemoteMediaHash(it.mediaItemId ?: "missing", 0)),
                     mediaHash = MediaItemHashModel.fromRemoteMediaHash(it.mediaItemId ?: "missing", 0),
                     displayDayDate = id,
                 )

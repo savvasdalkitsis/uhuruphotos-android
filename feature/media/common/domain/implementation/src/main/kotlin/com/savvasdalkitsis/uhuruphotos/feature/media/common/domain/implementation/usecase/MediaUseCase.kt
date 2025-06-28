@@ -164,7 +164,7 @@ class MediaUseCase @Inject constructor(
                 val date = dateDisplayer.dateString(dbRecord.date)
                 val day = dateParser.parseDateOrTimeString(dbRecord.date)
                 MediaItemInstanceModel(
-                    id = RemoteIdModel(dbRecord.id, dbRecord.isVideo),
+                    id = RemoteIdModel(dbRecord.id, dbRecord.isVideo, MediaItemHashModel.fromRemoteMediaHash(dbRecord.id, user.id)),
                     mediaHash = MediaItemHashModel.fromRemoteMediaHash(dbRecord.id, user.id),
                     fallbackColor = dbRecord.dominantColor,
                     displayDayDate = date,
@@ -182,7 +182,9 @@ class MediaUseCase @Inject constructor(
             bucket.id,
             video,
             contentUri,
-            thumbnailPath?.let { "file://$it" } ?: contentUri),
+            thumbnailPath?.let { "file://$it" } ?: contentUri,
+            MediaItemHashModel(md5, userId)
+        ),
         mediaHash = MediaItemHashModel(md5, userId),
         fallbackColor = fallbackColor,
         displayDayDate = displayDate,
@@ -319,7 +321,7 @@ class MediaUseCase @Inject constructor(
                     photoId.isNullOrBlank() -> null
                     else -> {
                         MediaItemInstanceModel(
-                            id = RemoteIdModel(photoId, item.isVideo),
+                            id = RemoteIdModel(photoId, item.isVideo, MediaItemHashModel.fromRemoteMediaHash(photoId, user.id)),
                             mediaHash = MediaItemHashModel.fromRemoteMediaHash(photoId, user.id),
                             fallbackColor = item.dominantColor,
                             displayDayDate = date,

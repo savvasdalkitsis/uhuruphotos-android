@@ -15,10 +15,12 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.state
 
+import android.os.Parcelable
 import androidx.compose.runtime.Immutable
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobModel
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatusModel
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
+import kotlinx.parcelize.Parcelize
 import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
 import uhuruphotos_android.foundation.strings.api.generated.resources.full_feed_details_sync
 import uhuruphotos_android.foundation.strings.api.generated.resources.full_feed_sync
@@ -26,11 +28,12 @@ import uhuruphotos_android.foundation.strings.api.generated.resources.precache_t
 import uhuruphotos_android.foundation.strings.api.generated.resources.scan_local_media
 
 @Immutable
+@Parcelize
 data class JobState(
     val title: Title,
     val job: JobModel,
     val status: JobStatusModel,
-)
+) : Parcelable
 
 val Map<JobModel, JobStatusModel>.toJobState get() = map { (job, status) ->
     JobState(

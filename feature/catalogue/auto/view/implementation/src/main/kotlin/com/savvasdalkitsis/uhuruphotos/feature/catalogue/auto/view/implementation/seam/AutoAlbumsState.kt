@@ -15,12 +15,15 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam
 
+import android.os.Parcelable
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.api.state.AutoAlbum
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSortingState
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class AutoAlbumsState(
     val isLoading: Boolean = false,
     val albums: List<AutoAlbum> = emptyList(),
     val sorting: CatalogueSortingState = CatalogueSortingState.default,
     val filter: String = "",
-)
+) : Parcelable

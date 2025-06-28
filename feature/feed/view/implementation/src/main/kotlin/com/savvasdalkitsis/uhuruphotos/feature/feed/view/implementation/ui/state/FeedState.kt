@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state
 
+import android.os.Parcelable
 import androidx.compose.runtime.Immutable
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.state.UserAlbumState
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
@@ -25,8 +26,10 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkable.SelectionM
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.parcelize.Parcelize
 
 @Immutable
+@Parcelize
 data class FeedState(
     val collageState: CollageState = CollageState(),
     val isRefreshing: Boolean = false,
@@ -45,7 +48,7 @@ data class FeedState(
     val missingPermissions: ImmutableList<String> = persistentListOf(),
     val syncItemDisplay: FeedMediaItemSyncDisplayState = FeedMediaItemSyncDisplayState.default,
     val showRequestForCloudSync: Boolean = false,
-) {
+) : Parcelable {
     val selectedCels: ImmutableList<CelState> = collageState.clusters.flatMap { cluster ->
         cluster.cels.filter { cel ->
             cel.selectionMode == SelectionMode.SELECTED

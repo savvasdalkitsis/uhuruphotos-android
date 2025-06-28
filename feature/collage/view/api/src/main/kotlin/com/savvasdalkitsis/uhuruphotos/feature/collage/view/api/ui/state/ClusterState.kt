@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state
 
+import android.os.Parcelable
 import androidx.compose.runtime.Immutable
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
@@ -23,8 +24,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.to
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.parcelize.Parcelize
 
 @Immutable
+@Parcelize
 data class ClusterState(
     val id: String,
     val cels: ImmutableList<CelState> = persistentListOf(),
@@ -32,7 +35,7 @@ data class ClusterState(
     val unformattedDate: String? = null,
     val location: String? = null,
     val showRefreshIcon: Boolean = false,
-) {
+) : Parcelable {
     val hasAnyCelsWithRemoteMedia = cels.any { it.mediaItem.id.preferRemote is MediaIdModel.RemoteIdModel }
 }
 

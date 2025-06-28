@@ -15,16 +15,19 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.state
 
+import android.os.Parcelable
 import androidx.compose.runtime.Immutable
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.PersonState
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.parcelize.Parcelize
 
 @Immutable
+@Parcelize
 data class PeopleState(
     val loading: Boolean = false,
     val people: ImmutableList<PersonState> = persistentListOf(),
     val sortOrderState: SortOrderState = SortOrderState.default,
-)
+) : Parcelable
 
 

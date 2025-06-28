@@ -187,7 +187,7 @@ private fun FeedMemoryPreview() {
                 yearsAgo = 10,
                 cels = persistentListOf(CelState(
                     MediaItemInstanceModel(
-                        id = MediaIdModel.LocalIdModel(0L, 0, false, "", ""),
+                        id = MediaIdModel.LocalIdModel(0L, 0, false, "", "", MediaItemHashModel.fromRemoteMediaHash("hash", 0)),
                         mediaHash = MediaItemHashModel.fromRemoteMediaHash("hash", 0),
                     )
                 )),

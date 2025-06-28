@@ -15,7 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model
 
-sealed class JobStatusModel {
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+sealed class JobStatusModel : Parcelable {
     data object IdleModel : JobStatusModel()
     data class InProgressModel(val progress: Int) : JobStatusModel()
     data object BlockedModel : JobStatusModel()

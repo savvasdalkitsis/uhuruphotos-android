@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.viewmodel
 
+import androidx.lifecycle.SavedStateHandle
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryId
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.GalleryAction
@@ -40,12 +41,14 @@ private typealias HiddenPhotosCompositeAction = Either<GalleryAction, HiddenPhot
 internal class HiddenPhotosViewModel @Inject constructor(
     hiddenPhotosAlbumPageActionsContext: HiddenPhotosAlbumPageActionsContext,
     hiddenPhotosActionsContext: HiddenPhotosActionsContext,
+    handle: SavedStateHandle,
 ) : NavigationViewModel<HiddenPhotosCompositeState, HiddenPhotosCompositeAction, HiddenPhotosNavigationRoute>(
     CompositeActionHandler(
         ActionHandlerWithContext(hiddenPhotosAlbumPageActionsContext.galleryActionsContext),
         ActionHandlerWithContext(hiddenPhotosActionsContext),
     ),
-    GalleryState(collageState = CollageState()) to HiddenPhotosState()
+    GalleryState(collageState = CollageState()) to HiddenPhotosState(),
+    handle,
 ) {
 
     override fun onRouteSet(route: HiddenPhotosNavigationRoute) {

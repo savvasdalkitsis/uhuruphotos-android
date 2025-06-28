@@ -20,23 +20,23 @@ package com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.ui
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
-import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.Arrangement.spacedBy
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.Collage
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.CollageDisplayActionButton
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.PersonImage
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.actions.ChangeDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.actions.PersonAction
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.actions.SelectedCel
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.ui.state.PersonCollageState
-import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Thumbnail
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UhuruFullLoading
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruUpNavButton
@@ -50,24 +50,25 @@ fun SharedTransitionScope.Person(
         title = {
             val person = state.personState
             when {
-                person != null -> Text(text = person.name)
+                person != null -> {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = spacedBy(8.dp),
+                    ) {
+                        PersonImage(
+                            modifier = Modifier
+                                .width(48.dp),
+                            shape = CircleShape,
+                            personState = person,
+                        )
+                        Text(text = person.name)
+                    }
+                }
                 else -> Text("Loading person")
             }
         },
         navigationIcon = {
-            UhuruUpNavButton(furtherContent = {
-                AnimatedVisibility(visible = state.personState != null) {
-                    Thumbnail(
-                        modifier = Modifier
-                            .width(32.dp)
-                            .aspectRatio(1f)
-                            .clip(CircleShape),
-                        url = state.personState?.imageUrl,
-                        contentScale = ContentScale.Crop,
-                        contentDescription = null
-                    )
-                }
-            })
+            UhuruUpNavButton()
         },
         actionBarContent = {
             AnimatedVisibility(

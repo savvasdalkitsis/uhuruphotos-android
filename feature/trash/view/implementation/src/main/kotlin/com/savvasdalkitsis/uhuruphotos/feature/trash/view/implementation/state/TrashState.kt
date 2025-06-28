@@ -15,6 +15,10 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.state
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class TrashState(
     val displayFingerPrintAction: Boolean = false
-)
+) : Parcelable

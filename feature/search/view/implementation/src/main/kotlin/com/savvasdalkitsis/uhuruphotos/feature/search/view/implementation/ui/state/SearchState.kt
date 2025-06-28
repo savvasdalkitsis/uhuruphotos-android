@@ -15,18 +15,21 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state
 
+import android.os.Parcelable
 import androidx.compose.runtime.Immutable
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.ClusterState
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplayState
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplayState
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.parcelize.Parcelize
 
 @Immutable
+@Parcelize
 data class SearchState(
     val query: String = "",
     val isLoading: Boolean = true,
     val isError: Boolean = false,
     val clusterStates: ImmutableList<ClusterState> = persistentListOf(),
     val searchDisplay: CollageDisplayState = PredefinedCollageDisplayState.default,
-)
+) : Parcelable

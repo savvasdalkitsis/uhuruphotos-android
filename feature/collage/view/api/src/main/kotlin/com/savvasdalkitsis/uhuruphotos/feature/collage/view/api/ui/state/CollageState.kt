@@ -15,17 +15,20 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state
 
+import android.os.Parcelable
 import androidx.compose.runtime.Immutable
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.parcelize.Parcelize
 
 @Immutable
+@Parcelize
 data class CollageState(
     val isLoading: Boolean = false,
     val isEmpty: Boolean = false,
     val clusters: ImmutableList<ClusterState> = persistentListOf(),
     val collageDisplayState: CollageDisplayState = PredefinedCollageDisplayState.default,
-) {
+) : Parcelable {
     val hasMedia = clusters.sumOf { it.cels.size } > 0
 
     override fun toString(): String {

@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.viewmodel
 
+import androidx.lifecycle.SavedStateHandle
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.api.navigation.HeatMapNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.actions.HeatMapAction
@@ -28,9 +29,11 @@ import javax.inject.Inject
 @HiltViewModel
 internal class HeatMapViewModel @Inject constructor(
     heatMapActionsContext: HeatMapActionsContext,
+    handle: SavedStateHandle,
 ) : NavigationViewModel<HeatMapState, HeatMapAction, HeatMapNavigationRoute>(
     ActionHandlerWithContext(heatMapActionsContext),
-    HeatMapState()
+    HeatMapState(),
+    handle,
 ) {
 
     override fun onRouteSet(route: HeatMapNavigationRoute) {

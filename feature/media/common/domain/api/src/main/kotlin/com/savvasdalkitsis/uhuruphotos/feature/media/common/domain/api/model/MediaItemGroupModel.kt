@@ -34,7 +34,7 @@ data class MediaItemGroupModel(
         }
     }
 
-    override val id: MediaIdModel<*> = MediaIdModel.GroupIdModel(all.map { it.id }, any.id.isVideo)
+    override val id: MediaIdModel<*> = MediaIdModel.GroupIdModel(all.map { it.id }, any.id.isVideo, any.mediaHash)
     override val mediaHash = any.mediaHash
     override val fallbackColor: String? = all.prop { fallbackColor }
     override val displayDayDate: String? = all.prop { displayDayDate }

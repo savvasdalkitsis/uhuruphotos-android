@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.viewmodel
 
+import androidx.lifecycle.SavedStateHandle
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.api.navigation.AboutNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.AboutActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.actions.AboutAction
@@ -28,9 +29,11 @@ import javax.inject.Inject
 @HiltViewModel
 internal class AboutViewModel @Inject constructor(
     actionsContext: AboutActionsContext,
+    handle: SavedStateHandle,
 ) : NavigationViewModel<AboutState, AboutAction, AboutNavigationRoute>(
     ActionHandlerWithContext(actionsContext),
     AboutState(),
+    handle,
 ) {
 
     override fun onRouteSet(route: AboutNavigationRoute) {

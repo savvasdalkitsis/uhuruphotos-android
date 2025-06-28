@@ -15,7 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.map.api.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class Viewport(
     val center: LatLon,
     val zoom: Float,
-)
+) : Parcelable

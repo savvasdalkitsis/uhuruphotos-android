@@ -114,7 +114,7 @@ fun SharedTransitionScope.LightboxCanvas(
                 .requiredHeight(this@BoxWithConstraints.maxHeight)
                 .fillMaxSize()
                 .sharedElement(
-                    rememberSharedContentState("image-${mediaItem.id.value}"),
+                    rememberSharedContentState("image-${mediaItem.id.mediaHash.hash}"),
                     animatedContentScope,
                 )
             ) {

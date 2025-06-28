@@ -15,6 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state
 
+import kotlinx.parcelize.IgnoredOnParcel
+import kotlinx.parcelize.Parcelize
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
 import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
@@ -34,15 +36,18 @@ import uhuruphotos_android.foundation.strings.api.generated.resources.yearly
 import kotlin.math.max
 import kotlin.math.min
 
+@Parcelize
 enum class PredefinedCollageDisplayState(
     override val miniIcons: Boolean,
     override val compactColumnsPortrait: Int,
     override val compactColumnsLandscape: Int,
     override val wideColumnsPortrait: Int,
     override val wideColumnsLandscape: Int,
+    @IgnoredOnParcel
     override val iconResource: DrawableResource,
     override val maintainAspectRatio: Boolean,
     override val allowsAnimatedVideoThumbnails: Boolean = true,
+    @IgnoredOnParcel
     override val friendlyName: StringResource,
     override val usingStaggeredGrid: Boolean = true,
 ) : CollageDisplayState {

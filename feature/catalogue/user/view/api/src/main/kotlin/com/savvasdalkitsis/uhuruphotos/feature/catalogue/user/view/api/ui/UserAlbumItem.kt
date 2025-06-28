@@ -63,7 +63,7 @@ fun SharedTransitionScope.UserAlbumItem(
         } else {
             Cel(
                 state = album.cover.cel1 ?: MediaItemInstanceModel(
-                    id = MediaIdModel.RemoteIdModel("", false),
+                    id = MediaIdModel.RemoteIdModel("", false, MediaItemHashModel.fromRemoteMediaHash("", 0)),
                     mediaHash = MediaItemHashModel.fromRemoteMediaHash("", 0),
                 ).toCel(),
                 onSelected = {

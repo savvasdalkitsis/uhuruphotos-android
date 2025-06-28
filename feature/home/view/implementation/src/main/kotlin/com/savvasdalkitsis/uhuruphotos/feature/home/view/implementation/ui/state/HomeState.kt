@@ -15,10 +15,13 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.ui.state
 
+import android.os.Parcelable
 import androidx.compose.runtime.Immutable
+import kotlinx.parcelize.Parcelize
 
 @Immutable
+@Parcelize
 data class HomeState(
     val isLoading: Boolean = true,
     val needsAuthentication: Boolean = false,
-)
+) : Parcelable

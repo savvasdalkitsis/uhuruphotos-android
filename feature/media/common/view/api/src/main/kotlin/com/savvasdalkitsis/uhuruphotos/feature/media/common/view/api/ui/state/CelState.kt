@@ -15,15 +15,18 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state
 
+import android.os.Parcelable
 import androidx.compose.runtime.Immutable
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemModel
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkable.SelectionMode
+import kotlinx.parcelize.Parcelize
 
 @Immutable
+@Parcelize
 data class CelState(
     val mediaItem: MediaItemModel,
     val selectionMode: SelectionMode = SelectionMode.UNDEFINED,
-)
+) : Parcelable
 
 fun MediaItemModel.toCel() = CelState(
     mediaItem = this,

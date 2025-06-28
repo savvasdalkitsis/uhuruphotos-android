@@ -16,9 +16,11 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.ui.state
 
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplayState
+import kotlinx.parcelize.Parcelize
 import uhuruphotos_android.foundation.strings.api.generated.resources.Res
 import uhuruphotos_android.foundation.strings.api.generated.resources.auto_albums
 
+@Parcelize
 data object AutoAlbumCollageDisplayState: CollageDisplayState {
     override val miniIcons: Boolean = false
     override val compactColumnsPortrait = 3

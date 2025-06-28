@@ -15,13 +15,16 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state
 
+import android.os.Parcelable
 import androidx.compose.runtime.Immutable
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.parcelize.Parcelize
 
 @Immutable
+@Parcelize
 data class MemoryCelState(
     val yearsAgo: Int,
     val cels: ImmutableList<CelState>,
     val parallaxEnabled: Boolean = true,
-)
+) : Parcelable

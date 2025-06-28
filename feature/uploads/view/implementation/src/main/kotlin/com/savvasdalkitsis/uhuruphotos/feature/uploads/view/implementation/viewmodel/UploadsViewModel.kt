@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.uploads.view.implementation.viewmodel
 
+import androidx.lifecycle.SavedStateHandle
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.view.api.navigation.UploadsNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.view.implementation.seam.UploadsActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.view.implementation.seam.actions.Load
@@ -28,9 +29,11 @@ import javax.inject.Inject
 @HiltViewModel
 internal class UploadsViewModel @Inject constructor(
     actionsContext: UploadsActionsContext,
+    handle: SavedStateHandle,
 ) : NavigationViewModel<UploadsState, UploadsAction, UploadsNavigationRoute>(
     ActionHandlerWithContext(actionsContext),
     UploadsState(),
+    handle,
 ) {
 
     override fun onRouteSet(route: UploadsNavigationRoute) {

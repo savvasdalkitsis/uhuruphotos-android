@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.state
 
+import android.os.Parcelable
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbums
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHashModel
@@ -24,16 +25,18 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.Vi
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.toTitleOr
+import kotlinx.parcelize.Parcelize
 import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
 import uhuruphotos_android.foundation.strings.api.generated.resources.missing_album_title
 
+@Parcelize
 data class UserAlbumState(
     val id: Int,
     val cover: VitrineState,
     val title: Title,
     val photoCount: Int?,
     val visible: Boolean = true,
-)
+) : Parcelable
 
 fun UserAlbums.toUserAlbumState() = UserAlbumState(
     id = id,
@@ -64,9 +67,9 @@ private fun celState(
     coverIsVideo: Boolean?,
 ): CelState? =
     imageHash?.let {
-        val isVideo = coverIsVideo ?: false
+        val isVideo = coverIsVideo == true
         MediaItemInstanceModel(
-            id = MediaIdModel.RemoteIdModel(it, isVideo),
+            id = MediaIdModel.RemoteIdModel(it, isVideo, MediaItemHashModel.fromRemoteMediaHash(it, 0)),
             mediaHash = MediaItemHashModel.fromRemoteMediaHash(it, 0),
             displayDayDate = null,
             ratio = 1f,

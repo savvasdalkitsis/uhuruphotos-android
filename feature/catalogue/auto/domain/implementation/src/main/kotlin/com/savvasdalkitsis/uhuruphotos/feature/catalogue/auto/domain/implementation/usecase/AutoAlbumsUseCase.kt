@@ -89,7 +89,14 @@ class AutoAlbumsUseCase @Inject constructor(
             AutoAlbum(
                 id = it.id,
                 cover = MediaItemInstanceModel(
-                    id = RemoteIdModel(it.coverPhotoHash, it.coverPhotoIsVideo ?: false),
+                    id = RemoteIdModel(
+                        it.coverPhotoHash,
+                        it.coverPhotoIsVideo == true,
+                        MediaItemHashModel.fromRemoteMediaHash(
+                            it.coverPhotoHash,
+                            user.id
+                        )
+                    ),
                     mediaHash = MediaItemHashModel.fromRemoteMediaHash(
                         it.coverPhotoHash,
                         user.id

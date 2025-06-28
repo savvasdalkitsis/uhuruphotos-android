@@ -15,12 +15,16 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class MediaDayModel(
     val day: Int,
     val dayOfWeek: Int,
     val month: Int,
     val year: Int,
     val monthText: String,
-) {
+) : Parcelable {
     val displayText = "$monthText $year"
 }

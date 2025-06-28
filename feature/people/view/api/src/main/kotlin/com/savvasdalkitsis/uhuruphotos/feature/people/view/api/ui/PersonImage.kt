@@ -13,8 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
+@file:OptIn(ExperimentalSharedTransitionApi::class)
+
 package com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
@@ -24,6 +28,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
+import androidx.navigation3.ui.LocalNavAnimatedContentScope
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.PersonState
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Thumbnail
 import org.jetbrains.compose.resources.painterResource
@@ -36,15 +41,20 @@ import uhuruphotos_android.foundation.icons.api.generated.resources.ic_person_5
 import uhuruphotos_android.foundation.icons.api.generated.resources.ic_person_6
 
 @Composable
-fun PersonImage(
+fun SharedTransitionScope.PersonImage(
     modifier: Modifier = Modifier,
     shape: Shape,
     personState: PersonState
 ) {
     if (personState.imageUrl != null) {
+        val animatedVisibilityScope = LocalNavAnimatedContentScope.current
         Thumbnail(
             modifier = modifier
                 .aspectRatio(1f)
+                .sharedElement(
+                    sharedContentState = rememberSharedContentState("person-${personState.id}"),
+                    animatedVisibilityScope = animatedVisibilityScope,
+                )
                 .clip(shape),
             url = personState.imageUrl,
             contentScale = ContentScale.Crop,

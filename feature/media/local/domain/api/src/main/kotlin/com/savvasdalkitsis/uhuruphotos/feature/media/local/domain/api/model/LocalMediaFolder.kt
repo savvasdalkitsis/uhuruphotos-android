@@ -15,7 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class LocalMediaFolder(
     val id: Int,
     val displayName: String,
-)
+) : Parcelable

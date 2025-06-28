@@ -174,7 +174,7 @@ private fun SharedTransitionScope.Cel(
             modifier = Modifier.fillMaxWidth().offset {
                 IntOffset(contentOffset.toInt(), 0)
             }.sharedElement(
-                rememberSharedContentState("image-${id.value}"),
+                rememberSharedContentState("image-${id.mediaHash.hash}"),
                 animatedContentScope,
             ),
             url = remember(serverUrl, id) {

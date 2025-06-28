@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.viewmodel
 
+import androidx.lifecycle.SavedStateHandle
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.navigation.UserAlbumsNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsState
@@ -28,9 +29,11 @@ import javax.inject.Inject
 @HiltViewModel
 class UserAlbumsViewModel @Inject constructor(
     userAlbumsActionsContext: UserAlbumsActionsContext,
+    handle: SavedStateHandle,
 ) : NavigationViewModel<UserAlbumsState, UserAlbumsAction, UserAlbumsNavigationRoute>(
     ActionHandlerWithContext(userAlbumsActionsContext),
-    UserAlbumsState()
+    UserAlbumsState(),
+    handle,
 ) {
 
     override fun onRouteSet(route: UserAlbumsNavigationRoute) {

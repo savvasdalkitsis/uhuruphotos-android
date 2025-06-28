@@ -15,11 +15,14 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui.state
 
+import android.os.Parcelable
 import androidx.compose.runtime.Immutable
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.parcelize.Parcelize
 
 @Immutable
-sealed class PortfolioItemsState {
+@Parcelize
+sealed class PortfolioItemsState : Parcelable {
 
     @Immutable
     data class RequiresPermissionsState(val deniedPermissions: ImmutableList<String>) : PortfolioItemsState()

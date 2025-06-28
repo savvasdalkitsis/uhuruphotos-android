@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.viewmodel
 
+import androidx.lifecycle.SavedStateHandle
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.api.navigation.SettingsNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.LoadSettings
@@ -28,9 +29,11 @@ import javax.inject.Inject
 @HiltViewModel
 internal class SettingsViewModel @Inject constructor(
     settingsActionsContext: SettingsActionsContext,
+    handle: SavedStateHandle,
 ) : NavigationViewModel<SettingsState, SettingsAction, SettingsNavigationRoute>(
     ActionHandlerWithContext(settingsActionsContext),
-    SettingsState()
+    SettingsState(),
+    handle,
 ) {
 
     override fun onRouteSet(route: SettingsNavigationRoute) {

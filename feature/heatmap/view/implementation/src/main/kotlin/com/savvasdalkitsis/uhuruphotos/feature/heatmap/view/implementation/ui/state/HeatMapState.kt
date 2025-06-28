@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state
 
+import android.os.Parcelable
 import androidx.compose.runtime.Immutable
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDeviceModel
@@ -23,8 +24,10 @@ import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.Viewport
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.parcelize.Parcelize
 
 @Immutable
+@Parcelize
 data class HeatMapState(
     val loading: Boolean = false,
     val allPoints: ImmutableList<LatLon> = persistentListOf(),
@@ -33,4 +36,4 @@ data class HeatMapState(
     val photosOnVisibleMap: ImmutableList<CelState> = persistentListOf(),
     val showRequestPermissionForLocalMediaAccess: MediaItemsOnDeviceModel.RequiresPermissionsModel? = null,
     val initialViewport: Viewport? = null,
-)
+) : Parcelable

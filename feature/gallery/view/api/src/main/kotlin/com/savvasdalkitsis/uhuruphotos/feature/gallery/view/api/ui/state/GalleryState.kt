@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state
 
+import android.os.Parcelable
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Immutable
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
@@ -22,8 +23,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.PersonSt
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.parcelize.Parcelize
 
 @Immutable
+@Parcelize
 data class GalleryState(
     val collageState: CollageState = CollageState(),
     @get:StringRes
@@ -32,4 +35,4 @@ data class GalleryState(
     val people: ImmutableList<PersonState> = persistentListOf(),
     val sorting: GallerySortingState? = null,
     val showDeleteConfirmation: Boolean = false,
-)
+) : Parcelable

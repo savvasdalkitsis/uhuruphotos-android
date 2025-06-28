@@ -15,7 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.map.api.model
 
-data class LatLon(val lat: Double, val lon: Double) {
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+data class LatLon(val lat: Double, val lon: Double) : Parcelable {
 
     override fun toString() = "$lat,$lon"
 }

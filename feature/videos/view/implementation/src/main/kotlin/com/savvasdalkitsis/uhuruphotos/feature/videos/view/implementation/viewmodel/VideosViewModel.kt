@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.videos.view.implementation.viewmodel
 
+import androidx.lifecycle.SavedStateHandle
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryId
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.GalleryAction
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.LoadCollage
@@ -32,9 +33,11 @@ import javax.inject.Inject
 @HiltViewModel
 internal class VideosViewModel @Inject constructor(
     actionsContext: VideosActionsContext,
+    handle: SavedStateHandle,
 ) : NavigationViewModel<GalleryState, GalleryAction, VideosNavigationRoute>(
     ActionHandlerWithContext(actionsContext.galleryActionsContext),
     GalleryState(title = Title.Resource(string.videos)),
+    handle,
 ) {
 
     override fun onRouteSet(route: VideosNavigationRoute) {

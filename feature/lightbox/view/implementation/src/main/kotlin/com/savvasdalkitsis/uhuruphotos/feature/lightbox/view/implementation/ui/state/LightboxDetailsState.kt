@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state
 
+import android.os.Parcelable
 import androidx.compose.runtime.Immutable
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.domain.api.model.LightboxDetailsModel
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.PersonState
@@ -26,8 +27,10 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.collections.immutable.toImmutableSet
+import kotlinx.parcelize.Parcelize
 
 @Immutable
+@Parcelize
 data class LightboxDetailsState(
     val formattedDateTime: String? = null,
     val location: String? = null,
@@ -48,7 +51,7 @@ data class LightboxDetailsState(
     val digitalZoomRatio: String? = null,
     val width: Int? = null,
     val height: Int? = null,
-) {
+) : Parcelable {
 
     val megapixels: String? = whSafe { w, h ->
             "${(w * h.toLong()).mb.round(2)} MP"

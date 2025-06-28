@@ -15,14 +15,17 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.ui.state
 
+import android.os.Parcelable
 import androidx.compose.runtime.Immutable
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.PersonState
+import kotlinx.parcelize.Parcelize
 
 @Immutable
+@Parcelize
 data class PersonCollageState(
     val personState: PersonState? = null,
     val collageState: CollageState = CollageState(),
-)
+) : Parcelable
 
 

@@ -15,10 +15,13 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.ui.state
 
+import android.os.Parcelable
 import androidx.compose.runtime.Immutable
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.parcelize.Parcelize
 
 @Immutable
+@Parcelize
 data class WelcomeState(
     val isLoading: Boolean = true,
     val isSaveEnabled: Boolean = false,
@@ -26,4 +29,4 @@ data class WelcomeState(
     val cloudMediaSelected: Boolean = false,
     val missingPermissions: ImmutableList<String>? = null,
     val showLibrePhotosHelp: Boolean = false,
-)
+) : Parcelable

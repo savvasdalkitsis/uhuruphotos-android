@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.theme.view.implementation.viewmodel
 
+import androidx.lifecycle.SavedStateHandle
 import com.savvasdalkitsis.uhuruphotos.feature.theme.view.api.navigation.ThemeNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.theme.view.implementation.seam.ThemeActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.theme.view.implementation.seam.actions.Load
@@ -28,9 +29,11 @@ import javax.inject.Inject
 @HiltViewModel
 internal class ThemeViewModel @Inject constructor(
     actionsContext: ThemeActionsContext,
+    handle: SavedStateHandle,
 ) : NavigationViewModel<ThemeState, ThemeAction, ThemeNavigationRoute>(
     ActionHandlerWithContext(actionsContext),
     ThemeState(),
+    handle,
 ) {
 
     override fun onRouteSet(route: ThemeNavigationRoute) {

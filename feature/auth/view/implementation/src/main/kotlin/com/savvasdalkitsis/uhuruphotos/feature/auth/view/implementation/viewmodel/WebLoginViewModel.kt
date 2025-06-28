@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.viewmodel
 
+import androidx.lifecycle.SavedStateHandle
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.api.navigation.WebLoginNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.seam.WebLoginActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.seam.actions.LoadPage
@@ -28,9 +29,11 @@ import javax.inject.Inject
 @HiltViewModel
 class WebLoginViewModel @Inject constructor(
     webLoginActionsContext: WebLoginActionsContext,
+    handle: SavedStateHandle,
 ) : NavigationViewModel<WebLoginState, WebLoginAction, WebLoginNavigationRoute>(
     ActionHandlerWithContext(webLoginActionsContext),
-    WebLoginState("")
+    WebLoginState(""),
+    handle,
 ) {
 
     override fun onRouteSet(route: WebLoginNavigationRoute) {

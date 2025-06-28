@@ -13,8 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
+@file:OptIn(ExperimentalSharedTransitionApi::class)
+
 package com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -45,7 +49,7 @@ import uhuruphotos_android.foundation.icons.api.generated.resources.ic_sort_az_a
 import uhuruphotos_android.foundation.icons.api.generated.resources.ic_sort_az_descending
 
 @Composable
-fun People(
+fun SharedTransitionScope.People(
     state: PeopleState,
     action: (PeopleAction) -> Unit,
 ) {

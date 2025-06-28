@@ -15,11 +15,15 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state
 
+import android.os.Parcelable
 import androidx.compose.runtime.Composable
+import kotlinx.parcelize.Parcelize
+import kotlinx.parcelize.RawValue
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 
-sealed class Title {
+@Parcelize
+sealed class Title : Parcelable {
     @Composable
     abstract fun toText(): String
 
@@ -28,7 +32,7 @@ sealed class Title {
         override fun toText(): String = title
     }
 
-    data class Resource(val title: StringResource) : Title() {
+    data class Resource(val title: @RawValue StringResource) : Title() {
         @Composable
         override fun toText(): String = stringResource(title)
     }

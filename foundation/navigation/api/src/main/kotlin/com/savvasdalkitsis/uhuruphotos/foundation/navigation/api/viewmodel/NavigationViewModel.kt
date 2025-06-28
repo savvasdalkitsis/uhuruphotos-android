@@ -15,6 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel
 
+import android.os.Parcelable
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
@@ -26,18 +28,28 @@ import kotlinx.coroutines.launch
 
 abstract class NavigationViewModel<S : Any, A : Any, R : Any>(
     actionHandler: ActionHandler<S, A>,
-    initialState: S,
+    private val initialState: S,
+    private val handle: SavedStateHandle,
 ) : ViewModel(), HasActionableState<S, A> {
+
+    private var savedState: S
+        get() = handle["savedState"] ?: initialState
+        set(value) {
+            if (value is Parcelable) {
+                handle["savedState"] = value
+            }
+        }
 
     private val seam = Seam(
         actionHandler,
-        initialState,
+        savedState,
         viewModelScope,
     )
 
     init {
         viewModelScope.launch {
             state.collect {
+                savedState = it
                 log("Seam") { "State updated to: $it" }
             }
         }

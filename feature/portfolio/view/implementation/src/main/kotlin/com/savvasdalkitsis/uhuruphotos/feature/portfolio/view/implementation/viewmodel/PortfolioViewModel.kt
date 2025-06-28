@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.viewmodel
 
+import androidx.lifecycle.SavedStateHandle
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.api.navigation.PortfolioNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.seam.PortfolioActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.seam.actions.Load
@@ -28,9 +29,11 @@ import javax.inject.Inject
 @HiltViewModel
 internal class PortfolioViewModel @Inject constructor(
     actionsContext: PortfolioActionsContext,
+    handle: SavedStateHandle,
 ) : NavigationViewModel<PortfolioState, PortfolioAction, PortfolioNavigationRoute>(
     ActionHandlerWithContext(actionsContext),
     PortfolioState(),
+    handle,
 ) {
 
     override fun onRouteSet(route: PortfolioNavigationRoute) {

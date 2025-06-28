@@ -16,10 +16,12 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state
 
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplayState
+import kotlinx.parcelize.Parcelize
 import org.jetbrains.compose.resources.DrawableResource
 import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
 import uhuruphotos_android.foundation.strings.api.generated.resources.media_heatmap
 
+@Parcelize
 data object HeatMapCollageDisplayState : CollageDisplayState {
     override val miniIcons: Boolean = false
     override val compactColumnsPortrait = 5

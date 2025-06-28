@@ -47,6 +47,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.NamedVit
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.VitrineState
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaFolder
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Md5Hash
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeMode
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SectionHeader
@@ -202,7 +203,7 @@ private fun LocalFoldersWithoutOther() {
 @Composable
 private fun celState(color: String) = CelState(
     MediaItemInstanceModel(
-        MediaIdModel.LocalIdModel(0, 0, false, "", ""),
+        MediaIdModel.LocalIdModel(0, 0, false, "", "", MediaItemHashModel(Md5Hash(""), 0)),
         MediaItemHashModel.fromRemoteMediaHash("", 0),
         fallbackColor = color
     )

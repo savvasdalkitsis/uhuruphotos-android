@@ -15,12 +15,15 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.api.state
 
+import android.os.Parcelable
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemModel
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class AutoAlbum(
     val id: Int,
     val cover: MediaItemModel,
     val title: String,
     val photoCount: Int?,
     val visible: Boolean = true,
-)
+) : Parcelable

@@ -15,17 +15,20 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state
 
+import android.os.Parcelable
 import androidx.compose.runtime.Immutable
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.GetPeopleForAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.people.People
+import kotlinx.parcelize.Parcelize
 
 @Immutable
+@Parcelize
 data class PersonState(
     val name: String,
     val imageUrl: String?,
     val photos: Int,
     val id: Int,
-)
+) : Parcelable
 
 fun People.toPerson(urlResolver: (String) -> String?) = PersonState(
     id = id,

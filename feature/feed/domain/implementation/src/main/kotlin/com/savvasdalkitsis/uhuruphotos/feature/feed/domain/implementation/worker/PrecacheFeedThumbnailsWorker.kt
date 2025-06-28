@@ -25,6 +25,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchTy
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.broadcast.CancelPrecacheWorkBroadcastReceiver
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.FeedRepository
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHashModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResultModel.CHANGED
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaPrecacher
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
@@ -61,7 +62,7 @@ internal class PrecacheFeedThumbnailsWorker @AssistedInject constructor(
             .items.entries.flatMap { entry ->
                 entry.value.mapNotNull { collections ->
                     collections.photoId?.let { id ->
-                        MediaIdModel.RemoteIdModel(id, collections.isVideo)
+                        MediaIdModel.RemoteIdModel(id, collections.isVideo, MediaItemHashModel.fromRemoteMediaHash(id, 0))
                     }
                 }
             }

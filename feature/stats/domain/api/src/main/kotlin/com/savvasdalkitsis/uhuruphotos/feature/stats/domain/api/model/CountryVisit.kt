@@ -15,12 +15,15 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model
 
+import android.os.Parcelable
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaDayModel
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class CountryVisit(
     val startDate: MediaDayModel,
     val endDate: MediaDayModel,
     val country: String,
-) {
+) : Parcelable {
     val dateRangeDisplayText = "${startDate.displayText} - ${endDate.displayText}"
 }

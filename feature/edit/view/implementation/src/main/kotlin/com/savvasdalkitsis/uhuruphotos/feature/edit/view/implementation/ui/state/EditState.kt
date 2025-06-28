@@ -16,9 +16,12 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.ui.state
 
 import android.net.Uri
+import android.os.Parcelable
 import androidx.compose.runtime.Immutable
+import kotlinx.parcelize.Parcelize
 
 @Immutable
+@Parcelize
 data class EditState(
     val photoUri: Uri? = null,
     val fileName: String = "",
@@ -27,4 +30,4 @@ data class EditState(
     val isLoading: Boolean = true,
     val showCropOptions: Boolean = false,
     val selectedRatio: CropRatioState? = null,
-)
+) : Parcelable

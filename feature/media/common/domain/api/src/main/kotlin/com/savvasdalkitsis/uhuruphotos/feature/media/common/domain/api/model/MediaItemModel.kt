@@ -15,10 +15,13 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model
 
+import android.os.Parcelable
 import androidx.compose.runtime.Immutable
+import kotlinx.parcelize.Parcelize
 
 @Immutable
-sealed interface MediaItemModel {
+@Parcelize
+sealed interface MediaItemModel : Parcelable {
     val id: MediaIdModel<*>
     val mediaHash: MediaItemHashModel
     val fallbackColor: String?

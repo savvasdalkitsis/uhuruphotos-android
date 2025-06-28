@@ -46,6 +46,7 @@ sealed class MediaIdModel<T : Serializable> private constructor(
     abstract val preferLocal: MediaIdModel<*>
     abstract val findLocals: Set<LocalIdModel>
     abstract val serializableId: String
+    abstract val mediaHash: MediaItemHashModel
 
     val hasRemote: Boolean get() = findRemote != null
     val isBothRemoteAndLocal: Boolean get() = findLocals.isNotEmpty() && hasRemote
@@ -54,6 +55,7 @@ sealed class MediaIdModel<T : Serializable> private constructor(
     data class RemoteIdModel(
         override val value: String,
         override val isVideo: Boolean,
+        override val mediaHash: MediaItemHashModel,
     ): MediaIdModel<String>() {
         @IgnoredOnParcel
         @Transient
@@ -78,16 +80,17 @@ sealed class MediaIdModel<T : Serializable> private constructor(
         override fun thumbnailUri(serverUrl: String?): String =
             serverUrl?.let { value.toThumbnailUrlFromId(it) } ?: ""
 
-        fun toDownloading() = DownloadingIdModel(value, isVideo)
+        fun toDownloading() = DownloadingIdModel(value, isVideo, mediaHash)
     }
 
     @Parcelize
     data class DownloadingIdModel(
         override val value: String,
         override val isVideo: Boolean,
+        override val mediaHash: MediaItemHashModel,
     ): MediaIdModel<String>() {
         @IgnoredOnParcel
-        val remote get() = RemoteIdModel(value, isVideo)
+        val remote get() = RemoteIdModel(value, isVideo, mediaHash)
 
         @IgnoredOnParcel
         @Transient
@@ -119,9 +122,10 @@ sealed class MediaIdModel<T : Serializable> private constructor(
         override val isVideo: Boolean,
         val contentUri: String,
         val thumbnailUri: String,
+        override val mediaHash: MediaItemHashModel,
     ): MediaIdModel<Long>() {
         @IgnoredOnParcel
-        val local get() = LocalIdModel(value, folderId, isVideo, contentUri, thumbnailUri)
+        val local get() = LocalIdModel(value, folderId, isVideo, contentUri, thumbnailUri, mediaHash)
 
         @IgnoredOnParcel
         @Transient
@@ -152,9 +156,10 @@ sealed class MediaIdModel<T : Serializable> private constructor(
         override val isVideo: Boolean,
         val contentUri: String,
         val thumbnailUri: String,
+        override val mediaHash: MediaItemHashModel,
     ): MediaIdModel<Long>() {
         @IgnoredOnParcel
-        val local get() = LocalIdModel(value, folderId, isVideo, contentUri, thumbnailUri)
+        val local get() = LocalIdModel(value, folderId, isVideo, contentUri, thumbnailUri, mediaHash)
 
         @IgnoredOnParcel
         @Transient
@@ -186,6 +191,7 @@ sealed class MediaIdModel<T : Serializable> private constructor(
         override val isVideo: Boolean,
         val contentUri: String,
         val thumbnailUri: String,
+        override val mediaHash: MediaItemHashModel,
     ): MediaIdModel<Long>() {
         @IgnoredOnParcel
         @Transient
@@ -208,8 +214,8 @@ sealed class MediaIdModel<T : Serializable> private constructor(
         override fun fullResUri(serverUrl: String?): String = contentUri
         override fun thumbnailUri(serverUrl: String?): String = thumbnailUri
 
-        fun toUploading() = UploadingIdModel(value, folderId, isVideo, contentUri, thumbnailUri)
-        fun toProcessing() = ProcessingIdModel(value, folderId, isVideo, contentUri, thumbnailUri)
+        fun toUploading() = UploadingIdModel(value, folderId, isVideo, contentUri, thumbnailUri, mediaHash)
+        fun toProcessing() = ProcessingIdModel(value, folderId, isVideo, contentUri, thumbnailUri, mediaHash)
     }
 
     @Parcelize
@@ -217,6 +223,7 @@ sealed class MediaIdModel<T : Serializable> private constructor(
     data class GroupIdModel private constructor(
         override val value: ArrayList<MediaIdModel<*>>,
         override val isVideo: Boolean,
+        override val mediaHash: MediaItemHashModel,
     ): MediaIdModel<ArrayList<MediaIdModel<*>>>() {
         @IgnoredOnParcel
         @Transient
@@ -252,8 +259,9 @@ sealed class MediaIdModel<T : Serializable> private constructor(
             operator fun invoke(
                 value: Collection<MediaIdModel<*>>,
                 isVideo: Boolean,
+                mediaHash: MediaItemHashModel,
             ) =
-                GroupIdModel(ArrayList(value.distinct()), isVideo)
+                GroupIdModel(ArrayList(value.distinct()), isVideo, mediaHash)
         }
     }
 }

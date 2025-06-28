@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.viewmodel
 
+import androidx.lifecycle.SavedStateHandle
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.AccountOverviewAction
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.Load
@@ -38,12 +39,14 @@ typealias DiscoverCompositeAction = Either<DiscoverAction, AccountOverviewAction
 class DiscoverViewModel @Inject constructor(
     discoverActionsContext: DiscoverActionsContext,
     accountOverviewActionsContext: AccountOverviewActionsContext,
+    handle: SavedStateHandle,
 ) : NavigationViewModel<DiscoverCompositeState, DiscoverCompositeAction, DiscoverNavigationRoute>(
     CompositeActionHandler(
         ActionHandlerWithContext(discoverActionsContext),
         ActionHandlerWithContext(accountOverviewActionsContext),
     ),
-    DiscoverState() to AccountOverviewState()
+    DiscoverState() to AccountOverviewState(),
+    handle,
 ) {
 
     override fun onRouteSet(route: DiscoverNavigationRoute) {

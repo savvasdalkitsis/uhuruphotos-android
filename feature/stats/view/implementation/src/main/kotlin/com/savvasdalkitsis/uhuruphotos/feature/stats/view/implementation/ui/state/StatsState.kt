@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.ui.state
 
+import android.os.Parcelable
 import androidx.compose.runtime.Immutable
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaDayModel
 import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.CountryVisit
@@ -26,8 +27,10 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentMapOf
+import kotlinx.parcelize.Parcelize
 
 @Immutable
+@Parcelize
 data class StatsState(
     val isLoadingMediaByYear: Boolean = true,
     val isLoadingMediaByMonth: Boolean = true,
@@ -43,7 +46,7 @@ data class StatsState(
     val timeline: ImmutableList<CountryVisit> = persistentListOf(),
     val photoCount: Int? = null,
     val videoCount: Int? = null,
-) {
+): Parcelable {
     val isLoading = isLoadingMediaByYear
             && isLoadingTimeline
             && isLoadingMediaByMonth

@@ -15,12 +15,15 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state
 
+import android.os.Parcelable
 import androidx.compose.runtime.Immutable
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.VitrineState
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.parcelize.Parcelize
 
 @Immutable
+@Parcelize
 data class LibraryState(
     val loading: Boolean = false,
     val showTrash: Boolean = true,
@@ -31,4 +34,4 @@ data class LibraryState(
     val localMedia: LibraryLocalMediaState? = null,
     val items: ImmutableList<LibraryItemState> = persistentListOf(),
     val showUpsellDialogFromSource: LibraryItemState? = null,
-)
+) : Parcelable

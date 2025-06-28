@@ -15,15 +15,18 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state
 
+import android.os.Parcelable
 import androidx.compose.runtime.Immutable
+import kotlinx.parcelize.Parcelize
 
 @Immutable
+@Parcelize
 data class VitrineState(
     val cel1: CelState? = null,
     val cel2: CelState? = null,
     val cel3: CelState? = null,
     val cel4: CelState? = null,
-) {
+) : Parcelable {
     val hasMoreThanOneItem = cel2 != null
     val isEmpty = cel1 == null && cel2 == null && cel3 == null && cel4 == null
 

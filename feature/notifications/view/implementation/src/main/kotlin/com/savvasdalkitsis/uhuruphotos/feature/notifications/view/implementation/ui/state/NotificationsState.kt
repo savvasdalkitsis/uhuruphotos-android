@@ -15,10 +15,13 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.notifications.view.implementation.ui.state
 
+import android.os.Parcelable
 import androidx.compose.runtime.Immutable
+import kotlinx.parcelize.Parcelize
 
 @Immutable
+@Parcelize
 data class NotificationsState(
     val isLoading: Boolean = true,
     val rememberChoice: Boolean = false,
-)
+) : Parcelable

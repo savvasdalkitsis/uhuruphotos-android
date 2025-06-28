@@ -31,10 +31,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
-import usecase.ToasterUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.mapNotNull
+import usecase.ToasterUseCase
 import javax.inject.Inject
 
 class AutoAlbumActionsContext @Inject constructor(
@@ -76,7 +76,11 @@ class AutoAlbumActionsContext @Inject constructor(
                                             MediaItemInstanceModel(
                                                 id = MediaIdModel.RemoteIdModel(
                                                     it.photoId.toString(),
-                                                    it.video ?: false
+                                                    it.video == true,
+                                                    MediaItemHashModel.fromRemoteMediaHash(
+                                                        it.photoId.toString(),
+                                                        user.id
+                                                    )
                                                 ),
                                                 mediaHash = MediaItemHashModel.fromRemoteMediaHash(
                                                     it.photoId.toString(),

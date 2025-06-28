@@ -13,8 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
+@file:OptIn(ExperimentalSharedTransitionApi::class)
+
 package com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -37,7 +41,7 @@ import uhuruphotos_android.foundation.strings.api.generated.resources.people
 import uhuruphotos_android.foundation.strings.api.generated.resources.view_all
 
 @Composable
-fun PeopleBanner(
+fun SharedTransitionScope.PeopleBanner(
     modifier: Modifier = Modifier,
     people: ImmutableList<PersonState>,
     headerPadding: PaddingValues = PaddingValues(),

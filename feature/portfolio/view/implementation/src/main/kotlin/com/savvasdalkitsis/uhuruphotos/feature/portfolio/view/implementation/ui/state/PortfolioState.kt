@@ -15,11 +15,14 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui.state
 
+import android.os.Parcelable
 import androidx.compose.runtime.Immutable
+import kotlinx.parcelize.Parcelize
 
 @Immutable
+@Parcelize
 data class PortfolioState(
     val localMedia: PortfolioItemsState = PortfolioItemsState.LoadingState,
     val title: String? = null,
     val showScanOther: Boolean = false,
-)
+) : Parcelable

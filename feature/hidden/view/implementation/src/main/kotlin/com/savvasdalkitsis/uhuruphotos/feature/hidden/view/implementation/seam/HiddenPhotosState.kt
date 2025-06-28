@@ -15,6 +15,10 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class HiddenPhotosState(
     val displayFingerPrintAction: Boolean = false,
-)
+) : Parcelable

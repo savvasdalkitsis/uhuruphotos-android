@@ -15,16 +15,19 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state
 
+import android.os.Parcelable
 import androidx.compose.runtime.Immutable
+import kotlinx.parcelize.Parcelize
 
 @Immutable
+@Parcelize
 data class AvatarState(
     val avatarUrl: String? = null,
     val initials: String = "",
     val userFullName: String = "",
     val serverUrl: String = "",
     val syncState: SyncState = SyncState.IN_PROGRESS,
-)
+) : Parcelable
 
 val previewAvatarState = AvatarState(
     initials = "SD",

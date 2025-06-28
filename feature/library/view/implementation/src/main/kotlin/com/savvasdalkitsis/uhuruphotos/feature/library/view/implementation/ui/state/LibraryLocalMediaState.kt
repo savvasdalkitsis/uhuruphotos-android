@@ -15,13 +15,16 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state
 
+import android.os.Parcelable
 import androidx.compose.runtime.Immutable
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.VitrineState
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaFolder
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.parcelize.Parcelize
 
 @Immutable
-sealed class LibraryLocalMediaState {
+@Parcelize
+sealed class LibraryLocalMediaState : Parcelable {
 
     @Immutable
     data class RequiresPermissionsState(val deniedPermissions: ImmutableList<String>) : LibraryLocalMediaState()

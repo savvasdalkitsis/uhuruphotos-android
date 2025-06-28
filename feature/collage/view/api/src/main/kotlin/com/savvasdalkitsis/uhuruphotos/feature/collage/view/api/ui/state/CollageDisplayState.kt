@@ -15,20 +15,24 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state
 
+import android.os.Parcelable
 import androidx.compose.runtime.Immutable
+import kotlinx.parcelize.IgnoredOnParcel
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
 
 @Immutable
-interface CollageDisplayState {
+interface CollageDisplayState : Parcelable {
     val miniIcons: Boolean
     val compactColumnsPortrait: Int
     val compactColumnsLandscape: Int
     val wideColumnsPortrait: Int
     val wideColumnsLandscape: Int
+    @IgnoredOnParcel
     val iconResource: DrawableResource?
     val maintainAspectRatio: Boolean
     val allowsAnimatedVideoThumbnails: Boolean
+    @IgnoredOnParcel
     val friendlyName: StringResource
     val zoomIn: CollageDisplayState
     val zoomOut: CollageDisplayState

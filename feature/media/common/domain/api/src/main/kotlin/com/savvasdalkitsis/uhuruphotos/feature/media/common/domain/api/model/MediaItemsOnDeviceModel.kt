@@ -15,9 +15,12 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model
 
+import android.os.Parcelable
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaFolder
+import kotlinx.parcelize.Parcelize
 
-sealed class MediaItemsOnDeviceModel {
+@Parcelize
+sealed class MediaItemsOnDeviceModel : Parcelable {
 
     data class FoundModel(
         val primaryFolder: Pair<LocalMediaFolder, List<MediaItemModel>>?,
