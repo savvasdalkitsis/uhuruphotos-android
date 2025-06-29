@@ -41,7 +41,6 @@ import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.DiscoverAction
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.LoadHeatMap
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.DiscoverState
-import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.sharedElement
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapView
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.rememberMapViewState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SectionHeader
@@ -75,11 +74,7 @@ fun SharedTransitionScope.DiscoverLocations(
         ) {
             MapView(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .sharedElement(
-                        scope = this@DiscoverLocations,
-                        id = "map",
-                    ),
+                    .fillMaxSize(),
                 mapViewState = rememberMapViewState(
                     initialPosition = state.mapViewport.center,
                     initialZoom = state.mapViewport.zoom,

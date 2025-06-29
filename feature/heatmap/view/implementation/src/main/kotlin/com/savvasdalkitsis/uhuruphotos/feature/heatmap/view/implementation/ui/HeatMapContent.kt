@@ -29,7 +29,6 @@ import com.google.accompanist.permissions.isGranted
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.actions.CameraViewPortChanged
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.actions.HeatMapAction
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state.HeatMapState
-import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.sharedElement
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapView
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.insets.insetsTop
@@ -52,11 +51,7 @@ fun SharedTransitionScope.HeatMapContent(
     val locationPermissionGranted = locationPermissionState.status.isGranted
 
     MapView(
-        modifier = modifier
-            .sharedElement(
-                scope = this,
-                id = "map",
-            ),
+        modifier = modifier,
         mapViewState = mapViewState,
         mapOptions = {
             copy(
