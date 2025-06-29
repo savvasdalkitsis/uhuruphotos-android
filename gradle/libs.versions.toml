@@ -135,7 +135,7 @@ kotlinx-immutable = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.8"
 kotlinx-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "serialization" }
 leaks = "com.squareup.leakcanary:leakcanary-android:2.14"
 log4k = "de.peilicke.sascha:log4k:1.4.1"
-lottie = "com.airbnb.android:lottie-compose:6.6.4"
+lottie = "com.airbnb.android:lottie-compose:6.6.7"
 lumberjack-core = { module = "com.github.MFlisar.Lumberjack:core", version.ref = "lumberjack" }
 lumberjack-implementation = { module = "com.github.MFlisar.Lumberjack:implementation-lumberjack", version.ref = "lumberjack" }
 lumberjack-logger-console = { module = "com.github.MFlisar.Lumberjack:logger-console", version.ref = "lumberjack" }
