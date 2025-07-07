@@ -100,7 +100,7 @@ autodagger-retrofit = { module = "se.ansman.dagger.auto:retrofit", version.ref =
 biometric = "androidx.biometric:biometric:1.1.0"
 bottomsheet = "com.holix.android:bottomsheetdialog-compose:1.6.0"
 bubble-navigation = "com.github.savvasdalkitsis:BubbleNavigationBarCompose:1.0.2"
-bugsnag = "com.bugsnag:bugsnag-android:6.12.1"
+bugsnag = "com.bugsnag:bugsnag-android:6.15.0"
 bugsnag-performance = "com.bugsnag:bugsnag-android-performance:1.10.0"
 bugsnag-plugin = "com.bugsnag:bugsnag-android-gradle-plugin:8.1.0"
 capturable = "com.github.SmartToolFactory:Compose-Screenshot:1.0.3"
