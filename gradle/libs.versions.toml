@@ -116,7 +116,7 @@ flowpreferences = "com.fredporciuncula:flow-preferences:1.9.1"
 gif = "com.squareup:gifencoder:0.10.1"
 google-fonts = "androidx.compose.ui:ui-text-google-fonts:1.8.0-rc03"
 google-services = { module = "com.google.gms:google-services", version.ref = "google-services" }
-gson = "com.google.code.gson:gson:2.11.0"
+gson = "com.google.code.gson:gson:2.13.1"
 heatmap = "com.github.k-surtel:heat-map:1.0.1"
 hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt-android-gradle-plugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hilt" }
