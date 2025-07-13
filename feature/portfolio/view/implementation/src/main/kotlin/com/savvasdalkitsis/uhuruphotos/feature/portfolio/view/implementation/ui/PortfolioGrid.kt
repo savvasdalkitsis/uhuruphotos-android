@@ -18,9 +18,9 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui
 
 import androidx.compose.animation.ExperimentalSharedTransitionApi
-import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.Arrangement.spacedBy
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -77,9 +77,9 @@ fun BoxScope.PortfolioGrid(
 @Preview
 @Composable
 private fun PortfolioGridPreview() {
-    SharedTransitionLayout {
+    PreviewAppTheme {
         val scope = this
-        PreviewAppTheme {
+        Box {
             PortfolioGrid(
                 localMedia = PortfolioItemsState.FoundState(
                     List(50) { state(it) }.toImmutableList()
@@ -94,9 +94,9 @@ private fun PortfolioGridPreview() {
 @Preview
 @Composable
 private fun PortfolioGridNotOthersPreview() {
-    SharedTransitionLayout {
+    PreviewAppTheme {
         val scope = this
-        PreviewAppTheme {
+        Box {
             PortfolioGrid(
                 localMedia = PortfolioItemsState.FoundState(
                     persistentListOf(state(1))

@@ -13,9 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
+@file:OptIn(ExperimentalSharedTransitionApi::class)
+
 package com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.ui
 
 import android.os.Build
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -43,7 +47,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.DayOfWeek
 import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.Month
 import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.Year
 import com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.ui.state.StatsState
+import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.SharedElementId
+import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.sharedElement
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.Background
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.NoContent
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruUpNavButton
@@ -66,81 +73,91 @@ import uhuruphotos_android.foundation.strings.api.generated.resources.year
 import java.time.LocalDate
 
 @Composable
-internal fun Stats(
+internal fun SharedTransitionScope.Stats(
     state: StatsState,
 ) {
-    UhuruScaffold(
-        title = { Text(stringResource(string.stats)) },
-        navigationIcon = { UhuruUpNavButton() }
-    ) { contentPadding ->
-        Column(
+    Background {
+        UhuruScaffold(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = 16.dp)
-                .verticalScroll(rememberScrollState()),
-            verticalArrangement = spacedBy(16.dp),
-        ) {
-            Spacer(modifier = Modifier.height(contentPadding.calculateTopPadding() + 16.dp))
-            StatsHeader(state)
-            StatsMediaPerPeriod(
-                isLoading = state.isLoadingMediaByYear,
-                mediaByPeriod = state.mediaByYear,
-                title = string.media_per_year,
-                uniqueId = "year",
-                bottomAxisLabel = string.year,
-            )
-            StatsMediaPerPeriod(
-                isLoading = state.isLoadingMediaByMonth,
-                mediaByPeriod = state.mediaByMonth,
-                title = string.media_per_month,
-                uniqueId = "month",
-                bottomAxisLabel = string.month,
-            )
-            StatsMediaPerPeriod(
-                isLoading = state.isLoadingMediaByDayOfMonth,
-                mediaByPeriod = state.mediaByDayOfMonth,
-                title = string.media_per_day_of_month,
-                uniqueId = "day_of_month",
-                bottomAxisLabel = string.day,
-            )
-            StatsMediaPerPeriod(
-                isLoading = state.isLoadingMediaByDayOfWeek,
-                mediaByPeriod = state.mediaByDayOfWeek,
-                title = string.media_per_day_of_week,
-                uniqueId = "day_of_week",
-                bottomAxisLabel = string.day,
-            )
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                StatsGroup(
-                    isLoading = state.isLoadingMediaHeatMap,
-                    title = string.media_heatmap,
-                    uniqueId = "heatmap",
-                ) {
-                    if (state.mediaHeatMap.isEmpty()) {
-                        NoContent(
-                            message = string.no_media,
-                            refreshable = false,
-                        )
-                    } else {
-                        HeatMap(
-                            properties = remember {
-                                Properties()
-                            },
-                            records = remember(state.mediaHeatMap) {
-                                state.mediaHeatMap.map { (day, count) ->
-                                    Record(
-                                        date = LocalDate.of(day.year, day.month, day.day),
-                                        value = count.toDouble(),
-                                    )
-                                }
-                            },
-                            onSquareClick = {},
-                        )
+                .sharedElement(SharedElementId.stats()),
+            title = {
+                Text(
+                    modifier = Modifier
+                        .sharedElement(SharedElementId.statsText()),
+                    text = stringResource(string.stats),
+                )
+            },
+            navigationIcon = { UhuruUpNavButton() }
+        ) { contentPadding ->
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 16.dp)
+                    .verticalScroll(rememberScrollState()),
+                verticalArrangement = spacedBy(16.dp),
+            ) {
+                Spacer(modifier = Modifier.height(contentPadding.calculateTopPadding() + 16.dp))
+                StatsHeader(state)
+                StatsMediaPerPeriod(
+                    isLoading = state.isLoadingMediaByYear,
+                    mediaByPeriod = state.mediaByYear,
+                    title = string.media_per_year,
+                    uniqueId = "year",
+                    bottomAxisLabel = string.year,
+                )
+                StatsMediaPerPeriod(
+                    isLoading = state.isLoadingMediaByMonth,
+                    mediaByPeriod = state.mediaByMonth,
+                    title = string.media_per_month,
+                    uniqueId = "month",
+                    bottomAxisLabel = string.month,
+                )
+                StatsMediaPerPeriod(
+                    isLoading = state.isLoadingMediaByDayOfMonth,
+                    mediaByPeriod = state.mediaByDayOfMonth,
+                    title = string.media_per_day_of_month,
+                    uniqueId = "day_of_month",
+                    bottomAxisLabel = string.day,
+                )
+                StatsMediaPerPeriod(
+                    isLoading = state.isLoadingMediaByDayOfWeek,
+                    mediaByPeriod = state.mediaByDayOfWeek,
+                    title = string.media_per_day_of_week,
+                    uniqueId = "day_of_week",
+                    bottomAxisLabel = string.day,
+                )
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    StatsGroup(
+                        isLoading = state.isLoadingMediaHeatMap,
+                        title = string.media_heatmap,
+                        uniqueId = "heatmap",
+                    ) {
+                        if (state.mediaHeatMap.isEmpty()) {
+                            NoContent(
+                                message = string.no_media,
+                                refreshable = false,
+                            )
+                        } else {
+                            HeatMap(
+                                properties = remember {
+                                    Properties()
+                                },
+                                records = remember(state.mediaHeatMap) {
+                                    state.mediaHeatMap.map { (day, count) ->
+                                        Record(
+                                            date = LocalDate.of(day.year, day.month, day.day),
+                                            value = count.toDouble(),
+                                        )
+                                    }
+                                },
+                                onSquareClick = {},
+                            )
+                        }
                     }
                 }
-            }
 //            StatsTimeline(state.isLoadingTimeline, state.timeline)
-            Spacer(modifier = Modifier.height(contentPadding.calculateBottomPadding() + 16.dp))
+                Spacer(modifier = Modifier.height(contentPadding.calculateBottomPadding() + 16.dp))
+            }
         }
     }
 }

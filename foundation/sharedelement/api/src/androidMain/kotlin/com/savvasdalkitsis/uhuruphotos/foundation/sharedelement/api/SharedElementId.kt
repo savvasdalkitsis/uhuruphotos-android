@@ -59,5 +59,29 @@ value class SharedElementId(val value: String) {
 
         fun hiddenTitle() =
             SharedElementId("hidden-title")
+
+        @Composable
+        fun stats() =
+            SharedElementId("stats")
+
+        @Composable
+        fun statsText() =
+            SharedElementId("stats-text")
+
+        @Composable
+        fun mediaWithoutDate() =
+            SharedElementId("media-without-date")
+
+        @Composable
+        fun mediaWithoutDateText() =
+            SharedElementId("media-without-date-text")
+
+        @Composable
+        fun videos() =
+            SharedElementId("videos")
+
+        @Composable
+        fun videosText() =
+            SharedElementId("videos-text")
     }
 }

@@ -13,8 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
+@file:OptIn(ExperimentalSharedTransitionApi::class)
+
 package com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionLayout
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -27,6 +32,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.MediaWithoutDateCategorySelected
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.StatsCategorySelected
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.VideoCategorySelected
+import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.SharedElementId
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SectionHeader
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.ActionRowWithIcon
@@ -42,7 +48,7 @@ import uhuruphotos_android.foundation.strings.api.generated.resources.stats
 import uhuruphotos_android.foundation.strings.api.generated.resources.videos
 
 @Composable
-fun DiscoverCategories(
+fun SharedTransitionScope.DiscoverCategories(
     action: (DiscoverAction) -> Unit = {},
 ) {
     Column(
@@ -60,6 +66,8 @@ fun DiscoverCategories(
         ActionRowWithIcon(
             icon = drawable.ic_play_filled,
             text = stringResource(string.videos),
+            sharedElementId = SharedElementId.videos(),
+            textSharedElementId = SharedElementId.videosText(),
         ) {
             action(VideoCategorySelected)
         }
@@ -67,6 +75,8 @@ fun DiscoverCategories(
         ActionRowWithIcon(
             icon = drawable.ic_calendar_remove,
             text = stringResource(string.media_without_date),
+            sharedElementId = SharedElementId.mediaWithoutDate(),
+            textSharedElementId = SharedElementId.mediaWithoutDateText(),
         ) {
             action(MediaWithoutDateCategorySelected)
         }
@@ -74,6 +84,8 @@ fun DiscoverCategories(
         ActionRowWithIcon(
             icon = drawable.ic_chart,
             text = stringResource(string.stats),
+            sharedElementId = SharedElementId.stats(),
+            textSharedElementId = SharedElementId.statsText(),
         ) {
             action(StatsCategorySelected)
         }
@@ -84,6 +96,8 @@ fun DiscoverCategories(
 @Composable
 private fun DiscoverCategoriesPreview() {
     PreviewAppTheme {
-        DiscoverCategories()
+        SharedTransitionLayout {
+            DiscoverCategories()
+        }
     }
 }

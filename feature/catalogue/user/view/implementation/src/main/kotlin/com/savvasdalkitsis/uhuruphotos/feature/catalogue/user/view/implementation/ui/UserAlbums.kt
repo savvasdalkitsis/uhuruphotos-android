@@ -19,11 +19,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementati
 
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -38,6 +34,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementatio
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.Catalogue
 import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.SharedElementId
 import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.sharedElement
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.Background
 import org.jetbrains.compose.resources.stringResource
 import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
 import uhuruphotos_android.foundation.strings.api.generated.resources.no_user_albums
@@ -48,10 +45,7 @@ internal fun SharedTransitionScope.UserAlbums(
     state: UserAlbumsState,
     action: (UserAlbumsAction) -> Unit,
 ) {
-    Box(Modifier
-        .fillMaxSize()
-        .background(MaterialTheme.colorScheme.background))
-    {
+    Background {
         Catalogue(
             modifier = Modifier
                 .sharedElement(SharedElementId.userAlbumsCanvas()),

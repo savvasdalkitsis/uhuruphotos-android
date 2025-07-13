@@ -101,6 +101,7 @@ subprojects {
         jvmToolchain(21)
         compilerOptions {
             freeCompilerArgs.add("-Xcontext-parameters")
+            freeCompilerArgs.add("-Xopt-in=androidx.compose.animation.ExperimentalSharedTransitionApi")
         }
     }
 

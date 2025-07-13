@@ -20,14 +20,26 @@ package com.savvasdalkitsis.uhuruphotos.feature.undated.view.implementation.ui
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.GalleryAction
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.Gallery
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
+import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.SharedElementId
+import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.sharedElement
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.Background
 
 @Composable
 internal fun SharedTransitionScope.Undated(
     state: GalleryState,
     action: (GalleryAction) -> Unit,
 ) {
-    Gallery(state = state, action = action)
+    Background {
+        Gallery(
+            modifier = Modifier
+                .sharedElement(SharedElementId.mediaWithoutDate()),
+            titleSharedElementId = SharedElementId.mediaWithoutDateText(),
+            state = state,
+            action = action,
+        )
+    }
 }

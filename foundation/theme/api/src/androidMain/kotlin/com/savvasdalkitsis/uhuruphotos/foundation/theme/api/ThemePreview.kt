@@ -13,11 +13,15 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
+@file:OptIn(ExperimentalSharedTransitionApi::class)
+
 package com.savvasdalkitsis.uhuruphotos.foundation.theme.api
 
 import android.graphics.Color.CYAN
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionLayout
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.material3.Surface
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
@@ -63,7 +67,7 @@ class PreviewThemeDataProvider : PreviewParameterProvider<PreviewThemeData> {
 fun PreviewAppTheme(
     themeData: PreviewThemeData,
     themeContrast: ThemeContrast = ThemeContrast.NORMAL,
-    content: @Composable BoxScope.() -> Unit,
+    content: @Composable SharedTransitionScope.() -> Unit,
 ) {
     PreviewAppTheme(
         themeMode = themeData.themeMode,
@@ -79,7 +83,7 @@ fun PreviewAppTheme(
     themeMode: ThemeMode = ThemeMode.LIGHT_MODE,
     themeContrast: ThemeContrast = ThemeContrast.NORMAL,
     theme: Theme = BlueTheme,
-    content: @Composable BoxScope.() -> Unit,
+    content: @Composable SharedTransitionScope.() -> Unit,
 ) {
     val drawable = CYAN.toDrawable()
     val imageLoader = ImageLoader.Builder(LocalContext.current)
@@ -100,8 +104,10 @@ fun PreviewAppTheme(
     ) {
         AppTheme(themeMode = themeMode) {
             Surface {
-                Box {
-                    content()
+                SharedTransitionLayout {
+                    Box {
+                        content()
+                    }
                 }
             }
         }
