@@ -31,6 +31,25 @@ dependencyResolutionManagement {
     }
 }
 
+buildCache {
+    local {
+        enabled = true
+    }
+    remote(HttpBuildCache) {
+        String remoteCacheUrl = settings.ext.find('gradle.cache.url') ?: System.getenv("GRADLE_CACHE_URL") ?: ""
+        String remoteCacheUser = settings.ext.find('gradle.cache.user') ?: System.getenv("GRADLE_CACHE_USER") ?: ""
+        String remoteCachePassword = settings.ext.find('gradle.cache.password') ?: System.getenv("GRADLE_CACHE_PASSWORD") ?: ""
+        enabled = !remoteCacheUrl.isEmpty()
+        url = remoteCacheUrl
+        push = true
+
+        credentials {
+            username = remoteCacheUser
+            password = remoteCachePassword
+        }
+    }
+}
+
 rootProject.name = "uhuruphotos-android"
 include ':app'
 include ':app:implementation'

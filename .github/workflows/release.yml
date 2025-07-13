@@ -65,6 +65,9 @@ jobs:
         MAPS_API_KEY: ${{ secrets.MAPS_API_KEY }}
         MAPLIBRE_API_KEY: ${{ secrets.MAPLIBRE_API_KEY }}
         ANDROID_JSON_KEY_FILE: ${{ steps.service_account_json_file.outputs.filePath }}
+        GRADLE_CACHE_URL: ${{ secrets.GRADLE_CACHE_URL }}
+        GRADLE_CACHE_USER: ${{ secrets.GRADLE_CACHE_USER }}
+        GRADLE_CACHE_PASSWORD: ${{ secrets.GRADLE_CACHE_PASSWORD }}
 
 #    - name: Build with Gradle
 #      run: ./gradlew app:bundleRelease

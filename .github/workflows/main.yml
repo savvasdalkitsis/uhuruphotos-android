@@ -45,6 +45,9 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         MAPBOX_DOWNLOADS_TOKEN: ${{ secrets.MAPBOX_DOWNLOADS_TOKEN }}
+        GRADLE_CACHE_URL: ${{ secrets.GRADLE_CACHE_URL }}
+        GRADLE_CACHE_USER: ${{ secrets.GRADLE_CACHE_USER }}
+        GRADLE_CACHE_PASSWORD: ${{ secrets.GRADLE_CACHE_PASSWORD }}
       run: ./gradlew testDebugUnitTest assembleDebug # sonarqube
     - name: Test Reporter
       uses: dorny/test-reporter@v1.9.1
