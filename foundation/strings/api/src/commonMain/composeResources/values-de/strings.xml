@@ -9,8 +9,8 @@
         <item quantity="other">%1$d Fotos löschen</item>
     </plurals>
     <plurals name="delete_photos_confirmation">
-        <item quantity="one">Sind Sie sicher, dass Sie dieses %1$d Foto löschen wollen\?</item>
-        <item quantity="other">Sind Sie sicher, dass Sie diese %1$d Fotos löschen wollen\?</item>
+        <item quantity="one">Sind Sie sicher, dass Sie dieses %1$d Foto löschen wollen?</item>
+        <item quantity="other">Sind Sie sicher, dass Sie diese %1$d Fotos löschen wollen?</item>
     </plurals>
     <string name="copied_to_clipboard">In die Zwischenablage kopiert</string>
     <string name="could_not_find_app_to_open">Es konnte keine Anwendung zum Öffnen gefunden werden</string>
@@ -52,8 +52,8 @@
     <string name="feed_sync_network_changed">Anforderung an das Feed-Synchronisierungs-Netzwerk geändert</string>
     <string name="error_changing_photo_favourite">Es ist ein Fehler beim Ändern des Favoritenstatus des Fotos aufgetreten</string>
     <plurals name="trash_photos_confirmation">
-        <item quantity="one">Bist du dir sicher, dass du dieses %1$d Foto in den Papierkorb schieben willst\?</item>
-        <item quantity="other">Bist du dir sicher, dass du diese %1$d Fotos in den Papierkorb schieben willst\?</item>
+        <item quantity="one">Bist du dir sicher, dass du dieses %1$d Foto in den Papierkorb schieben willst?</item>
+        <item quantity="other">Bist du dir sicher, dass du diese %1$d Fotos in den Papierkorb schieben willst?</item>
     </plurals>
     <string name="perform_full_feed_sync">Führe vollständige Feed Synchronisierung durch</string>
     <string name="feed_sync_progress">Vollständiger Feed Synchronisierung Fortschritt</string>
@@ -76,8 +76,8 @@
         <item quantity="other">Schiebe %1$d Fotos in den Papierkorb</item>
     </plurals>
     <plurals name="restore_photos_confirmation">
-        <item quantity="one">Bist du dir sicher, dass du dieses %1$d Foto wieder herstellen willst\?</item>
-        <item quantity="other">Bist du dir sicher, dass du dieses %1$d Fotos wieder herstellen willst\?</item>
+        <item quantity="one">Bist du dir sicher, dass du dieses %1$d Foto wieder herstellen willst?</item>
+        <item quantity="other">Bist du dir sicher, dass du dieses %1$d Fotos wieder herstellen willst?</item>
     </plurals>
     <string name="yearly">Jährlich</string>
     <string name="jobs">Jobs</string>
@@ -89,8 +89,8 @@
     <string name="sorting">Sortierung</string>
     <string name="hidden_photos">Versteckte Fotos</string>
     <plurals name="restore_media_confirmation">
-        <item quantity="one">Sind Sie sicher, dass Sie den %1$d Medieninhalt wiederherstellen möchten\?</item>
-        <item quantity="other">Sind Sie sicher, dass Sie die %1$d Medieninhalte wiederherstellen möchten\?</item>
+        <item quantity="one">Sind Sie sicher, dass Sie den %1$d Medieninhalt wiederherstellen möchten?</item>
+        <item quantity="other">Sind Sie sicher, dass Sie die %1$d Medieninhalte wiederherstellen möchten?</item>
     </plurals>
     <string name="setting_media_favourite">Medium als Favorit markieren</string>
     <string name="downloading_media_details">Lade Mediendetails herunter</string>
@@ -114,12 +114,12 @@
         <item quantity="other">%1$d Medieninhalte in den Papierkorb senden</item>
     </plurals>
     <plurals name="delete_media_confirmation">
-        <item quantity="one">Sind Sie sicher, dass Sie den %1$d Medieninhalt löschen möchten\?</item>
-        <item quantity="other">Sind Sie sicher, dass Sie die %1$d Medieninhalte löschen möchten\?</item>
+        <item quantity="one">Sind Sie sicher, dass Sie den %1$d Medieninhalt löschen möchten?</item>
+        <item quantity="other">Sind Sie sicher, dass Sie die %1$d Medieninhalte löschen möchten?</item>
     </plurals>
     <plurals name="trash_media_confirmation">
-        <item quantity="one">Sind Sie sicher, dass Sie den %1$d Medieninhalt in den Papierkorb senden möchten\?</item>
-        <item quantity="other">Sind Sie sicher, dass Sie die %1$d Medieninhalte in den Papierkorb senden möchten\?</item>
+        <item quantity="one">Sind Sie sicher, dass Sie den %1$d Medieninhalt in den Papierkorb senden möchten?</item>
+        <item quantity="other">Sind Sie sicher, dass Sie die %1$d Medieninhalte in den Papierkorb senden möchten?</item>
     </plurals>
     <string name="restoring_photo">Foto wird aus dem Papierkorb wiederhergestellt</string>
     <string name="restoring_media">Medium wird aus dem Papierkorb wiederhergestellt</string>

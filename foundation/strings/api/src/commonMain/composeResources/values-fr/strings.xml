@@ -2,9 +2,9 @@
 <resources>
     <string name="feed_sync_freq_changed">Fréquence de synchronisation du flux changé</string>
     <plurals name="delete_photos_confirmation">
-        <item quantity="one">Voulez-vous vraiment supprimer %1$d photo \?</item>
-        <item quantity="many">Voulez-vous vraiment supprimer %1$d photos \?</item>
-        <item quantity="other">Voulez-vous vraiment supprimer %1$d photos \?</item>
+        <item quantity="one">Voulez-vous vraiment supprimer %1$d photo ?</item>
+        <item quantity="many">Voulez-vous vraiment supprimer %1$d photos ?</item>
+        <item quantity="other">Voulez-vous vraiment supprimer %1$d photos ?</item>
     </plurals>
     <string name="error_loading_photo_details">Une erreur s'est produite lors du chargement des détails de la photo</string>
     <string name="feed_sync_freq">Fréquence de synchronisation du flux complet de photos</string>
@@ -82,7 +82,7 @@
     <string name="process_takes_while_consumes_battery">Ce processus prend du temps et consomme de la batterie.</string>
     <string name="change">Changer</string>
     <string name="library">Collection</string>
-    <string name="are_you_sure_you_want_to_perform_full_sync">Êtes-vous sûr de vouloir démarrer une synchro complète du flux \?</string>
+    <string name="are_you_sure_you_want_to_perform_full_sync">Êtes-vous sûr de vouloir démarrer une synchro complète du flux ?</string>
     <string name="any_connected">Peu importe</string>
     <string name="feedback">Commentaires</string>
     <string name="clear_log_file">Vider le fichier des journaux</string>
@@ -191,19 +191,19 @@
     <string name="login">Se connecter</string>
     <string name="biometrics_enroll">Activez les options biométriques pour activer cette fonctionalité</string>
     <plurals name="delete_media_confirmation">
-        <item quantity="one">Voulez-vous vraiment supprimer %1$d média \?</item>
-        <item quantity="many">Voulez-vous vraiment supprimer %1$d médias \?</item>
-        <item quantity="other">Voulez-vous vraiment supprimer %1$d médias \?</item>
+        <item quantity="one">Voulez-vous vraiment supprimer %1$d média ?</item>
+        <item quantity="many">Voulez-vous vraiment supprimer %1$d médias ?</item>
+        <item quantity="other">Voulez-vous vraiment supprimer %1$d médias ?</item>
     </plurals>
     <plurals name="trash_media_confirmation">
-        <item quantity="one">Êtes-vous sûr de vouloir envoyer %1$d média dans la corbeille \?</item>
-        <item quantity="many">Êtes-vous sûr de vouloir envoyer %1$d médias dans la corbeille \?</item>
-        <item quantity="other">Êtes-vous sûr de vouloir envoyer %1$d médias dans la corbeille \?</item>
+        <item quantity="one">Êtes-vous sûr de vouloir envoyer %1$d média dans la corbeille ?</item>
+        <item quantity="many">Êtes-vous sûr de vouloir envoyer %1$d médias dans la corbeille ?</item>
+        <item quantity="other">Êtes-vous sûr de vouloir envoyer %1$d médias dans la corbeille ?</item>
     </plurals>
     <plurals name="restore_media_confirmation">
-        <item quantity="one">Êtes-vous sûr de vouloir restaurer %1$d média \?</item>
-        <item quantity="many">Êtes-vous sûr de vouloir restaurer %1$d médias \?</item>
-        <item quantity="other">Êtes-vous sûr de vouloir restaurer %1$d médias \?</item>
+        <item quantity="one">Êtes-vous sûr de vouloir restaurer %1$d média ?</item>
+        <item quantity="many">Êtes-vous sûr de vouloir restaurer %1$d médias ?</item>
+        <item quantity="other">Êtes-vous sûr de vouloir restaurer %1$d médias ?</item>
     </plurals>
     <string name="gallery_size">Taille de la galerie</string>
     <plurals name="delete_media">
@@ -237,21 +237,21 @@
     <string name="process_takes_significant_time_consumes_battery">Le processus prend beaucoup de temps et consomme beaucoup de batterie.</string>
     <string name="feed_sync_job_configuration">Configuration de la synchronisation du flux</string>
     <string name="status">Statut</string>
-    <string name="are_you_sure_you_want_to_perform_precache">Êtes-vous sûr de vouloir démarrer la mise en cache des miniatures \?</string>
+    <string name="are_you_sure_you_want_to_perform_precache">Êtes-vous sûr de vouloir démarrer la mise en cache des miniatures ?</string>
     <string name="precaching_thumbnails_progress">État de la mise en cache des miniatures</string>
     <string name="cancel">Annuler</string>
     <string name="precaching_thumbnails">Mise en cache des miniatures</string>
     <string name="cannot_perform_full_sync">Impossible de synchroniser entièrement pour le moment</string>
-    <string name="missing_local_media_permissions">Voulez-vous voir les médias locaux dans votre flux \?</string>
+    <string name="missing_local_media_permissions">Voulez-vous voir les médias locaux dans votre flux ?</string>
     <string name="do_not_ask_again">Ne plus demander</string>
     <string name="media_sync_status_fully_synced">Les images et vidéos sont entièrement synchronisées</string>
     <string name="media_sync_status_remote_only">Uniquement disponible sur le serveur</string>
     <string name="media_sync_status_local_only">Uniquement disponible sur l'appareil actuel</string>
-    <string name="missing_local_media_permissions_photo_map">Souhaitez-vous voir vos fichiers locaux sur la carte \?</string>
+    <string name="missing_local_media_permissions_photo_map">Souhaitez-vous voir vos fichiers locaux sur la carte ?</string>
     <string name="today">Aujourd'hui</string>
-    <string name="what_would_like_to_do">Que voulez-vous faire \?</string>
+    <string name="what_would_like_to_do">Que voulez-vous faire ?</string>
     <string name="allow_storage_management_description">UhuruPhotos a besoin de la permission de gérer les fichiers de l'appareil pour effectuer cette action</string>
-    <string name="allow_storage_management_details">Vous allez être redirigé vers les paramètres du système pour autoriser cette permission. Continuer \?</string>
+    <string name="allow_storage_management_details">Vous allez être redirigé vers les paramètres du système pour autoriser cette permission. Continuer ?</string>
     <string name="full_feed_details_sync">Détails de la synchronisation du flux entier</string>
     <string name="full_feed_sync">Synchronisation du flux entier</string>
 </resources>

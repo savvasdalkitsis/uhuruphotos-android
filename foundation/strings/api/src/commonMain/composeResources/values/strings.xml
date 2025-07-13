@@ -37,20 +37,20 @@
         <item quantity="other">Are you sure you want to delete these %1$d media items?</item>
     </plurals>
     <plurals name="restore_photos_confirmation">
-        <item quantity="one">Restore this %1$d photo\?</item>
-        <item quantity="other">Restore these %1$d photos\?</item>
+        <item quantity="one">Restore this %1$d photo?</item>
+        <item quantity="other">Restore these %1$d photos?</item>
     </plurals>
     <plurals name="restore_media_confirmation">
-        <item quantity="one">Restore this %1$d media item\?</item>
-        <item quantity="other">Restore these %1$d media items\?</item>
+        <item quantity="one">Restore this %1$d media item?</item>
+        <item quantity="other">Restore these %1$d media items?</item>
     </plurals>
     <plurals name="trash_photos_confirmation">
-        <item quantity="one">Send this one photo to trash\?</item>
-        <item quantity="other">Send these %1$d photos to the trash\?</item>
+        <item quantity="one">Send this one photo to trash?</item>
+        <item quantity="other">Send these %1$d photos to the trash?</item>
     </plurals>
     <plurals name="trash_media_confirmation">
-        <item quantity="one">Send this %1$d media item to the trash\?</item>
-        <item quantity="other">Send these %1$d media items to trash\?</item>
+        <item quantity="one">Send this %1$d media item to the trash?</item>
+        <item quantity="other">Send these %1$d media items to trash?</item>
     </plurals>
     <string name="people">People</string>
     <string name="view_all">View all</string>
@@ -153,8 +153,8 @@
     <string name="no_user_albums">This user has not created any albums</string>
     <string name="no_photos">No photos to display</string>
     <string name="no_media">No media to display</string>
-    <string name="are_you_sure_you_want_to_perform_full_sync">Start syncing the whole feed\?</string>
-    <string name="are_you_sure_you_want_to_perform_feed_details_sync">Start fetching details for feed\?</string>
+    <string name="are_you_sure_you_want_to_perform_full_sync">Start syncing the whole feed?</string>
+    <string name="are_you_sure_you_want_to_perform_feed_details_sync">Start fetching details for feed?</string>
     <string name="process_takes_while_consumes_battery">This takes a while and consumes battery.</string>
     <string name="change">Change</string>
     <string name="any_connected">Any connected</string>
@@ -233,14 +233,14 @@
     <string name="precaching_thumbnails">Pre-caching thumbnails…</string>
     <string name="cannot_perform_precaching">Cannot perform pre-caching now</string>
     <string name="precaching_thumbnails_progress">Progress of pre-caching thumbnails</string>
-    <string name="are_you_sure_you_want_to_perform_precache">Start pre-caching all thumbnails\?</string>
-    <string name="are_you_sure_you_want_to_start_local_scan">Start scanning local media\?</string>
+    <string name="are_you_sure_you_want_to_perform_precache">Start pre-caching all thumbnails?</string>
+    <string name="are_you_sure_you_want_to_start_local_scan">Start scanning local media?</string>
     <string name="process_takes_significant_time_consumes_battery">Takes a significant amount of time and consumes a lot of battery.</string>
     <string name="cancel">Cancel</string>
     <string name="feed_sync_job_configuration">Feed sync job configuration</string>
     <string name="status">Status</string>
-    <string name="missing_local_media_permissions">View local media in feed\?</string>
-    <string name="missing_local_media_permissions_photo_map">View local media on the photo map\?</string>
+    <string name="missing_local_media_permissions">View local media in feed?</string>
+    <string name="missing_local_media_permissions_photo_map">View local media on the photo map?</string>
     <string name="do_not_ask_again">Do not ask again</string>
     <string name="media_sync_status_fully_synced">Media fully synced</string>
     <string name="media_sync_status_remote_only">Media is only available on the server</string>
@@ -258,7 +258,7 @@
     <string name="delete_fully_synced_media_local">Delete local</string>
     <string name="allow_storage_management_title">Storage management</string>
     <string name="allow_storage_management_description">The app needs permission to manage your device storage first</string>
-    <string name="allow_storage_management_details">Continue opening the system settings to allow this permission\?</string>
+    <string name="allow_storage_management_details">Continue opening the system settings to allow this permission?</string>
     <string name="error_deleting_media">Could not delete media</string>
     <string name="show_media_sync_status">Show status for media syncing</string>
     <string name="show_on_scroll">Show while scrolling</string>

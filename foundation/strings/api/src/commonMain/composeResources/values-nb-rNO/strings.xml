@@ -42,8 +42,8 @@
     <string name="error_searching">Kunne ikke søke</string>
     <string name="comfortable">Komfortabelt</string>
     <plurals name="delete_photos_confirmation">
-        <item quantity="one">Slett dette ene bildet\?</item>
-        <item quantity="other">Slett disse %1$d bildene\?</item>
+        <item quantity="one">Slett dette ene bildet?</item>
+        <item quantity="other">Slett disse %1$d bildene?</item>
     </plurals>
     <string name="error_loading_photo_details">Kunne ikke laste inn bildedetaljer</string>
     <string name="could_not_find_app_to_open">Fant ikke noe program for åpning</string>

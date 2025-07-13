@@ -107,16 +107,16 @@
         <item quantity="other">Sposta %1$d elementi multimediali nel cestino</item>
     </plurals>
     <plurals name="restore_media_confirmation">
-        <item quantity="one">Sei sicuro di voler ripristinare questo %1$d elemento multimediale\?</item>
-        <item quantity="other">Sei sicuro di voler ripristinare questi %1$d elementi multimediali\?</item>
+        <item quantity="one">Sei sicuro di voler ripristinare questo %1$d elemento multimediale?</item>
+        <item quantity="other">Sei sicuro di voler ripristinare questi %1$d elementi multimediali?</item>
     </plurals>
     <plurals name="trash_photos_confirmation">
-        <item quantity="one">Sei sicuro di voler spostare questa %1$d foto nel cestino\?</item>
-        <item quantity="other">Sei sicuro di voler spostare queste %1$d foto nel cestino\?</item>
+        <item quantity="one">Sei sicuro di voler spostare questa %1$d foto nel cestino?</item>
+        <item quantity="other">Sei sicuro di voler spostare queste %1$d foto nel cestino?</item>
     </plurals>
     <plurals name="trash_media_confirmation">
-        <item quantity="one">Sei sicuro di voler spostare questo %1$d elemento multimediale nel cestino\?</item>
-        <item quantity="other">Sei sicuro di voler spostare questi %1$d elementi multimediali nel cestino\?</item>
+        <item quantity="one">Sei sicuro di voler spostare questo %1$d elemento multimediale nel cestino?</item>
+        <item quantity="other">Sei sicuro di voler spostare questi %1$d elementi multimediali nel cestino?</item>
     </plurals>
     <string name="recent_searches_cleared">Ricerche recenti cancellate</string>
     <string name="setting_media_favourite">Settando lo stato dei media preferiti</string>
@@ -160,11 +160,11 @@
     <string name="error_loading_auto_albums">C'è stato un errore nel caricare gli album generati automaticamente</string>
     <string name="process_takes_while_consumes_battery">Questo processo ci mette un pò e consuma batteria.</string>
     <string name="no_photos">Non ci sono foto da mostrare</string>
-    <string name="are_you_sure_you_want_to_perform_full_sync">Sei sicuro che vuoi far partire una sincronizzazione full feed\?</string>
+    <string name="are_you_sure_you_want_to_perform_full_sync">Sei sicuro che vuoi far partire una sincronizzazione full feed?</string>
     <string name="maps">Mappe</string>
     <plurals name="restore_photos_confirmation">
-        <item quantity="one">Sei sicuro di voler ripristinare questa %1$d foto\?</item>
-        <item quantity="other">Sei sicuro di voler ripristinare queste %1$d foto\?</item>
+        <item quantity="one">Sei sicuro di voler ripristinare questa %1$d foto?</item>
+        <item quantity="other">Sei sicuro di voler ripristinare queste %1$d foto?</item>
     </plurals>
     <string name="feed_sync_network_changed">Requisiti di rete per la sincronizzazione del feed cambiati</string>
     <string name="feed_sync_charging_changed">Requisiti di caricamento per la sincronizzazione del feed cambiati</string>

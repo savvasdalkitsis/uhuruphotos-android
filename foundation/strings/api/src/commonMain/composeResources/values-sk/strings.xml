@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <plurals name="delete_media_confirmation">
-        <item quantity="one">Naozaj chcete odstrániť túto %1$d mediálnu položku\?</item>
-        <item quantity="few">Naozaj chcete odstrániť tieto %1$d mediálne položky\?</item>
-        <item quantity="other">Naozaj chcete odstrániť týchto %1$d mediálnych položiek\?</item>
+        <item quantity="one">Naozaj chcete odstrániť túto %1$d mediálnu položku?</item>
+        <item quantity="few">Naozaj chcete odstrániť tieto %1$d mediálne položky?</item>
+        <item quantity="other">Naozaj chcete odstrániť týchto %1$d mediálnych položiek?</item>
     </plurals>
     <plurals name="delete_photos">
         <item quantity="one">Odstrániť %1$d fotku</item>
@@ -63,9 +63,9 @@
     <string name="clear">Vyčisti</string>
     <string name="currently_used">Aktuálne využité: %1$dMB</string>
     <plurals name="delete_photos_confirmation">
-        <item quantity="one">Naozaj chcete odstrániť túto %1$d fotku\?</item>
-        <item quantity="few">Naozaj chcete odstrániť tieto %1$d fotky\?</item>
-        <item quantity="other">Naozaj chcete odstrániť týchto %1$d fotiek\?</item>
+        <item quantity="one">Naozaj chcete odstrániť túto %1$d fotku?</item>
+        <item quantity="few">Naozaj chcete odstrániť tieto %1$d fotky?</item>
+        <item quantity="other">Naozaj chcete odstrániť týchto %1$d fotiek?</item>
     </plurals>
     <string name="error_refreshing_people">Pri obnovovaní ľudí sa vyskytla chyba</string>
     <plurals name="restore_media_confirmation">

@@ -3,10 +3,10 @@
     <string name="feed_size">Розмір стрічки</string>
     <string name="gallery_size">Розмір галереї</string>
     <plurals name="delete_media_confirmation">
-        <item quantity="one">Ви дійсно хочете видалити цей %1$d медіафайл\?</item>
-        <item quantity="few">Ви дійсно хочете видалити ці %1$d медіафайли\?</item>
-        <item quantity="many">Ви дійсно хочете видалити цих %1$d медіафайлів\?</item>
-        <item quantity="other">Ви дійсно хочете видалити цих %1$d медіафайлів\?</item>
+        <item quantity="one">Ви дійсно хочете видалити цей %1$d медіафайл?</item>
+        <item quantity="few">Ви дійсно хочете видалити ці %1$d медіафайли?</item>
+        <item quantity="many">Ви дійсно хочете видалити цих %1$d медіафайлів?</item>
+        <item quantity="other">Ви дійсно хочете видалити цих %1$d медіафайлів?</item>
     </plurals>
     <string name="people">Люди</string>
     <string name="feed_sync_freq_changed">Змінено частоту синхронізації каналів</string>
@@ -73,10 +73,10 @@
     </plurals>
     <string name="view_all">Переглянути всі</string>
     <plurals name="delete_photos_confirmation">
-        <item quantity="one">Ви дійсно хочете видалити цю %1$d фотографію\?</item>
-        <item quantity="few">Ви дійсно хочете видалити ці %1$d фотографії\?</item>
-        <item quantity="many">Ви дійсно хочете видалити цих %1$d фотографій\?</item>
-        <item quantity="other">Ви дійсно хочете видалити цих %1$d фотографій\?</item>
+        <item quantity="one">Ви дійсно хочете видалити цю %1$d фотографію?</item>
+        <item quantity="few">Ви дійсно хочете видалити ці %1$d фотографії?</item>
+        <item quantity="many">Ви дійсно хочете видалити цих %1$d фотографій?</item>
+        <item quantity="other">Ви дійсно хочете видалити цих %1$d фотографій?</item>
     </plurals>
     <plurals name="trash_media_confirmation">
         <item quantity="one">Надіслати %1$d медіа елемент до кошика?</item>
@@ -161,7 +161,7 @@
     <string name="no_auto_albums">Для цього користувача не створено жодного автоматично згенерованого альбому</string>
     <string name="no_user_albums">Цей користувач не створив жодного альбому</string>
     <string name="no_photos">Немає фотографій для відображення</string>
-    <string name="are_you_sure_you_want_to_perform_full_sync">Ви впевнені, що хочете запустити повну синхронізацію стрічки\?</string>
+    <string name="are_you_sure_you_want_to_perform_full_sync">Ви впевнені, що хочете запустити повну синхронізацію стрічки?</string>
     <string name="change">Зміна</string>
     <string name="media_sync_status_remote_only">Медіа доступні лише на сервері</string>
     <string name="media_sync_status_local_only">Медіа є локальними лише для цього пристрою</string>
@@ -242,20 +242,20 @@
     <string name="save">Зберегти</string>
     <string name="years_ago">%1$d роки(ів) тому</string>
     <string name="cannot_perform_precaching">Наразі неможливо виконати попереднє кешування</string>
-    <string name="are_you_sure_you_want_to_perform_precache">Ви впевнені, що хочете почати попереднє кешування всіх мініатюр\?</string>
-    <string name="what_would_like_to_do">Що б ви хотіли зробити\?</string>
+    <string name="are_you_sure_you_want_to_perform_precache">Ви впевнені, що хочете почати попереднє кешування всіх мініатюр?</string>
+    <string name="what_would_like_to_do">Що б ви хотіли зробити?</string>
     <string name="delete_fully_synced_media_both">Видалити локальний/віддалений кошик</string>
     <string name="max_animated_video_thumbnails">Максимальна кількість анімованих мініатюр відео (%1$s)</string>
     <string name="max_animated_video_thumbnails_description">Велике число може спричинити нестабільну роботу застосунку. Зменшіть його, якщо у вас виникли проблеми</string>
     <string name="status">Статус</string>
     <string name="allow_storage_management_title">Керування сховищем</string>
-    <string name="allow_storage_management_details">Вас буде перенаправлено до налаштувань системи, щоб ввімкнути цей дозвіл. Продовжити\?</string>
+    <string name="allow_storage_management_details">Вас буде перенаправлено до налаштувань системи, щоб ввімкнути цей дозвіл. Продовжити?</string>
     <string name="process_takes_significant_time_consumes_battery">Цей процес займає значну кількість часу і споживає багато заряду батареї.</string>
-    <string name="missing_local_media_permissions_photo_map">Бажаєте переглянути локальні медіа на фотомапі\?</string>
+    <string name="missing_local_media_permissions_photo_map">Бажаєте переглянути локальні медіа на фотомапі?</string>
     <string name="do_not_ask_again">Більше не питати</string>
     <string name="precaching_thumbnails_progress">Прогрес кешування мініатюр</string>
     <string name="feed_sync_job_configuration">Налаштування синхронізації стрічки</string>
-    <string name="missing_local_media_permissions">Бажаєте переглядати локальні медіа у своїй стрічці\?</string>
+    <string name="missing_local_media_permissions">Бажаєте переглядати локальні медіа у своїй стрічці?</string>
     <string name="media_sync_status_downloading">На цей пристрій завантажується медіа</string>
     <string name="media_sync_status_fully_synced">Медіа повністю синхронізовано</string>
     <string name="today">Сьогодні</string>
@@ -307,7 +307,7 @@
     <string name="full_feed_details_sync">Синхронізація подробиць повного каналу</string>
     <string name="perform_full_feed_details_sync">Виконати синхронізацію подробиць повного каналу</string>
     <string name="refreshing_feed_details">Оновлення подробиць каналу</string>
-    <string name="are_you_sure_you_want_to_perform_feed_details_sync">Ви впевнені, що хочете розпочати синхронізацію подробиць каналу\?</string>
+    <string name="are_you_sure_you_want_to_perform_feed_details_sync">Ви впевнені, що хочете розпочати синхронізацію подробиць каналу?</string>
     <string name="show_feed_details_sync_progress">Відображення повних подробиць синхронізації фотографій</string>
     <string name="searching">Пошук</string>
     <string name="retry">Повторити спробу</string>

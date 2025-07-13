@@ -2,8 +2,8 @@
 <resources>
     <string name="error_refreshing_people">Probleem bij het vernieuwen van personen</string>
     <plurals name="delete_photos_confirmation">
-        <item quantity="one">Bent u zeker dat u foto %1$d wilt verwijderen\?</item>
-        <item quantity="other">Bent u zeker dat u deze foto's %1$d wilt verwijderen\?</item>
+        <item quantity="one">Bent u zeker dat u foto %1$d wilt verwijderen?</item>
+        <item quantity="other">Bent u zeker dat u deze foto's %1$d wilt verwijderen?</item>
     </plurals>
     <string name="recent_searches_cleared">Recente zoekopdrachten verwijderd</string>
     <plurals name="delete_photos">
@@ -69,7 +69,7 @@
     <string name="auto_generated_albums">Automatisch samengestelde albums</string>
     <string name="sorting">Sorteren</string>
     <string name="error_loading_auto_albums">Er is een fout opgetreden tijdens het laden van de albums</string>
-    <string name="are_you_sure_you_want_to_perform_full_sync">Weet u zeker dat u een volledige synchronisatie wilt uitvoeren\?</string>
+    <string name="are_you_sure_you_want_to_perform_full_sync">Weet u zeker dat u een volledige synchronisatie wilt uitvoeren?</string>
     <string name="process_takes_while_consumes_battery">Dit proces kan even duren en verhoogt het accuverbruik.</string>
     <string name="send_feedback_with_logs">Verstuur feedback incl. logboeken</string>
     <string name="clear_log_file">Logboek wissen</string>
@@ -137,8 +137,8 @@
         <item quantity="other">%1$d foto's verplaatsen naar prullenbak</item>
     </plurals>
     <plurals name="trash_photos_confirmation">
-        <item quantity="one">Weet u zeker dat u %1$d foto naar de prullenbak wilt verplaatsen\?</item>
-        <item quantity="other">Weet u zeker dat u %1$d foto's naar de prullenbak wilt verplaatsen\?</item>
+        <item quantity="one">Weet u zeker dat u %1$d foto naar de prullenbak wilt verplaatsen?</item>
+        <item quantity="other">Weet u zeker dat u %1$d foto's naar de prullenbak wilt verplaatsen?</item>
     </plurals>
     <string name="authenticate_for_access_to_hidden">Verifieer uzelf om toegang te krijgen tot verborgen foto's</string>
     <plurals name="restore_photos">
@@ -148,8 +148,8 @@
     <string name="restoring_photo">Bezig met herstellen van foto's…</string>
     <string name="restore">Herstellen</string>
     <plurals name="restore_photos_confirmation">
-        <item quantity="one">Weet u zeker dat %1$d foto wilt herstellen\?</item>
-        <item quantity="other">Weet u zeker dat %1$d foto's wilt herstellen\?</item>
+        <item quantity="one">Weet u zeker dat %1$d foto wilt herstellen?</item>
+        <item quantity="other">Weet u zeker dat %1$d foto's wilt herstellen?</item>
     </plurals>
     <string name="people">Personen</string>
     <string name="location">Locatie</string>
@@ -191,16 +191,16 @@
         <item quantity="other">%1$d media-items verplaatsen naar prullenbak</item>
     </plurals>
     <plurals name="delete_media_confirmation">
-        <item quantity="one">Weet je zeker dat je %1$d media-item wilt verwijderen\?</item>
-        <item quantity="other">Weet je zeker dat je %1$d media-items wilt verwijderen\?</item>
+        <item quantity="one">Weet je zeker dat je %1$d media-item wilt verwijderen?</item>
+        <item quantity="other">Weet je zeker dat je %1$d media-items wilt verwijderen?</item>
     </plurals>
     <plurals name="restore_media_confirmation">
-        <item quantity="one">Weet je zeker dat je %1$d media-item wilt herstellen\?</item>
-        <item quantity="other">Weet je zeker dat je %1$d media-items wilt herstellen\?</item>
+        <item quantity="one">Weet je zeker dat je %1$d media-item wilt herstellen?</item>
+        <item quantity="other">Weet je zeker dat je %1$d media-items wilt herstellen?</item>
     </plurals>
     <plurals name="trash_media_confirmation">
-        <item quantity="one">Dit %1$d media-item naar de prullenbak verplaatsen\?</item>
-        <item quantity="other">Deze %1$d media-items naar de prullenbak verplaatsen\?</item>
+        <item quantity="one">Dit %1$d media-item naar de prullenbak verplaatsen?</item>
+        <item quantity="other">Deze %1$d media-items naar de prullenbak verplaatsen?</item>
     </plurals>
     <string name="trashing_media">Bezig met verplaatsen naar prullenbak</string>
     <string name="restoring_media">Bezig met herstellen van media</string>
@@ -223,23 +223,23 @@
     <string name="process_takes_significant_time_consumes_battery">Deze handeling vergt veel tijd en verhoogt het accuverbruik.</string>
     <string name="cancel">Annuleren</string>
     <string name="precache_thumbnails">Alle miniaturen vooraf inladen</string>
-    <string name="are_you_sure_you_want_to_perform_precache">Weet je zeker dat je alle miniaturen vooraf wilt inladen\?</string>
+    <string name="are_you_sure_you_want_to_perform_precache">Weet je zeker dat je alle miniaturen vooraf wilt inladen?</string>
     <string name="feed_sync_job_configuration">Feedsynchronisatie instellen</string>
     <string name="cannot_perform_precaching">De miniaturen kunnen niet worden ingeladen</string>
     <string name="status">Status</string>
-    <string name="missing_local_media_permissions">Wil je lokale media in je feed zien\?</string>
+    <string name="missing_local_media_permissions">Wil je lokale media in je feed zien?</string>
     <string name="do_not_ask_again">Niet meer vragen</string>
     <string name="media_sync_status_fully_synced">De media is volledig gesynchroniseerd</string>
     <string name="media_sync_status_remote_only">De media is alleen beschikbaar op de server</string>
     <string name="media_sync_status_local_only">De media is alleen beschikbaar op dit apparaat</string>
-    <string name="missing_local_media_permissions_photo_map">Wil je de lokale media in de fotomap bekijken\?</string>
+    <string name="missing_local_media_permissions_photo_map">Wil je de lokale media in de fotomap bekijken?</string>
     <string name="today">Vandaag</string>
     <string name="what_would_like_to_do">Maak een keuze</string>
     <string name="delete_fully_synced_media_local">Lokaal verwijderen</string>
     <string name="delete_fully_synced_media_both">Lokaal verwijderen/Extern naar prullenbak</string>
     <string name="allow_storage_management_description">UruhuPhotos heeft toegang tot je apparaatopslag nodig om deze actie uit te kunnen voeren</string>
     <string name="allow_storage_management_title">Opslagbeheer</string>
-    <string name="allow_storage_management_details">De systeeminstellingen worden geopend zodat je het recht kan verlenen. Wil je dat nu doen\?</string>
+    <string name="allow_storage_management_details">De systeeminstellingen worden geopend zodat je het recht kan verlenen. Wil je dat nu doen?</string>
     <string name="error_deleting_media">Er is een fout opgetreden tijdens het verwijderen</string>
     <string name="media_sync_status_downloading">De media wordt gedownload naar dit apparaat</string>
     <string name="show_media_sync_status">Mediasynchronisatiestatus tonen</string>
@@ -271,7 +271,7 @@
     <string name="full_feed_details_sync">Feed inclusief details synchroniseren</string>
     <string name="perform_full_feed_details_sync">Feed inclusief details synchroniseren</string>
     <string name="refreshing_feed_details">Bezig met herladen…</string>
-    <string name="are_you_sure_you_want_to_perform_feed_details_sync">Weet u zeker dat u een volledige synchronisatie met details wilt uitvoeren\?</string>
+    <string name="are_you_sure_you_want_to_perform_feed_details_sync">Weet u zeker dat u een volledige synchronisatie met details wilt uitvoeren?</string>
     <string name="show_feed_details_sync_progress">Voortgang van synchronisatie tonen</string>
     <string name="searching">Bezig met zoeken…</string>
     <string name="retry">Opnieuw</string>

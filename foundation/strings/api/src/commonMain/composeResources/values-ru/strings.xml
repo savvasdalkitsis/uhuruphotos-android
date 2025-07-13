@@ -14,8 +14,8 @@
         <item quantity="other"></item>
     </plurals>
     <plurals name="delete_photos_confirmation">
-        <item quantity="one">Вы уверены что хотите удалить это %1$d фото\?</item>
-        <item quantity="few">Вы уверены что хотите удалить эти %1$d фотографии\?</item>
+        <item quantity="one">Вы уверены что хотите удалить это %1$d фото?</item>
+        <item quantity="few">Вы уверены что хотите удалить эти %1$d фотографии?</item>
         <item quantity="many"></item>
         <item quantity="other"></item>
     </plurals>
