@@ -41,7 +41,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.st
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.view.api.ui.LocalMediaAccessRequestBanner
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.insets.insetsTop
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.sheet.SheetHandle
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.sheet.SheetSize
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.sheet.adjustingSheetSize
 import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
@@ -68,7 +67,6 @@ fun SharedTransitionScope.BottomPanelHeatMap(
                     .fillMaxWidth()
                     .heightIn(min = height, max = height)
             ) {
-                SheetHandle()
                 HeatMapVisibleMedia(
                     loadingModifier = Modifier
                         .align(Alignment.CenterHorizontally)
