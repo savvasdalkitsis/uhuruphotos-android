@@ -32,7 +32,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.auth.view.api.navigation.LocalSer
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.LightboxAction
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.UpPressed
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
-import com.savvasdalkitsis.uhuruphotos.foundation.dismiss.api.ui.rememberPullToDismissState
 import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.SharedElementId
 import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.sharedElement
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window.LocalWindowSize
@@ -49,9 +48,6 @@ internal fun SharedTransitionScope.LightboxScaffold(
     zoomableState: ZoomableState,
     scrollState: ScrollState,
 ) {
-    val dismissState = rememberPullToDismissState(
-        onDismiss = { action(UpPressed) },
-    )
     val mediaItem = state.media[index]
     UhuruScaffold(
         modifier = Modifier
@@ -63,22 +59,18 @@ internal fun SharedTransitionScope.LightboxScaffold(
                 enter = slideInVertically(initialOffsetY = { it }),
                 exit = slideOutVertically(targetOffsetY = { it }),
             ) {
-                LightboxDismissProgressAware(dismissState) {
-                    LightboxBottomActionBar(state.media[index], state.showRestoreButton, action)
-                }
+                LightboxBottomActionBar(state.media[index], state.showRestoreButton, action)
             }
         },
         actionBarContent = {
-            LightboxActionBar(state, index, action, scrollState, dismissState)
+            LightboxActionBar(state, index, action, scrollState)
         },
         toolbarColor = { Color.Transparent },
         bottomBarColor = { Color.Transparent },
         topBarDisplayed = state.showUI,
         bottomBarDisplayed = state.showUI,
         navigationIcon = {
-            LightboxDismissProgressAware(dismissState) {
-                UhuruUpNavButton { action(UpPressed) }
-            }
+            UhuruUpNavButton { action(UpPressed) }
         },
     ) { contentPadding ->
         val serverUrl = LocalServerUrl.current
@@ -89,7 +81,7 @@ internal fun SharedTransitionScope.LightboxScaffold(
 
         when {
             state.isLoading && thumbnailUri.isEmpty() -> UhuruFullLoading()
-            else -> LightboxCanvas(action, state, index, contentPadding, scrollState, zoomableState, dismissState)
+            else -> LightboxCanvas(action, state, index, contentPadding, scrollState, zoomableState)
         }
     }
 }

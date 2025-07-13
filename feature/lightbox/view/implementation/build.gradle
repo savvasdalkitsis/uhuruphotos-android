@@ -62,7 +62,6 @@ dependencies {
             project(":foundation:activity:api"),
             project(":foundation:compose:api"),
             project(":foundation:date:api"),
-            project(":foundation:dismiss:api"),
             project(":foundation:exif:api"),
             project(":foundation:icons:api"),
             project(":foundation:launchers:api"),

@@ -37,12 +37,11 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncStateModel.LOCAL_ONLY
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncStateModel.REMOTE_ONLY
-import com.savvasdalkitsis.uhuruphotos.foundation.dismiss.api.ui.PullToDismissState
-import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruActionIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruToggleableActionIcon
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
 import uhuruphotos_android.foundation.icons.api.generated.resources.ic_favourite
 import uhuruphotos_android.foundation.icons.api.generated.resources.ic_feed
 import uhuruphotos_android.foundation.icons.api.generated.resources.ic_info
@@ -59,67 +58,58 @@ fun RowScope.LightboxActionBar(
     index: Int,
     action: (LightboxAction) -> Unit,
     scrollState: ScrollState,
-    dismissState: PullToDismissState,
 ) {
     val item = state.media[index]
     AnimatedVisibility(visible = state.isLoading) {
         if (state.isLoading) {
-            LightboxDismissProgressAware(dismissState) {
-                CircularProgressIndicator(
-                    modifier = Modifier
-                        .size(26.dp)
-                )
-            }
+            CircularProgressIndicator(
+                modifier = Modifier
+                    .size(26.dp)
+            )
         }
     }
     if (item.showAddToPortfolioIcon) {
-        LightboxDismissProgressAware(dismissState) {
-            UhuruToggleableActionIcon(
-                modifier = Modifier.alpha(
-                    if (item.addToPortfolioIconEnabled) 1f else 0.7f
-                ),
-                onClick = {
-                    action(ContributeToPortfolio(item, !item.inPortfolio))
-                },
-                enabled = item.addToPortfolioIconEnabled,
-                icon = drawable.ic_feed,
-                selected = item.inPortfolio,
-                contentDescription = stringResource(string.show_on_feed)
-            )
-        }
+        UhuruToggleableActionIcon(
+            modifier = Modifier.alpha(
+                if (item.addToPortfolioIconEnabled) 1f else 0.7f
+            ),
+            onClick = {
+                action(ContributeToPortfolio(item, !item.inPortfolio))
+            },
+            enabled = item.addToPortfolioIconEnabled,
+            icon = drawable.ic_feed,
+            selected = item.inPortfolio,
+            contentDescription = stringResource(string.show_on_feed)
+        )
     }
     item.mediaItemSyncState?.let { syncState ->
-        LightboxDismissProgressAware(dismissState) {
-            UhuruActionIcon(
-                modifier = Modifier.alpha(syncState.lightBoxIconAlpha),
-                onClick = {
-                    if (syncState == REMOTE_ONLY) {
-                        action(DownloadOriginal(item))
-                    }
-                    if (syncState == LOCAL_ONLY) {
-                        action(UploadToServer(item))
-                    }
-                },
-                enabled = syncState.enabled,
-                icon = syncState.lightBoxIcon,
-                contentDescription = stringResource(syncState.contentDescription)
-            )
-        }
+        UhuruActionIcon(
+            modifier = Modifier.alpha(syncState.lightBoxIconAlpha),
+            onClick = {
+                if (syncState == REMOTE_ONLY) {
+                    action(DownloadOriginal(item))
+                }
+                if (syncState == LOCAL_ONLY) {
+                    action(UploadToServer(item))
+                }
+            },
+            enabled = syncState.enabled,
+            icon = syncState.lightBoxIcon,
+            contentDescription = stringResource(syncState.contentDescription)
+        )
     }
     AnimatedVisibility(visible = item.showFavouriteIcon && item.isFavourite != null) {
         if (item.showFavouriteIcon && item.isFavourite != null) {
-            LightboxDismissProgressAware(dismissState) {
-                UhuruActionIcon(
-                    onClick = { action(SetFavourite(!item.isFavourite)) },
-                    icon = if (item.isFavourite) drawable.ic_favourite else drawable.ic_not_favourite,
-                    contentDescription = stringResource(
-                        when {
-                            item.isFavourite -> string.remove_favourite
-                            else -> string.favourite
-                        }
-                    )
+            UhuruActionIcon(
+                onClick = { action(SetFavourite(!item.isFavourite)) },
+                icon = if (item.isFavourite) drawable.ic_favourite else drawable.ic_not_favourite,
+                contentDescription = stringResource(
+                    when {
+                        item.isFavourite -> string.remove_favourite
+                        else -> string.favourite
+                    }
                 )
-            }
+            )
         }
     }
     val scope = rememberCoroutineScope()
@@ -133,16 +123,14 @@ fun RowScope.LightboxActionBar(
         }
     }
     AnimatedVisibility(visible = showInfoButton) {
-        LightboxDismissProgressAware(dismissState) {
-            UhuruActionIcon(
-                onClick = {
-                    scope.launch {
-                        scrollState.animateScrollTo(threshold + 1)
-                    }
-                },
-                icon = drawable.ic_info,
-                contentDescription = stringResource(string.info),
-            )
-        }
+        UhuruActionIcon(
+            onClick = {
+                scope.launch {
+                    scrollState.animateScrollTo(threshold + 1)
+                }
+            },
+            icon = drawable.ic_info,
+            contentDescription = stringResource(string.info),
+        )
     }
 }

@@ -27,22 +27,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.draw.scale
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.times
 import com.radusalagean.infobarcompose.InfoBar
 import com.radusalagean.infobarcompose.InfoBarMessage
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.DeleteLocalKeepRemoteMediaItem
@@ -59,9 +50,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.DeletePe
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.TrashPermissionDialog
 import com.savvasdalkitsis.uhuruphotos.feature.upload.view.api.ui.UploadErrorDialog
 import com.savvasdalkitsis.uhuruphotos.feature.upload.view.api.ui.state.UploadErrorDialogModeState
-import com.savvasdalkitsis.uhuruphotos.foundation.dismiss.api.ui.PullToDismissSpacer
-import com.savvasdalkitsis.uhuruphotos.foundation.dismiss.api.ui.PullToDismissState
-import com.savvasdalkitsis.uhuruphotos.foundation.dismiss.api.ui.pullToDismiss
 import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.dialogs.UpsellDialog
 import dev.shreyaspatil.permissionflow.compose.rememberPermissionFlowRequestLauncher
@@ -75,39 +63,22 @@ fun SharedTransitionScope.LightboxCanvas(
     index: Int,
     contentPadding: PaddingValues,
     scrollState: ScrollState,
-    zoomableState: ZoomableState,
-    dismissState: PullToDismissState
+    zoomableState: ZoomableState
 ) {
     BoxWithConstraints(
         modifier = Modifier
             .fillMaxSize(),
     ) {
-        val originalBackground = MaterialTheme.colorScheme.background
-        val background by remember {
-            derivedStateOf {
-                originalBackground.copy(alpha = dismissState.dismissAlpha)
-            }
-        }
 
         val mediaItem = state.media[index]
         Column(
             modifier = Modifier
-                .alpha(1 - dismissState.postDismissProgress)
                 .fillMaxSize()
-                .background(background)
+                .background(MaterialTheme.colorScheme.background)
                 .recomposeHighlighter()
-                .pullToDismiss(dismissState)
                 .verticalScroll(scrollState)
         ) {
-            PullToDismissSpacer(
-                modifier = Modifier
-                    .recomposeHighlighter()
-                    .fillMaxWidth(),
-                dismissState = dismissState,
-            )
             Box(modifier = Modifier
-                .scale(0.3f + 0.7f * (1 - dismissState.progress / 2))
-                .offset(y = dismissState.progress * 100.dp)
                 .requiredWidth(this@BoxWithConstraints.maxWidth)
                 .requiredHeight(this@BoxWithConstraints.maxHeight)
                 .fillMaxSize()
