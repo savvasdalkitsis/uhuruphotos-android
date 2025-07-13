@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.viewmodel
 
-import androidx.lifecycle.SavedStateHandle
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.api.navigation.PersonNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.actions.LoadPerson
@@ -29,11 +28,9 @@ import javax.inject.Inject
 @HiltViewModel
 class PersonViewModel @Inject constructor(
     personActionsContext: PersonActionsContext,
-    handle: SavedStateHandle,
 ) : NavigationViewModel<PersonCollageState, PersonAction, PersonNavigationRoute>(
     ActionHandlerWithContext(personActionsContext),
     PersonCollageState(),
-    handle,
 ) {
 
     override fun onRouteSet(route: PersonNavigationRoute) {

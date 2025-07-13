@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.viewmodel
 
-import androidx.lifecycle.SavedStateHandle
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryId
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.GalleryAction
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.LoadCollage
@@ -40,14 +39,12 @@ private typealias TrashCompositeAction = Either<GalleryAction, TrashAction>
 internal class TrashViewModel @Inject constructor(
     trashActionsContext: TrashActionsContext,
     trashAlbumPageActionsContext: TrashAlbumPageActionsContext,
-    handle: SavedStateHandle,
 ) : NavigationViewModel<TrashCompositeState, TrashCompositeAction, TrashNavigationRoute>(
     CompositeActionHandler(
         ActionHandlerWithContext(trashAlbumPageActionsContext.galleryActionsContext),
         ActionHandlerWithContext(trashActionsContext),
     ),
     GalleryState() to TrashState(),
-    handle,
 ) {
 
     override fun onRouteSet(route: TrashNavigationRoute) {

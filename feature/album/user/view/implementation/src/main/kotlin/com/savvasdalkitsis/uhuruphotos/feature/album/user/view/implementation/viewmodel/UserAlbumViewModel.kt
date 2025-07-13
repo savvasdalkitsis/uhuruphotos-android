@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.album.user.view.implementation.viewmodel
 
-import androidx.lifecycle.SavedStateHandle
 import com.savvasdalkitsis.uhuruphotos.feature.album.user.view.api.navigation.UserAlbumNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.album.user.view.implementation.seam.UserAlbumActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.album.user.view.implementation.seam.action.SetAlbumId
@@ -39,14 +38,12 @@ typealias UserAlbumCompositeAction = Either<GalleryAction, UserAlbumAction>
 @HiltViewModel
 internal class UserAlbumViewModel @Inject constructor(
     userAlbumActionsContext: UserAlbumActionsContext,
-    handle: SavedStateHandle,
 ) : NavigationViewModel<UserAlbumCompositeState, UserAlbumCompositeAction, UserAlbumNavigationRoute>(
     CompositeActionHandler(
         ActionHandlerWithContext(userAlbumActionsContext.galleryActionsContext),
         ActionHandlerWithContext(userAlbumActionsContext),
     ),
     GalleryState(collageState = CollageState()) to UserAlbumState(),
-    handle,
 ) {
 
     override fun onRouteSet(route: UserAlbumNavigationRoute) {

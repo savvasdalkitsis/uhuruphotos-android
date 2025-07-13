@@ -16,7 +16,6 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.viewmodel
 
 import android.net.Uri
-import androidx.lifecycle.SavedStateHandle
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.api.navigation.EditNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.seam.EditActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.seam.actions.EditAction
@@ -30,11 +29,9 @@ import javax.inject.Inject
 @HiltViewModel
 internal class EditViewModel @Inject constructor(
     actionsContext: EditActionsContext,
-    handle: SavedStateHandle,
 ) : NavigationViewModel<EditState, EditAction, EditNavigationRoute>(
     ActionHandlerWithContext(actionsContext),
     EditState(),
-    handle,
 ) {
 
     override fun onRouteSet(route: EditNavigationRoute) {

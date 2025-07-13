@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.viewmodel
 
-import androidx.lifecycle.SavedStateHandle
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.api.navigation.ServerNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.Load
@@ -29,11 +28,9 @@ import javax.inject.Inject
 @HiltViewModel
 internal class ServerViewModel @Inject constructor(
     serverActionsContext: ServerActionsContext,
-    handle: SavedStateHandle,
 ) : NavigationViewModel<ServerState, ServerAction, ServerNavigationRoute>(
     ActionHandlerWithContext(serverActionsContext),
     ServerState(),
-    handle,
 ) {
 
     override fun onRouteSet(route: ServerNavigationRoute) {

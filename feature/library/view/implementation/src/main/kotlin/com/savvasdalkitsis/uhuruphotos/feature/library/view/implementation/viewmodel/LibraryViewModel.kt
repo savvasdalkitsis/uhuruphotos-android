@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.viewmodel
 
-import androidx.lifecycle.SavedStateHandle
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.AccountOverviewAction
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.AccountOverviewState
@@ -39,14 +38,12 @@ internal typealias LibraryCompositeAction = Either<LibraryAction, AccountOvervie
 internal class LibraryViewModel @Inject constructor(
     libraryActionsContext: LibraryActionsContext,
     accountOverviewActionsContext: AccountOverviewActionsContext,
-    handle: SavedStateHandle,
 ) : NavigationViewModel<LibraryCompositeState, LibraryCompositeAction, LibraryNavigationRoute>(
     CompositeActionHandler(
         ActionHandlerWithContext(libraryActionsContext),
         ActionHandlerWithContext(accountOverviewActionsContext),
     ),
     LibraryState() to AccountOverviewState(),
-    handle,
 ) {
 
     override fun onRouteSet(route: LibraryNavigationRoute) {

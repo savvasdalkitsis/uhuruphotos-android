@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.viewmodel
 
-import androidx.lifecycle.SavedStateHandle
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.navigation.HomeNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.HomeActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.actions.HomeAction
@@ -29,11 +28,9 @@ import javax.inject.Inject
 @HiltViewModel
 internal class HomeViewModel @Inject constructor(
     homeActionsContext: HomeActionsContext,
-    handle: SavedStateHandle,
 ) : NavigationViewModel<HomeState, HomeAction, HomeNavigationRoute>(
     ActionHandlerWithContext(homeActionsContext),
     HomeState(),
-    handle,
 ) {
 
     override fun onRouteSet(route: HomeNavigationRoute) {

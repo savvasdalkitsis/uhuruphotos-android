@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.viewmodel
 
-import androidx.lifecycle.SavedStateHandle
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.api.navigation.SearchNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.actions.SearchAction
@@ -29,11 +28,9 @@ import javax.inject.Inject
 @HiltViewModel
 internal class SearchViewModel @Inject constructor(
     actionsContext: SearchActionsContext,
-    handle: SavedStateHandle,
 ) : NavigationViewModel<SearchState, SearchAction, SearchNavigationRoute>(
     ActionHandlerWithContext(actionsContext),
     SearchState(),
-    handle,
 ) {
 
     override fun onRouteSet(route: SearchNavigationRoute) {

@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.viewmodel
 
-import androidx.lifecycle.SavedStateHandle
 import com.savvasdalkitsis.uhuruphotos.feature.stats.view.api.navigation.StatsNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.seam.StatsActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.seam.actions.LoadStats
@@ -29,11 +28,9 @@ import javax.inject.Inject
 @HiltViewModel
 internal class StatsViewModel @Inject constructor(
     actionsContext: StatsActionsContext,
-    handle: SavedStateHandle,
 ) : NavigationViewModel<StatsState, StatsAction, StatsNavigationRoute>(
     ActionHandlerWithContext(actionsContext),
     StatsState(),
-    handle,
 ) {
 
     override fun onRouteSet(route: StatsNavigationRoute) {

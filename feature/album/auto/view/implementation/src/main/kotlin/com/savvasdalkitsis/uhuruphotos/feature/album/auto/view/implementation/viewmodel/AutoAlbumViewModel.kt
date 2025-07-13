@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.viewmodel
 
-import androidx.lifecycle.SavedStateHandle
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.api.navigation.AutoAlbumNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.seam.AutoAlbumActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.seam.action.AutoAlbumAction
@@ -40,14 +39,12 @@ typealias AutoAlbumCompositeAction = Either<GalleryAction, AutoAlbumAction>
 @HiltViewModel
 internal class AutoAlbumViewModel @Inject constructor(
     autoAlbumActionsContext: AutoAlbumActionsContext,
-    handle: SavedStateHandle,
 ) : NavigationViewModel<AutoAlbumCompositeState, AutoAlbumCompositeAction, AutoAlbumNavigationRoute>(
     CompositeActionHandler(
         ActionHandlerWithContext(autoAlbumActionsContext.galleryActionsContext),
         ActionHandlerWithContext(autoAlbumActionsContext),
     ),
     GalleryState(collageState = CollageState(collageDisplayState = AutoAlbumCollageDisplayState)) to AutoAlbumState(),
-    handle,
 ) {
 
     override fun onRouteSet(route: AutoAlbumNavigationRoute) {

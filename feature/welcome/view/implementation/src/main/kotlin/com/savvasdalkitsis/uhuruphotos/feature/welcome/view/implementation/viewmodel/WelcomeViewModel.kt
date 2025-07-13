@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.viewmodel
 
-import androidx.lifecycle.SavedStateHandle
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.api.navigation.WelcomeNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam.WelcomeActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam.actions.Load
@@ -29,11 +28,9 @@ import javax.inject.Inject
 @HiltViewModel
 internal class WelcomeViewModel @Inject constructor(
     actionsContext: WelcomeActionsContext,
-    handle: SavedStateHandle,
 ) : NavigationViewModel<WelcomeState, WelcomeAction, WelcomeNavigationRoute>(
     ActionHandlerWithContext(actionsContext),
     WelcomeState(),
-    handle,
 ) {
 
     override fun onRouteSet(route: WelcomeNavigationRoute) {

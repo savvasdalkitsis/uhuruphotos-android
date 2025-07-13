@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.viewmodel
 
-import androidx.lifecycle.SavedStateHandle
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation.LightboxNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.LightboxAction
@@ -29,11 +28,9 @@ import javax.inject.Inject
 @HiltViewModel
 internal class LightboxViewModel @Inject constructor(
     lightboxActionsContext: LightboxActionsContext,
-    handle: SavedStateHandle,
 ) : NavigationViewModel<LightboxState, LightboxAction, LightboxNavigationRoute>(
     ActionHandlerWithContext(lightboxActionsContext),
     LightboxState(),
-    handle,
 ) {
     override fun onRouteSet(route: LightboxNavigationRoute) {
         action(with(route) {

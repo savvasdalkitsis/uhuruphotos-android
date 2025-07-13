@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.viewmodel
 
-import androidx.lifecycle.SavedStateHandle
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryId
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.GalleryAction
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.LoadCollage
@@ -40,14 +39,12 @@ private typealias LocalAlbumCompositeAction = Either<GalleryAction, LocalAlbumAc
 internal class LocalAlbumViewModel @Inject constructor(
     localAlbumActionsContext: LocalAlbumActionsContext,
     localAlbumPageActionsContext: LocalAlbumPageActionsContext,
-    handle: SavedStateHandle,
 ) : NavigationViewModel<LocalAlbumCompositeState, LocalAlbumCompositeAction, LocalAlbumNavigationRoute>(
     CompositeActionHandler(
         ActionHandlerWithContext(localAlbumPageActionsContext.galleryActionsContext),
         ActionHandlerWithContext(localAlbumActionsContext),
     ),
     GalleryState() to LocalAlbumState(),
-    handle,
 ) {
 
     override fun onRouteSet(route: LocalAlbumNavigationRoute) {

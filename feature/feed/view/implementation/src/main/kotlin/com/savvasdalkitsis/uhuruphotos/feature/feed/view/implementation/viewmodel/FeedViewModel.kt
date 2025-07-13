@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.viewmodel
 
-import androidx.lifecycle.SavedStateHandle
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.AccountOverviewAction
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.Load
@@ -39,14 +38,12 @@ typealias FeedCompositeAction = Either<FeedAction, AccountOverviewAction>
 internal class FeedViewModel @Inject constructor(
     feedActionsContext: FeedActionsContext,
     accountOverviewActionsContext: AccountOverviewActionsContext,
-    handle: SavedStateHandle,
 ) : NavigationViewModel<FeedCompositeState, FeedCompositeAction, FeedNavigationRoute>(
     CompositeActionHandler(
         ActionHandlerWithContext(feedActionsContext),
         ActionHandlerWithContext(accountOverviewActionsContext),
     ),
     FeedState() to AccountOverviewState(),
-    handle,
 ) {
 
     override fun onRouteSet(route: FeedNavigationRoute) {

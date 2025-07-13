@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.undated.view.implementation.viewmodel
 
-import androidx.lifecycle.SavedStateHandle
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryId
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.GalleryAction
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.LoadCollage
@@ -33,11 +32,9 @@ import javax.inject.Inject
 @HiltViewModel
 internal class UndatedViewModel @Inject constructor(
     actionsContext: UndatedActionsContext,
-    handle: SavedStateHandle,
 ) : NavigationViewModel<GalleryState, GalleryAction, UndatedNavigationRoute>(
     ActionHandlerWithContext(actionsContext.galleryActionsContext),
     GalleryState(title = Title.Resource(string.media_without_date)),
-    handle,
 ) {
 
     override fun onRouteSet(route: UndatedNavigationRoute) {

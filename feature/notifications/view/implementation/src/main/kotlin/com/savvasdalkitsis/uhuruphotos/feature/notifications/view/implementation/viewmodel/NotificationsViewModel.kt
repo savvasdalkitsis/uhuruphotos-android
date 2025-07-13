@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.notifications.view.implementation.viewmodel
 
-import androidx.lifecycle.SavedStateHandle
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.view.api.navigation.NotificationsNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.view.implementation.seam.NotificationsActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.view.implementation.seam.actions.Load
@@ -29,11 +28,9 @@ import javax.inject.Inject
 @HiltViewModel
 internal class NotificationsViewModel @Inject constructor(
     actionsContext: NotificationsActionsContext,
-    handle: SavedStateHandle,
 ) : NavigationViewModel<NotificationsState, NotificationsAction, NotificationsNavigationRoute>(
     ActionHandlerWithContext(actionsContext),
     NotificationsState(),
-    handle,
 ) {
 
     override fun onRouteSet(route: NotificationsNavigationRoute) {
