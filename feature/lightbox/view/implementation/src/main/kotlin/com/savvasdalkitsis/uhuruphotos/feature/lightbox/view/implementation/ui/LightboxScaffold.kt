@@ -26,12 +26,15 @@ import androidx.compose.foundation.ScrollState
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass.Companion.Compact
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.api.navigation.LocalServerUrl
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.LightboxAction
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.UpPressed
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
 import com.savvasdalkitsis.uhuruphotos.foundation.dismiss.api.ui.rememberPullToDismissState
+import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.SharedElementId
+import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.sharedElement
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window.LocalWindowSize
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UhuruFullLoading
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruScaffold
@@ -49,7 +52,10 @@ internal fun SharedTransitionScope.LightboxScaffold(
     val dismissState = rememberPullToDismissState(
         onDismiss = { action(UpPressed) },
     )
+    val mediaItem = state.media[index]
     UhuruScaffold(
+        modifier = Modifier
+            .sharedElement(SharedElementId.imageCanvas(mediaItem.mediaHash.hash)),
         title = { },
         bottomBarContent = {
             AnimatedVisibility(

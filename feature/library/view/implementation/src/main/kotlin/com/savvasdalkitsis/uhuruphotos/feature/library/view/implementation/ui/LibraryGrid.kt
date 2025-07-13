@@ -55,6 +55,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.st
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.NamedVitrine
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.VitrineState
+import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.SharedElementId
+import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.sharedElement
 import dev.shreyaspatil.permissionflow.compose.rememberPermissionFlowRequestLauncher
 import kotlinx.collections.immutable.toImmutableList
 import org.jetbrains.compose.resources.DrawableResource
@@ -101,12 +103,26 @@ internal fun SharedTransitionScope.LibraryGrid(
         for (item in data.value) {
             when (item) {
                 TRASH -> if (state.showTrash) {
-                    pillItem(reordering, item, drawable.ic_delete, { GridItemSpan(maxCurrentLineSpan / 2) }) {
+                    pillItem(
+                        reorder = reordering,
+                        item = item,
+                        icon = drawable.ic_delete,
+                        sharedElementId = SharedElementId.trash(),
+                        titleSharedElementId = SharedElementId.trashTitle(),
+                        span = { GridItemSpan(maxCurrentLineSpan / 2) }
+                    ) {
                         action(TrashSelected)
                     }
                 }
                 HIDDEN -> if (state.showHidden){
-                    pillItem(reordering, item, drawable.ic_invisible, { GridItemSpan(maxCurrentLineSpan) }) {
+                    pillItem(
+                        reorder = reordering,
+                        item = item,
+                        icon = drawable.ic_invisible,
+                        sharedElementId = SharedElementId.hidden(),
+                        titleSharedElementId = SharedElementId.hiddenTitle(),
+                        span = { GridItemSpan(maxCurrentLineSpan) }
+                    ) {
                         action(HiddenPhotosSelected)
                     }
                 }
@@ -132,13 +148,39 @@ internal fun SharedTransitionScope.LibraryGrid(
                         }
                     }
                 }
-                AUTO -> libraryItem(reordering, state.autoAlbums, item, drawable.ic_album_auto, this@LibraryGrid) {
+                AUTO -> libraryItem(
+                    reordering,
+                    state.autoAlbums,
+                    item,
+                    drawable.ic_album_auto,
+                    this@LibraryGrid,
+                    SharedElementId.autoAlbumsCanvas(),
+                    SharedElementId.autoAlbumsTitle(),
+                ) {
                     action(AutoAlbumsSelected)
                 }
-                USER -> libraryItem(reordering, state.userAlbums, item, drawable.ic_album_user, this@LibraryGrid) {
+
+                USER -> libraryItem(
+                    reordering,
+                    state.userAlbums,
+                    item,
+                    drawable.ic_album_user,
+                    this@LibraryGrid,
+                    SharedElementId.userAlbumsCanvas(),
+                    SharedElementId.userAlbumsTitle(),
+                ) {
                     action(UserAlbumsSelected)
                 }
-                FAVOURITE -> libraryItem(reordering, state.favouritePhotos, item, drawable.ic_album_favourites, this@LibraryGrid) {
+
+                FAVOURITE -> libraryItem(
+                    reordering,
+                    state.favouritePhotos,
+                    item,
+                    drawable.ic_album_favourites,
+                    this@LibraryGrid,
+                    SharedElementId.favouriteMediaCanvas(),
+                    SharedElementId.favouriteMediaTitle(),
+                ) {
                     action(FavouritePhotosSelected)
                 }
             }
@@ -146,10 +188,13 @@ internal fun SharedTransitionScope.LibraryGrid(
     }
 }
 
+context(scope: SharedTransitionScope)
 internal fun LazyGridScope.pillItem(
     reorder: ReorderableLazyGridState,
     item: LibraryItemState,
     icon: DrawableResource,
+    sharedElementId: SharedElementId,
+    titleSharedElementId: SharedElementId,
     span: (LazyGridItemSpanScope.() -> GridItemSpan)? = null,
     onSelected: () -> Unit,
 ) {
@@ -157,12 +202,17 @@ internal fun LazyGridScope.pillItem(
         val title = stringResource(item.title)
         ReorderableItem(reorder, item.title) { isDragging ->
             Vibrate(isDragging)
-            LibraryPillItem(
-                modifier = Modifier.draggableHandle(),
-                title = title,
-                icon = icon,
-                onSelected = onSelected
-            )
+            with(scope) {
+                LibraryPillItem(
+                    modifier = Modifier
+                        .sharedElement(sharedElementId)
+                        .draggableHandle(),
+                    title = title,
+                    titleSharedElementId = titleSharedElementId,
+                    icon = icon,
+                    onSelected = onSelected
+                )
+            }
         }
     }
 }
@@ -173,6 +223,8 @@ internal fun LazyGridScope.libraryItem(
     item: LibraryItemState,
     iconFallback: DrawableResource,
     sharedTransitionScope: SharedTransitionScope,
+    cardSharedElementId: SharedElementId,
+    titleSharedElementId: SharedElementId,
     onSelected: () -> Unit,
 ) {
     vitrineState?.let {
@@ -182,10 +234,13 @@ internal fun LazyGridScope.libraryItem(
                 Vibrate(isDragging)
                 with (sharedTransitionScope) {
                     NamedVitrine(
+                        modifier = Modifier
+                            .sharedElement(cardSharedElementId),
                         state = vitrineState,
                         photoGridModifier = Modifier.fillMaxWidth(),
                         iconFallback = iconFallback,
                         title = title,
+                        titleSharedElementId = titleSharedElementId,
                         onSelected = onSelected
                     )
                 }

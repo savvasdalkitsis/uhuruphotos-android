@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.s
 import org.jetbrains.compose.resources.StringResource
 import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
 import uhuruphotos_android.foundation.strings.api.generated.resources.auto_albums
-import uhuruphotos_android.foundation.strings.api.generated.resources.favourite_photos
+import uhuruphotos_android.foundation.strings.api.generated.resources.favourite_media
 import uhuruphotos_android.foundation.strings.api.generated.resources.hidden_media
 import uhuruphotos_android.foundation.strings.api.generated.resources.local_albums
 import uhuruphotos_android.foundation.strings.api.generated.resources.trash
@@ -32,5 +32,5 @@ enum class LibraryItemState(
     LOCAL(string.local_albums),
     AUTO(string.auto_albums),
     USER(string.user_albums),
-    FAVOURITE(string.favourite_photos);
+    FAVOURITE(string.favourite_media);
 }

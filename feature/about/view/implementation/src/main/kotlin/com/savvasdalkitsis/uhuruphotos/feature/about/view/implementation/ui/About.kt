@@ -45,7 +45,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.ac
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.actions.NavigateToPrivacyPolicy
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.actions.SendFeedback
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.ui.state.AboutState
-import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
+import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewThemeData
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewThemeDataProvider

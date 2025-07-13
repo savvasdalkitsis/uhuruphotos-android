@@ -19,7 +19,12 @@ package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementati
 
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -31,6 +36,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementatio
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.action.UserAlbumSelected
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.action.UserAlbumsAction
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.Catalogue
+import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.SharedElementId
+import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.sharedElement
+import org.jetbrains.compose.resources.stringResource
 import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
 import uhuruphotos_android.foundation.strings.api.generated.resources.no_user_albums
 import uhuruphotos_android.foundation.strings.api.generated.resources.user_albums
@@ -40,28 +48,41 @@ internal fun SharedTransitionScope.UserAlbums(
     state: UserAlbumsState,
     action: (UserAlbumsAction) -> Unit,
 ) {
-    Catalogue(
-        title = string.user_albums,
-        onRefresh = { action(Refresh) },
-        isRefreshing = state.isLoading,
-        isEmpty = state.albums.isEmpty(),
-        emptyContentMessage = string.no_user_albums,
-        sorting = state.sorting,
-        initialFilter = state.filter,
-        onFilterUpdate =  { action(FilterAlbums(it)) },
-        onChangeSorting = { action(ChangeSorting(it)) },
-    ) {
-        state.albums
-            .filter { it.visible }
-            .forEach { album ->
-                item(album.id) {
-                    UserAlbumItem(
-                        modifier = Modifier.animateItem()
-                            .padding(8.dp),
-                        album = album,
-                        onAlbumSelected = { action(UserAlbumSelected(album)) },
-                    )
+    Box(Modifier
+        .fillMaxSize()
+        .background(MaterialTheme.colorScheme.background))
+    {
+        Catalogue(
+            modifier = Modifier
+                .sharedElement(SharedElementId.userAlbumsCanvas()),
+            title = {
+                Text(
+                    modifier = Modifier.sharedElement(SharedElementId.userAlbumsTitle()),
+                    text = stringResource(string.user_albums),
+                )
+            },
+            onRefresh = { action(Refresh) },
+            isRefreshing = state.isLoading,
+            isEmpty = state.albums.isEmpty(),
+            emptyContentMessage = string.no_user_albums,
+            sorting = state.sorting,
+            initialFilter = state.filter,
+            onFilterUpdate =  { action(FilterAlbums(it)) },
+            onChangeSorting = { action(ChangeSorting(it)) },
+        ) {
+            state.albums
+                .filter { it.visible }
+                .forEach { album ->
+                    item(album.id) {
+                        UserAlbumItem(
+                            modifier = Modifier
+                                .animateItem()
+                                .padding(8.dp),
+                            album = album,
+                            onAlbumSelected = { action(UserAlbumSelected(album)) },
+                        )
+                    }
                 }
-            }
+        }
     }
 }

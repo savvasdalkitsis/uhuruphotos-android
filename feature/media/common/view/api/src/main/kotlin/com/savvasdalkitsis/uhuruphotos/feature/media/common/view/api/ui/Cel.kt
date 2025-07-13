@@ -54,13 +54,17 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.Ce
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelSelectionModeState.NONE
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelSelectionModeState.SELECTABLE
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
-import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
-import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.sharedElement
-import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.toColor
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Thumbnail
+import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.SharedElementId
+import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.recomposeHighlighter
+import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.sharedElement
+import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.toColor
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkable.Checkable
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkable.SelectionMode
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruIcon
+import me.saket.telephoto.zoomable.ZoomablePeekOverlayBackdrop
+import me.saket.telephoto.zoomable.rememberZoomablePeekOverlayState
+import me.saket.telephoto.zoomable.zoomablePeekOverlay
 import org.jetbrains.compose.resources.painterResource
 import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
 import uhuruphotos_android.foundation.icons.api.generated.resources.ic_favourite
@@ -92,7 +96,7 @@ fun SharedTransitionScope.Cel(
             contentOffset,
             shape,
             miniIcons,
-            showSyncState
+            showSyncState,
         )
     }
     when (selectionMode) {
@@ -166,13 +170,21 @@ private fun SharedTransitionScope.Cel(
         modifier = modifier
             .aspectRatio(aspectRatio)
             .clip(shape)
+            .sharedElement(SharedElementId.imageCanvas(id.mediaHash.hash))
             .recomposeHighlighter()
     ) {
         val serverUrl = LocalServerUrl.current
+        val peekState = rememberZoomablePeekOverlayState()
+
         Thumbnail(
-            modifier = Modifier.fillMaxWidth().offset {
-                IntOffset(contentOffset.toInt(), 0)
-            }.sharedElement(this@Cel, "image-${id.mediaHash.hash}"),
+            modifier = Modifier
+                .fillMaxWidth()
+                .offset { IntOffset(contentOffset.toInt(), 0) }
+                .sharedElement(SharedElementId.image(id.mediaHash.hash))
+                .zoomablePeekOverlay(
+                    peekState,
+                    ZoomablePeekOverlayBackdrop.scrim(backgroundColor.copy(alpha = 0.4f))
+                ),
             url = remember(serverUrl, id) {
                 id.thumbnailUri(serverUrl)
             },

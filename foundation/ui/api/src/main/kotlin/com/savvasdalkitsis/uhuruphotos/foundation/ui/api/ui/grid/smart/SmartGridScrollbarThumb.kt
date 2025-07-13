@@ -36,7 +36,7 @@ import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
+import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.smart.simple.InternalLazyGridScrollbar
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.smart.simple.SmartSimpleGridState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.smart.staggered.InternalLazyStaggeredGridScrollbar

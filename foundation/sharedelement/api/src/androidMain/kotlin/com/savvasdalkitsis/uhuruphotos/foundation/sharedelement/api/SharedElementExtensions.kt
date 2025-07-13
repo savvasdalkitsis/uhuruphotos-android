@@ -1,4 +1,4 @@
-package com.savvasdalkitsis.uhuruphotos.foundation.compose.api
+package com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api
 
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
@@ -8,11 +8,12 @@ import androidx.navigation3.ui.LocalNavAnimatedContentScope
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun Modifier.sharedElement(scope: SharedTransitionScope, id: String): Modifier {
+context(scope: SharedTransitionScope)
+fun Modifier.sharedElement(id: SharedElementId): Modifier {
     val animatedVisibilityScope = LocalNavAnimatedContentScope.current
     return with(scope) {
         sharedElement(
-            sharedContentState = rememberSharedContentState(id),
+            sharedContentState = rememberSharedContentState(id.value),
             animatedVisibilityScope = animatedVisibilityScope,
         )
     }

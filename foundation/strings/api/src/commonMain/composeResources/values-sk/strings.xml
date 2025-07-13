@@ -1,44 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <plurals name="delete_media_confirmation">
-        <item quantity="one">Naozaj chcete odstrániť túto %d mediálnu položku\?</item>
-        <item quantity="few">Naozaj chcete odstrániť tieto %d mediálne položky\?</item>
-        <item quantity="other">Naozaj chcete odstrániť týchto %d mediálnych položiek\?</item>
+        <item quantity="one">Naozaj chcete odstrániť túto %1$d mediálnu položku\?</item>
+        <item quantity="few">Naozaj chcete odstrániť tieto %1$d mediálne položky\?</item>
+        <item quantity="other">Naozaj chcete odstrániť týchto %1$d mediálnych položiek\?</item>
     </plurals>
     <plurals name="delete_photos">
-        <item quantity="one">Odstrániť %d fotku</item>
-        <item quantity="few">Odstrániť %d fotky</item>
-        <item quantity="other">Odstrániť %d fotiek</item>
+        <item quantity="one">Odstrániť %1$d fotku</item>
+        <item quantity="few">Odstrániť %1$d fotky</item>
+        <item quantity="other">Odstrániť %1$d fotiek</item>
     </plurals>
     <plurals name="delete_media">
-        <item quantity="one">Odstrániť %d mediálnu položku</item>
-        <item quantity="few">Odstrániť %d mediálne položky</item>
-        <item quantity="other">Odstrániť %d mediálnych položiek</item>
+        <item quantity="one">Odstrániť %1$d mediálnu položku</item>
+        <item quantity="few">Odstrániť %1$d mediálne položky</item>
+        <item quantity="other">Odstrániť %1$d mediálnych položiek</item>
     </plurals>
     <plurals name="restore_photos">
-        <item quantity="one">Obnoviť %d fotku</item>
-        <item quantity="few">Obnoviť %d fotky</item>
-        <item quantity="other">Obnoviť %d fotiek</item>
+        <item quantity="one">Obnoviť %1$d fotku</item>
+        <item quantity="few">Obnoviť %1$d fotky</item>
+        <item quantity="other">Obnoviť %1$d fotiek</item>
     </plurals>
     <plurals name="restore_media">
-        <item quantity="one">Obnoviť %d mediálnu položku</item>
-        <item quantity="few">Obnoviť %d mediálne položky</item>
-        <item quantity="other">Obnoviť %d mediálnych položiek</item>
+        <item quantity="one">Obnoviť %1$d mediálnu položku</item>
+        <item quantity="few">Obnoviť %1$d mediálne položky</item>
+        <item quantity="other">Obnoviť %1$d mediálnych položiek</item>
     </plurals>
     <plurals name="trash_photos">
-        <item quantity="one">Presunúť %d fotku do koša</item>
-        <item quantity="few">Presunúť %d fotky do koša</item>
-        <item quantity="other">Presunúť %d fotiek do koša</item>
+        <item quantity="one">Presunúť %1$d fotku do koša</item>
+        <item quantity="few">Presunúť %1$d fotky do koša</item>
+        <item quantity="other">Presunúť %1$d fotiek do koša</item>
     </plurals>
     <plurals name="restore_photos_confirmation">
-        <item quantity="one">Naozaj chcete obnoviť túto %d fotku?</item>
-        <item quantity="few">Naozaj chcete obnoviť tieto %d fotky?</item>
-        <item quantity="other">Naozaj chcete obnoviť týchto %d fotiek?</item>
+        <item quantity="one">Naozaj chcete obnoviť túto %1$d fotku?</item>
+        <item quantity="few">Naozaj chcete obnoviť tieto %1$d fotky?</item>
+        <item quantity="other">Naozaj chcete obnoviť týchto %1$d fotiek?</item>
     </plurals>
     <plurals name="trash_media_confirmation">
-        <item quantity="one">Naozaj chcete poslať túto %d mediálnu položku do koša?</item>
-        <item quantity="few">Naozaj chcete poslať tieto %d mediálne položky do koša?</item>
-        <item quantity="other">Naozaj chcete poslať týchto %d mediálnych položiek do koša?</item>
+        <item quantity="one">Naozaj chcete poslať túto %1$d mediálnu položku do koša?</item>
+        <item quantity="few">Naozaj chcete poslať tieto %1$d mediálne položky do koša?</item>
+        <item quantity="other">Naozaj chcete poslať týchto %1$d mediálnych položiek do koša?</item>
     </plurals>
     <string name="people">Ľudia</string>
     <string name="view_all">Zobraziť všetky</string>
@@ -61,22 +61,22 @@
     <string name="yes">Áno</string>
     <string name="no">Nie</string>
     <string name="clear">Vyčisti</string>
-    <string name="currently_used">Aktuálne využité: %dMB</string>
+    <string name="currently_used">Aktuálne využité: %1$dMB</string>
     <plurals name="delete_photos_confirmation">
-        <item quantity="one">Naozaj chcete odstrániť túto %d fotku\?</item>
-        <item quantity="few">Naozaj chcete odstrániť tieto %d fotky\?</item>
-        <item quantity="other">Naozaj chcete odstrániť týchto %d fotiek\?</item>
+        <item quantity="one">Naozaj chcete odstrániť túto %1$d fotku\?</item>
+        <item quantity="few">Naozaj chcete odstrániť tieto %1$d fotky\?</item>
+        <item quantity="other">Naozaj chcete odstrániť týchto %1$d fotiek\?</item>
     </plurals>
     <string name="error_refreshing_people">Pri obnovovaní ľudí sa vyskytla chyba</string>
     <plurals name="restore_media_confirmation">
-        <item quantity="one">Naozaj chcete obnoviť túto %d mediálnu položku?</item>
-        <item quantity="few">Naozaj chcete obnoviť tieto %d mediálne položky?</item>
-        <item quantity="other">Naozaj chcete obnoviť týchto %d mediálnych položiek?</item>
+        <item quantity="one">Naozaj chcete obnoviť túto %1$d mediálnu položku?</item>
+        <item quantity="few">Naozaj chcete obnoviť tieto %1$d mediálne položky?</item>
+        <item quantity="other">Naozaj chcete obnoviť týchto %1$d mediálnych položiek?</item>
     </plurals>
     <plurals name="trash_photos_confirmation">
-        <item quantity="one">Naozaj chcete poslať túto %d fotku do koša?</item>
-        <item quantity="few">Naozaj chcete poslať tieto %d fotky do koša?</item>
-        <item quantity="other">Naozaj chcete poslať týchto %d fotiek do koša?</item>
+        <item quantity="one">Naozaj chcete poslať túto %1$d fotku do koša?</item>
+        <item quantity="few">Naozaj chcete poslať tieto %1$d fotky do koša?</item>
+        <item quantity="other">Naozaj chcete poslať týchto %1$d fotiek do koša?</item>
     </plurals>
     <string name="error_loading_photo_details">Pri načítavaní podrobností fotografie sa vyskytla chyba</string>
     <string name="gallery_size">Veľkosť galérie</string>
@@ -85,26 +85,26 @@
     <string name="changes_effect_after_restart">(zmeny sa prejavia po reštarte)</string>
     <string name="media">Média</string>
     <plurals name="trash_media">
-        <item quantity="one">Presunúť %d mediálnu položku do koša</item>
-        <item quantity="few">Presunúť %d mediálne položky do koša</item>
-        <item quantity="other">Presunúť %d mediálnych položiek do koša</item>
+        <item quantity="one">Presunúť %1$d mediálnu položku do koša</item>
+        <item quantity="few">Presunúť %1$d mediálne položky do koša</item>
+        <item quantity="other">Presunúť %1$d mediálnych položiek do koša</item>
     </plurals>
     <string name="yearly">Ročne</string>
     <string name="compact">Kompaktný</string>
     <string name="comfortable">Pohodlný</string>
-    <string name="max_limit">Maximálny limit: %dMB</string>
+    <string name="max_limit">Maximálny limit: %1$dMB</string>
     <string name="full">Plný</string>
     <string name="perform_full_sync">Vykonaj úplnú synchronizáciu</string>
     <string name="settings">Nastavenia</string>
     <plurals name="hours">
-        <item quantity="one">%d hodina</item>
-        <item quantity="few">%d hodiny</item>
-        <item quantity="other">%d hodín</item>
+        <item quantity="one">%1$d hodina</item>
+        <item quantity="few">%1$d hodiny</item>
+        <item quantity="other">%1$d hodín</item>
     </plurals>
     <plurals name="days">
-        <item quantity="one">%d deň</item>
-        <item quantity="few">%d dni</item>
-        <item quantity="other">%d dní</item>
+        <item quantity="one">%1$d deň</item>
+        <item quantity="few">%1$d dni</item>
+        <item quantity="other">%1$d dní</item>
     </plurals>
     <string name="feed_sync_freq_changed">Frekvencia synchronizácie kanálu zmenená</string>
     <string name="feed_sync_network_changed">Požiadavka siete na synchronizáciu kanála sa zmenila</string>

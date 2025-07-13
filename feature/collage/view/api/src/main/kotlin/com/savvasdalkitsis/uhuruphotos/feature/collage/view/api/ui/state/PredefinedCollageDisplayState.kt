@@ -115,7 +115,6 @@ enum class PredefinedCollageDisplayState(
 
     override val zoomIn: CollageDisplayState get() = entries[min(ordinal + 1, entries.size - 1)]
     override val zoomOut: CollageDisplayState get() = entries[max(0, ordinal -1)]
-    override val allowsPinchGestures = true
 
     companion object {
         val default = COMFORTABLE

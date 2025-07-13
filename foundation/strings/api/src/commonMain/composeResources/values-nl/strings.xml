@@ -2,13 +2,13 @@
 <resources>
     <string name="error_refreshing_people">Probleem bij het vernieuwen van personen</string>
     <plurals name="delete_photos_confirmation">
-        <item quantity="one">Bent u zeker dat u foto %d wilt verwijderen\?</item>
-        <item quantity="other">Bent u zeker dat u deze foto\'s %d wilt verwijderen\?</item>
+        <item quantity="one">Bent u zeker dat u foto %1$d wilt verwijderen\?</item>
+        <item quantity="other">Bent u zeker dat u deze foto's %1$d wilt verwijderen\?</item>
     </plurals>
     <string name="recent_searches_cleared">Recente zoekopdrachten verwijderd</string>
     <plurals name="delete_photos">
-        <item quantity="one">Verwijder %d foto</item>
-        <item quantity="other">Verwijder %d foto\'s</item>
+        <item quantity="one">Verwijder %1$d foto</item>
+        <item quantity="other">Verwijder %1$d foto's</item>
     </plurals>
     <string name="photo">Foto</string>
     <string name="error_searching">Kan de zoekopdracht niet uitvoeren</string>
@@ -19,7 +19,7 @@
     <string name="feed_sync_network_changed">De netwerksynchronisatievereiste is aangepast</string>
     <string name="feed_sync_charging_changed">De synchronisatievereisten zijn aangepast</string>
     <string name="logs_cleared">De logboeken zijn gewist</string>
-    <string name="downloading_photos_sharing">Bezig met ophalen van foto\'s… (hiena volgt het delen)</string>
+    <string name="downloading_photos_sharing">Bezig met ophalen van foto's… (hiena volgt het delen)</string>
     <string name="copied_to_clipboard">Gekopieerd naar klembord</string>
     <string name="error_logging_in">Er is een fout opgetreden tijdens het vastleggen in</string>
     <string name="could_not_find_app_to_open">Er is geen app beschikbaar waarin deze foto kan worden geopend</string>
@@ -38,19 +38,19 @@
     <string name="never">nooit</string>
     <string name="settings">Instellingen</string>
     <plurals name="hours">
-        <item quantity="one">%d uur</item>
-        <item quantity="other">%d uur</item>
+        <item quantity="one">%1$d uur</item>
+        <item quantity="other">%1$d uur</item>
     </plurals>
     <string name="yes">Ja</string>
     <string name="no">Nee</string>
     <string name="clear">Wissen</string>
-    <string name="currently_used">Gebruikte ruimte: %d mb</string>
-    <string name="max_limit">Limiet: %d mb</string>
+    <string name="currently_used">Gebruikte ruimte: %1$d mb</string>
+    <string name="max_limit">Limiet: %1$d mb</string>
     <string name="changes_effect_after_restart">(herstart om de wijzigingen toe te passen)</string>
     <string name="share">Delen</string>
     <string name="deleting_photo">Bezig met verwijderen…</string>
     <string name="refreshing_albums">Bezig met herladen…</string>
-    <string name="photos_on_map">Foto\'s in map (%1$d van %2$d)</string>
+    <string name="photos_on_map">Foto's in map (%1$d van %2$d)</string>
     <string name="refresh">Herladen</string>
     <string name="favourite">Toevoegen aan favorieten</string>
     <string name="remove_favourite">Verwijderen uit favorieten</string>
@@ -77,8 +77,8 @@
     <string name="image_memory_cache">Afbeeldingencache in geheugen</string>
     <string name="enable_suggestions">Suggesties inschakelen</string>
     <plurals name="item_count">
-        <item quantity="one">%d item</item>
-        <item quantity="other">%d items</item>
+        <item quantity="one">%1$d item</item>
+        <item quantity="other">%1$d items</item>
     </plurals>
     <string name="library">Verzameling</string>
     <string name="remove_gps_data_when_sharing">Gps-gegevens wissen tijdens delen</string>
@@ -86,7 +86,7 @@
     <string name="no_auto_albums">Deze gebruiker heeft geen automatisch samengestelde albums</string>
     <string name="any_connected">Iedere verbinding</string>
     <string name="metered">Beperkte verbindingen</string>
-    <string name="network_requirements">Netwerkvereisten: %s</string>
+    <string name="network_requirements">Netwerkvereisten: %1$s</string>
     <string name="unmetered">Onbeperkte verbindingen</string>
     <string name="not_roaming">Niet tijdens roamen</string>
     <string name="change">Wijzigen</string>
@@ -98,7 +98,7 @@
     <string name="collapse_all">Alles inklappen</string>
     <string name="expand_all">Alles uitklappen</string>
     <string name="error_changing_photo_favourite">Kan favorietstatus van foto niet wijzigen</string>
-    <string name="no_photos">Er zijn geen foto\'s beschikbaar</string>
+    <string name="no_photos">Er zijn geen foto's beschikbaar</string>
     <string name="auto_albums">Automatische albums</string>
     <string name="user_created_albums">Zelfgemaakte albums</string>
     <string name="user_albums">Eigen albums</string>
@@ -108,8 +108,8 @@
     <string name="enable_logging">Logboek aanleggen</string>
     <string name="degrades_performance">Let op: dit beïnvloedt de prestaties</string>
     <plurals name="days">
-        <item quantity="one">%d dag</item>
-        <item quantity="other">%d dagen</item>
+        <item quantity="one">%1$d dag</item>
+        <item quantity="other">%1$d dagen</item>
     </plurals>
     <string name="feed_refresh_days">Aantal te herladen dagen op fotorol na trekken om te herladen</string>
     <string name="require_biometrics_for_app_access">Biometrische toegang (vingerafdruk, gezicht) vereisen om app te openen</string>
@@ -120,36 +120,36 @@
     <string name="biometrics">Biometrie</string>
     <string name="biometrics_enroll">Schakel biometrie in om deze functie te kunnen gebruiken</string>
     <string name="authenticate_to_change">Verifieer om deze instelling te kunnen wijzigen</string>
-    <string name="hidden_photos">Verborgen foto\'s</string>
+    <string name="hidden_photos">Verborgen foto's</string>
     <string name="error_loading_albums">Er is een fout opgetreden tijdens het laden van de albums</string>
-    <string name="favourite_photos">Favoriete foto\'s</string>
+    <string name="favourite_photos">Favoriete foto's</string>
     <string name="error_loading_user_albums">Er is een fout opgetreden tijdens het laden van de zelfgemaakte albums</string>
     <string name="authenticate_for_access_to_trash_description">U heeft verzocht om de prullenbak te openen die alleen toegankelijk is middels verificatie</string>
     <string name="trashing_photo">Bezig met verplaatsen naar prullenbak…</string>
-    <string name="require_biometrics_for_hidden_photos_access">Biometrische verificatie vereisen om toegang te krijgen tot verborgen foto\'s</string>
+    <string name="require_biometrics_for_hidden_photos_access">Biometrische verificatie vereisen om toegang te krijgen tot verborgen foto's</string>
     <string name="require_biometrics_for_trash_access">Biometrische verificatie vereisen om toegang te krijgen tot de prullenbak</string>
     <string name="authenticate_for_access_to_trash">Verifieer uzelf om toegang te krijgen tot de prullenbak</string>
-    <string name="authenticate_for_access_to_hidden_description">U heeft verzocht om verborgen foto\'s te bekijken die alleen toegankelijk zijn middels verificatie</string>
+    <string name="authenticate_for_access_to_hidden_description">U heeft verzocht om verborgen foto's te bekijken die alleen toegankelijk zijn middels verificatie</string>
     <string name="trash">Prullenbak</string>
     <string name="operation_irreverisble">Deze actie is onomkeerbaar</string>
     <plurals name="trash_photos">
-        <item quantity="one">%d foto verplaatsen naar prullenbak</item>
-        <item quantity="other">%d foto\'s verplaatsen naar prullenbak</item>
+        <item quantity="one">%1$d foto verplaatsen naar prullenbak</item>
+        <item quantity="other">%1$d foto's verplaatsen naar prullenbak</item>
     </plurals>
     <plurals name="trash_photos_confirmation">
-        <item quantity="one">Weet u zeker dat u %d foto naar de prullenbak wilt verplaatsen\?</item>
-        <item quantity="other">Weet u zeker dat u %d foto\'s naar de prullenbak wilt verplaatsen\?</item>
+        <item quantity="one">Weet u zeker dat u %1$d foto naar de prullenbak wilt verplaatsen\?</item>
+        <item quantity="other">Weet u zeker dat u %1$d foto's naar de prullenbak wilt verplaatsen\?</item>
     </plurals>
-    <string name="authenticate_for_access_to_hidden">Verifieer uzelf om toegang te krijgen tot verborgen foto\'s</string>
+    <string name="authenticate_for_access_to_hidden">Verifieer uzelf om toegang te krijgen tot verborgen foto's</string>
     <plurals name="restore_photos">
-        <item quantity="one">%d foto herstellen</item>
-        <item quantity="other">%d foto\'s herstellen</item>
+        <item quantity="one">%1$d foto herstellen</item>
+        <item quantity="other">%1$d foto's herstellen</item>
     </plurals>
-    <string name="restoring_photo">Bezig met herstellen van foto\'s…</string>
+    <string name="restoring_photo">Bezig met herstellen van foto's…</string>
     <string name="restore">Herstellen</string>
     <plurals name="restore_photos_confirmation">
-        <item quantity="one">Weet u zeker dat %d foto wilt herstellen\?</item>
-        <item quantity="other">Weet u zeker dat %d foto\'s wilt herstellen\?</item>
+        <item quantity="one">Weet u zeker dat %1$d foto wilt herstellen\?</item>
+        <item quantity="other">Weet u zeker dat %1$d foto's wilt herstellen\?</item>
     </plurals>
     <string name="people">Personen</string>
     <string name="location">Locatie</string>
@@ -178,29 +178,29 @@
     <string name="server_url">Server-url</string>
     <string name="login_to_server">Inloggen op server</string>
     <plurals name="delete_media">
-        <item quantity="one">%d media-item verwijderen</item>
-        <item quantity="other">%d media-items verwijderen</item>
+        <item quantity="one">%1$d media-item verwijderen</item>
+        <item quantity="other">%1$d media-items verwijderen</item>
     </plurals>
     <string name="media">Media</string>
     <plurals name="restore_media">
-        <item quantity="one">%d media-item herstellen</item>
-        <item quantity="other">%d media-items herstellen</item>
+        <item quantity="one">%1$d media-item herstellen</item>
+        <item quantity="other">%1$d media-items herstellen</item>
     </plurals>
     <plurals name="trash_media">
-        <item quantity="one">%d media-item verplaatsen naar prullenbak</item>
-        <item quantity="other">%d media-items verplaatsen naar prullenbak</item>
+        <item quantity="one">%1$d media-item verplaatsen naar prullenbak</item>
+        <item quantity="other">%1$d media-items verplaatsen naar prullenbak</item>
     </plurals>
     <plurals name="delete_media_confirmation">
-        <item quantity="one">Weet je zeker dat je %d media-item wilt verwijderen\?</item>
-        <item quantity="other">Weet je zeker dat je %d media-items wilt verwijderen\?</item>
+        <item quantity="one">Weet je zeker dat je %1$d media-item wilt verwijderen\?</item>
+        <item quantity="other">Weet je zeker dat je %1$d media-items wilt verwijderen\?</item>
     </plurals>
     <plurals name="restore_media_confirmation">
-        <item quantity="one">Weet je zeker dat je %d media-item wilt herstellen\?</item>
-        <item quantity="other">Weet je zeker dat je %d media-items wilt herstellen\?</item>
+        <item quantity="one">Weet je zeker dat je %1$d media-item wilt herstellen\?</item>
+        <item quantity="other">Weet je zeker dat je %1$d media-items wilt herstellen\?</item>
     </plurals>
     <plurals name="trash_media_confirmation">
-        <item quantity="one">Dit %d media-item naar de prullenbak verplaatsen\?</item>
-        <item quantity="other">Deze %d media-items naar de prullenbak verplaatsen\?</item>
+        <item quantity="one">Dit %1$d media-item naar de prullenbak verplaatsen\?</item>
+        <item quantity="other">Deze %1$d media-items naar de prullenbak verplaatsen\?</item>
     </plurals>
     <string name="trashing_media">Bezig met verplaatsen naar prullenbak</string>
     <string name="restoring_media">Bezig met herstellen van media</string>
@@ -211,11 +211,11 @@
     <string name="gallery_size">Galerij-omvang</string>
     <string name="refreshing_feed">Bezig met herladen…</string>
     <string name="on_this_day">Op deze dag</string>
-    <string name="years_ago">%d jaar geleden</string>
+    <string name="years_ago">%1$d jaar geleden</string>
     <string name="enable_memories">Herinneringen tonen</string>
     <string name="video">Video</string>
     <string name="animate_video_thumbnails">Bewegende videominiaturen tonen</string>
-    <string name="max_animated_video_thumbnails">Maximumaantal bewegende videominiaturen (%s)</string>
+    <string name="max_animated_video_thumbnails">Maximumaantal bewegende videominiaturen (%1$s)</string>
     <string name="max_animated_video_thumbnails_description">Let op: een hoog aantal kan instabiliteit veroorzaken. Verlaag het aantal als je problemen ervaart.</string>
     <string name="cannot_perform_full_sync">Er kan geen volledige synchronisatie worden uitgevoerd</string>
     <string name="precaching_thumbnails">Bezig met inladen van miniaturen…</string>
@@ -281,7 +281,7 @@
     <string name="locations">Locaties</string>
     <string name="media_without_date">Media zonder datum</string>
     <string name="no_date">Zonder datum</string>
-    <string name="videos">Video\'s</string>
+    <string name="videos">Video's</string>
     <string name="month_february_short">feb</string>
     <string name="month_june_short">jun</string>
     <string name="month_july_short">jul</string>

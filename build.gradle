@@ -65,6 +65,7 @@ subprojects {
             "project ':foundation:math:api'",
             "project ':foundation:result:api'",
             "project ':foundation:seam:api'",
+            "project ':foundation:sharedelement:api'",
             "project ':foundation:share:api'",
             "project ':foundation:strings:api'",
             "project ':foundation:system:api'",
@@ -92,12 +93,15 @@ subprojects {
             targetSdk 36
         }
         compileOptions {
-            sourceCompatibility JavaVersion.VERSION_23
-            targetCompatibility JavaVersion.VERSION_23
+            sourceCompatibility JavaVersion.VERSION_21
+            targetCompatibility JavaVersion.VERSION_21
         }
     }
     kotlin {
-        jvmToolchain(23)
+        jvmToolchain(21)
+        compilerOptions {
+            freeCompilerArgs.add("-Xcontext-parameters")
+        }
     }
 
     dependencies {

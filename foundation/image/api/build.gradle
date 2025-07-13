@@ -14,12 +14,15 @@ dependencies {
 
     implementation(
             libs.androidx.compose.ui,
+            libs.androidx.navigation3.ui,
             libs.coil.compose,
             libs.coil.gif,
             libs.coil.video,
             libs.hilt,
-            libs.telephoto,
+            libs.bundles.telephoto,
             libs.videocache,
             project(":foundation:activity:api"),
+            project(":foundation:compose:api"),
+            project(":foundation:sharedelement:api"),
     )
 }

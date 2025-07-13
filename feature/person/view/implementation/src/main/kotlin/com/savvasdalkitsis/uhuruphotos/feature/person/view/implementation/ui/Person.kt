@@ -37,6 +37,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.a
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.actions.PersonAction
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.actions.SelectedCel
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.ui.state.PersonCollageState
+import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.SharedElementId
+import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.sharedElement
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UhuruFullLoading
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruUpNavButton
@@ -61,7 +63,11 @@ fun SharedTransitionScope.Person(
                             shape = CircleShape,
                             personState = person,
                         )
-                        Text(text = person.name)
+                        Text(
+                            modifier = Modifier
+                                .sharedElement(SharedElementId.personName(person.id)),
+                            text = person.name,
+                        )
                     }
                 }
                 else -> Text("Loading person")

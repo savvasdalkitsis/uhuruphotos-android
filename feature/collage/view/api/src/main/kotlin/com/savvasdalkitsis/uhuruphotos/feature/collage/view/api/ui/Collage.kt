@@ -34,9 +34,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Collage
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.CelSelected
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelSelectionModeState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
-import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.animation.AnimationResource
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.LocalAnimatedVideoThumbnails
+import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window.LocalWindowSize
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.NoContent
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UhuruFullLoading
@@ -88,22 +88,9 @@ fun SharedTransitionScope.Collage(
         CompositionLocalProvider(
             LocalAnimatedVideoThumbnails provides animated
         ) {
-            val collageModifier = remember(collageDisplay) {
-                modifier
-                    .recomposeHighlighter()
-                    .let {
-                        when {
-                            collageDisplay.allowsPinchGestures -> it.pinchToChange(
-                                collageDisplay,
-                                onChangeDisplay,
-                            )
-
-                            else -> it
-                        }
-                    }
-            }
             SmartCollage(
-                modifier = collageModifier,
+                modifier = modifier
+                    .recomposeHighlighter(),
                 contentPadding = contentPadding,
                 state = state.clusters,
                 showSelectionHeader = showSelectionHeader,

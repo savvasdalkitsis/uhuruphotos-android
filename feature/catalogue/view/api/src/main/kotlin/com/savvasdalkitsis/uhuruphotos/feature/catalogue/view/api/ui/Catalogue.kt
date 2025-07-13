@@ -30,7 +30,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -60,7 +59,8 @@ import uhuruphotos_android.foundation.strings.api.generated.resources.search_ico
 
 @Composable
 fun SharedTransitionScope.Catalogue(
-    title: StringResource,
+    modifier: Modifier = Modifier,
+    title: @Composable () -> Unit,
     onRefresh: () -> Unit,
     isRefreshing: Boolean,
     isEmpty: Boolean,
@@ -74,7 +74,7 @@ fun SharedTransitionScope.Catalogue(
     var showSearch by remember { mutableStateOf(initialFilter.isNotBlank()) }
 
     val scope = rememberCoroutineScope()
-    val navigator = LocalNavigator.current!!
+    val navigator = LocalNavigator.current
     val back = remember(showSearch) {
         {
             scope.launch {
@@ -91,7 +91,8 @@ fun SharedTransitionScope.Catalogue(
         back()
     }
     UhuruScaffold(
-        title = { Text(text = stringResource(title)) },
+        modifier = modifier,
+        title = title,
         navigationIcon = { UhuruUpNavButton() },
         actionBarContent = {
             IconButton(onClick = { showSearch = true }) {

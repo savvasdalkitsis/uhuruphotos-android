@@ -14,11 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
  */
 
+@file:OptIn(ExperimentalSharedTransitionApi::class)
+
 package com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui
 
 import android.graphics.drawable.BitmapDrawable
 import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES.UPSIDE_DOWN_CAKE
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -36,13 +40,17 @@ import coil.request.SuccessResult
 import coil.transition.Transition
 import com.savvasdalkitsis.uhuruphotos.foundation.activity.api.extensions.setHDR
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.LocalFullImageLoader
+import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.SharedElementId
+import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.sharedElement
 import kotlinx.coroutines.delay
 import me.saket.telephoto.zoomable.ZoomableImageState
 import me.saket.telephoto.zoomable.coil.ZoomableAsyncImage
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun FullSizeImage(
+fun SharedTransitionScope.FullSizeImage(
     modifier: Modifier = Modifier,
+    mediaHash: String,
     lowResUrl: String?,
     fullResUrl: String?,
     onFullResImageLoaded: () -> Unit = {},
@@ -64,7 +72,9 @@ fun FullSizeImage(
 
     if (showThumbnail) {
         Thumbnail(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize()
+                .sharedElement(SharedElementId.image(mediaHash)),
             url = lowResUrl,
             contentScale = contentScale,
             contentDescription = "low resolution image"
@@ -74,7 +84,8 @@ fun FullSizeImage(
     ZoomableAsyncImage(
         modifier = modifier
             .background(Color.Transparent)
-            .fillMaxSize(),
+            .fillMaxSize()
+            .sharedElement(SharedElementId.image(mediaHash)),
         imageLoader = LocalFullImageLoader.current,
         state = zoomableState,
         onClick = { onClick() },

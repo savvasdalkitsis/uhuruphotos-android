@@ -10,7 +10,6 @@ android {
 dependencies {
 
     api(
-            libs.appyx,
             libs.bundles.resaca,
             libs.bundles.androidx.navigation,
             libs.hilt,

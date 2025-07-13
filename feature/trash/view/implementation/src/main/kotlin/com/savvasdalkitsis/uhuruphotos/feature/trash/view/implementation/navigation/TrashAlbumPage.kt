@@ -19,7 +19,12 @@ package com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.naviga
 
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.GalleryAction
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.Gallery
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
@@ -28,6 +33,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.ac
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.state.TrashState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either.Right
+import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.SharedElementId
+import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.sharedElement
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruActionIcon
 import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
 import uhuruphotos_android.foundation.icons.api.generated.resources.ic_fingerprint
@@ -37,20 +44,28 @@ internal fun SharedTransitionScope.TrashAlbumPage(
     state: Pair<GalleryState, TrashState>,
     action: (Either<GalleryAction, TrashAction>) -> Unit
 ) {
-    Gallery(
-        state = state.first,
-        additionalActionBarContent = {
-            if (state.second.displayFingerPrintAction) {
-                UhuruActionIcon(
-                    onClick = {
-                        action(Right(FingerPrintActionPressed))
-                    },
-                    icon = drawable.ic_fingerprint,
-                )
-            }
-        },
-        action = {
-            action(Either.Left(it))
-        },
-    )
+    Box(Modifier
+        .fillMaxSize()
+        .background(MaterialTheme.colorScheme.background))
+    {
+        Gallery(
+            modifier = Modifier
+                .sharedElement(SharedElementId.trash()),
+            titleSharedElementId = SharedElementId.trashTitle(),
+            state = state.first,
+            additionalActionBarContent = {
+                if (state.second.displayFingerPrintAction) {
+                    UhuruActionIcon(
+                        onClick = {
+                            action(Right(FingerPrintActionPressed))
+                        },
+                        icon = drawable.ic_fingerprint,
+                    )
+                }
+            },
+            action = {
+                action(Either.Left(it))
+            },
+        )
+    }
 }

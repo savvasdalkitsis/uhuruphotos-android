@@ -35,8 +35,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.s
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.viewmodel.DiscoverCompositeAction
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.viewmodel.DiscoverCompositeState
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.ui.HomeScaffold
-import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.blurIf
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
+import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.blurIf
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.Logo
 import org.jetbrains.compose.resources.stringResource
 import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string

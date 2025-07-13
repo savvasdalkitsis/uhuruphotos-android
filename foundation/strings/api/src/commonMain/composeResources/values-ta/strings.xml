@@ -67,7 +67,7 @@
     <string name="unmetered">அளவிடப்படாதது</string>
     <string name="not_roaming">ரோமிங் அல்ல</string>
     <string name="metered">அளவிடப்பட்ட</string>
-    <string name="network_requirements">பிணைய தேவைகள்: %s</string>
+    <string name="network_requirements">பிணைய தேவைகள்: %1$s</string>
     <string name="feedback">கருத்து</string>
     <string name="send_feedback_with_logs">பதிவுகள் மூலம் கருத்துக்களை அனுப்பவும்</string>
     <string name="clear_log_file">பதிவு கோப்பை அழிக்கவும்</string>
@@ -84,8 +84,8 @@
     <string name="expand_all">அனைத்தையும் விரிவாக்குங்கள்</string>
     <string name="collapse_all">அனைத்தையும் சரக்கு</string>
     <plurals name="item_count">
-        <item quantity="one">%d உருப்படி</item>
-        <item quantity="other">%d உருப்படிகள்</item>
+        <item quantity="one">%1$d உருப்படி</item>
+        <item quantity="other">%1$d உருப்படிகள்</item>
     </plurals>
     <string name="maps">வரைபடங்கள்</string>
     <string name="map_provider">வழங்குநர்</string>
@@ -127,12 +127,12 @@
     <string name="save">சேமி</string>
     <string name="login_to_server">சேவையகத்தில் உள்நுழைக</string>
     <string name="login">புகுபதிகை</string>
-    <string name="years_ago">%d ஆண்டுகளுக்கு முன்பு</string>
+    <string name="years_ago">%1$d ஆண்டுகளுக்கு முன்பு</string>
     <string name="on_this_day">இந்த நாளில்</string>
     <string name="enable_memories">நினைவுகளை இயக்கவும்</string>
     <string name="video">ஒளிதோற்றம்</string>
     <string name="animate_video_thumbnails">வீடியோ சிறு உருவங்களை உயிரூட்டவும்</string>
-    <string name="max_animated_video_thumbnails">அனிமேசன் செய்யப்பட்ட வீடியோ சிறு உருவங்களின் அதிகபட்ச எண்ணிக்கை (%s)</string>
+    <string name="max_animated_video_thumbnails">அனிமேசன் செய்யப்பட்ட வீடியோ சிறு உருவங்களின் அதிகபட்ச எண்ணிக்கை (%1$s)</string>
     <string name="max_animated_video_thumbnails_description">அதிக எண்ணிக்கையானது பயன்பாட்டு உறுதியற்ற தன்மையை ஏற்படுத்தும். உங்களுக்கு சிக்கல்கள் இருந்தால் அதைக் குறைக்கவும்.</string>
     <string name="precache_thumbnails">அனைத்து சிறுபடங்களையும் முன் தற்காலிகமாக</string>
     <string name="precaching_thumbnails">முன்கூட்டியே சிறு சிறு உருவங்கள்…</string>
@@ -280,7 +280,7 @@
     <string name="logs">பதிவுகள்</string>
     <string name="unsecured_server">பாதுகாப்பற்ற சேவையகம்</string>
     <string name="unsecured_server_are_you_sure">பாதுகாப்பற்ற சேவையகத்துடன் இணைக்க விரும்புகிறீர்களா?</string>
-    <string name="unsecured_server_not_encrypted">இந்த சேவையகம் எளிய HTTP உடன் தொடர்பு கொள்கிறது மற்றும் குறியாக்கம் செய்யப்படவில்லை: %s</string>
+    <string name="unsecured_server_not_encrypted">இந்த சேவையகம் எளிய HTTP உடன் தொடர்பு கொள்கிறது மற்றும் குறியாக்கம் செய்யப்படவில்லை: %1$s</string>
     <string name="local_media">உள்ளக ஊடகங்கள்</string>
     <string name="local_media_rescan">புதிதாக உள்ளக ஊடகங்களை மீண்டும் ச்கை செய்யுங்கள்</string>
     <string name="remember_choice">தேர்வு நினைவில் கொள்ளுங்கள்</string>
@@ -288,7 +288,7 @@
     <string name="local_media_scan_completed">உள்ளக ஊடக ச்கேனிங் முடிந்தது</string>
     <string name="local_media_scan_completed_description">உங்கள் சாதனத்தின் உள்ளக ஊடகங்களின் ஆரம்ப ச்கேனிங் முடிந்தது. பயன்பாட்டைத் திறக்க இங்கே தட்டவும்</string>
     <string name="local_media_scan_warning">பயன்பாடு உங்கள் கேமரா கோப்புறையை ச்கேன் செய்யத் தொடங்கும், அதில் உள்ள மீடியாவின் அளவைப் பொறுத்து, நீண்ட நேரம் ஆகலாம் மற்றும் உங்கள் பேட்டரியில் சிலவற்றைப் பயன்படுத்தலாம். இது ஒரு முறை செயல்முறை.</string>
-    <string name="collage_spacing">படத்தொகுப்பு பொருட்களுக்கு இடையில் இடைவெளி: %d</string>
+    <string name="collage_spacing">படத்தொகுப்பு பொருட்களுக்கு இடையில் இடைவெளி: %1$d</string>
     <string name="collage_spacing_include_edges">விளிம்புகளில் இடைவெளியைச் சேர்க்கவும்</string>
     <string name="collage_shape">படத்தொகுப்பு பொருட்களின் வடிவம்</string>
     <string name="rectangle">செவ்வகம்</string>
@@ -319,52 +319,52 @@
     <string name="photo">புகைப்படம்</string>
     <string name="media">ஊடகம்</string>
     <plurals name="delete_photos">
-        <item quantity="one">%d புகைப்படத்தை நீக்கு</item>
-        <item quantity="other">%d புகைப்படங்களை நீக்கு</item>
+        <item quantity="one">%1$d புகைப்படத்தை நீக்கு</item>
+        <item quantity="other">%1$d புகைப்படங்களை நீக்கு</item>
     </plurals>
     <plurals name="delete_media">
-        <item quantity="one">%d மீடியா உருப்படியை நீக்கு</item>
-        <item quantity="other">%d மீடியா பொருட்களை நீக்கு</item>
+        <item quantity="one">%1$d மீடியா உருப்படியை நீக்கு</item>
+        <item quantity="other">%1$d மீடியா பொருட்களை நீக்கு</item>
     </plurals>
     <plurals name="restore_photos">
-        <item quantity="one">%d புகைப்படத்தை மீட்டெடுங்கள்</item>
-        <item quantity="other">%d புகைப்படங்களை மீட்டெடுங்கள்</item>
+        <item quantity="one">%1$d புகைப்படத்தை மீட்டெடுங்கள்</item>
+        <item quantity="other">%1$d புகைப்படங்களை மீட்டெடுங்கள்</item>
     </plurals>
     <plurals name="restore_media">
-        <item quantity="one">%d மீடியா உருப்படியை மீட்டெடுங்கள்</item>
-        <item quantity="other">%d மீடியா பொருட்களை மீட்டமை</item>
+        <item quantity="one">%1$d மீடியா உருப்படியை மீட்டெடுங்கள்</item>
+        <item quantity="other">%1$d மீடியா பொருட்களை மீட்டமை</item>
     </plurals>
     <plurals name="trash_photos">
-        <item quantity="one">குப்பைக்கு %d புகைப்படத்தை அனுப்பவும்</item>
-        <item quantity="other">குப்பைக்கு %d புகைப்படங்களை அனுப்பவும்</item>
+        <item quantity="one">குப்பைக்கு %1$d புகைப்படத்தை அனுப்பவும்</item>
+        <item quantity="other">குப்பைக்கு %1$d புகைப்படங்களை அனுப்பவும்</item>
     </plurals>
     <plurals name="trash_media">
-        <item quantity="one">%d மீடியா உருப்படியை குப்பைக்கு அனுப்பவும்</item>
-        <item quantity="other">%d மீடியா பொருட்களை குப்பைக்கு அனுப்பவும்</item>
+        <item quantity="one">%1$d மீடியா உருப்படியை குப்பைக்கு அனுப்பவும்</item>
+        <item quantity="other">%1$d மீடியா பொருட்களை குப்பைக்கு அனுப்பவும்</item>
     </plurals>
     <plurals name="delete_photos_confirmation">
-        <item quantity="one">இந்த %d புகைப்படத்தை நீக்க விரும்புகிறீர்களா?</item>
-        <item quantity="other">இந்த %d புகைப்படங்களை நீக்க விரும்புகிறீர்களா?</item>
+        <item quantity="one">இந்த %1$d புகைப்படத்தை நீக்க விரும்புகிறீர்களா?</item>
+        <item quantity="other">இந்த %1$d புகைப்படங்களை நீக்க விரும்புகிறீர்களா?</item>
     </plurals>
     <plurals name="delete_media_confirmation">
-        <item quantity="one">இந்த %d மீடியா உருப்படியை நீக்க விரும்புகிறீர்களா?</item>
-        <item quantity="other">இந்த %d மீடியா பொருட்களை நீக்க விரும்புகிறீர்களா?</item>
+        <item quantity="one">இந்த %1$d மீடியா உருப்படியை நீக்க விரும்புகிறீர்களா?</item>
+        <item quantity="other">இந்த %1$d மீடியா பொருட்களை நீக்க விரும்புகிறீர்களா?</item>
     </plurals>
     <plurals name="restore_photos_confirmation">
-        <item quantity="one">இந்த %d புகைப்படத்தை மீட்டெடுக்கவா?</item>
-        <item quantity="other">இந்த %d புகைப்படங்களை மீட்டெடுக்கவா?</item>
+        <item quantity="one">இந்த %1$d புகைப்படத்தை மீட்டெடுக்கவா?</item>
+        <item quantity="other">இந்த %1$d புகைப்படங்களை மீட்டெடுக்கவா?</item>
     </plurals>
     <plurals name="restore_media_confirmation">
-        <item quantity="one">இந்த %d மீடியா உருப்படியை மீட்டெடுக்கவா?</item>
-        <item quantity="other">இந்த %d மீடியா பொருட்களை மீட்டெடுக்கவா?</item>
+        <item quantity="one">இந்த %1$d மீடியா உருப்படியை மீட்டெடுக்கவா?</item>
+        <item quantity="other">இந்த %1$d மீடியா பொருட்களை மீட்டெடுக்கவா?</item>
     </plurals>
     <plurals name="trash_photos_confirmation">
         <item quantity="one">இந்த ஒரு புகைப்படத்தை குப்பைக்கு அனுப்பவா?</item>
-        <item quantity="other">இந்த %d புகைப்படங்களை குப்பைக்கு அனுப்பவா?</item>
+        <item quantity="other">இந்த %1$d புகைப்படங்களை குப்பைக்கு அனுப்பவா?</item>
     </plurals>
     <plurals name="trash_media_confirmation">
-        <item quantity="one">இந்த %d மீடியா உருப்படியை குப்பைக்கு அனுப்பவா?</item>
-        <item quantity="other">இந்த %d மீடியா பொருட்களை குப்பைக்கு அனுப்பவா?</item>
+        <item quantity="one">இந்த %1$d மீடியா உருப்படியை குப்பைக்கு அனுப்பவா?</item>
+        <item quantity="other">இந்த %1$d மீடியா பொருட்களை குப்பைக்கு அனுப்பவா?</item>
     </plurals>
     <string name="people">மக்கள்</string>
     <string name="view_all">அனைத்தையும் காண்க</string>
@@ -405,17 +405,17 @@
     <string name="never">ஒருபோதும்</string>
     <string name="settings">அமைப்புகள்</string>
     <plurals name="hours">
-        <item quantity="one">%d மணி</item>
-        <item quantity="other">%d மணிநேரம்</item>
+        <item quantity="one">%1$d மணி</item>
+        <item quantity="other">%1$d மணிநேரம்</item>
     </plurals>
     <plurals name="days">
-        <item quantity="one">%d நாள்</item>
-        <item quantity="other">%d நாட்கள்</item>
+        <item quantity="one">%1$d நாள்</item>
+        <item quantity="other">%1$d நாட்கள்</item>
     </plurals>
     <string name="yes">ஆம்</string>
     <string name="no">இல்லை</string>
-    <string name="currently_used">தற்போது பயன்படுத்தப்படுகிறது: %d எம்பி</string>
-    <string name="max_limit">அதிகபட்ச வரம்பு: %d எம்பி</string>
+    <string name="currently_used">தற்போது பயன்படுத்தப்படுகிறது: %1$d எம்பி</string>
+    <string name="max_limit">அதிகபட்ச வரம்பு: %1$d எம்பி</string>
     <string name="changes_effect_after_restart">(நிரலை மறுதொடக்கம் செய்த பிறகு மாற்றங்கள் நடைமுறைக்கு வருகின்றன)</string>
     <string name="share">பங்கு</string>
     <string name="delete">நீக்கு</string>

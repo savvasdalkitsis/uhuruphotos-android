@@ -8,7 +8,7 @@ android {
 }
 dependencies {
     api(
-                        libs.androidx.work,
+            libs.androidx.work,
             libs.kotlinx.coroutines,
             project(":feature:auth:view:api"),
             project(":feature:db:domain:api"),
@@ -19,11 +19,13 @@ dependencies {
     implementation(
             libs.androidx.compose.material3,
             libs.androidx.compose.ui.tooling.preview,
+            libs.bundles.telephoto,
             libs.moshi,
             project(":feature:media:common:domain:api"),
             project(":feature:people:view:api"),
             project(":foundation:compose:api"),
             project(":foundation:icons:api"),
+            project(":foundation:sharedelement:api"),
             project(":foundation:strings:api"),
             project(":foundation:ui:api"),
             project(":foundation:video:api"),

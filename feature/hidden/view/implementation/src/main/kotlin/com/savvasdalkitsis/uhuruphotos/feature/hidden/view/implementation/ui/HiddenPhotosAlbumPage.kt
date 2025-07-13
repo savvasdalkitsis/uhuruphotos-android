@@ -19,7 +19,12 @@ package com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.ui
 
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.GalleryAction
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.Gallery
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
@@ -29,6 +34,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.a
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either.Left
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either.Right
+import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.SharedElementId
+import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.sharedElement
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruActionIcon
 import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
 import uhuruphotos_android.foundation.icons.api.generated.resources.ic_fingerprint
@@ -38,20 +45,28 @@ fun SharedTransitionScope.HiddenPhotosAlbumPage(
     state: Pair<GalleryState, HiddenPhotosState>,
     action: (Either<GalleryAction, HiddenPhotosAction>) -> Unit
 ) {
-    Gallery(
-        state = state.first,
-        additionalActionBarContent = {
-            if (state.second.displayFingerPrintAction) {
-                UhuruActionIcon(
-                    onClick = {
-                        action(Right(FingerPrintActionPressed))
-                    },
-                    icon = drawable.ic_fingerprint,
-                )
+    Box(Modifier
+        .fillMaxSize()
+        .background(MaterialTheme.colorScheme.background))
+    {
+        Gallery(
+            modifier = Modifier
+                .sharedElement(SharedElementId.hidden()),
+            titleSharedElementId = SharedElementId.hiddenTitle(),
+            state = state.first,
+            additionalActionBarContent = {
+                if (state.second.displayFingerPrintAction) {
+                    UhuruActionIcon(
+                        onClick = {
+                            action(Right(FingerPrintActionPressed))
+                        },
+                        icon = drawable.ic_fingerprint,
+                    )
+                }
+            },
+            action = {
+                action(Left(it))
             }
-        },
-        action = {
-            action(Left(it))
-        }
-    )
+        )
+    }
 }

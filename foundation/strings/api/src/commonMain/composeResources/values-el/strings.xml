@@ -3,12 +3,12 @@
     <string name="feed_size">Μέγεθος φωτογραφιών</string>
     <string name="photo">Φωτογραφία</string>
     <plurals name="delete_photos">
-        <item quantity="one">Διαγραφή %d φωτογραφίας</item>
-        <item quantity="other">Διαγραφή %d φωτογραφιών</item>
+        <item quantity="one">Διαγραφή %1$d φωτογραφίας</item>
+        <item quantity="other">Διαγραφή %1$d φωτογραφιών</item>
     </plurals>
     <plurals name="delete_photos_confirmation">
-        <item quantity="one">Είστε σίγουροι για την διαγραφή αυτής της %d φωτογραφίας;</item>
-        <item quantity="other">Είστε σίγουροι για την διαγραφή αυτών των %d φωτογραφιών;</item>
+        <item quantity="one">Είστε σίγουροι για την διαγραφή αυτής της %1$d φωτογραφίας;</item>
+        <item quantity="other">Είστε σίγουροι για την διαγραφή αυτών των %1$d φωτογραφιών;</item>
     </plurals>
     <string name="error_refreshing_people">Πρόβλημα ανανέωσης προσώπων</string>
     <string name="error_loading_photo_details">Πρόβλημα φόρτωσης πληροφοριών φωτογραφίας</string>
@@ -48,7 +48,7 @@
     <string name="feed_sync_freq_changed">Συχνότητα συγχρονισμού φωτογραφιών άλλαξε</string>
     <string name="no">Όχι</string>
     <string name="error_searching">Πρόβλημα στην αναζήτηση</string>
-    <string name="currently_used">Χρήση: %dmb</string>
+    <string name="currently_used">Χρήση: %1$dmb</string>
     <string name="big">Μεγάλα</string>
     <string name="requires_charging">Απαιτείται φόρτηση</string>
     <string name="never">ποτέ</string>
@@ -57,16 +57,16 @@
     <string name="yes">Ναι</string>
     <string name="clear">Εκαθάρηση</string>
     <plurals name="hours">
-        <item quantity="one">%d ώρα</item>
-        <item quantity="other">%d ώρες</item>
+        <item quantity="one">%1$d ώρα</item>
+        <item quantity="other">%1$d ώρες</item>
     </plurals>
-    <string name="max_limit">Μέγιστο όριο: %dmb</string>
+    <string name="max_limit">Μέγιστο όριο: %1$dmb</string>
     <string name="edit_server_url">Επεξεργασία διεύθυνσης server</string>
     <string name="log_out">Αποσύνδεση</string>
     <string name="sorting">Ταξινόμηση</string>
     <plurals name="item_count">
-        <item quantity="one">%d αντικείμενο</item>
-        <item quantity="other">%d αντικείμενα</item>
+        <item quantity="one">%1$d αντικείμενο</item>
+        <item quantity="other">%1$d αντικείμενα</item>
     </plurals>
     <string name="albums">Άλμπουμ</string>
     <string name="error_loading_auto_albums">Υπήρξε σφάλμα κατά τη φόρτωση αυτόματα παραγόμενων άλμπουμ</string>
@@ -76,7 +76,7 @@
     <string name="unmetered">Μη μετρήσιμο</string>
     <string name="not_roaming">Όχι περιαγωγή</string>
     <string name="metered">Μετρήσιμο</string>
-    <string name="network_requirements">Απαιτήσεις δικτύου: %s</string>
+    <string name="network_requirements">Απαιτήσεις δικτύου: %1$s</string>
     <string name="feedback">Σχόλια</string>
     <string name="send_feedback_with_logs">Στείλτε σχόλια με αρχεία καταγραφής</string>
     <string name="clear_log_file">Εκκαθάριση αρχείου καταγραφής</string>
@@ -98,22 +98,22 @@
     <string name="no_auto_albums">Δεν υπάρχουν αυτόματα παραγόμενα άλμπουμ για αυτόν τον χρήστη</string>
     <string name="are_you_sure_you_want_to_perform_full_sync">Είστε σίγουροι ότι θέλετε να ξεκινήσετε πλήρη συγχρονισμό;</string>
     <plurals name="trash_photos_confirmation">
-        <item quantity="one">Είστε σίγουροι ότι θέλετε να στείλετε αυτήν την %d φωτογραφία στον κάδο ανακύκλωσης;</item>
-        <item quantity="other">Είστε σίγουροι ότι θέλετε να στείλετε αυτές τις %d φωτογραφίες στον κάδο ανακύκλωσης;</item>
+        <item quantity="one">Είστε σίγουροι ότι θέλετε να στείλετε αυτήν την %1$d φωτογραφία στον κάδο ανακύκλωσης;</item>
+        <item quantity="other">Είστε σίγουροι ότι θέλετε να στείλετε αυτές τις %1$d φωτογραφίες στον κάδο ανακύκλωσης;</item>
     </plurals>
     <string name="people">Πρόσωπα</string>
     <string name="view_all">Εμφάνιση όλων</string>
     <plurals name="restore_photos_confirmation">
-        <item quantity="one">Είστε σίγουροι ότι θέλετε να επαναφέρετε αυτή την %d φωτογραφία;</item>
-        <item quantity="other">Είστε σίγουροι ότι θέλετε να επαναφέρετε αυτές τις %d φωτογραφίες;</item>
+        <item quantity="one">Είστε σίγουροι ότι θέλετε να επαναφέρετε αυτή την %1$d φωτογραφία;</item>
+        <item quantity="other">Είστε σίγουροι ότι θέλετε να επαναφέρετε αυτές τις %1$d φωτογραφίες;</item>
     </plurals>
     <plurals name="restore_photos">
-        <item quantity="one">Επαναφορά %d φωτογραφίας</item>
-        <item quantity="other">Επαναφορά %d φωτογραφιών</item>
+        <item quantity="one">Επαναφορά %1$d φωτογραφίας</item>
+        <item quantity="other">Επαναφορά %1$d φωτογραφιών</item>
     </plurals>
     <plurals name="trash_photos">
-        <item quantity="one">Στείλτε %d φωτογραφία στον κάδο ανακύκλωσης</item>
-        <item quantity="other">Στείλτε %d φωτογραφίες στον κάδο ανακύκλωσης</item>
+        <item quantity="one">Στείλτε %1$d φωτογραφία στον κάδο ανακύκλωσης</item>
+        <item quantity="other">Στείλτε %1$d φωτογραφίες στον κάδο ανακύκλωσης</item>
     </plurals>
     <string name="authenticate_for_access">Επαλήθευση ταυτότητας για πρόσβαση στην εφαρμογή</string>
     <string name="error_loading_user_albums">Υπήρξε ενα πρόβλημα κατα τη φόρτωση των άλμπουμ του χρήστη</string>
@@ -122,8 +122,8 @@
     <string name="require_biometrics_for_hidden_photos_access">Απαίτηση βιομετρικης επαλήθευσης για πρόσβαση στις κρυφές φωτογραφίες</string>
     <string name="feed_refresh_days">Αριθμός ημερών στο τοίχος το φωτογραφιών προς ανανέωση κατα το τράβηγμα</string>
     <plurals name="days">
-        <item quantity="one">%d ημέρα</item>
-        <item quantity="other">%d ημέρες</item>
+        <item quantity="one">%1$d ημέρα</item>
+        <item quantity="other">%1$d ημέρες</item>
     </plurals>
     <string name="location">Τοποθεσία</string>
     <string name="open_in_maps">Άνοιγμα στους χάρτες</string>
@@ -135,20 +135,20 @@
     <string name="scanning_local_media">Συγχρονισμός τοπικών πολυμέσων…</string>
     <string name="media">Πολυμέσα</string>
     <plurals name="delete_media">
-        <item quantity="one">Διαγραφή %d στοιχείου πολυμέσων</item>
-        <item quantity="other">Διαγραφή %d στοιχείων πολυμέσων</item>
+        <item quantity="one">Διαγραφή %1$d στοιχείου πολυμέσων</item>
+        <item quantity="other">Διαγραφή %1$d στοιχείων πολυμέσων</item>
     </plurals>
     <plurals name="trash_media">
-        <item quantity="one">Αποστολή %d στοιχείου πολυμέσων στον κάδο</item>
-        <item quantity="other">Αποστολή %d στοιχείων πολυμέσων στον κάδο</item>
+        <item quantity="one">Αποστολή %1$d στοιχείου πολυμέσων στον κάδο</item>
+        <item quantity="other">Αποστολή %1$d στοιχείων πολυμέσων στον κάδο</item>
     </plurals>
     <plurals name="delete_media_confirmation">
-        <item quantity="one">Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτό το %d στοιχείο;</item>
-        <item quantity="other">Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτά τα %d στοιχεία;</item>
+        <item quantity="one">Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτό το %1$d στοιχείο;</item>
+        <item quantity="other">Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτά τα %1$d στοιχεία;</item>
     </plurals>
     <plurals name="restore_media">
-        <item quantity="one">Επαναφορά %d στοιχείου πολυμέσων</item>
-        <item quantity="other">Επαναφορά %d στοιχείων πολυμέσων</item>
+        <item quantity="one">Επαναφορά %1$d στοιχείου πολυμέσων</item>
+        <item quantity="other">Επαναφορά %1$d στοιχείων πολυμέσων</item>
     </plurals>
     <string name="no_photos">Δεν υπαρχουν φωτογραφίες προς προβολή</string>
     <string name="enable_logging">Ενεργοποίηση καταγραφής σφαλμάτων</string>
@@ -157,12 +157,12 @@
     <string name="authenticate_for_access_to_hidden_description">Ζητήσατε η πρόσβαση στις κρυφές φωτογραφιες να γίνεται μονο με επαλήθευση ταυτότητας</string>
     <string name="gallery_size">Μέγεθος βιβλιοθήκης</string>
     <plurals name="trash_media_confirmation">
-        <item quantity="one">Είστε βέβαιοι ότι θέλετε να στείλεις αυτό το %d στοιχείο στον κάδο;</item>
-        <item quantity="other">Είστε βέβαιοι ότι θέλετε να στείλετε αυτά τα %d στοιχεία στον κάδο;</item>
+        <item quantity="one">Είστε βέβαιοι ότι θέλετε να στείλεις αυτό το %1$d στοιχείο στον κάδο;</item>
+        <item quantity="other">Είστε βέβαιοι ότι θέλετε να στείλετε αυτά τα %1$d στοιχεία στον κάδο;</item>
     </plurals>
     <plurals name="restore_media_confirmation">
-        <item quantity="one">Είστε βέβαιοι ότι θέλετε να επαναφέρεις αυτό το %d στοιχείο;</item>
-        <item quantity="other">Είστε βέβαιοι ότι θέλετε να επαναφέρεται αυτά τα %d στοιχεία;</item>
+        <item quantity="one">Είστε βέβαιοι ότι θέλετε να επαναφέρεις αυτό το %1$d στοιχείο;</item>
+        <item quantity="other">Είστε βέβαιοι ότι θέλετε να επαναφέρεται αυτά τα %1$d στοιχεία;</item>
     </plurals>
     <string name="error_changing_photo_favourite">Υπήρξε ενα σφάλμα κατα τον ορισμό της φωτογραφίας ως αγαπημένης</string>
     <string name="downloading_media_details">Λήψη λεπτομέρειων πολυμέσων</string>
@@ -210,13 +210,13 @@
     <string name="nothing_here_yet">Ακόμα τίποτα εδώ</string>
     <string name="use_as">Χρήση ώς</string>
     <string name="enable_memories">Ενεργοποίηση αναμνήσεων</string>
-    <string name="years_ago">Πριν %d χρόνια</string>
+    <string name="years_ago">Πριν %1$d χρόνια</string>
     <string name="on_this_day">Σαν σήμερα</string>
     <string name="video">Βίντεο</string>
     <string name="animate_video_thumbnails">Κινούμενη μικρογραφία βίντεο</string>
     <string name="refreshing_feed">Ανανέωση τοίχους φωτογραφιών</string>
     <string name="max_animated_video_thumbnails_description">Ένας υψηλός αριθμός μπορεί να προκαλέσει αστάθεια της εφαρμογής. Χαμηλώστε τον εάν αντιμετωπίζετε προβλήματα</string>
-    <string name="max_animated_video_thumbnails">Μέγιστος αριθμός μικρογραφιών κινούμενων βίντεο (%s)</string>
+    <string name="max_animated_video_thumbnails">Μέγιστος αριθμός μικρογραφιών κινούμενων βίντεο (%1$s)</string>
     <string name="precaching_thumbnails">Προκαταρκτική αποθήκευση μικρογραφιών</string>
     <string name="cannot_perform_precaching">Δεν είναι δυνατή η εκτέλεση προκαταρκτικής αποθήκευσης προς το παρόν</string>
     <string name="process_takes_significant_time_consumes_battery">Αυτή η διαδικασία απαιτεί σημαντικό χρόνο και θα καταναλώσει πολύ μπαταρία.</string>

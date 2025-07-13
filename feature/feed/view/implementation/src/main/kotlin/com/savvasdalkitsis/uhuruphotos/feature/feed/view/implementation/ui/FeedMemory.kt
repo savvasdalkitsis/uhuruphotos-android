@@ -67,7 +67,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import org.jetbrains.compose.resources.stringResource
 import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
-import uhuruphotos_android.foundation.icons.api.generated.resources.ic_down_arrow
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_chevron_double_down
 import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
 import uhuruphotos_android.foundation.strings.api.generated.resources.years_ago
 import kotlin.math.max
@@ -155,7 +155,7 @@ internal fun SharedTransitionScope.FeedMemory(
                             .clip(CircleShape)
                             .background(MaterialTheme.colorScheme.background.copy(alpha = 0.4f)),
                         onClick = { onScrollToMemory(cel) },
-                        icon = drawable.ic_down_arrow,
+                        icon = drawable.ic_chevron_double_down,
                     )
                 }
                 Text(

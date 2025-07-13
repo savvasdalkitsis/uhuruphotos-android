@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam.a
 
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam.LocalAlbumActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam.LocalAlbumMutation
+import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam.LocalAlbumMutation.AlbumIdLoaded
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam.LocalAlbumMutation.AskForPermissions
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam.LocalAlbumMutation.DisplayContributingToPortfolio
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam.LocalAlbumMutation.PermissionsGranted
@@ -34,7 +35,10 @@ data class Load(val albumId: Int) : LocalAlbumAction() {
     override fun LocalAlbumActionsContext.handle(
         state: LocalAlbumState
     ) = merge(
-        flow { galleryId = albumId },
+        flow {
+            galleryId = albumId
+            emit(AlbumIdLoaded(albumId))
+        },
         localMediaUseCase.observePermissionsState()
             .flatMapLatest {
                 when (it) {

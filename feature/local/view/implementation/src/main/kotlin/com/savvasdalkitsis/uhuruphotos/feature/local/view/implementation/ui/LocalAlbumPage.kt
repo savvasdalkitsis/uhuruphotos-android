@@ -19,12 +19,14 @@ package com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.ui
 
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -37,6 +39,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam.ac
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam.actions.SetContributingToPortfolio
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.ui.state.LocalAlbumState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
+import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.SharedElementId
+import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.sharedElement
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.NoContent
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruToggleableActionIcon
 import dev.shreyaspatil.permissionflow.compose.rememberPermissionFlowRequestLauncher
@@ -54,47 +58,61 @@ fun SharedTransitionScope.LocalAlbumPage(
     action: (Either<GalleryAction, LocalAlbumAction>) -> Unit
 ) {
     val permissionLauncher = rememberPermissionFlowRequestLauncher()
+    val galleryState = state.first
     val albumState = state.second
+    val albumId = albumState.albumId
 
-    Gallery(
-        state = state.first,
-        action = { action(Either.Left(it)) },
-        additionalActionBarContent = {
-            albumState.contributingToPortfolio?.let { contributing ->
-                UhuruToggleableActionIcon(
-                    onClick = {
-                        action(Either.Right(SetContributingToPortfolio(!contributing)))
-                    },
-                    icon = drawable.ic_feed,
-                    selected = contributing,
-                )
-            }
-        },
-        emptyContent = {
-            if (albumState.deniedPermissions.isNotEmpty()) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(16.dp)
-                ) {
-                    Column(
-                        modifier = Modifier.align(Alignment.Center),
-                        verticalArrangement = spacedBy(16.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
+    Box(Modifier
+        .fillMaxSize()
+        .background(MaterialTheme.colorScheme.background))
+    {
+        Gallery(
+            modifier = Modifier
+                .then(if (albumId != null) {
+                    Modifier.sharedElement(SharedElementId.localAlbum(albumId))
+                } else {
+                    Modifier
+                }),
+            titleSharedElementId = albumId?.let { SharedElementId.localAlbumTitle(it) },
+            state = galleryState,
+            action = { action(Either.Left(it)) },
+            additionalActionBarContent = {
+                albumState.contributingToPortfolio?.let { contributing ->
+                    UhuruToggleableActionIcon(
+                        onClick = {
+                            action(Either.Right(SetContributingToPortfolio(!contributing)))
+                        },
+                        icon = drawable.ic_feed,
+                        selected = contributing,
+                    )
+                }
+            },
+            emptyContent = {
+                if (albumState.deniedPermissions.isNotEmpty()) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(16.dp)
                     ) {
-                        Text(text = stringResource(string.missing_permissions))
-                        Button(
-                            onClick = {
-                                permissionLauncher.launch(albumState.deniedPermissions.toTypedArray())
-                            },
+                        Column(
+                            modifier = Modifier.align(Alignment.Center),
+                            verticalArrangement = spacedBy(16.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally,
                         ) {
-                            Text(text = stringResource(string.grant_permissions))
+                            Text(text = stringResource(string.missing_permissions))
+                            Button(
+                                onClick = {
+                                    permissionLauncher.launch(albumState.deniedPermissions.toTypedArray())
+                                },
+                            ) {
+                                Text(text = stringResource(string.grant_permissions))
+                            }
                         }
                     }
+                } else {
+                    NoContent(string.no_media)
                 }
-            } else {
-                NoContent(string.no_media)
             }
-        }
-    )
+        )
+    }
 }

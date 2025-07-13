@@ -24,6 +24,10 @@ sealed class LocalAlbumMutation(
     mutation: Mutation<LocalAlbumState>
 ) : Mutation<LocalAlbumState> by mutation {
 
+    data class AlbumIdLoaded(val albumId: Int) : LocalAlbumMutation({
+        it.copy(albumId = albumId)
+    })
+
     data object PermissionsGranted : LocalAlbumMutation({
         it.copy(deniedPermissions = persistentListOf())
     })

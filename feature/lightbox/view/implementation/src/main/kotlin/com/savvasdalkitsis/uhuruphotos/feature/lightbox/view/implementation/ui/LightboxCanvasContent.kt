@@ -13,8 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
+@file:OptIn(ExperimentalSharedTransitionApi::class)
+
 package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.fillMaxSize
@@ -29,8 +33,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.LightboxAction
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.ToggleUI
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.SingleMediaItemState
-import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.FullSizeImage
+import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.ui.Video
 import me.saket.telephoto.zoomable.ZoomableState
 import me.saket.telephoto.zoomable.rememberZoomableImageState
@@ -43,8 +47,9 @@ import uhuruphotos_android.foundation.strings.api.generated.resources.photo
 internal fun BoxScope.LightboxCanvasContent(
     mediaItem: SingleMediaItemState,
     zoomableState: ZoomableState,
+    scope: SharedTransitionScope,
     action: (LightboxAction) -> Unit
-) {
+) = with(scope) {
     val serverUrl = LocalServerUrl.current
     val lowResUrl = remember(serverUrl, mediaItem.id) {
         mediaItem.id.thumbnailUri(serverUrl)
@@ -74,6 +79,7 @@ internal fun BoxScope.LightboxCanvasContent(
                 .recomposeHighlighter()
                 .fillMaxSize()
                 .align(Alignment.Center),
+            mediaHash = mediaItem.id.mediaHash.hash,
             lowResUrl = lowResUrl,
             fullResUrl = fullResUrl,
             onFullResImageLoaded = { action(FullMediaDataLoaded(mediaItem)) },

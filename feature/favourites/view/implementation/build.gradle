@@ -9,7 +9,7 @@ android {
 
 dependencies {
     implementation(
-                        libs.bundles.autodagger,
+            libs.bundles.autodagger,
             project(":feature:collage:view:api"),
             project(":feature:db:domain:api"),
             project(":feature:favourites:domain:api"),
@@ -23,6 +23,7 @@ dependencies {
             project(":foundation:date:api"),
             project(":foundation:navigation:api"),
             project(":foundation:preferences:api"),
+            project(":foundation:sharedelement:api"),
             project(":foundation:strings:api"),
     )
     ksp libs.autodagger.ksp

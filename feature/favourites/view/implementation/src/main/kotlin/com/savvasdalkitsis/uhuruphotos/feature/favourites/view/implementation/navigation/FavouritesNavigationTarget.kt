@@ -17,8 +17,8 @@ package com.savvasdalkitsis.uhuruphotos.feature.favourites.view.implementation.n
 
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import com.savvasdalkitsis.uhuruphotos.feature.favourites.view.api.navigation.FavouritesNavigationRoute
+import com.savvasdalkitsis.uhuruphotos.feature.favourites.view.implementation.ui.Favourites
 import com.savvasdalkitsis.uhuruphotos.feature.favourites.view.implementation.viewmodel.FavouritesViewModel
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.Gallery
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
 import se.ansman.dagger.auto.AutoInitialize
@@ -33,6 +33,6 @@ class FavouritesNavigationTarget @Inject constructor(
     FavouritesViewModel::class,
     FavouritesNavigationRoute::class,
     view = { state, action ->
-        Gallery(state, action = action)
+        Favourites(state, action)
     }
 )

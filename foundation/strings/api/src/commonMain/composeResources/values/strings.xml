@@ -5,52 +5,52 @@
     <string name="photo">Photo</string>
     <string name="media">Media</string>
     <plurals name="delete_photos">
-        <item quantity="one">Delete %d photo</item>
-        <item quantity="other">Delete %d photos</item>
+        <item quantity="one">Delete %1$d photo</item>
+        <item quantity="other">Delete %1$d photos</item>
     </plurals>
     <plurals name="delete_media">
-        <item quantity="one">Delete %d media item</item>
-        <item quantity="other">Delete %d media items</item>
+        <item quantity="one">Delete %1$d media item</item>
+        <item quantity="other">Delete %1$d media items</item>
     </plurals>
     <plurals name="restore_photos">
-        <item quantity="one">Restore %d photo</item>
-        <item quantity="other">Restore %d photos</item>
+        <item quantity="one">Restore %1$d photo</item>
+        <item quantity="other">Restore %1$d photos</item>
     </plurals>
     <plurals name="restore_media">
-        <item quantity="one">Restore %d media item</item>
-        <item quantity="other">Restore %d media items</item>
+        <item quantity="one">Restore %1$d media item</item>
+        <item quantity="other">Restore %1$d media items</item>
     </plurals>
     <plurals name="trash_photos">
-        <item quantity="one">Send %d photo to trash</item>
-        <item quantity="other">Send %d photos to trash</item>
+        <item quantity="one">Send %1$d photo to trash</item>
+        <item quantity="other">Send %1$d photos to trash</item>
     </plurals>
     <plurals name="trash_media">
-        <item quantity="one">Send %d media item to trash</item>
-        <item quantity="other">Send %d media items to trash</item>
+        <item quantity="one">Send %1$d media item to trash</item>
+        <item quantity="other">Send %1$d media items to trash</item>
     </plurals>
     <plurals name="delete_photos_confirmation">
-        <item quantity="one">Are you sure you want to delete this %d photo?</item>
-        <item quantity="other">Are you sure you want to delete these %d photos?</item>
+        <item quantity="one">Are you sure you want to delete this %1$d photo?</item>
+        <item quantity="other">Are you sure you want to delete these %1$d photos?</item>
     </plurals>
     <plurals name="delete_media_confirmation">
-        <item quantity="one">Are you sure you want to delete this %d media item?</item>
-        <item quantity="other">Are you sure you want to delete these %d media items?</item>
+        <item quantity="one">Are you sure you want to delete this %1$d media item?</item>
+        <item quantity="other">Are you sure you want to delete these %1$d media items?</item>
     </plurals>
     <plurals name="restore_photos_confirmation">
-        <item quantity="one">Restore this %d photo\?</item>
-        <item quantity="other">Restore these %d photos\?</item>
+        <item quantity="one">Restore this %1$d photo\?</item>
+        <item quantity="other">Restore these %1$d photos\?</item>
     </plurals>
     <plurals name="restore_media_confirmation">
-        <item quantity="one">Restore this %d media item\?</item>
-        <item quantity="other">Restore these %d media items\?</item>
+        <item quantity="one">Restore this %1$d media item\?</item>
+        <item quantity="other">Restore these %1$d media items\?</item>
     </plurals>
     <plurals name="trash_photos_confirmation">
         <item quantity="one">Send this one photo to trash\?</item>
-        <item quantity="other">Send these %d photos to the trash\?</item>
+        <item quantity="other">Send these %1$d photos to the trash\?</item>
     </plurals>
     <plurals name="trash_media_confirmation">
-        <item quantity="one">Send this %d media item to the trash\?</item>
-        <item quantity="other">Send these %d media items to trash\?</item>
+        <item quantity="one">Send this %1$d media item to the trash\?</item>
+        <item quantity="other">Send these %1$d media items to trash\?</item>
     </plurals>
     <string name="people">People</string>
     <string name="view_all">View all</string>
@@ -91,18 +91,18 @@
     <string name="never">never</string>
     <string name="settings">Settings</string>
     <plurals name="hours">
-        <item quantity="one">%d hour</item>
-        <item quantity="other">%d hours</item>
+        <item quantity="one">%1$d hour</item>
+        <item quantity="other">%1$d hours</item>
     </plurals>
     <plurals name="days">
-        <item quantity="one">%d day</item>
-        <item quantity="other">%d days</item>
+        <item quantity="one">%1$d day</item>
+        <item quantity="other">%1$d days</item>
     </plurals>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="clear">Clear</string>
-    <string name="currently_used">Currently used: %d MB</string>
-    <string name="max_limit">Max limit: %d MB</string>
+    <string name="currently_used">Currently used: %1$d MB</string>
+    <string name="max_limit">Max limit: %1$d MB</string>
     <string name="changes_effect_after_restart">(changes take effect after restarting the program)</string>
     <string name="share">Share</string>
     <string name="delete">Delete</string>
@@ -161,7 +161,7 @@
     <string name="unmetered">Unmetered</string>
     <string name="not_roaming">Not roaming</string>
     <string name="metered">Metered</string>
-    <string name="network_requirements">Network requirements: %s</string>
+    <string name="network_requirements">Network requirements: %1$s</string>
     <string name="feedback">Feedback</string>
     <string name="send_feedback_with_logs">Send feedback with logs</string>
     <string name="clear_log_file">Clear log file</string>
@@ -178,8 +178,8 @@
     <string name="expand_all">Expand all</string>
     <string name="collapse_all">Collapse all</string>
     <plurals name="item_count">
-        <item quantity="one">%d item</item>
-        <item quantity="other">%d items</item>
+        <item quantity="one">%1$d item</item>
+        <item quantity="other">%1$d items</item>
     </plurals>
     <string name="maps">Maps</string>
     <string name="map_provider">Provider</string>
@@ -222,12 +222,12 @@
     <string name="save">Save</string>
     <string name="login_to_server">Log in on the server</string>
     <string name="login">Log in</string>
-    <string name="years_ago">%d years ago</string>
+    <string name="years_ago">%1$d years ago</string>
     <string name="on_this_day">On this day</string>
     <string name="enable_memories">Turn on memories</string>
     <string name="video">Video</string>
     <string name="animate_video_thumbnails">Animate video thumbnails</string>
-    <string name="max_animated_video_thumbnails">Max number of animated video thumbnails (%s)</string>
+    <string name="max_animated_video_thumbnails">Max number of animated video thumbnails (%1$s)</string>
     <string name="max_animated_video_thumbnails_description">A high number can cause app instability. Lower it if you are having issues.</string>
     <string name="precache_thumbnails">Pre-cache all thumbnails</string>
     <string name="precaching_thumbnails">Pre-caching thumbnails…</string>
@@ -347,7 +347,7 @@
     <string name="person">Person</string>
     <string name="advanced_feature_title">Advanced Feature</string>
     <string name="advanced_feature_body">This is an advanced feature which requires a free LibrePhotos server</string>
-    <string name="do_not_show_again">Don\'t show again</string>
+    <string name="do_not_show_again">Don't show again</string>
     <string name="auto_hide_nav_on_scroll">Automatically hide the navigation bar when scrolling</string>
     <string name="initializing">Initializing</string>
     <string name="uploading">Uploading</string>
@@ -384,7 +384,7 @@
     <string name="logs">Logs</string>
     <string name="unsecured_server">Unsecured server</string>
     <string name="unsecured_server_are_you_sure">Are you sure you want to connect to an unsecured server?</string>
-    <string name="unsecured_server_not_encrypted">This server communicates over plain http and is not encrypted: %s</string>
+    <string name="unsecured_server_not_encrypted">This server communicates over plain http and is not encrypted: %1$s</string>
     <string name="local_media">Local media</string>
     <string name="local_media_rescan">Re-scan local media from scratch</string>
     <string name="remember_choice">Remember choice</string>
@@ -393,12 +393,12 @@
     <string name="local_media_scan_completed_description">The initial scanning of the local media of your device has completed. Tap here to open the app</string>
     <string name="local_media_scan_warning">The app will start scanning your camera folder which, depending on the amount of media in it, might take a long time and use up some of your battery. This is a one-time process.</string>
     <string name="collage">Collage</string>
-    <string name="collage_spacing">Spacing between collage items: %d</string>
+    <string name="collage_spacing">Spacing between collage items: %1$d</string>
     <string name="collage_spacing_include_edges">Include spacing on the edges</string>
     <string name="collage_shape">Shape of collage items</string>
     <string name="rectangle">Rectangle</string>
     <string name="rounded_rectangle">Rounded rectangle</string>
-    <string name="disable_battery_optimizations">Disable battery optimizations\n\nWhile battery optimizations are enabled, this app\'s background tasks like media syncing might not run properly</string>
+    <string name="disable_battery_optimizations">Disable battery optimizations\n\nWhile battery optimizations are enabled, this app's background tasks like media syncing might not run properly</string>
     <string name="battery_optimizations_warning">This might cause the app to consume more of your battery</string>
     <string name="add_to_album">Add to album</string>
     <string name="adding_to_album">Adding media to album</string>

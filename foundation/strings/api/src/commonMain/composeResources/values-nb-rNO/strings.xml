@@ -3,8 +3,8 @@
     <string name="feed_size">Innholdsstørrelse</string>
     <string name="photo">Bilde</string>
     <plurals name="delete_photos">
-        <item quantity="one">Slett %d bilde</item>
-        <item quantity="other">Slett %d bilder</item>
+        <item quantity="one">Slett %1$d bilde</item>
+        <item quantity="other">Slett %1$d bilder</item>
     </plurals>
     <string name="feed_sync_freq">Synkroniser hele billedstrømmen hvert</string>
     <string name="feed_sync_freq_changed">Frekvensen for oppdatering av bildestrømmen endret seg</string>
@@ -21,8 +21,8 @@
     <string name="requires_charging">Krever lading</string>
     <string name="never">aldri</string>
     <plurals name="hours">
-        <item quantity="one">%d time</item>
-        <item quantity="other">%d timer</item>
+        <item quantity="one">%1$d time</item>
+        <item quantity="other">%1$d timer</item>
     </plurals>
     <string name="refreshing_albums">Gjenoppfrisker album …</string>
     <string name="refresh">Gjenoppfrisk</string>
@@ -32,8 +32,8 @@
     <string name="background_jobs">Bakgrunnsjobber</string>
     <string name="crash_reports">Krasjrapporter</string>
     <string name="send_crash_logs">Send krasjlogger for feilsøking</string>
-    <string name="currently_used">%d MB i bruk</string>
-    <string name="max_limit">Maks. grense: %d MB</string>
+    <string name="currently_used">%1$d MB i bruk</string>
+    <string name="max_limit">Maks. grense: %1$d MB</string>
     <string name="changes_effect_after_restart">(start programmet på ny for å ta i bruk endringer)</string>
     <string name="setting_photo_favourite">Setter favorittstatus for bilde …</string>
     <string name="photos_on_map">Bilder på kartet (%1$d av %2$d)</string>
@@ -43,7 +43,7 @@
     <string name="comfortable">Komfortabelt</string>
     <plurals name="delete_photos_confirmation">
         <item quantity="one">Slett dette ene bildet\?</item>
-        <item quantity="other">Slett disse %d bildene\?</item>
+        <item quantity="other">Slett disse %1$d bildene\?</item>
     </plurals>
     <string name="error_loading_photo_details">Kunne ikke laste inn bildedetaljer</string>
     <string name="could_not_find_app_to_open">Fant ikke noe program for åpning</string>
@@ -64,31 +64,31 @@
     <string name="log_out">Logg ut</string>
     <string name="edit_server_url">Rediger tjenernettadresse</string>
     <plurals name="restore_photos">
-        <item quantity="one">Gjenopprett %d bilde</item>
-        <item quantity="other">Gjenopprett %d bilder</item>
+        <item quantity="one">Gjenopprett %1$d bilde</item>
+        <item quantity="other">Gjenopprett %1$d bilder</item>
     </plurals>
     <string name="view_all">Vis alle</string>
     <plurals name="trash_photos">
-        <item quantity="one">Send %d bilde til papirkurven</item>
-        <item quantity="other">Send %d bilder til papirkurven</item>
+        <item quantity="one">Send %1$d bilde til papirkurven</item>
+        <item quantity="other">Send %1$d bilder til papirkurven</item>
     </plurals>
     <plurals name="trash_media">
-        <item quantity="one">Send %d medieelement til papirkurven</item>
-        <item quantity="other">Send %d medieelementer til papirkurven</item>
+        <item quantity="one">Send %1$d medieelement til papirkurven</item>
+        <item quantity="other">Send %1$d medieelementer til papirkurven</item>
     </plurals>
     <string name="media">Media</string>
     <plurals name="restore_media">
-        <item quantity="one">Gjenopprett %d mediaelement</item>
-        <item quantity="other">Gjenopprett %d mediaelementer</item>
+        <item quantity="one">Gjenopprett %1$d mediaelement</item>
+        <item quantity="other">Gjenopprett %1$d mediaelementer</item>
     </plurals>
     <string name="gallery_size">Galleristørrelse</string>
     <plurals name="delete_media">
-        <item quantity="one">Slett %d medieelement</item>
-        <item quantity="other">Slett %d medieelementer</item>
+        <item quantity="one">Slett %1$d medieelement</item>
+        <item quantity="other">Slett %1$d medieelementer</item>
     </plurals>
     <plurals name="delete_media_confirmation">
-        <item quantity="one">Slett dette %d-medieelementet?</item>
-        <item quantity="other">Slett disse %d-medieelementene?</item>
+        <item quantity="one">Slett dette %1$d-medieelementet?</item>
+        <item quantity="other">Slett disse %1$d-medieelementene?</item>
     </plurals>
     <string name="crop">Beskjær</string>
     <string name="error_editing_photo">Kunne ikke redigerer bildet</string>
@@ -103,11 +103,11 @@
     <string name="password">Passord</string>
     <plurals name="restore_photos_confirmation">
         <item quantity="one">Gjenopprett dette bildet?</item>
-        <item quantity="other">Gjenopprett disse %d bildene?</item>
+        <item quantity="other">Gjenopprett disse %1$d bildene?</item>
     </plurals>
     <plurals name="days">
-        <item quantity="one">%d dag</item>
-        <item quantity="other">%d dager</item>
+        <item quantity="one">%1$d dag</item>
+        <item quantity="other">%1$d dager</item>
     </plurals>
     <string name="close">Lukk</string>
     <string name="about">Om</string>
@@ -120,7 +120,7 @@
     <string name="uploads">Opplastninger</string>
     <plurals name="restore_media_confirmation">
         <item quantity="one">Gjenopprett dette medieelementet?</item>
-        <item quantity="other">Gjenopprett disse %d medieelementene?</item>
+        <item quantity="other">Gjenopprett disse %1$d medieelementene?</item>
     </plurals>
     <string name="allow_storage_management_title">Lagringshåndtering</string>
     <string name="donate">Doner</string>
@@ -128,7 +128,7 @@
     <string name="error_loading_user_albums">Kunne ikke laste inn bruker-opprettede album</string>
     <string name="send_feedback_with_logs">Send tilbakemelding med loggføring</string>
     <string name="enable_memories">Skru på minner</string>
-    <string name="years_ago">%d år siden</string>
+    <string name="years_ago">%1$d år siden</string>
     <string name="on_this_day">På denne dagen</string>
     <string name="month_april_short">Apr</string>
     <string name="month_may_short">Mai</string>
@@ -146,8 +146,8 @@
     <string name="feedback">Tilbakemelding</string>
     <string name="categories">Kategorier</string>
     <plurals name="item_count">
-        <item quantity="one">%d element</item>
-        <item quantity="other">%d elementer</item>
+        <item quantity="one">%1$d element</item>
+        <item quantity="other">%1$d elementer</item>
     </plurals>
     <string name="locations">Steder</string>
     <string name="videos">Videoer</string>
@@ -197,7 +197,7 @@
     <string name="no_user_albums">Denne brukeren har ikke opprettet noen album</string>
     <string name="change">Endre</string>
     <string name="any_connected">Alle tilknyttede</string>
-    <string name="network_requirements">Nettverkskrav: %s</string>
+    <string name="network_requirements">Nettverkskrav: %1$s</string>
     <string name="clear_log_file">Tøm loggføring</string>
     <string name="enable_suggestions">Skru på forslag</string>
     <string name="clear_recent_searches">Fjern nylige søk</string>
@@ -224,7 +224,7 @@
     <string name="do_not_ask_again">Ikke spør igjen</string>
     <string name="crop_options">Beskjæringsvalg</string>
     <string name="dismiss">Forkast</string>
-    <string name="max_animated_video_thumbnails">Maks. antall animerte videominiatyrbilder (%s)</string>
+    <string name="max_animated_video_thumbnails">Maks. antall animerte videominiatyrbilder (%1$s)</string>
     <string name="media_sync_status_uploading">Laster opp media til tjeneren …</string>
     <string name="show_feed_details_sync_progress">Vis framdrift for synkronisering av detaljer for hele billedstrømmen</string>
     <string name="upload_error_checking">Kunne ikke sjekke hvorvidt opplasting av filer tillates på tjeneren din. Prøv igjen.</string>
@@ -267,11 +267,11 @@
     <string name="allow_storage_management_details">Åpne systeminnstillingene for å tillate denne tilgangen?</string>
     <plurals name="trash_photos_confirmation">
         <item quantity="one">Send dette bildet til papirkurven?</item>
-        <item quantity="other">Send disse %d bildene til papirkurven?</item>
+        <item quantity="other">Send disse %1$d bildene til papirkurven?</item>
     </plurals>
     <plurals name="trash_media_confirmation">
         <item quantity="one">Send dette medieelementet til papirkurven?</item>
-        <item quantity="other">Send disse %d medieelementene til papirkurven?</item>
+        <item quantity="other">Send disse %1$d medieelementene til papirkurven?</item>
     </plurals>
     <string name="full_feed_details_sync">Detaljer for fullstendig synkronisering av strøm</string>
     <string name="setting_media_favourite">Setter favorittilstand for media …</string>

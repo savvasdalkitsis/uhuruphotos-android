@@ -29,8 +29,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.PersonState
-import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.sharedElement
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Thumbnail
+import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.SharedElementId
+import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.sharedElement
 import org.jetbrains.compose.resources.painterResource
 import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
 import uhuruphotos_android.foundation.icons.api.generated.resources.ic_person_1
@@ -50,10 +51,7 @@ fun SharedTransitionScope.PersonImage(
         Thumbnail(
             modifier = modifier
                 .aspectRatio(1f)
-                .sharedElement(
-                    scope = this,
-                    id = "person-${personState.id}",
-                )
+                .sharedElement(SharedElementId.personImage(personState.id))
                 .clip(shape),
             url = personState.imageUrl,
             contentScale = ContentScale.Crop,

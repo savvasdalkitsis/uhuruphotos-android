@@ -48,6 +48,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.Ce
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.VitrineState
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaFolder
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Md5Hash
+import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.SharedElementId
+import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.sharedElement
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeMode
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SectionHeader
@@ -87,7 +89,10 @@ internal fun SharedTransitionScope.LocalFolders(
             for ((bucket, vitrineState) in media.buckets) {
                 item(bucket.id) {
                     NamedVitrine(
-                        modifier = Modifier.animateItem(),
+                        modifier = Modifier
+                            .sharedElement(SharedElementId.localAlbum(bucket.id))
+                            .animateItem(),
+                        titleSharedElementId = SharedElementId.localAlbumTitle(bucket.id),
                         state = vitrineState,
                         photoGridModifier = Modifier.width(120.dp),
                         title = bucket.displayName,

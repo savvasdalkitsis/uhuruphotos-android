@@ -33,6 +33,5 @@ data object AutoAlbumCollageDisplayState: CollageDisplayState {
     override val friendlyName = Res.string.auto_albums
     override val zoomIn = this
     override val zoomOut = this
-    override val allowsPinchGestures = false
     override val usingStaggeredGrid = true
 }

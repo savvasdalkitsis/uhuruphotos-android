@@ -39,6 +39,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.VitrineState
+import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.SharedElementId
+import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.sharedElement
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.CustomColors
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
@@ -51,6 +53,7 @@ fun SharedTransitionScope.NamedVitrine(
     iconFallback: DrawableResource?,
     title: String,
     selectable: Boolean = true,
+    titleSharedElementId: SharedElementId? = null,
     onSelected: () -> Unit,
 ) {
     Column(
@@ -74,17 +77,27 @@ fun SharedTransitionScope.NamedVitrine(
                 shape = CardDefaults.shape
             )
         }
-        VitrineSubtitle(title)
+        VitrineSubtitle(title, titleSharedElementId)
     }
 }
 
 @Composable
-fun ColumnScope.VitrineSubtitle(text: String) {
+context(scope: SharedTransitionScope)
+fun ColumnScope.VitrineSubtitle(
+    text: String,
+    titleSharedElementId: SharedElementId? = null
+) {
     val typography = MaterialTheme.typography
     Text(
         modifier = Modifier
             .align(Alignment.CenterHorizontally)
-            .padding(4.dp),
+            .padding(4.dp)
+            .then(
+                when(titleSharedElementId) {
+                    null -> Modifier
+                    else -> Modifier.sharedElement(titleSharedElementId)
+                }
+            ),
         text = text,
         maxLines = 1,
         overflow = TextOverflow.Ellipsis,

@@ -34,6 +34,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.Sele
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.SwipeToRefresh
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.PeopleBanner
+import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.SharedElementId
+import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.sharedElement
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.NoContent
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruActionIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.refresh.SwipeRefresh
@@ -46,13 +48,23 @@ import uhuruphotos_android.foundation.strings.api.generated.resources.sorting
 
 @Composable
 fun SharedTransitionScope.Gallery(
+    modifier: Modifier = Modifier,
+    titleSharedElementId: SharedElementId? = null,
     state: GalleryState,
     additionalActionBarContent: @Composable RowScope.() -> Unit = {},
     emptyContent: @Composable () -> Unit = { NoContent(string.no_media) },
     action: (GalleryAction) -> Unit
 ) {
     UhuruScaffold(
-        title = { Text(state.title.toText()) },
+        modifier = modifier,
+        title = { Text(
+            modifier = if (titleSharedElementId != null) {
+                Modifier.sharedElement(titleSharedElementId)
+            } else {
+                Modifier
+            },
+            text = state.title.toText(),
+        ) },
         expandableTopBar = true,
         navigationIcon = { UhuruUpNavButton() },
         actionBarContent = {

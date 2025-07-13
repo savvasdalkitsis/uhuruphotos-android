@@ -35,6 +35,5 @@ data object HeatMapCollageDisplayState : CollageDisplayState {
     override val friendlyName = string.media_heatmap
     override val zoomIn get() = HeatMapCollageDisplayState
     override val zoomOut get() = HeatMapCollageDisplayState
-    override val allowsPinchGestures = false
     override val usingStaggeredGrid = false
 }

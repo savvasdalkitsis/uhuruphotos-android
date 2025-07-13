@@ -1,52 +1,52 @@
 [versions]
 about = "11.6.3"
 accompanist = "0.36.0"
-agp = "8.9.1"
+agp = "8.11.1"
 android-sdk-geojson = "6.0.1"
 androidx-hilt = "1.2.0"
-autodagger = "1.4.0"
+autodagger = "2.0.0"
 coil = "2.7.0"
-compose = "1.7.8"
-crypto = "1.1.0-alpha07"
-datastore = "1.1.4"
+compose = "1.8.3"
+crypto = "1.1.0-beta01"
+datastore = "1.1.7"
 gms = "19.2.0"
-google-services = "4.4.2"
-hilt = "2.55"
+google-services = "4.4.3"
+hilt = "2.56.2"
 hilt-compiler = "1.2.0"
-kotlin = "2.1.20"
-kotlinx = "1.10.1"
-lifecycle = "2.8.7"
+kotlin = "2.2.0"
+kotlinx = "1.10.2"
+lifecycle = "2.9.1"
 lumberjack = "6.0.7"
-nav3 = "1.0.0-alpha01"
+nav3 = "1.0.0-alpha05"
 material3 = "1.3.2"
-media3 = "1.6.1"
-mockk = "1.13.17"
+media3 = "1.7.1"
+mockk = "1.14.4"
 moshi = "1.15.2"
-okhttp = "5.0.0-alpha.11"
-permissions = "2.0.0"
+okhttp = "5.1.0"
+permissions = "2.1.0"
 resaca = "4.4.4"
 result = "2.0.1"
-retrofit = "2.11.0"
-serialization = "1.8.1"
-sqldelight = "2.0.2"
+retrofit = "3.0.0"
+serialization = "1.9.0"
+sqldelight = "2.1.0"
 
 [plugins]
 about = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "about" }
 android-app = { id = 'com.android.application', version.ref = "agp" }
 android-library = { id = 'com.android.library', version.ref = "agp" }
-analysis = "com.autonomousapps.dependency-analysis:2.13.0"
+analysis = "com.autonomousapps.dependency-analysis:2.19.0"
 google-services = { id = "com.google.gms.google-services", version.ref = "google-services" }
 kotlin-android = { id = 'org.jetbrains.kotlin.android', version.ref = "kotlin" }
 kotlin-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin"}
-ksp = "com.google.devtools.ksp:2.1.20-2.0.0"
+ksp = "com.google.devtools.ksp:2.2.0-2.0.2"
 moduleGraph = "com.savvasdalkitsis.module-dependency-graph:0.12"
 powerassert = { id = "org.jetbrains.kotlin.plugin.power-assert", version.ref = "kotlin" }
-redacted = "dev.zacsweers.redacted:1.13.0"
-sonarqube = "org.sonarqube:6.0.1.5171"
+redacted = "dev.zacsweers.redacted:1.14.1"
+sonarqube = "org.sonarqube:6.2.0.5505"
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
-jetbrains-compose = { id = "org.jetbrains.compose", version = "1.7.3" }
+jetbrains-compose = { id = "org.jetbrains.compose", version = "1.8.2" }
 
 [libraries]
 about = { module = "com.mikepenz:aboutlibraries-compose", version.ref = "about" }
@@ -58,14 +58,14 @@ accompanist-systemui = { module = "com.google.accompanist:accompanist-systemuico
 accompanist-webview = { module = "com.google.accompanist:accompanist-webview", version.ref = "accompanist" }
 android-sdk-geojson = { module = "org.maplibre.gl:android-sdk-geojson", version.ref = "android-sdk-geojson" }
 androidx-activity = "androidx.activity:activity-compose:1.10.1"
-androidx-annotation = "androidx.annotation:annotation:1.9.1"
+androidx-appcompat = "androidx.appcompat:appcompat:1.7.1"
 androidx-compose-animation-base = { module = "androidx.compose.animation:animation", version.ref = "compose" }
 androidx-compose-animation-graphics = { module = "androidx.compose.animation:animation-graphics", version.ref = "compose" }
 androidx-compose-constraintlayout = "androidx.constraintlayout:constraintlayout-compose:1.1.1"
 androidx-compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose" }
 androidx-compose-foundation-layout = { module = "androidx.compose.foundation:foundation-layout", version.ref = "compose" }
 androidx-compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "material3" }
-androidx-compose-material-icons = { module = "androidx.compose.material:material-icons-core", version.ref = "compose" }
+androidx-compose-material-icons = "androidx.compose.material:material-icons-core:1.7.8"
 androidx-compose-material-windowsize = { module = "androidx.compose.material3:material3-window-size-class", version.ref = "material3" }
 androidx-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
 androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
@@ -78,7 +78,7 @@ androidx-lifecycle = { module = "androidx.lifecycle:lifecycle-runtime-ktx", vers
 androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-android", version.ref = "lifecycle" }
 androidx-navigation3-runtime = { module = "androidx.navigation3:navigation3-runtime", version.ref = "nav3" }
 androidx-navigation3-ui = { module = "androidx.navigation3:navigation3-ui", version.ref = "nav3" }
-androidx-navigation3-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-navigation3", version.ref = "nav3" }
+androidx-navigation3-viewmodel = "androidx.lifecycle:lifecycle-viewmodel-navigation3:1.0.0-alpha03"
 androidx-media3-core = { module = "androidx.media3:media3-exoplayer", version.ref = "media3" }
 androidx-media3-database = { module = "androidx.media3:media3-database", version.ref = "media3" }
 androidx-media3-hls = { module = "androidx.media3:media3-exoplayer-hls", version.ref = "media3" }
@@ -89,20 +89,19 @@ androidx-security-crypto-core = { module = "androidx.security:security-crypto", 
 androidx-security-crypto-ktx = { module = "androidx.security:security-crypto-ktx", version.ref = "crypto" }
 androidx-splash = "androidx.core:core-splashscreen:1.0.1"
 androidx-startup = "androidx.startup:startup-runtime:1.2.0"
-androidx-tracing = "androidx.tracing:tracing-ktx:1.2.0"
-androidx-window = "androidx.window:window:1.3.0"
-androidx-work = "androidx.work:work-runtime-ktx:2.10.0"
+androidx-tracing = "androidx.tracing:tracing-ktx:1.3.0"
+androidx-window = "androidx.window:window:1.4.0"
+androidx-work = "androidx.work:work-runtime-ktx:2.10.2"
 androidx-work-hilt = "androidx.hilt:hilt-work:1.2.0"
-appyx = "com.bumble.appyx:core:1.5.0"
 autodagger-core = { module = "se.ansman.dagger.auto:android", version.ref = "autodagger" }
 autodagger-ksp = { module = "se.ansman.dagger.auto:compiler", version.ref = "autodagger" }
 autodagger-retrofit = { module = "se.ansman.dagger.auto:retrofit", version.ref = "autodagger" }
 biometric = "androidx.biometric:biometric:1.1.0"
 bottomsheet = "com.holix.android:bottomsheetdialog-compose:1.6.0"
 bubble-navigation = "com.github.savvasdalkitsis:BubbleNavigationBarCompose:1.0.2"
-bugsnag = "com.bugsnag:bugsnag-android:6.12.1"
-bugsnag-performance = "com.bugsnag:bugsnag-android-performance:1.10.0"
-bugsnag-plugin = "com.bugsnag:bugsnag-android-gradle-plugin:8.1.0"
+bugsnag = "com.bugsnag:bugsnag-android:6.15.0"
+bugsnag-performance = "com.bugsnag:bugsnag-android-performance:2.0.0"
+bugsnag-plugin = "com.bugsnag:bugsnag-android-gradle-plugin:8.2.0"
 capturable = "com.github.SmartToolFactory:Compose-Screenshot:1.0.3"
 coil-base = { module = "io.coil-kt:coil-base", version.ref = "coil" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
@@ -111,31 +110,31 @@ coil-video = { module = "io.coil-kt:coil-video", version.ref = "coil" }
 compottie = "io.github.alexzhirkevich:compottie:2.0.0-rc04"
 crop = "com.github.moyuruaizawa:cropify:0.3.1"
 desugar = "com.android.tools:desugar_jdk_libs:2.1.5"
-exif = "androidx.exifinterface:exifinterface:1.4.0"
+exif = "androidx.exifinterface:exifinterface:1.4.1"
 flowpreferences = "com.fredporciuncula:flow-preferences:1.9.1"
 gif = "com.squareup:gifencoder:0.10.1"
-google-fonts = "androidx.compose.ui:ui-text-google-fonts:1.8.0-rc03"
+google-fonts = "androidx.compose.ui:ui-text-google-fonts:1.8.3"
 google-services = { module = "com.google.gms:google-services", version.ref = "google-services" }
-gson = "com.google.code.gson:gson:2.11.0"
+gson = "com.google.code.gson:gson:2.13.1"
 heatmap = "com.github.k-surtel:heat-map:1.0.1"
 hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt-android-gradle-plugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hilt" }
 hilt-dagger-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
-imaging = "org.apache.commons:commons-imaging:1.0.0-alpha5"
+imaging = "org.apache.commons:commons-imaging:1.0.0-alpha6"
 infobar = "com.radusalagean:info-bar-compose:1.0.0"
 jetlime = "io.github.pushpalroy:jetlime:3.0.1"
 joda-time = "net.danlew:android.joda:2.13.1"
 junit = "junit:junit:4.13.2"
 jwt = "com.auth0.android:jwtdecode:2.0.2"
-konsist = "com.lemonappdev:konsist:0.16.1"
+konsist = "com.lemonappdev:konsist:0.17.3"
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx" }
-kotlinx-immutable = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.8"
+kotlinx-immutable = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.4.0"
 kotlinx-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "serialization" }
 leaks = "com.squareup.leakcanary:leakcanary-android:2.14"
-log4k = "de.peilicke.sascha:log4k:1.4.1"
-lottie = "com.airbnb.android:lottie-compose:6.6.4"
+log4k = "de.peilicke.sascha:log4k:1.5.0"
+lottie = "com.airbnb.android:lottie-compose:6.6.7"
 lumberjack-core = { module = "com.github.MFlisar.Lumberjack:core", version.ref = "lumberjack" }
 lumberjack-implementation = { module = "com.github.MFlisar.Lumberjack:implementation-lumberjack", version.ref = "lumberjack" }
 lumberjack-logger-console = { module = "com.github.MFlisar.Lumberjack:logger-console", version.ref = "lumberjack" }
@@ -143,13 +142,13 @@ lumberjack-logger-file = { module = "com.github.MFlisar.Lumberjack:logger-file",
 lumberjack-extension-feedback = { module = "com.github.MFlisar.Lumberjack:extension-feedback", version.ref = "lumberjack" }
 lumberjack-extension-notification = { module = "com.github.MFlisar.Lumberjack:extension-notification", version.ref = "lumberjack" }
 lumberjack-extension-viewer = { module = "com.github.MFlisar.Lumberjack:extension-viewer", version.ref = "lumberjack" }
-mapbox = "com.mapbox.maps:android:11.6.1"
-maplibre = "org.maplibre.gl:android-sdk:11.8.4"
+mapbox = "com.mapbox.maps:android-ndk27:11.13.3"
+maplibre = "org.maplibre.gl:android-sdk:11.12.1"
 maplibre-annotations = "org.maplibre.gl:android-plugin-annotation-v9:3.0.2"
 maps = { module = "com.google.android.gms:play-services-maps", version.ref = "gms" }
-maps-compose = "com.google.maps.android:maps-compose:6.2.1"
-maps-utils = "com.google.maps.android:android-maps-utils:3.9.0"
-maps-utils-ktx = "com.google.maps.android:maps-utils-ktx:5.1.1"
+maps-compose = "com.google.maps.android:maps-compose:6.6.0"
+maps-utils = "com.google.maps.android:android-maps-utils:3.14.0"
+maps-utils-ktx = "com.google.maps.android:maps-utils-ktx:5.2.0"
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 moshi = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "moshi" }
 moshi-ksp = { module = "com.squareup.moshi:moshi-kotlin-codegen", version.ref = "moshi" }
@@ -159,9 +158,9 @@ okhttp-url = { module = "com.squareup.okhttp3:okhttp-urlconnection", version.ref
 palette = "androidx.palette:palette-ktx:1.0.0"
 permissions-base = { module = "dev.shreyaspatil.permission-flow:permission-flow-android", version.ref = "permissions" }
 permissions-compose = { module = "dev.shreyaspatil.permission-flow:permission-flow-compose", version.ref = "permissions" }
-play = "com.google.android.gms:play-services-base:18.7.0"
+play = "com.google.android.gms:play-services-base:18.7.2"
 remember = "dev.burnoo:compose-remember-preference:1.1.1"
-reorder = "sh.calvin.reorderable:reorderable:2.4.3"
+reorder = "sh.calvin.reorderable:reorderable:2.5.1"
 resaca-core = { module = "io.github.sebaslogen:resaca", version.ref = "resaca" }
 resaca-hilt = { module = "io.github.sebaslogen:resacahilt", version.ref = "resaca" }
 result = { module = "com.michael-bull.kotlin-result:kotlin-result", version.ref = "result" }
@@ -175,13 +174,14 @@ sqldelight-adapters = { module = "app.cash.sqldelight:primitive-adapters", versi
 sqldelight-android = { module = "app.cash.sqldelight:android-driver", version.ref = "sqldelight" }
 sqldelight-coroutines = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sqldelight" }
 sqldelight-gradle-plugin = { module = "app.cash.sqldelight:gradle-plugin", version.ref = "sqldelight" }
-telephoto = "me.saket.telephoto:zoomable-image-coil:0.14.0"
+telephoto-core = "me.saket.telephoto:zoomable-image-coil:0.16.0"
+telephoto-overlay = "me.saket.telephoto:zoomable-peek-overlay:0.16.0"
 timeline = "com.github.yeocak:ComposableTimelineView:0.6"
-turbine = "app.cash.turbine:turbine:1.2.0"
-urlvalidator = "commons-validator:commons-validator:1.9.0"
+turbine = "app.cash.turbine:turbine:1.2.1"
+urlvalidator = "commons-validator:commons-validator:1.10.0"
 vico = "com.patrykandpatrick.vico:compose-m2:1.15.0"
 videocache = "com.github.Andrew0000:Android-VideoView-cache:1.0.15"
-zoomable = "com.mxalbert.zoomable:zoomable:1.6.2"
+zoomable = "com.mxalbert.zoomable:zoomable:1.7.0"
 
 [bundles]
 androidx-compose-animation = [
@@ -228,6 +228,10 @@ resaca = [
 result = [
     "result",
     "result-coroutines",
+]
+telephoto = [
+    "telephoto-core",
+    "telephoto-overlay",
 ]
 test = [
     "junit",

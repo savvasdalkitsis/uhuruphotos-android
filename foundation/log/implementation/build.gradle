@@ -8,6 +8,7 @@ android {
 
 dependencies {
     implementation(
+            libs.androidx.appcompat,
             libs.bundles.autodagger,
             libs.bundles.lumberjack,
             libs.hilt,

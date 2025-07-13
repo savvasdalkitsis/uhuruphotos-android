@@ -27,6 +27,7 @@ dependencies {
             project(":feature:settings:domain:api"),
             project(":foundation:image:api"),
             project(":foundation:navigation:api"),
+            project(":foundation:sharedelement:api"),
             project(":foundation:ui:api"),
     )
     ksp libs.autodagger.ksp

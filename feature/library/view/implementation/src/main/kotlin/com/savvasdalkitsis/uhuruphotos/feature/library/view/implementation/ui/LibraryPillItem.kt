@@ -13,8 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
+@file:OptIn(ExperimentalSharedTransitionApi::class)
+
 package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -30,15 +34,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.VitrineSubtitle
+import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.SharedElementId
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.CustomColors
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
-internal fun LibraryPillItem(
+internal fun SharedTransitionScope.LibraryPillItem(
     modifier: Modifier,
     title: String,
     icon: DrawableResource,
+    titleSharedElementId: SharedElementId? = null,
     onSelected: () -> Unit
 ) {
     Column(
@@ -61,6 +67,6 @@ internal fun LibraryPillItem(
                 contentDescription = null
             )
         }
-        VitrineSubtitle(title)
+        VitrineSubtitle(title, titleSharedElementId)
     }
 }

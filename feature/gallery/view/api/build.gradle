@@ -10,6 +10,7 @@ android {
 dependencies {
     api(
             project(":feature:person:view:api"),
+            project(":foundation:sharedelement:api"),
     )
     implementation(
             libs.androidx.compose.foundation,

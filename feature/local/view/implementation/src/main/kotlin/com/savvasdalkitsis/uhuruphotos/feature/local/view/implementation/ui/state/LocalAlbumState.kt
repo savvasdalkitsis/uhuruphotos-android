@@ -24,6 +24,7 @@ import kotlinx.parcelize.Parcelize
 @Immutable
 @Parcelize
 data class LocalAlbumState(
+    val albumId: Int? = null,
     val deniedPermissions: ImmutableList<String> = persistentListOf(),
     val contributingToPortfolio: Boolean? = null,
 ) : Parcelable

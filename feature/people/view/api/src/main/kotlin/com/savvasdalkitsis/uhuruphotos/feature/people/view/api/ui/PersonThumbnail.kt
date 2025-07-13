@@ -36,6 +36,8 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.PersonState
+import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.SharedElementId
+import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.sharedElement
 
 @Composable
 fun SharedTransitionScope.PersonThumbnail(
@@ -60,6 +62,8 @@ fun SharedTransitionScope.PersonThumbnail(
                 personState = personState
             )
             Text(
+                modifier = Modifier
+                    .sharedElement(SharedElementId.personName(personState.id)),
                 text = personState.name,
                 maxLines = 2,
                 textAlign = TextAlign.Center,

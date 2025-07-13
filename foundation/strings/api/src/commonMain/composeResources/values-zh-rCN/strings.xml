@@ -17,29 +17,29 @@
     <string name="compact">紧凑</string>
     <string name="big">大</string>
     <plurals name="trash_photos">
-        <item quantity="other">将 %d 张照片移入回收站</item>
+        <item quantity="other">将 %1$d 张照片移入回收站</item>
     </plurals>
     <string name="jobs">任务</string>
     <plurals name="restore_photos">
-        <item quantity="other">恢复 %d 张照片</item>
+        <item quantity="other">恢复 %1$d 张照片</item>
     </plurals>
     <plurals name="restore_photos_confirmation">
-        <item quantity="other">恢复这 %d 张照片？</item>
+        <item quantity="other">恢复这 %1$d 张照片？</item>
     </plurals>
     <plurals name="trash_photos_confirmation">
-        <item quantity="other">将这 %d 张照片移入回收站？</item>
+        <item quantity="other">将这 %1$d 张照片移入回收站？</item>
     </plurals>
     <string name="perform_full_sync">执行全面同步</string>
     <plurals name="days">
-        <item quantity="other">%d 天</item>
+        <item quantity="other">%1$d 天</item>
     </plurals>
     <string name="downloading_photo_details">正在下载照片详情……</string>
     <string name="trashing_photo">正在将照片移入回收站…</string>
     <plurals name="delete_photos">
-        <item quantity="other">删除 %d 张照片</item>
+        <item quantity="other">删除 %1$d 张照片</item>
     </plurals>
     <plurals name="delete_photos_confirmation">
-        <item quantity="other">您确定要删除这 %d 张照片吗？</item>
+        <item quantity="other">您确定要删除这 %1$d 张照片吗？</item>
     </plurals>
     <string name="refreshing_albums">正在刷新相册</string>
     <string name="log_out">注销</string>
@@ -49,8 +49,8 @@
     <string name="settings">设置</string>
     <string name="no">否</string>
     <string name="clear">清除</string>
-    <string name="currently_used">当前已用：%d MB</string>
-    <string name="max_limit">最大限制：%d MB</string>
+    <string name="currently_used">当前已用：%1$d MB</string>
+    <string name="max_limit">最大限制：%1$d MB</string>
     <string name="changes_effect_after_restart">（更改将在应用程序重启后生效）</string>
     <string name="share">分享</string>
     <string name="delete">删除</string>
@@ -71,7 +71,7 @@
     <string name="authenticate_to_change">验证以解锁</string>
     <string name="authenticate_to_change_description">出于安全考虑，禁用此选项需要验证</string>
     <plurals name="hours">
-        <item quantity="other">%d 小时</item>
+        <item quantity="other">%1$d 小时</item>
     </plurals>
     <string name="yes">是</string>
     <string name="location">位置</string>
@@ -122,14 +122,14 @@
     <string name="not_roaming">没有漫游网络</string>
     <string name="metered">按流量计费的网络</string>
     <string name="degrades_performance">会降低性能</string>
-    <string name="network_requirements">网络要求: %s</string>
+    <string name="network_requirements">网络要求: %1$s</string>
     <string name="image_disk_cache">图像的磁盘缓存</string>
     <string name="image_memory_cache">图像的内存缓存</string>
     <string name="enable_suggestions">启用建议</string>
     <string name="clear_recent_searches">清除最近的搜索</string>
     <string name="remove_gps_data_when_sharing">分享时移除 GPS 数据</string>
     <plurals name="item_count">
-        <item quantity="other">%d 项目</item>
+        <item quantity="other">%1$d 项目</item>
     </plurals>
     <string name="maps">地图</string>
     <string name="error_loading_auto_albums">无法载入自动生成的相册</string>
@@ -157,7 +157,7 @@
     <string name="advanced">进阶</string>
     <string name="use_as">用于</string>
     <string name="full">全面（full）</string>
-    <string name="max_animated_video_thumbnails">动态视频缩略图最大数量 (%s)</string>
+    <string name="max_animated_video_thumbnails">动态视频缩略图最大数量 (%1$s)</string>
     <string name="max_animated_video_thumbnails_description">数值过高可能会导致应用不稳定。如果您遇到任何问题请尝试将数值调低。</string>
     <string name="today">今天</string>
     <string name="requires_charging">只在充电时同步</string>
@@ -166,7 +166,7 @@
     <string name="feed_sync_network_changed">照片流同步的网络要求已修改</string>
     <string name="feed_sync_freq">全面同步照片流，每</string>
     <plurals name="trash_media">
-        <item quantity="other">将 %d 个影像移入回收站</item>
+        <item quantity="other">将 %1$d 个影像移入回收站</item>
     </plurals>
     <string name="feed_refresh_days">下拉刷新所包含的照片流天数</string>
     <string name="feed">照片流</string>
@@ -176,7 +176,7 @@
     <string name="favourite_media">最爱的影像</string>
     <string name="refreshing_feed">正在刷新照片流</string>
     <string name="video">视频</string>
-    <string name="years_ago">%d 年前</string>
+    <string name="years_ago">%1$d 年前</string>
     <string name="precache_thumbnails">预缓存所有缩略图</string>
     <string name="precaching_thumbnails">正在预缓存缩略图…</string>
     <string name="cannot_perform_precaching">现在无法执行预缓存</string>
@@ -187,19 +187,19 @@
     <string name="gallery_size">展馆大小</string>
     <string name="media">影像</string>
     <plurals name="delete_media">
-        <item quantity="other">删除 %d 个影像</item>
+        <item quantity="other">删除 %1$d 个影像</item>
     </plurals>
     <plurals name="restore_media">
-        <item quantity="other">恢复 %d 个影像</item>
+        <item quantity="other">恢复 %1$d 个影像</item>
     </plurals>
     <plurals name="delete_media_confirmation">
-        <item quantity="other">您确定要删除这 %d 个影像吗？</item>
+        <item quantity="other">您确定要删除这 %1$d 个影像吗？</item>
     </plurals>
     <plurals name="restore_media_confirmation">
-        <item quantity="other">恢复这 %d 个影像？</item>
+        <item quantity="other">恢复这 %1$d 个影像？</item>
     </plurals>
     <plurals name="trash_media_confirmation">
-        <item quantity="other">将这 %d 个影像移入回收站？</item>
+        <item quantity="other">将这 %1$d 个影像移入回收站？</item>
     </plurals>
     <string name="feed_sync_charging_changed">照片流同步的充电要求已修改</string>
     <string name="perform_full_feed_sync">执行照片流的全面同步</string>
@@ -350,7 +350,7 @@
     <string name="local_media_scan_completed_description">本地媒体的初始扫描已完成。点击此处打开应用程序</string>
     <string name="media_sync_status_processing">服务器正在处理影像</string>
     <string name="feed_folders">订阅文件夹</string>
-    <string name="collage_spacing">拼贴项目之间的间距：%d</string>
+    <string name="collage_spacing">拼贴项目之间的间距：%1$d</string>
     <string name="collage_spacing_include_edges">包括边缘间距</string>
     <string name="processing">处理</string>
     <string name="last_error_processing">处理时最后一个错误</string>

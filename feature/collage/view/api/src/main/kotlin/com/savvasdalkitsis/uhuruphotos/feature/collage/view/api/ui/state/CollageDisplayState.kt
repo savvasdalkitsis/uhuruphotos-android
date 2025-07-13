@@ -36,6 +36,5 @@ interface CollageDisplayState : Parcelable {
     val friendlyName: StringResource
     val zoomIn: CollageDisplayState
     val zoomOut: CollageDisplayState
-    val allowsPinchGestures: Boolean
     val usingStaggeredGrid: Boolean
 }

@@ -72,7 +72,7 @@ fun SharedTransitionScope.UserAlbumItem(
                 miniIcons = miniIcons,
                 aspectRatio = 1f,
                 contentScale = ContentScale.Crop,
-                shape = shape,
+                shape = shape
             )
         }
         Text(

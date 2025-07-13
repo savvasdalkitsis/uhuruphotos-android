@@ -24,11 +24,9 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.platform.LocalDensity
@@ -38,6 +36,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.ShowActionsOverlay
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
 import kotlinx.coroutines.flow.collectLatest
+import me.saket.telephoto.zoomable.OverzoomEffect
+import me.saket.telephoto.zoomable.ZoomLimit
 import me.saket.telephoto.zoomable.ZoomSpec
 import me.saket.telephoto.zoomable.rememberZoomableState
 
@@ -56,39 +56,34 @@ internal fun SharedTransitionScope.Lightbox(
         pagerState.scrollToPage(state.currentIndex)
     }
 
-    val sharedTransitionFinished = remember {
-        mutableStateOf(false)
-    }
-    CompositionLocalProvider(LocalAnimatedSharedTransitionFinished provides sharedTransitionFinished) {
-        HorizontalPager(
-            state = pagerState,
-            pageSpacing = 12.dp,
-            key = { page -> state.media.getOrNull(page)?.id?.value ?: page.toString() },
-            userScrollEnabled = true,
-        ) { index ->
-            val zoomableState = rememberZoomableState(
-                zoomSpec = ZoomSpec(maxZoomFactor = 3f)
-            )
-            val scrollState = rememberScrollState()
-            LightboxScaffold(state, index, action, zoomableState, scrollState)
+    HorizontalPager(
+        state = pagerState,
+        pageSpacing = 12.dp,
+        key = { page -> state.media.getOrNull(page)?.id?.value ?: page.toString() },
+        userScrollEnabled = true,
+    ) { index ->
+        val zoomableState = rememberZoomableState(
+            zoomSpec = ZoomSpec(maximum = ZoomLimit(factor = 3f, overzoomEffect = OverzoomEffect.RubberBanding))
+        )
+        val scrollState = rememberScrollState()
+        LightboxScaffold(state, index, action, zoomableState, scrollState)
 
-            val showingActionsOverlay by remember {
-                derivedStateOf {
-                    scrollState.value < with(density) {
-                        48.dp.toPx()
-                    }
+        val showingActionsOverlay by remember {
+            derivedStateOf {
+                scrollState.value < with(density) {
+                    48.dp.toPx()
                 }
             }
-            LaunchedEffect(showingActionsOverlay) {
-                action(ShowActionsOverlay(showingActionsOverlay))
-            }
-            val isCurrentPageForHandler = pagerState.currentPage == index
-            LightboxBackHandler(isCurrentPageForHandler, showingActionsOverlay, scrollState, zoomableState, action)
-            if (!isCurrentPageForHandler) {
-                LaunchedEffect(Unit) {
-                    zoomableState.resetZoom(SnapSpec())
-                    scrollState.scrollTo(0)
-                }
+        }
+        LaunchedEffect(showingActionsOverlay) {
+            action(ShowActionsOverlay(showingActionsOverlay))
+        }
+        val isCurrentPageForHandler = pagerState.currentPage == index
+        LightboxBackHandler(isCurrentPageForHandler, showingActionsOverlay, scrollState, zoomableState, action)
+        if (!isCurrentPageForHandler) {
+            LaunchedEffect(Unit) {
+                zoomableState.resetZoom(SnapSpec())
+                scrollState.scrollTo(0)
             }
         }
     }

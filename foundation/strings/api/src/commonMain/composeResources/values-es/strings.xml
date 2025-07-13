@@ -3,14 +3,14 @@
     <string name="feed_size">Tamaño de fotos</string>
     <string name="photo">Foto</string>
     <plurals name="delete_photos">
-        <item quantity="one">Eliminar %d foto</item>
+        <item quantity="one">Eliminar %1$d foto</item>
         <item quantity="many"/>
-        <item quantity="other">Eliminar %d fotos</item>
+        <item quantity="other">Eliminar %1$d fotos</item>
     </plurals>
     <plurals name="delete_photos_confirmation">
-        <item quantity="one">¿Estás seguro de que quieres borrar esta %d foto\?</item>
-        <item quantity="many">¿Estás seguro de que quieres borrar estas %d fotos\?</item>
-        <item quantity="other">¿Estás seguro de que quieres borrar estas %d fotos\?</item>
+        <item quantity="one">¿Estás seguro de que quieres borrar esta %1$d foto\?</item>
+        <item quantity="many">¿Estás seguro de que quieres borrar estas %1$d fotos\?</item>
+        <item quantity="other">¿Estás seguro de que quieres borrar estas %1$d fotos\?</item>
     </plurals>
     <string name="error_refreshing_people">No se pudo actualizar a las personas</string>
     <string name="error_loading_photo_details">No se pueden cargar los detalles de la foto</string>
@@ -37,16 +37,16 @@
     <string name="never">nunca</string>
     <string name="settings">Ajustes</string>
     <string name="clear">Limpiar</string>
-    <string name="currently_used">Usado actualmente: %d MB</string>
-    <string name="max_limit">Límite máximo: %d MB</string>
+    <string name="currently_used">Usado actualmente: %1$d MB</string>
+    <string name="max_limit">Límite máximo: %1$d MB</string>
     <string name="deleting_photo">Borrando foto</string>
     <string name="refreshing_albums">Refrescando álbumes</string>
     <string name="photos_on_map">Fotos en el mapa (%1$d de %2$d)</string>
     <string name="refresh">Refrescar</string>
     <plurals name="hours">
-        <item quantity="one">%d hora</item>
-        <item quantity="many">%d horas</item>
-        <item quantity="other">%d horas</item>
+        <item quantity="one">%1$d hora</item>
+        <item quantity="many">%1$d horas</item>
+        <item quantity="other">%1$d horas</item>
     </plurals>
     <string name="remove_favourite">Eliminar favorita</string>
     <string name="info">Información</string>
@@ -79,9 +79,9 @@
     <string name="trash">Papelera</string>
     <string name="operation_irreverisble">Esta operación es irreversible</string>
     <plurals name="days">
-        <item quantity="one">%d día</item>
-        <item quantity="many">%d días</item>
-        <item quantity="other">%d días</item>
+        <item quantity="one">%1$d día</item>
+        <item quantity="many">%1$d días</item>
+        <item quantity="other">%1$d días</item>
     </plurals>
     <string name="biometrics">Biometría</string>
     <string name="biometrics_enroll">Activa la biometría para usar esto</string>
@@ -98,7 +98,7 @@
     <string name="any_connected">Cualquiera conectada</string>
     <string name="not_roaming">Sin roaming</string>
     <string name="metered">Medido</string>
-    <string name="network_requirements">Requisitos de red: %s</string>
+    <string name="network_requirements">Requisitos de red: %1$s</string>
     <string name="image_disk_cache">Caché del disco para imágenes</string>
     <string name="image_memory_cache">Memoria caché para imágenes</string>
     <string name="authenticate_to_change_description">Desactivar esto requiere autenticación por motivos de seguridad</string>
@@ -109,14 +109,14 @@
     <string name="authenticate_for_access_to_trash_description">Solicitaste autenticación para acceder a la papelera</string>
     <string name="auto_generated_albums">Álbumes generados automáticamente</string>
     <plurals name="trash_photos">
-        <item quantity="one">Enviar %d foto a la papelera</item>
-        <item quantity="many">Enviar las %d fotos a la papelera</item>
-        <item quantity="other">Enviar las %d fotos a la papelera</item>
+        <item quantity="one">Enviar %1$d foto a la papelera</item>
+        <item quantity="many">Enviar las %1$d fotos a la papelera</item>
+        <item quantity="other">Enviar las %1$d fotos a la papelera</item>
     </plurals>
     <plurals name="trash_photos_confirmation">
         <item quantity="one">¿Enviar esta foto a la papelera?</item>
-        <item quantity="many">¿Enviar estas %d fotos a la papelera?</item>
-        <item quantity="other">¿Enviar estas %d fotos a la papelera?</item>
+        <item quantity="many">¿Enviar estas %1$d fotos a la papelera?</item>
+        <item quantity="other">¿Enviar estas %1$d fotos a la papelera?</item>
     </plurals>
     <string name="hidden_photos">Fotos escondidas</string>
     <string name="maps">Mapas</string>
@@ -126,9 +126,9 @@
     <string name="change">Cambiar</string>
     <string name="send_feedback_with_logs">Envía feedback con registros</string>
     <plurals name="item_count">
-        <item quantity="one">%d elemento</item>
-        <item quantity="many">%d elementos</item>
-        <item quantity="other">%d elementos</item>
+        <item quantity="one">%1$d elemento</item>
+        <item quantity="many">%1$d elementos</item>
+        <item quantity="other">%1$d elementos</item>
     </plurals>
     <string name="albums">Álbumes</string>
     <string name="error_loading_albums">No se pudieron cargar los álbumes</string>
@@ -149,9 +149,9 @@
     <string name="sorting">Clasificación</string>
     <string name="feed_refresh_days">Número de días de los fedd incluidos al actualizar</string>
     <plurals name="restore_photos">
-        <item quantity="one">Restaurar %d foto</item>
-        <item quantity="many">Restaurar las %d fotos</item>
-        <item quantity="other">Restaurar las %d fotos</item>
+        <item quantity="one">Restaurar %1$d foto</item>
+        <item quantity="many">Restaurar las %1$d fotos</item>
+        <item quantity="other">Restaurar las %1$d fotos</item>
     </plurals>
     <string name="people">Gente</string>
     <string name="view_all">Ver todo</string>
@@ -171,18 +171,18 @@
     <string name="privacy_security">Privacidad y seguridad</string>
     <string name="help">Ayuda</string>
     <plurals name="restore_photos_confirmation">
-        <item quantity="one">¿Restaurar esta foto %d?</item>
-        <item quantity="many">¿Restaurar estas fotos %d?</item>
-        <item quantity="other">¿Restaurar estas fotos %d?</item>
+        <item quantity="one">¿Restaurar esta foto %1$d?</item>
+        <item quantity="many">¿Restaurar estas fotos %1$d?</item>
+        <item quantity="other">¿Restaurar estas fotos %1$d?</item>
     </plurals>
     <string name="nothing_here_yet">Todavía no hay nada aquí</string>
     <string name="use_as">Usar como</string>
     <string name="local_albums">Álbumes locales</string>
     <string name="scanning_local_media">Sincronización de medios locales…</string>
     <plurals name="delete_media_confirmation">
-        <item quantity="one">¿Estás seguro de que quieres eliminar este %d elemento multimedia\?</item>
-        <item quantity="many">¿Estás seguro de que quieres borrar estos %d elementos multimedia\?</item>
-        <item quantity="other">¿Estás seguro de que quieres borrar estos %d elementos multimedia\?</item>
+        <item quantity="one">¿Estás seguro de que quieres eliminar este %1$d elemento multimedia\?</item>
+        <item quantity="many">¿Estás seguro de que quieres borrar estos %1$d elementos multimedia\?</item>
+        <item quantity="other">¿Estás seguro de que quieres borrar estos %1$d elementos multimedia\?</item>
     </plurals>
     <string name="favourite_media">Multimedia favorito</string>
     <string name="missing_permissions">Faltan permisos</string>
@@ -190,33 +190,33 @@
     <string name="login_to_server">Iniciar sesión en el servidor</string>
     <string name="login">Iniciar sesión</string>
     <plurals name="restore_media">
-        <item quantity="one">Restaurar %d elemento multimedia</item>
-        <item quantity="many">Restaurar los %d elementos multimedia</item>
-        <item quantity="other">Restaurar los %d elementos multimedia</item>
+        <item quantity="one">Restaurar %1$d elemento multimedia</item>
+        <item quantity="many">Restaurar los %1$d elementos multimedia</item>
+        <item quantity="other">Restaurar los %1$d elementos multimedia</item>
     </plurals>
     <plurals name="trash_media">
-        <item quantity="one">Enviar a la papelera el %d elemento multimedia</item>
-        <item quantity="many">Enviar a la papelera los %d elementos multimedia</item>
-        <item quantity="other">Enviar a la papelera los %d elementos multimedia</item>
+        <item quantity="one">Enviar a la papelera el %1$d elemento multimedia</item>
+        <item quantity="many">Enviar a la papelera los %1$d elementos multimedia</item>
+        <item quantity="other">Enviar a la papelera los %1$d elementos multimedia</item>
     </plurals>
     <string name="gallery_size">Tamaño de la galería</string>
     <plurals name="delete_media">
-        <item quantity="one">Borrar %d elemento multimedia</item>
-        <item quantity="many">Borrar los %d elementos multimedia</item>
-        <item quantity="other">Borrar los %d elementos multimedia</item>
+        <item quantity="one">Borrar %1$d elemento multimedia</item>
+        <item quantity="many">Borrar los %1$d elementos multimedia</item>
+        <item quantity="other">Borrar los %1$d elementos multimedia</item>
     </plurals>
     <string name="grant_permissions">Conceder permisos</string>
     <string name="server_url">Url del servidor</string>
     <string name="enter_libre_photos_url">Introduzca la url del servidor de LibrePhotos</string>
     <plurals name="restore_media_confirmation">
-        <item quantity="one">¿Restaurar este elemento multimedia %d?</item>
-        <item quantity="many">¿Restaurar estos elementos multimedia %d?</item>
-        <item quantity="other">¿Restaurar estos elementos multimedia %d?</item>
+        <item quantity="one">¿Restaurar este elemento multimedia %1$d?</item>
+        <item quantity="many">¿Restaurar estos elementos multimedia %1$d?</item>
+        <item quantity="other">¿Restaurar estos elementos multimedia %1$d?</item>
     </plurals>
     <plurals name="trash_media_confirmation">
-        <item quantity="one">¿Enviar este elemento multimedia %d a la papelera?</item>
-        <item quantity="many">¿Enviar estos %d elementos multimedia a la papelera?</item>
-        <item quantity="other">¿Enviar estos %d elementos multimedia a la papelera?</item>
+        <item quantity="one">¿Enviar este elemento multimedia %1$d a la papelera?</item>
+        <item quantity="many">¿Enviar estos %1$d elementos multimedia a la papelera?</item>
+        <item quantity="other">¿Enviar estos %1$d elementos multimedia a la papelera?</item>
     </plurals>
     <string name="media">Medios</string>
     <string name="restoring_media">Restaurar medios de la papelera…</string>
@@ -226,11 +226,11 @@
     <string name="video">Video</string>
     <string name="animate_video_thumbnails">Animar miniaturas de vídeo</string>
     <string name="refreshing_feed">Refrescando el feed</string>
-    <string name="years_ago">hace %d años</string>
+    <string name="years_ago">hace %1$d años</string>
     <string name="on_this_day">En este día</string>
     <string name="downloading_media_details">Descargando los detalles multimedia…</string>
     <string name="deleting_media">Eliminanando medios</string>
-    <string name="max_animated_video_thumbnails">Número máximo de miniaturas de vídeo animadas (%s)</string>
+    <string name="max_animated_video_thumbnails">Número máximo de miniaturas de vídeo animadas (%1$s)</string>
     <string name="max_animated_video_thumbnails_description">Un número elevado puede provocar inestabilidad en la aplicación. Bájelo si tiene problemas.</string>
     <string name="precaching_thumbnails">Miniaturas de almacenamiento previo en la caché…</string>
     <string name="cannot_perform_precaching">No se puede realizar el almacenamiento en previo en la caché ahora</string>
@@ -401,7 +401,7 @@
     <string name="logs">Registros</string>
     <string name="unsecured_server">Servidor no asegurado</string>
     <string name="unsecured_server_are_you_sure">¿Estás seguro que quieres conectarte a un servidor no asegurado?</string>
-    <string name="unsecured_server_not_encrypted">El servidor se comunica sobre http plano y no está encriptado: %s</string>
+    <string name="unsecured_server_not_encrypted">El servidor se comunica sobre http plano y no está encriptado: %1$s</string>
     <string name="local_media">Medios locales</string>
     <string name="local_media_rescan">Reescanear medios locales desde cero</string>
     <string name="remember_choice">Recordar elecciones</string>
@@ -411,7 +411,7 @@
 \n
 \nSus datos nunca se envían ni se almacenan en un servidor de terceros. Obtenga las mismas funciones potentes que esos servicios comerciales sin renunciar a sus datos personales y su privacidad.</string>
     <string name="collage">Collage</string>
-    <string name="collage_spacing">Espacio entre elementos del collage: %d</string>
+    <string name="collage_spacing">Espacio entre elementos del collage: %1$d</string>
     <string name="collage_spacing_include_edges">Incluir espaciado en los bordes</string>
     <string name="collage_shape">Forma de los elementos del collage</string>
     <string name="rectangle">Rectángulo</string>

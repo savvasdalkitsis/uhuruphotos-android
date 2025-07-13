@@ -29,5 +29,5 @@ internal fun SharedTransitionScope.Undated(
     state: GalleryState,
     action: (GalleryAction) -> Unit,
 ) {
-    Gallery(state, action = action)
+    Gallery(state = state, action = action)
 }
