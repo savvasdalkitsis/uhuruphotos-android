@@ -92,7 +92,11 @@ inline fun <reified T> Preferences.get(key: String, defaultValue: T = null as T)
 
 inline fun <reified T: Enum<T>> Preferences.observe(key: String, defaultValue: T): Flow<T> =
     observeEnum(key, defaultValue) {
-        enumValueOf(it)
+        try {
+            enumValueOf(it)
+        } catch (_: Exception) {
+            defaultValue
+        }
     }
 
 @JvmName("observeEnumNullable")

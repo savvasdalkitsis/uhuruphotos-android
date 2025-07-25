@@ -138,11 +138,15 @@ class ImageModule {
         memoryCache: MemoryCache,
         diskCache: DiskCache,
     ): ImageLoader = ImageLoader.Builder(context)
+        .allowRgb565(true)
+        .bitmapFactoryMaxParallelism(2)
+        .addLastModifiedToFileCacheKey(false)
         .memoryCache { memoryCache }
         .diskCache { diskCache }
-        .okHttpClient(okHttpBuilder
+        .okHttpClient { okHttpBuilder
             .addInterceptor(tokenRefreshInterceptor)
-            .build())
+            .build()
+        }
         .crossfade(true)
         .respectCacheHeaders(false)
         .components {

@@ -35,14 +35,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.layout.onGloballyPositioned
 import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.insets.insetsEnd
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.insets.insetsStart
@@ -68,8 +63,7 @@ fun UhuruScaffold(
     val scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     UhuruScaffold(
         modifier = modifier
-            .nestedScroll(scrollBehavior.nestedScrollConnection)
-            .background(MaterialTheme.colorScheme.surfaceContainer),
+            .nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             CommonTopBar(
                 topBarDisplayed = topBarDisplayed,
@@ -99,9 +93,6 @@ fun UhuruScaffold(
     bottomBarDisplayed: Boolean = true,
     content: @Composable BoxScope.(PaddingValues) -> Unit
 ) {
-    var bottomBarHeight by remember {
-        mutableIntStateOf(0)
-    }
     Scaffold(
         modifier = modifier
             .recomposeHighlighter()
@@ -117,9 +108,6 @@ fun UhuruScaffold(
                     Modifier
                         .background(bottomBarColor())
                         .navigationBarsPadding()
-                        .onGloballyPositioned {
-                            bottomBarHeight = it.size.height
-                        }
                 ) {
                     bottomBarContent()
                 }

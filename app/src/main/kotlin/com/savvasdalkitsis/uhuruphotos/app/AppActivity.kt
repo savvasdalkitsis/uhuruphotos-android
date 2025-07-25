@@ -35,6 +35,9 @@ import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ActivityInitia
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.Log
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window.LocalWindowSize
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
@@ -50,8 +53,10 @@ class AppActivity : FragmentActivity() {
         super.onCreate(savedInstanceState)
         installSplashScreen()
         enableEdgeToEdge()
-        Bugsnag.start(this)
-        BugsnagPerformance.start(PerformanceConfiguration.load(this))
+        MainScope().launch(Dispatchers.IO) {
+            Bugsnag.start(this@AppActivity)
+            BugsnagPerformance.start(PerformanceConfiguration.load(this@AppActivity))
+        }
         activityInitializer.onCreated(this)
         setContent {
             val logging by settingsUseCase.observeLoggingEnabled().collectAsState(initial = false)

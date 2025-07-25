@@ -40,7 +40,7 @@ internal class NetworkModule {
     @BasicOkHttpClient
     fun basicOkHttpBuilder(
         userAgentInterceptor: UserAgentInterceptor,
-    ): OkHttpClient.Builder = OkHttpClient().newBuilder()
+    ): OkHttpClient.Builder = OkHttpClient.Builder()
         .followRedirects(false)
         .callTimeout(60, TimeUnit.SECONDS)
         .connectTimeout(60, TimeUnit.SECONDS)

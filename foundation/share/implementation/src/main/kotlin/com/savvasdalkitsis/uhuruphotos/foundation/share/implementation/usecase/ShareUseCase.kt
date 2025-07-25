@@ -47,7 +47,7 @@ internal class ShareUseCase @Inject constructor(
     private val settingsUseCase: SettingsUseCase,
     @ApplicationContext private val context: Context,
 ) : ShareUseCase {
-    private val shareDir = File(context.cacheDir, "share_cache")
+    private val shareDir get() = File(context.cacheDir, "share_cache")
     private fun shareFile(postfix: String = "") = File(shareDir, "Photo$postfix.jpg")
 
     override suspend fun share(url: String) {

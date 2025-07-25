@@ -16,8 +16,10 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.app
 
 import android.app.Application
+import android.os.StrictMode
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
+import com.savvasdalkitsis.uhuruphotos.BuildConfig
 import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationInitializer
 import dagger.hilt.android.HiltAndroidApp
 import se.ansman.dagger.auto.AutoDaggerInitializer
@@ -37,6 +39,20 @@ class App :
 
     override fun onCreate() {
         super.onCreate()
+        if (BuildConfig.DEBUG){
+            StrictMode.setThreadPolicy(
+                StrictMode.ThreadPolicy.Builder()
+                    .detectAll()
+                    .penaltyLog()
+                    .build()
+            )
+            StrictMode.setVmPolicy(
+                StrictMode.VmPolicy.Builder()
+                    .detectAll()
+                    .penaltyLog()
+                    .build()
+            )
+        }
         initializer.initialize()
         applicationInitializer.onCreated(this)
     }

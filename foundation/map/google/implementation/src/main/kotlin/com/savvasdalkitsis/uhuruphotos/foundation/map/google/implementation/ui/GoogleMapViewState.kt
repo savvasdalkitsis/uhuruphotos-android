@@ -28,7 +28,7 @@ import com.google.android.gms.maps.model.LatLngBounds
 import com.google.maps.android.compose.CameraPositionState
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.TileOverlay
-import com.google.maps.android.compose.rememberMarkerState
+import com.google.maps.android.compose.rememberUpdatedMarkerState
 import com.google.maps.android.heatmaps.Gradient
 import com.google.maps.android.heatmaps.HeatmapTileProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.launchers.api.onMain
@@ -48,7 +48,7 @@ internal class GoogleMapViewState(
     @Composable
     override fun Marker(latLon: LatLon) {
         Marker(
-            state = rememberMarkerState(position = latLon.toLatLng),
+            state = rememberUpdatedMarkerState(position = latLon.toLatLng),
         )
     }
 
