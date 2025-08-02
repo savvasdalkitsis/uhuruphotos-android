@@ -1,0 +1,3 @@
+* New Compose Navigation 3
+* Shared element transitions
+* Performance improvements
