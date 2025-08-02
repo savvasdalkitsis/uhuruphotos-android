@@ -7,24 +7,24 @@ androidx-hilt = "1.2.0"
 autodagger = "2.0.0"
 coil = "2.7.0"
 compose = "1.8.3"
-crypto = "1.1.0-beta01"
+crypto = "1.1.0"
 datastore = "1.1.7"
 gms = "19.2.0"
 google-services = "4.4.3"
-hilt = "2.56.2"
+hilt = "2.57"
 hilt-compiler = "1.2.0"
 kotlin = "2.2.0"
 kotlinx = "1.10.2"
-lifecycle = "2.9.1"
+lifecycle = "2.9.2"
 lumberjack = "6.0.7"
-nav3 = "1.0.0-alpha05"
+nav3 = "1.0.0-alpha06"
 material3 = "1.3.2"
-media3 = "1.7.1"
-mockk = "1.14.4"
+media3 = "1.8.0"
+mockk = "1.14.5"
 moshi = "1.15.2"
 okhttp = "5.1.0"
 permissions = "2.1.0"
-resaca = "4.4.4"
+resaca = "4.4.10"
 result = "2.0.1"
 retrofit = "3.0.0"
 serialization = "1.9.0"
@@ -78,7 +78,7 @@ androidx-lifecycle = { module = "androidx.lifecycle:lifecycle-runtime-ktx", vers
 androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-android", version.ref = "lifecycle" }
 androidx-navigation3-runtime = { module = "androidx.navigation3:navigation3-runtime", version.ref = "nav3" }
 androidx-navigation3-ui = { module = "androidx.navigation3:navigation3-ui", version.ref = "nav3" }
-androidx-navigation3-viewmodel = "androidx.lifecycle:lifecycle-viewmodel-navigation3:1.0.0-alpha03"
+androidx-navigation3-viewmodel = "androidx.lifecycle:lifecycle-viewmodel-navigation3:1.0.0-alpha04"
 androidx-media3-core = { module = "androidx.media3:media3-exoplayer", version.ref = "media3" }
 androidx-media3-database = { module = "androidx.media3:media3-database", version.ref = "media3" }
 androidx-media3-hls = { module = "androidx.media3:media3-exoplayer-hls", version.ref = "media3" }
@@ -91,7 +91,7 @@ androidx-splash = "androidx.core:core-splashscreen:1.0.1"
 androidx-startup = "androidx.startup:startup-runtime:1.2.0"
 androidx-tracing = "androidx.tracing:tracing-ktx:1.3.0"
 androidx-window = "androidx.window:window:1.4.0"
-androidx-work = "androidx.work:work-runtime-ktx:2.10.2"
+androidx-work = "androidx.work:work-runtime-ktx:2.10.3"
 androidx-work-hilt = "androidx.hilt:hilt-work:1.2.0"
 autodagger-core = { module = "se.ansman.dagger.auto:android", version.ref = "autodagger" }
 autodagger-ksp = { module = "se.ansman.dagger.auto:compiler", version.ref = "autodagger" }
@@ -99,7 +99,7 @@ autodagger-retrofit = { module = "se.ansman.dagger.auto:retrofit", version.ref =
 biometric = "androidx.biometric:biometric:1.1.0"
 bottomsheet = "com.holix.android:bottomsheetdialog-compose:1.6.0"
 bubble-navigation = "com.github.savvasdalkitsis:BubbleNavigationBarCompose:1.0.2"
-bugsnag = "com.bugsnag:bugsnag-android:6.15.0"
+bugsnag = "com.bugsnag:bugsnag-android:6.16.0"
 bugsnag-performance = "com.bugsnag:bugsnag-android-performance:2.0.0"
 bugsnag-plugin = "com.bugsnag:bugsnag-android-gradle-plugin:8.2.0"
 capturable = "com.github.SmartToolFactory:Compose-Screenshot:1.0.3"
@@ -132,7 +132,7 @@ kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-androi
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx" }
 kotlinx-immutable = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.4.0"
 kotlinx-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "serialization" }
-leaks = "com.squareup.leakcanary:leakcanary-android:2.14"
+leaks = "com.squareup.leakcanary:leakcanary-android:3.0-alpha-8"
 log4k = "de.peilicke.sascha:log4k:1.5.0"
 lottie = "com.airbnb.android:lottie-compose:6.6.7"
 lumberjack-core = { module = "com.github.MFlisar.Lumberjack:core", version.ref = "lumberjack" }
@@ -143,7 +143,7 @@ lumberjack-extension-feedback = { module = "com.github.MFlisar.Lumberjack:extens
 lumberjack-extension-notification = { module = "com.github.MFlisar.Lumberjack:extension-notification", version.ref = "lumberjack" }
 lumberjack-extension-viewer = { module = "com.github.MFlisar.Lumberjack:extension-viewer", version.ref = "lumberjack" }
 mapbox = "com.mapbox.maps:android-ndk27:11.13.3"
-maplibre = "org.maplibre.gl:android-sdk:11.12.1"
+maplibre = "org.maplibre.gl:android-sdk:11.13.0"
 maplibre-annotations = "org.maplibre.gl:android-plugin-annotation-v9:3.0.2"
 maps = { module = "com.google.android.gms:play-services-maps", version.ref = "gms" }
 maps-compose = "com.google.maps.android:maps-compose:6.7.0"

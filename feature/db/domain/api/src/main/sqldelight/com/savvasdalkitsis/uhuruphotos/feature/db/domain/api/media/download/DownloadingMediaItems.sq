@@ -7,7 +7,7 @@ insert:
 INSERT OR REPLACE INTO downloadingMediaItems VALUES ?;
 
 removeStartingWith:
-DELETE FROM downloadingMediaItems WHERE id LIKE :id || "%";
+DELETE FROM downloadingMediaItems WHERE id LIKE :id || '%';
 
 removeDownloadId:
 DELETE FROM downloadingMediaItems WHERE downloadId == :id;

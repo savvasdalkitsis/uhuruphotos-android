@@ -4,6 +4,7 @@
     <application
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher_round">
+        <profileable android:shell="true" android:enabled="true"/>
 
         <meta-data
             android:name="com.bugsnag.android.API_KEY"
