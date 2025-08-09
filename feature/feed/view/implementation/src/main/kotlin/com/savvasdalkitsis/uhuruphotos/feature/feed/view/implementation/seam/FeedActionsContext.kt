@@ -23,6 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.battery.domain.api.usecase.Batter
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.domain.api.usecase.UserAlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkScheduler
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.NewSelectionList
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.SelectionList
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.AskForPermissions
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
@@ -60,6 +61,7 @@ class FeedActionsContext @Inject constructor(
     val jobsUseCase: JobsUseCase,
     val localMediaDeletionUseCase: LocalMediaDeletionUseCase,
     val selectionList: SelectionList,
+    val newSelectionList: NewSelectionList,
     val settingsUIUseCase: SettingsUIUseCase,
     val memoriesUseCase: MemoriesUseCase,
     val localMediaWorkScheduler: LocalMediaWorkScheduler,

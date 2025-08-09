@@ -54,6 +54,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.Ce
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelSelectionModeState.NONE
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelSelectionModeState.SELECTABLE
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.NewCelState
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Thumbnail
 import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.SharedElementId
 import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.recomposeHighlighter
@@ -73,9 +74,10 @@ import uhuruphotos_android.foundation.icons.api.generated.resources.ic_play_fill
 @Composable
 fun SharedTransitionScope.Cel(
     modifier: Modifier = Modifier,
-    state: CelState,
+    state: CelState? = null,
+    newState: NewCelState? = null,
     onSelected: CelSelected,
-    aspectRatio: Float = state.mediaItem.ratio,
+    aspectRatio: Float = newState?.mediaItem?.ratio ?: 1f,
     contentScale: ContentScale = ContentScale.FillBounds,
     contentOffset: Float = 0f,
     shape: Shape = RectangleShape,
@@ -91,6 +93,7 @@ fun SharedTransitionScope.Cel(
         Cel(
             celModifier,
             state,
+            newState,
             aspectRatio,
             contentScale,
             contentOffset,
@@ -102,10 +105,10 @@ fun SharedTransitionScope.Cel(
     when (selectionMode) {
         CHECKABLE -> Checkable(
             modifier = modifier,
-            id = state.mediaItem.id,
-            selectionMode = state.selectionMode,
-            onClick = { onSelected(state) },
-            onLongClick = { onLongClick(state) },
+            id = state?.mediaItem?.id ?: newState!!.mediaItem.id,
+            selectionMode = state?.selectionMode ?: newState!!.selectionMode,
+            onClick = { onSelected(state!!) },
+            onLongClick = { onLongClick(state!!) },
         ) {
             cel()
         }
@@ -117,8 +120,9 @@ fun SharedTransitionScope.Cel(
 @Composable
 private fun SharedTransitionScope.Cel(
     modifier: Modifier = Modifier,
-    state: CelState,
-    aspectRatio: Float = state.mediaItem.ratio,
+    state: CelState?,
+    newState: NewCelState?,
+    aspectRatio: Float = newState?.mediaItem?.ratio ?: 1f,
     contentScale: ContentScale = ContentScale.FillBounds,
     contentOffset: Float = 0f,
     shape: Shape = RectangleShape,
@@ -133,10 +137,10 @@ private fun SharedTransitionScope.Cel(
         shape,
         miniIcons,
         showSyncState,
-        state.mediaItem.fallbackColor,
-        state.selectionMode,
-        state.mediaItem.id,
-        state.mediaItem.isFavourite,
+        state?.mediaItem?.fallbackColor ?: newState!!.mediaItem.fallbackColor,
+        state?.selectionMode ?: newState!!.selectionMode,
+        state?.mediaItem?.id ?: newState!!.mediaItem.id,
+        state?.mediaItem?.isFavourite ?: newState!!.mediaItem.isFavourite,
     )
 }
 

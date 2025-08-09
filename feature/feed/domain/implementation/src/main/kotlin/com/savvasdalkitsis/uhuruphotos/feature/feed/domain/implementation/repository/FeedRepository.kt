@@ -22,6 +22,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.Database
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitList
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingle
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingleOrNull
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.feed.Feed
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.feed.FeedQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.GetRemoteMediaCollections
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaCollectionsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchTypeModel
@@ -57,6 +59,7 @@ class FeedRepository @Inject constructor(
     private val preferences: Preferences,
     @DateModule.ParsingDateTimeFormat
     private val parsingDateTimeFormat: DateTimeFormatter,
+    private val feedQueries: FeedQueries,
 ) {
 
     private val lastFeedRefresh: String? get() =
@@ -70,6 +73,11 @@ class FeedRepository @Inject constructor(
 
     suspend fun hasRemoteMediaCollections(): Boolean =
         remoteMediaCollectionsQueries.remoteMediaCollectionCount().awaitSingle() > 0
+
+    fun observeFeed(): Flow<List<Feed>> =
+        feedQueries.get().asFlow()
+            .distinctUntilChanged()
+            .mapToList(Dispatchers.IO)
 
     fun observeRemoteMediaCollectionsByDate(
         feedFetchTypeModel: FeedFetchTypeModel,

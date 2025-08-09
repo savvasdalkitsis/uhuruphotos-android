@@ -93,6 +93,7 @@ fun SharedTransitionScope.Collage(
                     .recomposeHighlighter(),
                 contentPadding = contentPadding,
                 state = state.clusters,
+                newState = state.newClusters,
                 showSelectionHeader = showSelectionHeader,
                 maintainAspectRatio = collageDisplay.maintainAspectRatio,
                 miniIcons = collageDisplay.miniIcons,

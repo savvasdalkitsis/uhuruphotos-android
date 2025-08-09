@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.ac
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.SyncState
 import com.savvasdalkitsis.uhuruphotos.feature.battery.domain.api.model.BatteryOptimizationStatusModel.BATTERY_OPTIMIZED
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.ClusterState
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.NewClusterState
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplayState
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.toCluster
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchTypeModel
@@ -28,6 +29,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.Fee
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.Loading
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.ShowBatteryOptimizationBanner
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.ShowClusters
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.ShowFeed
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.ShowLocalMediaSyncRunning
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.ShowLostServerConnection
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.ShowNoPhotosFound
@@ -39,6 +41,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobModel
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatusModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDeviceModel.RequiresPermissionsModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.NewMediaItemModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.NewCelState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
 import com.savvasdalkitsis.uhuruphotos.feature.sync.domain.api.model.SyncStatus.Enabled
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkable.SelectionMode
@@ -65,7 +69,7 @@ data object LoadFeed : FeedAction() {
         showLibraryTab(),
         changeDisplay(),
         flowOf(Loading),
-        showClusters(),
+        showNewClusters(),
         localMediaPermissionHeader(),
         cloudSyncHeader(),
         localMediaSyncStatus(),
@@ -139,6 +143,46 @@ data object LoadFeed : FeedAction() {
                         && settingsUIUseCase.getShowBannerAskingForCloudSyncOnFeed()
             }
         }.filterNotNull()
+
+    private fun FeedActionsContext.showNewClusters(): Flow<FeedMutation> =
+        combine(
+            feedUseCase.observeNewFeed(),
+            newSelectionList.ids,
+            avatarUseCase.getAvatarState(),
+            feedUseCase
+                .observeFeedDisplay()
+                .distinctUntilChanged(),
+        ) { feed, selectedIds, avatar, feedDisplay ->
+            val final = feed.days.map { day ->
+                NewClusterState(
+                    cels = day.feedItems.map { item ->
+                        NewCelState(
+                            mediaItem = NewMediaItemModel(
+                                id = item.stableId,
+                                uri = item.uri,
+                                isVideo = item.isVideo,
+                                syncStatus = item.syncStatus,
+                                fallbackColor = item.fallbackColor,
+                                isFavourite = item.isFavourite,
+                                ratio = item.ratio,
+                            ),
+                            selectionMode =  when {
+                                selectedIds.isEmpty() -> SelectionMode.UNDEFINED
+                                item.stableId in selectedIds -> SelectionMode.SELECTED
+                                else -> SelectionMode.UNSELECTED
+                            }
+                        )
+                    }.toImmutableList(),
+                    displayTitle = day.date,
+                    location = day.location,
+                )
+            }
+            if (avatar.syncState != SyncState.IN_PROGRESS && feed.totalItems == 0) {
+                ShowNoPhotosFound
+            } else {
+                ShowFeed(final)
+            }
+        }
 
     private fun FeedActionsContext.showClusters() =
         combine(

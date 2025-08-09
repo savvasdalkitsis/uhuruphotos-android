@@ -13,29 +13,21 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state
+package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model
 
 import android.os.Parcelable
 import androidx.compose.runtime.Immutable
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemModel
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.NewMediaItemModel
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkable.SelectionMode
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.feed.FeedItemSyncStatus
 import kotlinx.parcelize.Parcelize
 
 @Immutable
 @Parcelize
-data class CelState(
-    val mediaItem: MediaItemModel,
-    val selectionMode: SelectionMode = SelectionMode.UNDEFINED,
-) : Parcelable
-
-fun MediaItemModel.toCel() = CelState(
-    mediaItem = this,
-)
-
-@Immutable
-@Parcelize
-data class NewCelState(
-    val mediaItem: NewMediaItemModel,
-    val selectionMode: SelectionMode = SelectionMode.UNDEFINED,
+data class NewMediaItemModel(
+    val id: String,
+    val uri: String,
+    val isVideo: Boolean,
+    val syncStatus: FeedItemSyncStatus,
+    val fallbackColor: String?,
+    val isFavourite: Boolean,
+    val ratio: Float,
 ) : Parcelable

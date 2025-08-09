@@ -26,6 +26,7 @@ import kotlinx.parcelize.Parcelize
 data class CollageState(
     val isLoading: Boolean = false,
     val isEmpty: Boolean = false,
+    val newClusters: ImmutableList<NewClusterState> = persistentListOf(),
     val clusters: ImmutableList<ClusterState> = persistentListOf(),
     val collageDisplayState: CollageDisplayState = PredefinedCollageDisplayState.default,
 ) : Parcelable {

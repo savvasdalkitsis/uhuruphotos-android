@@ -1,0 +1,17 @@
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.feed.FeedItemSyncStatus;
+
+CREATE TABLE feed (
+    md5sum TEXT NOT NULL PRIMARY KEY,
+    dateDisplay TEXT NOT NULL,
+    sortableValue INTEGER AS kotlin.Long NOT NULL,
+    location TEXT,
+    uri TEXT NOT NULL,
+    isVideo INTEGER AS kotlin.Boolean NOT NULL,
+    isFavourite INTEGER AS kotlin.Boolean NOT NULL,
+    syncStatus INTEGER AS FeedItemSyncStatus NOT NULL,
+    fallbackColor TEXT,
+    ratio REAL AS kotlin.Float NOT NULL
+);
+
+get:
+SELECT * FROM feed ORDER BY sortableValue DESC;

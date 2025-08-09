@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase
 
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplayState
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.Feed
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchTypeModel
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchTypeModel.ALL
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionModel
@@ -28,6 +29,8 @@ interface FeedUseCase {
         feedFetchTypeModel: FeedFetchTypeModel = ALL,
         loadSmallInitialChunk: Boolean = true,
     ): Flow<List<MediaCollectionModel>>
+
+    fun observeNewFeed(): Flow<Feed>
 
     fun observeFeedDisplay(): Flow<PredefinedCollageDisplayState>
     fun setFeedDisplay(feedDisplay: PredefinedCollageDisplayState)

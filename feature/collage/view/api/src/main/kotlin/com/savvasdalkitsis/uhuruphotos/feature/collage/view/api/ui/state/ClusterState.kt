@@ -20,6 +20,7 @@ import androidx.compose.runtime.Immutable
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.NewCelState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -38,6 +39,14 @@ data class ClusterState(
 ) : Parcelable {
     val hasAnyCelsWithRemoteMedia = cels.any { it.mediaItem.id.preferRemote is MediaIdModel.RemoteIdModel }
 }
+
+@Immutable
+@Parcelize
+data class NewClusterState(
+    val cels: ImmutableList<NewCelState> = persistentListOf(),
+    val displayTitle: String = "",
+    val location: String? = null,
+) : Parcelable
 
 val previewClusterStateEmpty = ClusterState(
     "id",

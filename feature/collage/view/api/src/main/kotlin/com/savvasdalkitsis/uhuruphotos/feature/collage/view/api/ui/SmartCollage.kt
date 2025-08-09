@@ -51,6 +51,7 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.ClusterState
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.NewClusterState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.Cel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.CelSelected
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelSelectionModeState
@@ -72,7 +73,7 @@ import uhuruphotos_android.foundation.strings.api.generated.resources.no_date
 internal fun SharedTransitionScope.SmartCollage(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues,
-    state: ImmutableList<ClusterState>,
+    state: ImmutableList<NewClusterState>,
     showSelectionHeader: Boolean = false,
     maintainAspectRatio: Boolean = true,
     miniIcons: Boolean = false,
@@ -86,8 +87,8 @@ internal fun SharedTransitionScope.SmartCollage(
     collageFooter: @Composable (SmartGridItemScope.() -> Unit)? = null,
     onCelSelected: CelSelected,
     onCelLongPressed: (CelState) -> Unit,
-    onClusterRefreshClicked: (ClusterState) -> Unit,
-    onClusterSelectionClicked: (ClusterState) -> Unit,
+    onClusterRefreshClicked: (NewClusterState) -> Unit,
+    onClusterSelectionClicked: (NewClusterState) -> Unit,
 ) {
     Box {
         val topPadding = remember {
@@ -172,7 +173,7 @@ internal fun SharedTransitionScope.SmartCollage(
                 }
                 for (cel in cluster.cels) {
                     val id = cel.mediaItem.id
-                    item("item:$clusterIndex:${id.serializableId}") {
+                    item("item:$clusterIndex:${id}") {
                         val aspectRatio = remember(maintainAspectRatio) {
                             when {
                                 maintainAspectRatio -> cel.mediaItem.ratio
@@ -183,9 +184,9 @@ internal fun SharedTransitionScope.SmartCollage(
                             modifier = Modifier
                                 .animateItem()
                                 .clip(shape),
-                            state = cel,
+                            newState = cel,
                             onSelected = {
-                                onCelSelected(cel)
+//                                onCelSelected(cel)
                             },
                             aspectRatio = aspectRatio,
                             contentScale = remember(maintainAspectRatio) {
@@ -218,7 +219,6 @@ internal fun SharedTransitionScope.SmartCollage(
                     ?.cels
                     ?.firstOrNull()
                     ?.mediaItem
-                    ?.mediaDay
                     ?.displayText
                     ?: ""
             }
@@ -282,10 +282,10 @@ private fun BoxScope.StickyHeader(
 @Composable
 private fun FeedClusterHeader(
     modifier: Modifier,
-    clusterState: ClusterState,
+    clusterState: NewClusterState,
     showSelectionHeader: Boolean,
-    onClusterRefreshClicked: (ClusterState) -> Unit,
-    onClusterSelectionClicked: (ClusterState) -> Unit,
+    onClusterRefreshClicked: (NewClusterState) -> Unit,
+    onClusterSelectionClicked: (NewClusterState) -> Unit,
 ) {
     val noDate = stringResource(string.no_date)
     val title = remember(clusterState.displayTitle) {
