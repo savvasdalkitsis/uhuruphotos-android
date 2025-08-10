@@ -50,7 +50,7 @@ jobs:
         GRADLE_CACHE_PASSWORD: ${{ secrets.GRADLE_CACHE_PASSWORD }}
       run: ./gradlew testDebugUnitTest assembleDebug # sonarqube
     - name: Test Reporter
-      uses: dorny/test-reporter@v1.9.1
+      uses: dorny/test-reporter@v2.1.1
       if: success() || failure()
       with:
         name: Tests
