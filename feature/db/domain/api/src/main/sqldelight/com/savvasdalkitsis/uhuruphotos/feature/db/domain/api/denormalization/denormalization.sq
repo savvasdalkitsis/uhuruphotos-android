@@ -1,0 +1,16 @@
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.denormalization.DenormalizationType;
+
+CREATE TABLE denormalization (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    type TEXT AS DenormalizationType NOT NULL,
+    externalId TEXT NOT NULL
+);
+
+get:
+SELECT * FROM denormalization;
+
+delete:
+DELETE FROM denormalization WHERE id = :id;
+
+insert:
+INSERT OR REPLACE INTO denormalization VALUES (?, ?,?);

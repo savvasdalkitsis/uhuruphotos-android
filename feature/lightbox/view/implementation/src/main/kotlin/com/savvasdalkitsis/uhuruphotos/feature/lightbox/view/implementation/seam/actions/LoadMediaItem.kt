@@ -69,8 +69,7 @@ import uhuruphotos_android.foundation.strings.api.generated.resources.error_load
 
 @OptIn(ExperimentalCoroutinesApi::class)
 data class LoadMediaItem(
-    val actionMediaId: MediaIdModel<*>,
-    val actionMediaItemHash: MediaItemHashModel,
+    val actionMediaMd5Sum: String,
     val sequenceDataSource: LightboxSequenceDataSourceModel,
 ) : LightboxAction() {
 
@@ -78,8 +77,8 @@ data class LoadMediaItem(
         state: LightboxState,
     ) = merge(
         flow {
-            currentMediaId.emit(actionMediaId)
-            emit(ShowMedia(listOf(actionMediaId.toSingleMediaItemState(mediaHash = actionMediaItemHash)), 0))
+//            currentMediaId.emit(actionMediaMd5Sum)
+//            emit(ShowMedia(listOf(actionMediaId.toSingleMediaItemState(mediaHash = actionMediaItemHash)), 0))
 
             if (sequenceDataSource == TrashModel) {
                 mediaItemTypeState = MediaItemTypeState.TRASHED

@@ -22,6 +22,7 @@ import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.map
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.denormalization.DenormalizationQueue
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaCollections
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemDetails
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
@@ -58,6 +59,7 @@ class RemoteMediaRepository @Inject constructor(
     private val remoteMediaService: RemoteMediaService,
     private val remoteMediaTrashQueries: RemoteMediaTrashQueries,
     private val lightboxDetailsQueries: LightboxDetailsQueries,
+    private val denormalizationQueue: DenormalizationQueue,
 ) {
 
     fun observeAllMediaItemDetails(): Flow<List<DbRemoteMediaItemDetails>> =
@@ -140,6 +142,7 @@ class RemoteMediaRepository @Inject constructor(
                     hash = summary.id,
                     md5 = md5,
                 )
+                denormalizationQueue.newRemoteMediaItemFound(summary.id)
             }
         }
     }

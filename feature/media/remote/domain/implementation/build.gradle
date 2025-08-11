@@ -10,7 +10,7 @@ dependencies {
 
     implementation(
             libs.accompanist.systemui,
-                        libs.androidx.compose.material3,
+            libs.androidx.compose.material3,
             libs.androidx.compose.material.windowsize,
             libs.androidx.work,
             libs.androidx.work.hilt,

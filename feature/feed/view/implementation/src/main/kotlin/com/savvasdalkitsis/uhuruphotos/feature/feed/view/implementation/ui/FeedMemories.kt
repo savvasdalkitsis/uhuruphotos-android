@@ -41,7 +41,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.MemoryCelState
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.NewCelState
 import org.jetbrains.compose.resources.stringResource
 import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
 import uhuruphotos_android.foundation.strings.api.generated.resources.on_this_day
@@ -49,8 +49,8 @@ import uhuruphotos_android.foundation.strings.api.generated.resources.on_this_da
 @Composable
 internal fun SharedTransitionScope.FeedMemories(
     memories: List<MemoryCelState>,
-    onScrollToMemory: (CelState) -> Unit,
-    onMemorySelected: (memory: CelState, yearsAgo: Int) -> Unit,
+    onScrollToMemory: (NewCelState) -> Unit,
+    onMemorySelected: (memory: NewCelState, yearsAgo: Int) -> Unit,
 ) {
     var width by remember { mutableIntStateOf(0) }
     Column(

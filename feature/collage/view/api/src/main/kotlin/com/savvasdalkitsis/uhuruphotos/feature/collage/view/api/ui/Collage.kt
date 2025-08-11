@@ -28,12 +28,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.ClusterState
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplayState
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.NewClusterState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.CelSelected
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelSelectionModeState
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.NewCelState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.animation.AnimationResource
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.LocalAnimatedVideoThumbnails
 import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.recomposeHighlighter
@@ -65,9 +65,9 @@ fun SharedTransitionScope.Collage(
     loadingAnimation: AnimationResource? = null,
     onCelSelected: CelSelected = { _ -> },
     onChangeDisplay: (CollageDisplayState) -> Unit = {},
-    onCelLongPressed: (CelState) -> Unit = {},
-    onClusterRefreshClicked: (ClusterState) -> Unit = {},
-    onClusterSelectionClicked: (ClusterState) -> Unit = {},
+    onCelLongPressed: (NewCelState) -> Unit = {},
+    onClusterRefreshClicked: (NewClusterState) -> Unit = {},
+    onClusterSelectionClicked: (NewClusterState) -> Unit = {},
 ) = when {
     isLoading(state.isLoading, state.clusters, state.isEmpty) -> {
         if (loadingAnimation != null) {
@@ -93,7 +93,6 @@ fun SharedTransitionScope.Collage(
                     .recomposeHighlighter(),
                 contentPadding = contentPadding,
                 state = state.clusters,
-                newState = state.newClusters,
                 showSelectionHeader = showSelectionHeader,
                 maintainAspectRatio = collageDisplay.maintainAspectRatio,
                 miniIcons = collageDisplay.miniIcons,
@@ -118,11 +117,11 @@ fun SharedTransitionScope.Collage(
 }
 
 @Composable
-private fun isEmpty(isLoading: Boolean, clusterStates: ImmutableList<ClusterState>, isEmpty: Boolean) =
+private fun isEmpty(isLoading: Boolean, clusterStates: ImmutableList<NewClusterState>, isEmpty: Boolean) =
     !isLoading && isEmpty && clusterStates.isEmpty()
 
 @Composable
-private fun isLoading(isLoading: Boolean, clusterStates: ImmutableList<ClusterState>, isEmpty: Boolean) =
+private fun isLoading(isLoading: Boolean, clusterStates: ImmutableList<NewClusterState>, isEmpty: Boolean) =
     (isLoading && clusterStates.isEmpty()) || (!isEmpty && clusterStates.isEmpty())
 
 @Composable

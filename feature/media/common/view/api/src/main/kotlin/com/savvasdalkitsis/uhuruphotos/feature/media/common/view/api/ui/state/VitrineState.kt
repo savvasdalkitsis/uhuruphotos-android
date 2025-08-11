@@ -22,16 +22,16 @@ import kotlinx.parcelize.Parcelize
 @Immutable
 @Parcelize
 data class VitrineState(
-    val cel1: CelState? = null,
-    val cel2: CelState? = null,
-    val cel3: CelState? = null,
-    val cel4: CelState? = null,
+    val cel1: NewCelState? = null,
+    val cel2: NewCelState? = null,
+    val cel3: NewCelState? = null,
+    val cel4: NewCelState? = null,
 ) : Parcelable {
     val hasMoreThanOneItem = cel2 != null
     val isEmpty = cel1 == null && cel2 == null && cel3 == null && cel4 == null
 
     companion object {
-        operator fun invoke(celStates: List<CelState?>)= VitrineState(
+        operator fun invoke(celStates: List<NewCelState?>)= VitrineState(
             celStates.getOrNull(0),
             celStates.getOrNull(1),
             celStates.getOrNull(2),

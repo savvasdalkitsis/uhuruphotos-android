@@ -28,8 +28,8 @@ data object DownloadSelectedCels : FeedAction() {
     ) = flow<FeedMutation> {
         toaster.show(string.downloading_original_files)
         selectionList.clear()
-        downloadUseCase.scheduleMediaDownload(state.selectedCels.mapNotNull {
-            it.mediaItem.id.findRemote
-        })
+//        downloadUseCase.scheduleMediaDownload(state.selectedCels.mapNotNull {
+//            it.mediaItem.id.findRemote
+//        })
     }
 }

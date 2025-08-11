@@ -31,7 +31,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.ClusterState
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.NewClusterState
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.previewClusterStateEmpty
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkable.SelectionMode.UNSELECTED
@@ -39,12 +39,11 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruActionIcon
 import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
 import uhuruphotos_android.foundation.icons.api.generated.resources.ic_check_circle
 import uhuruphotos_android.foundation.icons.api.generated.resources.ic_clear
-import uhuruphotos_android.foundation.icons.api.generated.resources.ic_refresh
 
 @Composable
 internal fun ClusterHeader(
     modifier: Modifier = Modifier,
-    state: ClusterState,
+    state: NewClusterState,
     showSelectionHeader: Boolean,
     title: String = state.displayTitle,
     location: String? = state.location,
@@ -98,13 +97,6 @@ internal fun ClusterHeader(
                     style = MaterialTheme.typography.labelLarge
                 )
             }
-        }
-        if (state.showRefreshIcon) {
-            UhuruActionIcon(
-                onClick = onRefreshClicked,
-                icon = drawable.ic_refresh,
-                tint = MaterialTheme.colorScheme.primary,
-            )
         }
     }
 }

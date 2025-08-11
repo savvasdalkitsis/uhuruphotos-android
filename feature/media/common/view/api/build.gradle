@@ -23,6 +23,7 @@ dependencies {
             libs.moshi,
             project(":feature:media:common:domain:api"),
             project(":feature:people:view:api"),
+            project(":feature:user:view:api"),
             project(":foundation:compose:api"),
             project(":foundation:icons:api"),
             project(":foundation:sharedelement:api"),

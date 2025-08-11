@@ -11,8 +11,8 @@ dependencies {
 
     implementation(
             libs.androidx.compose.foundation.layout,
-                        libs.androidx.compose.material3,
-                        libs.androidx.compose.ui,
+            libs.androidx.compose.material3,
+            libs.androidx.compose.ui,
             libs.androidx.compose.ui.tooling.preview,
             libs.androidx.lifecycle,
             libs.bottomsheet,
@@ -40,6 +40,7 @@ dependencies {
             project(":feature:settings:domain:api"),
             project(":feature:sync:domain:api"),
             project(":feature:upload:domain:api"),
+            project(":feature:user:domain:api"),
             project(":feature:welcome:domain:api"),
             project(":foundation:coroutines:api"),
             project(":foundation:compose:api"),

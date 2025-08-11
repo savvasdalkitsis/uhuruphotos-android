@@ -26,7 +26,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchTy
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchTypeModel.ONLY_WITHOUT_DATES
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchTypeModel.ONLY_WITH_DATES
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchTypeModel.VIDEOS
-import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedItem
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.FeedCache
@@ -42,6 +41,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.Welcom
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.flow
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.andThenSwitchTo
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
+import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.mapValues
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
@@ -50,8 +50,10 @@ import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.observe
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
 import com.savvasdalktsis.uhuruphotos.feature.download.domain.api.usecase.DownloadUseCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
@@ -62,7 +64,7 @@ import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.feed.Feed as FeedDbModel
 
-@OptIn(ExperimentalCoroutinesApi::class)
+@OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
 @AutoBind
 internal class FeedUseCase @Inject constructor(
     private val feedRepository: FeedRepository,
@@ -75,6 +77,7 @@ internal class FeedUseCase @Inject constructor(
     private val preferences: Preferences,
     private val welcomeUseCase: WelcomeUseCase,
     private val portfolioUseCase: PortfolioUseCase,
+    private val dateDisplayer: DateDisplayer,
 ) : FeedUseCase {
 
     private val key = "feedDisplay"
@@ -90,48 +93,48 @@ internal class FeedUseCase @Inject constructor(
         else -> combinedFeed(feedFetchTypeModel, false)
     }.distinctUntilChanged()
 
-    override fun observeNewFeed(): Flow<Feed> = feedRepository.observeFeed().mapLatest { model ->
-        if (model.isEmpty()) {
-            Feed(days = emptyList())
-        } else {
-            fun createFeedDayFrom(
-                dbItems: List<FeedDbModel>
-            ): FeedDay {
-                val firstItem = dbItems.first()
-                return FeedDay(
-                    date = firstItem.dateDisplay,
-                    location = firstItem.location,
-                    feedItems = dbItems.map { item ->
-                        FeedItem(
-                            stableId = item.md5sum,
-                            uri = item.uri,
-                            isVideo = item.isVideo,
-                            syncStatus = item.syncStatus,
-                            fallbackColor = item.fallbackColor,
-                            isFavourite = item.isFavourite,
-                            ratio = item.ratio,
+    override fun observeNewFeed(): Flow<Feed> = feedRepository.observeFeed()
+        .debounce(500)
+        .map { items ->
+            if (items.isEmpty()) {
+                Feed(emptyList())
+            } else {
+                val days = mutableListOf<FeedDay>()
+
+                var currentDayItems = mutableListOf<FeedDbModel>()
+                currentDayItems.add(items.first())
+
+                for (i in 1 until items.size) {
+                    val currentItem = items[i]
+                    val previousItem = items[i - 1]
+
+                    if (currentItem.day != previousItem.day) {
+                        val firstItemOfPreviousDay = currentDayItems.first()
+                        days.add(
+                            FeedDay(
+                                date = dateDisplayer.dateString(firstItemOfPreviousDay.day),
+                                location = firstItemOfPreviousDay.location,
+                                feedItems = currentDayItems
+                            )
                         )
+
+                        currentDayItems = mutableListOf()
                     }
-                )
-            }
-            val feedDays = mutableListOf<FeedDay>()
-            val currentDayItems = mutableListOf<FeedDbModel>()
-            for (item in model) {
-                val currentDayDate = currentDayItems.firstOrNull()?.dateDisplay
-                if (currentDayDate != null && item.dateDisplay != currentDayDate) {
-                    val newDay = createFeedDayFrom(currentDayItems)
-                    feedDays.add(newDay)
-                    currentDayItems.clear()
+                    currentDayItems.add(currentItem)
                 }
-                currentDayItems.add(item)
+
+                val firstItemOfLastDay = currentDayItems.first()
+                days.add(
+                    FeedDay(
+                        date = dateDisplayer.dateString(firstItemOfLastDay.day),
+                        location = firstItemOfLastDay.location,
+                        feedItems = currentDayItems
+                    )
+                )
+
+                Feed(days = days)
             }
-            if (currentDayItems.isNotEmpty()) {
-                val lastDay = createFeedDayFrom(currentDayItems)
-                feedDays.add(lastDay)
-            }
-            Feed(days = feedDays)
         }
-    }
 
     private fun combinedFeed(
         feedFetchTypeModel: FeedFetchTypeModel,

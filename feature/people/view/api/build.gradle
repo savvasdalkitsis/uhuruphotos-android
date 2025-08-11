@@ -14,7 +14,6 @@ android {
 
 dependencies {
     api(
-            project(":feature:db:domain:api"),
             project(":foundation:navigation:api"),
     )
     implementation(

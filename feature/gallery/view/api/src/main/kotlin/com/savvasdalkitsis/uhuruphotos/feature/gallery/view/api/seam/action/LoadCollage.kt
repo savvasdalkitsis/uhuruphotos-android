@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action
 
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.ClusterState
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.NewClusterState
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryId
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryMutation
@@ -57,23 +57,21 @@ data class LoadCollage(val id: GalleryId) : GalleryAction() {
         }
     }
 
-    private fun List<ClusterState>.descending() = map { cluster ->
+    private fun List<NewClusterState>.descending() = map { cluster ->
         cluster.copy(cels = cluster.cels
-            .sortedByDescending {
-                it.mediaItem.sortableDate
-            }.toImmutableList()
+            .toImmutableList()
         )
-    }.sortedByDescending {
-        it.unformattedDate
     }
+//        .sortedByDescending {
+//        it.unformattedDate
+//    }
 
-    private fun List<ClusterState>.ascending() = map { cluster ->
+    private fun List<NewClusterState>.ascending() = map { cluster ->
         cluster.copy(cels = cluster.cels
-            .sortedBy {
-                it.mediaItem.sortableDate
-            }.toImmutableList()
+            .reversed().toImmutableList()
         )
-    }.sortedBy {
-        it.unformattedDate
     }
+//        .sortedBy {
+//        it.unformattedDate
+//    }
 }

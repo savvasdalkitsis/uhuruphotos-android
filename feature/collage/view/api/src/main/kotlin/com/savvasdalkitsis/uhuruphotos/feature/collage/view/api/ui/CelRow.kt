@@ -28,7 +28,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.CelRowSlot.Ce
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.CelRowSlot.EmptySlot
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.Cel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.CelSelected
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.NewCelState
 
 @Composable
 internal fun SharedTransitionScope.CelRow(
@@ -37,7 +37,7 @@ internal fun SharedTransitionScope.CelRow(
     miniIcons: Boolean = false,
     showSyncState: Boolean = false,
     onCelSelected: CelSelected,
-    onCelLongPressed: (CelState) -> Unit,
+    onCelLongPressed: (NewCelState) -> Unit,
     vararg slots: CelRowSlot
 ) {
     Row(modifier = modifier) {

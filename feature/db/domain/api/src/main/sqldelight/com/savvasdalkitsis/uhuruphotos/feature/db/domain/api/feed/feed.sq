@@ -1,17 +1,25 @@
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.feed.FeedItemSyncStatus;
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.feed.FeedItemSyncStatusAdapter;
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Md5Hash;
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.feed.FeedUri;
 
 CREATE TABLE feed (
-    md5sum TEXT NOT NULL PRIMARY KEY,
-    dateDisplay TEXT NOT NULL,
-    sortableValue INTEGER AS kotlin.Long NOT NULL,
+    md5sum TEXT AS Md5Hash NOT NULL PRIMARY KEY,
+    day TEXT NOT NULL,
+    sortableValue INTEGER NOT NULL,
     location TEXT,
-    uri TEXT NOT NULL,
+    uri TEXT AS FeedUri NOT NULL,
     isVideo INTEGER AS kotlin.Boolean NOT NULL,
     isFavourite INTEGER AS kotlin.Boolean NOT NULL,
-    syncStatus INTEGER AS FeedItemSyncStatus NOT NULL,
-    fallbackColor TEXT,
+    syncStatus INTEGER AS FeedItemSyncStatus.FeedItemSyncStatusAdapter NOT NULL,
+    fallbackColor INTEGER AS kotlin.Int,
     ratio REAL AS kotlin.Float NOT NULL
 );
 
 get:
 SELECT * FROM feed ORDER BY sortableValue DESC;
+
+getItem:
+SELECT * FROM feed WHERE md5sum = :md5sum;
+
+insert:
+INSERT OR REPLACE INTO feed VALUES ?;

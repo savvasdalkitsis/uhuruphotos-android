@@ -9,9 +9,8 @@ android {
 
 dependencies {
     api(
-                        libs.androidx.work,
+            libs.androidx.work,
             libs.kotlinx.coroutines,
-            project(":feature:db:domain:api"),
             project(":feature:media:local:domain:api"),
             project(":foundation:group:api"),
             project(":foundation:map:api"),

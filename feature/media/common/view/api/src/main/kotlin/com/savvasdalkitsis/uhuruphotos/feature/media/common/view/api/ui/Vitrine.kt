@@ -36,7 +36,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelSelectionModeState
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.NewCelState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.VitrineState
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.CustomColors
 
@@ -67,7 +67,7 @@ fun SharedTransitionScope.Vitrine(
 }
 
 @Composable
-private fun RowScope.GridItem(celState: CelState?, sharedTransitionScope: SharedTransitionScope) {
+private fun RowScope.GridItem(celState: NewCelState?, sharedTransitionScope: SharedTransitionScope) {
     if (celState != null) {
         with (sharedTransitionScope) {
             Cel(

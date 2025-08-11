@@ -31,9 +31,9 @@ data object ShareSelectedCels : FeedAction() {
             null -> toaster.show(string.general_error)
             else -> {
                 toaster.show(string.downloading_photos_sharing)
-                shareUseCase.shareMultiple(state.selectedCels.map {
-                    it.mediaItem.id.fullResUri(serverUrl)
-                })
+//                shareUseCase.shareMultiple(state.selectedCels.map {
+//                    it.mediaItem.id.fullResUri(serverUrl)
+//                })
             }
         }
     }

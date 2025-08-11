@@ -19,7 +19,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.SyncStat
 import com.savvasdalkitsis.uhuruphotos.feature.battery.domain.api.model.BatteryOptimizationStatusModel.BATTERY_OPTIMIZED
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.ClusterState
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.NewClusterState
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplayState
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.toCluster
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchTypeModel
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedActionsContext
@@ -39,7 +38,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.MemoryCelState
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobModel
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatusModel
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDeviceModel.RequiresPermissionsModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.NewMediaItemModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.NewCelState
@@ -146,19 +144,20 @@ data object LoadFeed : FeedAction() {
 
     private fun FeedActionsContext.showNewClusters(): Flow<FeedMutation> =
         combine(
+            userUseCase.observeUser(),
             feedUseCase.observeNewFeed(),
-            newSelectionList.ids,
+            selectionList.ids,
             avatarUseCase.getAvatarState(),
             feedUseCase
                 .observeFeedDisplay()
                 .distinctUntilChanged(),
-        ) { feed, selectedIds, avatar, feedDisplay ->
+        ) { user, feed, selectedIds, avatar, feedDisplay ->
             val final = feed.days.map { day ->
                 NewClusterState(
                     cels = day.feedItems.map { item ->
                         NewCelState(
                             mediaItem = NewMediaItemModel(
-                                id = item.stableId,
+                                md5Sum = item.md5sum,
                                 uri = item.uri,
                                 isVideo = item.isVideo,
                                 syncStatus = item.syncStatus,
@@ -168,7 +167,7 @@ data object LoadFeed : FeedAction() {
                             ),
                             selectionMode =  when {
                                 selectedIds.isEmpty() -> SelectionMode.UNDEFINED
-                                item.stableId in selectedIds -> SelectionMode.SELECTED
+                                item.md5sum.value in selectedIds -> SelectionMode.SELECTED
                                 else -> SelectionMode.UNSELECTED
                             }
                         )
@@ -196,29 +195,31 @@ data object LoadFeed : FeedAction() {
             val selected = mediaCollections
                 .map { it.toCluster() }
                 .selectCels(selectedIds)
-            val final = when (feedDisplay) {
-                PredefinedCollageDisplayState.YEARLY -> selected.groupByYear()
-                    .map { it.copy(showRefreshIcon = false) }
-                else -> selected
-                    .map { it.copy(showRefreshIcon = it.hasAnyCelsWithRemoteMedia) }
-            }
-            if (avatar.syncState != SyncState.IN_PROGRESS && final.celCount == 0) {
+//            val final =
+//                when (feedDisplay) {
+//                PredefinedCollageDisplayState.YEARLY -> selected.groupByYear()
+//                    .map { it.copy(showRefreshIcon = false) }
+//                else ->
+//                    selected
+//                    .map { it.copy(showRefreshIcon = it.hasAnyCelsWithRemoteMedia) }
+//            }
+            if (avatar.syncState != SyncState.IN_PROGRESS && selected.celCount == 0) {
                 ShowNoPhotosFound
             } else {
-                ShowClusters(final)
+                ShowClusters(selected)
             }
         }
 
-    private val List<ClusterState>.celCount get() = sumOf { it.cels.size }
+    private val List<NewClusterState>.celCount get() = sumOf { it.cels.size }
 
-    private fun List<ClusterState>.selectCels(ids: Set<MediaIdModel<*>>): List<ClusterState> {
+    private fun List<NewClusterState>.selectCels(ids: Set<String>): List<NewClusterState> {
         val empty = ids.isEmpty()
         return map { cluster ->
             cluster.copy(cels = cluster.cels.map { cel ->
                 cel.copy(
                     selectionMode = when {
                         empty -> SelectionMode.UNDEFINED
-                        cel.mediaItem.id in ids -> SelectionMode.SELECTED
+                        cel.mediaItem.md5Sum.value in ids -> SelectionMode.SELECTED
                         else -> SelectionMode.UNSELECTED
                     }
                 )

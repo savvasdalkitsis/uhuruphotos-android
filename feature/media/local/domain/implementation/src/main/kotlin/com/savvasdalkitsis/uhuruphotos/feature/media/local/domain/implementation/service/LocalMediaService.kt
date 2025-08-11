@@ -29,7 +29,7 @@ import android.provider.MediaStore.Images
 import android.provider.MediaStore.Video
 import androidx.core.content.ContentResolverCompat
 import androidx.core.database.getStringOrNull
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.model.MediaStoreContentUriResolver
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.MediaStoreContentUriResolver
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.model.LocalMediaPhotoColumns
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.model.LocalMediaStoreServiceItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.model.LocalMediaVideoColumns

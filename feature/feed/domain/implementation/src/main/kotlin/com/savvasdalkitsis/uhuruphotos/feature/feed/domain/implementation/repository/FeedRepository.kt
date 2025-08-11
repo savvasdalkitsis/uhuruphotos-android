@@ -76,7 +76,6 @@ class FeedRepository @Inject constructor(
 
     fun observeFeed(): Flow<List<Feed>> =
         feedQueries.get().asFlow()
-            .distinctUntilChanged()
             .mapToList(Dispatchers.IO)
 
     fun observeRemoteMediaCollectionsByDate(

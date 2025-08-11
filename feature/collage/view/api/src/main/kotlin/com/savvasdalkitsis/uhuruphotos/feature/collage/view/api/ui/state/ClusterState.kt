@@ -18,8 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state
 import android.os.Parcelable
 import androidx.compose.runtime.Immutable
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionModel
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.hasRemote
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.NewCelState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
 import kotlinx.collections.immutable.ImmutableList
@@ -31,13 +30,15 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class ClusterState(
     val id: String,
-    val cels: ImmutableList<CelState> = persistentListOf(),
+    val cels: ImmutableList<NewCelState> = persistentListOf(),
     val displayTitle: String = "",
     val unformattedDate: String? = null,
     val location: String? = null,
     val showRefreshIcon: Boolean = false,
 ) : Parcelable {
-    val hasAnyCelsWithRemoteMedia = cels.any { it.mediaItem.id.preferRemote is MediaIdModel.RemoteIdModel }
+    val hasAnyCelsWithRemoteMedia = cels.any {
+        it.mediaItem.syncStatus.hasRemote
+    }
 }
 
 @Immutable
@@ -48,19 +49,15 @@ data class NewClusterState(
     val location: String? = null,
 ) : Parcelable
 
-val previewClusterStateEmpty = ClusterState(
-    "id",
+val previewClusterStateEmpty = NewClusterState(
     persistentListOf(),
     displayTitle = "01 January 2022",
-    unformattedDate = "2022-01-01",
     location = "London, UK",
-    showRefreshIcon = true,
 )
 
-fun MediaCollectionModel.toCluster() = ClusterState(
-    id = id,
+fun MediaCollectionModel.toCluster() = NewClusterState(
     cels = mediaItems.map { it.toCel() }.toImmutableList(),
     displayTitle = displayTitle,
-    unformattedDate = unformattedDate,
+//    unformattedDate = unformattedDate,
     location = location,
 )

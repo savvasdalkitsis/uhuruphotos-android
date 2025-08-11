@@ -19,6 +19,7 @@ import com.github.michaelbull.result.Result
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemDetails
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHashModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResultModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummaryStatus
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.RemoteFeedDayResponseData
@@ -43,7 +44,7 @@ interface RemoteMediaUseCase {
 
     suspend fun getFavouriteMediaSummariesCount(): Result<Long, Throwable>
 
-    suspend fun getHiddenMediaSummaries(): List<DbRemoteMediaItemSummary>
+    suspend fun getHiddenMediaSummaries(): Result<List<MediaItemModel>, Throwable>
 
     suspend fun setMediaItemFavourite(id: String, favourite: Boolean): SimpleResult
 

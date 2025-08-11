@@ -19,11 +19,11 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActi
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryMutation
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation.LightboxNavigationRoute
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.NewCelState
 import kotlinx.coroutines.flow.flow
 
 data class SelectedCel(
-    val cel: CelState,
+    val cel: NewCelState,
 ) : GalleryAction() {
     override fun GalleryActionsContext.handle(
         state: GalleryState

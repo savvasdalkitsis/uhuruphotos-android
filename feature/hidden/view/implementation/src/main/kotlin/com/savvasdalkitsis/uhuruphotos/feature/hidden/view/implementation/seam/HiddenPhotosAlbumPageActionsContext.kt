@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam
 
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.getOr
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.ClusterState
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.NewClusterState
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContextFactory
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetailsState
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.domain.api.usecase.HiddenMediaUseCase
@@ -82,9 +82,9 @@ class HiddenPhotosAlbumPageActionsContext @Inject constructor(
                                 GalleryDetailsState(
                                     title = Title.Resource(string.hidden_media),
                                     clusterStates = persistentListOf(
-                                        ClusterState(
-                                            id = "hidden",
-                                            displayTitle = "",
+                                        NewClusterState(
+//                                            id = "hidden",
+//                                            displayTitle = "",
                                             location = null,
                                             cels = photoEntries.map {
                                                 it.toCel()

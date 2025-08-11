@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.module
 
+import com.savvasdalkitsis.uhuruphotos.foundation.date.api.LocalMediaDateTimeFormat
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
@@ -24,9 +25,6 @@ import org.joda.time.format.DateTimeFormatter
 @dagger.Module
 @InstallIn(SingletonComponent::class)
 class LocalMediaModule {
-
-    @Retention(AnnotationRetention.BINARY)
-    annotation class LocalMediaDateTimeFormat
 
     @Provides
     @LocalMediaDateTimeFormat

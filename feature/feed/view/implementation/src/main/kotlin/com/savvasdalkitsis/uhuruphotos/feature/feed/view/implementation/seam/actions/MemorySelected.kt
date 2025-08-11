@@ -20,10 +20,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.Fee
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSourceModel.MemoryModel
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation.LightboxNavigationRoute
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.NewCelState
 import kotlinx.coroutines.flow.flow
 
-data class MemorySelected(val cel: CelState, val yearsAgo: Int) : FeedAction() {
+data class MemorySelected(val cel: NewCelState, val yearsAgo: Int) : FeedAction() {
     override fun FeedActionsContext.handle(
         state: FeedState
     ) = flow<FeedMutation> {

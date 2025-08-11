@@ -49,7 +49,7 @@ class DateModule {
 
     @Provides
     @ParsingDateTimeFormat
-    fun parsingDateTimeFormat(): DateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd'T'kk:mm:ss'Z'")
+    fun parsingDateTimeFormat(): DateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd'T'kk:mm:ssZZ")
 
     @Provides
     @DisplayingDateFormat

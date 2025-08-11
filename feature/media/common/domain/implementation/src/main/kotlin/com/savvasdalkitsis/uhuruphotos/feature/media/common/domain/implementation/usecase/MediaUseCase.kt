@@ -15,14 +15,12 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.implementation.usecase
 
+import androidx.core.graphics.toColorInt
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.combine
-import com.github.michaelbull.result.getOrThrow
 import com.github.michaelbull.result.map
 import com.github.michaelbull.result.mapOr
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.isVideo
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSourceModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaDayModel
@@ -51,20 +49,17 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Medi
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.MediaOrientation.ORIENTATION_UNKNOWN
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.model.RemoteUserModel
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.model.User
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateParser
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
-import com.savvasdalkitsis.uhuruphotos.foundation.log.api.andThenTry
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simple
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simpleOk
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.map
 import org.jetbrains.compose.resources.getString
 import org.joda.time.DateTime
 import se.ansman.dagger.auto.AutoBind
@@ -143,38 +138,10 @@ class MediaUseCase @Inject constructor(
     override fun observeFavouriteMedia(): Flow<Result<List<MediaItemModel>, Throwable>> =
         remoteMediaUseCase.observeFavouriteRemoteMedia()
             .distinctUntilChanged()
-            .map { media ->
-                media.andThenTry {
-                    it.mapToMediaItems().getOrThrow()
-                }
-            }
 
     override fun observeHiddenMedia(): Flow<Result<List<MediaItemModel>, Throwable>> =
             remoteMediaUseCase.observeHiddenRemoteMedia()
                 .distinctUntilChanged()
-                .mapToPhotos()
-
-    private fun Flow<List<DbRemoteMediaItemSummary>>.mapToPhotos(): Flow<Result<List<MediaItemModel>, Throwable>> =
-        map { it.mapToMediaItems() }
-
-    override suspend fun List<DbRemoteMediaItemSummary>.mapToMediaItems(): Result<List<MediaItemModel>, Throwable> =
-        withUser { user ->
-            map { dbRecord ->
-                val favouriteThreshold = user.favoriteMinRating
-                val date = dateDisplayer.dateString(dbRecord.date)
-                val day = dateParser.parseDateOrTimeString(dbRecord.date)
-                MediaItemInstanceModel(
-                    id = RemoteIdModel(dbRecord.id, dbRecord.isVideo, MediaItemHashModel.fromRemoteMediaHash(dbRecord.id, user.id)),
-                    mediaHash = MediaItemHashModel.fromRemoteMediaHash(dbRecord.id, user.id),
-                    fallbackColor = dbRecord.dominantColor,
-                    displayDayDate = date,
-                    sortableDate = dbRecord.date,
-                    isFavourite = favouriteThreshold != null && (dbRecord.rating ?: 0) >= favouriteThreshold,
-                    ratio = dbRecord.aspectRatio ?: 1f,
-                    mediaDay = day?.toMediaDay(),
-                )
-            }
-        }
 
     private suspend fun LocalMediaItem.toMediaItem(userId: Int?) = MediaItemInstanceModel(
         id = LocalIdModel(
@@ -182,7 +149,6 @@ class MediaUseCase @Inject constructor(
             bucket.id,
             video,
             contentUri,
-            thumbnailPath?.let { "file://$it" } ?: contentUri,
             MediaItemHashModel(md5, userId)
         ),
         mediaHash = MediaItemHashModel(md5, userId),
@@ -209,7 +175,7 @@ class MediaUseCase @Inject constructor(
         remoteMediaUseCase.getFavouriteMediaSummariesCount()
 
     override suspend fun getHiddenMedia(): Result<List<MediaItemModel>, Throwable> =
-        remoteMediaUseCase.getHiddenMediaSummaries().mapToMediaItems()
+        remoteMediaUseCase.getHiddenMediaSummaries()
 
     override suspend fun setMediaItemFavourite(id: MediaIdModel<*>, favourite: Boolean): SimpleResult =
         when (id) {
@@ -323,7 +289,7 @@ class MediaUseCase @Inject constructor(
                         MediaItemInstanceModel(
                             id = RemoteIdModel(photoId, item.isVideo, MediaItemHashModel.fromRemoteMediaHash(photoId, user.id)),
                             mediaHash = MediaItemHashModel.fromRemoteMediaHash(photoId, user.id),
-                            fallbackColor = item.dominantColor,
+                            fallbackColor = item.dominantColor?.toColorInt(),
                             displayDayDate = date,
                             sortableDate = item.date,
                             isFavourite = favouriteThreshold != null && (item.rating ?: 0) >= favouriteThreshold,
@@ -359,11 +325,6 @@ class MediaUseCase @Inject constructor(
             remoteMediaUseCase.restoreMediaItem(id.value)
         }
     }
-
-    private suspend fun <T> withUser(action: suspend (RemoteUserModel) -> T): Result<T, Throwable> =
-        userUseCase.getRemoteUserOrRefresh().andThenTry {
-            action(it)
-        }
 
     private suspend fun DateTime.toMediaDay(): MediaDayModel = MediaDayModel(
         day = dayOfMonth,

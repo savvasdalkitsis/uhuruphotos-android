@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.stat
 
 import android.os.Parcelable
 import androidx.compose.runtime.Immutable
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.NewCelState
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.parcelize.Parcelize
 
@@ -25,6 +25,6 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class MemoryCelState(
     val yearsAgo: Int,
-    val cels: ImmutableList<CelState>,
+    val cels: ImmutableList<NewCelState>,
     val parallaxEnabled: Boolean = true,
 ) : Parcelable

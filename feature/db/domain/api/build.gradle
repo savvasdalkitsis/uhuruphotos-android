@@ -1,4 +1,5 @@
 plugins {
+    id 'kotlin-parcelize'
     alias(libs.plugins.sqldelight)
 }
 
@@ -20,6 +21,9 @@ dependencies {
             libs.hilt,
             libs.sqldelight.android,
             libs.sqldelight.coroutines,
+            project(":feature:media:common:domain:api"),
+            project(":feature:media:local:domain:api"),
+            project(":feature:people:view:api"),
             project(":foundation:coroutines:api"),
             project(":foundation:lang:api"),
     )

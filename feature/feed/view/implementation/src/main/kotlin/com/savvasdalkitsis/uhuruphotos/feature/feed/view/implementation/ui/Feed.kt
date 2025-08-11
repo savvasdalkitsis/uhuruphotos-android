@@ -55,7 +55,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.DeleteFu
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.DeletePermissionDialog
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.TrashPermissionDialog
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelSelectionModeState
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.NewCelState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
 import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.blurIf
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.smart.SmartGridState
@@ -157,7 +157,7 @@ private fun SharedTransitionScope.Feed(
                 contentPadding.calculateTopPadding().toPx().toInt()
             }
         }
-        fun scrollToCel(cel: CelState) {
+        fun scrollToCel(cel: NewCelState) {
             coroutineScope.launch {
                 var found = false
                 val index = state.collageState.clusters.fold(0) { index, cluster ->

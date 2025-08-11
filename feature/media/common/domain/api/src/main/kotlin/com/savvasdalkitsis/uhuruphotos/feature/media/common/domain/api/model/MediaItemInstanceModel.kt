@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model
 data class MediaItemInstanceModel(
     override val id: MediaIdModel<*>,
     override val mediaHash: MediaItemHashModel,
-    override val fallbackColor: String? = null,
+    override val fallbackColor: Int? = null,
     override val displayDayDate: String? = null,
     override val sortableDate: String? = null,
     override val isFavourite: Boolean = false,

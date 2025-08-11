@@ -25,8 +25,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.Collage
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.ClusterState
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.NewClusterState
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.actions.HeatMapAction
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.actions.SelectedCel
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state.HeatMapCollageDisplayState
@@ -60,8 +60,8 @@ fun SharedTransitionScope.HeatMapVisibleMedia(
                 collageDisplayState = HeatMapCollageDisplayState,
                 clusters = remember(displayTitle, state.photosOnVisibleMap) {
                     persistentListOf(
-                        ClusterState(
-                            id = "visibleItems",
+                        NewClusterState(
+//                            id = "visibleItems",
                             cels = state.photosOnVisibleMap,
                             displayTitle = displayTitle,
                             location = null,

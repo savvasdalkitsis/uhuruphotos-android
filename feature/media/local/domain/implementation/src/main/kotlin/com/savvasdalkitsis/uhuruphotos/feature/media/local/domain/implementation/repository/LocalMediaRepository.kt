@@ -28,19 +28,20 @@ import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import app.cash.sqldelight.coroutines.mapToOneNotNull
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.Database
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.denormalization.DenormalizationQueue
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitList
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingleOrNull
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.download.DownloadingMediaItemsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.local.LocalMediaItemDetails
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.local.LocalMediaItemDetailsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaDeletionException
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.module.LocalMediaModule
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.LocalMediaService
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.model.LocalMediaStoreServiceItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.model.LocalMediaStoreServiceItem.Photo
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.model.LocalMediaStoreServiceItem.Video
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.usecase.BitmapUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.async
+import com.savvasdalkitsis.uhuruphotos.foundation.date.api.LocalMediaDateTimeFormat
 import com.savvasdalkitsis.uhuruphotos.foundation.exif.api.usecase.ExifUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
@@ -68,11 +69,12 @@ class LocalMediaRepository @Inject constructor(
     private val contentResolver: ContentResolver,
     @ApplicationContext private val context: Context,
     private val exifUseCase: ExifUseCase,
-    @LocalMediaModule.LocalMediaDateTimeFormat
+    @LocalMediaDateTimeFormat
     private val dateTimeFormat: DateTimeFormatter,
     private val bitmapUseCase: BitmapUseCase,
     @PlainTextPreferences
     private val preferences: Preferences,
+    private val denormalizationQueue: DenormalizationQueue,
 ) {
 
     private val keyLocalSyncedBefore = "keyLocalSyncedBefore"
@@ -128,6 +130,7 @@ class LocalMediaRepository @Inject constructor(
             downloadingMediaItemsQueries.removeStartingWith(itemDetails.md5)
             localMediaItemDetailsQueries.insert(itemDetails)
         }
+        denormalizationQueue.newLocalMediaFound(itemDetails.id)
     }
 
     private suspend fun List<LocalMediaStoreServiceItem>.process(
@@ -186,13 +189,13 @@ class LocalMediaRepository @Inject constructor(
             is Photo -> item.bitmap
             is Video -> item.bitmap
         }
-        val thumbnailPath = thumbnail?.save(item)
         val fallbackColor = thumbnail.palette(item)
         thumbnail?.recycle()
         onNewItem(
             LocalMediaItemDetails(
                 id = item.id,
                 displayName = item.displayName,
+                timestamp = exif.dateTime ?: item.dateTaken,
                 dateTaken = (exif.dateTime ?: item.dateTaken).toDateString(),
                 bucketId = item.bucketId,
                 bucketName = item.bucketName,
@@ -204,10 +207,9 @@ class LocalMediaRepository @Inject constructor(
                 video = item is Video,
                 duration = (item as? Video)?.duration,
                 latLon = exif.latLon?.let { (lat, lon) -> "$lat,$lon" },
-                fallbackColor = "#${fallbackColor.toUInt().toString(16).padStart(6, '0')}",
+                fallbackColor = fallbackColor,
                 path = item.path,
                 orientation = item.orientation,
-                thumbnailPath = thumbnailPath,
             )
         )
     }
@@ -304,21 +306,6 @@ class LocalMediaRepository @Inject constructor(
     }
 
     private fun Bitmap?.palette(item: LocalMediaStoreServiceItem) = item.tryPalette { this }
-
-    private fun Bitmap?.save(item: LocalMediaStoreServiceItem): String? = try {
-        this?.let { bitmap ->
-            val file = context.filesDir.subFolder("localThumbnails").subFile("${item.id}.jpg")
-            with(bitmapUseCase) {
-                file.writeBytes(
-                    bitmap.toJpeg().copyExifFrom(item.contentUri)
-                )
-            }
-            return file.absolutePath
-        }
-    } catch (e: Exception) {
-        log(e)
-        null
-    }
 
     private fun File.subFolder(name: String) = subFile(name).apply {
         mkdirs()

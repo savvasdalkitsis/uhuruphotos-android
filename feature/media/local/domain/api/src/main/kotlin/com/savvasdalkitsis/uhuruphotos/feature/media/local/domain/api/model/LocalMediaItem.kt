@@ -28,12 +28,11 @@ data class LocalMediaItem(
     val height: Int,
     val size: Int,
     val contentUri: String,
-    val thumbnailPath: String?,
     val md5: Md5Hash,
     val video: Boolean,
     val duration: Int?,
     val latLon: Pair<Double, Double>?,
-    val fallbackColor: String?,
+    val fallbackColor: Int?,
     val path: String?,
     val orientation: MediaOrientation,
 )

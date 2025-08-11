@@ -121,11 +121,10 @@ sealed class MediaIdModel<T : Serializable> private constructor(
         val folderId: Int,
         override val isVideo: Boolean,
         val contentUri: String,
-        val thumbnailUri: String,
         override val mediaHash: MediaItemHashModel,
     ): MediaIdModel<Long>() {
         @IgnoredOnParcel
-        val local get() = LocalIdModel(value, folderId, isVideo, contentUri, thumbnailUri, mediaHash)
+        val local get() = LocalIdModel(value, folderId, isVideo, contentUri, mediaHash)
 
         @IgnoredOnParcel
         @Transient
@@ -146,7 +145,7 @@ sealed class MediaIdModel<T : Serializable> private constructor(
         @IgnoredOnParcel
         override val syncState: MediaItemSyncStateModel = UPLOADING
         override fun fullResUri(serverUrl: String?): String = local.fullResUri(serverUrl)
-        override fun thumbnailUri(serverUrl: String?): String = thumbnailUri
+        override fun thumbnailUri(serverUrl: String?): String = contentUri
     }
 
     @Parcelize
@@ -155,11 +154,10 @@ sealed class MediaIdModel<T : Serializable> private constructor(
         val folderId: Int,
         override val isVideo: Boolean,
         val contentUri: String,
-        val thumbnailUri: String,
         override val mediaHash: MediaItemHashModel,
     ): MediaIdModel<Long>() {
         @IgnoredOnParcel
-        val local get() = LocalIdModel(value, folderId, isVideo, contentUri, thumbnailUri, mediaHash)
+        val local get() = LocalIdModel(value, folderId, isVideo, contentUri, mediaHash)
 
         @IgnoredOnParcel
         @Transient
@@ -181,7 +179,7 @@ sealed class MediaIdModel<T : Serializable> private constructor(
         override val syncState: MediaItemSyncStateModel = PROCESSING
 
         override fun fullResUri(serverUrl: String?): String = local.fullResUri(serverUrl)
-        override fun thumbnailUri(serverUrl: String?): String = thumbnailUri
+        override fun thumbnailUri(serverUrl: String?): String = contentUri
     }
 
     @Parcelize
@@ -190,7 +188,6 @@ sealed class MediaIdModel<T : Serializable> private constructor(
         val folderId: Int,
         override val isVideo: Boolean,
         val contentUri: String,
-        val thumbnailUri: String,
         override val mediaHash: MediaItemHashModel,
     ): MediaIdModel<Long>() {
         @IgnoredOnParcel
@@ -212,10 +209,10 @@ sealed class MediaIdModel<T : Serializable> private constructor(
         @IgnoredOnParcel
         override val syncState: MediaItemSyncStateModel = LOCAL_ONLY
         override fun fullResUri(serverUrl: String?): String = contentUri
-        override fun thumbnailUri(serverUrl: String?): String = thumbnailUri
+        override fun thumbnailUri(serverUrl: String?): String = contentUri
 
-        fun toUploading() = UploadingIdModel(value, folderId, isVideo, contentUri, thumbnailUri, mediaHash)
-        fun toProcessing() = ProcessingIdModel(value, folderId, isVideo, contentUri, thumbnailUri, mediaHash)
+        fun toUploading() = UploadingIdModel(value, folderId, isVideo, contentUri, mediaHash)
+        fun toProcessing() = ProcessingIdModel(value, folderId, isVideo, contentUri, mediaHash)
     }
 
     @Parcelize
@@ -266,7 +263,7 @@ sealed class MediaIdModel<T : Serializable> private constructor(
     }
 }
 
-private fun String.toThumbnailUrlFromId(serverUrl: String): String =
+public fun String.toThumbnailUrlFromId(serverUrl: String): String =
     "/media/square_thumbnails/$this".toAbsoluteRemoteUrl(serverUrl)
 
 private fun String.toFullSizeUrlFromId(isVideo: Boolean, serverUrl: String): String = when {

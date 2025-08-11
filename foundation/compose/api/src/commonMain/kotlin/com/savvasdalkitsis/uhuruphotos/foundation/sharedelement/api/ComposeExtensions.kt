@@ -42,6 +42,16 @@ import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
     }
 }
 
+@Composable fun Int?.toColor(): Color = when(this) {
+    null -> MaterialTheme.colorScheme.background
+    else -> try {
+        Color(this)
+    } catch (e: Exception) {
+        log(e)
+        MaterialTheme.colorScheme.background
+    }
+}
+
 @Composable
 fun PaddingValues.copy(
     layoutDirection: LayoutDirection = LocalLayoutDirection.current,

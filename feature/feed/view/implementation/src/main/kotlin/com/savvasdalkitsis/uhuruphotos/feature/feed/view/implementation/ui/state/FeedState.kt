@@ -21,7 +21,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.state.Use
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplayState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDeviceModel
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.hasLocal
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.hasRemote
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.NewCelState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkable.SelectionMode
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -49,7 +51,7 @@ data class FeedState(
     val syncItemDisplay: FeedMediaItemSyncDisplayState = FeedMediaItemSyncDisplayState.default,
     val showRequestForCloudSync: Boolean = false,
 ) : Parcelable {
-    val selectedCels: ImmutableList<CelState> = collageState.clusters.flatMap { cluster ->
+    val selectedCels: ImmutableList<NewCelState> = collageState.clusters.flatMap { cluster ->
         cluster.cels.filter { cel ->
             cel.selectionMode == SelectionMode.SELECTED
         }
@@ -60,18 +62,18 @@ data class FeedState(
     val hasSelection = selectedCelCount > 0
 
     val shouldShowShareIcon: Boolean =
-        selectedCels.isNotEmpty() && selectedCels.none { it.mediaItem.id.isVideo }
+        selectedCels.isNotEmpty() && selectedCels.none { it.mediaItem.isVideo }
 
     val shouldShowAddIcon: Boolean =
-        selectedCels.isNotEmpty() && selectedCels.all { it.mediaItem.id.hasRemote }
+        selectedCels.isNotEmpty() && selectedCels.all { it.mediaItem.syncStatus.hasRemote }
 
     val shouldShowDeleteIcon: Boolean = selectedCels.syncStates.size == 1
 
     val shouldShowDownloadIcon: Boolean =
-        selectedCels.isNotEmpty() && selectedCels.none { it.mediaItem.id.findLocals.isNotEmpty() }
+        selectedCels.isNotEmpty() && selectedCels.none { it.mediaItem.syncStatus.hasLocal }
 
     val shouldShowUploadIcon: Boolean =
-        selectedCels.isNotEmpty() && selectedCels.none { it.mediaItem.id.hasRemote }
+        selectedCels.isNotEmpty() && selectedCels.none { it.mediaItem.syncStatus.hasRemote }
 }
 
-val List<CelState>.syncStates get() = map { it.mediaItem.id.syncState }.toSet()
+val List<NewCelState>.syncStates get() = map { it.mediaItem.syncStatus }.toSet()

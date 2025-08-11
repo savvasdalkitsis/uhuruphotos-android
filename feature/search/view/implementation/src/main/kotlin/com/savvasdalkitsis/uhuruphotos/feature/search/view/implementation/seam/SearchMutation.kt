@@ -15,8 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam
 
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.ClusterState
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplayState
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.NewClusterState
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import kotlinx.collections.immutable.toImmutableList
@@ -39,7 +39,7 @@ sealed class SearchMutation(
         it.copy(searchDisplay = display)
     })
 
-    data class DisplaySearchResults(val clusterStates: List<ClusterState>) : SearchMutation({
+    data class DisplaySearchResults(val clusterStates: List<NewClusterState>) : SearchMutation({
         it.copy(
             isLoading = false,
             clusterStates = clusterStates.toImmutableList(),

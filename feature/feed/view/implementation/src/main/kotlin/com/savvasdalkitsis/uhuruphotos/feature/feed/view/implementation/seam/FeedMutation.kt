@@ -16,7 +16,6 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam
 
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.state.UserAlbumState
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.ClusterState
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.NewClusterState
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplayState
@@ -69,14 +68,14 @@ sealed class FeedMutation(
         it.copyFeed { copy(isLoading = false, isEmpty = true, clusters = persistentListOf()) }
     })
 
-    data class ShowClusters(val clusterStates: List<ClusterState>) : FeedMutation({
+    data class ShowClusters(val clusterStates: List<NewClusterState>) : FeedMutation({
         it.copyFeed { copy(isLoading = false, isEmpty = false, clusters = clusterStates.toImmutableList()) }
     }) {
         override fun toString() = "ShowClusters(${clusterStates.size})"
     }
 
     data class ShowFeed(val clusters: List<NewClusterState>) : FeedMutation({
-        it.copyFeed { copy(isLoading = false, isEmpty = false, newClusters = clusters.toImmutableList()) }
+        it.copyFeed { copy(isLoading = false, isEmpty = false, clusters = clusters.toImmutableList()) }
     }) {
         override fun toString() = "ShowFeed(${clusters.size})"
     }

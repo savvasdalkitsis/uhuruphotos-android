@@ -27,6 +27,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.LocalCollageS
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.LocalCollageSpacingEdgesProvider
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.LocalCollageSpacingProvider
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUIUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.model.User
+import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.user.view.api.LocalUser
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.LocalAnimatedVideoThumbnails
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.FullImage
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.LocalFullImageLoader
@@ -69,6 +72,7 @@ class CompositionLocalProviders @Inject constructor(
     private val serverUseCase: ServerUseCase,
     private val mapViewFactoryProviders: Set<@JvmSuppressWildcards MapViewFactoryProvider>,
     private val mapViewStateFactories: Set<@JvmSuppressWildcards MapViewStateFactory>,
+    private val userUseCase: UserUseCase,
 ) {
     @Composable
     fun Provide(
@@ -84,6 +88,7 @@ class CompositionLocalProviders @Inject constructor(
         val collageShape by settingsUIUseCase.observeCollageShape().collectAsState(CollageShape.default)
         val collageSpacing by settingsUIUseCase.observeCollageSpacing().collectAsState(2)
         val collageSpacingEdges by settingsUIUseCase.observeCollageSpacingIncludeEdges().collectAsState(false)
+        val user by userUseCase.observeUser().collectAsState(User.LocalUser)
         @Suppress("DEPRECATION") val systemUiController = rememberSystemUiController()
         CompositionLocalProvider(
             LocalExoPlayerProvider provides exoplayerProvider,
@@ -103,6 +108,7 @@ class CompositionLocalProviders @Inject constructor(
             LocalMapViewStateFactory provides CompositeMapViewStateFactory(mapViewStateFactories),
             LocalMapViewFactoryProvider provides CompositeMapViewFactoryProvider(mapViewFactoryProviders),
             LocalSystemUiController provides systemUiController,
+            LocalUser provides user,
             content = content
         )
     }

@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam
 
 import com.github.michaelbull.result.Ok
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.ClusterState
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.NewClusterState
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContextFactory
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetailsState
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSourceModel.TrashModel
@@ -78,9 +78,9 @@ class TrashAlbumPageActionsContext @Inject constructor(
                                 GalleryDetailsState(
                                     title = Title.Resource(string.trash),
                                     clusterStates = mediaCollections.map { mediaCollection ->
-                                        ClusterState(
-                                            id = mediaCollection.id,
-                                            unformattedDate = mediaCollection.unformattedDate,
+                                        NewClusterState(
+//                                            id = mediaCollection.id,
+//                                            unformattedDate = mediaCollection.unformattedDate,
                                             displayTitle = mediaCollection.displayTitle,
                                             location = mediaCollection.location,
                                             cels = mediaCollection.mediaItems.map {

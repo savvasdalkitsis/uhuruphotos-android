@@ -30,12 +30,9 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.state.UserAlbumState
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHashModel
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstanceModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.Cel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.Vitrine
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.NewCelState
 import org.jetbrains.compose.resources.pluralStringResource
 import uhuruphotos_android.foundation.strings.api.generated.resources.Res.plurals
 import uhuruphotos_android.foundation.strings.api.generated.resources.item_count
@@ -62,10 +59,7 @@ fun SharedTransitionScope.UserAlbumItem(
             )
         } else {
             Cel(
-                state = album.cover.cel1 ?: MediaItemInstanceModel(
-                    id = MediaIdModel.RemoteIdModel("", false, MediaItemHashModel.fromRemoteMediaHash("", 0)),
-                    mediaHash = MediaItemHashModel.fromRemoteMediaHash("", 0),
-                ).toCel(),
+                state = album.cover.cel1 ?: NewCelState(),
                 onSelected = {
                     onAlbumSelected(album)
                 },

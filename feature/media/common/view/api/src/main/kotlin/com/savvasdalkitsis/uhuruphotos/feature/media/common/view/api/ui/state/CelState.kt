@@ -24,18 +24,21 @@ import kotlinx.parcelize.Parcelize
 
 @Immutable
 @Parcelize
-data class CelState(
+data class
+CelState(
     val mediaItem: MediaItemModel,
     val selectionMode: SelectionMode = SelectionMode.UNDEFINED,
 ) : Parcelable
 
-fun MediaItemModel.toCel() = CelState(
-    mediaItem = this,
+fun MediaItemModel.toCel() = NewCelState(
+    mediaItem = NewMediaItemModel(
+        md5Sum = this.id.mediaHash.md5.value,
+    ),
 )
 
 @Immutable
 @Parcelize
 data class NewCelState(
-    val mediaItem: NewMediaItemModel,
+    val mediaItem: NewMediaItemModel = NewMediaItemModel(),
     val selectionMode: SelectionMode = SelectionMode.UNDEFINED,
 ) : Parcelable

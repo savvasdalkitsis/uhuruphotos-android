@@ -59,3 +59,6 @@ UPDATE remoteMediaItemSummary SET containerId = 'hiddenPhoto' WHERE id = :id;
 
 copyToTrash:
 INSERT OR REPLACE INTO remoteMediaTrash SELECT * FROM remoteMediaItemSummary WHERE id = :id;
+
+isRemote:
+SELECT EXISTS(SELECT 1 FROM remoteMediaItemSummary WHERE id = :id);

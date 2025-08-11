@@ -39,7 +39,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.act
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.NeverAskForDisablingBatteryOptimizations
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.NeverAskForLocalMediaAccessPermission
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.NewCelState
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.view.api.ui.LocalMediaAccessRequestBanner
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.view.api.ui.RequestBanner
 import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.recomposeHighlighter
@@ -59,7 +59,7 @@ import uhuruphotos_android.foundation.strings.api.generated.resources.missing_lo
 fun SharedTransitionScope.FeedHeaders(
     state: FeedState,
     visible: Boolean,
-    onScrollToMemory: (CelState) -> Unit,
+    onScrollToMemory: (NewCelState) -> Unit,
     action: (FeedAction) -> Unit
 ) {
     AnimatedVisibility(

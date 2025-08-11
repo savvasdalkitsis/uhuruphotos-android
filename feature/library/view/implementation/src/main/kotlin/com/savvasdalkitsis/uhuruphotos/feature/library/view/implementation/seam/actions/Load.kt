@@ -37,7 +37,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDeviceModel.ErrorModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDeviceModel.FoundModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDeviceModel.RequiresPermissionsModel
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.NewCelState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.VitrineState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaFolder
@@ -155,7 +155,7 @@ data object Load : LibraryAction() {
         },
     )
 
-    private fun <T> Flow<List<T>>.mapToCover(cover: (T) -> CelState?): Flow<VitrineState> =
+    private fun <T> Flow<List<T>>.mapToCover(cover: (T) -> NewCelState?): Flow<VitrineState> =
         map { albums ->
             albums.take(4).map(cover).let {
                 VitrineState(it)

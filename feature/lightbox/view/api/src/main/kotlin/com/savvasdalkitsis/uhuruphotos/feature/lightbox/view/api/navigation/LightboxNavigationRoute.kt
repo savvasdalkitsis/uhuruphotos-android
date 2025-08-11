@@ -16,17 +16,15 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation
 
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSourceModel
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHashModel
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.NewMediaItemModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Md5Hash
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class LightboxNavigationRoute(
-    val id: MediaIdModel<*>,
-    val mediaItemHash: MediaItemHashModel,
+    val md5Sum: Md5Hash,
     val lightboxSequenceDataSource: LightboxSequenceDataSourceModel = LightboxSequenceDataSourceModel.SingleItemModel,
 ) : NavigationRoute {
 
@@ -35,11 +33,10 @@ data class LightboxNavigationRoute(
 
     companion object {
         operator fun invoke(
-            mediaItem: MediaItemModel,
+            mediaItem: NewMediaItemModel,
             lightboxSequenceDataSource: LightboxSequenceDataSourceModel,
         ) = LightboxNavigationRoute(
-            id = mediaItem.id,
-            mediaItemHash = mediaItem.mediaHash,
+            md5Sum = mediaItem.md5Sum,
             lightboxSequenceDataSource = lightboxSequenceDataSource
         )
     }

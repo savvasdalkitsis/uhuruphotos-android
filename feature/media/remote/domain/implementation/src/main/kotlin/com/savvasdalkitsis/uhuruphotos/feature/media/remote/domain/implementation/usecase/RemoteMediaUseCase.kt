@@ -15,13 +15,18 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.usecase
 
+import androidx.core.graphics.toColorInt
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.getOrThrow
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.Database
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemDetails
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.isVideo
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemSummaryQueries
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel.RemoteIdModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHashModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstanceModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResultModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummaryStatus
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.RemoteFeedDayResponseData
@@ -38,6 +43,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementatio
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.http.response.RemoteMediaHashOperationResponseData
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.http.response.RemoteMediaOperationResponseData
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.worker.RemoteMediaItemWorkScheduler
+import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.model.RemoteUserModel
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.async
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.andThenTry
@@ -49,6 +55,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import retrofit2.Response
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
@@ -73,10 +80,14 @@ class RemoteMediaUseCase @Inject constructor(
                     remoteMediaRepository.observeFavouriteMedia(threshold)
                 }.mapToResultFlow()
             )
+        }.map { media ->
+            media.andThenTry {
+                it.mapToMediaItems().getOrThrow()
+            }
         }
 
     override fun observeHiddenRemoteMedia(): Flow<List<DbRemoteMediaItemSummary>> =
-        remoteMediaRepository.observeHiddenMedia()
+        remoteMediaRepository.observeHiddenMedia().mapToPhotos()
 
     override fun observeRemoteMediaItemDetails(id: String): Flow<DbRemoteMediaItemDetails> =
         remoteMediaRepository.observeMediaItemDetails(id).distinctUntilChanged()
@@ -88,8 +99,8 @@ class RemoteMediaUseCase @Inject constructor(
         remoteMediaRepository.getFavouriteMediaCount(it)
     }
 
-    override suspend fun getHiddenMediaSummaries(): List<DbRemoteMediaItemSummary> =
-        remoteMediaRepository.getHiddenMedia()
+    override suspend fun getHiddenMediaSummaries(): Result<List<MediaItemModel>, Throwable> =
+        remoteMediaRepository.getHiddenMedia().mapToMediaItems()
 
     override suspend fun setMediaItemFavourite(id: String, favourite: Boolean): SimpleResult =
         userUseCase.getRemoteUserOrRefresh().andThenTry {
@@ -291,4 +302,31 @@ class RemoteMediaUseCase @Inject constructor(
             }
         }
     }
+
+    private fun Flow<List<DbRemoteMediaItemSummary>>.mapToPhotos(): Flow<Result<List<MediaItemModel>, Throwable>> =
+        map { it.mapToMediaItems() }
+
+    suspend fun List<DbRemoteMediaItemSummary>.mapToMediaItems(): Result<List<MediaItemModel>, Throwable> =
+        withUser { user ->
+            map { dbRecord ->
+                val favouriteThreshold = user.favoriteMinRating
+                val date = dateDisplayer.dateString(dbRecord.date)
+                val day = dateParser.parseDateOrTimeString(dbRecord.date)
+                MediaItemInstanceModel(
+                    id = RemoteIdModel(dbRecord.id, dbRecord.isVideo, MediaItemHashModel.fromRemoteMediaHash(dbRecord.id, user.id)),
+                    mediaHash = MediaItemHashModel.fromRemoteMediaHash(dbRecord.id, user.id),
+                    fallbackColor = dbRecord.dominantColor?.toColorInt(),
+                    displayDayDate = date,
+                    sortableDate = dbRecord.date,
+                    isFavourite = favouriteThreshold != null && (dbRecord.rating ?: 0) >= favouriteThreshold,
+                    ratio = dbRecord.aspectRatio ?: 1f,
+                    mediaDay = day?.toMediaDay(),
+                )
+            }
+        }
+
+    private suspend fun <T> withUser(action: suspend (RemoteUserModel) -> T): Result<T, Throwable> =
+        userUseCase.getRemoteUserOrRefresh().andThenTry {
+            action(it)
+        }
 }

@@ -20,11 +20,11 @@ import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state.HeatMapState
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSourceModel.SingleItemModel
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation.LightboxNavigationRoute
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.NewCelState
 import kotlinx.coroutines.flow.flow
 
 data class SelectedCel(
-    val celState: CelState,
+    val celState: NewCelState,
 ) : HeatMapAction() {
     override fun HeatMapActionsContext.handle(
         state: HeatMapState

@@ -17,8 +17,6 @@ package com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state
 
 import android.os.Parcelable
 import androidx.compose.runtime.Immutable
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.GetPeopleForAutoAlbum
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.people.People
 import kotlinx.parcelize.Parcelize
 
 @Immutable
@@ -29,17 +27,3 @@ data class PersonState(
     val photos: Int,
     val id: Int,
 ) : Parcelable
-
-fun People.toPerson(urlResolver: (String) -> String?) = PersonState(
-    id = id,
-    name = name,
-    imageUrl = faceUrl?.let { urlResolver(it) },
-    photos = faceCount,
-)
-
-suspend fun GetPeopleForAutoAlbum.toPerson(urlResolver: suspend (String) -> String?) = PersonState(
-    id = personId,
-    name = name ?: "",
-    imageUrl = faceUrl?.let { urlResolver(it) },
-    photos = faceCount ?: 0,
-)

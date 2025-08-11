@@ -17,13 +17,13 @@ package com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.
 
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSourceModel.SearchResultsModel
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation.LightboxNavigationRoute
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.NewCelState
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchMutation
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchState
 import kotlinx.coroutines.flow.flow
 
-data class SelectedCel(val celState: CelState) : SearchAction() {
+data class SelectedCel(val celState: NewCelState) : SearchAction() {
     override fun SearchActionsContext.handle(
         state: SearchState
     ) = flow<SearchMutation> {

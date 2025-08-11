@@ -55,11 +55,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.MemoryCelState
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHashModel
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstanceModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.Cel
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.NewCelState
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruActionIcon
 import kotlinx.collections.immutable.persistentListOf
@@ -76,8 +73,8 @@ import kotlin.math.min
 @Composable
 internal fun SharedTransitionScope.FeedMemory(
     memory: MemoryCelState,
-    onMemorySelected: (memory: CelState, yearsAgo: Int) -> Unit,
-    onScrollToMemory: (CelState) -> Unit,
+    onMemorySelected: (memory: NewCelState, yearsAgo: Int) -> Unit,
+    onScrollToMemory: (NewCelState) -> Unit,
     scrollState: ScrollState,
     parentWidth: Int = 0,
 ) {
@@ -185,12 +182,7 @@ private fun FeedMemoryPreview() {
         PreviewAppTheme {
             FeedMemory(memory = MemoryCelState(
                 yearsAgo = 10,
-                cels = persistentListOf(CelState(
-                    MediaItemInstanceModel(
-                        id = MediaIdModel.LocalIdModel(0L, 0, false, "", "", MediaItemHashModel.fromRemoteMediaHash("hash", 0)),
-                        mediaHash = MediaItemHashModel.fromRemoteMediaHash("hash", 0),
-                    )
-                )),
+                cels = persistentListOf(NewCelState()),
             ), onMemorySelected = { _, _ -> }, onScrollToMemory = {}, scrollState = rememberScrollState()
             )
         }

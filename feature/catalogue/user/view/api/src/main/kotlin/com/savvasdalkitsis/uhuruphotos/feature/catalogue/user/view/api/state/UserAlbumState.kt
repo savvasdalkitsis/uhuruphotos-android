@@ -17,12 +17,10 @@ package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.state
 
 import android.os.Parcelable
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbums
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHashModel
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstanceModel
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.FeedItemSyncStatus
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.NewMediaItemModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.NewCelState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.VitrineState
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.toTitleOr
 import kotlinx.parcelize.Parcelize
@@ -65,13 +63,17 @@ fun UserAlbums.toUserAlbumState() = UserAlbumState(
 private fun celState(
     imageHash: String?,
     coverIsVideo: Boolean?,
-): CelState? =
-    imageHash?.let {
-        val isVideo = coverIsVideo == true
-        MediaItemInstanceModel(
-            id = MediaIdModel.RemoteIdModel(it, isVideo, MediaItemHashModel.fromRemoteMediaHash(it, 0)),
-            mediaHash = MediaItemHashModel.fromRemoteMediaHash(it, 0),
-            displayDayDate = null,
-            ratio = 1f,
-        ).toCel()
+): NewCelState? =
+    imageHash?.let { hash ->
+        NewCelState(
+            mediaItem = NewMediaItemModel(
+                hash,
+                uri = "",
+                isVideo = coverIsVideo == true,
+                syncStatus = FeedItemSyncStatus.FULLY_SYNCED,
+                fallbackColor = null,
+                isFavourite = false,
+                ratio = 1f,
+            ),
+        )
     }

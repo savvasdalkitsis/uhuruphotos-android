@@ -38,6 +38,13 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbu
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbumsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.auth.Token
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.auth.TokenQueries
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.denormalization.Denormalization
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.denormalization.DenormalizationQueries
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.feed.FeedItemSyncStatusAdapter
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.feed.FeedUriAdapter
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.favorites.FavoritesQueries
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.feed.Feed
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.feed.FeedQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.lightbox.LightboxDetails
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.lightbox.LightboxDetailsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.download.DownloadingMediaItemsQueries
@@ -64,6 +71,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.portfolio.Portfolio
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.search.SearchQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.user.User
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.user.UserQueries
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.implementation.adapters.Md5HashAdapter
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -102,7 +110,7 @@ class DbModule {
         tokenAdapter = Token.Adapter(typeAdapter = EnumColumnAdapter()),
         autoAlbumPeopleAdapter = AutoAlbumPeople.Adapter(IntColumnAdapter),
         autoAlbumsAdapter = AutoAlbums.Adapter(IntColumnAdapter, IntColumnAdapter),
-        localMediaItemDetailsAdapter = LocalMediaItemDetails.Adapter(IntColumnAdapter, IntColumnAdapter, IntColumnAdapter, IntColumnAdapter, IntColumnAdapter),
+        localMediaItemDetailsAdapter = LocalMediaItemDetails.Adapter(IntColumnAdapter, IntColumnAdapter, IntColumnAdapter, IntColumnAdapter, IntColumnAdapter, IntColumnAdapter),
         peopleAdapter = People.Adapter(IntColumnAdapter, IntColumnAdapter),
         personPhotosAdapter = PersonPhotos.Adapter(IntColumnAdapter),
         remoteMediaCollectionsAdapter = RemoteMediaCollections.Adapter(IntColumnAdapter, IntColumnAdapter),
@@ -115,6 +123,8 @@ class DbModule {
         portfolioItemsAdapter = PortfolioItems.Adapter(IntColumnAdapter),
         lightboxDetailsAdapter = LightboxDetails.Adapter(IntColumnAdapter, IntColumnAdapter),
         userAlbumAdditionQueueAdapter = UserAlbumAdditionQueue.Adapter(IntColumnAdapter),
+        feedAdapter = Feed.Adapter(Md5HashAdapter, FeedUriAdapter, FeedItemSyncStatusAdapter, IntColumnAdapter, FloatColumnAdapter),
+        denormalizationAdapter = Denormalization.Adapter(EnumColumnAdapter()),
     )
 
     @Provides
@@ -192,4 +202,12 @@ class DbModule {
     @Provides
     fun newUserAlbumAdditionQueueQueries(database: Database): NewUserAlbumAdditionQueueQueries = database.newUserAlbumAdditionQueueQueries
 
+    @Provides
+    fun feedQueries(database: Database): FeedQueries = database.feedQueries
+
+    @Provides
+    fun denormalizationQueries(database: Database): DenormalizationQueries = database.denormalizationQueries
+
+    @Provides
+    fun favoritesQueries(database: Database): FavoritesQueries = database.favoritesQueries
 }

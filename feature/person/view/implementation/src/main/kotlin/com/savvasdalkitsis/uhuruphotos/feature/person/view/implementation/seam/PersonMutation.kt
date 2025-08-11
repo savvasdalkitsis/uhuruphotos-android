@@ -15,9 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam
 
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.ClusterState
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplayState
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.NewClusterState
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.PersonState
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.ui.state.PersonCollageState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
@@ -31,7 +31,7 @@ sealed class PersonMutation(
         it.copyFeed { copy(isLoading = true) }
     })
 
-    data class ShowPersonMedia(val clusterStates: List<ClusterState>) : PersonMutation({
+    data class ShowPersonMedia(val clusterStates: List<NewClusterState>) : PersonMutation({
         it.copyFeed { copy(
             isLoading = false,
             clusters = clusterStates.toImmutableList(),

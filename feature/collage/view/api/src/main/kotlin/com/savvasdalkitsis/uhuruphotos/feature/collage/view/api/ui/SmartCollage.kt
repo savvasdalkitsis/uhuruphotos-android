@@ -50,12 +50,11 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.ClusterState
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.NewClusterState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.Cel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.CelSelected
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelSelectionModeState
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.NewCelState
 import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CollageShape.RECTANGLE
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CollageShape.ROUNDED_RECTANGLE
@@ -86,7 +85,7 @@ internal fun SharedTransitionScope.SmartCollage(
     collageHeader: @Composable (SmartGridItemScope.() -> Unit)? = null,
     collageFooter: @Composable (SmartGridItemScope.() -> Unit)? = null,
     onCelSelected: CelSelected,
-    onCelLongPressed: (CelState) -> Unit,
+    onCelLongPressed: (NewCelState) -> Unit,
     onClusterRefreshClicked: (NewClusterState) -> Unit,
     onClusterSelectionClicked: (NewClusterState) -> Unit,
 ) {
@@ -172,7 +171,7 @@ internal fun SharedTransitionScope.SmartCollage(
                     )
                 }
                 for (cel in cluster.cels) {
-                    val id = cel.mediaItem.id
+                    val id = cel.mediaItem.md5Sum
                     item("item:$clusterIndex:${id}") {
                         val aspectRatio = remember(maintainAspectRatio) {
                             when {
@@ -184,9 +183,9 @@ internal fun SharedTransitionScope.SmartCollage(
                             modifier = Modifier
                                 .animateItem()
                                 .clip(shape),
-                            newState = cel,
+                            state = cel,
                             onSelected = {
-//                                onCelSelected(cel)
+                                onCelSelected(cel)
                             },
                             aspectRatio = aspectRatio,
                             contentScale = remember(maintainAspectRatio) {
@@ -216,10 +215,7 @@ internal fun SharedTransitionScope.SmartCollage(
             derivedStateOf {
                 firstOffscreenCluster
                     ?.let { state.getOrNull(it) }
-                    ?.cels
-                    ?.firstOrNull()
-                    ?.mediaItem
-                    ?.displayText
+                    ?.displayTitle
                     ?: ""
             }
         }
@@ -246,10 +242,10 @@ internal fun SharedTransitionScope.SmartCollage(
 private fun BoxScope.StickyHeader(
     firstOffscreenCluster: Int?,
     topPadding: Dp,
-    state: ImmutableList<ClusterState>,
+    state: ImmutableList<NewClusterState>,
     showSelectionHeader: Boolean,
-    onClusterRefreshClicked: (ClusterState) -> Unit,
-    onClusterSelectionClicked: (ClusterState) -> Unit
+    onClusterRefreshClicked: (NewClusterState) -> Unit,
+    onClusterSelectionClicked: (NewClusterState) -> Unit
 ) {
     AnimatedVisibility(
         visible = firstOffscreenCluster != null,
@@ -265,7 +261,7 @@ private fun BoxScope.StickyHeader(
         val clusterState = remember(firstOffscreenCluster) {
             firstOffscreenCluster?.let {
                 state.getOrNull(it)
-            } ?: ClusterState("")
+            } ?: NewClusterState()
         }
         FeedClusterHeader(
             modifier = Modifier

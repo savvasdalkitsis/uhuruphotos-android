@@ -83,6 +83,7 @@ dependencies {
             project(":feature:auth:view:api"),
             project(":feature:download:domain:api"),
             project(":feature:home:view:api"),
+            project(":feature:user:view:api"),
             project(":feature:settings:domain:api"),
             project(":foundation:activity:api"),
             project(":foundation:image:api"),

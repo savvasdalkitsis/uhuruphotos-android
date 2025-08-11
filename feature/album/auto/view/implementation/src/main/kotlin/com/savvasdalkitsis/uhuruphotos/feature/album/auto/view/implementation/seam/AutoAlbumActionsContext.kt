@@ -19,7 +19,7 @@ import com.github.michaelbull.result.mapOr
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.domain.api.usecase.AutoAlbumUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.ui.state.AutoAlbumCollageDisplayState
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.ClusterState
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.NewClusterState
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContextFactory
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetailsState
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSourceModel.AutoAlbumModel
@@ -67,9 +67,9 @@ class AutoAlbumActionsContext @Inject constructor(
                                 clusterStates = photoEntries.groupBy { entry ->
                                     dateDisplayer.dateString(entry.timestamp)
                                 }.entries.map { (date, photos) ->
-                                    ClusterState(
-                                        id = date,
-                                        unformattedDate = photos.firstOrNull()?.timestamp,
+                                    NewClusterState(
+//                                        id = date,
+//                                        unformattedDate = photos.firstOrNull()?.timestamp,
                                         displayTitle = date,
                                         location = null,
                                         cels = photos.map {

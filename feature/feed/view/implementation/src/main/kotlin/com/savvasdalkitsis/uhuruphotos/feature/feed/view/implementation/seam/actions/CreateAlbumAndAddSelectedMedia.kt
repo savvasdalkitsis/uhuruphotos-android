@@ -21,7 +21,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.Fee
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.StartRefreshing
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.StopRefreshing
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
 
 data class CreateAlbumAndAddSelectedMedia(
@@ -33,10 +32,10 @@ data class CreateAlbumAndAddSelectedMedia(
         emit(StartRefreshing)
         emit(HideNewAlbumNameDialog)
         emit(HideAddToAlbumDialog)
-        val media = selectionList.ids.firstOrNull()?.mapNotNull { it.findRemote }
-        if (media != null) {
-            userAlbumUseCase.createNewUserAlbum(name, media)
-        }
+//        val media = selectionList.ids.firstOrNull()?.mapNotNull { it.findRemote }
+//        if (media != null) {
+//            userAlbumUseCase.createNewUserAlbum(name, media)
+//        }
         selectionList.clear()
         emit(StopRefreshing)
     }

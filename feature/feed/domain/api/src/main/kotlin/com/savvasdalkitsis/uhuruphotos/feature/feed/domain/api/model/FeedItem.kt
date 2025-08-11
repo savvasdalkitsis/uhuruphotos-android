@@ -7,7 +7,7 @@ data class FeedItem(
     val uri: String,
     val isVideo: Boolean,
     val syncStatus: FeedItemSyncStatus,
-    val fallbackColor: String?,
+    val fallbackColor: Int?,
     val isFavourite: Boolean,
     val ratio: Float,
 )

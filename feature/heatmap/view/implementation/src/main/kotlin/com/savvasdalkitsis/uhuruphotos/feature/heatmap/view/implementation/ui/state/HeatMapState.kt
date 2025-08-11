@@ -19,7 +19,7 @@ import android.os.Parcelable
 import androidx.compose.runtime.Immutable
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDeviceModel
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.NewCelState
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.Viewport
 import kotlinx.collections.immutable.ImmutableList
@@ -33,7 +33,7 @@ data class HeatMapState(
     val allPoints: ImmutableList<LatLon> = persistentListOf(),
     val pointsOnVisibleMap: ImmutableList<LatLon> = persistentListOf(),
     val allMedia: ImmutableList<MediaItemModel> = persistentListOf(),
-    val photosOnVisibleMap: ImmutableList<CelState> = persistentListOf(),
+    val photosOnVisibleMap: ImmutableList<NewCelState> = persistentListOf(),
     val showRequestPermissionForLocalMediaAccess: MediaItemsOnDeviceModel.RequiresPermissionsModel? = null,
     val initialViewport: Viewport? = null,
 ) : Parcelable

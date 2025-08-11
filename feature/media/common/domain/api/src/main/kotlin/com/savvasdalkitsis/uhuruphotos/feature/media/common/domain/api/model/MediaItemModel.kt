@@ -24,7 +24,7 @@ import kotlinx.parcelize.Parcelize
 sealed interface MediaItemModel : Parcelable {
     val id: MediaIdModel<*>
     val mediaHash: MediaItemHashModel
-    val fallbackColor: String?
+    val fallbackColor: Int?
     val displayDayDate: String?
     val sortableDate: String?
     val isFavourite: Boolean

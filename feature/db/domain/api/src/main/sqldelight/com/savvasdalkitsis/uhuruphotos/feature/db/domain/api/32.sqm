@@ -1,0 +1,48 @@
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.denormalization.DenormalizationType;
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.feed.FeedItemSyncStatusAdapter;
+
+DROP TABLE localMediaItemDetails;
+
+CREATE TABLE localMediaItemDetails (
+    id INTEGER NOT NULL PRIMARY KEY,
+    displayName TEXT,
+    dateTaken TEXT NOT NULL,
+    timestamp INTEGER NOT NULL,
+    bucketId INTEGER AS kotlin.Int NOT NULL,
+    bucketName TEXT NOT NULL,
+    width INTEGER AS kotlin.Int NOT NULL,
+    height INTEGER AS kotlin.Int NOT NULL,
+    size INTEGER AS kotlin.Int NOT NULL,
+    contentUri TEXT NOT NULL,
+    md5 TEXT NOT NULL,
+    video INTEGER AS kotlin.Boolean NOT NULL,
+    duration INTEGER AS kotlin.Int,
+    latLon TEXT,
+    fallbackColor INTEGER AS kotlin.Int,
+    path TEXT,
+    orientation TEXT,
+);
+
+CREATE TABLE feed (
+    md5sum TEXT NOT NULL PRIMARY KEY,
+    day TEXT NOT NULL,
+    sortableValue INTEGER NOT NULL,
+    location TEXT,
+    uri TEXT NOT NULL,
+    isVideo INTEGER AS kotlin.Boolean NOT NULL,
+    isFavourite INTEGER AS kotlin.Boolean NOT NULL,
+    syncStatus INTEGER AS FeedItemSyncStatus.FeedItemSyncStatusAdapter NOT NULL,
+    fallbackColor INTEGER AS kotlin.Int,
+    ratio REAL AS kotlin.Float NOT NULL
+);
+
+
+CREATE TABLE denormalization (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    type TEXT AS DenormalizationType NOT NULL,
+    externalId TEXT NOT NULL
+);
+
+CREATE TABLE favorites (
+    md5sum TEXT NOT NULL PRIMARY KEY
+);

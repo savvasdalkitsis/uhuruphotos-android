@@ -6,5 +6,6 @@ dependencies {
     api(
             libs.kotlinx.coroutines,
             project(":feature:media:common:domain:api"),
+            project(":feature:db:domain:api"),
     )
 }

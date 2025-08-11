@@ -34,7 +34,7 @@ internal class LightboxViewModel @Inject constructor(
 ) {
     override fun onRouteSet(route: LightboxNavigationRoute) {
         action(with(route) {
-            LoadMediaItem(id, mediaItemHash, lightboxSequenceDataSource)
+            LoadMediaItem(md5Sum, lightboxSequenceDataSource)
         })
     }
 }

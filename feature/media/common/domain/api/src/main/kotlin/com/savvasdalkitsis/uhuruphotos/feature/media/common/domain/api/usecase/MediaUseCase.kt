@@ -16,7 +16,6 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase
 
 import com.github.michaelbull.result.Result
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSourceModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaFolderOnDeviceModel
@@ -37,8 +36,6 @@ interface MediaUseCase {
     fun observeFavouriteMedia(): Flow<Result<List<MediaItemModel>, Throwable>>
 
     fun observeHiddenMedia(): Flow<Result<List<MediaItemModel>, Throwable>>
-
-    suspend fun List<DbRemoteMediaItemSummary>.mapToMediaItems(): Result<List<MediaItemModel>, Throwable>
 
     suspend fun getFavouriteMediaCount(): Result<Long, Throwable>
 

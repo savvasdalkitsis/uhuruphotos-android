@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.favourites.view.implementation.seam
 
 import com.github.michaelbull.result.getOr
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.ClusterState
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.NewClusterState
 import com.savvasdalkitsis.uhuruphotos.feature.favourites.domain.api.usecase.FavouritesUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContextFactory
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetailsState
@@ -51,9 +51,9 @@ class FavouritesActionsContext @Inject constructor(
                     GalleryDetailsState(
                         title = Title.Resource(string.favourite_media),
                         clusterStates = persistentListOf(
-                            ClusterState(
-                                id = "favourites",
-                                displayTitle = "",
+                            NewClusterState(
+//                                id = "favourites",
+//                                displayTitle = "",
                                 location = null,
                                 cels = mediaItems.map {
                                     it.toCel()

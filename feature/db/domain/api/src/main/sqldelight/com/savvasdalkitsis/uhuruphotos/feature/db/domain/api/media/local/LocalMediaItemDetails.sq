@@ -2,6 +2,7 @@ CREATE TABLE localMediaItemDetails (
     id INTEGER NOT NULL PRIMARY KEY,
     displayName TEXT,
     dateTaken TEXT NOT NULL,
+    timestamp INTEGER NOT NULL,
     bucketId INTEGER AS kotlin.Int NOT NULL,
     bucketName TEXT NOT NULL,
     width INTEGER AS kotlin.Int NOT NULL,
@@ -12,10 +13,9 @@ CREATE TABLE localMediaItemDetails (
     video INTEGER AS kotlin.Boolean NOT NULL,
     duration INTEGER AS kotlin.Int,
     latLon TEXT,
-    fallbackColor TEXT,
+    fallbackColor INTEGER AS kotlin.Int,
     path TEXT,
-    orientation TEXT,
-    thumbnailPath TEXT
+    orientation TEXT
 );
 
 insert:
@@ -44,3 +44,6 @@ DELETE FROM localMediaItemDetails WHERE id IN :ids;
 
 clearAll:
 DELETE FROM localMediaItemDetails;
+
+isLocal:
+SELECT EXISTS(SELECT 1 FROM localMediaItemDetails WHERE md5 = :md5sum);

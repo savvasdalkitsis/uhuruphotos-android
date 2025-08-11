@@ -40,14 +40,11 @@ import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.StartScanningOtherFolders
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.ViewAllLocalFolders
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryLocalMediaState
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHashModel
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstanceModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.NewMediaItemModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.NamedVitrine
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.NewCelState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.VitrineState
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaFolder
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Md5Hash
 import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.SharedElementId
 import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.sharedElement
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
@@ -145,28 +142,28 @@ private fun LocalFoldersPreviewDark() {
 private fun SharedTransitionScope.LocalFoldersAll() {
     LocalFolders(title = stringResource(string.local_albums), media = LibraryLocalMediaState.FoundState(persistentListOf(
         LocalMediaFolder(0, "Folder 1") to VitrineState(
-            celState("#ff0000"),
-            celState("#00ff00"),
-            celState("#0000ff"),
-            celState("#00ffff"),
+            celState(0xff0000),
+            celState(0x00ff00),
+            celState(0x0000ff),
+            celState(0x00ffff),
         ),
         LocalMediaFolder(1, "Folder 2") to VitrineState(
-            celState("#00ff00"),
-            celState("#00ffff"),
-            celState("#ff0000"),
-            celState("#0000ff"),
+            celState(0x00ff00),
+            celState(0x00ffff),
+            celState(0xff0000),
+            celState(0x0000ff),
         ),
         LocalMediaFolder(2, "Folder 3") to VitrineState(
-            celState("#00ffff"),
-            celState("#00ff00"),
-            celState("#0000ff"),
-            celState("#ff0000"),
+            celState(0x00ffff),
+            celState(0x00ff00),
+            celState(0x0000ff),
+            celState(0xff0000),
         ),
         LocalMediaFolder(3, "Folder 4") to VitrineState(
-            celState("#00ff00"),
-            celState("#0000ff"),
-            celState("#00ffff"),
-            celState("#ff0000"),
+            celState(0x00ff00),
+            celState(0x0000ff),
+            celState(0x00ffff),
+            celState(0xff0000),
         ),
     ), true)) {
 
@@ -194,10 +191,10 @@ private fun LocalFoldersWithoutOther() {
     SharedTransitionLayout {
         LocalFolders(title = stringResource(string.local_albums), media = LibraryLocalMediaState.FoundState(persistentListOf(
             LocalMediaFolder(0, "Folder 1") to VitrineState(
-                celState("#ff0000"),
-                celState("#00ff00"),
-                celState("#0000ff"),
-                celState("#00ffff"),
+                celState(0xff0000),
+                celState(0x00ff00),
+                celState(0x0000ff),
+                celState(0x00ffff),
             ),
         ), false)) {
 
@@ -206,10 +203,8 @@ private fun LocalFoldersWithoutOther() {
 }
 
 @Composable
-private fun celState(color: String) = CelState(
-    MediaItemInstanceModel(
-        MediaIdModel.LocalIdModel(0, 0, false, "", "", MediaItemHashModel(Md5Hash(""), 0)),
-        MediaItemHashModel.fromRemoteMediaHash("", 0),
+private fun celState(color: Int) = NewCelState(
+    NewMediaItemModel(
         fallbackColor = color
     )
 )

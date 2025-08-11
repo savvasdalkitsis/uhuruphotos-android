@@ -48,13 +48,16 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.api.navigation.LocalServerUrl
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.feed.FeedItemSyncStatusAdapter
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.feed.FeedUri
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.icon
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelSelectionModeState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelSelectionModeState.CHECKABLE
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelSelectionModeState.NONE
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelSelectionModeState.SELECTABLE
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.NewCelState
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Md5Hash
+import com.savvasdalkitsis.uhuruphotos.feature.user.view.api.LocalUser
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Thumbnail
 import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.SharedElementId
 import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.recomposeHighlighter
@@ -74,17 +77,16 @@ import uhuruphotos_android.foundation.icons.api.generated.resources.ic_play_fill
 @Composable
 fun SharedTransitionScope.Cel(
     modifier: Modifier = Modifier,
-    state: CelState? = null,
-    newState: NewCelState? = null,
+    state: NewCelState? = null,
     onSelected: CelSelected,
-    aspectRatio: Float = newState?.mediaItem?.ratio ?: 1f,
+    aspectRatio: Float = state?.mediaItem?.ratio ?: 1f,
     contentScale: ContentScale = ContentScale.FillBounds,
     contentOffset: Float = 0f,
     shape: Shape = RectangleShape,
     miniIcons: Boolean = false,
     selectionMode: CelSelectionModeState = SELECTABLE,
     showSyncState: Boolean = false,
-    onLongClick: (CelState) -> Unit = {},
+    onLongClick: (NewCelState) -> Unit = {},
 ) {
     @Composable
     fun cel(
@@ -93,7 +95,6 @@ fun SharedTransitionScope.Cel(
         Cel(
             celModifier,
             state,
-            newState,
             aspectRatio,
             contentScale,
             contentOffset,
@@ -105,14 +106,14 @@ fun SharedTransitionScope.Cel(
     when (selectionMode) {
         CHECKABLE -> Checkable(
             modifier = modifier,
-            id = state?.mediaItem?.id ?: newState!!.mediaItem.id,
-            selectionMode = state?.selectionMode ?: newState!!.selectionMode,
-            onClick = { onSelected(state!!) },
-            onLongClick = { onLongClick(state!!) },
+            id = state!!.mediaItem.md5Sum,
+            selectionMode = state.selectionMode,
+            onClick = { onSelected(state) },
+            onLongClick = { onLongClick(state) },
         ) {
             cel()
         }
-        SELECTABLE -> cel(celModifier = modifier.clickable { onSelected(state) })
+        SELECTABLE -> cel(celModifier = modifier.clickable { onSelected(state!!) })
         NONE -> cel(celModifier = modifier)
     }
 }
@@ -120,9 +121,8 @@ fun SharedTransitionScope.Cel(
 @Composable
 private fun SharedTransitionScope.Cel(
     modifier: Modifier = Modifier,
-    state: CelState?,
-    newState: NewCelState?,
-    aspectRatio: Float = newState?.mediaItem?.ratio ?: 1f,
+    state: NewCelState?,
+    aspectRatio: Float = state?.mediaItem?.ratio ?: 1f,
     contentScale: ContentScale = ContentScale.FillBounds,
     contentOffset: Float = 0f,
     shape: Shape = RectangleShape,
@@ -137,10 +137,13 @@ private fun SharedTransitionScope.Cel(
         shape,
         miniIcons,
         showSyncState,
-        state?.mediaItem?.fallbackColor ?: newState!!.mediaItem.fallbackColor,
-        state?.selectionMode ?: newState!!.selectionMode,
-        state?.mediaItem?.id ?: newState!!.mediaItem.id,
-        state?.mediaItem?.isFavourite ?: newState!!.mediaItem.isFavourite,
+        state!!.mediaItem.fallbackColor,
+        state.selectionMode,
+        state.mediaItem.md5Sum,
+        state.mediaItem.uri,
+        state.mediaItem.isVideo,
+        state.mediaItem.syncStatus,
+        state.mediaItem.isFavourite,
     )
 }
 
@@ -153,9 +156,12 @@ private fun SharedTransitionScope.Cel(
     shape: Shape = RectangleShape,
     miniIcons: Boolean = false,
     showSyncState: Boolean = false,
-    fallbackColor: String?,
+    fallbackColor: Int?,
     selectionMode: SelectionMode,
-    id: MediaIdModel<*>,
+    md5Sum: Md5Hash,
+    uri: FeedUri,
+    isVideo: Boolean,
+    syncStatus: FeedItemSyncStatusAdapter,
     isFavourite: Boolean,
 ) {
     val iconSize = remember(miniIcons) {
@@ -174,30 +180,29 @@ private fun SharedTransitionScope.Cel(
         modifier = modifier
             .aspectRatio(aspectRatio)
             .clip(shape)
-            .sharedElement(SharedElementId.imageCanvas(id.mediaHash.hash))
+            .sharedElement(SharedElementId.imageCanvas(md5Sum.value))
             .recomposeHighlighter()
     ) {
         val serverUrl = LocalServerUrl.current
+        val user = LocalUser.current
         val peekState = rememberZoomablePeekOverlayState()
 
         Thumbnail(
             modifier = Modifier
                 .fillMaxWidth()
                 .offset { IntOffset(contentOffset.toInt(), 0) }
-                .sharedElement(SharedElementId.image(id.mediaHash.hash))
+                .sharedElement(SharedElementId.image(md5Sum.value))
                 .zoomablePeekOverlay(
                     peekState,
                     ZoomablePeekOverlayBackdrop.scrim(backgroundColor.copy(alpha = 0.4f))
                 ),
-            url = remember(serverUrl, id) {
-                id.thumbnailUri(serverUrl)
-            },
+            url = uri.resolve(md5Sum, serverUrl, user.id, isVideo),
             isVideo = false,//mediaItem.id.isVideo,
             contentScale = contentScale,
             placeholder = backgroundColor.toArgb(),
             contentDescription = null
         )
-        if (id.isVideo) {
+        if (isVideo) {
             val size = remember(miniIcons) {
                 if (miniIcons) 16.dp else 48.dp
             }
@@ -237,10 +242,10 @@ private fun SharedTransitionScope.Cel(
                     .padding(2.dp)
                     .alpha(0.7f),
             ) {
-                UhuruIcon(icon = id.syncState.icon, tint = Color.White)
+                UhuruIcon(icon = syncStatus.icon, tint = Color.White)
             }
         }
     }
 }
 
-typealias CelSelected = (cel: CelState) -> Unit
+typealias CelSelected = (cel: NewCelState) -> Unit

@@ -17,8 +17,8 @@ package com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.st
 
 import android.os.Parcelable
 import androidx.compose.runtime.Immutable
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.ClusterState
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplayState
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.NewClusterState
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplayState
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -30,6 +30,6 @@ data class SearchState(
     val query: String = "",
     val isLoading: Boolean = true,
     val isError: Boolean = false,
-    val clusterStates: ImmutableList<ClusterState> = persistentListOf(),
+    val clusterStates: ImmutableList<NewClusterState> = persistentListOf(),
     val searchDisplay: CollageDisplayState = PredefinedCollageDisplayState.default,
 ) : Parcelable

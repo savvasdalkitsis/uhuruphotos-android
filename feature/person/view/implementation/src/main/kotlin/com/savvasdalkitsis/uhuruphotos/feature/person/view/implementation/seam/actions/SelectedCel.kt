@@ -17,13 +17,13 @@ package com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.
 
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSourceModel.PersonResultsModel
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation.LightboxNavigationRoute
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.NewCelState
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonMutation
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.ui.state.PersonCollageState
 import kotlinx.coroutines.flow.flow
 
-data class SelectedCel(val cel: CelState) : PersonAction() {
+data class SelectedCel(val cel: NewCelState) : PersonAction() {
     override fun PersonActionsContext.handle(
         state: PersonCollageState
     ) = flow<PersonMutation> {

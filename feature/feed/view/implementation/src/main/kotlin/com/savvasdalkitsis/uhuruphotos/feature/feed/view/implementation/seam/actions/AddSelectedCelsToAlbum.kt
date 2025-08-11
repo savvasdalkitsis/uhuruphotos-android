@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.Fee
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.StartRefreshing
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.StopRefreshing
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
-import kotlinx.coroutines.flow.firstOrNull
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
 import kotlinx.coroutines.flow.flow
 
 data class AddSelectedCelsToAlbum(val albumId: Int) : FeedAction() {
@@ -27,7 +27,8 @@ data class AddSelectedCelsToAlbum(val albumId: Int) : FeedAction() {
         state: FeedState
     ) = flow {
         emit(StartRefreshing)
-        val media = selectionList.ids.firstOrNull()?.mapNotNull { it.findRemote }
+//        val media = selectionList.ids.firstOrNull()?.mapNotNull { it.findRemote }
+        val media = emptyList<MediaIdModel.RemoteIdModel>()
         if (media != null) {
             userAlbumUseCase.addMediaToAlbum(albumId, media)
         }

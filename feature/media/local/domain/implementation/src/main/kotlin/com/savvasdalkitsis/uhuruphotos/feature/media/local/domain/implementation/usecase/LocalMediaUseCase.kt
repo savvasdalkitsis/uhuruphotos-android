@@ -39,10 +39,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Loca
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalPermissions.Granted
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalPermissions.RequiresPermissions
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Md5Hash
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.MediaOrientation
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.MediaStoreContentUriResolver
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.toMediaOrientation
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.model.MediaStoreContentUriResolver
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.module.LocalMediaModule
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.repository.LocalMediaFolderRepository
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.repository.LocalMediaRepository
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.repository.MediaStoreVersionRepository
@@ -50,6 +49,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.worker.LocalMediaWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.async
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateDisplayer
+import com.savvasdalkitsis.uhuruphotos.foundation.date.api.LocalMediaDateTimeFormat
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule.ParsingDateFormat
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule.ParsingDateTimeFormat
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
@@ -76,7 +76,7 @@ import javax.inject.Inject
 class LocalMediaUseCase @Inject constructor(
     @ApplicationContext
     private val context: Context,
-    @LocalMediaModule.LocalMediaDateTimeFormat
+    @LocalMediaDateTimeFormat
     private val localMediaDateTimeFormat: DateTimeFormatter,
     @ParsingDateTimeFormat
     private val parsingDateTimeFormat: DateTimeFormatter,
@@ -295,7 +295,6 @@ class LocalMediaUseCase @Inject constructor(
             height = height,
             size = size,
             contentUri = contentUri,
-            thumbnailPath = thumbnailPath,
             md5 = Md5Hash(md5),
             video = video,
             duration = duration,
@@ -307,13 +306,7 @@ class LocalMediaUseCase @Inject constructor(
             }?.filterOutNulls(),
             fallbackColor = fallbackColor,
             path = path,
-            orientation = when (orientation) {
-                "0" -> MediaOrientation.ORIENTATION_0
-                "90" -> MediaOrientation.ORIENTATION_90
-                "180" -> MediaOrientation.ORIENTATION_180
-                "270" -> MediaOrientation.ORIENTATION_270
-                else -> MediaOrientation.ORIENTATION_UNKNOWN
-            },
+            orientation = orientation.toMediaOrientation(),
         )
     }
 
@@ -351,5 +344,4 @@ class LocalMediaUseCase @Inject constructor(
             }
         }
     }
-
 }
