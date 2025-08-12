@@ -16,8 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.actions
 
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.toCluster
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.toPerson
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionModel
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonMutation
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.ui.state.PersonCollageState

@@ -34,13 +34,13 @@ interface RemoteMediaUseCase {
 
     fun observeAllRemoteMediaDetails(): Flow<List<DbRemoteMediaItemDetails>>
 
-    fun observeFavouriteRemoteMedia(): Flow<Result<List<DbRemoteMediaItemSummary>, Throwable>>
+    fun observeFavouriteRemoteMedia(): Flow<Result<List<MediaItemModel>, Throwable>>
 
     fun observeRemoteMediaItemDetails(id: String): Flow<DbRemoteMediaItemDetails>
 
     suspend fun getRemoteMediaItemSummary(id: String): Result<RemoteMediaItemSummaryStatus, Throwable>
 
-    fun observeHiddenRemoteMedia(): Flow<List<DbRemoteMediaItemSummary>>
+    fun observeHiddenRemoteMedia(): Flow<Result<List<MediaItemModel>, Throwable>>
 
     suspend fun getFavouriteMediaSummariesCount(): Result<Long, Throwable>
 

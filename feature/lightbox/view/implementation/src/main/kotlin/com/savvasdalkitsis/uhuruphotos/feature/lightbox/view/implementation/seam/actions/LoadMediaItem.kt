@@ -49,6 +49,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHashModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Md5Hash
 import com.savvasdalkitsis.uhuruphotos.foundation.launchers.api.onIO
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -69,7 +70,7 @@ import uhuruphotos_android.foundation.strings.api.generated.resources.error_load
 
 @OptIn(ExperimentalCoroutinesApi::class)
 data class LoadMediaItem(
-    val actionMediaMd5Sum: String,
+    val actionMediaMd5Sum: Md5Hash,
     val sequenceDataSource: LightboxSequenceDataSourceModel,
 ) : LightboxAction() {
 

@@ -5,6 +5,7 @@ android {
 dependencies {
     api(
             project(":feature:collage:view:api"),
+            project(":feature:db:domain:api"),
             project(":feature:media:common:domain:api"),
     )
 }

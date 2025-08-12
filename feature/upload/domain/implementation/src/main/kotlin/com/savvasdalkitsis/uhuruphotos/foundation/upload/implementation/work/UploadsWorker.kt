@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.work
 import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.WorkerParameters
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.denormalization.DenormalizationQueue
 import com.savvasdalkitsis.uhuruphotos.feature.sync.domain.api.usecase.SyncUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.CurrentUpload
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
@@ -41,6 +42,7 @@ class UploadsWorker @AssistedInject constructor(
     @Assisted private val params: WorkerParameters,
     private val uploadUseCase: UploadUseCase,
     private val syncUseCase: SyncUseCase,
+    private val denormalizationQueue: DenormalizationQueue,
     foregroundInfoBuilder: ForegroundInfoBuilder,
 ) : ForegroundNotificationWorker<Nothing>(
     context,
@@ -55,6 +57,7 @@ class UploadsWorker @AssistedInject constructor(
         val itemsFailed = mutableSetOf<UploadItem>()
         syncUseCase.observePendingItems().distinctUntilChanged().collectLatest { items ->
             uploadUseCase.markAsUploading(items = items.toTypedArray())
+            denormalizationQueue.uploadingLocalMedia(items.map { it.id }.toSet())
             for ((index, item) in items.withIndex()) {
                 val xOfX = getString(string.x_of_x, index + 1, items.size)
                 log { "Uploading item $item ($xOfX)" }
@@ -87,6 +90,7 @@ class UploadsWorker @AssistedInject constructor(
         Result.retry()
     } else {
         uploadUseCase.markAsNotUploading(*(this.map { it.id }.toLongArray()))
+        denormalizationQueue.uploadingLocalMediaFailed(map { it.id }.toSet())
         Result.failure()
     }
 

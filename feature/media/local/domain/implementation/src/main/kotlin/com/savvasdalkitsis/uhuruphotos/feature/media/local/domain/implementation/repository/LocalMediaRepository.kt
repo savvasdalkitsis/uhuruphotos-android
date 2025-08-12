@@ -35,6 +35,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.download.Down
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.local.LocalMediaItemDetails
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.local.LocalMediaItemDetailsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaDeletionException
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.localMediaThumbnailFile
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.LocalMediaService
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.model.LocalMediaStoreServiceItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.model.LocalMediaStoreServiceItem.Photo
@@ -55,7 +56,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import org.joda.time.format.DateTimeFormatter
-import java.io.File
 import java.math.BigInteger
 import java.security.MessageDigest
 import javax.inject.Inject
@@ -189,6 +189,7 @@ class LocalMediaRepository @Inject constructor(
             is Photo -> item.bitmap
             is Video -> item.bitmap
         }
+        thumbnail?.save(item)
         val fallbackColor = thumbnail.palette(item)
         thumbnail?.recycle()
         onNewItem(
@@ -307,10 +308,20 @@ class LocalMediaRepository @Inject constructor(
 
     private fun Bitmap?.palette(item: LocalMediaStoreServiceItem) = item.tryPalette { this }
 
-    private fun File.subFolder(name: String) = subFile(name).apply {
-        mkdirs()
+    private fun Bitmap?.save(item: LocalMediaStoreServiceItem): String? = try {
+        this?.let { bitmap ->
+            val file = localMediaThumbnailFile(context, item.id)
+            with(bitmapUseCase) {
+                file.writeBytes(
+                    bitmap.toJpeg().copyExifFrom(item.contentUri)
+                )
+            }
+            return file.absolutePath
+        }
+    } catch (e: Exception) {
+        log(e)
+        null
     }
-    private fun File.subFile(name: String) = File(this, name)
 
     private fun LocalMediaStoreServiceItem.tryPalette(bitmap: (Uri) -> Bitmap?): Int = try {
         bitmap(contentUri)

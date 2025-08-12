@@ -10,6 +10,7 @@ dependencies {
     api(
             libs.kotlinx.immutable,
             libs.moshi,
+            project(":feature:db:domain:api"),
             project(":feature:media:common:domain:api"),
     )
     ksp libs.moshi.ksp

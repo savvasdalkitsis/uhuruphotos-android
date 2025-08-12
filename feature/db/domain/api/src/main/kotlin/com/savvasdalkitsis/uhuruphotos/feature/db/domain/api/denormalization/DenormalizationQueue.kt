@@ -4,4 +4,6 @@ interface DenormalizationQueue {
 
     fun newLocalMediaFound(localMediaId: Long)
     fun newRemoteMediaItemFound(remoteMediaId: String)
+    fun uploadingLocalMedia(localMediaIds: Set<Long>)
+    fun uploadingLocalMediaFailed(localMediaIds: Set<Long>)
 }

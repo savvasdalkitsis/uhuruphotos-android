@@ -17,9 +17,9 @@ package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.
 
 import android.os.Parcelable
 import androidx.compose.runtime.Immutable
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.toPerson
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.domain.api.model.LightboxDetailsModel
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.PersonState
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableSet

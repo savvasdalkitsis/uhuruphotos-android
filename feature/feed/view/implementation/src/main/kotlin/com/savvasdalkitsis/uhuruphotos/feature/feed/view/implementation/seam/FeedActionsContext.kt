@@ -71,11 +71,11 @@ class FeedActionsContext @Inject constructor(
     val userUseCase: UserUseCase,
 ) {
     suspend fun NewCelState.deselect() {
-        selectionList.deselect(mediaItem.md5Sum)
+        selectionList.deselect(mediaItem.md5Sum.value)
     }
 
     suspend fun NewCelState.select() {
-        selectionList.select(mediaItem.md5Sum)
+        selectionList.select(mediaItem.md5Sum.value)
     }
 
     fun trashRemoteSelectedCels(state: FeedState) {

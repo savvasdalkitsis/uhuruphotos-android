@@ -16,21 +16,12 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.implementation.usecase
 
 import androidx.core.graphics.toColorInt
-import com.github.michaelbull.result.Ok
-import com.github.michaelbull.result.Result
-import com.github.michaelbull.result.combine
-import com.github.michaelbull.result.map
-import com.github.michaelbull.result.mapOr
+import com.github.michaelbull.result.*
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSourceModel
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaDayModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaFolderOnDeviceModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel.DownloadingIdModel
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel.LocalIdModel
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel.ProcessingIdModel
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel.RemoteIdModel
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel.UploadingIdModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel.*
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHashModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstanceModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemModel
@@ -38,15 +29,12 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResultModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResultModel.CHANGED
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResultModel.SKIPPED
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.toMediaDay
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalFolderModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItems
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.MediaOrientation.ORIENTATION_0
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.MediaOrientation.ORIENTATION_180
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.MediaOrientation.ORIENTATION_270
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.MediaOrientation.ORIENTATION_90
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.MediaOrientation.ORIENTATION_UNKNOWN
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.MediaOrientation.*
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.model.User
@@ -60,22 +48,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simpleOk
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import org.jetbrains.compose.resources.getString
-import org.joda.time.DateTime
 import se.ansman.dagger.auto.AutoBind
-import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
-import uhuruphotos_android.foundation.strings.api.generated.resources.month_april_short
-import uhuruphotos_android.foundation.strings.api.generated.resources.month_august_short
-import uhuruphotos_android.foundation.strings.api.generated.resources.month_december_short
-import uhuruphotos_android.foundation.strings.api.generated.resources.month_february_short
-import uhuruphotos_android.foundation.strings.api.generated.resources.month_january_short
-import uhuruphotos_android.foundation.strings.api.generated.resources.month_july_short
-import uhuruphotos_android.foundation.strings.api.generated.resources.month_june_short
-import uhuruphotos_android.foundation.strings.api.generated.resources.month_march_short
-import uhuruphotos_android.foundation.strings.api.generated.resources.month_may_short
-import uhuruphotos_android.foundation.strings.api.generated.resources.month_november_short
-import uhuruphotos_android.foundation.strings.api.generated.resources.month_october_short
-import uhuruphotos_android.foundation.strings.api.generated.resources.month_september_short
 import javax.inject.Inject
 
 @AutoBind
@@ -325,25 +298,4 @@ class MediaUseCase @Inject constructor(
             remoteMediaUseCase.restoreMediaItem(id.value)
         }
     }
-
-    private suspend fun DateTime.toMediaDay(): MediaDayModel = MediaDayModel(
-        day = dayOfMonth,
-        dayOfWeek = dayOfWeek,
-        month = monthOfYear,
-        year = year,
-        monthText = getString(when (monthOfYear) {
-            1 -> string.month_january_short
-            2 -> string.month_february_short
-            3 -> string.month_march_short
-            4 -> string.month_april_short
-            5 -> string.month_may_short
-            6 -> string.month_june_short
-            7 -> string.month_july_short
-            8 -> string.month_august_short
-            9 -> string.month_september_short
-            10 -> string.month_october_short
-            11 -> string.month_november_short
-            else -> string.month_december_short
-        })
-    )
 }

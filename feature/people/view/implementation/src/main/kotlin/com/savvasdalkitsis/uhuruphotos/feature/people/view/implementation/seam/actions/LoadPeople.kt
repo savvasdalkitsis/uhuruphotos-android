@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.actions
 
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.toPerson
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.toPerson
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleMutation.DisplayPeople
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleMutation.Loading

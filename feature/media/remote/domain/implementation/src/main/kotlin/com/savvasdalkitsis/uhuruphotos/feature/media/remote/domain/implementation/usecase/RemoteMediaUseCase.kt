@@ -28,6 +28,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstanceModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResultModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.toMediaDay
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummaryStatus
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.RemoteFeedDayResponseData
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.RemoteFeedResponseData
@@ -46,6 +47,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementatio
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.model.RemoteUserModel
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.async
+import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateDisplayer
+import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateParser
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.andThenTry
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
@@ -68,12 +71,14 @@ class RemoteMediaUseCase @Inject constructor(
     private val userUseCase: UserUseCase,
     private val remoteMediaItemSummaryQueries: RemoteMediaItemSummaryQueries,
     private val db: Database,
+    private val dateDisplayer: DateDisplayer,
+    private val dateParser: DateParser,
 ) : RemoteMediaUseCase {
 
     override fun observeAllRemoteMediaDetails(): Flow<List<DbRemoteMediaItemDetails>> =
         remoteMediaRepository.observeAllMediaItemDetails()
 
-    override fun observeFavouriteRemoteMedia(): Flow<Result<List<DbRemoteMediaItemSummary>, Throwable>> =
+    override fun observeFavouriteRemoteMedia(): Flow<Result<List<MediaItemModel>, Throwable>> =
         flow {
             emitAll(
                 withFavouriteThreshold { threshold ->
@@ -86,7 +91,7 @@ class RemoteMediaUseCase @Inject constructor(
             }
         }
 
-    override fun observeHiddenRemoteMedia(): Flow<List<DbRemoteMediaItemSummary>> =
+    override fun observeHiddenRemoteMedia(): Flow<Result<List<MediaItemModel>, Throwable>> =
         remoteMediaRepository.observeHiddenMedia().mapToPhotos()
 
     override fun observeRemoteMediaItemDetails(id: String): Flow<DbRemoteMediaItemDetails> =

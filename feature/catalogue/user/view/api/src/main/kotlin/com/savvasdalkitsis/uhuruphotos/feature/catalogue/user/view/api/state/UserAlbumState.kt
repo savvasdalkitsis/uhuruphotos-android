@@ -18,9 +18,11 @@ package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.state
 import android.os.Parcelable
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbums
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.FeedItemSyncStatus
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.FeedUri
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.NewMediaItemModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.NewCelState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.VitrineState
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Md5Hash
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.toTitleOr
 import kotlinx.parcelize.Parcelize
@@ -67,8 +69,8 @@ private fun celState(
     imageHash?.let { hash ->
         NewCelState(
             mediaItem = NewMediaItemModel(
-                hash,
-                uri = "",
+                Md5Hash(hash),
+                uri = FeedUri.remote(),
                 isVideo = coverIsVideo == true,
                 syncStatus = FeedItemSyncStatus.FULLY_SYNCED,
                 fallbackColor = null,

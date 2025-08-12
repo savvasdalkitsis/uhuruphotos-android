@@ -3,14 +3,8 @@ package com.savvasdalkitsis.uhuruphotos.feature.db.domain.implementation.denorma
 import androidx.core.graphics.toColorInt
 import com.github.michaelbull.result.mapBoth
 import com.github.michaelbull.result.mapOr
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.denormalization.Denormalization
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.denormalization.DenormalizationType.FAVORITE_ADDED
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.denormalization.DenormalizationType.FAVORITE_REMOVED
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.denormalization.DenormalizationType.NEW_LOCAL_MEDIA_FOUND
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.denormalization.DenormalizationType.NEW_REMOTE_MEDIA_FOUND
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.feed.FeedItemSyncStatusAdapter
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.feed.FeedUri
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.denormalization.DenormalizationType.*
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingle
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingleOrNull
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.isVideo
@@ -21,13 +15,11 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.local.LocalMe
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.local.LocalMediaItemDetailsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemSummaryQueries
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.FeedItemSyncStatus
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.FeedUri
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHashModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Md5Hash
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.MediaOrientation.ORIENTATION_0
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.MediaOrientation.ORIENTATION_180
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.MediaOrientation.ORIENTATION_270
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.MediaOrientation.ORIENTATION_90
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.MediaOrientation.ORIENTATION_UNKNOWN
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.MediaOrientation.*
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.toMediaOrientation
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateParser
@@ -48,23 +40,31 @@ class Denormalizer @Inject constructor(
     private val dateParser: DateParser,
     private val favoritesQueries: FavoritesQueries,
     private val userUseCase: UserUseCase,
-    private val serverUseCase: ServerUseCase,
 ) {
 
     suspend fun process(denormalization: Denormalization): Boolean = when (denormalization.type) {
-        NEW_LOCAL_MEDIA_FOUND -> processNewLocalMediaFound(localMediaItemDetails(denormalization))
+        NEW_LOCAL_MEDIA_FOUND -> localMediaItemDetails(denormalization)?.let {
+            processNewLocalMediaFound(it)
+        } ?: false.also {
+            log { "No local media item found for denormalization: $denormalization" }
+        }
         FAVORITE_ADDED -> processFavorite(denormalization.externalId, true)
         FAVORITE_REMOVED -> processFavorite(denormalization.externalId, false)
         NEW_REMOTE_MEDIA_FOUND -> processNewRemoteMediaFound(remoteMediaItemSummary(denormalization))
+        UPLOADING_LOCAL_MEDIA -> uploadingLocalMedia(localMediaItemDetails(denormalization))
+        UPLOADING_LOCAL_MEDIA_FAILED -> uploadingLocalMediaFailed(localMediaItemDetails(denormalization))
     }
 
-    private suspend fun localMediaItemDetails(denormalization: Denormalization): LocalMediaItemDetails =
-        localMediaItemDetailsQueries.getItem(denormalization.externalId.toLong()).awaitSingle()
+    private suspend fun localMediaItemDetails(denormalization: Denormalization): LocalMediaItemDetails? =
+        localMediaItemDetailsQueries.getItem(denormalization.externalId.toLong()).awaitSingleOrNull()
 
     private suspend fun remoteMediaItemSummary(denormalization: Denormalization): RemoteMediaItemSummary =
         remoteMediaItemSummaryQueries.get(denormalization.externalId).awaitSingle()
 
-    private suspend fun processNewLocalMediaFound(localMediaItemDetails: LocalMediaItemDetails): Boolean {
+    private suspend fun processNewLocalMediaFound(
+        localMediaItemDetails: LocalMediaItemDetails,
+        localSyncStatus: FeedItemSyncStatus = FeedItemSyncStatus.LOCAL_ONLY,
+    ): Boolean {
         val existingFeedItem = feedQueries.getItem(Md5Hash(localMediaItemDetails.md5)).awaitSingleOrNull()
         val date = localMediaDateTimeFormat.parseDateTime(localMediaItemDetails.dateTaken)
         val dateString = parsingDateFormat.print(date)
@@ -76,9 +76,9 @@ class Denormalizer @Inject constructor(
             existingFeedItem?.copy(
                 uri = FeedUri.local(localMediaItemDetails.contentUri),
                 syncStatus = if (isAlsoRemote) {
-                    FeedItemSyncStatusAdapter.FULLY_SYNCED
+                    FeedItemSyncStatus.FULLY_SYNCED
                 } else {
-                    FeedItemSyncStatusAdapter.LOCAL_ONLY
+                    localSyncStatus
                 }
             ) ?: Feed(
                 md5sum = Md5Hash(localMediaItemDetails.md5),
@@ -89,9 +89,9 @@ class Denormalizer @Inject constructor(
                 isVideo = localMediaItemDetails.video,
                 isFavourite = favoritesQueries.isFavorite(localMediaItemDetails.md5).awaitSingle(),
                 syncStatus = if (isAlsoRemote) {
-                    FeedItemSyncStatusAdapter.FULLY_SYNCED
+                    FeedItemSyncStatus.FULLY_SYNCED
                 } else {
-                    FeedItemSyncStatusAdapter.LOCAL_ONLY
+                    localSyncStatus
                 },
                 fallbackColor = localMediaItemDetails.fallbackColor,
                 ratio = localMediaItemDetails.ratio,
@@ -111,13 +111,12 @@ class Denormalizer @Inject constructor(
                 val isAlsoLocal = localMediaItemDetailsQueries.isLocal(md5sum.value).awaitSingle()
                 val time = dateParser.parseDateOrTimeString(remoteMediaItemSummary.date)
                 val dateString = parsingDateFormat.print(time)
-                val serverUrl = serverUseCase.getServerUrl()!!
                 feedQueries.insert(
                     existingFeedItem?.copy(
                         syncStatus = if (isAlsoLocal) {
-                            FeedItemSyncStatusAdapter.FULLY_SYNCED
+                            FeedItemSyncStatus.FULLY_SYNCED
                         } else {
-                            FeedItemSyncStatusAdapter.REMOTE_ONLY
+                            FeedItemSyncStatus.REMOTE_ONLY
                         }
                     ) ?: Feed(
                         md5sum = md5sum,
@@ -128,9 +127,9 @@ class Denormalizer @Inject constructor(
                         isVideo = remoteMediaItemSummary.isVideo,
                         isFavourite = favoritesQueries.isFavorite(md5sum.value).awaitSingle(),
                         syncStatus = if (isAlsoLocal) {
-                            FeedItemSyncStatusAdapter.FULLY_SYNCED
+                            FeedItemSyncStatus.FULLY_SYNCED
                         } else {
-                            FeedItemSyncStatusAdapter.REMOTE_ONLY
+                            FeedItemSyncStatus.REMOTE_ONLY
                         },
                         fallbackColor = try {
                             remoteMediaItemSummary.dominantColor?.toColorInt()
@@ -145,6 +144,18 @@ class Denormalizer @Inject constructor(
             },
             failure = { false }
         )
+    }
+
+    private suspend fun uploadingLocalMedia(localMediaItemDetails: LocalMediaItemDetails?): Boolean = if (localMediaItemDetails != null) {
+        processNewLocalMediaFound(localMediaItemDetails, FeedItemSyncStatus.LOCAL_UPLOADING)
+    } else {
+        false
+    }
+
+    private suspend fun uploadingLocalMediaFailed(localMediaItemDetails: LocalMediaItemDetails?): Boolean = if (localMediaItemDetails != null) {
+        processNewLocalMediaFound(localMediaItemDetails, FeedItemSyncStatus.LOCAL_ONLY)
+    } else {
+        false
     }
 
     private suspend fun processFavorite(md5: String, isFavorite: Boolean): Boolean {

@@ -266,7 +266,7 @@ sealed class MediaIdModel<T : Serializable> private constructor(
 public fun String.toThumbnailUrlFromId(serverUrl: String): String =
     "/media/square_thumbnails/$this".toAbsoluteRemoteUrl(serverUrl)
 
-private fun String.toFullSizeUrlFromId(isVideo: Boolean, serverUrl: String): String = when {
+fun String.toFullSizeUrlFromId(isVideo: Boolean, serverUrl: String): String = when {
     isVideo -> "/media/video/$this".toAbsoluteRemoteUrl(serverUrl)
     else -> "/media/photos/$this".toAbsoluteRemoteUrl(serverUrl)
 }

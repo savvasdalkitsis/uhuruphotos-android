@@ -1,6 +1,6 @@
 package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model
 
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.feed.FeedItemSyncStatus
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.FeedItemSyncStatus
 
 data class FeedItem(
     val stableId: String,

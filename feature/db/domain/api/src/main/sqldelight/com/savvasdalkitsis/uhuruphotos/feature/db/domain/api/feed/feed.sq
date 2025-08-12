@@ -1,6 +1,6 @@
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.feed.FeedItemSyncStatusAdapter;
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.FeedItemSyncStatus;
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Md5Hash;
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.feed.FeedUri;
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.FeedUri;
 
 CREATE TABLE feed (
     md5sum TEXT AS Md5Hash NOT NULL PRIMARY KEY,
@@ -10,7 +10,7 @@ CREATE TABLE feed (
     uri TEXT AS FeedUri NOT NULL,
     isVideo INTEGER AS kotlin.Boolean NOT NULL,
     isFavourite INTEGER AS kotlin.Boolean NOT NULL,
-    syncStatus INTEGER AS FeedItemSyncStatus.FeedItemSyncStatusAdapter NOT NULL,
+    syncStatus INTEGER AS FeedItemSyncStatus NOT NULL,
     fallbackColor INTEGER AS kotlin.Int,
     ratio REAL AS kotlin.Float NOT NULL
 );

@@ -32,7 +32,7 @@ CelState(
 
 fun MediaItemModel.toCel() = NewCelState(
     mediaItem = NewMediaItemModel(
-        md5Sum = this.id.mediaHash.md5.value,
+        md5Sum = this.id.mediaHash.md5,
     ),
 )
 

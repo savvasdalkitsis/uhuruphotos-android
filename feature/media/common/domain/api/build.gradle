@@ -11,6 +11,7 @@ dependencies {
     api(
             libs.androidx.work,
             libs.kotlinx.coroutines,
+            libs.joda.time,
             project(":feature:media:local:domain:api"),
             project(":foundation:group:api"),
             project(":foundation:map:api"),

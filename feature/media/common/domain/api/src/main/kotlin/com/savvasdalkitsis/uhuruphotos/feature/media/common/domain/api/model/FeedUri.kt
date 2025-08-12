@@ -1,8 +1,10 @@
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model
 
+import android.content.Context
 import android.os.Parcelable
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Md5Hash
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.MediaStoreContentUriResolver
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.localMediaThumbnailFile
 import kotlinx.parcelize.Parcelize
 
 @JvmInline
@@ -13,18 +15,29 @@ value class FeedUri(val value: String) : Parcelable {
         serverUrl: String?,
         userId: Int?,
         isVideo: Boolean,
+        context: Context,
+        isThumbnail: Boolean = false,
     ): String = when {
         value.startsWith(LOCAL_PREFIX) -> {
             val id = value.removePrefix(LOCAL_PREFIX).toLongOrNull()
             if (id != null) {
-                MediaStoreContentUriResolver.getContentUriForItem(id, isVideo).toString()
+                if (isThumbnail) {
+                    localMediaThumbnailFile(context, id).absolutePath
+                } else {
+                    MediaStoreContentUriResolver.getContentUriForItem(id, isVideo).toString()
+                }
             } else {
                 ""
             }
         }
         value.startsWith(REMOTE_PREFIX) -> when {
-            serverUrl != null && userId != null ->
-                MediaItemHashModel(md5sum, userId).hash.toThumbnailUrlFromId(serverUrl)
+            serverUrl != null && userId != null -> MediaItemHashModel(md5sum, userId).hash.let {
+                if (isThumbnail) {
+                    it.toThumbnailUrlFromId(serverUrl)
+                } else {
+                    it.toFullSizeUrlFromId(isVideo, serverUrl)
+                }
+            }
             else -> ""
         }
         else -> ""

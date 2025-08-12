@@ -45,11 +45,13 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.api.navigation.LocalServerUrl
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.feed.FeedItemSyncStatusAdapter
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.feed.FeedUri
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.FeedItemSyncStatus
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.FeedUri
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.icon
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelSelectionModeState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelSelectionModeState.CHECKABLE
@@ -161,7 +163,7 @@ private fun SharedTransitionScope.Cel(
     md5Sum: Md5Hash,
     uri: FeedUri,
     isVideo: Boolean,
-    syncStatus: FeedItemSyncStatusAdapter,
+    syncStatus: FeedItemSyncStatus,
     isFavourite: Boolean,
 ) {
     val iconSize = remember(miniIcons) {
@@ -185,6 +187,7 @@ private fun SharedTransitionScope.Cel(
     ) {
         val serverUrl = LocalServerUrl.current
         val user = LocalUser.current
+        val context = LocalContext.current
         val peekState = rememberZoomablePeekOverlayState()
 
         Thumbnail(
@@ -196,7 +199,7 @@ private fun SharedTransitionScope.Cel(
                     peekState,
                     ZoomablePeekOverlayBackdrop.scrim(backgroundColor.copy(alpha = 0.4f))
                 ),
-            url = uri.resolve(md5Sum, serverUrl, user.id, isVideo),
+            url = uri.resolve(md5Sum, serverUrl, user.id, isVideo, context),
             isVideo = false,//mediaItem.id.isVideo,
             contentScale = contentScale,
             placeholder = backgroundColor.toArgb(),
