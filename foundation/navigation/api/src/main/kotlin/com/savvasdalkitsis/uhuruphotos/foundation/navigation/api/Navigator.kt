@@ -29,6 +29,7 @@ interface Navigator {
     fun <R : NavigationRoute> newRoot(route: R)
     fun navigateBack()
     fun navigateUp()
+    fun navigateToAppSystemSettings()
     fun clearBackStack()
     fun <R : NavigationRoute> singleTop(route: R, routeType: KClass<R>)
 }

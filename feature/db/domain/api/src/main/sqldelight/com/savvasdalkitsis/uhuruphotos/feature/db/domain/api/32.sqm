@@ -1,5 +1,5 @@
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.denormalization.DenormalizationType;
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.feed.FeedItemSyncStatusAdapter;
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.FeedItemSyncStatus;
 
 DROP TABLE localMediaItemDetails;
 
@@ -20,7 +20,7 @@ CREATE TABLE localMediaItemDetails (
     latLon TEXT,
     fallbackColor INTEGER AS kotlin.Int,
     path TEXT,
-    orientation TEXT,
+    orientation TEXT
 );
 
 CREATE TABLE feed (
@@ -31,7 +31,7 @@ CREATE TABLE feed (
     uri TEXT NOT NULL,
     isVideo INTEGER AS kotlin.Boolean NOT NULL,
     isFavourite INTEGER AS kotlin.Boolean NOT NULL,
-    syncStatus INTEGER AS FeedItemSyncStatus.FeedItemSyncStatusAdapter NOT NULL,
+    syncStatus INTEGER AS FeedItemSyncStatus NOT NULL,
     fallbackColor INTEGER AS kotlin.Int,
     ratio REAL AS kotlin.Float NOT NULL
 );

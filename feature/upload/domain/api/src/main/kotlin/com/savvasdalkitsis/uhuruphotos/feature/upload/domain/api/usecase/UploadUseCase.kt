@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.Flow
 interface UploadUseCase {
 
     fun observeSingleCanUpload(): Flow<UploadCapability>
+    suspend fun getSingleCanUpload(): UploadCapability
     suspend fun canUpload(): UploadCapability
     suspend fun markAsUploading(force: Boolean = false, vararg items: UploadItem)
     suspend fun scheduleUploads(
@@ -47,4 +48,5 @@ interface UploadUseCase {
     fun saveErrorForProcessingItem(itemId: Long, error: Throwable)
     fun setCurrentUpload(currentUpload: CurrentUpload?)
     fun observeCurrentUpload(): Flow<CurrentUpload?>
+    suspend fun cancelScheduledUploads()
 }

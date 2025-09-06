@@ -20,6 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 
 interface UploadWorkScheduler {
 
+    fun cancelScheduledUploads()
     fun scheduleUploads(
         networkType: NetworkType,
         requiresCharging: Boolean,

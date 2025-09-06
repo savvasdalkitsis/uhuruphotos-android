@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.Flow
 interface SyncUseCase {
 
     fun observeSyncStatus(): Flow<SyncStatus>
+    suspend fun getPendingItems(): List<UploadItem>
     fun observePendingItems(): Flow<List<UploadItem>>
     fun setSyncEnabled(enabled: Boolean)
 }

@@ -31,6 +31,7 @@ interface FeedUseCase {
     ): Flow<List<MediaCollectionModel>>
 
     fun observeNewFeed(): Flow<Feed>
+    suspend fun getNewFeed(): Feed
 
     fun observeFeedDisplay(): Flow<PredefinedCollageDisplayState>
     fun setFeedDisplay(feedDisplay: PredefinedCollageDisplayState)

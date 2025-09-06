@@ -95,46 +95,55 @@ internal class FeedUseCase @Inject constructor(
 
     override fun observeNewFeed(): Flow<Feed> = feedRepository.observeFeed()
         .debounce(500)
-        .map { items ->
-            if (items.isEmpty()) {
-                Feed(emptyList())
-            } else {
-                val days = mutableListOf<FeedDay>()
-
-                var currentDayItems = mutableListOf<FeedDbModel>()
-                currentDayItems.add(items.first())
-
-                for (i in 1 until items.size) {
-                    val currentItem = items[i]
-                    val previousItem = items[i - 1]
-
-                    if (currentItem.day != previousItem.day) {
-                        val firstItemOfPreviousDay = currentDayItems.first()
-                        days.add(
-                            FeedDay(
-                                date = dateDisplayer.dateString(firstItemOfPreviousDay.day),
-                                location = firstItemOfPreviousDay.location,
-                                feedItems = currentDayItems
-                            )
-                        )
-
-                        currentDayItems = mutableListOf()
-                    }
-                    currentDayItems.add(currentItem)
-                }
-
-                val firstItemOfLastDay = currentDayItems.first()
-                days.add(
-                    FeedDay(
-                        date = dateDisplayer.dateString(firstItemOfLastDay.day),
-                        location = firstItemOfLastDay.location,
-                        feedItems = currentDayItems
-                    )
-                )
-
-                Feed(days = days)
-            }
+        .map {
+            it.toFeed()
         }
+
+    override suspend fun getNewFeed(): Feed {
+        return feedRepository.getFeed().toFeed()
+    }
+
+    private suspend fun List<FeedDbModel>.toFeed(): Feed {
+        val items = this
+        return if (items.isEmpty()) {
+            Feed(emptyList())
+        } else {
+            val days = mutableListOf<FeedDay>()
+
+            var currentDayItems = mutableListOf<FeedDbModel>()
+            currentDayItems.add(items.first())
+
+            for (i in 1 until items.size) {
+                val currentItem = items[i]
+                val previousItem = items[i - 1]
+
+                if (currentItem.day != previousItem.day) {
+                    val firstItemOfPreviousDay = currentDayItems.first()
+                    days.add(
+                        FeedDay(
+                            date = dateDisplayer.dateString(firstItemOfPreviousDay.day),
+                            location = firstItemOfPreviousDay.location,
+                            feedItems = currentDayItems
+                        )
+                    )
+
+                    currentDayItems = mutableListOf()
+                }
+                currentDayItems.add(currentItem)
+            }
+
+            val firstItemOfLastDay = currentDayItems.first()
+            days.add(
+                FeedDay(
+                    date = dateDisplayer.dateString(firstItemOfLastDay.day),
+                    location = firstItemOfLastDay.location,
+                    feedItems = currentDayItems
+                )
+            )
+
+            Feed(days = days)
+        }
+    }
 
     private fun combinedFeed(
         feedFetchTypeModel: FeedFetchTypeModel,

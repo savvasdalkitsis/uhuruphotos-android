@@ -69,6 +69,8 @@ class UploadUseCase @Inject constructor(
         emit(canUpload())
     }
 
+    override suspend fun getSingleCanUpload(): UploadCapability = canUpload()
+
     override suspend fun canUpload(): UploadCapability =
         welcomeUseCase.get(
             withoutRemoteAccess = { NotSetUpWithAServer },
@@ -87,6 +89,9 @@ class UploadUseCase @Inject constructor(
             },
         )
 
+    override suspend fun cancelScheduledUploads() {
+        uploadWorkScheduler.cancelScheduledUploads()
+    }
     override suspend fun scheduleUploads(
         networkType: NetworkType,
         requiresCharging: Boolean,

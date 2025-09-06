@@ -22,9 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadU
 import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import se.ansman.dagger.auto.AutoBindIntoSet
 import javax.inject.Inject
@@ -41,13 +39,17 @@ class SyncInitializer @Inject constructor(
                 syncUseCase.observePendingItems(),
                 settingsUseCase.observeCloudSyncNetworkRequirements(),
                 settingsUseCase.observeCloudSyncRequiresCharging(),
-            ) { _, networkRequirement, requiresCharging ->
-                networkRequirement to requiresCharging
-            }.distinctUntilChanged().collectLatest { (networkRequirement, requiresCharging) ->
-                uploadUseCase.scheduleUploads(
-                    networkType = networkRequirement,
-                    requiresCharging = requiresCharging,
-                )
+            ) { items, networkRequirement, requiresCharging ->
+                Triple(items, networkRequirement, requiresCharging)
+            }.collect { (items, networkRequirement, requiresCharging) ->
+                if (items.isNotEmpty()) {
+                    uploadUseCase.scheduleUploads(
+                        networkType = networkRequirement,
+                        requiresCharging = requiresCharging,
+                    )
+                } else {
+                    uploadUseCase.cancelScheduledUploads()
+                }
             }
         }
     }

@@ -1,6 +1,6 @@
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.FeedItemSyncStatus;
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Md5Hash;
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.FeedUri;
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Md5Hash;
 
 CREATE TABLE feed (
     md5sum TEXT AS Md5Hash NOT NULL PRIMARY KEY,
@@ -18,8 +18,17 @@ CREATE TABLE feed (
 get:
 SELECT * FROM feed ORDER BY sortableValue DESC;
 
-getItem:
-SELECT * FROM feed WHERE md5sum = :md5sum;
+hasItem:
+SELECT EXISTS(SELECT 1 FROM feed WHERE md5sum = :md5sum);
 
 insert:
 INSERT OR REPLACE INTO feed VALUES ?;
+
+setSyncStatus:
+UPDATE feed SET syncStatus = :syncStatus WHERE md5sum = :md5sum;
+
+setUri:
+UPDATE feed SET uri = :uri WHERE md5sum = :md5sum;
+
+setFavourite:
+UPDATE feed SET isFavourite = :isFavourite WHERE md5sum = :md5sum;

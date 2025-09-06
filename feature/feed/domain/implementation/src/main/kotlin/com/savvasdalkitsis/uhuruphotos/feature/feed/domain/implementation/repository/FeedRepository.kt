@@ -78,6 +78,8 @@ class FeedRepository @Inject constructor(
         feedQueries.get().asFlow()
             .mapToList(Dispatchers.IO)
 
+    suspend fun getFeed(): List<Feed> = feedQueries.get().awaitList()
+
     fun observeRemoteMediaCollectionsByDate(
         feedFetchTypeModel: FeedFetchTypeModel,
         loadSmallInitialChunk: Boolean,

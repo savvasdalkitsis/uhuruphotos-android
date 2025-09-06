@@ -29,8 +29,6 @@ import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNot
 import com.savvasdalkitsis.uhuruphotos.math.toProgressPercent
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.distinctUntilChanged
 import org.jetbrains.compose.resources.getString
 import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
 import uhuruphotos_android.foundation.strings.api.generated.resources.media_sync_status_uploading
@@ -55,7 +53,16 @@ class UploadsWorker @AssistedInject constructor(
 
     override suspend fun work(): Result {
         val itemsFailed = mutableSetOf<UploadItem>()
-        syncUseCase.observePendingItems().distinctUntilChanged().collectLatest { items ->
+        do {
+            val items = syncUseCase.getPendingItems()
+            if (items.isEmpty()) {
+                return Result.success()
+            }
+            if (items.toSet() == itemsFailed) {
+                return itemsFailed.failOrRetry()
+            }
+            itemsFailed.clear()
+
             uploadUseCase.markAsUploading(items = items.toTypedArray())
             denormalizationQueue.uploadingLocalMedia(items.map { it.id }.toSet())
             for ((index, item) in items.withIndex()) {
@@ -73,13 +80,12 @@ class UploadsWorker @AssistedInject constructor(
                 if (result.isErr) {
                     log(result.error) { "Failed to upload item $item" }
                     itemsFailed += item
+                } else {
+                    uploadUseCase.markAsNotUploading(item.id)
+                    denormalizationQueue.uploadingLocalMediaSucceeded(item.id)
                 }
             }
-        }
-        return when {
-            itemsFailed.isEmpty() -> Result.success()
-            else -> itemsFailed.failOrRetry()
-        }
+        } while (true)
     }
 
     private fun UploadItem.updateCurrentUpload(percent: Float) {

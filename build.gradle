@@ -101,6 +101,7 @@ subprojects {
         compilerOptions {
             freeCompilerArgs.add("-Xcontext-parameters")
             freeCompilerArgs.add("-Xopt-in=androidx.compose.animation.ExperimentalSharedTransitionApi")
+            freeCompilerArgs.add("-Xannotation-default-target=param-property")
         }
     }
 

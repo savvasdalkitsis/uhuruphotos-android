@@ -15,8 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.sync.domain.implementation.usecase
 
-import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchTypeModel
+import android.content.Context
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.Feed
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.FeedItemSyncStatus.LOCAL_ONLY
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.FeedItemSyncStatus.LOCAL_UPLOADING
 import com.savvasdalkitsis.uhuruphotos.feature.sync.domain.api.model.SyncStatus
 import com.savvasdalkitsis.uhuruphotos.feature.sync.domain.api.model.SyncStatus.Disabled
 import com.savvasdalkitsis.uhuruphotos.feature.sync.domain.api.model.SyncStatus.Enabled
@@ -32,8 +35,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.uploads.domain.api.usecase.Upload
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.WelcomeUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.get
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.observe
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -42,6 +47,8 @@ import javax.inject.Inject
 
 @AutoBind
 class SyncUseCase @Inject constructor(
+    @ApplicationContext
+    private val context: Context,
     private val welcomeUseCase: WelcomeUseCase,
     @PlainTextPreferences
     private val preferences: Preferences,
@@ -63,6 +70,16 @@ class SyncUseCase @Inject constructor(
         }
     }
 
+    private suspend fun getSyncStatus(): SyncStatus {
+        val welcomeStatus = welcomeUseCase.getWelcomeStatus()
+        val canUpload = uploadUseCase.getSingleCanUpload()
+        val enabled = preferences.get(enabledKey, false)
+        return when (canUpload) {
+            CanUpload -> if (welcomeStatus.allGranted && enabled) Enabled else Disabled
+            CannotUpload, UnableToCheck, NotSetUpWithAServer -> NotAvailable
+        }
+    }
+
     override fun setSyncEnabled(enabled: Boolean) {
         preferences.set(enabledKey, enabled)
     }
@@ -70,21 +87,37 @@ class SyncUseCase @Inject constructor(
     override fun observePendingItems(): Flow<List<UploadItem>> =
         combine(
             observeSyncStatus(),
-            feedUseCase.observeFeed(FeedFetchTypeModel.ALL, loadSmallInitialChunk = false),
-            uploadsUseCase.observeUploadsInFlight(),
-        )
-        { syncStatus, feed, existingUploads ->
-            if (syncStatus != Enabled)
-                emptyList()
-            else
-                (feed.flatMap { it.mediaItems }
-                    .mapNotNull { item -> item.id.findLocals.firstOrNull()?.takeIf { item.id.findRemote == null } }
-                    .map { item ->
-                        UploadItem(item.value, item.contentUri)
-                    } + existingUploads.jobs.map { item ->
-                        UploadItem(item.localItemId, item.contentUri)
-                    }
-                ).distinct()
-        }.distinctUntilChanged()
+            feedUseCase.observeNewFeed(),
+            ::pendingItems
+        ).distinctUntilChanged()
+
+    override suspend fun getPendingItems(): List<UploadItem> =
+        pendingItems(getSyncStatus(), feedUseCase.getNewFeed())
+
+    private fun pendingItems(
+        syncStatus: SyncStatus,
+        feed: Feed
+    ): List<UploadItem> = when {
+        syncStatus != Enabled -> emptyList()
+        else -> feed.days
+            .flatMap { it.feedItems }
+            .filter { it.syncStatus == LOCAL_ONLY || it.syncStatus == LOCAL_UPLOADING }
+            .mapNotNull { item ->
+                item.uri.localMediaId?.let { id ->
+                    UploadItem(
+                        id,
+                        item.uri.resolve(
+                            item.md5sum,
+                            "",
+                            null,
+                            item.isVideo,
+                            context,
+                            isThumbnail = false
+                        )
+                    )
+                }
+            }
+            .distinct()
+    }
 
 }

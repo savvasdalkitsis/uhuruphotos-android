@@ -47,3 +47,6 @@ DELETE FROM localMediaItemDetails;
 
 isLocal:
 SELECT EXISTS(SELECT 1 FROM localMediaItemDetails WHERE md5 = :md5sum);
+
+getMd5:
+SELECT md5 FROM localMediaItemDetails WHERE id = :id;

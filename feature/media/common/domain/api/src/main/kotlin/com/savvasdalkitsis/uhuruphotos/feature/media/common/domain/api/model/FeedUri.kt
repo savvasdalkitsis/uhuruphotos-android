@@ -10,6 +10,9 @@ import kotlinx.parcelize.Parcelize
 @JvmInline
 @Parcelize
 value class FeedUri(val value: String) : Parcelable {
+
+    val localMediaId: Long? get() = value.removePrefix(LOCAL_PREFIX).toLongOrNull()
+
     fun resolve(
         md5sum: Md5Hash,
         serverUrl: String?,
@@ -19,7 +22,7 @@ value class FeedUri(val value: String) : Parcelable {
         isThumbnail: Boolean = false,
     ): String = when {
         value.startsWith(LOCAL_PREFIX) -> {
-            val id = value.removePrefix(LOCAL_PREFIX).toLongOrNull()
+            val id = localMediaId
             if (id != null) {
                 if (isThumbnail) {
                     localMediaThumbnailFile(context, id).absolutePath

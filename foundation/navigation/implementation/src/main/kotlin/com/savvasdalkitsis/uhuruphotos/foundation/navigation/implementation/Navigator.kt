@@ -15,7 +15,10 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.navigation.implementation
 
+import android.content.Context
 import android.content.Intent
+import android.net.Uri
+import android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.core.net.toUri
@@ -24,6 +27,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.launchers.api.onMain
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
+import dagger.hilt.android.qualifiers.ApplicationContext
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -32,6 +36,7 @@ import kotlin.reflect.KClass
 @AutoBind
 @Singleton
 class Navigator @Inject internal constructor(
+    @ApplicationContext private val context: Context,
     private val intentLauncher: IntentLauncher,
 ) : Navigator {
 
@@ -73,6 +78,14 @@ class Navigator @Inject internal constructor(
         } else {
             clearBackStack()
         }
+    }
+
+    override fun navigateToAppSystemSettings() {
+        navigateTo(Intent(ACTION_APPLICATION_DETAILS_SETTINGS, Uri.Builder()
+            .scheme("package")
+            .opaquePart(context.packageName)
+            .build()
+        ))
     }
 
     override fun clearBackStack() {

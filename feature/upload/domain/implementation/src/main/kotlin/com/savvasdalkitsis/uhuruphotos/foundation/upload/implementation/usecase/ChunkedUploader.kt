@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.usecase
 
 import android.content.ContentResolver
-import android.net.Uri
+import androidx.core.net.toUri
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.user.User
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
@@ -43,7 +43,7 @@ class ChunkedUploader @Inject constructor(
         progress: suspend (current: Long, total: Long) -> Unit,
     ): SimpleResult = runCatchingWithLog {
         val initialOffset = uploadRepository.getOffset(item.id) ?: 0
-        contentResolver.openInputStream(Uri.parse(item.contentUri))!!.use { input ->
+        contentResolver.openInputStream(item.contentUri.toUri())!!.use { input ->
             val total = (size.takeIf { it > 0 } ?: input.available()).toLong()
             input.skip(initialOffset)
             val chunk = ByteArray(maxChunkSize)

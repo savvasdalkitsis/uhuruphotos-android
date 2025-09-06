@@ -15,8 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions
 
-import android.content.Intent
-import android.provider.Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
@@ -26,6 +24,6 @@ data object DisableBatteryOptimizations : FeedAction() {
     override fun FeedActionsContext.handle(
         state: FeedState
     ) = flow<FeedMutation> {
-        navigator.navigateTo(Intent(ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS))
+        navigator.navigateToAppSystemSettings()
     }
 }

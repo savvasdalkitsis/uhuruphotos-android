@@ -2,7 +2,11 @@ package com.savvasdalkitsis.uhuruphotos.feature.db.domain.implementation.denorma
 
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.denormalization.DenormalizationQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.denormalization.DenormalizationQueue
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.denormalization.DenormalizationType.*
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.denormalization.DenormalizationType.NEW_LOCAL_MEDIA_FOUND
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.denormalization.DenormalizationType.NEW_REMOTE_MEDIA_FOUND
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.denormalization.DenormalizationType.UPLOADING_LOCAL_MEDIA
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.denormalization.DenormalizationType.UPLOADING_LOCAL_MEDIA_FAILED
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.denormalization.DenormalizationType.UPLOADING_LOCAL_MEDIA_SUCCEEDED
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -30,6 +34,13 @@ class DbDenormalizationQueue @Inject constructor(
                 denormalizationQueries.insert(null, UPLOADING_LOCAL_MEDIA, localMediaId.toString()).await()
             }
         }
+    }
+
+    override fun uploadingLocalMediaSucceeded(localMediaId: Long) {
+        CoroutineScope(Dispatchers.IO).launch {
+            denormalizationQueries.insert(null, UPLOADING_LOCAL_MEDIA_SUCCEEDED, localMediaId.toString()).await()
+        }
+
     }
 
     override fun uploadingLocalMediaFailed(localMediaIds: Set<Long>) {

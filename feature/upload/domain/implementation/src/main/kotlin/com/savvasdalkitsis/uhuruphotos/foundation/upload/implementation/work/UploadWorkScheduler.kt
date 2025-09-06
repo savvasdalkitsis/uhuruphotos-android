@@ -21,6 +21,7 @@ import androidx.work.NetworkType
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHashModel
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.work.UploadWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
+import com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.work.UploadsWorker.Companion.WORK_NAME
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkScheduleUseCase
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
@@ -30,6 +31,10 @@ class UploadWorkScheduler @Inject constructor(
     private val workScheduleUseCase: WorkScheduleUseCase,
 ) : UploadWorkScheduler {
 
+    override fun cancelScheduledUploads() {
+        log { "Will cancel all scheduled uploads" }
+        workScheduleUseCase.cancelUniqueWork(WORK_NAME)
+    }
     override fun scheduleUploads(
         networkType: NetworkType,
         requiresCharging: Boolean,
