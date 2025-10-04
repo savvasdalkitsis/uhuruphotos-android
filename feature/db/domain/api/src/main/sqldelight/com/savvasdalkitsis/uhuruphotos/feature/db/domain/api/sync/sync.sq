@@ -1,0 +1,21 @@
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Md5Hash;
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.FeedUri;
+
+CREATE TABLE sync (
+    id INTEGER NOT NULL PRIMARY KEY,
+    uri TEXT AS FeedUri NOT NULL,
+    isVideo INTEGER AS kotlin.Boolean NOT NULL,
+    md5sum TEXT AS Md5Hash NOT NULL
+);
+
+get:
+SELECT * FROM sync;
+
+insert:
+INSERT OR REPLACE INTO sync VALUES ?;
+
+remove:
+DELETE FROM sync WHERE id = :id;
+
+removeByMd5:
+DELETE FROM sync WHERE md5sum = :md5sum;

@@ -21,4 +21,5 @@ import kotlinx.coroutines.flow.Flow
 interface UploadsUseCase {
 
     fun observeUploadsInFlight(): Flow<Uploads>
+    suspend fun clearFinishedUploads()
 }

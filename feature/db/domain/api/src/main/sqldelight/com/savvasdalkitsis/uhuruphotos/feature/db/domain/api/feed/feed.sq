@@ -18,6 +18,9 @@ CREATE TABLE feed (
 get:
 SELECT * FROM feed ORDER BY sortableValue DESC;
 
+getLocalOnlyOrUploadingFeedItems:
+SELECT * FROM feed WHERE syncStatus IN (:statusLocalOnly, :statusLocalUploading) ORDER BY sortableValue DESC;
+
 hasItem:
 SELECT EXISTS(SELECT 1 FROM feed WHERE md5sum = :md5sum);
 

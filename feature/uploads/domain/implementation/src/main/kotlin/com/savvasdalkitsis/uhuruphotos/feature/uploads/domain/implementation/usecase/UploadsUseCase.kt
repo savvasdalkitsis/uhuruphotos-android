@@ -16,74 +16,71 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.uploads.domain.implementation.usecase
 
 import android.content.Context
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.processing.domain.api.usecase.ProcessingUseCase
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToList
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.uploads.UploadsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadJob
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadStatus.Failed
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadStatus.Finished
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadStatus.InQueue
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadStatus.Processing
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadStatus.Uploading
-import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadStatuses.FAILED
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadStatuses.FINISHED
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadStatuses.IN_QUEUE
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadStatuses.PROCESSING
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadStatuses.UPLOADING
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.domain.api.model.Uploads
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.domain.api.usecase.UploadsUseCase
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 
 @AutoBind
 class UploadsUseCase @Inject constructor(
-    private val localMediaUseCase: LocalMediaUseCase,
-    private val uploadUseCase: UploadUseCase,
-    private val processingUseCase: ProcessingUseCase,
+    private val uploadsQueries: UploadsQueries,
     @ApplicationContext private val context: Context,
 ) : UploadsUseCase {
 
     override fun observeUploadsInFlight(): Flow<Uploads> =
-        combine(
-            uploadUseCase.observeUploading(),
-            processingUseCase.observeProcessingMedia(),
-            uploadUseCase.observeCurrentUpload(),
-        ) { uploading, processing, currentUpload ->
-            uploading.mapNotNull { itemId ->
-                localMediaUseCase.getLocalMediaItem(itemId)?.let { mediaItem ->
-                    UploadJob(
-                        localItemId = itemId,
-                        displayName = mediaItem.displayName,
-                        contentUri = mediaItem.contentUri,
-                        status = when {
-                            currentUpload?.item?.id == itemId ->
-                                Uploading(
-                                    progressPercent = currentUpload.progressPercent,
-                                    progressDisplay = String.format(
-                                        locale = context.resources.configuration.locales[0],
-                                        format = "%.2f%%",
-                                        currentUpload.progressPercent * 100,
+        uploadsQueries.get()
+            .asFlow().mapToList(Dispatchers.IO)
+            .map { items ->
+                Uploads(
+                    jobs = items.map { item ->
+                        UploadJob(
+                            localItemId = item.id,
+                            displayName = item.displayName,
+                            contentUri = item.uri.resolve(
+                                item.md5sum,
+                                "",
+                                null,
+                                item.isVideo,
+                                context,
+                                isThumbnail = true,
+                            ),
+                            status = when (item.status) {
+                                UPLOADING -> {
+                                    val progress = item.progress ?: 0
+                                    Uploading(
+                                        progressPercent = progress / 100f,
+                                        progressDisplay = "$progress% ",
                                     )
-                                )
-                            else -> InQueue
-                        }
-                    )
-                }
-            } + processing.jobs.map { item ->
-                UploadJob(
-                    localItemId = item.localItemId,
-                    displayName = item.displayName,
-                    contentUri = item.contentUri,
-                    status = if (item.hasError) Failed(item.lastResponse) else Processing,
+                                }
+                                IN_QUEUE -> InQueue
+                                PROCESSING -> Processing
+                                FAILED -> Failed(item.lastResponse)
+                                FINISHED -> Finished
+                            }
+                        )
+                    }
                 )
             }
-        }.map {
-            Uploads(it.sortedWith { a, b ->
-                when {
-                    a.status is Processing -> -1
-                    b.status is Processing -> 1
-                    a.status is Uploading -> -1
-                    b.status is Uploading -> 1
-                    else -> 0
-                }
-            })
-        }
+
+    override suspend fun clearFinishedUploads() {
+        uploadsQueries.clearUploadsOfStatus(FINISHED).await()
+    }
 }

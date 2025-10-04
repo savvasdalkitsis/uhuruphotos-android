@@ -69,9 +69,14 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.portfolio.Portfolio
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.portfolio.PortfolioItemsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.portfolio.PortfolioQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.search.SearchQueries
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.sync.Sync
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.sync.SyncQueries
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.uploads.Uploads
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.uploads.UploadsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.user.User
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.user.UserQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.implementation.adapters.Md5HashAdapter
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.implementation.adapters.UploadStatusAdapter
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -125,6 +130,8 @@ class DbModule {
         userAlbumAdditionQueueAdapter = UserAlbumAdditionQueue.Adapter(IntColumnAdapter),
         feedAdapter = Feed.Adapter(Md5HashAdapter, FeedUriAdapter, FeedItemSyncStatusAdapter, IntColumnAdapter, FloatColumnAdapter),
         denormalizationAdapter = Denormalization.Adapter(EnumColumnAdapter()),
+        syncAdapter = Sync.Adapter(FeedUriAdapter, Md5HashAdapter),
+        uploadsAdapter = Uploads.Adapter(FeedUriAdapter, Md5HashAdapter, UploadStatusAdapter)
     )
 
     @Provides
@@ -210,4 +217,10 @@ class DbModule {
 
     @Provides
     fun favoritesQueries(database: Database): FavoritesQueries = database.favoritesQueries
+
+    @Provides
+    fun uploadsQueries(database: Database): UploadsQueries = database.uploadsQueries
+
+    @Provides
+    fun syncQueries(database: Database): SyncQueries = database.syncQueries
 }

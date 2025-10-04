@@ -21,6 +21,7 @@ import androidx.work.WorkerParameters
 import com.github.michaelbull.result.coroutines.coroutineBinding
 import com.github.michaelbull.result.getOr
 import com.github.michaelbull.result.onFailure
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.denormalization.DenormalizationQueue
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummaryStatus.Found
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummaryStatus.Processing
@@ -42,6 +43,7 @@ class UploadPostCompletionWorker @AssistedInject constructor(
     private val mediaUseCase: RemoteMediaUseCase,
     private val feedUseCase: FeedUseCase,
     private val uploadUseCase: UploadUseCase,
+    private val denormalizationQueue: DenormalizationQueue,
     foregroundInfoBuilder: ForegroundInfoBuilder,
 ) : ForegroundNotificationWorker<Nothing>(
     context,
@@ -61,10 +63,12 @@ class UploadPostCompletionWorker @AssistedInject constructor(
             is Found -> {
                 feedUseCase.refreshCluster(status.containerId).bind()
                 uploadUseCase.markAsNotProcessing(itemId)
+                denormalizationQueue.processingUploadedMediaItemSuccess(itemId)
                 Result.success()
             }
             is Processing -> {
                 uploadUseCase.saveLastResponseForProcessingItem(itemId, status.response.toString())
+                denormalizationQueue.processingUploadedMediaItemMessageUpdate(itemId, status.response.toString())
                 failOrRetry(itemId)
             }
         }.also {
@@ -72,12 +76,14 @@ class UploadPostCompletionWorker @AssistedInject constructor(
         }
     }.onFailure {
         uploadUseCase.saveErrorForProcessingItem(itemId, it)
+        denormalizationQueue.processingUploadedMediaItemMessageUpdate(itemId, it.stackTraceToString())
     }.getOr(Result.retry())
 
     private fun failOrRetry(itemId: Long) = if (params.runAttemptCount < SCHEDULE_MAX_ATTEMPTS) {
         Result.retry()
     } else {
         uploadUseCase.markAsNotProcessing(itemId)
+        denormalizationQueue.processingUploadedMediaItemFailure(itemId)
         Result.failure()
     }
 

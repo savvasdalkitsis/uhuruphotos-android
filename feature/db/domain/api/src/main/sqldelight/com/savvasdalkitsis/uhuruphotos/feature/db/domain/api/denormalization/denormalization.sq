@@ -3,7 +3,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.denormalization.Den
 CREATE TABLE denormalization (
     id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     type TEXT AS DenormalizationType NOT NULL,
-    externalId TEXT NOT NULL
+    externalId TEXT NOT NULL,
+    extra TEXT
 );
 
 get:
@@ -13,4 +14,4 @@ delete:
 DELETE FROM denormalization WHERE id = :id;
 
 insert:
-INSERT OR REPLACE INTO denormalization VALUES (?, ?,?);
+INSERT OR REPLACE INTO denormalization VALUES (?, ?, ?, ?);

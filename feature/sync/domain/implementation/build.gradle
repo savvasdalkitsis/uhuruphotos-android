@@ -6,6 +6,7 @@ dependencies {
     implementation(
             libs.bundles.autodagger,
             libs.hilt,
+            libs.sqldelight.coroutines,
             project(":feature:feed:domain:api"),
             project(":feature:settings:domain:api"),
             project(":feature:sync:domain:api"),

@@ -99,9 +99,13 @@ internal class FeedUseCase @Inject constructor(
             it.toFeed()
         }
 
-    override suspend fun getNewFeed(): Feed {
-        return feedRepository.getFeed().toFeed()
-    }
+    override fun observeLocalOnlyOrUploadingFeedItems(): Flow<List<FeedDbModel>> =
+        feedRepository.observeLocalOnlyOrUploadingFeedItems()
+
+    override suspend fun getNewFeed(): Feed = feedRepository.getFeed().toFeed()
+
+    override suspend fun getLocalOnlyOrUploadingFeedItems(): List<FeedDbModel> =
+        feedRepository.getLocalOnlyOrUploadingFeedItems()
 
     private suspend fun List<FeedDbModel>.toFeed(): Feed {
         val items = this
@@ -208,7 +212,7 @@ internal class FeedUseCase @Inject constructor(
     )
 
     private suspend fun Group<String, MediaCollectionSourceModel>.toCollection() =
-            mediaUseCase.toMediaCollection(this@toCollection)
+        mediaUseCase.toMediaCollection(this@toCollection)
 
     private fun observeLocalMediaFeed(feedFetchTypeModel: FeedFetchTypeModel) =
         combine(

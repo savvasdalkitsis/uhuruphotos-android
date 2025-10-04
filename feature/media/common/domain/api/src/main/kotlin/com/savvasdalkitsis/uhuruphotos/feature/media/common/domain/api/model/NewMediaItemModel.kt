@@ -20,6 +20,7 @@ import androidx.compose.runtime.Immutable
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.FeedItemSyncStatus.FULLY_SYNCED
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.FeedItemSyncStatus.LOCAL_ONLY
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.FeedItemSyncStatus.LOCAL_UPLOADING
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.FeedItemSyncStatus.PROCESSING
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.FeedItemSyncStatus.REMOTE_DOWNLOADING
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.FeedItemSyncStatus.REMOTE_ONLY
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Md5Hash
@@ -28,6 +29,7 @@ import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
 import uhuruphotos_android.foundation.icons.api.generated.resources.ic_cloud
 import uhuruphotos_android.foundation.icons.api.generated.resources.ic_cloud_done
 import uhuruphotos_android.foundation.icons.api.generated.resources.ic_cloud_download
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_cloud_in_progress
 import uhuruphotos_android.foundation.icons.api.generated.resources.ic_cloud_off
 import uhuruphotos_android.foundation.icons.api.generated.resources.ic_cloud_upload
 
@@ -53,6 +55,7 @@ val FeedItemSyncStatus.hasLocal get() = this in setOf(
     FULLY_SYNCED,
     LOCAL_UPLOADING,
     LOCAL_ONLY,
+    PROCESSING,
 )
 
 val FeedItemSyncStatus.icon get() = when (this) {
@@ -61,4 +64,5 @@ val FeedItemSyncStatus.icon get() = when (this) {
     LOCAL_UPLOADING -> drawable.ic_cloud_upload
     REMOTE_DOWNLOADING -> drawable.ic_cloud_download
     FULLY_SYNCED -> drawable.ic_cloud_done
+    PROCESSING -> drawable.ic_cloud_in_progress
 }

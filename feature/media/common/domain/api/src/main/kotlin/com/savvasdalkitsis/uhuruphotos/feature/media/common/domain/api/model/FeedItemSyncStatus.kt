@@ -7,5 +7,6 @@ enum class FeedItemSyncStatus(
     REMOTE_ONLY(1),
     LOCAL_UPLOADING(2),
     REMOTE_DOWNLOADING(3),
-    FULLY_SYNCED(4);
+    FULLY_SYNCED(4),
+    PROCESSING(5);
 }

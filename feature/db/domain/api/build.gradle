@@ -24,6 +24,7 @@ dependencies {
             project(":feature:media:common:domain:api"),
             project(":feature:media:local:domain:api"),
             project(":feature:people:view:api"),
+            project(":feature:upload:domain:api"),
             project(":foundation:coroutines:api"),
             project(":foundation:lang:api"),
     )

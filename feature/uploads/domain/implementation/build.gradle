@@ -6,7 +6,8 @@ dependencies {
     implementation(
             libs.bundles.autodagger,
             libs.hilt,
-            project(":feature:processing:domain:api"),
+            libs.sqldelight.coroutines,
+            project(":feature:db:domain:api"),
             project(":feature:upload:domain:api"),
             project(":feature:uploads:domain:api"),
             project(":foundation:notification:api"),

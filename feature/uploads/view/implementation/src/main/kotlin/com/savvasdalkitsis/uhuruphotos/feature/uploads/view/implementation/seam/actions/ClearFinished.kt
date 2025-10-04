@@ -13,12 +13,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.processing.domain.api.usecase
+package com.savvasdalkitsis.uhuruphotos.feature.uploads.view.implementation.seam.actions
 
-import com.savvasdalkitsis.uhuruphotos.feature.processing.domain.api.model.Processing
+import com.savvasdalkitsis.uhuruphotos.feature.uploads.view.implementation.seam.UploadsActionsContext
+import com.savvasdalkitsis.uhuruphotos.feature.uploads.view.implementation.ui.state.UploadsState
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
-interface ProcessingUseCase {
-
-    fun observeProcessingMedia(): Flow<Processing>
+data object ClearFinished : UploadsAction() {
+    override fun UploadsActionsContext.handle(state: UploadsState): Flow<Mutation<UploadsState>> = flow {
+        uploadsUseCase.clearFinishedUploads()
+    }
 }

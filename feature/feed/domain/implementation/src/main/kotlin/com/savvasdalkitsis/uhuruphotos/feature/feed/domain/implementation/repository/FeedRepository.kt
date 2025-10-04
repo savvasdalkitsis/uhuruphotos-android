@@ -28,6 +28,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.GetRem
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaCollectionsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchTypeModel
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.service.http.FeedService
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.FeedItemSyncStatus.LOCAL_ONLY
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.FeedItemSyncStatus.LOCAL_UPLOADING
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.RemoteMediaDayCompleteResponse
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.RemoteMediaDaySummaryResponse
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.toDbModel
@@ -77,6 +79,13 @@ class FeedRepository @Inject constructor(
     fun observeFeed(): Flow<List<Feed>> =
         feedQueries.get().asFlow()
             .mapToList(Dispatchers.IO)
+
+    fun observeLocalOnlyOrUploadingFeedItems(): Flow<List<Feed>> =
+        feedQueries.getLocalOnlyOrUploadingFeedItems(LOCAL_ONLY, LOCAL_UPLOADING).asFlow()
+            .mapToList(Dispatchers.IO)
+
+    suspend fun getLocalOnlyOrUploadingFeedItems(): List<Feed> =
+        feedQueries.getLocalOnlyOrUploadingFeedItems(LOCAL_ONLY, LOCAL_UPLOADING).awaitList()
 
     suspend fun getFeed(): List<Feed> = feedQueries.get().awaitList()
 

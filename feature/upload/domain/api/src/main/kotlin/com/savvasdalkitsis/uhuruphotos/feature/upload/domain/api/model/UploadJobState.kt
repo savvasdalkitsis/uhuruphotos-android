@@ -33,3 +33,11 @@ sealed class UploadStatus(
     data object Finished: UploadStatus(true, string.succeeded)
     data class Failed(val lastResponse: String?): UploadStatus(true, string.failed)
 }
+
+enum class UploadStatuses(val stableId: Int) {
+    UPLOADING(0),
+    IN_QUEUE(1),
+    PROCESSING(2),
+    FINISHED(3),
+    FAILED(4);
+}

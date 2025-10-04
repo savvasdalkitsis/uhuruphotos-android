@@ -64,7 +64,7 @@ class UploadsWorker @AssistedInject constructor(
             itemsFailed.clear()
 
             uploadUseCase.markAsUploading(items = items.toTypedArray())
-            denormalizationQueue.uploadingLocalMedia(items.map { it.id }.toSet())
+            denormalizationQueue.localMediaQueuedForUpload(items.map { it.id }.toSet())
             for ((index, item) in items.withIndex()) {
                 val xOfX = getString(string.x_of_x, index + 1, items.size)
                 log { "Uploading item $item ($xOfX)" }
@@ -90,6 +90,7 @@ class UploadsWorker @AssistedInject constructor(
 
     private fun UploadItem.updateCurrentUpload(percent: Float) {
         uploadUseCase.setCurrentUpload(CurrentUpload(this, percent))
+        denormalizationQueue.uploadingLocalMedia(id, percent)
     }
 
     private fun Set<UploadItem>.failOrRetry() = if (params.runAttemptCount < 4) {

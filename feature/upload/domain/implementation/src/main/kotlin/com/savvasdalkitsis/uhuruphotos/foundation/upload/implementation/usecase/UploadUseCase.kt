@@ -20,7 +20,6 @@ import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.coroutines.coroutineBinding
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.upload.ProcessingMediaItems
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.user.User
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHashModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItem
@@ -39,6 +38,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadU
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.work.UploadWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.WelcomeUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.flow
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.get
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
@@ -47,7 +47,9 @@ import com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.model.up
 import com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.repository.UploadRepository
 import com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.service.http.UploadService
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 import okhttp3.MultipartBody.Part.Companion.createFormData
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
@@ -64,6 +66,25 @@ class UploadUseCase @Inject constructor(
     private val chunkedUploader: ChunkedUploader,
     private val welcomeUseCase: WelcomeUseCase,
 ) : UploadUseCase {
+
+    override fun observeCanUpload(): Flow<UploadCapability> = welcomeUseCase.flow(
+        withoutRemoteAccess = flowOf(NotSetUpWithAServer),
+        withRemoteAccess = flow {
+            emit(siteUseCase.getSiteOptions()
+                .fold(
+                    onSuccess = {
+                        when {
+                            it.allowUpload -> CanUpload
+                            else -> CannotUpload
+                        }
+                    },
+                    onFailure = {
+                        CannotUpload
+                    }
+                )
+            )
+        }
+    ).distinctUntilChanged()
 
     override fun observeSingleCanUpload(): Flow<UploadCapability> = flow {
         emit(canUpload())
@@ -123,9 +144,6 @@ class UploadUseCase @Inject constructor(
     }
 
     override fun observeUploading(): Flow<Set<Long>> = uploadRepository.observeUploading()
-
-    override fun observeProcessing(): Flow<Set<ProcessingMediaItems>> =
-        uploadRepository.observeProcessing()
 
     override suspend fun upload(
         item: UploadItem,

@@ -1,0 +1,32 @@
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.FeedUri;
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Md5Hash;
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadStatuses;
+
+CREATE TABLE uploads (
+    id INTEGER NOT NULL PRIMARY KEY,
+    displayName TEXT,
+    uri TEXT AS FeedUri NOT NULL,
+    md5sum TEXT AS Md5Hash NOT NULL,
+    isVideo INTEGER AS kotlin.Boolean NOT NULL,
+    status TEXT AS UploadStatuses NOT NULL,
+    lastResponse TEXT,
+    progress INTEGER
+);
+
+get:
+SELECT * FROM uploads ORDER BY status ASC, displayName ASC;
+
+insert:
+INSERT OR REPLACE INTO uploads VALUES ?;
+
+updateProgress:
+UPDATE uploads SET progress = :progress WHERE id = :id;
+
+setStatus:
+UPDATE uploads SET status = :status WHERE id = :id;
+
+setLastResponse:
+UPDATE uploads SET lastResponse = :lastResponse WHERE id = :id;
+
+clearUploadsOfStatus:
+DELETE FROM uploads WHERE status = :status;

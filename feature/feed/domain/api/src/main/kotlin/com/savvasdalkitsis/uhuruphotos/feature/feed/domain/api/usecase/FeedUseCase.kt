@@ -31,7 +31,9 @@ interface FeedUseCase {
     ): Flow<List<MediaCollectionModel>>
 
     fun observeNewFeed(): Flow<Feed>
+    fun observeLocalOnlyOrUploadingFeedItems(): Flow<List<com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.feed.Feed>>
     suspend fun getNewFeed(): Feed
+    suspend fun getLocalOnlyOrUploadingFeedItems(): List<com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.feed.Feed>
 
     fun observeFeedDisplay(): Flow<PredefinedCollageDisplayState>
     fun setFeedDisplay(feedDisplay: PredefinedCollageDisplayState)

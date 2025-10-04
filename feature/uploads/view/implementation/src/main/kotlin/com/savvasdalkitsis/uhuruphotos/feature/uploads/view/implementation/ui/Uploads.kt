@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.uploads.view.implementation.ui
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement.spacedBy
@@ -53,6 +54,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadSta
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadStatus.InQueue
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadStatus.Processing
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadStatus.Uploading
+import com.savvasdalkitsis.uhuruphotos.feature.uploads.view.implementation.seam.actions.ClearFinished
+import com.savvasdalkitsis.uhuruphotos.feature.uploads.view.implementation.seam.actions.UploadsAction
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.view.implementation.ui.state.UploadsState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.animation.AnimationResource
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.LocalThumbnailImageLoader
@@ -60,21 +63,33 @@ import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Thumbnail
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.CustomColors
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UhuruFullLoading
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruActionIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruUpNavButton
 import kotlinx.collections.immutable.persistentListOf
 import org.jetbrains.compose.resources.stringResource
+import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
+import uhuruphotos_android.foundation.icons.api.generated.resources.ic_clear_all
 import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
 import uhuruphotos_android.foundation.strings.api.generated.resources.uploads
 
 @Composable
 internal fun Uploads(
     state: UploadsState,
+    action: (UploadsAction) -> Unit,
 ) {
     UhuruScaffold(
         title = { Text(text = "${stringResource(string.uploads)} (${state.jobs.size})") },
         navigationIcon = { UhuruUpNavButton() },
+        actionBarContent = {
+            AnimatedVisibility(visible = !state.isLoading) {
+                UhuruActionIcon(
+                    icon = drawable.ic_clear_all,
+                    onClick = { action(ClearFinished) },
+                )
+            }
+        }
     ) { contentPadding ->
         when {
             state.isLoading -> UhuruFullLoading()
@@ -89,7 +104,10 @@ internal fun Uploads(
             ) {
                 for (job in state.jobs) {
                     item(job.localItemId) {
-                        UploadJobRow(job)
+                        UploadJobRow(
+                            Modifier.animateItem(),
+                            job,
+                        )
                     }
                 }
             }
@@ -98,17 +116,17 @@ internal fun Uploads(
 }
 
 @Composable
-fun UploadJobRow(job: UploadJob) {
+fun UploadJobRow(modifier: Modifier, job: UploadJob) {
     val status = job.status
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(8.dp)
             .height(64.dp),
         horizontalArrangement = spacedBy(4.dp),
     ) {
         Thumbnail(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxHeight()
                 .aspectRatio(1f),
             url = job.contentUri,
@@ -116,7 +134,7 @@ fun UploadJobRow(job: UploadJob) {
             contentDescription = null,
         )
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = modifier.fillMaxSize(),
             verticalArrangement = spacedBy(4.dp),
         ) {
             Text(
@@ -125,15 +143,15 @@ fun UploadJobRow(job: UploadJob) {
                 style = MaterialTheme.typography.bodyMedium,
             )
             Row(
-                modifier = Modifier
+                modifier = modifier
                     .height(4.dp),
                 horizontalArrangement = spacedBy(2.dp),
             ) {
                 Segment(status)
             }
-            Spacer(modifier = Modifier.weight(1f))
+            Spacer(modifier = modifier.weight(1f))
             Row(
-                modifier = Modifier.fillMaxWidth()
+                modifier = modifier.fillMaxWidth()
             ) {
                 if (status is Uploading) {
                     Text(
@@ -141,7 +159,7 @@ fun UploadJobRow(job: UploadJob) {
                         style = MaterialTheme.typography.bodyMedium,
                     )
                 }
-                Spacer(modifier = Modifier.weight(1f))
+                Spacer(modifier = modifier.weight(1f))
                 Text(
                     text = stringResource(status.displayName),
                     textAlign = TextAlign.End,
@@ -209,7 +227,7 @@ private fun UploadsPreview() {
             LocalThumbnailImageLoader provides ImageLoader(LocalContext.current)
         ) {
             Uploads(
-                UploadsState(
+                state = UploadsState(
                     isLoading = false,
                     jobs = persistentListOf(
                         UploadJob(
@@ -261,7 +279,8 @@ private fun UploadsPreview() {
                             status = Finished,
                         ),
                     ),
-                )
+                ),
+                action = {}
             )
         }
     }

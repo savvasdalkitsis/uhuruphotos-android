@@ -19,6 +19,7 @@ import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.getOrElse
+import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.runCatching
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
@@ -57,9 +58,8 @@ fun <T> Flow<T>.onStartWithResult(
     map { Ok(it) }
         .onStart {
             CoroutineScope(currentCoroutineContext() + Dispatchers.IO).launch {
-                val result = block()
-                if (result.isErr) {
-                    send(Err(result.error))
+                block().onFailure {
+                    send(Err(it))
                 }
             }
         }
