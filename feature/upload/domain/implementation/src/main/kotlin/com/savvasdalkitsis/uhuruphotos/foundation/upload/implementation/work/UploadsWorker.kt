@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.work
 import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.WorkerParameters
+import com.github.michaelbull.result.mapBoth
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.denormalization.DenormalizationQueue
 import com.savvasdalkitsis.uhuruphotos.feature.sync.domain.api.usecase.SyncUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.CurrentUpload
@@ -77,13 +78,16 @@ class UploadsWorker @AssistedInject constructor(
                 }
                 log { "Result of uploading item $item was $result" }
                 uploadUseCase.setCurrentUpload(null)
-                if (result.isErr) {
-                    log(result.error) { "Failed to upload item $item" }
-                    itemsFailed += item
-                } else {
-                    uploadUseCase.markAsNotUploading(item.id)
-                    denormalizationQueue.uploadingLocalMediaSucceeded(item.id)
-                }
+                result.mapBoth(
+                    success = {
+                        uploadUseCase.markAsNotUploading(item.id)
+                        denormalizationQueue.uploadingLocalMediaSucceeded(item.id)
+                    } ,
+                    failure = {
+                        log(it) { "Failed to upload item $item" }
+                        itemsFailed += item
+                    }
+                )
             }
         } while (true)
     }

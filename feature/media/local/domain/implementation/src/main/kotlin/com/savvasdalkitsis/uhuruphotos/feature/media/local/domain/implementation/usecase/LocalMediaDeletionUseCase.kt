@@ -29,6 +29,7 @@ import androidx.activity.result.IntentSenderRequest
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import com.github.michaelbull.result.combine
+import com.github.michaelbull.result.mapBoth
 import com.github.michaelbull.result.onSuccess
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.InternalLocalMediaItemDeletionModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.InternalLocalMediaItemDeletionModel.ErrorModel
@@ -81,10 +82,10 @@ class LocalMediaDeletionUseCase @Inject constructor(
                     localMediaRepository.removeItemsFromDb(*(items.map { it.id }.toLongArray()))
                     deleteMediaItems(items)
                 }
-                when {
-                    requestResult.isOk -> LocalMediaItemDeletion.Success
-                    else -> LocalMediaItemDeletion.Error(requestResult.error)
-                }
+                requestResult.mapBoth(
+                    success = { LocalMediaItemDeletion.Success },
+                    failure = { LocalMediaItemDeletion.Error(it) },
+                )
             }
             SuccessModel -> LocalMediaItemDeletion.Success
         }
@@ -155,9 +156,9 @@ class LocalMediaDeletionUseCase @Inject constructor(
         val photosResult = localMediaRepository.deletePhotos(*(photos.map { it.id }.toLongArray()))
         val videosResult = localMediaRepository.deleteVideos(*(videos.map { it.id }.toLongArray()))
         val result = combine(photosResult, videosResult)
-        return when {
-            result.isOk -> SuccessModel
-            else -> ErrorModel(result.error)
-        }
+        return result.mapBoth(
+            success = { SuccessModel },
+            failure = { ErrorModel(it) },
+        )
     }
 }
