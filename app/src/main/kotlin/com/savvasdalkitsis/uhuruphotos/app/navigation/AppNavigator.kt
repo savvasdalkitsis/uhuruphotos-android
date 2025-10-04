@@ -217,17 +217,17 @@ fun predictivePopExitTransitionRefined(): ExitTransition {
     ) + scaleOut(
         animationSpec = keyframes {
             durationMillis = TOTAL_EXIT_DURATION_MS
-            1.0f at 0 with LinearEasing
-            0.93f at PEEK_DURATION_MS with FastOutSlowInEasing // Scale down for peek
-            0.85f at TOTAL_EXIT_DURATION_MS with FastOutSlowInEasing // Further scale down
+            1.0f at 0 using LinearEasing
+            0.93f at PEEK_DURATION_MS using FastOutSlowInEasing // Scale down for peek
+            0.85f at TOTAL_EXIT_DURATION_MS using FastOutSlowInEasing // Further scale down
         },
         targetScale = 0.85f
     ) + fadeOut(
         animationSpec = keyframes {
             durationMillis = TOTAL_EXIT_DURATION_MS
-            1.0f at 0 with LinearEasing
-            0.7f at PEEK_DURATION_MS with FastOutSlowInEasing // Slightly fade for peek
-            0.0f at TOTAL_EXIT_DURATION_MS with FastOutSlowInEasing
+            1.0f at 0 using LinearEasing
+            0.7f at PEEK_DURATION_MS using FastOutSlowInEasing // Slightly fade for peek
+            0.0f at TOTAL_EXIT_DURATION_MS using FastOutSlowInEasing
         }
     )
 }
@@ -243,17 +243,17 @@ fun predictivePopEnterTransitionRefined(): EnterTransition {
     ) + scaleIn(
         animationSpec = keyframes {
             durationMillis = TOTAL_ENTER_DURATION_MS
-            0.93f at 0 with LinearEasing // Start slightly scaled down
-            0.97f at PEEK_DURATION_MS with FastOutSlowInEasing // Scale up a bit during peek
-            1.0f at TOTAL_ENTER_DURATION_MS with FastOutSlowInEasing
+            0.93f at 0 using LinearEasing // Start slightly scaled down
+            0.97f at PEEK_DURATION_MS using FastOutSlowInEasing // Scale up a bit during peek
+            1.0f at TOTAL_ENTER_DURATION_MS using FastOutSlowInEasing
         },
         initialScale = 0.93f
     ) + fadeIn(
         animationSpec = keyframes {
             durationMillis = TOTAL_ENTER_DURATION_MS
-            0.0f at 0 with LinearEasing
-            0.3f at PEEK_DURATION_MS with FastOutSlowInEasing // Slightly visible
-            1.0f at TOTAL_ENTER_DURATION_MS with FastOutSlowInEasing
+            0.0f at 0 using LinearEasing
+            0.3f at PEEK_DURATION_MS using FastOutSlowInEasing // Slightly visible
+            1.0f at TOTAL_ENTER_DURATION_MS using FastOutSlowInEasing
         }
     )
 }
