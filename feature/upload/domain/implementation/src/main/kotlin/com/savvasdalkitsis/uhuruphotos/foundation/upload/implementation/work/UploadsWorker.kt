@@ -21,7 +21,6 @@ import androidx.work.WorkerParameters
 import com.github.michaelbull.result.mapBoth
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.denormalization.DenormalizationQueue
 import com.savvasdalkitsis.uhuruphotos.feature.sync.domain.api.usecase.SyncUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.CurrentUpload
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
@@ -77,7 +76,6 @@ class UploadsWorker @AssistedInject constructor(
                     item.updateCurrentUpload(current.toProgressPercent(total))
                 }
                 log { "Result of uploading item $item was $result" }
-                uploadUseCase.setCurrentUpload(null)
                 result.mapBoth(
                     success = {
                         uploadUseCase.markAsNotUploading(item.id)
@@ -93,7 +91,6 @@ class UploadsWorker @AssistedInject constructor(
     }
 
     private fun UploadItem.updateCurrentUpload(percent: Float) {
-        uploadUseCase.setCurrentUpload(CurrentUpload(this, percent))
         denormalizationQueue.uploadingLocalMedia(id, percent)
     }
 

@@ -16,7 +16,6 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase
 
 import androidx.work.NetworkType
-import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.CurrentUpload
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadCapability
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
@@ -33,7 +32,6 @@ interface UploadUseCase {
         networkType: NetworkType,
         requiresCharging: Boolean,
     )
-    fun observeUploading(): Flow<Set<Long>>
     suspend fun upload(
         item: UploadItem,
         progress: suspend (current: Long, total: Long) -> Unit,
@@ -45,7 +43,5 @@ interface UploadUseCase {
         response: String,
     )
     fun saveErrorForProcessingItem(itemId: Long, error: Throwable)
-    fun setCurrentUpload(currentUpload: CurrentUpload?)
-    fun observeCurrentUpload(): Flow<CurrentUpload?>
     suspend fun cancelScheduledUploads()
 }

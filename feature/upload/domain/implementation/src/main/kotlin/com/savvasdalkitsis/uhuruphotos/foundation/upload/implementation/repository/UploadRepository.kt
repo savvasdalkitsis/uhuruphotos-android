@@ -15,34 +15,19 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.repository
 
-import app.cash.sqldelight.coroutines.asFlow
-import app.cash.sqldelight.coroutines.mapToList
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.Database
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingle
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingleOrNull
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.upload.ProcessingMediaItems
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.upload.ProcessingMediaItemsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.upload.UploadingMediaItems
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.upload.UploadingMediaItemsQueries
-import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.CurrentUpload
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
-import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
-import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
-import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
-import com.squareup.moshi.Moshi
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class UploadRepository @Inject constructor(
     private val uploadingMediaItemsQueries: UploadingMediaItemsQueries,
     private val processingMediaItemsQueries: ProcessingMediaItemsQueries,
-    @PlainTextPreferences
-    private val preferences: Preferences,
     private val database: Database,
-    private val moshi: Moshi,
 ) {
 
     fun setUploading(vararg items: UploadItem) {
@@ -66,12 +51,6 @@ class UploadRepository @Inject constructor(
             }
         }
     }
-
-    fun observeUploading(): Flow<Set<Long>> = uploadingMediaItemsQueries.getAll()
-        .asFlow().mapToList(Dispatchers.IO).map { it.toSet() }.distinctUntilChanged()
-
-    fun observeProcessing(): Flow<Set<ProcessingMediaItems>> = processingMediaItemsQueries.getAll()
-        .asFlow().mapToList(Dispatchers.IO).map { it.toSet() }.distinctUntilChanged()
 
     suspend fun getOffset(itemId: Long): Long? =
         uploadingMediaItemsQueries.getOffset(itemId).awaitSingleOrNull()
@@ -108,20 +87,6 @@ class UploadRepository @Inject constructor(
 
     fun setLastResponseForProcessing(id: Long, response: String) {
         processingMediaItemsQueries.setResponse(response, id)
-    }
-
-    private val currentUploadKey = "currentUploadKey"
-
-    fun setCurrentlyUpload(currentUpload: CurrentUpload?) {
-        if (currentUpload == null) {
-            preferences.remove(currentUploadKey)
-        } else {
-            preferences.set(currentUploadKey, moshi.adapter(CurrentUpload::class.java).toJson(currentUpload))
-        }
-    }
-
-    fun observeCurrentlyUpload(): Flow<CurrentUpload?> = preferences.observeNullableString(currentUploadKey, null).map {
-        it?.let { moshi.adapter(CurrentUpload::class.java).fromJson(it) }
     }
 
 }
