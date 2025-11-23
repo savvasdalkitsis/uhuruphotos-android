@@ -27,6 +27,7 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentMapOf
+import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
 @Immutable
@@ -47,6 +48,7 @@ data class StatsState(
     val photoCount: Int? = null,
     val videoCount: Int? = null,
 ): Parcelable {
+    @IgnoredOnParcel
     val isLoading = isLoadingMediaByYear
             && isLoadingTimeline
             && isLoadingMediaByMonth

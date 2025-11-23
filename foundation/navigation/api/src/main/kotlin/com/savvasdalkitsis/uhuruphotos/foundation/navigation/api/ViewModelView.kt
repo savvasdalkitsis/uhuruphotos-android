@@ -23,7 +23,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.lifecycle.HasDefaultViewModelProviderFactory
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
@@ -35,12 +34,11 @@ import com.sebaslogen.resaca.generateKeysAndObserveLifecycle
 import com.sebaslogen.resaca.hilt.createHiltViewModelFactory
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancelChildren
-import kotlin.reflect.KClass
 
 @Composable
 fun <S : Any, A : Any, VM : NavigationViewModel<S, A, R>, R : NavigationRoute> ViewModelView(
-    route: R,
-    viewModelClass: KClass<VM>,
+    route: ImmutableNavigationRoute<R>,
+    viewModelClass: ImmutableClass<VM>,
     viewModelScopedToComposable: Boolean,
     content: @Composable (state: S, action: (A) -> Unit) -> Unit,
 ) {
@@ -52,9 +50,9 @@ fun <S : Any, A : Any, VM : NavigationViewModel<S, A, R>, R : NavigationRoute> V
 
     val keyboard = LocalSoftwareKeyboardController.current
     DisposableEffect(route) {
-        log { "Navigated to route: $route" }
+        log { "Navigated to route: ${route.target}" }
         keyboard?.hide()
-        viewModel.onRouteSet(route)
+        viewModel.onRouteSet(route.target)
         onDispose {
             viewModel.viewModelScope.coroutineContext[Job]?.cancelChildren()
         }
@@ -66,38 +64,29 @@ fun <S : Any, A : Any, VM : NavigationViewModel<S, A, R>, R : NavigationRoute> V
 @Composable
 private fun <VM : ViewModel> hiltViewModel(
     key: String? = null,
-    clazz: KClass<VM>,
-    viewModelStoreOwner: ViewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current) {
-        "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-    },
+    clazz: ImmutableClass<VM>,
 ): VM {
-    val factory = createHiltViewModelFactory(viewModelStoreOwner)
-    return viewModel(key, factory, clazz)
-}
-
-@Composable
-private fun <VM : ViewModel> viewModel(
-    key: String? = null,
-    factory: ViewModelProvider.Factory? = null,
-    clazz: KClass<VM>,
-    viewModelStoreOwner: ViewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current) {
-        "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-    },
-    extras: CreationExtras = if (viewModelStoreOwner is HasDefaultViewModelProviderFactory) {
+    val factory = createHiltViewModelFactory(checkNotNull(LocalViewModelStoreOwner.current))
+    val viewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current)
+    val extras: CreationExtras = if (viewModelStoreOwner is HasDefaultViewModelProviderFactory) {
         viewModelStoreOwner.defaultViewModelCreationExtras
     } else {
         CreationExtras.Empty
     }
-): VM = androidx.lifecycle.viewmodel.compose.viewModel(
-    clazz.java,
-    viewModelStoreOwner,
-    key,
-    factory,
-    extras
-)
+    return androidx.lifecycle.viewmodel.compose.viewModel<VM>(
+        clazz.target.java,
+        viewModelStoreOwner,
+        key,
+        factory,
+        extras
+    )
+}
 
 @Composable
-private fun <T : ViewModel> hiltViewModelScoped(key: Any? = null, clazz: KClass<T>, defaultArguments: Bundle = Bundle.EMPTY): T {
+private fun <T : ViewModel> hiltViewModelScoped(
+    key: Any? = null,
+    clazz: ImmutableClass<T>,
+): T {
     val (scopedViewModelContainer: ScopedViewModelContainer, positionalMemoizationKey: ScopedViewModelContainer.InternalKey, externalKey: ScopedViewModelContainer.ExternalKey) =
         generateKeysAndObserveLifecycle(key = key)
 
@@ -107,11 +96,11 @@ private fun <T : ViewModel> hiltViewModelScoped(key: Any? = null, clazz: KClass<
 
     // The object will be built the first time and retrieved in next calls or recompositions
     return scopedViewModelContainer.getOrBuildViewModel(
-        modelClass = clazz,
+        modelClass = clazz.target,
         positionalMemoizationKey = positionalMemoizationKey,
         externalKey = externalKey,
         factory = createHiltViewModelFactory(viewModelStoreOwner),
         viewModelStoreOwner = viewModelStoreOwner,
-        defaultArguments = defaultArguments
+        defaultArguments = Bundle.EMPTY
     )
 }

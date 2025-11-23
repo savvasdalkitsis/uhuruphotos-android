@@ -58,7 +58,7 @@ fun UhuruActionIcon(
     icon: DrawableResource,
     contentDescription: String? = null
 ) {
-    UhuruActionIcon(modifier, iconModifier, enabled, tint, onClick, painterResource(icon), contentDescription)
+    UhuruActionIcon(modifier, iconModifier, enabled, tint, onClick, StablePainter(painterResource(icon)), contentDescription)
 }
 
 @Composable
@@ -68,7 +68,7 @@ fun UhuruActionIcon(
     enabled: Boolean = true,
     tint: Color? = MaterialTheme.colorScheme.onBackground,
     onClick: () -> Unit,
-    painter: Painter,
+    painter: StablePainter,
     contentDescription: String? = null
 ) {
     UhuruActionIcon(

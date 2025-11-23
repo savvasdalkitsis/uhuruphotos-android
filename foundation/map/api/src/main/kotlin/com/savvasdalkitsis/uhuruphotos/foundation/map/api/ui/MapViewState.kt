@@ -16,12 +16,14 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LocalMapProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LocalMapViewStateFactory
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.Viewport
 
+@Stable
 interface MapViewState : MapViewScope {
     val initialPosition: LatLon
     val initialZoom: Float

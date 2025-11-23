@@ -19,6 +19,7 @@ import android.os.Parcelable
 import androidx.compose.runtime.Immutable
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
 @Immutable
@@ -29,6 +30,7 @@ data class CollageState(
     val clusters: ImmutableList<NewClusterState> = persistentListOf(),
     val collageDisplayState: CollageDisplayState = PredefinedCollageDisplayState.default,
 ) : Parcelable {
+    @IgnoredOnParcel
     val hasMedia = clusters.sumOf { it.cels.size } > 0
 
     override fun toString(): String {

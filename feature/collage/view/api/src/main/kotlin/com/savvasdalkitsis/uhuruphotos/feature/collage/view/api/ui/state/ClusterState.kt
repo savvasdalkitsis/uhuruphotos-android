@@ -24,6 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.to
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
 @Immutable
@@ -36,6 +37,7 @@ data class ClusterState(
     val location: String? = null,
     val showRefreshIcon: Boolean = false,
 ) : Parcelable {
+    @IgnoredOnParcel
     val hasAnyCelsWithRemoteMedia = cels.any {
         it.mediaItem.syncStatus.hasRemote
     }

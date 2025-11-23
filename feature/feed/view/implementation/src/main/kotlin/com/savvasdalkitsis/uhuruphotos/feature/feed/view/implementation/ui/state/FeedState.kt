@@ -28,6 +28,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.checkable.SelectionM
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
 @Immutable
@@ -51,27 +52,35 @@ data class FeedState(
     val syncItemDisplay: FeedMediaItemSyncDisplayState = FeedMediaItemSyncDisplayState.default,
     val showRequestForCloudSync: Boolean = false,
 ) : Parcelable {
+    @IgnoredOnParcel
     val selectedCels: ImmutableList<NewCelState> = collageState.clusters.flatMap { cluster ->
         cluster.cels.filter { cel ->
             cel.selectionMode == SelectionMode.SELECTED
         }
     }.toImmutableList()
 
+    @IgnoredOnParcel
     val selectedCelCount: Int = selectedCels.size
 
+    @IgnoredOnParcel
     val hasSelection = selectedCelCount > 0
 
+    @IgnoredOnParcel
     val shouldShowShareIcon: Boolean =
         selectedCels.isNotEmpty() && selectedCels.none { it.mediaItem.isVideo }
 
+    @IgnoredOnParcel
     val shouldShowAddIcon: Boolean =
         selectedCels.isNotEmpty() && selectedCels.all { it.mediaItem.syncStatus.hasRemote }
 
+    @IgnoredOnParcel
     val shouldShowDeleteIcon: Boolean = selectedCels.syncStates.size == 1
 
+    @IgnoredOnParcel
     val shouldShowDownloadIcon: Boolean =
         selectedCels.isNotEmpty() && selectedCels.none { it.mediaItem.syncStatus.hasLocal }
 
+    @IgnoredOnParcel
     val shouldShowUploadIcon: Boolean =
         selectedCels.isNotEmpty() && selectedCels.none { it.mediaItem.syncStatus.hasRemote }
 }

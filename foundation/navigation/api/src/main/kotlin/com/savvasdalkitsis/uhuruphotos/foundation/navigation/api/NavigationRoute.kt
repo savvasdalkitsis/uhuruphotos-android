@@ -15,8 +15,10 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.navigation.api
 
+import androidx.compose.runtime.Immutable
 import androidx.navigation3.runtime.NavKey
 
+@Immutable
 interface NavigationRoute : NavKey {
     val animateTransitionTo: Boolean get() = true
     val animatePopTransitionTo: Boolean get() = true

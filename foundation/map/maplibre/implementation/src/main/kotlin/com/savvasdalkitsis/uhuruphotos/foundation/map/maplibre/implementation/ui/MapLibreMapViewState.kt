@@ -16,13 +16,14 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.foundation.map.maplibre.implementation.ui
 
 import androidx.compose.runtime.Composable
-import org.maplibre.android.camera.CameraPosition
-import org.maplibre.android.geometry.LatLng
-import org.maplibre.android.maps.MapView
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.Viewport
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.toLatLon
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewState
+import kotlinx.collections.immutable.ImmutableList
+import org.maplibre.android.camera.CameraPosition
+import org.maplibre.android.geometry.LatLng
+import org.maplibre.android.maps.MapView
 
 class MapLibreMapViewState(
     override val initialPosition: LatLon,
@@ -60,8 +61,8 @@ class MapLibreMapViewState(
 
     @Composable
     override fun HeatMap(
-        allPoints: Collection<LatLon>,
-        pointsOnVisibleMap: Collection<LatLon>,
+        allPoints: ImmutableList<LatLon>,
+        pointsOnVisibleMap: ImmutableList<LatLon>,
     ) {
         if (pointsOnVisibleMap.isNotEmpty()) {
             mapView.showHeatMap(pointsOnVisibleMap.toSet())

@@ -36,6 +36,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewThemeData
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewThemeDataProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruIcon
+import kotlinx.collections.immutable.ImmutableList
 import org.jetbrains.compose.resources.stringResource
 import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
 import uhuruphotos_android.foundation.strings.api.generated.resources.grant_permissions
@@ -43,7 +44,7 @@ import uhuruphotos_android.foundation.strings.api.generated.resources.missing_pe
 
 @Composable
 fun BoxScope.PortfolioMissingPermissions(
-    missingPermissions: List<String>? = null,
+    missingPermissions: ImmutableList<String>? = null,
 ) {
     val permissionsState by PermissionsState.rememberPermissionsState(missingPermissions)
     Column(

@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state
 
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplayState
+import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import org.jetbrains.compose.resources.DrawableResource
 import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
@@ -23,17 +24,26 @@ import uhuruphotos_android.foundation.strings.api.generated.resources.media_heat
 
 @Parcelize
 data object HeatMapCollageDisplayState : CollageDisplayState {
+    @IgnoredOnParcel
     override val miniIcons: Boolean = false
+    @IgnoredOnParcel
     override val compactColumnsPortrait = 5
+    @IgnoredOnParcel
     override val compactColumnsLandscape = 3
+    @IgnoredOnParcel
     override val wideColumnsPortrait = 7
+    @IgnoredOnParcel
     override val wideColumnsLandscape = 3
     override val iconResource: DrawableResource
         get() = throw IllegalStateException("This is not used")
+    @IgnoredOnParcel
     override val maintainAspectRatio = false
+    @IgnoredOnParcel
     override val allowsAnimatedVideoThumbnails = false
+    @IgnoredOnParcel
     override val friendlyName = string.media_heatmap
     override val zoomIn get() = HeatMapCollageDisplayState
     override val zoomOut get() = HeatMapCollageDisplayState
+    @IgnoredOnParcel
     override val usingStaggeredGrid = false
 }

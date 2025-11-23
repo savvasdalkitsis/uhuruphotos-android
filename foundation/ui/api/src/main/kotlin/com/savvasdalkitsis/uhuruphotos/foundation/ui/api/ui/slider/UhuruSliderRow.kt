@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Slider
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
@@ -28,13 +29,14 @@ import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.layout.UhuruEntryWithSubtext
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.UhuruTextRow
 import org.jetbrains.compose.resources.StringResource
+import kotlin.math.max
 
 @Composable
 fun UhuruSliderRow(
     text: @Composable (Float) -> String,
     subtext: StringResource? = null,
     initialValue: Float,
-    range: ClosedFloatingPointRange<Float>,
+    range: SliderRange,
     steps: Int = 0,
     onValueChanged: (Float) -> Unit = {},
 ) {
@@ -48,10 +50,26 @@ fun UhuruSliderRow(
                 .padding(8.dp)
                 .fillMaxWidth(),
             value = sliderValue,
-            valueRange = range,
+            valueRange = range.range,
             steps = steps,
             onValueChange = { sliderValue = it },
             onValueChangeFinished = { onValueChanged(sliderValue) },
         )
     }
 }
+
+@Immutable
+data class SliderRange(
+    val range: ClosedFloatingPointRange<Float>,
+) {
+
+    @Composable
+    fun maybeExpandTo(end: Float) =
+        sliderRange(range.start, max(range.endInclusive, end))
+}
+
+@Composable
+fun sliderRange(
+    start: Float,
+    end: Float,
+): SliderRange = remember(start, end) { SliderRange(start..end) }

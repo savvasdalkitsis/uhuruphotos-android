@@ -23,13 +23,13 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.CacheState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.slider.UhuruSliderRow
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.slider.sliderRange
 import org.jetbrains.compose.resources.stringResource
 import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
 import uhuruphotos_android.foundation.strings.api.generated.resources.changes_effect_after_restart
 import uhuruphotos_android.foundation.strings.api.generated.resources.clear
 import uhuruphotos_android.foundation.strings.api.generated.resources.currently_used
 import uhuruphotos_android.foundation.strings.api.generated.resources.max_limit
-import kotlin.math.max
 
 @Composable
 internal fun SettingsCache(
@@ -47,10 +47,7 @@ internal fun SettingsCache(
         text = { stringResource(string.max_limit, it.toInt()) },
         subtext = string.changes_effect_after_restart,
         initialValue = initialMaxLimit,
-        range = (minCacheSize.toFloat().. cacheState.limit.toFloat()).maybeExpandTo(initialMaxLimit),
+        range = sliderRange(minCacheSize.toFloat(), cacheState.limit.toFloat()).maybeExpandTo(initialMaxLimit),
         onValueChanged = { action(ChangeCache(cacheState.cacheType, it)) }
     )
 }
-
-private fun ClosedFloatingPointRange<Float>.maybeExpandTo(end: Float) =
-    start..max(endInclusive, end)

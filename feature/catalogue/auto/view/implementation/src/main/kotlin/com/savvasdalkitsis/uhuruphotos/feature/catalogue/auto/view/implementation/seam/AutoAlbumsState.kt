@@ -18,12 +18,14 @@ package com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementati
 import android.os.Parcelable
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.api.state.AutoAlbum
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSortingState
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class AutoAlbumsState(
     val isLoading: Boolean = false,
-    val albums: List<AutoAlbum> = emptyList(),
+    val albums: ImmutableList<AutoAlbum> = persistentListOf(),
     val sorting: CatalogueSortingState = CatalogueSortingState.default,
     val filter: String = "",
 ) : Parcelable

@@ -17,10 +17,12 @@ package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementati
 
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.state.UserAlbumState
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSortingState
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
 data class UserAlbumsState(
     val isLoading: Boolean = false,
-    val albums: List<UserAlbumState> = emptyList(),
+    val albums: ImmutableList<UserAlbumState> = persistentListOf(),
     val sorting: CatalogueSortingState = CatalogueSortingState.default,
     val filter: String = "",
 )

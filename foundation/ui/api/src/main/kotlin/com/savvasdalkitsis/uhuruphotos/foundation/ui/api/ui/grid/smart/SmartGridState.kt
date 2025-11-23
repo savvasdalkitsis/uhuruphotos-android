@@ -18,10 +18,12 @@ package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.smart
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.smart.simple.SmartSimpleGridState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.smart.staggered.SmartStaggeredGridState
 
+@Stable
 interface SmartGridState {
     suspend fun animateScrollToItem(index: Int, scrollOffset: Int = 0)
     val isScrollInProgress: Boolean

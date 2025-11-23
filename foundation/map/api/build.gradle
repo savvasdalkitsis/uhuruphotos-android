@@ -9,6 +9,9 @@ android {
 
 dependencies {
 
+    api(
+            libs.kotlinx.immutable,
+    )
     implementation(
             libs.androidx.compose.foundation.layout,
             libs.androidx.compose.material3,

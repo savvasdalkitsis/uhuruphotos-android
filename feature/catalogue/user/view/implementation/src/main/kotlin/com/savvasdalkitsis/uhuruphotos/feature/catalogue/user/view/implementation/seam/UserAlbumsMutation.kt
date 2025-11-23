@@ -17,13 +17,14 @@ package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementati
 
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.state.UserAlbumState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
+import kotlinx.collections.immutable.toPersistentList
 
 sealed class UserAlbumsMutation(
     mutation: Mutation<UserAlbumsState>
 ) : Mutation<UserAlbumsState> by mutation {
 
     data class DisplayAlbums(val albums: List<UserAlbumState>) : UserAlbumsMutation({
-        it.copy(albums = albums)
+        it.copy(albums = albums.toPersistentList())
     })
 
     data class SetFilter(val filter: String) : UserAlbumsMutation({

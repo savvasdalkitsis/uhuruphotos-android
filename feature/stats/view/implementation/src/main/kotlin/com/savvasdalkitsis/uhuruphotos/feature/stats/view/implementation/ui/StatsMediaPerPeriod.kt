@@ -40,6 +40,7 @@ import com.patrykandpatrick.vico.core.entry.FloatEntry
 import com.patrykandpatrick.vico.core.scroll.InitialScroll
 import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.Period
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.NoContent
+import kotlinx.collections.immutable.ImmutableMap
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
@@ -48,7 +49,7 @@ import uhuruphotos_android.foundation.strings.api.generated.resources.no_media
 @Composable
 internal fun StatsMediaPerPeriod(
     isLoading: Boolean,
-    mediaByPeriod: Map<out Period, Int>,
+    mediaByPeriod: ImmutableMap<out Period, Int>,
     title: StringResource,
     uniqueId: String,
     bottomAxisLabel: StringResource,

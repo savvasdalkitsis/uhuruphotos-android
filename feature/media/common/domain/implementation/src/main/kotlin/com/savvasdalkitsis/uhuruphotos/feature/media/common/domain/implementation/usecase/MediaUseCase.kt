@@ -16,12 +16,20 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.implementation.usecase
 
 import androidx.core.graphics.toColorInt
-import com.github.michaelbull.result.*
+import com.github.michaelbull.result.Ok
+import com.github.michaelbull.result.Result
+import com.github.michaelbull.result.combine
+import com.github.michaelbull.result.map
+import com.github.michaelbull.result.mapOr
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSourceModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaFolderOnDeviceModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel.*
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel.DownloadingIdModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel.LocalIdModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel.ProcessingIdModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel.RemoteIdModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel.UploadingIdModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHashModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstanceModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemModel
@@ -34,7 +42,11 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.M
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalFolderModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItems
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.MediaOrientation.*
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.MediaOrientation.ORIENTATION_0
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.MediaOrientation.ORIENTATION_180
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.MediaOrientation.ORIENTATION_270
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.MediaOrientation.ORIENTATION_90
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.MediaOrientation.ORIENTATION_UNKNOWN
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.model.User
@@ -45,6 +57,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simple
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simpleOk
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -84,7 +97,7 @@ class MediaUseCase @Inject constructor(
         }
 
         is LocalMediaItems.RequiresPermissions -> MediaItemsOnDeviceModel.RequiresPermissionsModel(
-            localMediaItems.deniedPermissions
+            localMediaItems.deniedPermissions.toPersistentList()
         )
     }
 

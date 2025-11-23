@@ -23,5 +23,5 @@ interface NavigationTarget<R : NavigationRoute> {
 
     @OptIn(ExperimentalSharedTransitionApi::class)
     @Composable
-    fun SharedTransitionScope.NavigationRootView(route: R)
+    fun SharedTransitionScope.NavigationRootView(route: ImmutableNavigationRoute<R>)
 }

@@ -59,6 +59,7 @@ class FeedUseCaseTest {
         preferences,
         welcomeUseCase,
         portfolioUseCase,
+        mockk(),
     )
 
     @Test

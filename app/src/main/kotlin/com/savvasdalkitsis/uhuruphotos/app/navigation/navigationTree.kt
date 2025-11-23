@@ -22,6 +22,7 @@ import androidx.compose.runtime.remember
 import androidx.navigation3.runtime.NavEntry
 import com.bugsnag.android.performance.BugsnagPerformance.startViewLoadSpan
 import com.bugsnag.android.performance.ViewType.COMPOSE
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ImmutableNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetRegistry
 
@@ -35,7 +36,7 @@ fun SharedTransitionScope.navigationTree(
         startViewLoadSpan(COMPOSE, screenName)
     }
     with(NavigationTargetRegistry.registry[klass]!!) {
-        NavigationRootView(key)
+        NavigationRootView(ImmutableNavigationRoute(key))
     }
     LaunchedEffect(screenName) {
         viewSpan.end()

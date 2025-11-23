@@ -6,19 +6,22 @@ plugins {
 
 android {
     namespace 'com.savvasdalkitsis.konsist'
-    compileSdk 36
+    compileSdk = 36
 
     defaultConfig {
         minSdk 24
         targetSdk 36
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_23
-        targetCompatibility JavaVersion.VERSION_23
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
     }
     kotlinOptions {
         kotlinOptions.allWarningsAsErrors = true
     }
+}
+kotlin {
+    jvmToolchain(21)
 }
 
 tasks.withType(Test).configureEach {

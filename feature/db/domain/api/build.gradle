@@ -29,3 +29,17 @@ dependencies {
             project(":foundation:lang:api"),
     )
 }
+
+afterEvaluate {
+    tasks.configureEach { task ->
+        if (task.name.startsWith("ksp") && task.name.endsWith("Kotlin")) {
+            def variantName = task.name.substring(3, task.name.length() - 6)
+            def sqlTaskName = "generate${variantName}DatabaseInterface"
+            def sqlTask = tasks.findByName(sqlTaskName)
+            if (sqlTask != null) {
+                task.dependsOn(sqlTask)
+                println "Fixed dependency: ${task.name} depends on ${sqlTaskName}"
+            }
+        }
+    }
+}

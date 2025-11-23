@@ -36,7 +36,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplayState
@@ -118,15 +117,15 @@ private fun Items(
         NavItem(
             label = string.feed,
             route = FeedNavigationRoute,
-            painterResource(icon),
-            onReselected,
-            rowScope,
+            icon = { Icon(painterResource(icon), contentDescription = null) },
+            onReselected = onReselected,
+            rowScope = rowScope,
         )
     }
     NavItem(
         label = string.discover,
         route = DiscoverNavigationRoute,
-        icon = rememberVectorPainter(Icons.Filled.Search),
+        icon = { Icon(rememberVectorPainter(Icons.Filled.Search), contentDescription = null) },
         onReselected = onReselected,
         rowScope = rowScope,
     )
@@ -134,7 +133,7 @@ private fun Items(
         NavItem(
             label = string.library,
             route = LibraryNavigationRoute,
-            icon = painterResource(drawable.ic_photo_album),
+            icon = { Icon(painterResource(drawable.ic_photo_album), contentDescription = null) },
             onReselected = onReselected,
             rowScope = rowScope,
         )
@@ -142,10 +141,10 @@ private fun Items(
 }
 
 @Composable
-private fun <R: NavigationRoute> NavItem(
+private fun NavItem(
     label: StringResource,
-    route: R,
-    icon: Painter,
+    route: NavigationRoute,
+    icon: @Composable () -> Unit,
     onReselected: () -> Unit,
     rowScope: RowScope? = null,
 ) {
@@ -168,11 +167,11 @@ private fun <R: NavigationRoute> NavItem(
 }
 
 @Composable
-private fun <R: NavigationRoute> BottomNavItem(
+private fun BottomNavItem(
     rowScope: RowScope,
     label: StringResource,
-    route: R,
-    icon: Painter,
+    route: NavigationRoute,
+    icon: @Composable () -> Unit,
     onReselected: () -> Unit,
 ) {
     val navigator = LocalNavigator.current
@@ -182,7 +181,7 @@ private fun <R: NavigationRoute> BottomNavItem(
     with(rowScope) {
         NavigationBarItem(
             label = { Text(stringResource(label)) },
-            icon = { Icon(icon, contentDescription = null) },
+            icon = icon,
 //            selectedColor = MaterialTheme.colorScheme.primary,
 //            unSelectedBackgroundColor = MaterialTheme.colorScheme.background,
 //            unSelectedIconColor = CustomColors.emptyItem,
@@ -198,10 +197,10 @@ private fun <R: NavigationRoute> BottomNavItem(
 }
 
 @Composable
-private fun <R: NavigationRoute> NavRailNavItem(
+private fun NavRailNavItem(
     label: StringResource,
-    route: R,
-    icon: Painter,
+    route: NavigationRoute,
+    icon: @Composable () -> Unit,
     onReselected: () -> Unit,
 ) {
     val navigator = LocalNavigator.current
@@ -210,7 +209,7 @@ private fun <R: NavigationRoute> NavRailNavItem(
     }
     NavigationRailItem(
 //        selectedContentColor = LocalContentColor.current,
-        icon = { Icon(icon, contentDescription = null) },
+        icon = icon,
         label = { Text(stringResource(label)) },
         selected = activeRoute == route,
         onClick = selectNavigationItem(activeRoute, route, navigator, onReselected)

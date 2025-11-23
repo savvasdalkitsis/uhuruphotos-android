@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model
 
 import android.os.Parcelable
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaFolder
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -27,7 +28,7 @@ sealed class MediaItemsOnDeviceModel : Parcelable {
         val mediaFolders: List<Pair<LocalMediaFolder, List<MediaItemModel>>>,
     ) : MediaItemsOnDeviceModel()
 
-    data class RequiresPermissionsModel(val deniedPermissions: List<String>) : MediaItemsOnDeviceModel()
+    data class RequiresPermissionsModel(val deniedPermissions: ImmutableList<String>) : MediaItemsOnDeviceModel()
 
     data object ErrorModel: MediaItemsOnDeviceModel()
 }

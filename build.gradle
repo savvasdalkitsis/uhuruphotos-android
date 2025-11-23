@@ -8,13 +8,14 @@ buildscript {
 
 }
 plugins {
+    alias(libs.plugins.analysis)
     alias(libs.plugins.moduleGraph)
     alias(libs.plugins.sonarqube)
-    alias(libs.plugins.analysis)
 
     alias(libs.plugins.about) apply false
     alias(libs.plugins.android.app) apply false
     alias(libs.plugins.android.library) apply false
+    alias(libs.plugins.compose.stability.analyzer) apply false
     alias(libs.plugins.google.services) apply false
     alias(libs.plugins.jetbrains.compose) apply false
     alias(libs.plugins.kotlin.android) apply false
@@ -83,9 +84,10 @@ subprojects {
     apply plugin: libs.plugins.powerassert.get().pluginId
     apply plugin: libs.plugins.redacted.get().pluginId
     apply plugin: libs.plugins.ksp.get().pluginId
+    apply plugin: libs.plugins.compose.stability.analyzer.get().pluginId
 
     android {
-        compileSdk 36
+        compileSdk = 36
 
         defaultConfig {
             minSdk 24

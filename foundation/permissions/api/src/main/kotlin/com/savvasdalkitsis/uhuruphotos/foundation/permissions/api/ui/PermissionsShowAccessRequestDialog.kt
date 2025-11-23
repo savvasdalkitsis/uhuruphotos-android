@@ -19,7 +19,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
-import androidx.activity.result.ActivityResultLauncher
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -56,15 +55,15 @@ import uhuruphotos_android.foundation.strings.api.generated.resources.ok
 @Composable
 internal fun PermissionsShowAccessRequestDialog(
     state: PermissionsState,
-    permissionLauncher: ActivityResultLauncher<Array<String>> = rememberPermissionFlowRequestLauncher(),
 ) {
     val navigator = LocalNavigator.current
     val context = LocalContext.current
+    val permissionLauncher = rememberPermissionFlowRequestLauncher()
     YesNoDialog(
         title = stringResource(string.missing_permissions),
-        onNo = { state.showAccessRequest?.value = false },
+        onNo = { state.showAccessRequest.value = false },
         onYes = {
-            state.showAccessRequest?.value = false
+            state.showAccessRequest.value = false
             state.missingPermissions?.let {
                 permissionLauncher.launch(it.toTypedArray())
             }
@@ -85,7 +84,7 @@ internal fun PermissionsShowAccessRequestDialog(
                     .fillMaxWidth()
                     .padding(8.dp),
                 onClick = {
-                    state.showAccessRequest?.value = false
+                    state.showAccessRequest.value = false
                     navigateToSettings(navigator, context)
                 }
             ) {
@@ -118,6 +117,6 @@ private fun navigateToSettings(navigator: Navigator?, context: Context) {
 @Composable
 private fun PermissionsShowAccessRequestDialogPreview() {
     PreviewAppTheme {
-        PermissionsShowAccessRequestDialog(PermissionsState(), FakeResultLauncher)
+        PermissionsShowAccessRequestDialog(PermissionsState())
     }
 }

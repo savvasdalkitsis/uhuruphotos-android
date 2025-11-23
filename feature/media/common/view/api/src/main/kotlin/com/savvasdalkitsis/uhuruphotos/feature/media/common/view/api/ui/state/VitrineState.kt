@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state
 
 import android.os.Parcelable
 import androidx.compose.runtime.Immutable
+import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
 @Immutable
@@ -27,7 +28,9 @@ data class VitrineState(
     val cel3: NewCelState? = null,
     val cel4: NewCelState? = null,
 ) : Parcelable {
+    @IgnoredOnParcel
     val hasMoreThanOneItem = cel2 != null
+    @IgnoredOnParcel
     val isEmpty = cel1 == null && cel2 == null && cel3 == null && cel4 == null
 
     companion object {

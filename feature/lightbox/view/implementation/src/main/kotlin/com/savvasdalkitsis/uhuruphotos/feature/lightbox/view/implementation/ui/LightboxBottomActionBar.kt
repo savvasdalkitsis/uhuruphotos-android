@@ -40,6 +40,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.UseMediaItemAs
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.SingleMediaItemState
 import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.recomposeHighlighter
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.StablePainter
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruActionIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruActionIconWithText
 import org.jetbrains.compose.resources.stringResource
@@ -111,7 +112,7 @@ fun LightboxBottomActionBarEdit(
                 val pm = LocalContext.current.packageManager
                 UhuruActionIconWithText(
                     onClick = { action(EditMediaItemExternally(app)) },
-                    painter = rememberDrawablePainter(app.loadIcon(pm)),
+                    painter = StablePainter(rememberDrawablePainter(app.loadIcon(pm))),
                     text = app.loadLabel(pm).toString(),
                 )
             }

@@ -16,16 +16,17 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.foundation.permissions.api.ui
 
 import androidx.compose.runtime.Composable
-import dev.shreyaspatil.permissionflow.compose.rememberPermissionFlowRequestLauncher
+import androidx.compose.runtime.getValue
 
 @Composable
 internal fun PermissionsCheck(
     state: PermissionsState,
 ) {
     state.Compose()
-    val permissionLauncher = rememberPermissionFlowRequestLauncher()
+    val showRationale by state.showRationale
+    val showAccessRequest by state.showAccessRequest
 
-    if (state.showRationale?.value == true || state.showAccessRequest?.value == true) {
-        PermissionsShowAccessRequestDialog(state, permissionLauncher)
+    if (showRationale || showAccessRequest) {
+        PermissionsShowAccessRequestDialog(state)
     }
 }

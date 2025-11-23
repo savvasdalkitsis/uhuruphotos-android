@@ -28,6 +28,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.slot
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.flowOf
 
 fun MediaUseCase.defaults() = apply {
@@ -36,7 +37,7 @@ fun MediaUseCase.defaults() = apply {
 }
 
 fun MediaUseCase.hasNoLocalMedia() {
-    every { observeLocalMedia() }.returns(flowOf(MediaItemsOnDeviceModel.RequiresPermissionsModel(emptyList())))
+    every { observeLocalMedia() }.returns(flowOf(MediaItemsOnDeviceModel.RequiresPermissionsModel(persistentListOf())))
 }
 
 fun MediaUseCase.returnsLocalMedia(

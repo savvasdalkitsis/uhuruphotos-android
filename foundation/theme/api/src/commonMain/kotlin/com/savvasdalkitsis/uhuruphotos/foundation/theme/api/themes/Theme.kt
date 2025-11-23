@@ -17,8 +17,10 @@ package com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes
 
 import androidx.compose.material3.ColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import org.jetbrains.compose.resources.StringResource
 
+@Stable
 interface Theme {
 
     val label: StringResource

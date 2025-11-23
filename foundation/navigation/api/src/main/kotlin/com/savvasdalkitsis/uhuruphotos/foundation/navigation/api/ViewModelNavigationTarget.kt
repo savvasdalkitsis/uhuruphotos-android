@@ -26,7 +26,7 @@ import kotlin.reflect.KClass
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Suppress("UNCHECKED_CAST")
-class ViewModelNavigationTarget<S : Any, A : Any, VM : NavigationViewModel<S, A, R>, R: NavigationRoute>(
+class ViewModelNavigationTarget<S : Any, A : Any, VM : NavigationViewModel<S, A, R>, R : NavigationRoute>(
     private val viewModelClass: KClass<VM>,
     route: KClass<R>,
     private val viewModelScopedToComposable: Boolean = false,
@@ -39,8 +39,12 @@ class ViewModelNavigationTarget<S : Any, A : Any, VM : NavigationViewModel<S, A,
     }
 
     @Composable
-    override fun SharedTransitionScope.NavigationRootView(route: R) {
-        ViewModelView(route, viewModelClass, viewModelScopedToComposable) { state, actions ->
+    override fun SharedTransitionScope.NavigationRootView(route: ImmutableNavigationRoute<R>) {
+        ViewModelView(
+            route,
+            ImmutableClass(viewModelClass),
+            viewModelScopedToComposable
+        ) { state, actions ->
             AppTheme(themeMode = theme()) {
                 view(state, actions)
             }

@@ -6,7 +6,7 @@ android-sdk-geojson = "6.0.1"
 androidx-hilt = "1.2.0"
 autodagger = "2.1.0"
 coil = "2.7.0"
-compose = "1.9.2"
+compose = "1.9.5"
 crypto = "1.1.0"
 datastore = "1.1.7"
 gms = "19.2.0"
@@ -35,6 +35,7 @@ about = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "about" }
 android-app = { id = 'com.android.application', version.ref = "agp" }
 android-library = { id = 'com.android.library', version.ref = "agp" }
 analysis = "com.autonomousapps.dependency-analysis:3.0.4"
+compose-stability-analyzer = "com.github.skydoves.compose.stability.analyzer:0.5.0"
 google-services = { id = "com.google.gms.google-services", version.ref = "google-services" }
 kotlin-android = { id = 'org.jetbrains.kotlin.android', version.ref = "kotlin" }
 kotlin-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }

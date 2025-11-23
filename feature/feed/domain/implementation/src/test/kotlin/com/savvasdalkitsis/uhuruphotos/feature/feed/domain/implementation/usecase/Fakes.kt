@@ -41,9 +41,9 @@ fun mediaItem(id: MediaIdModel<*>, date: String = "") =
 fun localMediaItem(id: Long, displayDate: String) = mediaItem(local(id), displayDate)
 fun remote(id: String) = MediaIdModel.RemoteIdModel(id, false, MediaItemHashModel.fromRemoteMediaHash(id, 0))
 fun downloading(id: String) = MediaIdModel.DownloadingIdModel(id, false, MediaItemHashModel(Md5Hash(""), 0))
-fun local(id: Long) = MediaIdModel.LocalIdModel(id, 0, false, "", "", MediaItemHashModel(Md5Hash(""), 0))
-fun processing(id: Long) = MediaIdModel.ProcessingIdModel(id, 0, false, "", "", MediaItemHashModel(Md5Hash(""), 0))
-fun uploading(id: Long) = MediaIdModel.UploadingIdModel(id, 0, false, "", "", MediaItemHashModel(Md5Hash(""), 0))
+fun local(id: Long) = MediaIdModel.LocalIdModel(id, 0, false, "", MediaItemHashModel(Md5Hash(""), 0))
+fun processing(id: Long) = MediaIdModel.ProcessingIdModel(id, 0, false, "", MediaItemHashModel(Md5Hash(""), 0))
+fun uploading(id: Long) = MediaIdModel.UploadingIdModel(id, 0, false, "", MediaItemHashModel(Md5Hash(""), 0))
 
 fun mediaItem(id: String, hash: String = id) = GetRemoteMediaCollections(
     id,

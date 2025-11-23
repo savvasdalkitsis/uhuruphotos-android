@@ -16,22 +16,35 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.ui.state
 
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplayState
+import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import uhuruphotos_android.foundation.strings.api.generated.resources.Res
 import uhuruphotos_android.foundation.strings.api.generated.resources.auto_albums
 
 @Parcelize
 data object AutoAlbumCollageDisplayState: CollageDisplayState {
+    @IgnoredOnParcel
     override val miniIcons: Boolean = false
+    @IgnoredOnParcel
     override val compactColumnsPortrait = 3
+    @IgnoredOnParcel
     override val compactColumnsLandscape = 5
+    @IgnoredOnParcel
     override val wideColumnsPortrait = 6
+    @IgnoredOnParcel
     override val wideColumnsLandscape = 8
+    @IgnoredOnParcel
     override val iconResource = null
+    @IgnoredOnParcel
     override val maintainAspectRatio = false
+    @IgnoredOnParcel
     override val allowsAnimatedVideoThumbnails = true
+    @IgnoredOnParcel
     override val friendlyName = Res.string.auto_albums
+    @IgnoredOnParcel
     override val zoomIn = this
+    @IgnoredOnParcel
     override val zoomOut = this
+    @IgnoredOnParcel
     override val usingStaggeredGrid = true
 }

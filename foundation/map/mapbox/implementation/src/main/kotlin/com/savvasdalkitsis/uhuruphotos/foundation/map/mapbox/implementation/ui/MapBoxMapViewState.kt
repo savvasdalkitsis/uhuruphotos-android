@@ -24,6 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.Viewport
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.toLatLon
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewState
+import kotlinx.collections.immutable.ImmutableList
 
 internal class MapBoxMapViewState(
     override val initialPosition: LatLon,
@@ -42,8 +43,8 @@ internal class MapBoxMapViewState(
 
     @Composable
     override fun HeatMap(
-        allPoints: Collection<LatLon>,
-        pointsOnVisibleMap: Collection<LatLon>,
+        allPoints: ImmutableList<LatLon>,
+        pointsOnVisibleMap: ImmutableList<LatLon>,
     ) {
         if (pointsOnVisibleMap.isNotEmpty()) {
             mapView?.showHeatMap(pointsOnVisibleMap.toSet())

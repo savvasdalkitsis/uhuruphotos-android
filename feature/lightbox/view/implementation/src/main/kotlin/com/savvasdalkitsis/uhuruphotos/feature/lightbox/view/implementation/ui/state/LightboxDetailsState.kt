@@ -27,6 +27,7 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.collections.immutable.toImmutableSet
+import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
 @Immutable
@@ -53,13 +54,16 @@ data class LightboxDetailsState(
     val height: Int? = null,
 ) : Parcelable {
 
+    @IgnoredOnParcel
     val megapixels: String? = whSafe { w, h ->
             "${(w * h.toLong()).mb.round(2)} MP"
         }
+    @IgnoredOnParcel
     val wh: Pair<Int, Int>? = whSafe { w, h ->
             w to h
         }
 
+    @IgnoredOnParcel
     val isEmpty = localPaths.isEmpty() && remotePaths.isEmpty() && size.isNullOrBlank() &&
             fStop.isNullOrBlank() &&
             shutterSpeed.isNullOrBlank() &&

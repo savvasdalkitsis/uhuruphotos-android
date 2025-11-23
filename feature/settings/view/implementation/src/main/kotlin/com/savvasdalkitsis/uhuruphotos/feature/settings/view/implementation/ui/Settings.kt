@@ -244,7 +244,7 @@ private fun preferences() = object : Preferences {
 
     override fun getFloat(key: String, defaultValue: Float): Float = 0f
 
-    override fun getNullableFloat(key: String, defaultValue: Float?): Float? = 0f
+    override fun getNullableFloat(key: String, defaultValue: Float?): Float = 0f
 
     override fun observeFloat(key: String, defaultValue: Float): Flow<Float> = flowOf(0f)
 
@@ -253,7 +253,7 @@ private fun preferences() = object : Preferences {
 
     override fun getString(key: String, defaultValue: String): String = "test"
 
-    override fun getNullableString(key: String, defaultValue: String?): String? = "test"
+    override fun getNullableString(key: String, defaultValue: String?): String = "test"
 
     override fun observeString(key: String, defaultValue: String): Flow<String> = flowOf("test")
 

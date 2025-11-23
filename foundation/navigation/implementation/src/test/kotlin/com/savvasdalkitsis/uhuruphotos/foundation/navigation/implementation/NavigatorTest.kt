@@ -20,7 +20,8 @@ import org.junit.Test
 class NavigatorTest {
 
     private val underTest = Navigator(
-        intentLauncher = mockk()
+        intentLauncher = mockk(),
+        context = mockk(),
     )
 
     private val dispatcher = StandardTestDispatcher()

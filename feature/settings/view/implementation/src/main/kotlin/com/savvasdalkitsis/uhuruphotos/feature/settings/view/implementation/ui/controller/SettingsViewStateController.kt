@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.controller
 
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.mutableStateOf
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
@@ -50,6 +51,7 @@ import uhuruphotos_android.foundation.strings.api.generated.resources.video
 import uhuruphotos_android.foundation.strings.api.generated.resources.video_disk_cache
 import javax.inject.Inject
 
+@Stable
 class SettingsViewStateController @Inject constructor(
     @PlainTextPreferences
     private val preferences: Preferences,

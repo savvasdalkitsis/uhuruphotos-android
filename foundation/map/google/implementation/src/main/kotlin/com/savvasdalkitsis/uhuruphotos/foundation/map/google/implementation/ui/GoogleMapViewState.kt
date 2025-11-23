@@ -36,6 +36,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.Viewport
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.toLatLon
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewState
+import kotlinx.collections.immutable.ImmutableList
 
 internal class GoogleMapViewState(
     internal val cameraPositionState: CameraPositionState,
@@ -44,6 +45,22 @@ internal class GoogleMapViewState(
 ) : MapViewState {
 
     private var bounds: LatLngBounds? = null
+    private val gradient = listOf(
+        Color(0, 255, 255, 0),
+        Color(0, 255, 255, 255),
+        Color(0, 191, 255, 255),
+        Color(0, 127, 255, 255),
+        Color(0, 63, 255, 255),
+        Color(0, 0, 255, 255),
+        Color(0, 0, 223, 255),
+        Color(0, 0, 191, 255),
+        Color(0, 0, 159, 255),
+        Color(0, 0, 127, 255),
+        Color(63, 0, 91, 255),
+        Color(127, 0, 63, 255),
+        Color(191, 0, 31, 255),
+        Color(255, 0, 0, 255)
+    ).map { it.toArgb() }.toIntArray()
 
     @Composable
     override fun Marker(latLon: LatLon) {
@@ -54,26 +71,10 @@ internal class GoogleMapViewState(
 
     @Composable
     override fun HeatMap(
-        allPoints: Collection<LatLon>,
-        pointsOnVisibleMap: Collection<LatLon>,
+        allPoints: ImmutableList<LatLon>,
+        pointsOnVisibleMap: ImmutableList<LatLon>,
     ) {
         if (pointsOnVisibleMap.isNotEmpty()) {
-            val gradient = listOf(
-                Color(0, 255, 255, 0),
-                Color(0, 255, 255, 255),
-                Color(0, 191, 255, 255),
-                Color(0, 127, 255, 255),
-                Color(0, 63, 255, 255),
-                Color(0, 0, 255, 255),
-                Color(0, 0, 223, 255),
-                Color(0, 0, 191, 255),
-                Color(0, 0, 159, 255),
-                Color(0, 0, 127, 255),
-                Color(63, 0, 91, 255),
-                Color(127, 0, 63, 255),
-                Color(191, 0, 31, 255),
-                Color(255, 0, 0, 255)
-            ).map { it.toArgb() }.toIntArray()
             TileOverlay(
                 tileProvider = HeatmapTileProvider.Builder()
                     .data(pointsOnVisibleMap.map { it.toLatLng })

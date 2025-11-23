@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -45,6 +46,10 @@ import org.jetbrains.compose.resources.painterResource
 import uhuruphotos_android.foundation.icons.api.generated.resources.Res
 import uhuruphotos_android.foundation.icons.api.generated.resources.Res.drawable
 import uhuruphotos_android.foundation.icons.api.generated.resources.ic_delete
+
+@Immutable
+@JvmInline
+value class StablePainter(val value: Painter)
 
 @Composable
 fun UhuruIcon(
@@ -81,13 +86,13 @@ fun UhuruIcon(
     tint: Color? = null,
     animateIfAvailable: Boolean = true,
 ) {
-    UhuruIcon(modifier, painterResource(icon), contentDescription, tint, animateIfAvailable)
+    UhuruIcon(modifier, StablePainter(painterResource(icon)), contentDescription, tint, animateIfAvailable)
 }
 
 @Composable
 fun UhuruIcon(
     modifier: Modifier = Modifier,
-    painter: Painter,
+    painter: StablePainter,
     contentDescription: String? = null,
     tint: Color? = null,
     animateIfAvailable: Boolean = true,
@@ -97,7 +102,7 @@ fun UhuruIcon(
         modifier = modifier
             .recomposeHighlighter()
         ,
-        painter = painter,
+        painter = painter.value,
         contentDescription = contentDescription,
         tint = resolvedTint,
     )

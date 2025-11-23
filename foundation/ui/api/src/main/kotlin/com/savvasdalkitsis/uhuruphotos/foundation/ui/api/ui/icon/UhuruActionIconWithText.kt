@@ -67,7 +67,7 @@ fun UhuruActionIconWithText(
     modifier: Modifier = Modifier,
     iconModifier: Modifier = Modifier,
     onClick: () -> Unit,
-    painter: Painter,
+    painter: StablePainter,
     text: String,
 ) {
     Column(
