@@ -78,8 +78,8 @@ data class LoadMediaItem(
         state: LightboxState,
     ) = merge(
         flow {
-//            currentMediaId.emit(actionMediaMd5Sum)
-//            emit(ShowMedia(listOf(actionMediaId.toSingleMediaItemState(mediaHash = actionMediaItemHash)), 0))
+            currentMediaId.emit(actionMediaMd5Sum)
+            emit(ShowMedia(listOf(actionMediaMd5Sum.toSingleMediaItemState()), 0))
 
             if (sequenceDataSource == TrashModel) {
                 mediaItemTypeState = MediaItemTypeState.TRASHED
@@ -180,33 +180,31 @@ data class LoadMediaItem(
         isInPortfolio: (Long) -> Boolean,
         showAddToPortfolioIcon: Boolean,
         addToPortfolioEnabled: Boolean
-    ) = id.toSingleMediaItemState(
+    ) = mediaHash.md5.toSingleMediaItemState(
         isFavourite = isFavourite,
         isInPortfolio = isInPortfolio,
         showAddToPortfolioIcon = showAddToPortfolioIcon,
         addToPortfolioEnabled = addToPortfolioEnabled,
-        mediaHash = mediaHash
     )
 
-    private fun MediaIdModel<*>.toSingleMediaItemState(
+    private fun Md5Hash.toSingleMediaItemState(
         isFavourite: Boolean = false,
         isInPortfolio: (Long) -> Boolean = { false },
         showAddToPortfolioIcon: Boolean = false,
         addToPortfolioEnabled: Boolean = false,
-        mediaHash: MediaItemHashModel,
     ) = SingleMediaItemState(
         id = this,
-        showFavouriteIcon = preferRemote is MediaIdModel.RemoteIdModel,
+        showFavouriteIcon = false,//preferRemote is MediaIdModel.RemoteIdModel,
         showDeleteButton = sequenceDataSource.shouldShowDeleteButton,
-        showEditIcon = shouldShowEditButton,
-        showShareIcon = !isVideo,
-        showUseAsIcon = !isVideo,
+        showEditIcon = false,//shouldShowEditButton,
+        showShareIcon = false,//!isVideo,
+        showUseAsIcon = false,//!isVideo,
         showAddToPortfolioIcon = showAddToPortfolioIcon,
         addToPortfolioIconEnabled = addToPortfolioEnabled,
-        inPortfolio = findLocals.any { isInPortfolio(it.value) },
-        mediaItemSyncState = syncState.takeIf { sequenceDataSource.showMediaSyncState },
+        inPortfolio = false,//findLocals.any { isInPortfolio(it.value) },
+        mediaItemSyncState = null,//syncState.takeIf { sequenceDataSource.showMediaSyncState },
         isFavourite = isFavourite,
-        mediaHash = mediaHash,
+        mediaHash = MediaItemHashModel(this, null),
     )
 
     private val MediaIdModel<*>.shouldShowEditButton get() = !isVideo && findLocals.isNotEmpty()

@@ -52,6 +52,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Loca
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItemDeletion.Error
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItemDeletion.RequiresPermissions
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItemDeletion.Success
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Md5Hash
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.MissingPermissionsException
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaDeletionUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
@@ -111,7 +112,7 @@ class LightboxActionsContext @Inject constructor(
 ) {
 
     var mediaItemTypeState = MediaItemTypeState.default
-    val currentMediaId = MutableSharedFlow<MediaIdModel<*>>(1)
+    val currentMediaId = MutableSharedFlow<Md5Hash>(1)
 
     fun deletionCategory(item: SingleMediaItemState) = when {
         mediaItemTypeState == TRASHED -> REMOTE_ITEM_TRASHED
