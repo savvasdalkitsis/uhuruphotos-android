@@ -1,18 +1,19 @@
 package com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api
 
 import androidx.compose.runtime.Composable
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Md5Hash
 
 @JvmInline
 value class SharedElementId(val value: String) {
     companion object {
 
         @Composable
-        fun image(imageHash: String) =
-            SharedElementId("image-$imageHash")
+        fun image(imageMd5sum: Md5Hash) =
+            SharedElementId("image-${imageMd5sum.value}")
 
         @Composable
-        fun imageCanvas(imageHash: String) =
-            SharedElementId("image-canvas-$imageHash")
+        fun imageCanvas(imageMd5sum: Md5Hash) =
+            SharedElementId("image-canvas-${imageMd5sum.value}")
 
         @Composable
         fun personImage(personId: Int) =

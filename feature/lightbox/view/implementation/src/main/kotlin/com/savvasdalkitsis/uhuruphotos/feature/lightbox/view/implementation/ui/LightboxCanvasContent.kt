@@ -28,11 +28,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.api.navigation.LocalServerUrl
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.FullMediaDataLoaded
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.LightboxAction
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.ToggleUI
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.SingleMediaItemState
+import com.savvasdalkitsis.uhuruphotos.feature.user.view.api.LocalUser
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.FullSizeImage
 import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.ui.Video
@@ -51,11 +53,13 @@ internal fun BoxScope.LightboxCanvasContent(
     action: (LightboxAction) -> Unit
 ) = with(scope) {
     val serverUrl = LocalServerUrl.current
+    val context = LocalContext.current
+    val user = LocalUser.current
     val lowResUrl = remember(serverUrl, mediaItem.id) {
-        mediaItem.id.thumbnailUri(serverUrl)
+        mediaItem.uri.resolve(mediaItem.mediaHash.md5, serverUrl, user.id, mediaItem.id.isVideo, context, true)
     }
     val fullResUrl = remember(serverUrl, mediaItem.id) {
-        mediaItem.id.fullResUri(serverUrl)
+        mediaItem.uri.resolve(mediaItem.mediaHash.md5, serverUrl, user.id, mediaItem.id.isVideo, context, false)
     }
     when {
         mediaItem.id.isVideo -> Box(modifier = Modifier
@@ -79,7 +83,7 @@ internal fun BoxScope.LightboxCanvasContent(
                 .recomposeHighlighter()
                 .fillMaxSize()
                 .align(Alignment.Center),
-            mediaHash = mediaItem.id.mediaHash.hash,
+            mediaMd5sum = mediaItem.id.mediaHash.md5,
             lowResUrl = lowResUrl,
             fullResUrl = fullResUrl,
             onFullResImageLoaded = { action(FullMediaDataLoaded(mediaItem)) },

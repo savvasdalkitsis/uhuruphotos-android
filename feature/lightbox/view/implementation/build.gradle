@@ -8,7 +8,6 @@ android {
 }
 
 dependencies {
-
     implementation(
             libs.accompanist.drawable,
             libs.accompanist.systemui,
@@ -58,6 +57,7 @@ dependencies {
             project(":feature:trash:domain:api"),
             project(":feature:upload:domain:api"),
             project(":feature:upload:view:api"),
+            project(":feature:user:view:api"),
             project(":feature:user:domain:api"),
             project(":foundation:activity:api"),
             project(":foundation:compose:api"),
@@ -78,6 +78,7 @@ dependencies {
             project(":foundation:worker:api"),
             project(":foundation:image:api"),
     )
+
     debugImplementation(
             libs.androidx.compose.ui.tooling,
     )

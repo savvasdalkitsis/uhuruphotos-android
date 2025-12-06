@@ -51,7 +51,7 @@ internal fun SharedTransitionScope.LightboxScaffold(
     val mediaItem = state.media[index]
     UhuruScaffold(
         modifier = Modifier
-            .sharedElement(SharedElementId.imageCanvas(mediaItem.mediaHash.hash)),
+            .sharedElement(SharedElementId.imageCanvas(mediaItem.mediaHash.md5)),
         title = { },
         bottomBarContent = {
             AnimatedVisibility(

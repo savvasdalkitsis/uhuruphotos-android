@@ -28,7 +28,7 @@ data class ChangedToPage(val page: Int) : LightboxAction() {
     ): Flow<LightboxMutation> = flow {
         if (state.media.isNotEmpty()) {
             val page = page.coerceAtMost(state.media.size - 1)
-            currentMediaId.emit(state.media[page].id)
+            currentMediaId.emit(state.media[page].mediaHash.md5)
         }
     }
 }

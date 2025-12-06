@@ -21,6 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.s
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.SingleMediaItemState
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.toLightboxDetailsState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Md5Hash
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import kotlinx.collections.immutable.toImmutableList
 import org.jetbrains.compose.resources.StringResource
@@ -61,13 +62,13 @@ sealed class LightboxMutation(
         )
     })
 
-    data class LoadingDetails(val id: MediaIdModel<*>) : LightboxMutation({
+    data class LoadingDetails(val id: Md5Hash) : LightboxMutation({
         it.copyItem(id) { photoState ->
             photoState.copy(loadingDetails = true)
         }
     })
 
-    data class FinishedLoadingDetails(val id: MediaIdModel<*>) : LightboxMutation({
+    data class FinishedLoadingDetails(val id: Md5Hash) : LightboxMutation({
         it.copyItem(id) { photoState ->
             photoState.copy(loadingDetails = false)
         }
@@ -123,7 +124,7 @@ sealed class LightboxMutation(
     }
 
     data class ReceivedDetails(
-        val id: MediaIdModel<*>,
+        val id: Md5Hash,
         val details: LightboxDetailsModel,
         val serverUrl: String,
     ) : LightboxMutation({
@@ -194,6 +195,16 @@ private fun LightboxState.copyItem(
     copy: (SingleMediaItemState) -> SingleMediaItemState
 ): LightboxState = copy(media = media.map { mediaItem ->
     when (mediaItem.id) {
+        id -> copy(mediaItem)
+        else -> mediaItem
+    }
+}.toImmutableList())
+
+private fun LightboxState.copyItem(
+    id: Md5Hash,
+    copy: (SingleMediaItemState) -> SingleMediaItemState
+): LightboxState = copy(media = media.map { mediaItem ->
+    when (mediaItem.mediaHash.md5) {
         id -> copy(mediaItem)
         else -> mediaItem
     }

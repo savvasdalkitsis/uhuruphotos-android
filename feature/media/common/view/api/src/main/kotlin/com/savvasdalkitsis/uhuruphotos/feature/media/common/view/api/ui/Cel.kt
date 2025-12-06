@@ -49,7 +49,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.api.navigation.LocalServerUrl
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.feed.FeedItemSyncStatusAdapter
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.FeedItemSyncStatus
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.FeedUri
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.icon
@@ -182,7 +181,7 @@ private fun SharedTransitionScope.Cel(
         modifier = modifier
             .aspectRatio(aspectRatio)
             .clip(shape)
-            .sharedElement(SharedElementId.imageCanvas(md5Sum.value))
+            .sharedElement(SharedElementId.imageCanvas(md5Sum))
             .recomposeHighlighter()
     ) {
         val serverUrl = LocalServerUrl.current
@@ -194,7 +193,7 @@ private fun SharedTransitionScope.Cel(
             modifier = Modifier
                 .fillMaxWidth()
                 .offset { IntOffset(contentOffset.toInt(), 0) }
-                .sharedElement(SharedElementId.image(md5Sum.value))
+                .sharedElement(SharedElementId.image(md5Sum))
                 .zoomablePeekOverlay(
                     peekState,
                     ZoomablePeekOverlayBackdrop.scrim(backgroundColor.copy(alpha = 0.4f))

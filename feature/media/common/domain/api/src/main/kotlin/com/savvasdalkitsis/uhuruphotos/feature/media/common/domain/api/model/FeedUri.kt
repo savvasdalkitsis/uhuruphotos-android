@@ -6,9 +6,11 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Md5H
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.MediaStoreContentUriResolver
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.localMediaThumbnailFile
 import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
 
 @JvmInline
 @Parcelize
+@Serializable
 value class FeedUri(val value: String) : Parcelable {
 
     val localMediaId: Long? get() = value.removePrefix(LOCAL_PREFIX).toLongOrNull()

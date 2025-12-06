@@ -172,9 +172,9 @@ class LightboxActionsContext @Inject constructor(
         mediaId: MediaIdModel<*>,
         media: List<SingleMediaItemState>,
     ) {
-        media.find(mediaId)?.let { (_, item) ->
+        media.find(mediaId.mediaHash.md5)?.let { (_, item) ->
             emit(Loading)
-            emit(LoadingDetails(mediaId))
+            emit(LoadingDetails(mediaId.mediaHash.md5))
             lightboxUseCase.refreshMediaDetails(mediaId, item.mediaHash).onFailure {
                 emit(ShowErrorMessage(string.error_loading_photo_details))
             }
@@ -183,6 +183,15 @@ class LightboxActionsContext @Inject constructor(
 
     fun List<SingleMediaItemState>.find(id: MediaIdModel<*>): Pair<Int, SingleMediaItemState>? {
         val index = indexOfFirst { it.id.matches(id) }
+        return if (index >= 0) {
+            index to get(index)
+        } else {
+            null
+        }
+    }
+
+    fun List<SingleMediaItemState>.find(id: Md5Hash): Pair<Int, SingleMediaItemState>? {
+        val index = indexOfFirst { it.mediaHash.md5 == id }
         return if (index >= 0) {
             index to get(index)
         } else {

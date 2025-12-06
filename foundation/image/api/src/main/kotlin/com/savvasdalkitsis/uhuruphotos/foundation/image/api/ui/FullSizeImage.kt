@@ -38,6 +38,7 @@ import androidx.compose.ui.platform.LocalContext
 import coil.request.ImageRequest
 import coil.request.SuccessResult
 import coil.transition.Transition
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Md5Hash
 import com.savvasdalkitsis.uhuruphotos.foundation.activity.api.extensions.setHDR
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.LocalFullImageLoader
 import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.SharedElementId
@@ -50,7 +51,7 @@ import me.saket.telephoto.zoomable.coil.ZoomableAsyncImage
 @Composable
 fun SharedTransitionScope.FullSizeImage(
     modifier: Modifier = Modifier,
-    mediaHash: String,
+    mediaMd5sum: Md5Hash,
     lowResUrl: String?,
     fullResUrl: String?,
     onFullResImageLoaded: () -> Unit = {},
@@ -74,7 +75,7 @@ fun SharedTransitionScope.FullSizeImage(
         Thumbnail(
             modifier = Modifier
                 .fillMaxSize()
-                .sharedElement(SharedElementId.image(mediaHash)),
+                .sharedElement(SharedElementId.image(mediaMd5sum)),
             url = lowResUrl,
             contentScale = contentScale,
             contentDescription = "low resolution image"
@@ -85,7 +86,7 @@ fun SharedTransitionScope.FullSizeImage(
         modifier = modifier
             .background(Color.Transparent)
             .fillMaxSize()
-            .sharedElement(SharedElementId.image(mediaHash)),
+            .sharedElement(SharedElementId.image(mediaMd5sum)),
         imageLoader = LocalFullImageLoader.current,
         state = zoomableState,
         onClick = { onClick() },

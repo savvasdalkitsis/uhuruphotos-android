@@ -13,6 +13,7 @@ kotlin {
                 api(compose.foundation)
                 api(compose.ui)
                 api(compose.ui)
+                api(project(":feature:media:local:domain:api"))
                 implementation(compose.material3)
                 implementation(project(":foundation:log:api"))
             }

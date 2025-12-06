@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation
 
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSourceModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.FeedUri
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.NewMediaItemModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Md5Hash
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
@@ -24,6 +25,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class LightboxNavigationRoute(
+    val uri: FeedUri,
     val md5Sum: Md5Hash,
     val lightboxSequenceDataSource: LightboxSequenceDataSourceModel = LightboxSequenceDataSourceModel.SingleItemModel,
 ) : NavigationRoute {
@@ -36,6 +38,7 @@ data class LightboxNavigationRoute(
             mediaItem: NewMediaItemModel,
             lightboxSequenceDataSource: LightboxSequenceDataSourceModel,
         ) = LightboxNavigationRoute(
+            uri = mediaItem.uri,
             md5Sum = mediaItem.md5Sum,
             lightboxSequenceDataSource = lightboxSequenceDataSource
         )

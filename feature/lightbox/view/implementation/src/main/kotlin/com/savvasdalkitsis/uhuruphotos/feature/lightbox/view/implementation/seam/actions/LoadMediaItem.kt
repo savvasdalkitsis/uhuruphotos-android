@@ -16,7 +16,6 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions
 
 import com.github.michaelbull.result.getOr
-import com.github.michaelbull.result.onFailure
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.portfolio.PortfolioItems
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchTypeModel
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSourceModel
@@ -39,12 +38,12 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.Loading
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.LoadingDetails
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ReceivedDetails
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ShowErrorMessage
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ShowMedia
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ShowRestoreButton
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.MediaItemTypeState
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.SingleMediaItemState
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.FeedUri
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHashModel
@@ -65,12 +64,11 @@ import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
-import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
-import uhuruphotos_android.foundation.strings.api.generated.resources.error_loading_photo_details
 
 @OptIn(ExperimentalCoroutinesApi::class)
 data class LoadMediaItem(
     val actionMediaMd5Sum: Md5Hash,
+    val actionMediaUri: FeedUri,
     val sequenceDataSource: LightboxSequenceDataSourceModel,
 ) : LightboxAction() {
 
@@ -106,9 +104,9 @@ data class LoadMediaItem(
                         send(FinishedLoadingDetails(id))
                     }.onStart {
                         onIO {
-                            lightboxUseCase.refreshMediaDetails(id, item.mediaHash).onFailure {
-                                send(ShowErrorMessage(string.error_loading_photo_details))
-                            }
+//                            lightboxUseCase.refreshMediaDetails(id, item.mediaHash).onFailure {
+//                                send(ShowErrorMessage(string.error_loading_photo_details))
+//                            }
                         }
                     }.collect(this::send)
                 }
@@ -193,7 +191,7 @@ data class LoadMediaItem(
         showAddToPortfolioIcon: Boolean = false,
         addToPortfolioEnabled: Boolean = false,
     ) = SingleMediaItemState(
-        id = this,
+        id = MediaIdModel.LocalIdModel(0, 0, false, "", MediaItemHashModel(this, null)),
         showFavouriteIcon = false,//preferRemote is MediaIdModel.RemoteIdModel,
         showDeleteButton = sequenceDataSource.shouldShowDeleteButton,
         showEditIcon = false,//shouldShowEditButton,
