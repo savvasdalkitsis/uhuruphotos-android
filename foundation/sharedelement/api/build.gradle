@@ -3,28 +3,17 @@ plugins {
     alias(libs.plugins.kotlin.compose.compiler)
 }
 
-kotlin {
-    jvm("desktop")
-    androidTarget()
-    sourceSets {
-        commonMain {
-            dependencies {
-                api(compose.animation)
-                api(compose.foundation)
-                api(compose.ui)
-                api(compose.ui)
-                api(project(":feature:media:local:domain:api"))
-                implementation(compose.material3)
-                implementation(project(":foundation:log:api"))
-            }
-        }
-    }
-}
-
 android {
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api'
 
     dependencies {
         implementation(libs.bundles.androidx.navigation)
+        api(compose.animation)
+        api(compose.foundation)
+        api(compose.ui)
+        api(compose.ui)
+        api(project(":feature:media:local:domain:api"))
+        implementation(compose.material3)
+        implementation(project(":foundation:log:api"))
     }
 }

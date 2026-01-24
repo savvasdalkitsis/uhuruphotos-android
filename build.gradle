@@ -65,7 +65,6 @@ subprojects {
             "project ':foundation:math:api'",
             "project ':foundation:result:api'",
             "project ':foundation:seam:api'",
-            "project ':foundation:sharedelement:api'",
             "project ':foundation:share:api'",
             "project ':foundation:strings:api'",
             "project ':foundation:system:api'",
