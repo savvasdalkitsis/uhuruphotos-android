@@ -59,7 +59,7 @@ internal fun SharedTransitionScope.Lightbox(
     HorizontalPager(
         state = pagerState,
         pageSpacing = 12.dp,
-        key = { page -> state.media.getOrNull(page)?.id?.value ?: page.toString() },
+        key = { page -> state.media.getOrNull(page)?.mediaHash?.hash ?: page.toString() },
         userScrollEnabled = true,
     ) { index ->
         val zoomableState = rememberZoomableState(

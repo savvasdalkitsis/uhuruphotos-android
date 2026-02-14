@@ -39,7 +39,7 @@ sonarqube {
 }
 
 subprojects {
-
+    task allDeps(type: DependencyReportTask) {}
     if (displayName == "project ':konsist'") {
         return
     }
@@ -66,6 +66,7 @@ subprojects {
             "project ':foundation:result:api'",
             "project ':foundation:seam:api'",
             "project ':foundation:share:api'",
+            "project ':foundation:sharedelement:api'",
             "project ':foundation:strings:api'",
             "project ':foundation:system:api'",
             "project ':foundation:theme:api'",

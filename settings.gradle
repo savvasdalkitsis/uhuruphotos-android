@@ -39,7 +39,7 @@ buildCache {
         String remoteCacheUrl = settings.ext.find('gradle.cache.url') ?: System.getenv("GRADLE_CACHE_URL") ?: ""
         String remoteCacheUser = settings.ext.find('gradle.cache.user') ?: System.getenv("GRADLE_CACHE_USER") ?: ""
         String remoteCachePassword = settings.ext.find('gradle.cache.password') ?: System.getenv("GRADLE_CACHE_PASSWORD") ?: ""
-        enabled = !remoteCacheUrl.isEmpty()
+        enabled = false//!remoteCacheUrl.isEmpty()
         url = remoteCacheUrl
         push = true
 

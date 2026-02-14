@@ -3,6 +3,11 @@ plugins {
     alias(libs.plugins.kotlin.compose.compiler)
 }
 
+kotlin {
+    jvm("desktop")
+    androidTarget()
+}
+
 android {
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api'
 

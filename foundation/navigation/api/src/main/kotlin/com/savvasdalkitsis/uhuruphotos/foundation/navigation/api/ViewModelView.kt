@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.navigation.api
 
-import android.os.Bundle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
@@ -32,6 +31,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.Navig
 import com.sebaslogen.resaca.ScopedViewModelContainer
 import com.sebaslogen.resaca.generateKeysAndObserveLifecycle
 import com.sebaslogen.resaca.hilt.createHiltViewModelFactory
+import com.sebaslogen.resaca.utils.ResacaPackagePrivate
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancelChildren
 
@@ -82,6 +82,7 @@ private fun <VM : ViewModel> hiltViewModel(
     )
 }
 
+@OptIn(ResacaPackagePrivate::class)
 @Composable
 private fun <T : ViewModel> hiltViewModelScoped(
     key: Any? = null,
@@ -101,6 +102,5 @@ private fun <T : ViewModel> hiltViewModelScoped(
         externalKey = externalKey,
         factory = createHiltViewModelFactory(viewModelStoreOwner),
         viewModelStoreOwner = viewModelStoreOwner,
-        defaultArguments = Bundle.EMPTY
     )
 }
