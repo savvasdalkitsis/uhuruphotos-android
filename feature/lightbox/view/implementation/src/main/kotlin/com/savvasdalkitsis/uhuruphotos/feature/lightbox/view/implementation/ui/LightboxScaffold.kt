@@ -28,10 +28,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.api.navigation.LocalServerUrl
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.LightboxAction
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.UpPressed
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
+import com.savvasdalkitsis.uhuruphotos.feature.user.view.api.LocalUser
 import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.SharedElementId
 import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.sharedElement
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window.LocalWindowSize
@@ -74,9 +76,11 @@ internal fun SharedTransitionScope.LightboxScaffold(
         },
     ) { contentPadding ->
         val serverUrl = LocalServerUrl.current
+        val context = LocalContext.current
+        val user = LocalUser.current
         val mediaItem = state.media[index]
-        val thumbnailUri = remember(serverUrl, mediaItem.id) {
-            mediaItem.id.thumbnailUri(serverUrl)
+        val thumbnailUri = remember(serverUrl, mediaItem.mediaHash.md5) {
+            mediaItem.uri.resolve(mediaItem.mediaHash.md5, serverUrl, user.id, mediaItem.id.isVideo, context, true)
         }
 
         when {

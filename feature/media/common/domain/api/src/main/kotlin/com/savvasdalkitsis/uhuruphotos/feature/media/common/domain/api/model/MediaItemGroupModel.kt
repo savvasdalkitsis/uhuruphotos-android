@@ -43,6 +43,7 @@ data class MediaItemGroupModel(
     override val ratio: Float = all.firstOrNull { it.ratio != 1f }?.ratio ?: 1f
     override val latLng: (Pair<Double, Double>)? = all.prop { latLng }
     override val mediaDay: MediaDayModel? = all.prop { mediaDay }
+    override val uri: FeedUri? = null
 
     private fun <T> List<MediaItemModel>.prop(instance: MediaItemModel.() -> T): T? =
         firstOrNull { instance(it) != null }?.let(instance)

@@ -25,4 +25,5 @@ data class MediaItemInstanceModel(
     override val ratio: Float = 1f,
     override val latLng: Pair<Double, Double>? = null,
     override val mediaDay: MediaDayModel? = null,
+    override val uri: FeedUri? = null,
 ) : MediaItemModel

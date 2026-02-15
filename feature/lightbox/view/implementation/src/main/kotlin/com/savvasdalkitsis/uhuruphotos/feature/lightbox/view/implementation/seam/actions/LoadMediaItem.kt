@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.sea
 
 import com.github.michaelbull.result.getOr
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.portfolio.PortfolioItems
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.Feed
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchTypeModel
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSourceModel
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSourceModel.AutoAlbumModel
@@ -47,6 +48,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Fee
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHashModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstanceModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Md5Hash
 import com.savvasdalkitsis.uhuruphotos.foundation.launchers.api.onIO
@@ -77,7 +79,7 @@ data class LoadMediaItem(
     ) = merge(
         flow {
             currentMediaId.emit(actionMediaMd5Sum)
-            emit(ShowMedia(listOf(actionMediaMd5Sum.toSingleMediaItemState()), 0))
+            emit(ShowMedia(listOf(actionMediaMd5Sum.toSingleMediaItemState(mediaUri = actionMediaUri)), 0))
 
             if (sequenceDataSource == TrashModel) {
                 mediaItemTypeState = MediaItemTypeState.TRASHED
@@ -123,13 +125,13 @@ data class LoadMediaItem(
             val showAddToPortfolioIcon = sequenceDataSource is LocalAlbumModel
                     && sequenceDataSource.albumId != localMediaUseCase.getDefaultFolderId()
             mediaItems.map {
-                it.toSingleMediaItemState(isInPortfolio, showAddToPortfolioIcon, addToPortfolioEnabled)
+                it.toSingleMediaItemState(isInPortfolio, showAddToPortfolioIcon, addToPortfolioEnabled, mediaUri = it.uri!!)
             }
         }
 
     private fun LightboxActionsContext.observeMediaItemsSequence(): Flow<List<MediaItemModel>> = when (sequenceDataSource) {
         SingleItemModel -> emptyFlow()
-        FeedModel -> feedUseCase.observeFeed(FeedFetchTypeModel.ONLY_WITH_DATES, loadSmallInitialChunk = false).toMediaItems
+        FeedModel -> feedUseCase.observeNewFeed().toMediaItemss
         is MemoryModel -> memoriesUseCase.observeMemories(loadSmallInitialChunk = false).map { collections ->
             collections.find { it.yearsAgo == sequenceDataSource.yearsAgo }?.mediaCollection?.mediaItems
             ?: emptyList()
@@ -168,6 +170,25 @@ data class LoadMediaItem(
         sequenceDataSource is LocalAlbumModel && sequenceDataSource.albumId in
                 portfolioUseCase.getPublishedFolderIds()
 
+    private val Flow<Feed>.toMediaItemss get() = map {
+        it.days.flatMap { day ->
+          day.feedItems.map { item ->
+              MediaItemInstanceModel(
+                  id = MediaIdModel.LocalIdModel(0, 0, false, "", MediaItemHashModel(item.md5sum, null)),
+                  mediaHash = MediaItemHashModel(item.md5sum, null),
+                  fallbackColor = item.fallbackColor,
+                  displayDayDate = item.day,
+                  isFavourite = item.isFavourite,
+                  sortableDate = item.sortableValue.toString(),
+                  ratio = item.ratio,
+                  latLng = null,
+                  mediaDay = null,
+                  uri = item.uri,
+              )
+          }
+        }
+    }
+
     private val Flow<List<MediaCollectionModel>>.toMediaItems get() = map { collections ->
         collections.flatMap {
             it.mediaItems
@@ -177,12 +198,14 @@ data class LoadMediaItem(
     private fun MediaItemModel.toSingleMediaItemState(
         isInPortfolio: (Long) -> Boolean,
         showAddToPortfolioIcon: Boolean,
-        addToPortfolioEnabled: Boolean
+        addToPortfolioEnabled: Boolean,
+        mediaUri: FeedUri,
     ) = mediaHash.md5.toSingleMediaItemState(
         isFavourite = isFavourite,
         isInPortfolio = isInPortfolio,
         showAddToPortfolioIcon = showAddToPortfolioIcon,
         addToPortfolioEnabled = addToPortfolioEnabled,
+        mediaUri = mediaUri,
     )
 
     private fun Md5Hash.toSingleMediaItemState(
@@ -190,6 +213,7 @@ data class LoadMediaItem(
         isInPortfolio: (Long) -> Boolean = { false },
         showAddToPortfolioIcon: Boolean = false,
         addToPortfolioEnabled: Boolean = false,
+        mediaUri: FeedUri,
     ) = SingleMediaItemState(
         id = MediaIdModel.LocalIdModel(0, 0, false, "", MediaItemHashModel(this, null)),
         showFavouriteIcon = false,//preferRemote is MediaIdModel.RemoteIdModel,
@@ -203,6 +227,7 @@ data class LoadMediaItem(
         mediaItemSyncState = null,//syncState.takeIf { sequenceDataSource.showMediaSyncState },
         isFavourite = isFavourite,
         mediaHash = MediaItemHashModel(this, null),
+        uri = mediaUri,
     )
 
     private val MediaIdModel<*>.shouldShowEditButton get() = !isVideo && findLocals.isNotEmpty()

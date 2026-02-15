@@ -31,4 +31,5 @@ sealed interface MediaItemModel : Parcelable {
     val ratio: Float
     val latLng: (Pair<Double, Double>)?
     val mediaDay: MediaDayModel?
+    val uri: FeedUri?
 }

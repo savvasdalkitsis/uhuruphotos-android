@@ -55,10 +55,10 @@ internal fun BoxScope.LightboxCanvasContent(
     val serverUrl = LocalServerUrl.current
     val context = LocalContext.current
     val user = LocalUser.current
-    val lowResUrl = remember(serverUrl, mediaItem.id) {
+    val lowResUrl = remember(serverUrl, mediaItem.mediaHash.md5) {
         mediaItem.uri.resolve(mediaItem.mediaHash.md5, serverUrl, user.id, mediaItem.id.isVideo, context, true)
     }
-    val fullResUrl = remember(serverUrl, mediaItem.id) {
+    val fullResUrl = remember(serverUrl, mediaItem.mediaHash.md5) {
         mediaItem.uri.resolve(mediaItem.mediaHash.md5, serverUrl, user.id, mediaItem.id.isVideo, context, false)
     }
     when {
