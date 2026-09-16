@@ -110,7 +110,7 @@ coil-video = { module = "io.coil-kt:coil-video", version.ref = "coil" }
 compottie = "io.github.alexzhirkevich:compottie:2.0.0-rc04"
 crop = "com.github.moyuruaizawa:cropify:0.3.1"
 desugar = "com.android.tools:desugar_jdk_libs:2.1.5"
-exif = "androidx.exifinterface:exifinterface:1.4.1"
+exif = "androidx.exifinterface:exifinterface:1.4.2"
 flowpreferences = "com.fredporciuncula:flow-preferences:1.9.1"
 gif = "com.squareup:gifencoder:0.10.1"
 google-fonts = "androidx.compose.ui:ui-text-google-fonts:1.8.3"
