@@ -25,20 +25,24 @@ import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import java.util.TimeZone
 
 class ExifUseCaseTest {
 
     private val underTest = ExifUseCase()
+    private val defaultTimeZone = TimeZone.getDefault()
 
     @Before
     fun setUp() {
         mockkStatic(Log::class)
         every { Log.isLoggable(any(), any()) } returns false
+        TimeZone.setDefault(TimeZone.getTimeZone("UTC"))
     }
 
     @After
     fun tearDown() {
         unmockkStatic(Log::class)
+        TimeZone.setDefault(defaultTimeZone)
     }
 
     @Test
@@ -62,6 +66,23 @@ class ExifUseCaseTest {
         assertEquals(3L, with(underTest) { exif.metadata() }.dateTime)
     }
 
+    @Test
+    fun `reads a date without an offset as the local time of the device`() {
+        TimeZone.setDefault(TimeZone.getTimeZone("America/New_York"))
+        val exif = exif(original = JANUARY_FIRST, modified = null, digitized = null)
+
+        assertEquals(JANUARY_FIRST + FIVE_HOURS, with(underTest) { exif.metadata() }.dateTime)
+    }
+
+    @Test
+    fun `keeps a date that carries its own offset`() {
+        TimeZone.setDefault(TimeZone.getTimeZone("America/New_York"))
+        val exif = exif(original = JANUARY_FIRST, modified = null, digitized = null)
+        every { exif.hasAttribute(ExifInterface.TAG_OFFSET_TIME_ORIGINAL) } returns true
+
+        assertEquals(JANUARY_FIRST, with(underTest) { exif.metadata() }.dateTime)
+    }
+
     private fun exif(original: Long?, modified: Long?, digitized: Long?) =
         mockk<ExifInterface>(relaxed = true) {
             every { latLong } returns null
@@ -69,4 +90,9 @@ class ExifUseCaseTest {
             every { dateTime } returns modified
             every { dateTimeDigitized } returns digitized
         }
+
+    private companion object {
+        const val JANUARY_FIRST = 1_704_103_200_000L
+        const val FIVE_HOURS = 5 * 60 * 60 * 1000L
+    }
 }

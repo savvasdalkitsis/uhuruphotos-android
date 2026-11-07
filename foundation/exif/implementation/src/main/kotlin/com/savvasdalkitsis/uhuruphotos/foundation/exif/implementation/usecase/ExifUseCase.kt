@@ -25,6 +25,9 @@ import androidx.exifinterface.media.ExifInterface.TAG_F_NUMBER
 import androidx.exifinterface.media.ExifInterface.TAG_IMAGE_LENGTH
 import androidx.exifinterface.media.ExifInterface.TAG_IMAGE_WIDTH
 import androidx.exifinterface.media.ExifInterface.TAG_MODEL
+import androidx.exifinterface.media.ExifInterface.TAG_OFFSET_TIME
+import androidx.exifinterface.media.ExifInterface.TAG_OFFSET_TIME_DIGITIZED
+import androidx.exifinterface.media.ExifInterface.TAG_OFFSET_TIME_ORIGINAL
 import androidx.exifinterface.media.ExifInterface.TAG_PHOTOGRAPHIC_SENSITIVITY
 import androidx.exifinterface.media.ExifInterface.TAG_PIXEL_X_DIMENSION
 import androidx.exifinterface.media.ExifInterface.TAG_PIXEL_Y_DIMENSION
@@ -40,6 +43,7 @@ import se.ansman.dagger.auto.AutoBind
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.InputStream
+import java.util.TimeZone
 import javax.inject.Inject
 import kotlin.math.exp
 import kotlin.math.ln
@@ -87,7 +91,14 @@ class ExifUseCase @Inject constructor(
 
     @SuppressLint("RestrictedApi")
     private fun ExifInterface.takenAt(): Long? =
-        dateTimeOriginal ?: dateTime ?: dateTimeDigitized
+        zoned(dateTimeOriginal, TAG_OFFSET_TIME_ORIGINAL)
+            ?: zoned(dateTime, TAG_OFFSET_TIME)
+            ?: zoned(dateTimeDigitized, TAG_OFFSET_TIME_DIGITIZED)
+
+    private fun ExifInterface.zoned(millis: Long?, offsetTag: String): Long? = when {
+        millis == null || hasAttribute(offsetTag) -> millis
+        else -> millis - TimeZone.getDefault().getOffset(millis)
+    }
 
     private fun ExifInterface.string(attribute: String) =
         getAttribute(attribute)
