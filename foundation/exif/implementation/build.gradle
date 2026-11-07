@@ -13,5 +13,8 @@ dependencies {
             libs.hilt,
             libs.imaging,
     )
+    testImplementation(
+            libs.bundles.test,
+    )
     ksp libs.autodagger.ksp
 }

@@ -67,8 +67,7 @@ class ExifUseCase @Inject constructor(
     }
 
 
-    @SuppressLint("RestrictedApi")
-    private fun ExifInterface.metadata() = ExifMetadata(
+    internal fun ExifInterface.metadata() = ExifMetadata(
         fStop = double(TAG_F_NUMBER)
             ?: ratio(TAG_APERTURE_VALUE)?.let { exp(it * ln(2.0) * 0.5) },
         shutterSpeed = ratio(TAG_SHUTTER_SPEED_VALUE)?.let {
@@ -76,7 +75,7 @@ class ExifUseCase @Inject constructor(
         },
         isoSpeed = int(TAG_PHOTOGRAPHIC_SENSITIVITY),
         camera = string(TAG_MODEL),
-        dateTime = dateTime,
+        dateTime = takenAt(),
         focalLength = ratio(TAG_FOCAL_LENGTH),
         focalLength35Equivalent = int(TAG_FOCAL_LENGTH_IN_35MM_FILM),
         width = int(TAG_PIXEL_X_DIMENSION) ?: int(TAG_IMAGE_WIDTH),
@@ -85,6 +84,10 @@ class ExifUseCase @Inject constructor(
         digitalZoomRatio = double(TAG_DIGITAL_ZOOM_RATIO),
         latLon = latLong?.let { (lat, lon) -> lat to lon },
     )
+
+    @SuppressLint("RestrictedApi")
+    private fun ExifInterface.takenAt(): Long? =
+        dateTimeOriginal ?: dateTime ?: dateTimeDigitized
 
     private fun ExifInterface.string(attribute: String) =
         getAttribute(attribute)
