@@ -8,6 +8,7 @@ dependencies {
             libs.androidx.work.hilt,
             libs.bundles.autodagger,
             libs.bundles.permissions,
+            libs.exif,
             libs.hilt,
             libs.palette,
             libs.sqldelight.coroutines,
