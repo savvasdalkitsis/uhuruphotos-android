@@ -113,6 +113,7 @@ class FeedRepository @Inject constructor(
                 remoteMediaUseCase.getRemoteMediaCollection(id, filter)
             },
             onProgressChange = onProgressChange,
+            clearSummariesBeforeInserting = true,
             incompleteAlbumsProcessor = { albums ->
                 database.transaction {
                     for (album in albums.map { it.toDbModel() }) {
