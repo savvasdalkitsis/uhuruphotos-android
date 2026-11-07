@@ -28,6 +28,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadCap
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadCapability.NotSetUpWithAServer
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadCapability.UnableToCheck
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadStatus
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadStatus.InQueue
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadStatus.Uploading
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.domain.api.usecase.UploadsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.WelcomeUseCase
@@ -75,14 +78,18 @@ class SyncUseCase @Inject constructor(
             uploadsUseCase.observeUploadsInFlight(),
         )
         { syncStatus, feed, existingUploads ->
-            val queued = existingUploads.jobs.map { item ->
+            val (waiting, uploaded) = existingUploads.jobs.partition { it.status.isWaitingToUpload }
+            val queued = waiting.map { item ->
                 UploadItem(item.localItemId, item.contentUri)
             }
+            val uploadedIds = uploaded.map { it.localItemId }.toSet()
             when (syncStatus) {
-                Enabled -> (localOnlyItems(feed) + queued).distinct()
+                Enabled -> (localOnlyItems(feed).filterNot { it.id in uploadedIds } + queued).distinct()
                 else -> queued
             }
         }.distinctUntilChanged()
+
+    private val UploadStatus.isWaitingToUpload get() = this is InQueue || this is Uploading
 
     private fun localOnlyItems(feed: List<MediaCollectionModel>): List<UploadItem> =
         feed.flatMap { it.mediaItems }

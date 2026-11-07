@@ -24,6 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Md5H
 import com.savvasdalkitsis.uhuruphotos.feature.sync.domain.api.model.SyncStatus
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadJob
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadStatus
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.domain.api.model.Uploads
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.domain.api.usecase.UploadsUseCase
 import io.mockk.every
@@ -51,16 +52,16 @@ class SyncUseCaseTest {
             )
         )
     }
-    private val uploadsUseCase: UploadsUseCase = mockk {
-        every { observeUploadsInFlight() } returns flowOf(
-            Uploads(jobs = listOf(UploadJob(localItemId = 2, displayName = null, contentUri = "content://2")))
-        )
-    }
+    private val queuedJob = UploadJob(localItemId = 2, displayName = null, contentUri = "content://2")
 
-    private fun underTest(status: SyncStatus) =
-        spyk(SyncUseCase(mockk(), mockk(), feedUseCase, mockk(), uploadsUseCase)) {
+    private fun underTest(status: SyncStatus, jobs: List<UploadJob> = listOf(queuedJob)) =
+        spyk(SyncUseCase(mockk(), mockk(), feedUseCase, mockk(), uploadsUseCase(jobs))) {
             every { observeSyncStatus() } returns flowOf(status)
         }
+
+    private fun uploadsUseCase(jobs: List<UploadJob>): UploadsUseCase = mockk {
+        every { observeUploadsInFlight() } returns flowOf(Uploads(jobs = jobs))
+    }
 
     @Test
     fun `queued uploads drain while cloud sync is off`() = runTest {
@@ -75,6 +76,27 @@ class SyncUseCaseTest {
         assertEquals(
             listOf(UploadItem(1, "content://1"), UploadItem(2, "content://2")),
             underTest(SyncStatus.Enabled).observePendingItems().first(),
+        )
+    }
+
+    @Test
+    fun `items being processed are not uploaded again`() = runTest {
+        val processing = UploadJob(3, null, "content://3", UploadStatus.Processing)
+        val failed = UploadJob(4, null, "content://4", UploadStatus.Failed(null))
+
+        assertEquals(
+            listOf(UploadItem(2, "content://2")),
+            underTest(SyncStatus.Disabled, listOf(queuedJob, processing, failed)).observePendingItems().first(),
+        )
+    }
+
+    @Test
+    fun `cloud sync skips local only items that are already being processed`() = runTest {
+        val processing = UploadJob(1, null, "content://1", UploadStatus.Processing)
+
+        assertEquals(
+            emptyList<UploadItem>(),
+            underTest(SyncStatus.Enabled, listOf(processing)).observePendingItems().first(),
         )
     }
 }
