@@ -282,15 +282,11 @@ class MediaUseCase @Inject constructor(
         remoteMediaUseCase.refreshHiddenMedia()
 
     override fun trashMediaItem(id: MediaIdModel<*>) {
-        if (id is RemoteIdModel) {
-            remoteMediaUseCase.trashMediaItem(id.value)
-        }
+        id.findRemote?.let { remoteMediaUseCase.trashMediaItem(it.value) }
     }
 
     override fun restoreMediaItem(id: MediaIdModel<*>) {
-        if (id is RemoteIdModel) {
-            remoteMediaUseCase.restoreMediaItem(id.value)
-        }
+        id.findRemote?.let { remoteMediaUseCase.restoreMediaItem(it.value) }
     }
 
     private suspend fun <T> withUser(action: suspend (RemoteUserModel) -> T): Result<T, Throwable> =

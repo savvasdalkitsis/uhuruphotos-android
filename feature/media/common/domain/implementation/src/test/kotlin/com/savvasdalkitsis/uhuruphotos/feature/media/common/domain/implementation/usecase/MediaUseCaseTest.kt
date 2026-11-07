@@ -20,8 +20,10 @@ import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.get
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSourceModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHashModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Md5Hash
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.model.RemoteUserModel
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateDisplayer
@@ -30,6 +32,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -52,7 +55,8 @@ class MediaUseCaseTest {
     private val dateParser: DateParser = mockk {
         every { parseDateOrTimeString(any()) } returns null
     }
-    private val underTest = MediaUseCase(mockk(), mockk(), userUseCase, dateDisplayer, dateParser)
+    private val remoteMediaUseCase: RemoteMediaUseCase = mockk(relaxed = true)
+    private val underTest = MediaUseCase(mockk(), remoteMediaUseCase, userUseCase, dateDisplayer, dateParser)
 
     @Test
     fun `day collections match local copies by content hash`() = runTest {
@@ -65,6 +69,20 @@ class MediaUseCaseTest {
         assertEquals("Berlin", collection.location)
         assertEquals(listOf(MediaItemHashModel(Md5Hash(md5), 1)), collection.mediaItems.map { it.mediaHash })
         assertEquals(uuid, collection.mediaItems.single().id.value)
+    }
+
+    @Test
+    fun `trashing an item that is both local and remote trashes the remote copy`() {
+        val hash = MediaItemHashModel(Md5Hash(md5), 1)
+        val local = MediaIdModel.LocalIdModel(1, 0, false, "content://1", "", hash)
+        val remote = MediaIdModel.RemoteIdModel(uuid, false, hash)
+
+        underTest.trashMediaItem(MediaIdModel.GroupIdModel(listOf(local, remote), false, hash))
+        underTest.restoreMediaItem(MediaIdModel.GroupIdModel(listOf(local, remote), false, hash))
+        underTest.trashMediaItem(local)
+
+        verify(exactly = 1) { remoteMediaUseCase.trashMediaItem(uuid) }
+        verify(exactly = 1) { remoteMediaUseCase.restoreMediaItem(uuid) }
     }
 
     @Test
