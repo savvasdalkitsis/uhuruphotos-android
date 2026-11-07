@@ -1,0 +1,5 @@
+* Support for the latest LibrePhotos server
+* Android 16 support
+* Uploads no longer get stuck in the queue
+* New photos show up without a full sync
+* Many bug fixes
