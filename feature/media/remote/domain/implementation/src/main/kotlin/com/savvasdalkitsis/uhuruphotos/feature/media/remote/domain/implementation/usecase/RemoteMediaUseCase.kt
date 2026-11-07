@@ -268,7 +268,7 @@ class RemoteMediaUseCase @Inject constructor(
     ) {
         val completeAlbum = remoteMediaDaySummariesFetcher(id)
         completeAlbumInterceptor(completeAlbum)
-        if (clearSummariesBeforeInserting) {
+        if (clearSummariesBeforeInserting && !completeAlbum.incomplete) {
             remoteMediaItemSummaryQueries.deletePhotoSummariesforAlbum(id)
         }
         saveRemoteMediaSummaries(completeAlbum)

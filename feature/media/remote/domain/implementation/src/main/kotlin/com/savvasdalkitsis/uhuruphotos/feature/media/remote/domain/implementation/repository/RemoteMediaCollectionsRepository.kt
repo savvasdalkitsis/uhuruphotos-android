@@ -99,7 +99,7 @@ class RemoteMediaCollectionsRepository @Inject constructor(
             items += next
             lastPageSize = next.size
         }
-        return first.copy(items = items)
+        return first.copy(items = items, incomplete = filter.modifiedSince != null)
     }
 
     private fun emptyDay(id: String) = RemoteMediaDayCompleteResponse(

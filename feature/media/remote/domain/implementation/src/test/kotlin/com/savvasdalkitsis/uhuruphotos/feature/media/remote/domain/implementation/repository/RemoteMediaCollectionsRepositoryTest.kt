@@ -35,6 +35,7 @@ import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import retrofit2.HttpException
@@ -131,6 +132,24 @@ class RemoteMediaCollectionsRepositoryTest {
         underTest.getCollections(timeline)
 
         assertEquals(listOf("a", "b"), underTest.getCollection("7", timeline).items.map { it.id })
+    }
+
+    @Test
+    fun `only a legacy day changed since the last refresh is incomplete`() = runTest {
+        val since = timeline.copy(modifiedSince = "2026-01-01T00:00:00Z")
+        coEvery { service.getDayPhotos(any(), any(), any(), any()) } throws notFound()
+        coEvery { service.getLegacyDay("7", 1, any()) } returns legacyPage("7", 1, summary("a"))
+
+        assertTrue(underTest.getCollection("7", since).incomplete)
+        assertFalse(underTest.getCollection("7", timeline).incomplete)
+    }
+
+    @Test
+    fun `a day from the days api is complete`() = runTest {
+        coEvery { service.getDayPhotos("20240501", null, 500, timelineQuery) } returns
+            RemoteDayPhotosResponseData(listOf(summary("a")), next = null)
+
+        assertFalse(underTest.getCollection("20240501", timeline.copy(modifiedSince = "2026-01-01")).incomplete)
     }
 
     @Test
