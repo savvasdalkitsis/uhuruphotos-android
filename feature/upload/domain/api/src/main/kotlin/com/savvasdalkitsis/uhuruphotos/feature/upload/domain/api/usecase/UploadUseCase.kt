@@ -31,6 +31,7 @@ interface UploadUseCase {
     suspend fun scheduleUploads(
         networkType: NetworkType,
         requiresCharging: Boolean,
+        keepExisting: Boolean = false,
     )
     fun observeUploading(): Flow<Set<Long>>
     fun observeProcessing(): Flow<Set<ProcessingMediaItems>>
