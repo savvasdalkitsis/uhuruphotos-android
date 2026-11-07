@@ -76,7 +76,7 @@ sealed class MediaIdModel<T : Serializable> private constructor(
         @IgnoredOnParcel
         override val syncState: MediaItemSyncStateModel = REMOTE_ONLY
         override fun fullResUri(serverUrl: String?): String =
-            serverUrl?.let { value.toFullSizeUrlFromId(isVideo, it) } ?: ""
+            serverUrl?.let { originalKey().toFullSizeUrlFromId(isVideo, it) } ?: ""
         override fun thumbnailUri(serverUrl: String?): String =
             serverUrl?.let { value.toThumbnailUrlFromId(it) } ?: ""
 
@@ -269,8 +269,13 @@ sealed class MediaIdModel<T : Serializable> private constructor(
 private fun String.toThumbnailUrlFromId(serverUrl: String): String =
     "/media/square_thumbnails/$this".toAbsoluteRemoteUrl(serverUrl)
 
+private fun MediaIdModel.RemoteIdModel.originalKey(): String = when {
+    '-' in value -> mediaHash.hash
+    else -> value
+}
+
 private fun String.toFullSizeUrlFromId(isVideo: Boolean, serverUrl: String): String = when {
-    isVideo -> "/media/video/$this".toAbsoluteRemoteUrl(serverUrl)
+    isVideo -> "/media/photos/$this".toAbsoluteRemoteUrl(serverUrl) + ".mp4"
     else -> "/media/photos/$this".toAbsoluteRemoteUrl(serverUrl)
 }
 

@@ -23,6 +23,7 @@ class MediaItemHashModelTest {
 
     private val md5 = "9e107d9d372bb6826bd81d3542a419d6"
     private val uuid = "0b4a4e1c-8b1f-4e4e-9a59-2b7c4b8f1d3e"
+    private val server = "https://photos.example.com"
 
     @Test
     fun `splits an image hash into md5 and owner`() {
@@ -50,5 +51,34 @@ class MediaItemHashModelTest {
         val hash = "9e107d9d-72bb6826bd81d3542a419d6123"
 
         assertEquals(MediaItemHashModel(Md5Hash(hash), null), MediaItemHashModel.fromRemoteMediaHash(hash, null))
+    }
+
+    @Test
+    fun `originals of photos are requested by image hash`() {
+        val id = MediaIdModel.RemoteIdModel(uuid, false, MediaItemHashModel.fromRemoteMediaHash("${md5}1", 1))
+
+        assertEquals("$server/media/photos/${md5}1", id.fullResUri(server))
+    }
+
+    @Test
+    fun `originals of videos are requested by image hash as mp4`() {
+        val id = MediaIdModel.RemoteIdModel(uuid, true, MediaItemHashModel.fromRemoteMediaHash("${md5}1", 1))
+
+        assertEquals("$server/media/photos/${md5}1.mp4", id.fullResUri(server))
+    }
+
+    @Test
+    fun `remote ids that are already hashes are used as they are`() {
+        val id = MediaIdModel.RemoteIdModel("${md5}1", false, MediaItemHashModel.fromRemoteMediaHash("${md5}1", 0))
+
+        assertEquals("$server/media/photos/${md5}1", id.fullResUri(server))
+        assertEquals("", id.fullResUri(null))
+    }
+
+    @Test
+    fun `thumbnails keep using the photo id`() {
+        val id = MediaIdModel.RemoteIdModel(uuid, false, MediaItemHashModel.fromRemoteMediaHash("${md5}1", 1))
+
+        assertEquals("$server/media/square_thumbnails/$uuid", id.thumbnailUri(server))
     }
 }
