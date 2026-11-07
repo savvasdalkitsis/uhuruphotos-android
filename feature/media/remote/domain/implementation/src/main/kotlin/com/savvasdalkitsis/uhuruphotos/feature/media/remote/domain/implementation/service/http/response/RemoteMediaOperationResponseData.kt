@@ -15,12 +15,13 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.http.response
 
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.RemoteMediaItemResponseData
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class RemoteMediaOperationResponseData(
-    @field:Json(name = "status") val status: Boolean,
-    @field:Json(name = "results") val results: List<RemoteMediaItemResponseData>,
+    @field:Json(name = "status") val status: Boolean = false,
+    @field:Json(name = "count") val count: Int? = null,
+    @field:Json(name = "updated_hashes") val updatedHashes: List<String>? = null,
+    @field:Json(name = "not_updated_hashes") val notUpdatedHashes: List<String>? = null,
 )

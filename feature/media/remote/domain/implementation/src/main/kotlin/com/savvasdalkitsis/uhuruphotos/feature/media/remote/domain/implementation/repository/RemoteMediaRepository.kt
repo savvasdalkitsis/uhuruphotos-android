@@ -106,6 +106,16 @@ class RemoteMediaRepository @Inject constructor(
         }
     }
 
+    suspend fun contentHashOf(id: String): String =
+        localContentHashOf(id) ?: remoteMediaService.getMediaItem(id).imageHash
+
+    private suspend fun localContentHashOf(id: String): String? =
+        summaryContentHashOf(id) ?: getMediaItemDetails(id)?.imageHash
+
+    private suspend fun summaryContentHashOf(id: String): String? =
+        remoteMediaItemSummaryQueries.get(id).awaitSingleOrNull()?.url
+            ?: remoteMediaTrashQueries.get(id).awaitSingleOrNull()?.url
+
     suspend fun getFavouriteMedia(favouriteThreshold: Int): List<DbRemoteMediaItemSummary> =
         remoteMediaItemSummaryQueries.getFavourites(favouriteThreshold).awaitList()
 

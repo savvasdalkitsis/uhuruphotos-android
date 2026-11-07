@@ -19,7 +19,6 @@ import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.toDbModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.repository.RemoteMediaRepository
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.http.RemoteMediaService
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.http.request.RemoteMediaItemFavouriteRequestData
@@ -42,28 +41,32 @@ class RemoteMediaItemFavouriteWorker @AssistedInject constructor(
 
     override suspend fun doWork(): Result =
         try {
-            val response = remoteMediaService.setMediaItemFavourite(
-                RemoteMediaItemFavouriteRequestData(
-                    mediaHashes = listOf(params.inputData.getString(KEY_ID)!!),
-                    favourite = params.inputData.getBoolean(KEY_FAVOURITE, false)
-                )
-            )
-            if (response.status) {
-                response.results.forEach { mediaItem ->
-                    remoteMediaRepository.insertMediaItem(mediaItem.toDbModel())
-                }
-                Result.success()
-            } else {
-                Result.failure()
-            }
+            setFavourite(params.inputData.getString(KEY_ID)!!)
         } catch (e: Exception) {
             log(e)
-            if (params.runAttemptCount < 4) {
-                Result.retry()
-            } else {
-                Result.failure()
-            }
+            retryOrFail()
         }
+
+    private suspend fun setFavourite(id: String): Result {
+        val response = remoteMediaService.setMediaItemFavourite(
+            RemoteMediaItemFavouriteRequestData(
+                mediaHashes = listOf(remoteMediaRepository.contentHashOf(id)),
+                favourite = params.inputData.getBoolean(KEY_FAVOURITE, false)
+            )
+        )
+        return if (response.status) {
+            remoteMediaRepository.refreshDetailsNow(id)
+            Result.success()
+        } else {
+            Result.failure()
+        }
+    }
+
+    private fun retryOrFail() = if (params.runAttemptCount < 4) {
+        Result.retry()
+    } else {
+        Result.failure()
+    }
 
     override suspend fun getForegroundInfo() = foregroundInfoBuilder.build(
         applicationContext,

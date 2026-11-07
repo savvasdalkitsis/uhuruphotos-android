@@ -150,7 +150,7 @@ class RemoteMediaUseCase @Inject constructor(
     override suspend fun trashMediaItemNow(id: String): Boolean {
         val response = remoteMediaService.setMediaItemDeleted(
             RemoteMediaItemDeletedRequestData(
-                mediaHashes = listOf(id),
+                mediaHashes = listOf(remoteMediaRepository.contentHashOf(id)),
                 deleted = true,
             )
         )
@@ -180,7 +180,7 @@ class RemoteMediaUseCase @Inject constructor(
     override suspend fun deleteMediaItemNow(id: String): Boolean {
         val response = remoteMediaService.deleteMediaItemPermanently(
             RemoteMediaItemDeleteRequestData(
-                mediaHashes = listOf(id),
+                mediaHashes = listOf(remoteMediaRepository.contentHashOf(id)),
             )
         )
         if (shouldDeleteLocallyHashed(response)) {

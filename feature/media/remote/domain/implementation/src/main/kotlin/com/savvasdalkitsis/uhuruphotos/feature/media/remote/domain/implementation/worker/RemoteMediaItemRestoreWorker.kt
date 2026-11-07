@@ -46,7 +46,7 @@ class RemoteMediaItemRestoreWorker @AssistedInject constructor(
             val id = params.inputData.getString(KEY_ID)!!
             val response = remoteMediaService.setMediaItemDeleted(
                 RemoteMediaItemDeletedRequestData(
-                    mediaHashes = listOf(id),
+                    mediaHashes = listOf(remoteMediaRepository.contentHashOf(id)),
                     deleted = false,
                 )
             )

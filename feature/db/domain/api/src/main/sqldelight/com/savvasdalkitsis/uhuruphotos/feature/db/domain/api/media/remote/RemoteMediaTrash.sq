@@ -22,6 +22,9 @@ INSERT OR REPLACE INTO remoteMediaTrash VALUES ?;
 count:
 SELECT count(id) FROM remoteMediaTrash;
 
+get:
+SELECT * FROM remoteMediaTrash WHERE id = :id;
+
 clear:
 DELETE FROM remoteMediaTrash;
 
