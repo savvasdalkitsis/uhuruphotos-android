@@ -18,7 +18,6 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementati
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import app.cash.sqldelight.coroutines.mapToOneNotNull
-import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.map
@@ -38,11 +37,12 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummaryStatus
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummaryStatus.Found
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummaryStatus.Processing
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.RemoteMediaItemSummaryContainerResponseData
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.RemoteMediaItemSummaryResponse
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.containerId
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.contentHash
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.toDbModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.http.RemoteMediaService
-import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -84,27 +84,25 @@ class RemoteMediaRepository @Inject constructor(
     private suspend fun getMediaItemDetails(id: String): DbRemoteMediaItemDetails? =
         remoteMediaItemDetailsQueries.getMediaItem(id).awaitSingleOrNull()
 
-    suspend fun getOrRefreshRemoteMediaItemSummary(id: String): Result<RemoteMediaItemSummaryStatus, Throwable> {
-        val summary = remoteMediaItemSummaryQueries.get(id).awaitSingleOrNull()
-        return if (summary != null) {
-            Ok(Found(summary.containerId))
-        } else {
-            try {
-                val response = remoteMediaService.getMediaItemSummary(id)
-                val albumDateId = response.albumDateId
-                if (albumDateId == null || response.processing == true || response.remoteMediaItemSummary.aspectRatio == null) {
-                    Ok(Processing(response))
-                } else {
-                    val model = response.remoteMediaItemSummary
-                    saveRemoteMediaSummary(albumDateId, model)
-                    Ok(Found(albumDateId))
-                }
-            } catch (e: Exception) {
-                log(e)
-                Err(e)
+    suspend fun getOrRefreshRemoteMediaItemSummary(id: String): Result<RemoteMediaItemSummaryStatus, Throwable> =
+        when (val summary = remoteMediaItemSummaryQueries.get(id).awaitSingleOrNull()) {
+            null -> runCatchingWithLog { remoteMediaService.getMediaItemSummary(id).toStatus() }
+            else -> Ok(Found(summary.containerId))
+        }
+
+    private fun RemoteMediaItemSummaryContainerResponseData.toStatus(): RemoteMediaItemSummaryStatus {
+        val containerId = containerId
+        return when {
+            containerId == null || isProcessing -> Processing(this)
+            else -> {
+                saveRemoteMediaSummary(containerId, remoteMediaItemSummary)
+                Found(containerId)
             }
         }
     }
+
+    private val RemoteMediaItemSummaryContainerResponseData.isProcessing: Boolean
+        get() = processing == true || remoteMediaItemSummary.aspectRatio == null
 
     suspend fun contentHashOf(id: String): String =
         localContentHashOf(id) ?: remoteMediaService.getMediaItem(id).imageHash

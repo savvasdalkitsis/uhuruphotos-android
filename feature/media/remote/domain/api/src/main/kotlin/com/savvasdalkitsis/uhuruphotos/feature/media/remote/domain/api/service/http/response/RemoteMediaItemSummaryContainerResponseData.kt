@@ -20,7 +20,10 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class RemoteMediaItemSummaryContainerResponseData(
+    @Json(name = "day_id") val dayId: String? = null,
     @Json(name = "album_date_id") val albumDateId: String? = null,
     @Json(name = "photo_summary") val remoteMediaItemSummary: RemoteMediaItemSummaryResponse,
     @Json(name = "processing") val processing: Boolean? = null,
 )
+
+val RemoteMediaItemSummaryContainerResponseData.containerId: String? get() = dayId ?: albumDateId

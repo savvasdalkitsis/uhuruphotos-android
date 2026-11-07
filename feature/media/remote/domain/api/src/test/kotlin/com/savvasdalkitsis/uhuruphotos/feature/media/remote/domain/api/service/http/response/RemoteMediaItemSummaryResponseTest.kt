@@ -24,6 +24,7 @@ class RemoteMediaItemSummaryResponseTest {
 
     private val moshi = Moshi.Builder().build()
     private val summaryAdapter = moshi.adapter(RemoteMediaItemSummaryResponse::class.java)
+    private val containerAdapter = moshi.adapter(RemoteMediaItemSummaryContainerResponseData::class.java)
     private val detailsAdapter = moshi.adapter(RemoteMediaItemResponseData::class.java)
 
     private val uuid = "0b4a4e1c-8b1f-4e4e-9a59-2b7c4b8f1d3e"
@@ -67,6 +68,24 @@ class RemoteMediaItemSummaryResponseTest {
         assertNull(summary.location)
         assertEquals(0, summary.toDbModel("1").rating)
         assertEquals(0, summary.toTrash("1").rating)
+    }
+
+    @Test
+    fun `container reads day_id of current servers`() {
+        val container = containerAdapter.fromJson(
+            """{"photo_summary": $summaryJson, "day_id": 20240501, "processing": false}"""
+        )!!
+
+        assertEquals("20240501", container.containerId)
+    }
+
+    @Test
+    fun `container reads album_date_id of 1_5 servers`() {
+        val container = containerAdapter.fromJson(
+            """{"photo_summary": $summaryJson, "album_date_id": 42, "processing": false}"""
+        )!!
+
+        assertEquals("42", container.containerId)
     }
 
     @Test
