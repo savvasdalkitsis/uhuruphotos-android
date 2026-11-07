@@ -39,8 +39,8 @@ fun mediaGroup(remote: MediaItemInstanceModel, vararg locals: MediaItemInstanceM
 fun mediaItem(id: MediaIdModel<*>, date: String = "") =
     MediaItemInstanceModel(id, MediaItemHashModel.fromRemoteMediaHash(id.value.toString(), 0), displayDayDate = date)
 fun localMediaItem(id: Long, displayDate: String) = mediaItem(local(id), displayDate)
-fun remote(id: String) = MediaIdModel.RemoteIdModel(id, false, MediaItemHashModel.fromRemoteMediaHash(id, 0))
-fun downloading(id: String) = MediaIdModel.DownloadingIdModel(id, false, MediaItemHashModel(Md5Hash(""), 0))
+fun remote(id: String, hash: String = id) = MediaIdModel.RemoteIdModel(id, false, MediaItemHashModel.fromRemoteMediaHash(hash, 0))
+fun downloading(id: String) = MediaIdModel.DownloadingIdModel(id, false, MediaItemHashModel.fromRemoteMediaHash(id, 0))
 fun local(id: Long) = MediaIdModel.LocalIdModel(id, 0, false, "", "", MediaItemHashModel(Md5Hash(""), 0))
 fun processing(id: Long) = MediaIdModel.ProcessingIdModel(id, 0, false, "", "", MediaItemHashModel(Md5Hash(""), 0))
 fun uploading(id: Long) = MediaIdModel.UploadingIdModel(id, 0, false, "", "", MediaItemHashModel(Md5Hash(""), 0))
