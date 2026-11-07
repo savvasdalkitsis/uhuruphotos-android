@@ -25,5 +25,5 @@ interface UploadWorkScheduler {
         requiresCharging: Boolean,
     )
 
-    fun schedulePostUploadProcessing(hash: MediaItemHashModel, itemId: Long)
+    fun schedulePostUploadProcessing(hash: MediaItemHashModel, itemId: Long, photoId: String? = null)
 }

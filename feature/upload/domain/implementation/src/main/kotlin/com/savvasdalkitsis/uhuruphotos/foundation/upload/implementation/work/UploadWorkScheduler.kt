@@ -47,6 +47,7 @@ class UploadWorkScheduler @Inject constructor(
     override fun schedulePostUploadProcessing(
         hash: MediaItemHashModel,
         itemId: Long,
+        photoId: String?,
     ) = with(UploadPostCompletionWorker) {
         log { "Will schedule post completion of $hash" }
         workScheduleUseCase.scheduleNow(
@@ -57,6 +58,7 @@ class UploadWorkScheduler @Inject constructor(
             backoffTimeUnit = SCHEDULE_UNIT,
         ) {
             putString(KEY_HASH, hash.hash)
+            putString(KEY_PHOTO_ID, photoId)
             putLong(KEY_ITEM_ID, itemId)
         }
     }

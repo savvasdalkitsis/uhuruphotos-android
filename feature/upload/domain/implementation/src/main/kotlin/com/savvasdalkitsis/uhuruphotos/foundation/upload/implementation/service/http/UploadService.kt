@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.service.http
 
 import com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.service.http.response.UploadChunkResponseData
+import com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.service.http.response.UploadCompleteResponseData
 import okhttp3.MultipartBody
 import retrofit2.http.Header
 import retrofit2.http.Multipart
@@ -46,5 +47,5 @@ interface UploadService {
         @Part user: MultipartBody.Part,
         @Part filename: MultipartBody.Part,
         @Part md5: MultipartBody.Part,
-    )
+    ): UploadCompleteResponseData
 }

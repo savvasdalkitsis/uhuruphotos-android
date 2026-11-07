@@ -15,13 +15,17 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.usecase
 
+import com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.service.http.response.UploadCompleteResponseData
+import com.squareup.moshi.Moshi
 import io.mockk.mockk
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
 import org.junit.Test
 
 class ChunkedUploaderTest {
 
     private val underTest = ChunkedUploader(mockk(), mockk(), mockk())
+    private val completeAdapter = Moshi.Builder().build().adapter(UploadCompleteResponseData::class.java)
 
     @Test
     fun `content range total is the file size`() {
@@ -32,5 +36,19 @@ class ChunkedUploaderTest {
     @Test
     fun `content range total never ends before the chunk`() {
         assertEquals("bytes 1000-1999/2000", underTest.contentRange(1_000, 1_000, 0))
+    }
+
+    @Test
+    fun `reads the photo id of a completed upload`() {
+        val response = completeAdapter.fromJson("""{"job_id": "j1", "photo_id": "0b4a4e1c-8b1f-4e4e-9a59-2b7c4b8f1d3e"}""")!!
+
+        assertEquals("0b4a4e1c-8b1f-4e4e-9a59-2b7c4b8f1d3e", response.photoId)
+    }
+
+    @Test
+    fun `reads a duplicate upload without photo id`() {
+        val response = completeAdapter.fromJson("""{"detail": "Photo duplicated. No new import performed.", "photo_id": null}""")!!
+
+        assertNull(response.photoId)
     }
 }
