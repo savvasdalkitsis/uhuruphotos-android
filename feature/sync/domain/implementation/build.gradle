@@ -14,5 +14,8 @@ dependencies {
             project(":foundation:initializer:api"),
             project(":foundation:preferences:api"),
     )
+    testImplementation(
+            libs.bundles.test,
+    )
     ksp libs.autodagger.ksp
 }
