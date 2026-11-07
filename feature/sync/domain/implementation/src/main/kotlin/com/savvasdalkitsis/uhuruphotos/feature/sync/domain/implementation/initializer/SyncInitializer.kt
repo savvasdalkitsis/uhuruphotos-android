@@ -27,8 +27,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.mapNotNull
+import kotlinx.coroutines.flow.runningFold
 import kotlinx.coroutines.launch
 import se.ansman.dagger.auto.AutoBindIntoSet
 import javax.inject.Inject
@@ -41,24 +42,55 @@ class SyncInitializer @Inject constructor(
 ) : ApplicationCreated {
     override fun onAppCreated(app: Application) {
         MainScope().launch(Dispatchers.IO) {
-            uploadRequirementsWhilePending().collectLatest(::scheduleUploads)
+            uploadSchedules().collectLatest(::scheduleUploads)
         }
     }
 
-    private suspend fun scheduleUploads(requirements: Pair<NetworkType, Boolean>) {
+    private suspend fun scheduleUploads(schedule: UploadSchedule) {
         uploadUseCase.scheduleUploads(
-            networkType = requirements.first,
-            requiresCharging = requirements.second,
+            networkType = schedule.networkType,
+            requiresCharging = schedule.requiresCharging,
+            keepExisting = schedule.keepExisting,
         )
     }
 
-    internal fun uploadRequirementsWhilePending(): Flow<Pair<NetworkType, Boolean>> = combine(
+    internal fun uploadSchedules(): Flow<UploadSchedule> = combine(
         syncUseCase.observePendingItems(),
         settingsUseCase.observeCloudSyncNetworkRequirements(),
         settingsUseCase.observeCloudSyncRequiresCharging(),
     ) { pendingItems, networkRequirement, requiresCharging ->
-        Triple(pendingItems.isNotEmpty(), networkRequirement, requiresCharging)
+        PendingUploads(pendingItems.map { it.id }.toSet(), networkRequirement, requiresCharging)
     }.distinctUntilChanged()
-        .filter { it.first }
-        .map { it.second to it.third }
+        .runningFold(null as Pair<PendingUploads?, PendingUploads>?) { previous, current ->
+            previous?.second to current
+        }
+        .filterNotNull()
+        .mapNotNull { (previous, current) -> current.scheduleAfter(previous) }
+
+    internal data class UploadSchedule(
+        val networkType: NetworkType,
+        val requiresCharging: Boolean,
+        val keepExisting: Boolean,
+    )
+
+    private data class PendingUploads(
+        val ids: Set<Long>,
+        val networkType: NetworkType,
+        val requiresCharging: Boolean,
+    ) {
+        fun scheduleAfter(previous: PendingUploads?): UploadSchedule? {
+            if (ids.isEmpty()) {
+                return null
+            }
+            if (previous == null || previous.ids.isEmpty() || !sameRequirementsAs(previous)) {
+                return schedule(keepExisting = false)
+            }
+            return schedule(keepExisting = true).takeUnless { previous.ids.containsAll(ids) }
+        }
+
+        private fun sameRequirementsAs(other: PendingUploads) =
+            networkType == other.networkType && requiresCharging == other.requiresCharging
+
+        private fun schedule(keepExisting: Boolean) = UploadSchedule(networkType, requiresCharging, keepExisting)
+    }
 }

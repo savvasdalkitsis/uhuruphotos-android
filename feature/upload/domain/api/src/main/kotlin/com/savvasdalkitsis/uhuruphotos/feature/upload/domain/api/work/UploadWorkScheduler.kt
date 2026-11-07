@@ -23,6 +23,7 @@ interface UploadWorkScheduler {
     fun scheduleUploads(
         networkType: NetworkType,
         requiresCharging: Boolean,
+        keepExisting: Boolean = false,
     )
 
     fun schedulePostUploadProcessing(hash: MediaItemHashModel, itemId: Long, photoId: String? = null)

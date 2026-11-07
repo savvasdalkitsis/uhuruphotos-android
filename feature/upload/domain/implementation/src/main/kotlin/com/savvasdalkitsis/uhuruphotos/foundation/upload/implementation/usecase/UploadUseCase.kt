@@ -90,8 +90,9 @@ class UploadUseCase @Inject constructor(
     override suspend fun scheduleUploads(
         networkType: NetworkType,
         requiresCharging: Boolean,
+        keepExisting: Boolean,
     ) {
-        uploadWorkScheduler.scheduleUploads(networkType, requiresCharging)
+        uploadWorkScheduler.scheduleUploads(networkType, requiresCharging, keepExisting)
     }
 
     override suspend fun markAsUploading(

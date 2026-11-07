@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.work
 
 import androidx.work.BackoffPolicy
+import androidx.work.ExistingWorkPolicy.KEEP
 import androidx.work.ExistingWorkPolicy.REPLACE
 import androidx.work.NetworkType
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHashModel
@@ -33,12 +34,13 @@ class UploadWorkScheduler @Inject constructor(
     override fun scheduleUploads(
         networkType: NetworkType,
         requiresCharging: Boolean,
+        keepExisting: Boolean,
     ) = with(UploadsWorker) {
         log { "Will schedule upload of local items" }
         workScheduleUseCase.scheduleNow(
             workName = WORK_NAME,
             klass = UploadsWorker::class,
-            existingWorkPolicy = REPLACE,
+            existingWorkPolicy = if (keepExisting) KEEP else REPLACE,
             networkRequirement = networkType,
             requiresCharging = requiresCharging,
         )
