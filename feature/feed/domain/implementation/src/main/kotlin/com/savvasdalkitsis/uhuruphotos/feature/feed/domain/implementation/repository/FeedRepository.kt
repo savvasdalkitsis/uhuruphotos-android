@@ -126,20 +126,19 @@ class FeedRepository @Inject constructor(
         }
     }
 
-    suspend fun refreshRemoteMediaCollection(collectionId: String) =
-        remoteMediaUseCase.processRemoteMediaCollections(
-            remoteMediaDaySummaryResponseAlbumsFetcher = {
-                listOf(localCollectionSummary(collectionId))
-            },
-            remoteMediaDayCompleteResponseAlbumsFetcher = { id ->
-                remoteMediaUseCase.getRemoteMediaCollection(id, RemoteMediaCollectionsFilterModel.Timeline)
-            },
-            clearSummariesBeforeInserting = true,
-        )
-
-    private suspend fun localCollectionSummary(collectionId: String): RemoteMediaDaySummaryResponse =
-        remoteMediaCollectionsQueries.get(collectionId).awaitSingleOrNull()?.toDaySummary()
-            ?: RemoteMediaDaySummaryResponse(id = collectionId, date = null, numberOfItems = 0)
+    suspend fun refreshRemoteMediaCollection(collectionId: String): SimpleResult =
+        when (val collection = remoteMediaCollectionsQueries.get(collectionId).awaitSingleOrNull()) {
+            null -> refreshRemoteFeed()
+            else -> remoteMediaUseCase.processRemoteMediaCollections(
+                remoteMediaDaySummaryResponseAlbumsFetcher = {
+                    listOf(collection.toDaySummary())
+                },
+                remoteMediaDayCompleteResponseAlbumsFetcher = { id ->
+                    remoteMediaUseCase.getRemoteMediaCollection(id, RemoteMediaCollectionsFilterModel.Timeline)
+                },
+                clearSummariesBeforeInserting = true,
+            )
+        }
 
     private fun DbRemoteMediaCollections.toDaySummary() = RemoteMediaDaySummaryResponse(
         id = id,
