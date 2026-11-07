@@ -19,8 +19,12 @@ import android.content.ContentResolver
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory.decodeStream
+import android.graphics.Matrix
 import android.media.MediaMetadataRetriever
 import android.media.MediaMetadataRetriever.OPTION_CLOSEST_SYNC
+import androidx.exifinterface.media.ExifInterface
+import androidx.exifinterface.media.ExifInterface.ORIENTATION_NORMAL
+import androidx.exifinterface.media.ExifInterface.TAG_ORIENTATION
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.model.LocalMediaStoreServiceItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.model.LocalMediaStoreServiceItem.Photo
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.model.LocalMediaStoreServiceItem.Video
@@ -49,6 +53,10 @@ class LocalMediaThumbnails @Inject constructor(
         with(bitmapUseCase) {
             file.writeBytes(bitmap.toJpeg().copyExifFrom(item.contentUri))
         }
+        ExifInterface(file).apply {
+            setAttribute(TAG_ORIENTATION, ORIENTATION_NORMAL.toString())
+            saveAttributes()
+        }
         return file.absolutePath
     }
 
@@ -74,11 +82,19 @@ class LocalMediaThumbnails @Inject constructor(
     private val Photo.bitmap get() = try {
         contentResolver.openInputStream(contentUri)!!.use { stream ->
             decodeStream(stream)
-        }.scale()
+        }.scale()?.rotatedBy(orientation)
     } catch (e: Exception) {
         log(e)
         null
     }
+
+    private fun Bitmap.rotatedBy(orientation: String?): Bitmap = when (val degrees = orientation.degrees) {
+        0f -> this
+        else -> Bitmap.createBitmap(this, 0, 0, width, height, Matrix().apply { postRotate(degrees) }, true)
+            .also { recycle() }
+    }
+
+    private val String?.degrees get() = this?.toFloatOrNull() ?: 0f
 
     private fun Bitmap?.scale() = try {
         this?.let { frame ->
