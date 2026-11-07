@@ -28,8 +28,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNot
 import com.savvasdalkitsis.uhuruphotos.math.toProgressPercent
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.first
 import org.jetbrains.compose.resources.getString
 import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
 import uhuruphotos_android.foundation.strings.api.generated.resources.media_sync_status_uploading
@@ -52,31 +51,33 @@ class UploadsWorker @AssistedInject constructor(
 ) {
 
     override suspend fun work(): Result {
-        val itemsFailed = mutableSetOf<UploadItem>()
-        syncUseCase.observePendingItems().distinctUntilChanged().collectLatest { items ->
-            uploadUseCase.markAsUploading(items = items.toTypedArray())
-            for ((index, item) in items.withIndex()) {
-                val xOfX = getString(string.x_of_x, index + 1, items.size)
-                log { "Uploading item $item ($xOfX)" }
-                updateProgress(0, xOfX)
-                item.updateCurrentUpload(0f)
-
-                val result = uploadUseCase.upload(item) { current, total ->
-                    updateProgress(current, total, " ($xOfX)")
-                    item.updateCurrentUpload(current.toProgressPercent(total))
-                }
-                log { "Result of uploading item $item was $result" }
-                uploadUseCase.setCurrentUpload(null)
-                if (result.isErr) {
-                    log(result.error) { "Failed to upload item $item" }
-                    itemsFailed += item
-                }
-            }
-        }
+        val itemsFailed = drainPendingUploads(
+            pendingItems = { syncUseCase.observePendingItems().first() },
+            markAsUploading = { uploadUseCase.markAsUploading(items = it.toTypedArray()) },
+            upload = ::upload,
+        )
         return when {
             itemsFailed.isEmpty() -> Result.success()
             else -> itemsFailed.failOrRetry()
         }
+    }
+
+    private suspend fun upload(item: UploadItem, position: Int, total: Int): Boolean {
+        val xOfX = getString(string.x_of_x, position, total)
+        log { "Uploading item $item ($xOfX)" }
+        updateProgress(0, xOfX)
+        item.updateCurrentUpload(0f)
+
+        val result = uploadUseCase.upload(item) { current, size ->
+            updateProgress(current, size, " ($xOfX)")
+            item.updateCurrentUpload(current.toProgressPercent(size))
+        }
+        log { "Result of uploading item $item was $result" }
+        uploadUseCase.setCurrentUpload(null)
+        if (result.isErr) {
+            log(result.error) { "Failed to upload item $item" }
+        }
+        return result.isOk
     }
 
     private fun UploadItem.updateCurrentUpload(percent: Float) {
