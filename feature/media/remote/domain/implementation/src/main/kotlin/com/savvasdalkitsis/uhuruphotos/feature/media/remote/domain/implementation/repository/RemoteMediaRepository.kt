@@ -148,7 +148,7 @@ class RemoteMediaRepository @Inject constructor(
         remoteMediaItemDetailsQueries.insert(mediaItemDetails)
         remoteMediaItemSummaryQueries.setRating(
             mediaItemDetails.rating,
-            mediaItemDetails.imageHash
+            mediaItemDetails.remoteId ?: mediaItemDetails.imageHash
         )
     }
 
