@@ -199,7 +199,7 @@ data class LoadMediaItem(
         showFavouriteIcon = preferRemote is MediaIdModel.RemoteIdModel,
         showDeleteButton = sequenceDataSource.shouldShowDeleteButton,
         showEditIcon = shouldShowEditButton,
-        showShareIcon = !isVideo,
+        showShareIcon = shouldShowShareButton,
         showUseAsIcon = !isVideo,
         showAddToPortfolioIcon = showAddToPortfolioIcon,
         addToPortfolioIconEnabled = addToPortfolioEnabled,
@@ -210,4 +210,6 @@ data class LoadMediaItem(
     )
 
     private val MediaIdModel<*>.shouldShowEditButton get() = !isVideo && findLocals.isNotEmpty()
+
+    private val MediaIdModel<*>.shouldShowShareButton get() = !isVideo || findLocals.isNotEmpty()
 }

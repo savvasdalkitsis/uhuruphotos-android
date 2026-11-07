@@ -54,7 +54,7 @@ internal class ShareUseCase @Inject constructor(
         withContext(Dispatchers.IO) {
             url.actualize()?.let { uri ->
                 launch("Share Photo", Intent(Intent.ACTION_SEND).apply {
-                    setDataAndType(uri, imageMimeType)
+                    setDataAndType(uri, uri.mimeType)
                     putExtra(Intent.EXTRA_STREAM, uri)
                 })
             }
@@ -89,6 +89,8 @@ internal class ShareUseCase @Inject constructor(
         isContentUri -> toUri
         else -> download(this).firstOrNull()
     }
+
+    private val Uri.mimeType get() = context.contentResolver.getType(this) ?: imageMimeType
 
     private val String.toUri get() = Uri.parse(this)
     private val String.isContentUri get() = startsWith("content://")
