@@ -22,6 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.domain.implementat
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbums
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbumsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitList
+import com.savvasdalkitsis.uhuruphotos.foundation.http.api.allPages
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simple
@@ -43,10 +44,10 @@ class UserAlbumsRepository @Inject constructor(
         userAlbumsQueries.getUserAlbums().awaitList()
 
     suspend fun refreshUserAlbums(): SimpleResult = runCatchingWithLog {
-        val albums = userAlbumsService.getUserAlbums()
+        val albums = allPages { page -> userAlbumsService.getUserAlbums(page).let { it.results to it.next } }
         userAlbumsQueries.transaction {
             userAlbumsQueries.clearAll()
-            for (album in albums.results) {
+            for (album in albums) {
                 userAlbumsQueries.insert(album.toUserAlbums())
             }
         }

@@ -24,6 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.people.PeopleQuerie
 import com.savvasdalkitsis.uhuruphotos.feature.people.domain.api.service.http.response.toDbModel
 import com.savvasdalkitsis.uhuruphotos.feature.people.domain.implementation.service.http.PeopleService
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.async
+import com.savvasdalkitsis.uhuruphotos.foundation.http.api.allPages
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simple
 import kotlinx.coroutines.Dispatchers
@@ -55,7 +56,7 @@ class PeopleRepository @Inject constructor(
     }.simple()
 
     suspend fun refreshPeople() = runCatchingWithLog {
-        val people = peopleService.getPeople().results
+        val people = allPages { page -> peopleService.getPeople(page).let { it.results to it.next } }
         async {
             peopleQueries.transaction {
                 peopleQueries.clearAll()

@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.domain.implementa
 
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.domain.implementation.service.http.response.AutoAlbumsResponseData
 import retrofit2.http.GET
+import retrofit2.http.Query
 import se.ansman.dagger.auto.retrofit.AutoProvideService
 import javax.inject.Singleton
 
@@ -25,5 +26,5 @@ import javax.inject.Singleton
 interface AutoAlbumsService {
 
     @GET("api/albums/auto/list/")
-    suspend fun getAutoAlbums(): AutoAlbumsResponseData
+    suspend fun getAutoAlbums(@Query("page") page: Int): AutoAlbumsResponseData
 }
