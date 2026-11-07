@@ -23,4 +23,8 @@ dependencies {
             project(":foundation:coroutines:api"),
             project(":foundation:lang:api"),
     )
+    testImplementation(
+            libs.junit,
+            libs.sqldelight.sqlite,
+    )
 }
