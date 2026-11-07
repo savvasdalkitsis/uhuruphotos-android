@@ -22,4 +22,6 @@ import com.squareup.moshi.JsonClass
 data class RemoteMediaExistsResponseData(
     @field:Json(name = "exists")
     val exists: Boolean,
+    @field:Json(name = "photo_id")
+    val photoId: String? = null,
 )

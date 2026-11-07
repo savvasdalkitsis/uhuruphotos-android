@@ -16,12 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.repository
 
 import android.content.ContentResolver
-import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory.decodeStream
 import android.graphics.Color
-import android.media.MediaMetadataRetriever
-import android.media.MediaMetadataRetriever.OPTION_CLOSEST_SYNC
 import android.net.Uri
 import androidx.palette.graphics.Palette
 import app.cash.sqldelight.coroutines.asFlow
@@ -39,7 +35,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.model.LocalMediaStoreServiceItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.model.LocalMediaStoreServiceItem.Photo
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.model.LocalMediaStoreServiceItem.Video
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.usecase.BitmapUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.async
 import com.savvasdalkitsis.uhuruphotos.foundation.exif.api.usecase.ExifUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
@@ -49,12 +44,10 @@ import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.get
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simple
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import org.joda.time.format.DateTimeFormatter
-import java.io.File
 import java.math.BigInteger
 import java.security.MessageDigest
 import javax.inject.Inject
@@ -66,11 +59,10 @@ class LocalMediaRepository @Inject constructor(
     private val localMediaService: LocalMediaService,
     private val localMediaFolderRepository: LocalMediaFolderRepository,
     private val contentResolver: ContentResolver,
-    @ApplicationContext private val context: Context,
     private val exifUseCase: ExifUseCase,
     @LocalMediaModule.LocalMediaDateTimeFormat
     private val dateTimeFormat: DateTimeFormatter,
-    private val bitmapUseCase: BitmapUseCase,
+    private val localMediaThumbnails: LocalMediaThumbnails,
     @PlainTextPreferences
     private val preferences: Preferences,
 ) {
@@ -150,6 +142,9 @@ class LocalMediaRepository @Inject constructor(
             async {
                 for (id in existingIds - currentIds) {
                     removeItemsFromDb(id)
+                }
+                if (bucketId == null) {
+                    localMediaThumbnails.deleteAllExcept(currentIds)
                 }
             }
         }
@@ -252,8 +247,10 @@ class LocalMediaRepository @Inject constructor(
         }
      }.simple()
 
-    fun removeItemsFromDb(vararg ids: Long) =
+    fun removeItemsFromDb(vararg ids: Long) {
         localMediaItemDetailsQueries.delete(ids.toList())
+        localMediaThumbnails.delete(*ids)
+    }
 
 
     fun markLocalMediaSyncedBefore(synced: Boolean) = preferences.set(keyLocalSyncedBefore, synced)
@@ -263,38 +260,9 @@ class LocalMediaRepository @Inject constructor(
         // will be set to false during Welcome
         preferences.get(keyLocalSyncedBefore, true)
 
-    private val thumbWidth = 400
+    private val Photo.bitmap get() = localMediaThumbnails.bitmap(this)
 
-    private val Video.bitmap get() = try {
-        MediaMetadataRetriever().apply {
-            setDataSource(context, contentUri)
-        }.getFrameAtTime(0, OPTION_CLOSEST_SYNC).scale()
-    } catch (e: Exception) {
-        log(e)
-        null
-    }
-
-    private val Photo.bitmap get() = try {
-        contentResolver.openInputStream(contentUri)!!.use { stream ->
-            decodeStream(stream)
-        }.scale()
-    } catch (e: Exception) {
-        log(e)
-        null
-    }
-
-    private fun Bitmap?.scale() = try {
-        this?.let { frame ->
-            val ratio = frame.height / frame.width.toFloat()
-            Bitmap.createScaledBitmap(frame, thumbWidth, (thumbWidth * ratio).toInt(), true).also {
-                frame.recycle()
-            }
-        }
-    }
-    catch (e: Exception) {
-        log(e)
-        null
-    }
+    private val Video.bitmap get() = localMediaThumbnails.bitmap(this)
 
     private val Bitmap.palette get() = try {
         Palette.from(this).generate().lightMutedSwatch?.rgb
@@ -306,24 +274,11 @@ class LocalMediaRepository @Inject constructor(
     private fun Bitmap?.palette(item: LocalMediaStoreServiceItem) = item.tryPalette { this }
 
     private fun Bitmap?.save(item: LocalMediaStoreServiceItem): String? = try {
-        this?.let { bitmap ->
-            val file = context.filesDir.subFolder("localThumbnails").subFile("${item.id}.jpg")
-            with(bitmapUseCase) {
-                file.writeBytes(
-                    bitmap.toJpeg().copyExifFrom(item.contentUri)
-                )
-            }
-            return file.absolutePath
-        }
+        this?.let { localMediaThumbnails.save(it, item) }
     } catch (e: Exception) {
         log(e)
         null
     }
-
-    private fun File.subFolder(name: String) = subFile(name).apply {
-        mkdirs()
-    }
-    private fun File.subFile(name: String) = File(this, name)
 
     private fun LocalMediaStoreServiceItem.tryPalette(bitmap: (Uri) -> Bitmap?): Int = try {
         bitmap(contentUri)

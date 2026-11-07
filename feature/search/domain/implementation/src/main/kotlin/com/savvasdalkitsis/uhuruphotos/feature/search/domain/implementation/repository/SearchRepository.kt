@@ -21,6 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitLis
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.search.GetSearchResults
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.search.SearchQueries
 import com.savvasdalkitsis.uhuruphotos.feature.search.domain.implementation.service.http.SearchService
+import com.savvasdalkitsis.uhuruphotos.feature.search.domain.implementation.service.http.response.toSearchHits
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.groupBy
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
@@ -54,16 +55,14 @@ class SearchRepository @Inject constructor(
 
     suspend fun refreshSearch(query: String) = runCatchingWithLog {
         val results = searchService.search(query)
-        for (searchResult in results.results) {
-            for (mediaItemSummary in searchResult.items) {
-                searchQueries.addSearchResult(
-                    id = null,
-                    query = query,
-                    date = searchResult.date,
-                    location = searchResult.location,
-                    photoId = mediaItemSummary.id
-                )
-            }
+        for (hit in results.results.flatMap { it.toSearchHits() }) {
+            searchQueries.addSearchResult(
+                id = null,
+                query = query,
+                date = hit.date,
+                location = hit.location,
+                photoId = hit.photoId,
+            )
         }
     }.simple()
 

@@ -58,7 +58,7 @@ class ChunkedUploader @Inject constructor(
                 }
                 if (chunkSize > 0) {
                     val result = uploadService.uploadChunk(
-                        range = "bytes $currentOffset-${currentOffset + chunkSize - 1}/$chunkSize",
+                        range = contentRange(currentOffset, chunkSize, total),
                         uploadId = MultipartBody.Part.createFormData("upload_id", uploadId),
                         user = MultipartBody.Part.createFormData("user", user.id.toString()),
                         offset = MultipartBody.Part.createFormData(
@@ -84,4 +84,7 @@ class ChunkedUploader @Inject constructor(
             } while (chunkSize > 0)
         }
     }
+
+    internal fun contentRange(offset: Long, chunkSize: Int, total: Long): String =
+        "bytes $offset-${offset + chunkSize - 1}/${maxOf(total, offset + chunkSize)}"
 }

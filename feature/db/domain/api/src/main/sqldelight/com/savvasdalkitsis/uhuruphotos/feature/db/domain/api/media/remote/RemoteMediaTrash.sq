@@ -22,6 +22,9 @@ INSERT OR REPLACE INTO remoteMediaTrash VALUES ?;
 count:
 SELECT count(id) FROM remoteMediaTrash;
 
+get:
+SELECT * FROM remoteMediaTrash WHERE id = :id;
+
 clear:
 DELETE FROM remoteMediaTrash;
 
@@ -41,6 +44,7 @@ SELECT
  remoteMediaCollections.date AS albumDate,
  remoteMediaCollections.location AS albumLocation,
  remoteMediaTrash.id AS photoId,
+ remoteMediaTrash.url AS photoHash,
  remoteMediaTrash.dominantColor,
  remoteMediaTrash.rating,
  remoteMediaTrash.aspectRatio,

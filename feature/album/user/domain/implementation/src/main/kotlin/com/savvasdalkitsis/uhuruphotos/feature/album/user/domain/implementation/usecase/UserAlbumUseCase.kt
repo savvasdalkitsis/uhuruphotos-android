@@ -84,6 +84,7 @@ class UserAlbumUseCase @Inject constructor(
         date = photoDate,
         location = location,
         mediaItemId = photoId,
+        mediaItemHash = photoHash,
         dominantColor = dominantColor,
         rating = rating,
         aspectRatio = aspectRatio,

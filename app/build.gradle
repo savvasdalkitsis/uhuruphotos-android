@@ -18,7 +18,7 @@ android {
     defaultConfig {
         applicationId "com.savvasdalkitsis.uhuruphotos"
         minSdk 24
-        targetSdk 35
+        targetSdk 36
         versionCode 265
         versionName "0.0.265"
 

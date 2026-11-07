@@ -25,6 +25,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.get
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
@@ -49,7 +50,7 @@ class WelcomeUseCase @Inject constructor(
         authenticationUseCase.observeRefreshToken(),
     ) { permissions, refreshToken ->
         WelcomeStatus(permissions, refreshToken)
-    }
+    }.distinctUntilChanged()
 
     override fun markWelcomeScreenSeen() {
         preferences.set(keySeenScreen, true)

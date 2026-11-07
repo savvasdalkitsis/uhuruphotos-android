@@ -20,6 +20,8 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class RemoteMediaHashOperationResponseData(
-    @field:Json(name = "status") val status: Boolean,
-    @field:Json(name = "results") val results: List<String>,
+    @field:Json(name = "status") val status: Boolean = false,
+    @field:Json(name = "results") val results: List<String>? = null,
+    @field:Json(name = "deleted") val deleted: List<String>? = null,
+    @field:Json(name = "not_deleted") val notDeleted: List<String>? = null,
 )

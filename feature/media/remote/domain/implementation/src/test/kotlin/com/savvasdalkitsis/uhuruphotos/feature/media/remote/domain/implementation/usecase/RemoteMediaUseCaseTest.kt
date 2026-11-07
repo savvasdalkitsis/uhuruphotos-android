@@ -1,0 +1,104 @@
+/*
+Copyright 2024 Savvas Dalkitsis
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+ */
+package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.usecase
+
+import app.cash.sqldelight.Query
+import app.cash.sqldelight.Transacter
+import app.cash.sqldelight.TransactionWithoutReturn
+import app.cash.sqldelight.db.QueryResult
+import app.cash.sqldelight.db.SqlCursor
+import app.cash.sqldelight.db.SqlDriver
+import app.cash.sqldelight.db.SqlPreparedStatement
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.Database
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemSummaryQueries
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.RemoteMediaDayCompleteResponse
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.RemoteMediaDaySummaryResponse
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.RemoteMediaItemSummaryResponse
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.repository.RemoteMediaRepository
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
+import kotlinx.coroutines.test.runTest
+import org.junit.Assert.assertEquals
+import org.junit.Test
+
+class RemoteMediaUseCaseTest {
+
+    private val remoteMediaRepository: RemoteMediaRepository = mockk(relaxed = true)
+    private val statements = mutableListOf<String>()
+    private val summaryQueries = RemoteMediaItemSummaryQueries(RecordingDriver(statements), mockk())
+    private val db: Database = mockk {
+        every { transaction(any(), any()) } answers {
+            secondArg<TransactionWithoutReturn.() -> Unit>().invoke(mockk(relaxed = true))
+        }
+    }
+    private val underTest = RemoteMediaUseCase(
+        remoteMediaRepository, mockk(), mockk(), mockk(), mockk(), summaryQueries, db,
+    )
+    private val summary = RemoteMediaItemSummaryResponse(id = "a", date = null)
+
+    private suspend fun refresh(day: RemoteMediaDayCompleteResponse) = underTest.processRemoteMediaCollections(
+        remoteMediaDaySummaryResponseAlbumsFetcher = {
+            listOf(RemoteMediaDaySummaryResponse(id = day.id, date = null, numberOfItems = 1))
+        },
+        remoteMediaDayCompleteResponseAlbumsFetcher = { day },
+        onProgressChange = { _, _ -> },
+        clearSummariesBeforeInserting = true,
+    )
+
+    @Test
+    fun `a complete day replaces the summaries of the day`() = runTest {
+        refresh(RemoteMediaDayCompleteResponse("1", null, numberOfItems = 1, items = listOf(summary)))
+
+        assertEquals(listOf("DELETE FROM remoteMediaItemSummary WHERE containerId=?"), statements)
+        verify { remoteMediaRepository.saveRemoteMediaSummary("1", summary) }
+    }
+
+    @Test
+    fun `an incomplete day keeps the summaries it does not list`() = runTest {
+        refresh(RemoteMediaDayCompleteResponse("1", null, incomplete = true, numberOfItems = 1, items = listOf(summary)))
+
+        assertEquals(emptyList<String>(), statements)
+        verify { remoteMediaRepository.saveRemoteMediaSummary("1", summary) }
+    }
+
+    private class RecordingDriver(private val statements: MutableList<String>) : SqlDriver {
+        override fun execute(
+            identifier: Int?,
+            sql: String,
+            parameters: Int,
+            binders: (SqlPreparedStatement.() -> Unit)?,
+        ): QueryResult<Long> {
+            statements += sql
+            return QueryResult.Value(1L)
+        }
+
+        override fun <R> executeQuery(
+            identifier: Int?,
+            sql: String,
+            mapper: (SqlCursor) -> QueryResult<R>,
+            parameters: Int,
+            binders: (SqlPreparedStatement.() -> Unit)?,
+        ): QueryResult<R> = throw UnsupportedOperationException(sql)
+
+        override fun newTransaction(): QueryResult<Transacter.Transaction> = throw UnsupportedOperationException()
+        override fun currentTransaction(): Transacter.Transaction? = null
+        override fun addListener(vararg queryKeys: String, listener: Query.Listener) = Unit
+        override fun removeListener(vararg queryKeys: String, listener: Query.Listener) = Unit
+        override fun notifyListeners(vararg queryKeys: String) = Unit
+        override fun close() = Unit
+    }
+}

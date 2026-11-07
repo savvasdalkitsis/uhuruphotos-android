@@ -17,6 +17,9 @@ dependencies {
             project(":foundation:log:api"),
             project(":foundation:preferences:api"),
     )
+    testImplementation(
+            libs.bundles.test,
+    )
     ksp libs.autodagger.ksp
     ksp libs.moshi.ksp
 }

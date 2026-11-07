@@ -90,8 +90,9 @@ class UploadUseCase @Inject constructor(
     override suspend fun scheduleUploads(
         networkType: NetworkType,
         requiresCharging: Boolean,
+        keepExisting: Boolean,
     ) {
-        uploadWorkScheduler.scheduleUploads(networkType, requiresCharging)
+        uploadWorkScheduler.scheduleUploads(networkType, requiresCharging, keepExisting)
     }
 
     override suspend fun markAsUploading(
@@ -128,21 +129,32 @@ class UploadUseCase @Inject constructor(
     ): SimpleResult = coroutineBinding {
         val mediaItem = localMediaItem(item).bind()
         val user = userUseCase.getRemoteUserOrRefresh().bind()
-
-        if (!exists(mediaItem.md5, user).bind()) {
-            if (!uploadRepository.isCompleted(item.id)) {
-                chunkedUploader.uploadInChunks(item, mediaItem.size, user, progress).bind()
-            }
-
-            completeUpload(item, mediaItem, user).bind()
-        }
+        val photoId = uploadIfMissing(item, mediaItem, user, progress).bind()
 
         uploadRepository.setNotUploading(item.id)
         uploadRepository.setProcessing(item.id)
         uploadWorkScheduler.schedulePostUploadProcessing(
             MediaItemHashModel(mediaItem.md5, user.id),
-            item.id
+            item.id,
+            photoId,
         )
+    }
+
+    private suspend fun uploadIfMissing(
+        item: UploadItem,
+        mediaItem: LocalMediaItem,
+        user: User,
+        progress: suspend (current: Long, total: Long) -> Unit,
+    ): Result<String?, Throwable> = coroutineBinding {
+        when {
+            exists(mediaItem.md5, user).bind() -> null
+            else -> {
+                if (!uploadRepository.isCompleted(item.id)) {
+                    chunkedUploader.uploadInChunks(item, mediaItem.size, user, progress).bind()
+                }
+                completeUpload(item, mediaItem, user).bind()
+            }
+        }
     }
 
     override fun setCurrentUpload(currentUpload: CurrentUpload?) {
@@ -159,7 +171,7 @@ class UploadUseCase @Inject constructor(
         item: UploadItem,
         mediaItem: LocalMediaItem,
         user: User
-    ): SimpleResult = runCatchingWithLog {
+    ): Result<String?, Throwable> = runCatchingWithLog {
         uploadRepository.setCompleted(item.id)
         val filename = mediaItem.displayName
             ?: throw IllegalArgumentException("No name associated with file ${item.id}")
@@ -173,7 +185,7 @@ class UploadUseCase @Inject constructor(
             user = createFormData("user", user.id.toString()),
             md5 = createFormData("md5", mediaItem.md5.value),
             filename = createFormData("filename", filename),
-        )
+        ).photoId
     }
 
     private suspend fun localMediaItem(item: UploadItem): Result<LocalMediaItem, Throwable> =

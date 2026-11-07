@@ -32,6 +32,7 @@ SELECT
     autoAlbum.gpsLat,
     autoAlbum.gpsLon,
     remoteMediaItemDetails.imageHash AS photoId,
+    remoteMediaItemDetails.remoteId AS photoRemoteId,
     remoteMediaItemDetails.rating,
     remoteMediaItemDetails.video,
     remoteMediaItemDetails.timestamp

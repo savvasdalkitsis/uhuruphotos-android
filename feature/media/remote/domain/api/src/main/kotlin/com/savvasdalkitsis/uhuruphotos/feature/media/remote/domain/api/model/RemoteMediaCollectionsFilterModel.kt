@@ -1,0 +1,46 @@
+/*
+Copyright 2024 Savvas Dalkitsis
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+ */
+package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model
+
+data class RemoteMediaCollectionsFilterModel(
+    val timeline: Boolean = false,
+    val favourite: Boolean = false,
+    val hidden: Boolean = false,
+    val inTrash: Boolean = false,
+    val person: Int? = null,
+    val modifiedSince: String? = null,
+) {
+    fun toQuery(): Map<String, String> = buildMap {
+        if (timeline) put("archived", "false")
+        if (favourite) put("favorite", "true")
+        if (hidden) put("hidden", "true")
+        if (inTrash) put("in_trashcan", "true")
+        person?.let { put("person", it.toString()) }
+    }
+
+    fun toLegacyQuery(): Map<String, String> = when (modifiedSince) {
+        null -> toQuery()
+        else -> toQuery() + ("last_modified" to modifiedSince)
+    }
+
+    companion object {
+        val Timeline = RemoteMediaCollectionsFilterModel(timeline = true)
+        val Favourites = RemoteMediaCollectionsFilterModel(favourite = true)
+        val Hidden = RemoteMediaCollectionsFilterModel(hidden = true)
+        val Trash = RemoteMediaCollectionsFilterModel(inTrash = true)
+        fun person(id: Int) = RemoteMediaCollectionsFilterModel(person = id)
+    }
+}

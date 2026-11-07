@@ -22,8 +22,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSin
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.GetTrash
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaTrashQueries
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.toTrash
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaCollectionsFilterModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.trash.domain.implementation.service.http.TrashService
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.groupBy
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
@@ -35,7 +35,6 @@ import javax.inject.Inject
 class TrashRepository @Inject constructor(
     private val remoteMediaTrashQueries: RemoteMediaTrashQueries,
     private val remoteMediaUseCase: RemoteMediaUseCase,
-    private val trashService: TrashService,
 ) {
 
     fun observeTrash(): Flow<Group<String, GetTrash>> =
@@ -50,9 +49,8 @@ class TrashRepository @Inject constructor(
         remoteMediaTrashQueries.getTrash().awaitList().groupBy(GetTrash::id).let(::Group)
 
     suspend fun refreshTrash(): SimpleResult = remoteMediaUseCase.refreshMediaCollections(
-        incompleteMediaCollections = { trashService.getTrash() },
+        filter = RemoteMediaCollectionsFilterModel.Trash,
         clearCollectionsBeforeRefreshing = { remoteMediaTrashQueries.clear() },
-        completeMediaCollection = { trashService.getTrashMediaCollection(it) },
         processSummary = { albumId, summary -> remoteMediaTrashQueries.insert(
             summary.toTrash(albumId)
         )}

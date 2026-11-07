@@ -54,8 +54,11 @@ class UploadPostCompletionWorker @AssistedInject constructor(
 
     private val itemId get() = params.inputData.getLong(KEY_ITEM_ID, -1)
 
+    private val mediaKey: String
+        get() = params.inputData.getString(KEY_PHOTO_ID) ?: params.inputData.getString(KEY_HASH)!!
+
     override suspend fun work(): Result = coroutineBinding {
-        val hash = params.inputData.getString(KEY_HASH)!!
+        val hash = mediaKey
         log { "Post completion of item $hash" }
         when (val status = mediaUseCase.getRemoteMediaItemSummary(hash).bind()) {
             is Found -> {
@@ -84,6 +87,7 @@ class UploadPostCompletionWorker @AssistedInject constructor(
     companion object {
         const val KEY_ITEM_ID = "itemId"
         const val KEY_HASH = "hash"
+        const val KEY_PHOTO_ID = "photoId"
         const val SCHEDULE_DELAY = 10L
         val SCHEDULE_UNIT = TimeUnit.SECONDS
         private const val SCHEDULE_MAX_ATTEMPTS = 60480 // amount of 10 second intervals in a week

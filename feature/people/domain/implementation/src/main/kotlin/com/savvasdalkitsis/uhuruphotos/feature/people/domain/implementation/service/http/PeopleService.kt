@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.people.domain.implementation.ser
 import com.savvasdalkitsis.uhuruphotos.feature.people.domain.api.service.http.response.PersonResponseData
 import com.savvasdalkitsis.uhuruphotos.feature.people.domain.implementation.service.http.response.PeopleResponseData
 import retrofit2.http.GET
+import retrofit2.http.Query
 import retrofit2.http.Path
 import se.ansman.dagger.auto.retrofit.AutoProvideService
 import javax.inject.Singleton
@@ -27,7 +28,7 @@ import javax.inject.Singleton
 interface PeopleService {
 
     @GET("/api/persons/")
-    suspend fun getPeople(): PeopleResponseData
+    suspend fun getPeople(@Query("page") page: Int): PeopleResponseData
 
     @GET("/api/persons/{id}/")
     suspend fun getPerson(@Path("id") id: Int): PersonResponseData

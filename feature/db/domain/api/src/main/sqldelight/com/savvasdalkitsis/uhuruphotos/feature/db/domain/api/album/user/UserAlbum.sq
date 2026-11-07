@@ -20,6 +20,7 @@ SELECT
     userAlbum.date,
     userAlbum.title,
     remoteMediaItemSummary.id AS photoId,
+    remoteMediaItemSummary.url AS photoHash,
     remoteMediaItemSummary.rating,
     remoteMediaItemSummary.location,
     remoteMediaItemSummary.type,

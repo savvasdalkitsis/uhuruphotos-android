@@ -187,7 +187,7 @@ class FeedUseCaseTest {
 
         observeFeed().assert(
             MediaCollectionModel("day1", listOf(
-                mediaGroup(mediaItem(remote("1"), "day1").withHash("hash"), local2, local3)
+                mediaGroup(mediaItem(remote("1", hash = "hash"), "day1").withHash("hash"), local2, local3)
             ), "day1"),
         )
     }

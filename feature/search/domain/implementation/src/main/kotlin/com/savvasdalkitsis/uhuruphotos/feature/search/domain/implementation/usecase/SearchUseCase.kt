@@ -69,6 +69,7 @@ class SearchUseCase @Inject constructor(
         location = location,
         date = date,
         mediaItemId = summaryId,
+        mediaItemHash = photoHash,
         dominantColor = dominantColor,
         aspectRatio = aspectRatio,
         isVideo = isVideo,

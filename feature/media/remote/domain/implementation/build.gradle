@@ -51,6 +51,9 @@ dependencies {
             project(":foundation:video:api"),
             project(":foundation:worker:api"),
     )
+    testImplementation(
+            libs.bundles.test,
+    )
     ksp libs.autodagger.ksp
     ksp libs.moshi.ksp
 }

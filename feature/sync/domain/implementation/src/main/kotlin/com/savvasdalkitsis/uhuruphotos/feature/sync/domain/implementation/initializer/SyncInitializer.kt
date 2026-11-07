@@ -16,15 +16,20 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.sync.domain.implementation.initializer
 
 import android.app.Application
+import androidx.work.NetworkType
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.sync.domain.api.usecase.SyncUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.mapNotNull
+import kotlinx.coroutines.flow.runningFold
 import kotlinx.coroutines.launch
 import se.ansman.dagger.auto.AutoBindIntoSet
 import javax.inject.Inject
@@ -37,18 +42,55 @@ class SyncInitializer @Inject constructor(
 ) : ApplicationCreated {
     override fun onAppCreated(app: Application) {
         MainScope().launch(Dispatchers.IO) {
-            combine(
-                syncUseCase.observePendingItems(),
-                settingsUseCase.observeCloudSyncNetworkRequirements(),
-                settingsUseCase.observeCloudSyncRequiresCharging(),
-            ) { _, networkRequirement, requiresCharging ->
-                networkRequirement to requiresCharging
-            }.distinctUntilChanged().collectLatest { (networkRequirement, requiresCharging) ->
-                uploadUseCase.scheduleUploads(
-                    networkType = networkRequirement,
-                    requiresCharging = requiresCharging,
-                )
-            }
+            uploadSchedules().collectLatest(::scheduleUploads)
         }
+    }
+
+    private suspend fun scheduleUploads(schedule: UploadSchedule) {
+        uploadUseCase.scheduleUploads(
+            networkType = schedule.networkType,
+            requiresCharging = schedule.requiresCharging,
+            keepExisting = schedule.keepExisting,
+        )
+    }
+
+    internal fun uploadSchedules(): Flow<UploadSchedule> = combine(
+        syncUseCase.observePendingItems(),
+        settingsUseCase.observeCloudSyncNetworkRequirements(),
+        settingsUseCase.observeCloudSyncRequiresCharging(),
+    ) { pendingItems, networkRequirement, requiresCharging ->
+        PendingUploads(pendingItems.map { it.id }.toSet(), networkRequirement, requiresCharging)
+    }.distinctUntilChanged()
+        .runningFold(null as Pair<PendingUploads?, PendingUploads>?) { previous, current ->
+            previous?.second to current
+        }
+        .filterNotNull()
+        .mapNotNull { (previous, current) -> current.scheduleAfter(previous) }
+
+    internal data class UploadSchedule(
+        val networkType: NetworkType,
+        val requiresCharging: Boolean,
+        val keepExisting: Boolean,
+    )
+
+    private data class PendingUploads(
+        val ids: Set<Long>,
+        val networkType: NetworkType,
+        val requiresCharging: Boolean,
+    ) {
+        fun scheduleAfter(previous: PendingUploads?): UploadSchedule? {
+            if (ids.isEmpty()) {
+                return null
+            }
+            if (previous == null || previous.ids.isEmpty() || !sameRequirementsAs(previous)) {
+                return schedule(keepExisting = false)
+            }
+            return schedule(keepExisting = true).takeUnless { previous.ids.containsAll(ids) }
+        }
+
+        private fun sameRequirementsAs(other: PendingUploads) =
+            networkType == other.networkType && requiresCharging == other.requiresCharging
+
+        private fun schedule(keepExisting: Boolean) = UploadSchedule(networkType, requiresCharging, keepExisting)
     }
 }

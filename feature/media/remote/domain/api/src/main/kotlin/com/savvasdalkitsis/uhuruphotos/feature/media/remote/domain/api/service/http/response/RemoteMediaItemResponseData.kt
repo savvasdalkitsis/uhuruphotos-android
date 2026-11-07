@@ -21,6 +21,7 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class RemoteMediaItemResponseData(
+    @field:Json(name = "id") val id: String? = null,
     @field:Json(name = "exif_timestamp") val timestamp: String?,
     @field:Json(name = "search_captions") val captions: String?,
     @field:Json(name = "search_location") val location: String?,
@@ -88,4 +89,5 @@ fun RemoteMediaItemResponseData.toDbModel() = DbRemoteMediaItemDetails(
     rating = rating,
     peopleNames = serializePeople,
     imagePath = serializePaths,
+    remoteId = id,
 )

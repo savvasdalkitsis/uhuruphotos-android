@@ -20,9 +20,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRe
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHashModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResultModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaCollectionsFilterModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummaryStatus
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.RemoteFeedDayResponseData
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.RemoteFeedResponseData
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.RemoteMediaDayCompleteResponse
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.RemoteMediaDaySummaryResponse
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.RemoteMediaItemSummaryResponse
@@ -76,10 +75,18 @@ interface RemoteMediaUseCase {
 
     suspend fun exists(hash: MediaItemHashModel): Result<Boolean, Throwable>
 
+    suspend fun getRemoteMediaCollections(
+        filter: RemoteMediaCollectionsFilterModel,
+    ): List<RemoteMediaDaySummaryResponse>
+
+    suspend fun getRemoteMediaCollection(
+        id: String,
+        filter: RemoteMediaCollectionsFilterModel,
+    ): RemoteMediaDayCompleteResponse
+
     suspend fun refreshMediaCollections(
-        incompleteMediaCollections: suspend () -> RemoteFeedResponseData,
+        filter: RemoteMediaCollectionsFilterModel,
         clearCollectionsBeforeRefreshing: () -> Unit,
-        completeMediaCollection: suspend (String) -> RemoteFeedDayResponseData,
         processSummary: (albumId: String, summary: RemoteMediaItemSummaryResponse) -> Unit,
     ): SimpleResult
 

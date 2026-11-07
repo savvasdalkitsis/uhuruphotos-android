@@ -79,6 +79,7 @@ internal class TrashUseCase @Inject constructor(
         date = albumDate,
         location = albumLocation,
         mediaItemId = photoId,
+        mediaItemHash = photoHash,
         dominantColor = dominantColor,
         rating = rating,
         aspectRatio = aspectRatio,

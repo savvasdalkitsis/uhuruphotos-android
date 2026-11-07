@@ -22,7 +22,7 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class UserAlbumPhotoGroupResponse(
     @field:Json(name = "date")
-    val date: String,
+    val date: String? = null,
     @field:Json(name = "items")
     val items: List<RemoteMediaItemSummaryResponse>
 )

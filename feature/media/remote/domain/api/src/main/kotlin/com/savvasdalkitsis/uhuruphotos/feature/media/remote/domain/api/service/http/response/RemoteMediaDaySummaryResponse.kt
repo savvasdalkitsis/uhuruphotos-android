@@ -27,9 +27,9 @@ data class RemoteMediaDaySummaryResponse(
     @field:Json(name = "date")
     val date: String?,
     @field:Json(name = "location")
-    val location: String,
+    val location: String? = null,
     @field:Json(name = "incomplete")
-    val incomplete: Boolean,
+    val incomplete: Boolean = true,
     @field:Json(name = "numberOfItems")
     val numberOfItems: Int,
 )

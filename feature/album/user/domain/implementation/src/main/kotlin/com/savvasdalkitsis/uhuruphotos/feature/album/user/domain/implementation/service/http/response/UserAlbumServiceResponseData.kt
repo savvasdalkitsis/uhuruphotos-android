@@ -25,9 +25,9 @@ data class UserAlbumServiceResponseData(
     @field:Json(name = "title")
     val title: String,
     @field:Json(name = "date")
-    val date: String,
+    val date: String? = null,
     @field:Json(name = "location")
-    val location: String,
+    val location: String? = null,
     @field:Json(name = "grouped_photos")
     val groups: List<UserAlbumPhotoGroupResponse>,
 )

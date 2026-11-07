@@ -22,10 +22,8 @@ import com.github.michaelbull.result.getOrThrow
 import com.github.michaelbull.result.map
 import com.github.michaelbull.result.mapOr
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.isVideo
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSourceModel
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaDayModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaFolderOnDeviceModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel.DownloadingIdModel
@@ -44,11 +42,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.M
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalFolderModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItems
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.MediaOrientation.ORIENTATION_0
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.MediaOrientation.ORIENTATION_180
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.MediaOrientation.ORIENTATION_270
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.MediaOrientation.ORIENTATION_90
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.MediaOrientation.ORIENTATION_UNKNOWN
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.model.RemoteUserModel
@@ -65,22 +58,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
-import org.jetbrains.compose.resources.getString
-import org.joda.time.DateTime
 import se.ansman.dagger.auto.AutoBind
-import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
-import uhuruphotos_android.foundation.strings.api.generated.resources.month_april_short
-import uhuruphotos_android.foundation.strings.api.generated.resources.month_august_short
-import uhuruphotos_android.foundation.strings.api.generated.resources.month_december_short
-import uhuruphotos_android.foundation.strings.api.generated.resources.month_february_short
-import uhuruphotos_android.foundation.strings.api.generated.resources.month_january_short
-import uhuruphotos_android.foundation.strings.api.generated.resources.month_july_short
-import uhuruphotos_android.foundation.strings.api.generated.resources.month_june_short
-import uhuruphotos_android.foundation.strings.api.generated.resources.month_march_short
-import uhuruphotos_android.foundation.strings.api.generated.resources.month_may_short
-import uhuruphotos_android.foundation.strings.api.generated.resources.month_november_short
-import uhuruphotos_android.foundation.strings.api.generated.resources.month_october_short
-import uhuruphotos_android.foundation.strings.api.generated.resources.month_september_short
 import javax.inject.Inject
 
 @AutoBind
@@ -114,7 +92,6 @@ class MediaUseCase @Inject constructor(
                 }
             )
         }
-
         is LocalMediaItems.RequiresPermissions -> MediaItemsOnDeviceModel.RequiresPermissionsModel(
             localMediaItems.deniedPermissions
         )
@@ -160,18 +137,11 @@ class MediaUseCase @Inject constructor(
     override suspend fun List<DbRemoteMediaItemSummary>.mapToMediaItems(): Result<List<MediaItemModel>, Throwable> =
         withUser { user ->
             map { dbRecord ->
-                val favouriteThreshold = user.favoriteMinRating
-                val date = dateDisplayer.dateString(dbRecord.date)
-                val day = dateParser.parseDateOrTimeString(dbRecord.date)
-                MediaItemInstanceModel(
-                    id = RemoteIdModel(dbRecord.id, dbRecord.isVideo, MediaItemHashModel.fromRemoteMediaHash(dbRecord.id, user.id)),
-                    mediaHash = MediaItemHashModel.fromRemoteMediaHash(dbRecord.id, user.id),
-                    fallbackColor = dbRecord.dominantColor,
-                    displayDayDate = date,
-                    sortableDate = dbRecord.date,
-                    isFavourite = favouriteThreshold != null && (dbRecord.rating ?: 0) >= favouriteThreshold,
-                    ratio = dbRecord.aspectRatio ?: 1f,
-                    mediaDay = day?.toMediaDay(),
+                dbRecord.toRemoteMediaItem(
+                    userId = user.id,
+                    favouriteThreshold = user.favoriteMinRating,
+                    displayDate = dateDisplayer.dateString(dbRecord.date),
+                    mediaDay = dateParser.parseDateOrTimeString(dbRecord.date)?.toMediaDay(),
                 )
             }
         }
@@ -194,16 +164,6 @@ class MediaUseCase @Inject constructor(
         ratio = ratio,
         latLng = latLon,
     )
-
-    private val LocalMediaItem.ratio: Float get() {
-        val (w, h) = when (orientation) {
-            ORIENTATION_UNKNOWN, ORIENTATION_0, ORIENTATION_180 ->
-                width to height
-            ORIENTATION_90, ORIENTATION_270 ->
-                height to width
-        }
-        return (w / h.toFloat()).takeIf { it > 0 } ?: 1f
-    }
 
     override suspend fun getFavouriteMediaCount(): Result<Long, Throwable> =
         remoteMediaUseCase.getFavouriteMediaSummariesCount()
@@ -304,85 +264,33 @@ class MediaUseCase @Inject constructor(
         id: String,
         source: List<MediaCollectionSourceModel>,
     ): MediaCollectionModel? = userUseCase.getRemoteUserOrRefresh().mapOr(null) { user ->
-        val favouriteThreshold = user.favoriteMinRating
         val albumDate = source.firstOrNull()?.date
-        val albumLocation = source.firstOrNull()?.location
-
         val date = dateDisplayer.dateString(albumDate)
-        val day = dateParser.parseDateOrTimeString(albumDate)
+        val day = dateParser.parseDateOrTimeString(albumDate)?.toMediaDay()
         MediaCollectionModel(
             id = id,
             displayTitle = date,
             unformattedDate = albumDate,
-            location = albumLocation ?: "",
+            location = source.firstOrNull()?.location ?: "",
             mediaItems = source.mapNotNull { item ->
-                val photoId = item.mediaItemId
-                when {
-                    photoId.isNullOrBlank() -> null
-                    else -> {
-                        MediaItemInstanceModel(
-                            id = RemoteIdModel(photoId, item.isVideo, MediaItemHashModel.fromRemoteMediaHash(photoId, user.id)),
-                            mediaHash = MediaItemHashModel.fromRemoteMediaHash(photoId, user.id),
-                            fallbackColor = item.dominantColor,
-                            displayDayDate = date,
-                            sortableDate = item.date,
-                            isFavourite = favouriteThreshold != null && (item.rating ?: 0) >= favouriteThreshold,
-                            ratio = item.aspectRatio ?: 1.0f,
-                            latLng = (item.lat?.toDoubleOrNull() to item.lon?.toDoubleOrNull()).notNull(),
-                            mediaDay = day?.toMediaDay(),
-                        )
-                    }
-                }
+                item.toRemoteMediaItem(user.id, user.favoriteMinRating, date, day)
             }
         )
-    }
-
-    private fun <T> Pair<T?, T?>.notNull(): Pair<T, T>? {
-        val (k, v) = this
-        return when {
-            k != null && v != null -> k to v
-            else -> null
-        }
     }
 
     override suspend fun refreshHiddenMedia() =
         remoteMediaUseCase.refreshHiddenMedia()
 
     override fun trashMediaItem(id: MediaIdModel<*>) {
-        if (id is RemoteIdModel) {
-            remoteMediaUseCase.trashMediaItem(id.value)
-        }
+        id.findRemote?.let { remoteMediaUseCase.trashMediaItem(it.value) }
     }
 
     override fun restoreMediaItem(id: MediaIdModel<*>) {
-        if (id is RemoteIdModel) {
-            remoteMediaUseCase.restoreMediaItem(id.value)
-        }
+        id.findRemote?.let { remoteMediaUseCase.restoreMediaItem(it.value) }
     }
 
     private suspend fun <T> withUser(action: suspend (RemoteUserModel) -> T): Result<T, Throwable> =
         userUseCase.getRemoteUserOrRefresh().andThenTry {
             action(it)
         }
-
-    private suspend fun DateTime.toMediaDay(): MediaDayModel = MediaDayModel(
-        day = dayOfMonth,
-        dayOfWeek = dayOfWeek,
-        month = monthOfYear,
-        year = year,
-        monthText = getString(when (monthOfYear) {
-            1 -> string.month_january_short
-            2 -> string.month_february_short
-            3 -> string.month_march_short
-            4 -> string.month_april_short
-            5 -> string.month_may_short
-            6 -> string.month_june_short
-            7 -> string.month_july_short
-            8 -> string.month_august_short
-            9 -> string.month_september_short
-            10 -> string.month_october_short
-            11 -> string.month_november_short
-            else -> string.month_december_short
-        })
-    )
 }

@@ -8,6 +8,7 @@ dependencies {
             libs.androidx.work.hilt,
             libs.bundles.autodagger,
             libs.bundles.permissions,
+            libs.exif,
             libs.hilt,
             libs.palette,
             libs.sqldelight.coroutines,
@@ -24,6 +25,9 @@ dependencies {
             project(":foundation:preferences:api"),
             project(":foundation:strings:api"),
             project(":foundation:worker:api"),
+    )
+    testImplementation(
+            libs.bundles.test,
     )
     ksp libs.autodagger.ksp
 }

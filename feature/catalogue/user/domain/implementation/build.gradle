@@ -10,6 +10,7 @@ dependencies {
             libs.retrofit.core,
             libs.sqldelight.coroutines,
             project(":feature:catalogue:user:domain:api"),
+            project(":foundation:http:api"),
             project(":foundation:log:api"),
             project(":foundation:preferences:api"),
     )

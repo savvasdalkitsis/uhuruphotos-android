@@ -29,7 +29,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbu
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbumQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbumsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitList
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingleOrNull
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simple
@@ -87,11 +86,10 @@ class UserAlbumRepository @Inject constructor(
     }
 
     suspend fun addMediaToUserAlbum(albumId: Int, ids: List<String>): SimpleResult = runCatchingWithLog {
-        val album = userAlbumQueries.getUserAlbum(albumId.toString()).awaitSingleOrNull()
-            ?: throw IllegalArgumentException("Album $albumId not found")
-        val title = album.title ?: throw IllegalStateException("Album $albumId has no title")
-        val newAlbum =
-            userAlbumService.addMediaToUserAlbum(albumId.toString(), UserAlbumEditModelRequestData(title, ids))
+        val newAlbum = userAlbumService.addMediaToUserAlbum(
+            albumId.toString(),
+            UserAlbumEditModelRequestData(ids = ids),
+        )
         db.transaction {
             userAlbumPhotosQueries.removePhotosForAlbum(albumId.toString())
             for (id in newAlbum.ids) {

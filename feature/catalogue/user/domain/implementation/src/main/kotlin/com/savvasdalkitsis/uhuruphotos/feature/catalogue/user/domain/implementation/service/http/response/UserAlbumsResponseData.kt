@@ -21,7 +21,9 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class UserAlbumsResponseData(
     @field:Json(name = "count")
-    val count: Int,
+    val count: Int? = null,
     @field:Json(name = "results")
     val results: List<UserAlbumSummaryResponse>,
+    @field:Json(name = "next")
+    val next: String? = null,
 )

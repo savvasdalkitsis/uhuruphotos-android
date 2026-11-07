@@ -23,4 +23,6 @@ import com.squareup.moshi.JsonClass
 data class PeopleResponseData(
     @field:Json(name = "results")
     val results: List<PersonResponseData>,
+    @field:Json(name = "next")
+    val next: String? = null,
 )

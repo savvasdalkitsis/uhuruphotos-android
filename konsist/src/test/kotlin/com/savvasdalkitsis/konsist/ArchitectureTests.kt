@@ -206,13 +206,13 @@ class ArchitectureTests {
 
     @Test
     fun `retrofit services only have raw or RequestData types as parameters`() {
-        val rawTypes = setOf("Int", "String", "Boolean", "Float", "Double", "Long", "MultipartBody.Part")
+        val rawTypes = setOf("Int", "String", "Boolean", "Float", "Double", "Long", "MultipartBody.Part", "Map<String, String>")
         Konsist.scopeFromProject()
             .retrofitServices()
             .assertTrue {
                 it.hasAllFunctions { function ->
                     function.hasAllParameters { param ->
-                        param.type.name in rawTypes || param.type.name.endsWith("RequestData")
+                        param.type.name.removeSuffix("?") in rawTypes || param.type.name.endsWith("RequestData")
                     }
                 }
             }

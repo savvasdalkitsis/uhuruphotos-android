@@ -15,7 +15,8 @@ CREATE TABLE remoteMediaItemDetails (
   video INTEGER AS kotlin.Boolean,
   rating INTEGER AS kotlin.Int,
   peopleNames TEXT,
-  imagePath TEXT
+  imagePath TEXT,
+  remoteId TEXT
 );
 
 getAll:
@@ -23,16 +24,16 @@ SELECT * FROM remoteMediaItemDetails
 LIMIT :limit;
 
 getMediaItem:
-SELECT * FROM remoteMediaItemDetails WHERE imageHash = :id LIMIT 1;
+SELECT * FROM remoteMediaItemDetails WHERE remoteId = :id OR imageHash = :id LIMIT 1;
 
 insert:
 INSERT OR REPLACE INTO remoteMediaItemDetails VALUES ?;
 
 setRating:
-UPDATE remoteMediaItemDetails SET rating = :rating WHERE imageHash = :id;
+UPDATE remoteMediaItemDetails SET rating = :rating WHERE remoteId = :id OR imageHash = :id;
 
 delete:
-DELETE FROM remoteMediaItemDetails WHERE imageHash = :id;
+DELETE FROM remoteMediaItemDetails WHERE remoteId = :id OR imageHash = :id;
 
 clearAll:
 DELETE FROM remoteMediaItemDetails;
