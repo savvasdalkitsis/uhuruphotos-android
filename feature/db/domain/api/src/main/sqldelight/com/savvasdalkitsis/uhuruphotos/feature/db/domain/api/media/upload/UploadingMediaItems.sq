@@ -9,7 +9,7 @@ CREATE TABLE uploadingMediaItems (
 );
 
 insert:
-INSERT OR REPLACE INTO uploadingMediaItems VALUES ?;
+INSERT OR IGNORE INTO uploadingMediaItems VALUES ?;
 
 delete:
 DELETE FROM uploadingMediaItems WHERE id = :id;
