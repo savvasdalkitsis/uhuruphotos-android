@@ -16,15 +16,19 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.sync.domain.implementation.initializer
 
 import android.app.Application
+import androidx.work.NetworkType
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.sync.domain.api.usecase.SyncUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import se.ansman.dagger.auto.AutoBindIntoSet
 import javax.inject.Inject
@@ -37,18 +41,24 @@ class SyncInitializer @Inject constructor(
 ) : ApplicationCreated {
     override fun onAppCreated(app: Application) {
         MainScope().launch(Dispatchers.IO) {
-            combine(
-                syncUseCase.observePendingItems(),
-                settingsUseCase.observeCloudSyncNetworkRequirements(),
-                settingsUseCase.observeCloudSyncRequiresCharging(),
-            ) { _, networkRequirement, requiresCharging ->
-                networkRequirement to requiresCharging
-            }.distinctUntilChanged().collectLatest { (networkRequirement, requiresCharging) ->
-                uploadUseCase.scheduleUploads(
-                    networkType = networkRequirement,
-                    requiresCharging = requiresCharging,
-                )
-            }
+            uploadRequirementsWhilePending().collectLatest(::scheduleUploads)
         }
     }
+
+    private suspend fun scheduleUploads(requirements: Pair<NetworkType, Boolean>) {
+        uploadUseCase.scheduleUploads(
+            networkType = requirements.first,
+            requiresCharging = requirements.second,
+        )
+    }
+
+    internal fun uploadRequirementsWhilePending(): Flow<Pair<NetworkType, Boolean>> = combine(
+        syncUseCase.observePendingItems(),
+        settingsUseCase.observeCloudSyncNetworkRequirements(),
+        settingsUseCase.observeCloudSyncRequiresCharging(),
+    ) { pendingItems, networkRequirement, requiresCharging ->
+        Triple(pendingItems.isNotEmpty(), networkRequirement, requiresCharging)
+    }.distinctUntilChanged()
+        .filter { it.first }
+        .map { it.second to it.third }
 }
