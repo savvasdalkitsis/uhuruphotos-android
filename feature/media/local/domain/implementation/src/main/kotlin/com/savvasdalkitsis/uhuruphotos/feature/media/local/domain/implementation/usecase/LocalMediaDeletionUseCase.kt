@@ -42,6 +42,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.Lo
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.repository.LocalMediaRepository
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.LocalMediaService
 import com.savvasdalkitsis.uhuruphotos.foundation.activity.api.request.ActivityRequestLauncher
+import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
+import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simpleOk
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import se.ansman.dagger.auto.AutoBind
@@ -152,12 +154,20 @@ class LocalMediaDeletionUseCase @Inject constructor(
         vararg request: LocalMediaDeletionRequestModel,
     ): InternalLocalMediaItemDeletionModel {
         val (videos, photos) = request.partition { it.isVideo }
-        val photosResult = localMediaRepository.deletePhotos(*(photos.map { it.id }.toLongArray()))
-        val videosResult = localMediaRepository.deleteVideos(*(videos.map { it.id }.toLongArray()))
+        val photosResult = deleteIfAny(photos, localMediaRepository::deletePhotos)
+        val videosResult = deleteIfAny(videos, localMediaRepository::deleteVideos)
         val result = combine(photosResult, videosResult)
         return when {
             result.isOk -> SuccessModel
             else -> ErrorModel(result.error)
         }
+    }
+
+    private fun deleteIfAny(
+        items: List<LocalMediaDeletionRequestModel>,
+        delete: (LongArray) -> SimpleResult,
+    ): SimpleResult = when {
+        items.isEmpty() -> simpleOk
+        else -> delete(items.map { it.id }.toLongArray())
     }
 }
