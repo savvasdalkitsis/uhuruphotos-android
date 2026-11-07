@@ -132,12 +132,12 @@ class LocalMediaService @Inject constructor(
             else -> LocalMediaPhotoColumns.collection
         }, id)
 
-    private val videoRowHandler: Cursor.() -> LocalMediaStoreServiceItem.Video = {
+    internal val videoRowHandler: Cursor.() -> LocalMediaStoreServiceItem.Video = {
         val id = long(Video.Media._ID)
         LocalMediaStoreServiceItem.Video(
             id = id,
             displayName = string(Video.Media.DISPLAY_NAME),
-            dateTaken = long(Video.Media.DATE_TAKEN).orFrom { long(Video.Media.DATE_ADDED) },
+            dateTaken = long(Video.Media.DATE_TAKEN).orFrom { long(Video.Media.DATE_ADDED) * 1000 },
             bucketId = int(Video.Media.BUCKET_ID),
             bucketName = nullableString(Video.Media.BUCKET_DISPLAY_NAME) ?: "-",
             width = int(Video.Media.WIDTH),
