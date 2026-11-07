@@ -99,7 +99,8 @@ class NavigatorTest {
     }
 
     private fun TestScope.givenRoutes(vararg routes: NavigationRoute) {
-        routes.forEach {
+        underTest.newRoot(routes.first())
+        routes.drop(1).forEach {
             underTest.navigateTo(it)
         }
         advanceUntilIdle()
