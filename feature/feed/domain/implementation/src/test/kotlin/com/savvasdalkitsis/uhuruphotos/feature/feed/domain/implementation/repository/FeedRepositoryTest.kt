@@ -15,16 +15,21 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository
 
+import app.cash.sqldelight.Query
 import com.github.michaelbull.result.Ok
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaCollections
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaCollectionsQueries
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaCollectionsFilterModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.RemoteMediaDaySummaryResponse
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
 import kotlinx.coroutines.test.runTest
 import org.joda.time.format.ISODateTimeFormat
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
@@ -47,6 +52,36 @@ class FeedRepositoryTest {
         mockk(relaxed = true) { every { getNullableString("lastFeedRefresh", null) } returns "since" },
         ISODateTimeFormat.dateTime(),
     )
+
+    private fun collection(collection: DbRemoteMediaCollections?) {
+        every { queries.get("20261107") } returns mockk<Query<DbRemoteMediaCollections>> {
+            every { executeAsOneOrNull() } returns collection
+        }
+    }
+
+    @Test
+    fun `refreshing a day the feed does not know yet refreshes the feed`() = runTest {
+        collection(null)
+
+        underTest.refreshRemoteMediaCollection("20261107")
+
+        assertEquals(listOf(day), summaries.captured())
+        coVerify {
+            remoteMediaUseCase.getRemoteMediaCollections(
+                RemoteMediaCollectionsFilterModel.Timeline.copy(modifiedSince = "since")
+            )
+        }
+    }
+
+    @Test
+    fun `refreshing a known day keeps its date`() = runTest {
+        collection(DbRemoteMediaCollections("20261107", "2026-11-07", "", null, false, 3))
+
+        underTest.refreshRemoteMediaCollection("20261107")
+
+        assertEquals(listOf("2026-11-07"), summaries.captured().map { it.date })
+        coVerify(exactly = 0) { remoteMediaUseCase.getRemoteMediaCollections(any()) }
+    }
 
     @Test
     fun `a feed refresh replaces the summaries of the days it refreshes`() = runTest {
