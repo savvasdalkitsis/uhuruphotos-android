@@ -81,6 +81,9 @@ dependencies {
     debugImplementation(
             libs.androidx.compose.ui.tooling,
     )
+    testImplementation(
+            libs.bundles.test,
+    )
     ksp libs.autodagger.ksp
     ksp libs.moshi.ksp
 }

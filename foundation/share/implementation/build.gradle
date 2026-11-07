@@ -12,4 +12,7 @@ dependencies {
             project(":foundation:navigation:api"),
             project(":foundation:share:api"),
     )
+    testImplementation(
+            libs.bundles.test,
+    )
 }
