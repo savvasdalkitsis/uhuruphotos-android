@@ -16,15 +16,29 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.search.domain.implementation.service.http.response
 
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.RemoteMediaItemSummaryResponse
+import com.savvasdalkitsis.uhuruphotos.feature.search.domain.implementation.model.SearchHitModel
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class SearchResponse(
+    @field:Json(name = "id")
+    val id: String? = null,
     @field:Json(name = "date")
-    val date: String,
+    val date: String? = null,
     @field:Json(name = "location")
-    val location: String,
+    val location: String? = null,
     @field:Json(name = "items")
-    val items: List<RemoteMediaItemSummaryResponse>
+    val items: List<RemoteMediaItemSummaryResponse>? = null,
 )
+
+private const val NO_TIMESTAMP = "No timestamp"
+
+fun SearchResponse.toSearchHits(): List<SearchHitModel> = when (items) {
+    null -> listOfNotNull(id?.let { SearchHitModel(it, dayOf(date), location) })
+    else -> items.map { SearchHitModel(it.id, date ?: NO_TIMESTAMP, location) }
+}
+
+private fun dayOf(date: String?): String = date?.take(DAY_LENGTH)?.ifEmpty { null } ?: NO_TIMESTAMP
+
+private const val DAY_LENGTH = 10
