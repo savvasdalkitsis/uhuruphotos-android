@@ -40,6 +40,6 @@ interface UserAlbumService {
     @POST("/api/albums/user/edit/")
     suspend fun createUserAlbum(@Body body: UserAlbumEditModelRequestData): UserAlbumServiceUpdateResponseData
 
-    @DELETE("/api/albums/user/edit/{id}/")
+    @DELETE("/api/albums/user/{id}/")
     suspend fun deleteUserAlbum(@Path("id") id: String)
 }
