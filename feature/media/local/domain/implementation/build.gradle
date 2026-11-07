@@ -25,5 +25,9 @@ dependencies {
             project(":foundation:strings:api"),
             project(":foundation:worker:api"),
     )
+    testImplementation(
+            libs.bundles.test,
+            libs.sqldelight.sqlite,
+    )
     ksp libs.autodagger.ksp
 }
