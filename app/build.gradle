@@ -98,4 +98,7 @@ dependencies {
     debugImplementation(
             libs.leaks,
     )
+    testImplementation(
+            libs.junit,
+    )
 }
