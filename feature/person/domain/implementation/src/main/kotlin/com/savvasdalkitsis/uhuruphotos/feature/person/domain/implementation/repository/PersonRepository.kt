@@ -22,8 +22,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.Remote
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.person.GetPersonAlbums
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.person.PersonQueries
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.toDbModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaCollectionsFilterModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.person.domain.implementation.service.http.PersonService
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.groupBy
@@ -34,7 +34,6 @@ import javax.inject.Inject
 
 class PersonRepository @Inject constructor(
     private val personQueries: PersonQueries,
-    private val personService: PersonService,
     private val remoteMediaCollectionsQueries: RemoteMediaCollectionsQueries,
     private val remoteMediaUseCase: RemoteMediaUseCase,
 ) {
@@ -51,8 +50,12 @@ class PersonRepository @Inject constructor(
 
     private suspend fun downloadPersonAlbums(personId: Int) {
         remoteMediaUseCase.processRemoteMediaCollections(
-            remoteMediaDaySummaryResponseAlbumsFetcher = { personService.getMediaCollectionsForPerson(personId).results },
-            remoteMediaDayCompleteResponseAlbumsFetcher = { personService.getMediaCollectionForPerson(it, personId).results },
+            remoteMediaDaySummaryResponseAlbumsFetcher = {
+                remoteMediaUseCase.getRemoteMediaCollections(RemoteMediaCollectionsFilterModel.person(personId))
+            },
+            remoteMediaDayCompleteResponseAlbumsFetcher = {
+                remoteMediaUseCase.getRemoteMediaCollection(it, RemoteMediaCollectionsFilterModel.person(personId))
+            },
             incompleteAlbumsProcessor = { albums ->
                 remoteMediaCollectionsQueries.transaction {
                     for (album in albums.map { it.toDbModel() }) {

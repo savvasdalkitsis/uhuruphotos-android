@@ -15,8 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.http
 
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.RemoteFeedDayResponseData
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.RemoteFeedResponseData
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.RemoteMediaItemResponseData
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.RemoteMediaItemSummaryContainerResponseData
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.http.response.RemoteMediaExistsResponseData
@@ -58,18 +56,6 @@ interface RemoteMediaService {
     suspend fun deleteMediaItemPermanently(
         @Body deleteRequest: RemoteMediaItemDeleteRequestData
     ): Response<RemoteMediaHashOperationResponseData>
-
-    @GET("/api/albums/date/list/?favorite=true")
-    suspend fun getFavouriteMedia(): RemoteFeedResponseData
-
-    @GET("/api/albums/date/{id}/?favorite=true")
-    suspend fun getFavouriteMediaCollection(@Path("id") id: String): RemoteFeedDayResponseData
-
-    @GET("/api/albums/date/list/?hidden=true")
-    suspend fun getHiddenMedia(): RemoteFeedResponseData
-
-    @GET("/api/albums/date/{id}/?hidden=true")
-    suspend fun getHiddenMediaCollection(@Path("id") id: String): RemoteFeedDayResponseData
 
     @GET("/api/exists/{hash}/")
     suspend fun exists(@Path("hash") hash: String): RemoteMediaExistsResponseData

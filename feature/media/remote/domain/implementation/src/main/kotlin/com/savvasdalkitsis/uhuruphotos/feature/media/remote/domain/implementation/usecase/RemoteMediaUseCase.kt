@@ -23,14 +23,14 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRe
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemSummaryQueries
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHashModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResultModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaCollectionsFilterModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummaryStatus
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.RemoteFeedDayResponseData
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.RemoteFeedResponseData
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.RemoteMediaDayCompleteResponse
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.RemoteMediaDaySummaryResponse
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.RemoteMediaItemSummaryResponse
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.toDbModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.repository.RemoteMediaCollectionsRepository
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.repository.RemoteMediaRepository
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.http.RemoteMediaService
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.http.request.RemoteMediaItemDeleteRequestData
@@ -56,6 +56,7 @@ import javax.inject.Inject
 @AutoBind
 class RemoteMediaUseCase @Inject constructor(
     private val remoteMediaRepository: RemoteMediaRepository,
+    private val remoteMediaCollectionsRepository: RemoteMediaCollectionsRepository,
     private val remoteMediaService: RemoteMediaService,
     private val remoteMediaItemWorkScheduler: RemoteMediaItemWorkScheduler,
     private val userUseCase: UserUseCase,
@@ -104,40 +105,36 @@ class RemoteMediaUseCase @Inject constructor(
         remoteMediaRepository.refreshDetailsNow(id)
 
     override suspend fun refreshFavouriteMedia(): SimpleResult =
-        resultWithFavouriteThreshold { favouriteThreshold ->
-            val currentFavourites = remoteMediaRepository.getFavouriteMedia(favouriteThreshold)
-                .map { it.id }
-                .toSet()
-            val newFavourites = mutableListOf<RemoteMediaItemSummaryResponse>()
-            refreshMediaCollections(
-                incompleteMediaCollections = { remoteMediaService.getFavouriteMedia() },
-                clearCollectionsBeforeRefreshing = {},
-                completeMediaCollection = { id ->
-                    remoteMediaService.getFavouriteMediaCollection(id).also { collection ->
-                        newFavourites += collection.results.items
-                    }
-                },
-                processSummary = { albumId, summary ->
-                    remoteMediaRepository.saveRemoteMediaSummary(albumId, summary)
-                }
-            )
-            val newFavouriteIds = newFavourites.map { it.id }.toSet()
-            runCatchingWithLog {
-                (currentFavourites - newFavouriteIds).forEach {
-                    val rating = remoteMediaService.getMediaItem(it).rating
-                    async { remoteMediaItemSummaryQueries.setRating(rating, it) }
-                }
-            }
+        resultWithFavouriteThreshold { favouriteThreshold -> refreshFavourites(favouriteThreshold) }
+
+    private suspend fun refreshFavourites(favouriteThreshold: Int): SimpleResult {
+        val currentFavourites = remoteMediaRepository.getFavouriteMedia(favouriteThreshold)
+            .map { it.id }
+            .toSet()
+        val newFavourites = mutableSetOf<String>()
+        refreshCollections(
+            filter = RemoteMediaCollectionsFilterModel.Favourites,
+            clearCollectionsBeforeRefreshing = {},
+            onCollection = { collection -> newFavourites += collection.items.map { it.id } },
+            processSummary = remoteMediaRepository::saveRemoteMediaSummary,
+        )
+        return refreshRatings(currentFavourites - newFavourites)
+    }
+
+    private suspend fun refreshRatings(ids: Set<String>): SimpleResult = runCatchingWithLog {
+        ids.forEach {
+            val rating = remoteMediaService.getMediaItem(it).rating
+            async { remoteMediaItemSummaryQueries.setRating(rating, it) }
         }
+    }
 
     override fun saveRemoteMediaSummary(containerId: String, summary: RemoteMediaItemSummaryResponse) {
         remoteMediaRepository.saveRemoteMediaSummary(containerId, summary)
     }
 
     override suspend fun refreshHiddenMedia() = refreshMediaCollections(
-        incompleteMediaCollections = { remoteMediaService.getHiddenMedia() },
+        filter = RemoteMediaCollectionsFilterModel.Hidden,
         clearCollectionsBeforeRefreshing = { remoteMediaItemSummaryQueries.deleteHidden() },
-        completeMediaCollection = { remoteMediaService.getHiddenMediaCollection(it) },
         processSummary = { _, summary ->
             remoteMediaItemSummaryQueries.insert(summary.toDbModel(HIDDEN_CONTAINER_ID))
         }
@@ -221,13 +218,28 @@ class RemoteMediaUseCase @Inject constructor(
         remoteMediaService.exists(hash.hash).exists
     }
 
+    override suspend fun getRemoteMediaCollections(
+        filter: RemoteMediaCollectionsFilterModel,
+    ): List<RemoteMediaDaySummaryResponse> = remoteMediaCollectionsRepository.getCollections(filter)
+
+    override suspend fun getRemoteMediaCollection(
+        id: String,
+        filter: RemoteMediaCollectionsFilterModel,
+    ): RemoteMediaDayCompleteResponse = remoteMediaCollectionsRepository.getCollection(id, filter)
+
     override suspend fun refreshMediaCollections(
-        incompleteMediaCollections: suspend () -> RemoteFeedResponseData,
+        filter: RemoteMediaCollectionsFilterModel,
         clearCollectionsBeforeRefreshing: () -> Unit,
-        completeMediaCollection: suspend (String) -> RemoteFeedDayResponseData,
+        processSummary: (albumId: String, summary: RemoteMediaItemSummaryResponse) -> Unit,
+    ): SimpleResult = refreshCollections(filter, clearCollectionsBeforeRefreshing, {}, processSummary)
+
+    private suspend fun refreshCollections(
+        filter: RemoteMediaCollectionsFilterModel,
+        clearCollectionsBeforeRefreshing: () -> Unit,
+        onCollection: (RemoteMediaDayCompleteResponse) -> Unit,
         processSummary: (albumId: String, summary: RemoteMediaItemSummaryResponse) -> Unit,
     ): SimpleResult = runCatchingWithLog {
-        val incompleteCollections = incompleteMediaCollections().results
+        val incompleteCollections = getRemoteMediaCollections(filter)
         async {
             db.transaction {
                 for (incompleteCollection in incompleteCollections) {
@@ -238,7 +250,8 @@ class RemoteMediaUseCase @Inject constructor(
         async { clearCollectionsBeforeRefreshing() }
         for (incompleteCollection in incompleteCollections) {
             val id = incompleteCollection.id
-            val completeCollection = completeMediaCollection(id).results
+            val completeCollection = getRemoteMediaCollection(id, filter)
+            onCollection(completeCollection)
             async {
                 completeCollection.items.forEach {
                     processSummary(id, it)
