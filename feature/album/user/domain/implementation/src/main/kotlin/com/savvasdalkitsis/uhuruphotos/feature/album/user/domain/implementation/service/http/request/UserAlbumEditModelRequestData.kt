@@ -21,7 +21,7 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class UserAlbumEditModelRequestData(
     @field:Json(name = "title")
-    val title: String,
+    val title: String? = null,
     @field:Json(name = "photos")
     val ids: List<String>,
 )

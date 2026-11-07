@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.implementation.service.http.response
 
+import com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.implementation.service.http.request.UserAlbumEditModelRequestData
 import com.squareup.moshi.Moshi
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
@@ -36,5 +37,13 @@ class UserAlbumServiceResponseDataTest {
 
         assertEquals(listOf("a", "b"), album.groups.flatMap { it.items }.map { it.id })
         assertNull(album.groups[1].date)
+    }
+
+    @Test
+    fun `adding photos does not send the title`() {
+        val json = moshi.adapter(UserAlbumEditModelRequestData::class.java)
+            .toJson(UserAlbumEditModelRequestData(ids = listOf("a")))
+
+        assertEquals("""{"photos":["a"]}""", json)
     }
 }
