@@ -39,23 +39,24 @@ import org.junit.Test
 class SyncUseCaseTest {
 
     private val hash = MediaItemHashModel(Md5Hash("md5"), 1)
+    private val otherHash = MediaItemHashModel(Md5Hash("other"), 1)
     private val local = MediaIdModel.LocalIdModel(1, 0, false, "content://1", "", hash)
-    private val remote = MediaIdModel.RemoteIdModel("uuid", false, hash)
-    private val feedUseCase: FeedUseCase = mockk {
-        every { observeFeed(any(), any()) } returns flowOf(
-            listOf(
-                MediaCollectionModel(
-                    id = "day",
-                    mediaItems = listOf(MediaItemInstanceModel(local, hash), MediaItemInstanceModel(remote, hash)),
-                    displayTitle = "day",
-                )
-            )
-        )
+    private val remote = MediaIdModel.RemoteIdModel("uuid", false, otherHash)
+    private val sameDay = collection("day", MediaItemInstanceModel(local, hash), MediaItemInstanceModel(remote, otherHash))
+
+    private fun collection(id: String, vararg items: MediaItemInstanceModel) =
+        MediaCollectionModel(id = id, mediaItems = items.toList(), displayTitle = id)
+
+    private fun feed(vararg collections: MediaCollectionModel): FeedUseCase = mockk {
+        every { observeFeed(any(), any()) } returns flowOf(collections.toList())
     }
     private val queuedJob = UploadJob(localItemId = 2, displayName = null, contentUri = "content://2")
 
-    private fun underTest(status: SyncStatus, jobs: List<UploadJob> = listOf(queuedJob)) =
-        spyk(SyncUseCase(mockk(), mockk(), feedUseCase, mockk(), uploadsUseCase(jobs))) {
+    private fun underTest(
+        status: SyncStatus,
+        jobs: List<UploadJob> = listOf(queuedJob),
+        feedUseCase: FeedUseCase = feed(sameDay),
+    ) = spyk(SyncUseCase(mockk(), mockk(), feedUseCase, mockk(), uploadsUseCase(jobs))) {
             every { observeSyncStatus() } returns flowOf(status)
         }
 
@@ -97,6 +98,16 @@ class SyncUseCaseTest {
         assertEquals(
             emptyList<UploadItem>(),
             underTest(SyncStatus.Enabled, listOf(processing)).observePendingItems().first(),
+        )
+    }
+
+    @Test
+    fun `cloud sync skips local items whose copy on the server is on another day`() = runTest {
+        val undated = collection("undated", MediaItemInstanceModel(MediaIdModel.RemoteIdModel("uuid", false, hash), hash))
+
+        assertEquals(
+            emptyList<UploadItem>(),
+            underTest(SyncStatus.Enabled, emptyList(), feed(sameDay, undated)).observePendingItems().first(),
         )
     }
 }

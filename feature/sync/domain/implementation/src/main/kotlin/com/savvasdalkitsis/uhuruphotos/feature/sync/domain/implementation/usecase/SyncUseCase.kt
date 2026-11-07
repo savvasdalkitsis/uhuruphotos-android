@@ -91,9 +91,12 @@ class SyncUseCase @Inject constructor(
 
     private val UploadStatus.isWaitingToUpload get() = this is InQueue || this is Uploading
 
-    private fun localOnlyItems(feed: List<MediaCollectionModel>): List<UploadItem> =
-        feed.flatMap { it.mediaItems }
-            .mapNotNull { item -> item.id.findLocals.firstOrNull()?.takeIf { item.id.findRemote == null } }
+    private fun localOnlyItems(feed: List<MediaCollectionModel>): List<UploadItem> {
+        val mediaItems = feed.flatMap { it.mediaItems }
+        val remoteHashes = mediaItems.filter { it.id.hasRemote }.map { it.mediaHash }.toSet()
+        return mediaItems.filterNot { it.mediaHash in remoteHashes }
+            .mapNotNull { item -> item.id.findLocals.firstOrNull() }
             .map { item -> UploadItem(item.value, item.contentUri) }
+    }
 
 }
