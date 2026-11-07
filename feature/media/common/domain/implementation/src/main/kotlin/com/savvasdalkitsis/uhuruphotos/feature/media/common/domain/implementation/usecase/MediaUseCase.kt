@@ -25,7 +25,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRe
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.isVideo
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSourceModel
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaDayModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaFolderOnDeviceModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel.DownloadingIdModel
@@ -44,11 +43,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.M
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalFolderModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItems
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.MediaOrientation.ORIENTATION_0
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.MediaOrientation.ORIENTATION_180
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.MediaOrientation.ORIENTATION_270
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.MediaOrientation.ORIENTATION_90
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.MediaOrientation.ORIENTATION_UNKNOWN
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.model.RemoteUserModel
@@ -65,22 +59,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
-import org.jetbrains.compose.resources.getString
-import org.joda.time.DateTime
 import se.ansman.dagger.auto.AutoBind
-import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
-import uhuruphotos_android.foundation.strings.api.generated.resources.month_april_short
-import uhuruphotos_android.foundation.strings.api.generated.resources.month_august_short
-import uhuruphotos_android.foundation.strings.api.generated.resources.month_december_short
-import uhuruphotos_android.foundation.strings.api.generated.resources.month_february_short
-import uhuruphotos_android.foundation.strings.api.generated.resources.month_january_short
-import uhuruphotos_android.foundation.strings.api.generated.resources.month_july_short
-import uhuruphotos_android.foundation.strings.api.generated.resources.month_june_short
-import uhuruphotos_android.foundation.strings.api.generated.resources.month_march_short
-import uhuruphotos_android.foundation.strings.api.generated.resources.month_may_short
-import uhuruphotos_android.foundation.strings.api.generated.resources.month_november_short
-import uhuruphotos_android.foundation.strings.api.generated.resources.month_october_short
-import uhuruphotos_android.foundation.strings.api.generated.resources.month_september_short
 import javax.inject.Inject
 
 @AutoBind
@@ -194,16 +173,6 @@ class MediaUseCase @Inject constructor(
         ratio = ratio,
         latLng = latLon,
     )
-
-    private val LocalMediaItem.ratio: Float get() {
-        val (w, h) = when (orientation) {
-            ORIENTATION_UNKNOWN, ORIENTATION_0, ORIENTATION_180 ->
-                width to height
-            ORIENTATION_90, ORIENTATION_270 ->
-                height to width
-        }
-        return (w / h.toFloat()).takeIf { it > 0 } ?: 1f
-    }
 
     override suspend fun getFavouriteMediaCount(): Result<Long, Throwable> =
         remoteMediaUseCase.getFavouriteMediaSummariesCount()
@@ -364,25 +333,4 @@ class MediaUseCase @Inject constructor(
         userUseCase.getRemoteUserOrRefresh().andThenTry {
             action(it)
         }
-
-    private suspend fun DateTime.toMediaDay(): MediaDayModel = MediaDayModel(
-        day = dayOfMonth,
-        dayOfWeek = dayOfWeek,
-        month = monthOfYear,
-        year = year,
-        monthText = getString(when (monthOfYear) {
-            1 -> string.month_january_short
-            2 -> string.month_february_short
-            3 -> string.month_march_short
-            4 -> string.month_april_short
-            5 -> string.month_may_short
-            6 -> string.month_june_short
-            7 -> string.month_july_short
-            8 -> string.month_august_short
-            9 -> string.month_september_short
-            10 -> string.month_october_short
-            11 -> string.month_november_short
-            else -> string.month_december_short
-        })
-    )
 }
