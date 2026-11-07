@@ -50,6 +50,7 @@ fun mediaItem(id: String, hash: String = id) = GetRemoteMediaCollections(
     null,
     null,
     hash,
+    hash,
     null,
     null,
     null,

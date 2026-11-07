@@ -41,6 +41,7 @@ SELECT
  remoteMediaCollections.date AS albumDate,
  remoteMediaCollections.location AS albumLocation,
  remoteMediaTrash.id AS photoId,
+ remoteMediaTrash.url AS photoHash,
  remoteMediaTrash.dominantColor,
  remoteMediaTrash.rating,
  remoteMediaTrash.aspectRatio,

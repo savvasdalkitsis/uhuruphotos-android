@@ -16,6 +16,7 @@ SELECT
  remoteMediaCollections.date AS albumDate,
  remoteMediaCollections.location AS albumLocation,
  summary.id AS photoId,
+ summary.url AS photoHash,
  summary.dominantColor,
  summary.rating,
  summary.aspectRatio,

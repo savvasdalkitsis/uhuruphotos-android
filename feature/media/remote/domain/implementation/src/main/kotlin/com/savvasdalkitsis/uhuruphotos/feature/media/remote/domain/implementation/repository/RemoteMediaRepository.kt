@@ -39,6 +39,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.Rem
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummaryStatus.Found
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummaryStatus.Processing
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.RemoteMediaItemSummaryResponse
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.contentHash
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.http.response.toDbModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.http.RemoteMediaService
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
@@ -130,18 +131,20 @@ class RemoteMediaRepository @Inject constructor(
         when {
             summary.removed -> deleteMediaItem(summary.id)
             summary.inTrash -> trashMediaItem(summary.id)
-            else -> {
-                remoteMediaItemSummaryQueries.insert(summary.toDbModel(containerId))
-                val md5 = MediaItemHashModel.fromRemoteMediaHash(summary.id, summary.owner.id).md5.value
-                lightboxDetailsQueries.touch(md5 = md5)
-                lightboxDetailsQueries.updateRemoteGps(
-                    lat = summary.lat?.toDoubleOrNull(),
-                    lon = summary.lon?.toDoubleOrNull(),
-                    hash = summary.id,
-                    md5 = md5,
-                )
-            }
+            else -> insertRemoteMediaSummary(containerId, summary)
         }
+    }
+
+    private fun insertRemoteMediaSummary(containerId: String, summary: RemoteMediaItemSummaryResponse) {
+        remoteMediaItemSummaryQueries.insert(summary.toDbModel(containerId))
+        val md5 = MediaItemHashModel.fromRemoteMediaHash(summary.contentHash, summary.owner?.id).md5.value
+        lightboxDetailsQueries.touch(md5 = md5)
+        lightboxDetailsQueries.updateRemoteGps(
+            lat = summary.lat?.toDoubleOrNull(),
+            lon = summary.lon?.toDoubleOrNull(),
+            hash = summary.contentHash,
+            md5 = md5,
+        )
     }
 
     fun insertMediaItem(mediaItemDetails: DbRemoteMediaItemDetails) {

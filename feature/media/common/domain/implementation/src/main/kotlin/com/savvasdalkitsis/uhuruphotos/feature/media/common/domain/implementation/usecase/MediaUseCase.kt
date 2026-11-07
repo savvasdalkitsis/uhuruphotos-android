@@ -22,7 +22,6 @@ import com.github.michaelbull.result.getOrThrow
 import com.github.michaelbull.result.map
 import com.github.michaelbull.result.mapOr
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.isVideo
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSourceModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaFolderOnDeviceModel
@@ -93,7 +92,6 @@ class MediaUseCase @Inject constructor(
                 }
             )
         }
-
         is LocalMediaItems.RequiresPermissions -> MediaItemsOnDeviceModel.RequiresPermissionsModel(
             localMediaItems.deniedPermissions
         )
@@ -139,18 +137,11 @@ class MediaUseCase @Inject constructor(
     override suspend fun List<DbRemoteMediaItemSummary>.mapToMediaItems(): Result<List<MediaItemModel>, Throwable> =
         withUser { user ->
             map { dbRecord ->
-                val favouriteThreshold = user.favoriteMinRating
-                val date = dateDisplayer.dateString(dbRecord.date)
-                val day = dateParser.parseDateOrTimeString(dbRecord.date)
-                MediaItemInstanceModel(
-                    id = RemoteIdModel(dbRecord.id, dbRecord.isVideo, MediaItemHashModel.fromRemoteMediaHash(dbRecord.id, user.id)),
-                    mediaHash = MediaItemHashModel.fromRemoteMediaHash(dbRecord.id, user.id),
-                    fallbackColor = dbRecord.dominantColor,
-                    displayDayDate = date,
-                    sortableDate = dbRecord.date,
-                    isFavourite = favouriteThreshold != null && (dbRecord.rating ?: 0) >= favouriteThreshold,
-                    ratio = dbRecord.aspectRatio ?: 1f,
-                    mediaDay = day?.toMediaDay(),
+                dbRecord.toRemoteMediaItem(
+                    userId = user.id,
+                    favouriteThreshold = user.favoriteMinRating,
+                    displayDate = dateDisplayer.dateString(dbRecord.date),
+                    mediaDay = dateParser.parseDateOrTimeString(dbRecord.date)?.toMediaDay(),
                 )
             }
         }
@@ -273,45 +264,18 @@ class MediaUseCase @Inject constructor(
         id: String,
         source: List<MediaCollectionSourceModel>,
     ): MediaCollectionModel? = userUseCase.getRemoteUserOrRefresh().mapOr(null) { user ->
-        val favouriteThreshold = user.favoriteMinRating
         val albumDate = source.firstOrNull()?.date
-        val albumLocation = source.firstOrNull()?.location
-
         val date = dateDisplayer.dateString(albumDate)
-        val day = dateParser.parseDateOrTimeString(albumDate)
+        val day = dateParser.parseDateOrTimeString(albumDate)?.toMediaDay()
         MediaCollectionModel(
             id = id,
             displayTitle = date,
             unformattedDate = albumDate,
-            location = albumLocation ?: "",
+            location = source.firstOrNull()?.location ?: "",
             mediaItems = source.mapNotNull { item ->
-                val photoId = item.mediaItemId
-                when {
-                    photoId.isNullOrBlank() -> null
-                    else -> {
-                        MediaItemInstanceModel(
-                            id = RemoteIdModel(photoId, item.isVideo, MediaItemHashModel.fromRemoteMediaHash(photoId, user.id)),
-                            mediaHash = MediaItemHashModel.fromRemoteMediaHash(photoId, user.id),
-                            fallbackColor = item.dominantColor,
-                            displayDayDate = date,
-                            sortableDate = item.date,
-                            isFavourite = favouriteThreshold != null && (item.rating ?: 0) >= favouriteThreshold,
-                            ratio = item.aspectRatio ?: 1.0f,
-                            latLng = (item.lat?.toDoubleOrNull() to item.lon?.toDoubleOrNull()).notNull(),
-                            mediaDay = day?.toMediaDay(),
-                        )
-                    }
-                }
+                item.toRemoteMediaItem(user.id, user.favoriteMinRating, date, day)
             }
         )
-    }
-
-    private fun <T> Pair<T?, T?>.notNull(): Pair<T, T>? {
-        val (k, v) = this
-        return when {
-            k != null && v != null -> k to v
-            else -> null
-        }
     }
 
     override suspend fun refreshHiddenMedia() =

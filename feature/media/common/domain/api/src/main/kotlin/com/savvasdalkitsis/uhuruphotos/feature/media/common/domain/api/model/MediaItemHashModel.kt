@@ -34,8 +34,20 @@ data class MediaItemHashModel(
     val hash get() = "${md5.value}${userId?.toString().orEmpty()}"
 
     companion object {
-        fun fromRemoteMediaHash(hash: String, userId: Int?) = MediaItemHashModel(
-            Md5Hash(hash.removeSuffix(userId?.toString().orEmpty())), userId,
-        )
+        private const val MD5_LENGTH = 32
+
+        fun fromRemoteMediaHash(hash: String, userId: Int?): MediaItemHashModel =
+            splitImageHash(hash) ?: MediaItemHashModel(
+                Md5Hash(hash.removeSuffix(userId?.toString().orEmpty())), userId,
+            )
+
+        private fun splitImageHash(hash: String): MediaItemHashModel? {
+            val md5 = hash.take(MD5_LENGTH)
+            val owner = hash.drop(MD5_LENGTH).toIntOrNull()
+            return when {
+                owner == null || !md5.all { it.isLetterOrDigit() } -> null
+                else -> MediaItemHashModel(Md5Hash(md5), owner)
+            }
+        }
     }
 }

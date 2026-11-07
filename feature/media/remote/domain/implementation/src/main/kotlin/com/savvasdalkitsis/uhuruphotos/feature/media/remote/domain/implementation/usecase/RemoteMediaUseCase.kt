@@ -139,20 +139,7 @@ class RemoteMediaUseCase @Inject constructor(
         clearCollectionsBeforeRefreshing = { remoteMediaItemSummaryQueries.deleteHidden() },
         completeMediaCollection = { remoteMediaService.getHiddenMediaCollection(it) },
         processSummary = { _, summary ->
-            remoteMediaItemSummaryQueries.insertHidden(
-                id = summary.id,
-                dominantColor = summary.dominantColor,
-                aspectRatio = summary.aspectRatio,
-                location = summary.location,
-                rating = summary.rating,
-                url = summary.url,
-                date = summary.date,
-                birthTime = summary.birthTime,
-                type = summary.type,
-                videoLength = summary.videoLength,
-                gpsLat = summary.lat,
-                gpsLon = summary.lon,
-            )
+            remoteMediaItemSummaryQueries.insert(summary.toDbModel(HIDDEN_CONTAINER_ID))
         }
     )
 
@@ -290,5 +277,9 @@ class RemoteMediaUseCase @Inject constructor(
                 saveRemoteMediaSummary(album.id, day)
             }
         }
+    }
+
+    private companion object {
+        const val HIDDEN_CONTAINER_ID = "hiddenPhoto"
     }
 }

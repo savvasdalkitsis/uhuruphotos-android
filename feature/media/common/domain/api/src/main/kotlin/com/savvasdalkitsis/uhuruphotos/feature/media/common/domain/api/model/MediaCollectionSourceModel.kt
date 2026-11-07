@@ -20,6 +20,7 @@ data class MediaCollectionSourceModel(
     val date: String?,
     val location: String?,
     val mediaItemId: String?,
+    val mediaItemHash: String? = null,
     val dominantColor: String?,
     val rating: Int?,
     val aspectRatio: Float?,

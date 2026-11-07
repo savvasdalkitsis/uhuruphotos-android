@@ -24,24 +24,26 @@ import com.squareup.moshi.JsonClass
 data class RemoteMediaItemSummaryResponse(
     @field:Json(name = "id")
     val id: String,
+    @field:Json(name = "image_hash")
+    val imageHash: String? = null,
     @field:Json(name = "dominantColor")
-    val dominantColor: String,
+    val dominantColor: String? = null,
     @field:Json(name = "url")
-    val url: String,
+    val url: String? = null,
     @field:Json(name = "location")
-    val location: String,
+    val location: String? = null,
     @field:Json(name = "date")
     val date: String?,
     @field:Json(name = "birthTime")
-    val birthTime: String,
+    val birthTime: String? = null,
     @field:Json(name = "aspectRatio")
     val aspectRatio: Float? = null,
     @field:Json(name = "type")
-    val type: String,
+    val type: String? = null,
     @Json(name = "video_length")
-    val videoLength: String,
+    val videoLength: String? = null,
     @Json(name = "rating")
-    val rating: Int,
+    val rating: Int? = null,
     @Json(name = "exif_gps_lat")
     val lat: String? = null,
     @Json(name = "exif_gps_lon")
@@ -51,20 +53,22 @@ data class RemoteMediaItemSummaryResponse(
     @Json(name = "in_trashcan")
     val inTrash: Boolean = false,
     @Json(name = "owner")
-    val owner: RemoteMediaItemSummaryOwnerResponse,
+    val owner: RemoteMediaItemSummaryOwnerResponse? = null,
 )
+
+val RemoteMediaItemSummaryResponse.contentHash: String get() = imageHash ?: url ?: id
 
 fun RemoteMediaItemSummaryResponse.toDbModel(albumId: String) = DbRemoteMediaItemSummary(
     id = id,
     dominantColor = dominantColor,
-    url = url,
+    url = contentHash,
     location = location,
     date = date,
     birthTime = birthTime,
     aspectRatio = aspectRatio,
     type = type,
     videoLength = videoLength,
-    rating = rating,
+    rating = rating ?: 0,
     containerId = albumId,
     gpsLat = lat,
     gpsLon = lon
@@ -73,14 +77,14 @@ fun RemoteMediaItemSummaryResponse.toDbModel(albumId: String) = DbRemoteMediaIte
 fun RemoteMediaItemSummaryResponse.toTrash(albumId: String) = DbTrash(
     id = id,
     dominantColor = dominantColor,
-    url = url,
+    url = contentHash,
     location = location,
     date = date,
     birthTime = birthTime,
     aspectRatio = aspectRatio,
     type = type,
     videoLength = videoLength,
-    rating = rating,
+    rating = rating ?: 0,
     containerId = albumId,
     gpsLat = lat,
     gpsLon = lon,
