@@ -5,6 +5,9 @@ plugins {
 
 android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api'
+    testOptions {
+        unitTests.includeAndroidResources = true
+    }
 }
 
 dependencies {
@@ -29,5 +32,9 @@ dependencies {
             project(":foundation:strings:api"),
             project(":foundation:toaster:api"),
             project(":foundation:ui:api"),
+    )
+    testImplementation(
+            libs.bundles.test,
+            libs.bundles.ui.test,
     )
 }

@@ -5,6 +5,9 @@ plugins {
 
 android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation'
+    testOptions {
+        unitTests.includeAndroidResources = true
+    }
 }
 
 dependencies {
@@ -83,6 +86,7 @@ dependencies {
     )
     testImplementation(
             libs.bundles.test,
+            libs.bundles.ui.test,
     )
     ksp libs.autodagger.ksp
     ksp libs.moshi.ksp

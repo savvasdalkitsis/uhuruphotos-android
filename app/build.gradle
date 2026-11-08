@@ -63,6 +63,9 @@ android {
         }
     }
     namespace 'com.savvasdalkitsis.uhuruphotos'
+    testOptions {
+        unitTests.includeAndroidResources = true
+    }
 }
 
 dependencies {
@@ -99,6 +102,8 @@ dependencies {
             libs.leaks,
     )
     testImplementation(
+            libs.bundles.ui.test,
             libs.junit,
+            libs.mockk,
     )
 }

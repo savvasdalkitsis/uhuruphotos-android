@@ -4,6 +4,9 @@ plugins {
 
 android {
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.video.api'
+    testOptions {
+        unitTests.includeAndroidResources = true
+    }
 }
 
 dependencies {
@@ -16,5 +19,9 @@ dependencies {
             libs.androidx.media3.ui,
             libs.hilt,
             project(":foundation:image:api"),
+    )
+    testImplementation(
+            libs.bundles.test,
+            libs.bundles.ui.test,
     )
 }
