@@ -33,15 +33,21 @@ internal fun PlaybackEffect(
 ) {
     val startPosition = rememberSaveable(videoUrl, saver = playbackPositionSaver(exoPlayer)) { 0L }
     LaunchedEffect(videoUrl, play) {
-        if (!play) {
-            exoPlayer.pause()
+        if (play) {
+            exoPlayer.startOrResume(videoUrl, startPosition, VideoLoadingListener(onReady, onFinishedLoading))
         } else {
-            exoPlayer.setMediaItem(MediaItem.fromUri(videoUrl), startPosition)
-            exoPlayer.addListener(VideoLoadingListener(onReady, onFinishedLoading))
-            exoPlayer.prepare()
-            exoPlayer.playWhenReady = true
+            exoPlayer.pause()
         }
     }
+}
+
+private fun ExoPlayer.startOrResume(videoUrl: String, startPosition: Long, listener: Player.Listener) {
+    if (currentMediaItem?.mediaId != videoUrl) {
+        setMediaItem(MediaItem.Builder().setMediaId(videoUrl).setUri(videoUrl).build(), startPosition)
+        addListener(listener)
+        prepare()
+    }
+    playWhenReady = true
 }
 
 private fun playbackPositionSaver(player: Player): Saver<Long, Long> = Saver(

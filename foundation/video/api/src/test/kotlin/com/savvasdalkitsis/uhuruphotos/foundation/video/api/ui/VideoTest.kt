@@ -18,12 +18,17 @@ package com.savvasdalkitsis.uhuruphotos.foundation.video.api.ui
 import android.os.Looper
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.ProgressBarRangeInfo
 import androidx.compose.ui.test.hasProgressBarRangeInfo
 import androidx.compose.ui.test.junit4.StateRestorationTester
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
 import coil.ImageLoader
@@ -34,7 +39,9 @@ import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
+import io.mockk.slot
 import io.mockk.verify
+import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -47,15 +54,21 @@ class VideoTest {
     val composeRule = createComposeRule()
 
     private val listeners = mutableListOf<Player.Listener>()
+    private val mediaItem = slot<MediaItem>()
     private val player = mockk<ExoPlayer>(relaxed = true) {
         every { applicationLooper } returns Looper.getMainLooper()
         every { currentPosition } returns 4_200L
         every { addListener(capture(listeners)) } just Runs
+        every { setMediaItem(capture(mediaItem), any<Long>()) } just Runs
+        every { currentMediaItem } answers { if (mediaItem.isCaptured) mediaItem.captured else null }
     }
     private val loading = hasProgressBarRangeInfo(ProgressBarRangeInfo.Indeterminate)
     private val exoplayerProvider = object : ExoplayerProvider {
         @Composable
-        override fun createExoplayer(url: String): ExoPlayer = player
+        override fun createExoplayer(url: String): ExoPlayer {
+            DisposableEffect(url) { onDispose { mediaItem.clear() } }
+            return player
+        }
     }
 
     @Composable
@@ -102,5 +115,20 @@ class VideoTest {
         }
 
         composeRule.onNode(loading).assertDoesNotExist()
+    }
+
+    @Test
+    fun `resumes instead of restarting when it plays again`() {
+        var play by mutableStateOf(true)
+        composeRule.setContent { PlayingVideo(play) }
+
+        composeRule.runOnIdle { play = false }
+        composeRule.runOnIdle { play = true }
+        composeRule.waitForIdle()
+
+        verify(exactly = 1) { player.setMediaItem(any(), any<Long>()) }
+        verify(exactly = 1) { player.prepare() }
+        verify(exactly = 2) { player.playWhenReady = true }
+        assertEquals(1, listeners.filterIsInstance<VideoLoadingListener>().size)
     }
 }
