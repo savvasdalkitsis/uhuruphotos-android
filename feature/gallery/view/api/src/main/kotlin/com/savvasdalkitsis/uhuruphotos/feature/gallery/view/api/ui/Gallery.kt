@@ -23,7 +23,9 @@ import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextOverflow
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.Collage
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.CollageDisplayActionButton
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.ChangeCollageDisplay
@@ -41,11 +43,13 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.icon.UhuruActionIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.refresh.SwipeRefresh
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.scaffold.UhuruUpNavButton
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
 import org.jetbrains.compose.resources.stringResource
 import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
 import uhuruphotos_android.foundation.strings.api.generated.resources.no_media
 import uhuruphotos_android.foundation.strings.api.generated.resources.sorting
 
+@NonRestartableComposable
 @Composable
 fun SharedTransitionScope.Gallery(
     modifier: Modifier = Modifier,
@@ -57,14 +61,7 @@ fun SharedTransitionScope.Gallery(
 ) {
     UhuruScaffold(
         modifier = modifier,
-        title = { Text(
-            modifier = if (titleSharedElementId != null) {
-                Modifier.sharedElement(titleSharedElementId)
-            } else {
-                Modifier
-            },
-            text = state.title.toText(),
-        ) },
+        title = { GalleryTitle(titleSharedElementId, state.title) },
         expandableTopBar = true,
         navigationIcon = { UhuruUpNavButton() },
         actionBarContent = {
@@ -110,4 +107,17 @@ fun SharedTransitionScope.Gallery(
             )
         }
     }
+}
+
+@Composable
+private fun SharedTransitionScope.GalleryTitle(
+    titleSharedElementId: SharedElementId?,
+    title: Title,
+) {
+    Text(
+        modifier = titleSharedElementId?.let { Modifier.sharedElement(it) } ?: Modifier,
+        text = title.toText(),
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis,
+    )
 }
