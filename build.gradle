@@ -39,7 +39,7 @@ sonarqube {
 
 subprojects {
 
-    if (displayName == "project ':konsist'") {
+    if (displayName in ["project ':konsist'", "project ':linkage'"]) {
         return
     }
     if ((

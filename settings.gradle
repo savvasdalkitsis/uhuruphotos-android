@@ -258,3 +258,4 @@ include ':foundation:system:api'
 include ':foundation:system:implementation'
 
 include ':konsist'
+include ':linkage'
