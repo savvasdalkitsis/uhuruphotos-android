@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -55,6 +56,7 @@ internal fun FeedTitle(
         if (!hasSelection) {
             Text(stringResource(string.feed))
         } else {
+            BackHandler { action(ClearSelected) }
             OutlinedButton(
                 modifier = Modifier
                     .heightIn(max = 48.dp),
