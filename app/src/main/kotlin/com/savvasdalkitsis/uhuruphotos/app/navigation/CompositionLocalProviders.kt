@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import coil.ImageLoader
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
@@ -84,6 +85,7 @@ class CompositionLocalProviders @Inject constructor(
         val collageShape by settingsUIUseCase.observeCollageShape().collectAsState(CollageShape.default)
         val collageSpacing by settingsUIUseCase.observeCollageSpacing().collectAsState(2)
         val collageSpacingEdges by settingsUIUseCase.observeCollageSpacingIncludeEdges().collectAsState(false)
+        val serverUrl by remember { serverUseCase.observeMaybeServerUrl() }.collectAsState(serverUseCase.getServerUrl())
         @Suppress("DEPRECATION") val systemUiController = rememberSystemUiController()
         CompositionLocalProvider(
             LocalExoPlayerProvider provides exoplayerProvider,
@@ -93,7 +95,7 @@ class CompositionLocalProviders @Inject constructor(
             LocalThumbnailImageLoader provides thumbnailImageLoader,
             LocalThumbnailWithNetworkCacheImageLoader provides thumbnailImageWithNetworkCacheSupportLoader,
             LocalNavigator provides navigator,
-            LocalServerUrl provides serverUseCase.getServerUrl(),
+            LocalServerUrl provides serverUrl,
             LocalThemeMode provides themeMode,
             LocalTheme provides themeVariant,
             LocalThemeContrast provides themeContrast,
