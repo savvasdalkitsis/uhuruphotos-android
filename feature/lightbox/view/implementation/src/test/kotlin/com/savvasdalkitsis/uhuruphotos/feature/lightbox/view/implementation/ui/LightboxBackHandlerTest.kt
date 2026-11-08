@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.LightboxAction
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import me.saket.telephoto.zoomable.ZoomSpec
 import me.saket.telephoto.zoomable.ZoomableContentLocation
 import me.saket.telephoto.zoomable.ZoomableState
 import me.saket.telephoto.zoomable.rememberZoomableState
@@ -65,9 +66,9 @@ class LightboxBackHandlerTest {
         }
     }
 
-    private fun showImage(size: Float) {
+    private fun showImage(size: Float, maxZoom: Float = 2f) {
         composeRule.setContent {
-            zoomableState = rememberZoomableState()
+            zoomableState = rememberZoomableState(ZoomSpec(maxZoomFactor = maxZoom))
             scope = rememberCoroutineScope()
             Box(Modifier.size(300.dp).zoomable(zoomableState))
             LaunchedEffect(Unit) {
@@ -123,6 +124,29 @@ class LightboxBackHandlerTest {
 
         assertFalse(leftLightbox)
         assertEquals(emptyList<LightboxAction>(), actions)
+        assertEquals(0f, zoomableState.zoomFraction)
+    }
+
+    @Test
+    fun `leaves the lightbox on back for an image scaled up to the maximum zoom`() {
+        showImage(size = 100f, maxZoom = 3f)
+        assertEquals(3f, zoomableState.contentTransformation.scale.scaleX)
+
+        pressBack()
+
+        assertTrue(leftLightbox)
+    }
+
+    @Test
+    fun `resets the zoom on back when a scaled up image is zoomed in all the way`() {
+        showImage(size = 206f, maxZoom = 3f)
+        scope.launch { zoomableState.zoomTo(zoomFactor = 3f, animationSpec = SnapSpec()) }
+        composeRule.waitForIdle()
+        assertEquals(1f, zoomableState.zoomFraction)
+
+        pressBack()
+
+        assertFalse(leftLightbox)
         assertEquals(0f, zoomableState.zoomFraction)
     }
 }

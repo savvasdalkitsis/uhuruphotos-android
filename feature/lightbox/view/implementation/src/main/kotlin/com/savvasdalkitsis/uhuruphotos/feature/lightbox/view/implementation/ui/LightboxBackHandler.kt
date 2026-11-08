@@ -219,4 +219,4 @@ private fun lerp(start: Float, stop: Float, fraction: Float): Float {
 }
 
 private val ZoomableState.isZoomedIn: Boolean
-    get() = (zoomFraction ?: 0f) > 0.05f && contentTransformation.scale.scaleX <= zoomSpec.maximum.factor
+    get() = contentTransformation.scaleMetadata.userZoom > 1.05f
