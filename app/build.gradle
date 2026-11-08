@@ -107,3 +107,23 @@ dependencies {
             libs.mockk,
     )
 }
+
+tasks.register('writeLinkageClasspath') {
+    def output = layout.buildDirectory.file('linkage/release-classpath.txt')
+    def libraries = configurations.named('releaseRuntimeClasspath').get().incoming.artifactView {
+        attributes { attribute(Attribute.of('artifactType', String), 'android-classes-jar') }
+        componentFilter { it instanceof ModuleComponentIdentifier }
+    }.artifacts
+    def platform = android.bootClasspath
+    def resources = files(tasks.named('processDebugResources')).filter { it.name == 'R.jar' }
+    inputs.files(libraries.artifactFiles).withNormalizer(ClasspathNormalizer)
+    inputs.files(platform).withNormalizer(ClasspathNormalizer)
+    inputs.files(resources).withNormalizer(ClasspathNormalizer)
+    outputs.file(output)
+    doLast {
+        def lines = libraries.artifacts.collect { "${it.id.componentIdentifier.displayName}\t${it.file}" }
+        lines += platform.collect { "platform\t${it}" }
+        lines += resources.collect { "generated:R:debug\t${it}" }
+        output.get().asFile.text = lines.join('\n')
+    }
+}

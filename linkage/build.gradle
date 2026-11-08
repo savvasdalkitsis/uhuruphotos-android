@@ -19,6 +19,15 @@ kotlin {
     jvmToolchain(21)
 }
 
+def releaseClasspath = project(':app').layout.buildDirectory.file('linkage/release-classpath.txt')
+
+tasks.withType(Test).configureEach {
+    dependsOn(':app:writeLinkageClasspath')
+    inputs.file(releaseClasspath).withPathSensitivity(PathSensitivity.NONE)
+    systemProperty('linkage.classpath', releaseClasspath.get().asFile.absolutePath)
+    maxHeapSize = '2g'
+}
+
 dependencies {
     implementation(libs.asm)
     testImplementation(libs.junit)
