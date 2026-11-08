@@ -15,4 +15,7 @@ dependencies {
             libs.androidx.compose.ui,
             libs.androidx.startup,
     )
+    testImplementation(
+            libs.bundles.test,
+    )
 }

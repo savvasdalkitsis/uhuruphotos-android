@@ -19,6 +19,6 @@ enum class MapProvider {
     Google, MapBox, MapLibre;
 
     companion object {
-        val default = Google
+        val default = MapLibre
     }
 }
