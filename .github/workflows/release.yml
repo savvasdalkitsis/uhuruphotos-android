@@ -60,7 +60,6 @@ jobs:
         MAPBOX_DOWNLOADS_TOKEN: ${{ secrets.MAPBOX_DOWNLOADS_TOKEN }}
         MAPBOX_API_KEY: ${{ secrets.MAPBOX_API_KEY }}
         MAPS_API_KEY: ${{ secrets.MAPS_API_KEY }}
-        MAPLIBRE_API_KEY: ${{ secrets.MAPLIBRE_API_KEY }}
         ANDROID_JSON_KEY_FILE: ${{ steps.service_account_json_file.outputs.filePath }}
         GRADLE_CACHE_URL: ${{ secrets.GRADLE_CACHE_URL }}
         GRADLE_CACHE_USER: ${{ secrets.GRADLE_CACHE_USER }}

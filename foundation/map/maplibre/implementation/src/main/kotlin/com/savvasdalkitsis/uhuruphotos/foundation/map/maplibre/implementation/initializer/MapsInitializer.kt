@@ -17,9 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.foundation.map.maplibre.implementation.i
 
 import android.app.Application
 import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
-import com.savvasdalkitsis.uhuruphotos.foundation.map.maplibre.implementation.api.MapLibreApi
 import org.maplibre.android.MapLibre
-import org.maplibre.android.WellKnownTileServer
 import se.ansman.dagger.auto.AutoBindIntoSet
 import javax.inject.Inject
 
@@ -28,6 +26,6 @@ internal class MapsInitializer @Inject constructor(
 ) : ApplicationCreated {
 
     override fun onAppCreated(app: Application) {
-        MapLibre.getInstance(app, MapLibreApi.getApiKey(app), WellKnownTileServer.MapTiler)
+        MapLibre.getInstance(app)
     }
 }
