@@ -54,7 +54,6 @@ internal fun LightboxBackHandler(
 
     val currentShowingActionsOverlay by rememberUpdatedState(showingActionsOverlay)
     val currentScrollValue by rememberUpdatedState(scrollState.value)
-    val currentZoomFraction by rememberUpdatedState(zoomableState.zoomFraction ?: 0f)
     val currentZoomableState by rememberUpdatedState(zoomableState)
 
     var backGestureProgress by remember { mutableFloatStateOf(0f) }
@@ -75,9 +74,8 @@ internal fun LightboxBackHandler(
 
 
     // --- Conditions for enabling the callback ---
-    val currentScaleX = currentZoomableState.contentTransformation.scale.scaleX
     val canScrollBasedOnCurrentState = !currentShowingActionsOverlay && currentScrollValue > 0
-    val canZoomResetBasedOnCurrentState = currentShowingActionsOverlay && (currentScaleX > 1.05f || currentZoomFraction > 0.05f)
+    val canZoomResetBasedOnCurrentState = currentShowingActionsOverlay && currentZoomableState.isZoomedIn
     val isCallbackEnabledConditionMet =
         (canScrollBasedOnCurrentState || canZoomResetBasedOnCurrentState) && isTrulyActivePage
 
@@ -219,3 +217,6 @@ internal fun LightboxBackHandler(
 private fun lerp(start: Float, stop: Float, fraction: Float): Float {
     return (1 - fraction) * start + fraction * stop
 }
+
+private val ZoomableState.isZoomedIn: Boolean
+    get() = (zoomFraction ?: 0f) > 0.05f && contentTransformation.scale.scaleX <= zoomSpec.maximum.factor
