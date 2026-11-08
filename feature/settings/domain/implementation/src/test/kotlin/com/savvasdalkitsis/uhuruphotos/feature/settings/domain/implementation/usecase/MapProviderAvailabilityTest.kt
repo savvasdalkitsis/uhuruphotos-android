@@ -32,8 +32,8 @@ class MapProviderAvailabilityTest {
     }
 
     @Test
-    fun `falls back from Google to MapBox without Play services`() {
-        assertEquals(MapBox, resolve(Google, playServices = false, openGlEs3 = true))
+    fun `falls back from Google to MapLibre without Play services`() {
+        assertEquals(MapLibre, resolve(Google, playServices = false, openGlEs3 = true))
     }
 
     @Test

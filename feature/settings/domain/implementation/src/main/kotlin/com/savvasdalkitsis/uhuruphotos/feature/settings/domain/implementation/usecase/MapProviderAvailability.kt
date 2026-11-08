@@ -26,10 +26,12 @@ internal class MapProviderAvailability @Inject constructor(
 ) {
 
     fun resolve(requested: MapProvider): MapProvider =
-        (listOf(requested) + MapProvider.entries).firstOrNull { it.isUsable() } ?: MapLibre
+        (listOf(requested) + FALLBACKS).firstOrNull { it.isUsable() } ?: MapLibre
 
     private fun MapProvider.isUsable(): Boolean = when (this) {
         Google -> capabilities.hasGooglePlayServices()
         MapBox, MapLibre -> capabilities.supportsOpenGlEs3()
     }
 }
+
+private val FALLBACKS = listOf(MapLibre, Google, MapBox)
