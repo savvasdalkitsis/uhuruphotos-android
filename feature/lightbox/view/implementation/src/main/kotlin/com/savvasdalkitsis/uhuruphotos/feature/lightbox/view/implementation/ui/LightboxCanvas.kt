@@ -80,7 +80,7 @@ fun SharedTransitionScope.LightboxCanvas(
                 .requiredHeight(this@BoxWithConstraints.maxHeight)
                 .fillMaxSize()
             ) {
-                LightboxCanvasContent(mediaItem, zoomableState, this@LightboxCanvas, action)
+                LightboxCanvasContent(mediaItem, index == state.currentIndex, zoomableState, this@LightboxCanvas, action)
             }
             LightboxDetailsSheet(mediaItem, state.showRestoreButton, action)
         }

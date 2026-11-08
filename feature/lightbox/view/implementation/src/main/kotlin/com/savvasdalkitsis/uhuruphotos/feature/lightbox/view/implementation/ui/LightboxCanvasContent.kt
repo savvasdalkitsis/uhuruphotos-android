@@ -46,6 +46,7 @@ import uhuruphotos_android.foundation.strings.api.generated.resources.photo
 @Composable
 internal fun BoxScope.LightboxCanvasContent(
     mediaItem: SingleMediaItemState,
+    play: Boolean,
     zoomableState: ZoomableState,
     scope: SharedTransitionScope,
     action: (LightboxAction) -> Unit
@@ -69,7 +70,7 @@ internal fun BoxScope.LightboxCanvasContent(
                     .align(Alignment.Center),
                 videoThumbnailUrl = lowResUrl,
                 videoUrl = fullResUrl,
-                play = true,
+                play = play,
                 onFinishedLoading = { action(FullMediaDataLoaded(mediaItem)) },
             )
         }
