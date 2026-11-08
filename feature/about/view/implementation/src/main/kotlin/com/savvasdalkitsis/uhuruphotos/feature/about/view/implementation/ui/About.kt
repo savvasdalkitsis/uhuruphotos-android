@@ -19,6 +19,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -31,14 +32,18 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import com.mikepenz.aboutlibraries.Libs
 import com.mikepenz.aboutlibraries.ui.compose.LibrariesContainer
 import com.mikepenz.aboutlibraries.ui.compose.LibraryColors
+import com.mikepenz.aboutlibraries.ui.compose.LibraryDefaults
+import com.mikepenz.aboutlibraries.ui.compose.android.rememberLibraries
+import com.mikepenz.aboutlibraries.ui.compose.chipColors
+import com.mikepenz.aboutlibraries.ui.compose.libraryColors
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.actions.AboutAction
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.actions.Donate
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.actions.NavigateToGithub
@@ -72,55 +77,67 @@ import uhuruphotos_android.foundation.strings.api.generated.resources.privacy_po
 @Composable
 internal fun About(
     state: AboutState,
+    libraries: Libs? = rememberLibraries().value,
     action: (AboutAction) -> Unit,
 ) {
     UhuruScaffold(
         title = { Text(stringResource(string.about)) },
         navigationIcon = { UhuruUpNavButton() },
     ) { contentPadding ->
-        val listState = rememberLazyListState()
-        val backgroundColor = MaterialTheme.colorScheme.background
-        val contentColor = contentColorFor(MaterialTheme.colorScheme.background)
-        val badgeBackgroundColor = MaterialTheme.colorScheme.primary
-        val badgeContentColor = contentColorFor(MaterialTheme.colorScheme.primary)
-        val dialogConfirmButtonColor = MaterialTheme.colorScheme.primary
-        LibrariesContainer(
-            modifier = Modifier
-                .recomposeHighlighter()
-                .fillMaxSize(),
-            showLicenseBadges = false,
-            contentPadding = contentPadding,
-            lazyListState = listState,
-            colors = remember {
-                object: LibraryColors {
-                    override val backgroundColor = backgroundColor
-                    override val contentColor = contentColor
-                    override val badgeBackgroundColor = badgeBackgroundColor
-                    override val badgeContentColor = badgeContentColor
-                    override val dialogConfirmButtonColor = dialogConfirmButtonColor
-                }
-            },
-            header = {
-                stickyHeader {
-                    AboutHeader(state, action)
-                }
-            }
-        )
-        Box(modifier = Modifier
-            .recomposeHighlighter()
-            .padding(contentPadding)
-        ) {
-            InternalLazyColumnScrollbar(
-                state = listState,
-                settings = ScrollbarSettings(
-                    thumbThickness = 8.dp,
-                    selectionMode = ScrollbarSelectionMode.Thumb,
-                    thumbSelectedColor = MaterialTheme.colorScheme.primary,
-                    thumbUnselectedColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.7f),
-                ),
-            )
-        }
+        AboutLibraries(state, libraries, contentPadding, action)
     }
+}
+
+@Composable
+private fun AboutLibraries(
+    state: AboutState,
+    libraries: Libs?,
+    contentPadding: PaddingValues,
+    action: (AboutAction) -> Unit,
+) {
+    val listState = rememberLazyListState()
+    LibrariesContainer(
+        libraries = libraries,
+        modifier = Modifier
+            .recomposeHighlighter()
+            .fillMaxSize(),
+        showLicenseBadges = false,
+        contentPadding = contentPadding,
+        lazyListState = listState,
+        colors = aboutLibraryColors(),
+        header = {
+            stickyHeader {
+                AboutHeader(state, action)
+            }
+        }
+    )
+    Box(modifier = Modifier
+        .recomposeHighlighter()
+        .padding(contentPadding)
+    ) {
+        InternalLazyColumnScrollbar(
+            state = listState,
+            settings = ScrollbarSettings(
+                thumbThickness = 8.dp,
+                selectionMode = ScrollbarSelectionMode.Thumb,
+                thumbSelectedColor = MaterialTheme.colorScheme.primary,
+                thumbUnselectedColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.7f),
+            ),
+        )
+    }
+}
+
+@Composable
+private fun aboutLibraryColors(): LibraryColors {
+    val background = MaterialTheme.colorScheme.background
+    val primary = MaterialTheme.colorScheme.primary
+    return LibraryDefaults.libraryColors(
+        backgroundColor = background,
+        contentColor = contentColorFor(background),
+        versionChipColors = LibraryDefaults.chipColors(background, contentColorFor(background)),
+        licenseChipColors = LibraryDefaults.chipColors(primary, contentColorFor(primary)),
+        dialogConfirmButtonColor = primary,
+    )
 }
 
 @Composable

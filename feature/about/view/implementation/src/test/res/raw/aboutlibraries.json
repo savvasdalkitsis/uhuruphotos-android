@@ -1,0 +1,11 @@
+{
+  "libraries": [
+    {
+      "uniqueId": "com.example:generated",
+      "artifactVersion": "2.0.0",
+      "name": "Generated Library",
+      "licenses": []
+    }
+  ],
+  "licenses": {}
+}

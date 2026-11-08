@@ -5,12 +5,15 @@ plugins {
 
 android {
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.about.view.implementation'
+    testOptions {
+        unitTests.includeAndroidResources = true
+    }
 }
 
 dependencies {
     implementation(
             libs.about,
-                        libs.androidx.compose.material3,
+            libs.androidx.compose.material3,
             libs.androidx.compose.ui.tooling.preview,
             libs.bundles.autodagger,
             libs.scrollbar,
@@ -27,6 +30,10 @@ dependencies {
     )
     debugImplementation(
             libs.androidx.compose.ui.tooling,
+    )
+    testImplementation(
+            libs.bundles.test,
+            libs.bundles.ui.test,
     )
     ksp libs.autodagger.ksp
 }
