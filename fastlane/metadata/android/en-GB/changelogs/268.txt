@@ -1,0 +1,3 @@
+* Fixed crashes on the map screens
+* Maps now use a free, privacy-friendly map by default, with no Google account or API key needed
+* Devices without OpenGL ES 3 get a map that works on them

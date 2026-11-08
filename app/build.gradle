@@ -19,8 +19,8 @@ android {
         applicationId "com.savvasdalkitsis.uhuruphotos"
         minSdk 24
         targetSdk 36
-        versionCode 267
-        versionName "0.0.267"
+        versionCode 268
+        versionName "0.0.268"
 
         manifestPlaceholders = [
                 bugSnagApiKey: System.getenv("BUGSNAG_API_KEY") ?: "DUMMY-KEY",
