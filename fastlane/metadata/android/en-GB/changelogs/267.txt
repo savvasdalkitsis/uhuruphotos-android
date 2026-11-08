@@ -1,0 +1,6 @@
+* Fixed a crash on the open source licences screen
+* Thumbnails show right after the first login
+* Videos keep their position on rotation
+* Only the video on screen plays
+* Back works for small photos and selections
+* Long album titles fit on one line
