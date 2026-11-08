@@ -15,20 +15,12 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.settings.domain.implementation.usecase
 
-import android.content.Context
-import com.google.android.gms.common.ConnectionResult.SERVICE_UPDATING
-import com.google.android.gms.common.ConnectionResult.SERVICE_VERSION_UPDATE_REQUIRED
-import com.google.android.gms.common.ConnectionResult.SIGN_IN_REQUIRED
-import com.google.android.gms.common.ConnectionResult.SUCCESS
-import com.google.android.gms.common.GoogleApiAvailability
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplayState
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplayState.ALWAYS_OFF
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUIUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.WelcomeUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.flow
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider
-import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider.Google
-import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider.MapBox
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.get
@@ -38,7 +30,6 @@ import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeContrast
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeMode
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.themes.ThemeVariant
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CollageShape
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
@@ -50,7 +41,7 @@ internal class SettingsUIUseCase @Inject constructor(
     @PlainTextPreferences
     private val preferences: Preferences,
     private val welcomeUseCase: WelcomeUseCase,
-    @ApplicationContext private val context: Context,
+    private val mapProviderAvailability: MapProviderAvailability,
 ) : SettingsUIUseCase {
 
     private val themeMode = "themeMode"
@@ -273,15 +264,7 @@ internal class SettingsUIUseCase @Inject constructor(
     }
 
     private fun MapProvider.mapToAvailable(): MapProvider =
-        when {
-            this == Google && !googlePlayAvailable() -> MapBox
-            else -> this
-        }
-
-    private fun googlePlayAvailable() =
-        GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(context) in setOf(
-            SUCCESS, SERVICE_VERSION_UPDATE_REQUIRED, SIGN_IN_REQUIRED, SERVICE_UPDATING
-        )
+        mapProviderAvailability.resolve(this)
 
     private inline fun <reified T: Enum<T>> get(key: String, defaultValue: T): T =
         preferences.get(key, defaultValue)
