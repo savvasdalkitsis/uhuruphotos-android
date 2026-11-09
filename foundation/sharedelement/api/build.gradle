@@ -24,6 +24,7 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api'
 
     dependencies {
+        implementation(libs.androidx.compose.animation.base)
         implementation(libs.bundles.androidx.navigation)
     }
 }

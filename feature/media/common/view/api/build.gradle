@@ -5,6 +5,9 @@ plugins {
 
 android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api'
+    testOptions {
+        unitTests.includeAndroidResources = true
+    }
 }
 dependencies {
     api(
@@ -34,4 +37,8 @@ dependencies {
             libs.androidx.compose.ui.tooling,
     )
     ksp libs.moshi.ksp
+    testImplementation(
+            libs.bundles.test,
+            libs.bundles.ui.test,
+    )
 }
