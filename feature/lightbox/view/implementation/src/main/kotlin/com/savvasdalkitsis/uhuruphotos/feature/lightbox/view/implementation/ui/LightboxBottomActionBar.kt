@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui
 
+import android.content.pm.ResolveInfo
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Arrangement.spacedBy
@@ -106,8 +107,8 @@ fun LightboxBottomActionBarEdit(
                 text = stringResource(string.crop),
             )
         }
-        mediaItem.showEditApps.forEach { app ->
-            item(app.iconResource) {
+        mediaItem.showEditApps.distinctBy { it.editAppKey }.forEach { app ->
+            item(app.editAppKey) {
                 val pm = LocalContext.current.packageManager
                 UhuruActionIconWithText(
                     onClick = { action(EditMediaItemExternally(app)) },
@@ -121,6 +122,9 @@ fun LightboxBottomActionBarEdit(
         }
     }
 }
+
+private val ResolveInfo.editAppKey
+    get() = "${activityInfo.packageName}/${activityInfo.name}"
 
 @Composable
 fun LightboxBottomActionBarOptions(
