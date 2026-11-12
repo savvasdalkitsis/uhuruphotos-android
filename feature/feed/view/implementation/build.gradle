@@ -62,6 +62,7 @@ dependencies {
     )
     ksp libs.autodagger.ksp
     testImplementation(
+            libs.androidx.compose.material.windowsize,
             libs.bundles.test,
             libs.bundles.ui.test,
     )

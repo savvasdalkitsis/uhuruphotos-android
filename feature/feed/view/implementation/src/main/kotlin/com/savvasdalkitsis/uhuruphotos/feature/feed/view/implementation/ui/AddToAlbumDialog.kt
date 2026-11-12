@@ -19,6 +19,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui
 
 import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -63,7 +64,7 @@ import uhuruphotos_android.foundation.strings.api.generated.resources.add_to_alb
 import uhuruphotos_android.foundation.strings.api.generated.resources.create_album
 
 @Composable
-internal fun SharedTransitionScope.AddToAlbumDialog(
+internal fun AddToAlbumDialog(
     albums: ImmutableList<UserAlbumState>,
     action: (FeedAction) -> Unit,
 ) {
@@ -78,45 +79,55 @@ internal fun SharedTransitionScope.AddToAlbumDialog(
             enableEdgeToEdge = true,
         ),
     ) {
-        Surface(
-            shape = MaterialTheme.shapes.large,
+        SharedTransitionLayout {
+            AlbumsSheet(albums, action)
+        }
+    }
+}
+
+@Composable
+private fun SharedTransitionScope.AlbumsSheet(
+    albums: ImmutableList<UserAlbumState>,
+    action: (FeedAction) -> Unit,
+) {
+    Surface(
+        shape = MaterialTheme.shapes.large,
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(8.dp),
+            SheetHandle()
+            Text(
+                modifier = Modifier.padding(vertical = 8.dp),
+                text = stringResource(string.add_to_album),
+                style = MaterialTheme.typography.headlineMedium,
+            )
+            SearchField(
+                queryCacheKey = "albums",
+                latestQuery = "",
+                showSearchIcon = false,
+                onNewQuery = { action(FilterAlbums(it)) },
+                onSearchFor = { action(FilterAlbums(it)) },
+            )
+            LazyVerticalGrid(
+                modifier = Modifier.fillMaxSize(),
+                columns = GridCells.Adaptive(120.dp),
+                contentPadding =
+                    WindowInsets.systemBars.only(WindowInsetsSides.Bottom).asPaddingValues() +
+                    WindowInsets.ime.only(WindowInsetsSides.Bottom).asPaddingValues(),
             ) {
-                SheetHandle()
-                Text(
-                    modifier = Modifier.padding(vertical = 8.dp),
-                    text = stringResource(string.add_to_album),
-                    style = MaterialTheme.typography.headlineMedium,
-                )
-                SearchField(
-                    queryCacheKey = "albums",
-                    latestQuery = "",
-                    showSearchIcon = false,
-                    onNewQuery = { action(FilterAlbums(it)) },
-                    onSearchFor = { action(FilterAlbums(it)) },
-                )
-                LazyVerticalGrid(
-                    modifier = Modifier.fillMaxSize(),
-                    columns = GridCells.Adaptive(120.dp),
-                    contentPadding =
-                        WindowInsets.systemBars.only(WindowInsetsSides.Bottom).asPaddingValues() +
-                        WindowInsets.ime.only(WindowInsetsSides.Bottom).asPaddingValues(),
-                ) {
-                    createNewButtonItem(action)
-                    for (album in albums) {
-                        if (album.visible) {
-                            item(album.id) {
-                                UserAlbumItem(
-                                    modifier = Modifier
-                                        .padding(8.dp),
-                                    album = album,
-                                ) {
-                                    action(AddSelectedCelsToAlbum(album.id))
-                                    action(HideAddToAlbumDialog)
-                                }
+                createNewButtonItem(action)
+                for (album in albums) {
+                    if (album.visible) {
+                        item(album.id) {
+                            UserAlbumItem(
+                                modifier = Modifier
+                                    .padding(8.dp),
+                                album = album,
+                            ) {
+                                action(AddSelectedCelsToAlbum(album.id))
+                                action(HideAddToAlbumDialog)
                             }
                         }
                     }
