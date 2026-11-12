@@ -1,0 +1,2 @@
+* Fixed a crash when going back to Discover while person suggestions were showing
+* Fixed a possible crash in the Add to album sheet
