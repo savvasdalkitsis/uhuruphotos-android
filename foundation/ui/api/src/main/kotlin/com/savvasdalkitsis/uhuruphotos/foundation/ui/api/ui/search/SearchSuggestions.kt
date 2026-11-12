@@ -19,6 +19,7 @@ package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.search
 
 import android.content.res.Configuration.ORIENTATION_LANDSCAPE
 import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.heightIn
@@ -38,44 +39,46 @@ import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.persistentMapOf
 
 @Composable
-internal fun SharedTransitionScope.SearchSuggestions(
+internal fun SearchSuggestions(
     suggestions: ImmutableList<SearchSuggestion>,
     leadingContent: ImmutableMap<String, @Composable SharedTransitionScope.(SearchSuggestion) -> Unit> = persistentMapOf(),
     trailingContent: ImmutableMap<String, @Composable (SearchSuggestion) -> Unit> = persistentMapOf(),
     onSearchAction: (SearchSuggestion) -> Unit,
 ) {
     Popup {
-        Card(
-            modifier = Modifier
-                .clip(MaterialTheme.shapes.large)
-                .padding(horizontal = 16.dp, vertical = 8.dp),
-            shape = CardDefaults.elevatedShape,
-            colors = CardDefaults.elevatedCardColors(),
-        ) {
-            val height = when (LocalConfiguration.current.orientation) {
-                ORIENTATION_LANDSCAPE -> 120.dp
-                else -> 320.dp
-            }
-            LazyColumn(
+        SharedTransitionLayout {
+            Card(
                 modifier = Modifier
-                    .heightIn(max = height)
-                    .animateContentSize()
+                    .clip(MaterialTheme.shapes.large)
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                shape = CardDefaults.elevatedShape,
+                colors = CardDefaults.elevatedCardColors(),
             ) {
-                for ((index, suggestion) in suggestions.withIndex()) {
-                    item(index, contentType = "${suggestion.type}SearchSuggestion") {
-                        Suggestion(
-                            modifier = Modifier.animateItem(),
-                            text = suggestion.filterable,
-                            onClick = {
-                                onSearchAction(suggestion)
-                            },
-                            leadingContent = {
-                                leadingContent[suggestion.type]?.invoke(this, suggestion)
-                            },
-                            trailingContent = {
-                                trailingContent[suggestion.type]?.invoke(suggestion)
-                            }
-                        )
+                val height = when (LocalConfiguration.current.orientation) {
+                    ORIENTATION_LANDSCAPE -> 120.dp
+                    else -> 320.dp
+                }
+                LazyColumn(
+                    modifier = Modifier
+                        .heightIn(max = height)
+                        .animateContentSize()
+                ) {
+                    for ((index, suggestion) in suggestions.withIndex()) {
+                        item(index, contentType = "${suggestion.type}SearchSuggestion") {
+                            Suggestion(
+                                modifier = Modifier.animateItem(),
+                                text = suggestion.filterable,
+                                onClick = {
+                                    onSearchAction(suggestion)
+                                },
+                                leadingContent = {
+                                    leadingContent[suggestion.type]?.invoke(this, suggestion)
+                                },
+                                trailingContent = {
+                                    trailingContent[suggestion.type]?.invoke(suggestion)
+                                }
+                            )
+                        }
                     }
                 }
             }
