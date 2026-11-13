@@ -1,0 +1,5 @@
+* Fixed crashes when deleting photos from your phone, scrolling local albums, opening events, uploads or a person's page, and with very tall photos
+* Fixed crashes when editing, sharing or opening photos in other apps, and while Android System WebView updates
+* Unexpected errors are now reported instead of closing the app
+* "Remove GPS data" now also applies to photos shared from your phone
+* Fixed dragging to reorder the Library and a map memory leak in the photo viewer
