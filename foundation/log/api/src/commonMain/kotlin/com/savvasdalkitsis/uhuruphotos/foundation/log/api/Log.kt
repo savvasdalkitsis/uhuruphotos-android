@@ -59,6 +59,16 @@ fun logError(t: Throwable) {
     }
 }
 
+const val HANDLED_ERROR_TAG = "HandledError"
+
+fun reportError(t: Throwable) {
+    try {
+        saschpe.log4k.Log.error(throwable = t, tag = HANDLED_ERROR_TAG) { "Handled error" }
+    } catch (_: Exception) {
+        t.printStackTrace()
+    }
+}
+
 data object Log {
     var enabled: Boolean = false
 }

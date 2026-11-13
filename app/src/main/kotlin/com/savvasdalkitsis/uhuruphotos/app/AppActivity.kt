@@ -56,6 +56,7 @@ class AppActivity : FragmentActivity() {
         MainScope().launch(Dispatchers.IO) {
             Bugsnag.start(this@AppActivity)
             BugsnagPerformance.start(PerformanceConfiguration.load(this@AppActivity))
+            reportHandledErrorsToBugsnag()
         }
         activityInitializer.onCreated(this)
         setContent {

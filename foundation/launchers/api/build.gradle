@@ -9,6 +9,7 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(libs.kotlinx.coroutines)
+                implementation(project(":foundation:log:api"))
             }
         }
     }

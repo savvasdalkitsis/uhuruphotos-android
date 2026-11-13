@@ -15,7 +15,10 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.seam.api
 
+import com.savvasdalkitsis.uhuruphotos.foundation.launchers.api.reportingErrors
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
+import com.savvasdalkitsis.uhuruphotos.foundation.log.api.reportError
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
@@ -39,18 +42,28 @@ class Seam<S : Any, A : Any>(
     override val state: StateFlow<S> = _state
 
     override fun action(action: A) {
-        scope.launch {
-            log("Seam") { "Starting handling of action $action" }
-            actionHandler.handleAction(_state.value, action)
-                .distinctUntilChanged()
-                .flowOn(Dispatchers.Default)
-                .cancellable()
-                .collect { mutation ->
-                    if (!scope.isActive)
-                        currentCoroutineContext().cancel()
-                    log("Seam") { "Received mutation $mutation due to action $action" }
-                    _state.update { mutation.reduce(_state.value) }
-                }
+        scope.launch(reportingErrors) {
+            try {
+                handle(action)
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                reportError(e)
+            }
         }
+    }
+
+    private suspend fun handle(action: A) {
+        log("Seam") { "Starting handling of action $action" }
+        actionHandler.handleAction(_state.value, action)
+            .distinctUntilChanged()
+            .flowOn(Dispatchers.Default)
+            .cancellable()
+            .collect { mutation ->
+                if (!scope.isActive)
+                    currentCoroutineContext().cancel()
+                log("Seam") { "Received mutation $mutation due to action $action" }
+                _state.update { mutation.reduce(_state.value) }
+            }
     }
 }
