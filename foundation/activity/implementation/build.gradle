@@ -1,5 +1,8 @@
 android {
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.activity.implementation'
+    testOptions {
+        unitTests.includeAndroidResources = true
+    }
 }
 
 dependencies {
@@ -10,6 +13,10 @@ dependencies {
             libs.bundles.autodagger,
             libs.hilt,
             project(":foundation:initializer:api"),
+    )
+    testImplementation(
+            libs.bundles.test,
+            libs.robolectric,
     )
     ksp libs.autodagger.ksp
 }

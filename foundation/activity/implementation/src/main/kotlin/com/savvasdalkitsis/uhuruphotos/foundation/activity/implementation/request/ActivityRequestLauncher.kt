@@ -17,10 +17,12 @@ package com.savvasdalkitsis.uhuruphotos.foundation.activity.implementation.reque
 
 import android.app.Activity
 import androidx.activity.ComponentActivity
+import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
+import androidx.savedstate.SavedStateRegistry.SavedStateProvider
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.savvasdalkitsis.uhuruphotos.foundation.activity.api.holder.CurrentActivityHolder
@@ -41,7 +43,6 @@ class ActivityRequestLauncher @Inject constructor(
 ) : ActivityRequestLauncher {
 
     private val keyIncrement = AtomicInteger(0)
-    private val activity get() = currentActivityHolder.currentActivity
     private val noActivityResult get() = Err(
         IllegalStateException("No active activity found when trying to launch request")
     )
@@ -53,67 +54,61 @@ class ActivityRequestLauncher @Inject constructor(
         requestId: String,
         request: IntentSenderRequest,
     ): SimpleResult {
-        var isLaunched = false
-
-        val key = activity?.let { activity ->
-            val savedBundle = activity.savedStateRegistry.consumeRestoredStateForKey(savedStateRegistryKey)
-            if (savedBundle?.getString(requestKey) == requestId) {
-                isLaunched = true
-                generateKey(savedBundle.getInt(lastIncrementKey))
-            } else {
-                generateKey(keyIncrement.getAndIncrement())
-            }
-        } ?: return noActivityResult
-
-        activity?.let {
-            if (!isLaunched) {
-                prepareSavedData(it, requestId)
-            }
-        } ?: return noActivityResult
-
+        val activity = currentActivityHolder.currentActivity ?: return noActivityResult
+        val restoredIncrement = activity.savedStateRegistry.consumeRestoredStateForKey(savedStateRegistryKey)
+            ?.takeIf { it.getString(requestKey) == requestId }
+            ?.getInt(lastIncrementKey)
+        val increment = restoredIncrement ?: keyIncrement.getAndIncrement()
+        val provider = prepareSavedData(activity, requestId, increment)
         var launcher: ActivityResultLauncher<IntentSenderRequest>? = null
         return try {
-            val activity = activity ?: return noActivityResult
             suspendCancellableCoroutine { continuation ->
                 launcher = activity.activityResultRegistry.register(
-                    key,
+                    generateKey(increment),
                     ActivityResultContracts.StartIntentSenderForResult()
                 ) { result ->
-                    clearSavedStateData(activity)
-                    continuation.resume(
-                        if (result.resultCode == Activity.RESULT_OK) {
-                            Ok(Unit)
-                        } else {
-                            Err(ActivityRequestFailed(result.resultCode.toString()))
-                        }
-                    )
+                    continuation.resume(result.toSimpleResult())
                 }
-
-                if (!isLaunched) {
+                if (restoredIncrement == null) {
                     launcher!!.launch(request)
-                    isLaunched = true
                 }
             }
         } finally {
             launcher?.unregister()
+            clearSavedStateData(activity, provider)
         }
     }
 
-    private fun prepareSavedData(currentActivity: ComponentActivity, requestId: String) {
-        currentActivity.savedStateRegistry.registerSavedStateProvider(
-            savedStateRegistryKey
-        ) {
+    private fun ActivityResult.toSimpleResult(): SimpleResult =
+        if (resultCode == Activity.RESULT_OK) {
+            Ok(Unit)
+        } else {
+            Err(ActivityRequestFailed(resultCode.toString()))
+        }
+
+    private fun prepareSavedData(
+        currentActivity: ComponentActivity,
+        requestId: String,
+        increment: Int,
+    ): SavedStateProvider {
+        val provider = SavedStateProvider {
             bundleOf(
                 requestKey to requestId,
-                lastIncrementKey to keyIncrement.get() - 1
+                lastIncrementKey to increment,
             )
         }
+        with(currentActivity.savedStateRegistry) {
+            unregisterSavedStateProvider(savedStateRegistryKey)
+            registerSavedStateProvider(savedStateRegistryKey, provider)
+        }
+        return provider
     }
 
-    private fun clearSavedStateData(currentActivity: ComponentActivity) =
-        with(currentActivity.savedStateRegistry){
-            unregisterSavedStateProvider(savedStateRegistryKey)
-            consumeRestoredStateForKey(savedStateRegistryKey)
+    private fun clearSavedStateData(currentActivity: ComponentActivity, provider: SavedStateProvider) =
+        with(currentActivity.savedStateRegistry) {
+            if (getSavedStateProvider(savedStateRegistryKey) === provider) {
+                unregisterSavedStateProvider(savedStateRegistryKey)
+            }
         }
 
     private fun generateKey(increment: Int) = "request_$increment"
