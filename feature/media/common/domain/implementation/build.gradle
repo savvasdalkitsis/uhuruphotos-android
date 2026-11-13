@@ -4,6 +4,9 @@ plugins {
 
 android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.implementation'
+    testOptions {
+        unitTests.includeAndroidResources = true
+    }
 }
 
 dependencies {
@@ -55,7 +58,11 @@ dependencies {
             project(":foundation:worker:api"),
     )
     testImplementation(
+            libs.androidx.compose.foundation,
+            libs.androidx.navigation3.ui,
             libs.bundles.test,
+            libs.bundles.ui.test,
+            project(":feature:media:common:view:api"),
     )
     ksp libs.autodagger.ksp
     ksp libs.moshi.ksp

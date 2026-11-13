@@ -78,14 +78,24 @@ class RemoteMediaItemMappingTest {
         assertNull(source(lat = "x").toRemoteMediaItem(1, 4, null, null)!!.latLng)
     }
 
-    private fun summary(url: String, rating: Int?) = DbRemoteMediaItemSummary(
+    @Test
+    fun `a summary whose aspect ratio was rounded down to zero is shown square`() {
+        assertEquals(1f, summary(url = "${md5}1", rating = null, aspectRatio = 0f).toRemoteMediaItem(1, 4, null, null).ratio)
+    }
+
+    @Test
+    fun `a collection item whose aspect ratio was rounded down to zero is shown square`() {
+        assertEquals(1f, source(aspectRatio = 0f).toRemoteMediaItem(1, 4, null, null)!!.ratio)
+    }
+
+    private fun summary(url: String, rating: Int?, aspectRatio: Float = 1.5f) = DbRemoteMediaItemSummary(
         id = uuid,
         dominantColor = "#000000",
         url = url,
         location = null,
         date = "2024-05-01T10:00:00Z",
         birthTime = null,
-        aspectRatio = 1.5f,
+        aspectRatio = aspectRatio,
         type = "image",
         videoLength = null,
         rating = rating,
@@ -99,6 +109,7 @@ class RemoteMediaItemMappingTest {
         hash: String? = "${md5}1",
         lat: String? = "52.5",
         lon: String? = "13.4",
+        aspectRatio: Float? = null,
     ) = MediaCollectionSourceModel(
         id = "20240501",
         date = "2024-05-01T10:00:00Z",
@@ -107,7 +118,7 @@ class RemoteMediaItemMappingTest {
         mediaItemHash = hash,
         dominantColor = null,
         rating = 5,
-        aspectRatio = null,
+        aspectRatio = aspectRatio,
         isVideo = false,
         lat = lat,
         lon = lon,
