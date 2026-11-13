@@ -15,14 +15,13 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.cookies
 
-import android.webkit.CookieManager
 import okhttp3.Cookie
 import okhttp3.CookieJar
 import okhttp3.HttpUrl
 import javax.inject.Inject
 
 class WebkitCookieManager @Inject constructor(
-    private val cookieManager: CookieManager,
+    private val cookieManager: WebCookies,
 ) : CookieJar {
 
     override fun saveFromResponse(url: HttpUrl, cookies: List<Cookie>) {

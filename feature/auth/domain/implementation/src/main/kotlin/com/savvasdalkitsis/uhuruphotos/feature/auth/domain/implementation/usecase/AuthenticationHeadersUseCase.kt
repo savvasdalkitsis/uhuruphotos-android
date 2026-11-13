@@ -15,8 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.usecase
 
-import android.webkit.CookieManager
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.AuthenticationHeadersUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.cookies.WebCookies
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.repository.AuthenticationRepository
 import kotlinx.coroutines.runBlocking
 import se.ansman.dagger.auto.AutoBind
@@ -25,7 +25,7 @@ import javax.inject.Inject
 @AutoBind
 class AuthenticationHeadersUseCase @Inject constructor(
     private val authenticationRepository: AuthenticationRepository,
-    private val cookieManager: CookieManager,
+    private val cookieManager: WebCookies,
 ) : AuthenticationHeadersUseCase {
 
     override fun headers(requestUrl: String): Set<Pair<String, String>> {
@@ -33,6 +33,6 @@ class AuthenticationHeadersUseCase @Inject constructor(
         val cookie = cookieManager.getCookie(requestUrl)
         return setOf(
             "Authorization" to "Bearer $accessToken",
-        ) + setOfNotNull(("Cookie" to cookie).takeIf { !cookie.isNullOrEmpty() })
+        ) + setOfNotNull(cookie?.takeIf { it.isNotEmpty() }?.let { "Cookie" to it })
     }
 }

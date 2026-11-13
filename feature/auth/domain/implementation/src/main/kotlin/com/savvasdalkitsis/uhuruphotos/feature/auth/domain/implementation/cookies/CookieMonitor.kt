@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.cookies
 
-import android.webkit.CookieManager
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.cookies.CookieMonitor
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
@@ -33,10 +32,10 @@ import kotlin.coroutines.CoroutineContext
 @Singleton
 class CookieMonitor @Inject constructor(
     private val serverUseCase: ServerUseCase,
+    private val cookies: WebCookies,
 ) : CookieMonitor {
 
     override fun monitor(context: CoroutineContext): Job = CoroutineScope(Dispatchers.IO + context).launch {
-        val cookies = CookieManager.getInstance()
         val server = serverUseCase.getServerUrl()
         var cookie: String?
         do {

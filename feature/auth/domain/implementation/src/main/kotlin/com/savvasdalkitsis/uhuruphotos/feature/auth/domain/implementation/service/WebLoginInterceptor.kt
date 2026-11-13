@@ -15,8 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.service
 
-import android.webkit.CookieManager
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.cookies.WebCookies
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.api.navigation.WebLoginNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import kotlinx.coroutines.CoroutineScope
@@ -29,7 +29,7 @@ import javax.inject.Inject
 class WebLoginInterceptor @Inject constructor(
     private val navigator: Navigator,
     private val serverUseCase: ServerUseCase,
-    private val cookieManager: CookieManager,
+    private val cookieManager: WebCookies,
 ) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
