@@ -19,9 +19,11 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
+import com.savvasdalkitsis.uhuruphotos.foundation.log.api.reportError
 import dagger.hilt.android.qualifiers.ApplicationContext
 import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
 import uhuruphotos_android.foundation.strings.api.generated.resources.could_not_find_app_to_open
+import uhuruphotos_android.foundation.strings.api.generated.resources.general_error
 import usecase.ToasterUseCase
 import javax.inject.Inject
 
@@ -32,23 +34,28 @@ internal class IntentLauncher @Inject constructor(
 
     fun launch(intent: Intent) {
         try {
-            context.startActivity(intent.apply {
-                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            })
+            start(intent)
         } catch (e: ActivityNotFoundException) {
             log(e)
             toasterUseCase.show(string.could_not_find_app_to_open)
+        } catch (e: RuntimeException) {
+            reportError(e)
+            toasterUseCase.show(string.general_error)
         }
     }
+
     fun launch(intent: Intent, fallbackIntent: Intent) {
         try {
-            context.startActivity(intent.apply {
-                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            })
-        } catch (e: ActivityNotFoundException) {
+            start(intent)
+        } catch (e: RuntimeException) {
             log(e)
             launch(fallbackIntent)
         }
     }
 
+    private fun start(intent: Intent) {
+        context.startActivity(intent.apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        })
+    }
 }
