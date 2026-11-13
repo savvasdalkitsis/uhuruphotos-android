@@ -16,8 +16,11 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.foundation.map.maplibre.implementation.ui
 
 import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
+import com.savvasdalkitsis.uhuruphotos.foundation.activity.api.extensions.getActivity
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 import org.maplibre.android.maps.MapLibreMap
 import org.maplibre.android.maps.MapView
@@ -60,6 +63,16 @@ internal fun MapView.lifecycleObserver() = object : DefaultLifecycleObserver {
     override fun onDestroy(owner: LifecycleOwner) {
         onDestroy()
     }
+}
+
+internal fun View.releaseMapLifecycle() {
+    val observer = tag as? DefaultLifecycleObserver ?: return
+    val owner = context.getActivity() ?: return
+    val state = owner.lifecycle.currentState
+    owner.lifecycle.removeObserver(observer)
+    if (state.isAtLeast(Lifecycle.State.RESUMED)) observer.onPause(owner)
+    if (state.isAtLeast(Lifecycle.State.STARTED)) observer.onStop(owner)
+    if (state.isAtLeast(Lifecycle.State.CREATED)) observer.onDestroy(owner)
 }
 
 internal fun MapView?.withMap(action: MapLibreMap.(MapView) -> Unit) {

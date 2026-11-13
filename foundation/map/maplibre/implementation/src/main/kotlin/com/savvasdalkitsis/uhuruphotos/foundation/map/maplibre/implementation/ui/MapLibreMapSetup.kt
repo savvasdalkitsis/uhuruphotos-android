@@ -44,7 +44,7 @@ internal val LocalMapLibreViewFactory =
 private fun createMapLibreMapView(context: Context, setup: MapLibreMapSetup): View =
     MapView(context).apply {
         bindTo(setup.state)
-        context.getActivity()!!.lifecycle.addObserver(lifecycleObserver())
+        tag = lifecycleObserver().also(context.getActivity()!!.lifecycle::addObserver)
         getMapAsync { map -> map.setUp(this, setup) }
     }
 

@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.map.maplibre.implementation.ui
 
+import android.view.View
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
@@ -47,6 +48,7 @@ fun MapLibreMapView(
     AndroidView(
         modifier = modifier,
         factory = { context -> createMapView(context, setup) },
+        onRelease = View::releaseMapLifecycle,
     )
     content?.invoke(mapViewState)
 }
