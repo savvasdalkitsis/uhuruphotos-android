@@ -19,6 +19,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Parcelable
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkConstructor
@@ -35,7 +36,10 @@ class ShareUseCaseTest {
     private val contentUri = "content://media/external/video/media/1"
     private val uri: Uri = mockk()
     private val context: Context = mockk()
-    private val underTest = ShareUseCase(mockk(), mockk(relaxed = true), mockk(), mockk(), context, mockk())
+    private val settings = mockk<SettingsUseCase> {
+        every { getShareRemoveGpsData() } returns false
+    }
+    private val underTest = ShareUseCase(mockk(), mockk(relaxed = true), mockk(), settings, context, mockk())
 
     @Before
     fun setUp() {

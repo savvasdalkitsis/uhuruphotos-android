@@ -88,12 +88,29 @@ internal class ShareUseCase @Inject constructor(
 
     private suspend fun List<String>.realise(): List<Uri> {
         val (contentUris, urls) = partition { it.isContentUri }
-        return contentUris.map { it.toUri } + download(*urls.toTypedArray())
+        return contentUris.mapIndexedNotNull { index, url -> local(url, "-local-$index") } +
+            download(*urls.toTypedArray())
     }
     private suspend fun String.actualize() = when {
-        isContentUri -> toUri
+        isContentUri -> local(this, "-local")
         else -> download(this).firstOrNull()
     }
+
+    private fun local(url: String, postfix: String): Uri? {
+        val uri = url.toUri
+        return when {
+            !settingsUseCase.getShareRemoveGpsData() -> uri
+            uri.mimeType.startsWith("video/") -> refuse(null)
+            else -> copy(uri, shareFile(postfix))?.let(::sharable)
+        }
+    }
+
+    private fun copy(uri: Uri, file: File): File? =
+        context.contentResolver.openInputStream(uri)?.use { input ->
+            file.parentFile?.mkdirs()
+            file.outputStream().use { input.copyTo(it) }
+            file
+        }
 
     private val Uri.mimeType get() = context.contentResolver.getType(this) ?: imageMimeType
 
