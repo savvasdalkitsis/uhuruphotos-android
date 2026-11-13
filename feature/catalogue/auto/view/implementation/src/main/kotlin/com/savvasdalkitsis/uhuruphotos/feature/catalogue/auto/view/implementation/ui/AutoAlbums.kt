@@ -54,7 +54,7 @@ internal fun SharedTransitionScope.AutoAlbums(
     {
         Catalogue(
             modifier = Modifier
-                .sharedElement(SharedElementId.userAlbumsCanvas()),
+                .sharedElement(SharedElementId.autoAlbumsCanvas()),
             title = {
                 Text(
                     modifier = Modifier.sharedElement(SharedElementId.autoAlbumsTitle()),
