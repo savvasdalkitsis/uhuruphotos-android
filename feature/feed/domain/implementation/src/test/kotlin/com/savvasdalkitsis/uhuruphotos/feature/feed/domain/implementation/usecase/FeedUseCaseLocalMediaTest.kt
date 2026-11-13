@@ -21,6 +21,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchTy
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.FeedCache
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.FeedRepository
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHashModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstanceModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.domain.api.usecase.PortfolioUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.domain.api.usecase.UploadsUseCase
@@ -37,8 +40,9 @@ class FeedUseCaseLocalMediaTest {
 
     private val portfolioUseCase: PortfolioUseCase = mockk<PortfolioUseCase>().defaults()
     private val mediaUseCase: MediaUseCase = mockk<MediaUseCase>().defaults()
+    private val feedRepository: FeedRepository = mockk<FeedRepository>().defaults()
     private val underTest = FeedUseCase(
-        mockk<FeedRepository>().defaults(),
+        feedRepository,
         mockk<FeedCache>(relaxed = true).defaults(),
         mediaUseCase,
         mockk(relaxed = true),
@@ -59,6 +63,18 @@ class FeedUseCaseLocalMediaTest {
         every { portfolioUseCase.observeIndividualPortfolioItems() } returns flowOf(listOf(PortfolioItems(5, 101)))
 
         assertFeed(mediaCollection("local_media_collection_day1", "day1", local(5)))
+    }
+
+    @Test
+    fun `keeps a device video apart from a server photo with the same content hash`() = runTest {
+        val hash = MediaItemHashModel.fromRemoteMediaHash("hash", 0)
+        val video = MediaItemInstanceModel(MediaIdModel.LocalIdModel(2, 0, true, "", "", hash), hash, displayDayDate = "day1")
+        feedRepository.returnsRemoteFeed("day1" to listOf(mediaItem("1", hash = "hash")))
+        mediaUseCase.returnsLocalMedia(primaryFolder = localFolder(100) to listOf(video))
+
+        assertFeed(
+            MediaCollectionModel("day1", listOf(mediaItem(remote("1", hash = "hash"), "day1").copy(mediaHash = hash), video), "day1"),
+        )
     }
 
     private suspend fun assertFeed(vararg collections: MediaCollectionModel) {

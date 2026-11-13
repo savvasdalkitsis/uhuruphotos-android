@@ -92,7 +92,7 @@ internal class FeedMergerUseCase(
         remainingLocalMedia: MutableList<MediaItemModel>
     ) = copy(mediaItems = mediaItems.map { item ->
         val local = remainingLocalMedia
-            .filter { it.mediaHash == item.mediaHash }
+            .filter { it.mediaHash == item.mediaHash && it.id.isVideo == item.id.isVideo }
             .toSet()
         when {
             local.isEmpty() -> item.orDownloading(mediaBeingDownloaded)
