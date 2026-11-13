@@ -86,7 +86,7 @@ internal fun SharedTransitionScope.LocalFolders(
             modifier = Modifier.heightIn(min = 120.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            for ((bucket, vitrineState) in media.buckets) {
+            for ((bucket, vitrineState) in media.buckets.distinctBy { (bucket, _) -> bucket.id }) {
                 item(bucket.id) {
                     NamedVitrine(
                         modifier = Modifier

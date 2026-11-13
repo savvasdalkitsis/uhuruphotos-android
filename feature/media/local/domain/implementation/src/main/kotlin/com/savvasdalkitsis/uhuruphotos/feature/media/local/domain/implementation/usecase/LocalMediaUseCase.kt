@@ -32,26 +32,19 @@ import android.provider.MediaStore.MediaColumns.RELATIVE_PATH
 import androidx.core.content.ContextCompat
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.local.LocalMediaItemDetails
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalFolderModel
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaFolder
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItems
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalPermissions
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalPermissions.Granted
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalPermissions.RequiresPermissions
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Md5Hash
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.MediaOrientation
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.model.MediaStoreContentUriResolver
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.module.LocalMediaModule
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.repository.LocalMediaFolderRepository
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.repository.LocalMediaRepository
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.repository.MediaStoreVersionRepository
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.worker.LocalMediaSyncWorker
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.worker.LocalMediaWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.async
-import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateDisplayer
-import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule.ParsingDateFormat
-import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule.ParsingDateTimeFormat
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNotificationWorker
@@ -66,7 +59,6 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
-import org.joda.time.format.DateTimeFormatter
 import se.ansman.dagger.auto.AutoBind
 import java.io.IOException
 import javax.inject.Inject
@@ -76,13 +68,7 @@ import javax.inject.Inject
 class LocalMediaUseCase @Inject constructor(
     @ApplicationContext
     private val context: Context,
-    @LocalMediaModule.LocalMediaDateTimeFormat
-    private val localMediaDateTimeFormat: DateTimeFormatter,
-    @ParsingDateTimeFormat
-    private val parsingDateTimeFormat: DateTimeFormatter,
-    @ParsingDateFormat
-    private val parsingDateFormat: DateTimeFormatter,
-    private val dateDisplayer: DateDisplayer,
+    private val localMediaItemMapper: LocalMediaItemMapper,
     private val localMediaRepository: LocalMediaRepository,
     private val permissionFlow: PermissionFlow,
     private val localMediaFolderRepository: LocalMediaFolderRepository,
@@ -111,10 +97,10 @@ class LocalMediaUseCase @Inject constructor(
     override fun Long.toContentUri(isVideo: Boolean): String = contentUri(isVideo)
 
     override fun observeLocalMediaItem(id: Long): Flow<LocalMediaItem> =
-        localMediaRepository.observeItem(id).map { it.toItem() }
+        localMediaRepository.observeItem(id).map { localMediaItemMapper.toItem(it) }
 
     override suspend fun getLocalMediaItem(id: Long): LocalMediaItem? =
-        localMediaRepository.getItem(id)?.toItem()
+        localMediaRepository.getItem(id)?.let { localMediaItemMapper.toItem(it) }
 
     override suspend fun refreshLocalMediaItem(id: Long, isVideo: Boolean) =
         localMediaRepository.refreshItem(id, isVideo)
@@ -125,8 +111,7 @@ class LocalMediaUseCase @Inject constructor(
             when (permissions) {
                 is RequiresPermissions -> flowOf(LocalFolderModel.RequiresPermissionsModel(permissions.deniedPermissions))
                 else -> localMediaRepository.observeFolder(folderId).map { media ->
-                    media.toItems()
-                        .groupBy(LocalMediaItem::bucket)
+                    localMediaItemMapper.toFolders(media)
                         .entries
                         .find { entry -> entry.key.id == folderId }
                         ?.toPair()
@@ -171,8 +156,7 @@ class LocalMediaUseCase @Inject constructor(
         itemDetails: List<LocalMediaItemDetails>
     ): LocalMediaItems.Found {
         val defaultFolder = getDefaultFolderId()
-        val media = itemDetails.toItems()
-            .groupBy(LocalMediaItem::bucket)
+        val media = localMediaItemMapper.toFolders(itemDetails)
         return LocalMediaItems.Found(
             primaryLocalMediaFolder = media.entries.firstOrNull { (folder, _) ->
                 folder.id == defaultFolder
@@ -276,54 +260,6 @@ class LocalMediaUseCase @Inject constructor(
 
     private fun Long.contentUri(isVideo: Boolean) =
         MediaStoreContentUriResolver.getContentUriForItem(this, isVideo).toString()
-
-    private suspend fun List<LocalMediaItemDetails>.toItems() = map { it.toItem() }
-
-    private suspend fun LocalMediaItemDetails.toItem(): LocalMediaItem {
-        val date = localMediaDateTimeFormat.parseDateTime(dateTaken)
-        val dateTimeString = parsingDateTimeFormat.print(date)
-        return LocalMediaItem(
-            id = id,
-            displayName = displayName,
-            displayDate = dateDisplayer.dateString(dateTimeString),
-            displayDateTime = dateDisplayer.dateTimeString(dateTimeString),
-            dateTimeTaken = parsingDateTimeFormat.print(date),
-            dateTaken = parsingDateFormat.print(date),
-            sortableDate = parsingDateTimeFormat.print(date),
-            bucket = LocalMediaFolder(id = bucketId, bucketName),
-            width = width,
-            height = height,
-            size = size,
-            contentUri = contentUri,
-            thumbnailPath = thumbnailPath,
-            md5 = Md5Hash(md5),
-            video = video,
-            duration = duration,
-            latLon = latLon?.split(",")?.let { value ->
-                when (value.size) {
-                    2 -> value[0].toDoubleOrNull() to value[1].toDoubleOrNull()
-                    else -> null
-                }
-            }?.filterOutNulls(),
-            fallbackColor = fallbackColor,
-            path = path,
-            orientation = when (orientation) {
-                "0" -> MediaOrientation.ORIENTATION_0
-                "90" -> MediaOrientation.ORIENTATION_90
-                "180" -> MediaOrientation.ORIENTATION_180
-                "270" -> MediaOrientation.ORIENTATION_270
-                else -> MediaOrientation.ORIENTATION_UNKNOWN
-            },
-        )
-    }
-
-    private fun <T> Pair<T?, T?>.filterOutNulls(): Pair<T, T>? {
-        val (f, s) = this
-        return if (f != null && s != null)
-            f to s
-        else
-            null
-    }
 
     override suspend fun getDefaultFolderId(): Int? {
         resetMediaStoreIfNeeded()

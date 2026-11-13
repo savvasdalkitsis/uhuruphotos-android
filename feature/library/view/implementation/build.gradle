@@ -5,6 +5,9 @@ plugins {
 
 android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation'
+    testOptions {
+        unitTests.includeAndroidResources = true
+    }
 }
 
 dependencies {
@@ -55,6 +58,11 @@ dependencies {
     )
     debugImplementation(
             libs.androidx.compose.ui.tooling,
+    )
+    testImplementation(
+            libs.androidx.navigation3.ui,
+            libs.bundles.test,
+            libs.bundles.ui.test,
     )
     ksp libs.autodagger.ksp
 }
