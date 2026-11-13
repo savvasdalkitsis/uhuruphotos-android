@@ -18,10 +18,8 @@ package com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.servi
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.cookies.WebCookies
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.api.navigation.WebLoginNavigationRoute
+import com.savvasdalkitsis.uhuruphotos.foundation.launchers.api.onMain
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import okhttp3.Interceptor
 import okhttp3.Response
 import javax.inject.Inject
@@ -34,12 +32,11 @@ class WebLoginInterceptor @Inject constructor(
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val response = chain.proceed(chain.request())
-        if (response.isRedirect) {
-            CoroutineScope(Dispatchers.Main).launch {
+        val location = response.header("Location")
+        if (response.isRedirect && location != null) {
+            onMain {
                 cookieManager.setCookie(serverUseCase.getServerUrl(), "")
-                navigator.navigateTo(
-                    WebLoginNavigationRoute(url = response.header("Location")!!)
-                )
+                navigator.navigateTo(WebLoginNavigationRoute(url = location))
             }
         }
         return response
