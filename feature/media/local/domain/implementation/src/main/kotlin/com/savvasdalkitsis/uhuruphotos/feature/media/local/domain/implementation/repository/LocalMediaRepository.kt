@@ -152,7 +152,7 @@ class LocalMediaRepository @Inject constructor(
         for ((index, item) in newItems.withIndex()) {
             onProgressChange(index, newItems.size)
             async {
-                processNewItem(item, onNewItem)
+                runCatchingWithLog { processNewItem(item, onNewItem) }
             }
         }
     }
