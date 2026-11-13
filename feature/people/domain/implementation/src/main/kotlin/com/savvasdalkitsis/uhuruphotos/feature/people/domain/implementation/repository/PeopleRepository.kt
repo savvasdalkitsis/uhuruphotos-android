@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.people.domain.implementation.rep
 
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
-import app.cash.sqldelight.coroutines.mapToOne
+import app.cash.sqldelight.coroutines.mapToOneNotNull
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitList
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.people.People
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.people.PeopleQueries
@@ -47,7 +47,7 @@ class PeopleRepository @Inject constructor(
         .asFlow().mapToList(Dispatchers.IO).distinctUntilChanged()
 
     fun observePerson(id: Int): Flow<People> = peopleQueries.getPerson(id)
-        .asFlow().mapToOne(Dispatchers.IO).distinctUntilChanged()
+        .asFlow().mapToOneNotNull(Dispatchers.IO).distinctUntilChanged()
 
     suspend fun refreshPerson(id: Int) = runCatchingWithLog {
         peopleService.getPerson(id).toDbModel()?.let {
