@@ -20,18 +20,21 @@ import com.savvasdalkitsis.uhuruphotos.feature.album.auto.domain.api.usecase.Aut
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.ui.state.AutoAlbumCollageDisplayState
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.ClusterState
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.GetAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContextFactory
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetailsState
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSourceModel.AutoAlbumModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHashModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstanceModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.text.state.Title
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.mapNotNull
 import usecase.ToasterUseCase
@@ -40,7 +43,7 @@ import javax.inject.Inject
 class AutoAlbumActionsContext @Inject constructor(
     val autoAlbumUseCase: AutoAlbumUseCase,
     serverUseCase: ServerUseCase,
-    dateDisplayer: DateDisplayer,
+    private val dateDisplayer: DateDisplayer,
     galleryActionsContextFactory: GalleryActionsContextFactory,
     userUseCase: UserUseCase,
     val navigator: Navigator,
@@ -64,39 +67,35 @@ class AutoAlbumActionsContext @Inject constructor(
                                 people = people.map { person ->
                                     person.toPerson { "$serverUrl$it" }
                                 }.toImmutableList(),
-                                clusterStates = photoEntries.groupBy { entry ->
-                                    dateDisplayer.dateString(entry.timestamp)
-                                }.entries.map { (date, photos) ->
-                                    ClusterState(
-                                        id = date,
-                                        unformattedDate = photos.firstOrNull()?.timestamp,
-                                        displayTitle = date,
-                                        location = null,
-                                        cels = photos.map {
-                                            MediaItemInstanceModel(
-                                                id = MediaIdModel.RemoteIdModel(
-                                                    it.photoId.toString(),
-                                                    it.video == true,
-                                                    MediaItemHashModel.fromRemoteMediaHash(
-                                                        it.photoId.toString(),
-                                                        user.id
-                                                    )
-                                                ),
-                                                mediaHash = MediaItemHashModel.fromRemoteMediaHash(
-                                                    it.photoId.toString(),
-                                                    user.id
-                                                ),
-                                                displayDayDate = date,
-                                                sortableDate = it.timestamp,
-                                                isFavourite = it.isFavorite ?: false,
-                                            ).toCel()
-                                        }.toImmutableList()
-                                    )
-                                }.toImmutableList()
+                                clusterStates = photoEntries.toClusterStates(user.id),
                             )
                         }
                 }
         },
         lightboxSequenceDataSource = { AutoAlbumModel(it) },
     )
+
+    private suspend fun List<GetAutoAlbum>.toClusterStates(userId: Int): ImmutableList<ClusterState> =
+        filter { it.photoId != null }
+            .groupBy { entry -> dateDisplayer.dateString(entry.timestamp) }
+            .map { (date, photos) ->
+                ClusterState(
+                    id = date,
+                    unformattedDate = photos.firstOrNull()?.timestamp,
+                    displayTitle = date,
+                    location = null,
+                    cels = photos.mapNotNull { it.toCel(date, userId) }.toImmutableList(),
+                )
+            }.toImmutableList()
+
+    private fun GetAutoAlbum.toCel(date: String, userId: Int): CelState? = photoId?.let { id ->
+        val hash = MediaItemHashModel.fromRemoteMediaHash(id, userId)
+        MediaItemInstanceModel(
+            id = MediaIdModel.RemoteIdModel(id, video == true, hash),
+            mediaHash = hash,
+            displayDayDate = date,
+            sortableDate = timestamp,
+            isFavourite = isFavorite ?: false,
+        ).toCel()
+    }
 }
