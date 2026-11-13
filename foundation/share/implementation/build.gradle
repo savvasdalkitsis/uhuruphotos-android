@@ -1,5 +1,8 @@
 android {
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.share.implementation'
+    testOptions {
+        unitTests.includeAndroidResources = true
+    }
 }
 
 dependencies {
@@ -11,8 +14,11 @@ dependencies {
             project(":foundation:image:api"),
             project(":foundation:navigation:api"),
             project(":foundation:share:api"),
+            project(":foundation:strings:api"),
+            project(":foundation:toaster:api"),
     )
     testImplementation(
             libs.bundles.test,
+            libs.robolectric,
     )
 }

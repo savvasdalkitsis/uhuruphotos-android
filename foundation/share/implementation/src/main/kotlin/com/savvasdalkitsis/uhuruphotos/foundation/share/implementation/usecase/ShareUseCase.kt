@@ -25,6 +25,7 @@ import coil.disk.DiskCache
 import coil.request.ImageRequest
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.FullImage
+import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.share.api.usecase.ShareUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.share.implementation.removeGpsData
@@ -32,6 +33,9 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.withContext
+import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
+import uhuruphotos_android.foundation.strings.api.generated.resources.could_not_remove_gps_data
+import usecase.ToasterUseCase
 import java.io.File
 import javax.inject.Inject
 
@@ -46,6 +50,7 @@ internal class ShareUseCase @Inject constructor(
     private val imageLoader: ImageLoader,
     private val settingsUseCase: SettingsUseCase,
     @ApplicationContext private val context: Context,
+    private val toaster: ToasterUseCase,
 ) : ShareUseCase {
     private val shareDir get() = File(context.cacheDir, "share_cache")
     private fun shareFile(postfix: String = "") = File(shareDir, "Photo$postfix.jpg")
@@ -119,16 +124,31 @@ internal class ShareUseCase @Inject constructor(
     }
 
     private fun uriFor(url: String, postfix: String = "") = diskCache.openSnapshot(url)?.let { snapshot ->
-        val data = snapshot.data
-        val path = data.toFile().copyTo(shareFile(postfix), overwrite = true)
-        snapshot.close()
-        if (settingsUseCase.getShareRemoveGpsData()) {
-            path.removeGpsData()
-        }
-        FileProvider.getUriForFile(
+        val path = snapshot.use { it.data.toFile().copyTo(shareFile(postfix), overwrite = true) }
+        sharable(path)
+    }
+
+    private fun sharable(file: File): Uri? = when {
+        settingsUseCase.getShareRemoveGpsData() && !file.removedGpsData() -> null
+        else -> FileProvider.getUriForFile(
             context,
             "${context.packageName}.share.fileprovider",
-            path
+            file
         )
+    }
+
+    private fun File.removedGpsData(): Boolean = try {
+        removeGpsData()
+        true
+    } catch (e: Exception) {
+        log(e)
+        refuse(this)
+        false
+    }
+
+    private fun refuse(file: File?): Uri? {
+        file?.delete()
+        toaster.show(string.could_not_remove_gps_data)
+        return null
     }
 }

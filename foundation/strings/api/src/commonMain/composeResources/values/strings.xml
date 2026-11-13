@@ -173,6 +173,7 @@
     <string name="enable_suggestions">Turn on suggestions</string>
     <string name="clear_recent_searches">Clear recent searches</string>
     <string name="remove_gps_data_when_sharing">Remove GPS data when sharing</string>
+    <string name="could_not_remove_gps_data">Could not remove the GPS data, so it was not shared</string>
     <string name="theme">Theme</string>
     <string name="video_disk_cache">Disk cache for videos</string>
     <string name="expand_all">Expand all</string>

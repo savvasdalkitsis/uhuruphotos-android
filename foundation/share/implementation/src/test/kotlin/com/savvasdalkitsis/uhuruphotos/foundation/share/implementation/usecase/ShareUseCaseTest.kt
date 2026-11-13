@@ -35,7 +35,7 @@ class ShareUseCaseTest {
     private val contentUri = "content://media/external/video/media/1"
     private val uri: Uri = mockk()
     private val context: Context = mockk()
-    private val underTest = ShareUseCase(mockk(), mockk(relaxed = true), mockk(), mockk(), context)
+    private val underTest = ShareUseCase(mockk(), mockk(relaxed = true), mockk(), mockk(), context, mockk())
 
     @Before
     fun setUp() {
