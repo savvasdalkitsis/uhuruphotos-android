@@ -58,6 +58,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.Vi
 import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.SharedElementId
 import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.sharedElement
 import dev.shreyaspatil.permissionflow.compose.rememberPermissionFlowRequestLauncher
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.stringResource
@@ -86,9 +87,7 @@ internal fun SharedTransitionScope.LibraryGrid(
     val reordering = rememberReorderableLazyGridState(
         lazyGridState = lazyGridState,
         onMove = { from, to ->
-            data.value = data.value.toMutableList().apply {
-                add(to.index, removeAt(from.index))
-            }.toImmutableList()
+            data.value = data.value.moved(from.key, to.key)
             action(ItemOrderChanged(data.value))
         }
     )
@@ -127,7 +126,7 @@ internal fun SharedTransitionScope.LibraryGrid(
                     }
                 }
                 LOCAL -> item(item.title.key, { GridItemSpan(maxLineSpan) }) {
-                    ReorderableItem(reordering, item.title) { isDragging ->
+                    ReorderableItem(reordering, item.title.key) { isDragging ->
                         Vibrate(isDragging)
                         val title = stringResource(item.title)
                         when (val media = state.localMedia) {
@@ -200,7 +199,7 @@ internal fun LazyGridScope.pillItem(
 ) {
     item(item.title.key, span) {
         val title = stringResource(item.title)
-        ReorderableItem(reorder, item.title) { isDragging ->
+        ReorderableItem(reorder, item.title.key) { isDragging ->
             Vibrate(isDragging)
             with(scope) {
                 LibraryPillItem(
@@ -230,7 +229,7 @@ internal fun LazyGridScope.libraryItem(
     vitrineState?.let {
         item(item.title.key) {
             val title = stringResource(item.title)
-            ReorderableItem(reordering, item.title) { isDragging ->
+            ReorderableItem(reordering, item.title.key) { isDragging ->
                 Vibrate(isDragging)
                 with (sharedTransitionScope) {
                     NamedVitrine(
@@ -246,6 +245,15 @@ internal fun LazyGridScope.libraryItem(
                 }
             }
         }
+    }
+}
+
+private fun ImmutableList<LibraryItemState>.moved(from: Any, to: Any): ImmutableList<LibraryItemState> {
+    val fromIndex = indexOfFirst { it.title.key == from }
+    val toIndex = indexOfFirst { it.title.key == to }
+    return when {
+        fromIndex < 0 || toIndex < 0 -> this
+        else -> toMutableList().apply { add(toIndex, removeAt(fromIndex)) }.toImmutableList()
     }
 }
 
