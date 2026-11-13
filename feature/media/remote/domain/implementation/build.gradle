@@ -53,6 +53,7 @@ dependencies {
     )
     testImplementation(
             libs.bundles.test,
+            libs.sqldelight.sqlite,
     )
     ksp libs.autodagger.ksp
     ksp libs.moshi.ksp

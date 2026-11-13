@@ -8,6 +8,9 @@ CREATE TABLE userAlbumPhotos (
 insert:
 INSERT OR REPLACE INTO userAlbumPhotos VALUES (?, ?);
 
+removePhoto:
+DELETE FROM userAlbumPhotos WHERE imageHash == :imageHash;
+
 removePhotosForAlbum:
 DELETE FROM userAlbumPhotos WHERE albumId == :albumId;
 

@@ -21,6 +21,8 @@ import app.cash.sqldelight.coroutines.mapToOneNotNull
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.map
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.AutoAlbumPhotosQueries
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbumPhotosQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaCollections
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemDetails
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
@@ -59,6 +61,8 @@ class RemoteMediaRepository @Inject constructor(
     private val remoteMediaService: RemoteMediaService,
     private val remoteMediaTrashQueries: RemoteMediaTrashQueries,
     private val lightboxDetailsQueries: LightboxDetailsQueries,
+    private val autoAlbumPhotosQueries: AutoAlbumPhotosQueries,
+    private val userAlbumPhotosQueries: UserAlbumPhotosQueries,
 ) {
 
     fun observeAllMediaItemDetails(): Flow<List<DbRemoteMediaItemDetails>> =
@@ -181,6 +185,8 @@ class RemoteMediaRepository @Inject constructor(
         remoteMediaItemDetailsQueries.delete(id)
         remoteMediaItemSummaryQueries.delete(id)
         remoteMediaTrashQueries.delete(id)
+        autoAlbumPhotosQueries.removePhoto(id)
+        userAlbumPhotosQueries.removePhoto(id)
     }
 
     fun insertMediaCollection(remoteMediaCollections: DbRemoteMediaCollections) {
