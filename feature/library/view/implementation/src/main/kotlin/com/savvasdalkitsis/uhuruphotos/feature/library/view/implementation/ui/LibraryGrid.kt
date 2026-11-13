@@ -109,7 +109,7 @@ internal fun SharedTransitionScope.LibraryGrid(
                         icon = drawable.ic_delete,
                         sharedElementId = SharedElementId.trash(),
                         titleSharedElementId = SharedElementId.trashTitle(),
-                        span = { GridItemSpan(maxCurrentLineSpan / 2) }
+                        span = { GridItemSpan((maxCurrentLineSpan / 2).coerceAtLeast(1)) }
                     ) {
                         action(TrashSelected)
                     }
