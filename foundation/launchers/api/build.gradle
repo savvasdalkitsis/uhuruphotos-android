@@ -12,5 +12,12 @@ kotlin {
                 implementation(project(":foundation:log:api"))
             }
         }
+        androidUnitTest {
+            dependencies {
+                implementation(libs.junit)
+                implementation(libs.kotlinx.coroutines.test)
+                implementation(libs.log4k)
+            }
+        }
     }
 }

@@ -20,11 +20,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
-inline fun onMain(crossinline action: suspend () -> Unit) = CoroutineScope(Dispatchers.Main).launch {
+inline fun onMain(crossinline action: suspend () -> Unit) = CoroutineScope(Dispatchers.Main + reportingErrors).launch {
     action()
 }
 
-inline fun onIO(crossinline action: suspend () -> Unit) = CoroutineScope(Dispatchers.IO).launch {
+inline fun onIO(crossinline action: suspend () -> Unit) = CoroutineScope(Dispatchers.IO + reportingErrors).launch {
     action()
 }
 
