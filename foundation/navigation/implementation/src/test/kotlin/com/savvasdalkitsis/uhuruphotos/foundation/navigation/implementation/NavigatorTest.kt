@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.navigation.implementation
 
+import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.navigation.HomeNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.singleTop
 import io.mockk.mockk
@@ -96,6 +97,26 @@ class NavigatorTest {
         underTest.singleTop(B("!"))
 
         thenRoutesAre(A(), B("!"))
+    }
+
+    @Test
+    fun `navigating up twice in one frame from a second screen lands home`() = runTest {
+        givenRoutes(A(), B())
+
+        underTest.navigateUp()
+        underTest.navigateUp()
+        advanceUntilIdle()
+
+        assertEquals(HomeNavigationRoute, underTest.backStack.last())
+    }
+
+    @Test
+    fun `navigating up from the only screen lands home`() = runTest {
+        givenRoutes(A())
+
+        underTest.navigateUp()
+
+        thenRoutesAre(HomeNavigationRoute)
     }
 
     private fun TestScope.givenRoutes(vararg routes: NavigationRoute) {

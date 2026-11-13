@@ -73,10 +73,13 @@ class Navigator @Inject internal constructor(
     }
 
     override fun navigateUp() {
-        if (_backStack.size > 1) {
-            navigateBack()
-        } else {
-            clearBackStack()
+        mutateBackStack {
+            if (size > 1) {
+                removeAt(lastIndex)
+            } else {
+                clear()
+                add(HomeNavigationRoute)
+            }
         }
     }
 
