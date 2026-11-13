@@ -205,7 +205,9 @@ internal class FeedUseCase @Inject constructor(
         }.flatMap { (_, mediaItems) -> mediaItems }
         val publishedItems = mediaFolders.flatMap { (_, items) -> items }
             .filter { it.id.value in publishedItemsIds }
-        return (primaryFolderItems + publishedFoldersItems + publishedItems).filter(feedFetchTypeModel)
+        return (primaryFolderItems + publishedFoldersItems + publishedItems)
+            .distinctBy { it.id }
+            .filter(feedFetchTypeModel)
     }
 
     private fun List<MediaItemModel>.filter(
