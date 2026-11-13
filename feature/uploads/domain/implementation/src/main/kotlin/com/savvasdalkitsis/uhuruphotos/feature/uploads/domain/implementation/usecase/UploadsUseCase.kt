@@ -75,8 +75,8 @@ class UploadsUseCase @Inject constructor(
                     status = if (item.hasError) Failed(item.lastResponse) else Processing,
                 )
             }
-        }.map {
-            Uploads(it.sortedWith { a, b ->
+        }.map { jobs ->
+            Uploads(jobs.distinctBy { it.localItemId }.sortedWith { a, b ->
                 when {
                     a.status is Processing -> -1
                     b.status is Processing -> 1
