@@ -15,12 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions
 
-import android.content.Intent
-import android.content.Intent.ACTION_EDIT
-import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION
 import android.content.pm.ResolveInfo
-import android.net.Uri
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
@@ -31,12 +27,11 @@ data class EditMediaItemExternally(val app: ResolveInfo) : LightboxAction() {
     override fun LightboxActionsContext.handle(
         state: LightboxState
     ) = flow<LightboxMutation> {
-        state.currentMediaItem.id.findLocals.firstOrNull()?.let { media ->
-            val intent = Intent(ACTION_EDIT, Uri.parse(media.contentUri)).apply {
+        localEditIntent(state)?.let { intent ->
+            navigator.navigateTo(intent.apply {
                 setPackage(app.activityInfo.packageName)
-                flags = FLAG_GRANT_READ_URI_PERMISSION or FLAG_ACTIVITY_NEW_TASK
-            }
-            context.startActivity(intent)
+                flags = FLAG_GRANT_READ_URI_PERMISSION
+            })
         }
     }
 }

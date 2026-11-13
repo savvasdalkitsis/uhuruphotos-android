@@ -30,7 +30,7 @@ data object EditMediaItem : LightboxAction() {
     override fun LightboxActionsContext.handle(
         state: LightboxState
     ) = flow<LightboxMutation> {
-        val intent = Intent(ACTION_EDIT).apply {
+        val intent = localEditIntent(state) ?: Intent(ACTION_EDIT).apply {
             type = "image/*"
         }
         val result = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
