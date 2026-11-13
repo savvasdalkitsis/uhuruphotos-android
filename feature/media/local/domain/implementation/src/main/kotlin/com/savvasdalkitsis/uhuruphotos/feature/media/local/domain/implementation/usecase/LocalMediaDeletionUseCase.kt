@@ -29,6 +29,7 @@ import androidx.activity.result.IntentSenderRequest
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import com.github.michaelbull.result.combine
+import com.github.michaelbull.result.getOrElse
 import com.github.michaelbull.result.onSuccess
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.InternalLocalMediaItemDeletionModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.InternalLocalMediaItemDeletionModel.ErrorModel
@@ -42,6 +43,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.Lo
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.repository.LocalMediaRepository
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.LocalMediaService
 import com.savvasdalkitsis.uhuruphotos.foundation.activity.api.request.ActivityRequestLauncher
+import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simpleOk
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -73,30 +75,34 @@ class LocalMediaDeletionUseCase @Inject constructor(
             is ErrorModel -> LocalMediaItemDeletion.Error(result.e ?: UnknownError())
             is RequiresPermissionsModel -> LocalMediaItemDeletion.RequiresPermissions(result.deniedPermissions)
 
-            is NeedsSystemApprovalModel -> {
-                val requestResult = activityRequestLauncher.performRequest(
-                    "deleteLocalMedia:${items.map { it.id }}",
-                    result.request,
-                ).onSuccess {
-                    // deleting again cause on R sometimes the file is not deleted at the same flow
-                    // we give permission in
-                    localMediaRepository.removeItemsFromDb(*(items.map { it.id }.toLongArray()))
-                    deleteMediaItems(items)
-                }
-                when {
-                    requestResult.isOk -> LocalMediaItemDeletion.Success
-                    else -> LocalMediaItemDeletion.Error(requestResult.error)
-                }
-            }
+            is NeedsSystemApprovalModel -> approveDeletion(items, result.request)
             SuccessModel -> LocalMediaItemDeletion.Success
         }
 
+    private suspend fun approveDeletion(
+        items: List<LocalMediaDeletionRequestModel>,
+        request: IntentSenderRequest,
+    ): LocalMediaItemDeletion {
+        val requestResult = activityRequestLauncher.performRequest("deleteLocalMedia:${items.map { it.id }}", request)
+            .onSuccess { completeApprovedDeletion(items) }
+        return when {
+            requestResult.isOk -> LocalMediaItemDeletion.Success
+            else -> LocalMediaItemDeletion.Error(requestResult.error)
+        }
+    }
 
-    private fun deleteMediaItems(items: List<LocalMediaDeletionRequestModel>): InternalLocalMediaItemDeletionModel =
+    private suspend fun completeApprovedDeletion(items: List<LocalMediaDeletionRequestModel>) {
+        localMediaRepository.removeItemsFromDb(*items.ids)
+        if (SDK_INT < R) {
+            deleteMediaItems(items)
+        }
+    }
+
+    private suspend fun deleteMediaItems(items: List<LocalMediaDeletionRequestModel>): InternalLocalMediaItemDeletionModel =
         when {
             items.isEmpty() -> SuccessModel
             SDK_INT == Q -> qDeletion(*items.toTypedArray())
-            SDK_INT >= R -> postRDeletion(*items.toTypedArray())
+            SDK_INT >= R -> postRDeletion(items)
             else -> preQDeletion(*items.toTypedArray())
         }
 
@@ -139,16 +145,32 @@ class LocalMediaDeletionUseCase @Inject constructor(
     }
 
     @RequiresApi(R)
-    private fun postRDeletion(vararg request: LocalMediaDeletionRequestModel): InternalLocalMediaItemDeletionModel =
-        NeedsSystemApprovalModel(
-            IntentSenderRequest.Builder(
-                createDeleteRequest(contentResolver,
-                    request.map { (id, video) -> localMediaService.createMediaItemUri(id, video) }
-                )
-            ).setFillInIntent(null)
-                .setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION, 0)
-                .build()
-        )
+    private suspend fun postRDeletion(items: List<LocalMediaDeletionRequestModel>): InternalLocalMediaItemDeletionModel {
+        val (present, gone) = items.partition { (id, video) -> localMediaService.exists(id, video) }
+        if (gone.isNotEmpty()) {
+            localMediaRepository.removeItemsFromDb(*gone.ids)
+        }
+        return when {
+            present.isEmpty() -> SuccessModel
+            else -> requestSystemDeletion(present)
+        }
+    }
+
+    @RequiresApi(R)
+    private fun requestSystemDeletion(items: List<LocalMediaDeletionRequestModel>): InternalLocalMediaItemDeletionModel =
+        runCatchingWithLog {
+            NeedsSystemApprovalModel(
+                IntentSenderRequest.Builder(
+                    createDeleteRequest(contentResolver,
+                        items.map { (id, video) -> localMediaService.createMediaItemUri(id, video) }
+                    )
+                ).setFillInIntent(null)
+                    .setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION, 0)
+                    .build()
+            )
+        }.getOrElse { ErrorModel(it) }
+
+    private val List<LocalMediaDeletionRequestModel>.ids get() = map { it.id }.toLongArray()
 
     private fun attemptDeletion(
         vararg request: LocalMediaDeletionRequestModel,

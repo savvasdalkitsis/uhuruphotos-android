@@ -24,6 +24,7 @@ import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES.R
 import android.os.CancellationSignal
 import android.os.Environment
+import android.provider.BaseColumns
 import android.provider.MediaStore
 import android.provider.MediaStore.Images
 import android.provider.MediaStore.Video
@@ -125,6 +126,12 @@ class LocalMediaService @Inject constructor(
             Video.Media._ID + " in (${ids.joinToString(",") { "?" }})",
             ids.map { it.toString() }.toTypedArray(),
         )
+
+    suspend fun exists(id: Long, video: Boolean): Boolean =
+        query(
+            collection = createMediaItemUri(id, video),
+            projection = arrayOf(BaseColumns._ID),
+        ) { long(BaseColumns._ID) }.isNotEmpty()
 
     fun createMediaItemUri(id: Long, video: Boolean): Uri = ContentUris.withAppendedId(
         when {
