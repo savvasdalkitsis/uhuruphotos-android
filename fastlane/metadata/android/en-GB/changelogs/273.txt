@@ -1,0 +1,5 @@
+* Fixed a crash when swiping back on a zoomed in photo
+* Fixed crashes with maps after rotating, when cropping a photo that is still loading, and on login while Android System WebView updates
+* Fixed a crash on Android 8 and 9 after deleting photos from your phone
+* Feed memories and banners now show up straight away
+* The photo info map shows its location pin again
