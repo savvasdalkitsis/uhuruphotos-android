@@ -61,7 +61,8 @@ internal fun LightboxBackHandler(
     var peekingForZoomReset by remember { mutableStateOf(false) }
 
     var initialScrollOnPeek by remember { mutableIntStateOf(0) }
-    var initialScaleOnPeek by remember { mutableFloatStateOf(1f) } // This will store scaleX
+    var initialScaleOnPeek by remember { mutableFloatStateOf(1f) }
+    var fittedScaleOnPeek by remember { mutableFloatStateOf(1f) }
 
     val density = LocalDensity.current
     val maxPeekScrollDp = 64.dp
@@ -84,11 +85,10 @@ internal fun LightboxBackHandler(
             override fun handleOnBackStarted(backEvent: BackEventCompat) {
                 val latestShowingActionsOverlay = currentShowingActionsOverlay
                 val latestScrollValue = currentScrollValue
-                val latestScaleX = currentZoomableState.contentTransformation.scale.scaleX
-                val latestZoomFraction = currentZoomableState.zoomFraction ?: 0f
+                val latestTransformation = currentZoomableState.contentTransformation
 
                 val shouldPeekForScroll = !latestShowingActionsOverlay && latestScrollValue > 0
-                val shouldPeekForZoomReset = latestShowingActionsOverlay && (latestScaleX > 1.05f || latestZoomFraction > 0.05f)
+                val shouldPeekForZoomReset = latestShowingActionsOverlay && currentZoomableState.isZoomedIn
 
                 peekingForScroll = shouldPeekForScroll
                 // Only allow one peek type. If scrolling is possible (overlay hidden), it usually takes precedence.
@@ -97,7 +97,8 @@ internal fun LightboxBackHandler(
                 if (peekingForScroll) {
                     initialScrollOnPeek = latestScrollValue
                 } else if (peekingForZoomReset) {
-                    initialScaleOnPeek = latestScaleX
+                    initialScaleOnPeek = latestTransformation.scale.scaleX
+                    fittedScaleOnPeek = latestTransformation.scaleMetadata.initialScale.scaleX
                 }
                 backGestureProgress = backEvent.progress
             }
@@ -126,11 +127,9 @@ internal fun LightboxBackHandler(
                     // re-evaluate conditions based on current state at gesture commit.
                     val latestShowingActionsOverlayNow = currentShowingActionsOverlay
                     val latestScrollValueNow = currentScrollValue
-                    val latestScaleXNow = currentZoomableState.contentTransformation.scale.scaleX
-                    val latestZoomFractionNow = currentZoomableState.zoomFraction ?: 0f
 
                     val canStillScrollNow = !latestShowingActionsOverlayNow && latestScrollValueNow > 0
-                    val canStillZoomResetNow = latestShowingActionsOverlayNow && (latestScaleXNow > 1.05f || latestZoomFractionNow > 0.05f)
+                    val canStillZoomResetNow = latestShowingActionsOverlayNow && currentZoomableState.isZoomedIn
 
                     var performedFallbackAction = false
                     if (canStillScrollNow) {
@@ -182,15 +181,9 @@ internal fun LightboxBackHandler(
             val targetScroll = initialScrollOnPeek - (backGestureProgress * maxPeekScrollPx).toInt()
             scrollState.scrollTo(targetScroll.coerceIn(0, initialScrollOnPeek))
         } else if (peekingForZoomReset) {
-            val baseTargetScale = 1f
-            val targetScale = lerp(initialScaleOnPeek, baseTargetScale, backGestureProgress)
-            val currentActualScaleX = currentZoomableState.contentTransformation.scale.scaleX
-
-            if (currentActualScaleX != targetScale.coerceIn(baseTargetScale, initialScaleOnPeek)) { // Added coerceIn here for safety
-                currentZoomableState.zoomTo(
-                    zoomFactor = targetScale.coerceIn(baseTargetScale, initialScaleOnPeek),
-                    animationSpec = SnapSpec()
-                )
+            val targetScale = lerp(initialScaleOnPeek, fittedScaleOnPeek, backGestureProgress.coerceIn(0f, 1f))
+            if (currentZoomableState.contentTransformation.scale.scaleX != targetScale) {
+                currentZoomableState.zoomTo(zoomFactor = targetScale, animationSpec = SnapSpec())
             }
         }
     }

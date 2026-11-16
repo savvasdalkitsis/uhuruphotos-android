@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui
 
+import androidx.activity.BackEventCompat
 import androidx.activity.ComponentActivity
 import androidx.activity.OnBackPressedCallback
 import androidx.compose.animation.core.SnapSpec
@@ -92,6 +93,31 @@ class LightboxBackHandlerTest {
         composeRule.waitForIdle()
     }
 
+    private fun zoomTo(zoomFactor: Float) {
+        scope.launch { zoomableState.zoomTo(zoomFactor = zoomFactor, animationSpec = SnapSpec()) }
+        composeRule.waitForIdle()
+    }
+
+    private fun swipeBack(vararg progress: Float) {
+        composeRule.runOnUiThread {
+            val dispatcher = composeRule.activity.onBackPressedDispatcher
+            dispatcher.dispatchOnBackStarted(backEvent(0f))
+            progress.forEach { dispatcher.dispatchOnBackProgressed(backEvent(it)) }
+        }
+        composeRule.waitForIdle()
+    }
+
+    private fun cancelSwipeBack() {
+        composeRule.runOnUiThread {
+            composeRule.activity.onBackPressedDispatcher.dispatchOnBackCancelled()
+        }
+        composeRule.waitForIdle()
+    }
+
+    private fun backEvent(progress: Float) = BackEventCompat(0f, 0f, progress, BackEventCompat.EDGE_LEFT)
+
+    private val scale get() = zoomableState.contentTransformation.scale.scaleX
+
     @Test
     fun `leaves the lightbox on back for an image that is scaled up to fit the screen`() {
         showImage(size = 200f)
@@ -148,5 +174,50 @@ class LightboxBackHandlerTest {
 
         assertFalse(leftLightbox)
         assertEquals(0f, zoomableState.zoomFraction)
+    }
+
+    @Test
+    fun `peeks the zoom out towards the fitted size when swiping back on a zoomed in large image`() {
+        showImage(size = 1000f)
+        zoomTo(0.73491913f)
+        assertEquals(0.73491913f, scale, 0.0001f)
+
+        swipeBack(0.5f)
+
+        assertEquals(0.51745957f, scale, 0.0001f)
+        assertFalse(leftLightbox)
+    }
+
+    @Test
+    fun `resets the zoom when a swipe back on a zoomed in large image completes`() {
+        showImage(size = 1000f)
+        zoomTo(0.73491913f)
+
+        swipeBack(0.3f, 0.9f)
+        pressBack()
+
+        assertFalse(leftLightbox)
+        assertEquals(0.3f, scale, 0.0001f)
+    }
+
+    @Test
+    fun `restores the zoom when a swipe back on a zoomed in large image is cancelled`() {
+        showImage(size = 1000f)
+        zoomTo(0.73491913f)
+
+        swipeBack(0.6f)
+        cancelSwipeBack()
+
+        assertEquals(0.73491913f, scale, 0.0001f)
+    }
+
+    @Test
+    fun `peeks the zoom out towards the fitted size when swiping back on a zoomed in small image`() {
+        showImage(size = 200f)
+        zoomTo(2f)
+
+        swipeBack(1f)
+
+        assertEquals(1.5f, scale, 0.0001f)
     }
 }
