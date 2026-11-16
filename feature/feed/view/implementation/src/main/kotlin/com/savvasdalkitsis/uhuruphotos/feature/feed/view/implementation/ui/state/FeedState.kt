@@ -72,6 +72,14 @@ data class FeedState(
 
     val shouldShowUploadIcon: Boolean =
         selectedCels.isNotEmpty() && selectedCels.none { it.mediaItem.id.hasRemote }
+
+    val hasHeaders: Boolean
+        get() = memories.isNotEmpty()
+            || showRequestPermissionForLocalMediaAccess != null
+            || localMediaSyncRunning
+            || showRequestForCloudSync
+            || showLoginBanner
+            || showBatteryOptimizationBanner
 }
 
 val List<CelState>.syncStates get() = map { it.mediaItem.id.syncState }.toSet()

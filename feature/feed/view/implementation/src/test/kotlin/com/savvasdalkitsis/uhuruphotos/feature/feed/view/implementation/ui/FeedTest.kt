@@ -36,6 +36,7 @@ import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.isDialog
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onNodeWithText
 
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
@@ -44,10 +45,13 @@ import androidx.navigation3.ui.LocalNavAnimatedContentScope
 import androidx.test.core.app.ApplicationProvider
 import coil.ImageLoader
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.AccountOverviewState
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.ClusterState
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.navigation.FeedNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.MissingPermissionsRequested
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.viewmodel.FeedCompositeAction
+import com.savvasdalkitsis.uhuruphotos.foundation.image.api.LocalAnimatedVideoThumbnails
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.LocalThumbnailImageLoader
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.LocalNavigator
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
@@ -113,6 +117,17 @@ class FeedTest {
     }
 
     @Test
+    fun `shows the banners that arrive after the feed is first shown`() {
+        state = state.copy(collageState = CollageState(clusters = persistentListOf(ClusterState("today"))))
+        showFeed()
+
+        state = state.copy(showLoginBanner = true)
+        composeRule.waitForIdle()
+
+        composeRule.onNodeWithText("Connection to server lost").assertExists()
+    }
+
+    @Test
     fun `shows every dialog the state asks for`() {
         state = state.copy(
             showTrashingConfirmationDialog = true,
@@ -132,6 +147,7 @@ class FeedTest {
             ComposeResourcesContext()
             CompositionLocalProvider(
                 LocalActivityResultRegistryOwner provides registryOwner,
+                LocalAnimatedVideoThumbnails provides false,
                 LocalThumbnailImageLoader provides remember { ImageLoader(context) },
                 LocalNavigator provides navigator,
                 LocalWindowSize provides WindowSizeClass.calculateFromSize(DpSize(400.dp, 800.dp)),

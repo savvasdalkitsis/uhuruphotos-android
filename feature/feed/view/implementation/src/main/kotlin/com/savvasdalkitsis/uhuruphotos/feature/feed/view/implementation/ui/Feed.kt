@@ -97,16 +97,7 @@ private fun SharedTransitionScope.Feed(
             gridState.animateScrollToItem(0, 0)
         }
     }
-    val feedHeadersVisible by remember {
-        derivedStateOf {
-            state.memories.isNotEmpty()
-                    || state.showRequestPermissionForLocalMediaAccess != null
-                    || state.localMediaSyncRunning
-                    || state.showRequestForCloudSync
-                    || state.showLoginBanner
-                    || state.showBatteryOptimizationBanner
-        }
-    }
+    val feedHeadersVisible = state.hasHeaders
 
     val showSyncState by remember(state.syncItemDisplay) {
         derivedStateOf {
