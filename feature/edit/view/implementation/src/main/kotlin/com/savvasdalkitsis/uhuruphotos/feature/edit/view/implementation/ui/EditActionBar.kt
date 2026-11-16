@@ -57,7 +57,7 @@ internal  fun RowScope.EditActionBar(
     )
     UhuruActionIcon(
         onClick = { cropState.crop() },
-        enabled = state.actionBarActionsEnabled,
+        enabled = state.actionBarActionsEnabled && CropifyImage.isShown(cropState),
         icon = drawable.ic_crop,
         contentDescription = stringResource(string.crop),
     )
