@@ -33,8 +33,11 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.ChangedToPage
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.LightboxAction
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.MissingPermissionsRequested
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.ShowActionsOverlay
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
+import com.savvasdalkitsis.uhuruphotos.foundation.permissions.api.ui.MissingPermissionsRequest
+
 import kotlinx.coroutines.flow.collectLatest
 import me.saket.telephoto.zoomable.OverzoomEffect
 import me.saket.telephoto.zoomable.ZoomLimit
@@ -91,5 +94,8 @@ internal fun SharedTransitionScope.Lightbox(
         snapshotFlow { pagerState.currentPage }.collectLatest { page ->
             action(ChangedToPage(page))
         }
+    }
+    MissingPermissionsRequest(state.missingPermissions) {
+        action(MissingPermissionsRequested)
     }
 }

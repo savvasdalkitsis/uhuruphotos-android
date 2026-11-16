@@ -72,6 +72,7 @@ dependencies {
             project(":foundation:map:api"),
             project(":foundation:navigation:api"),
             project(":foundation:notification:api"),
+            project(":foundation:permissions:api"),
             project(":foundation:sharedelement:api"),
             project(":foundation:share:api"),
             project(":foundation:strings:api"),

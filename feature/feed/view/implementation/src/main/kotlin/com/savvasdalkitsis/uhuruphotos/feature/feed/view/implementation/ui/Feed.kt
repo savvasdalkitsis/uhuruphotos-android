@@ -40,20 +40,13 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.act
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.ChangeDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.ClusterRefreshClicked
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.ClusterSelectionClicked
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.DeleteLocalSelectedCels
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.DismissSelectedMediaTrashing
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.FeedAction
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.RefreshFeed
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.SelectedCel
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.TrashRemoteAndDeleteLocalSelectedCels
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.TrashRemoteSelectedCels
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.viewmodel.FeedCompositeAction
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.viewmodel.FeedCompositeState
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.ui.HomeScaffold
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.DeleteFullySyncedPermissionDialog
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.DeletePermissionDialog
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.TrashPermissionDialog
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelSelectionModeState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
@@ -61,7 +54,6 @@ import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.blurIf
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.smart.SmartGridState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.smart.rememberSmartGridState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.refresh.SwipeRefresh
-import dev.shreyaspatil.permissionflow.compose.rememberPermissionFlowRequestLauncher
 import kotlinx.coroutines.launch
 
 @Composable
@@ -125,7 +117,6 @@ private fun SharedTransitionScope.Feed(
             }
         }
     }
-    val permissionLauncher = rememberPermissionFlowRequestLauncher()
 
     HomeScaffold(
         modifier = Modifier.blurIf(isShowingPopUp),
@@ -215,36 +206,7 @@ private fun SharedTransitionScope.Feed(
                 action(ClusterSelectionClicked(it))
             }
         }
-        if (state.showTrashingConfirmationDialog) {
-            TrashPermissionDialog(
-                mediaItemCount = state.selectedCelCount,
-                onDismiss = { action(DismissSelectedMediaTrashing) },
-                onDelete = { action(TrashRemoteSelectedCels) },
-            )
-        }
-        if (state.showDeleteConfirmationDialog) {
-            DeletePermissionDialog(
-                mediaItemCount = state.selectedCelCount,
-                onDismiss = { action(DismissSelectedMediaTrashing) },
-                onDelete = { action(DeleteLocalSelectedCels) },
-            )
-        }
-        if (state.showFullySyncedDeleteConfirmationDialog) {
-            DeleteFullySyncedPermissionDialog(
-                onDismiss = { action(DismissSelectedMediaTrashing) },
-                onDeleteLocalTrashRemote =  { action(TrashRemoteAndDeleteLocalSelectedCels) },
-                onDeleteLocal =  { action(DeleteLocalSelectedCels) },
-            )
-        }
-        if (state.missingPermissions.isNotEmpty()) {
-            permissionLauncher.launch(state.missingPermissions.toTypedArray())
-        }
-        state.showAddToAlbumDialog?.let { albums ->
-            AddToAlbumDialog(albums, action)
-        }
-        if (state.showNewAlbumNameDialog) {
-            NewAlbumNameDialog(action)
-        }
+        FeedDialogs(state, action)
         additionalContent()
     }
 }

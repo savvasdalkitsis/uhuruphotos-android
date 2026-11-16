@@ -50,7 +50,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.upload.view.api.ui.UploadErrorDia
 import com.savvasdalkitsis.uhuruphotos.feature.upload.view.api.ui.state.UploadErrorDialogModeState
 import com.savvasdalkitsis.uhuruphotos.foundation.sharedelement.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.dialogs.UpsellDialog
-import dev.shreyaspatil.permissionflow.compose.rememberPermissionFlowRequestLauncher
+
 import me.saket.telephoto.zoomable.ZoomableState
 import org.jetbrains.compose.resources.stringResource
 
@@ -133,10 +133,6 @@ fun SharedTransitionScope.LightboxCanvas(
             UpsellDialog(
                 onDismiss = { action(DismissUpsellDialog) }
             ) { action(Login) }
-        }
-        val permissionLauncher = rememberPermissionFlowRequestLauncher()
-        if (state.missingPermissions.isNotEmpty()) {
-            permissionLauncher.launch(state.missingPermissions.toTypedArray())
         }
     }
 }

@@ -50,6 +50,7 @@ dependencies {
             project(":foundation:icons:api"),
             project(":foundation:log:api"),
             project(":foundation:navigation:api"),
+            project(":foundation:permissions:api"),
             project(":foundation:preferences:api"),
             project(":foundation:seam:api"),
             project(":foundation:share:api"),
