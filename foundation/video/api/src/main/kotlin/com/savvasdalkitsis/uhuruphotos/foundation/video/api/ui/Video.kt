@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.foundation.video.api.ui
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.NonSkippableComposable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -76,7 +77,9 @@ fun Video(
     val playerView = rememberPlayerView(exoPlayer, showControls, mute, crop)
 
     if (showPlayer) {
-        AndroidView(modifier = modifier, factory = { playerView })
+        key(playerView) {
+            AndroidView(modifier = modifier, factory = { playerView })
+        }
     } else {
         VideoThumbnail(modifier, videoThumbnailUrl, showProgress)
     }

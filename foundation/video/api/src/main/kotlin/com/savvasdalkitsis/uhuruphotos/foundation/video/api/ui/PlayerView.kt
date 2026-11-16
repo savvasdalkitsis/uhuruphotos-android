@@ -36,7 +36,7 @@ internal fun rememberPlayerView(
     crop: Boolean,
 ): PlayerView {
     val context = LocalContext.current
-    return remember(showControls, mute, crop) {
+    return remember(exoPlayer, showControls, mute, crop) {
         playerView(context, exoPlayer, showControls, mute, crop)
     }
 }
