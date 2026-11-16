@@ -16,6 +16,11 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.foundation.map.maplibre.implementation.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import org.maplibre.android.camera.CameraPosition
 import org.maplibre.android.geometry.LatLng
 import org.maplibre.android.maps.MapView
@@ -29,7 +34,7 @@ class MapLibreMapViewState(
     override val initialZoom: Float,
 ) : MapViewState {
 
-    var mapView: MapView? = null
+    var mapView: MapView? by mutableStateOf(null)
     private var bounds: Pair<LatLng, LatLng>? = null
     private var onStoppedMoving: (Viewport) -> Unit = {}
 
@@ -55,7 +60,11 @@ class MapLibreMapViewState(
 
     @Composable
     override fun Marker(latLon: LatLon) {
-        mapView.addMarker(latLon)
+        val map = mapView ?: return
+        DisposableEffect(map, latLon) {
+            val removeMarker = map.addMarker(latLon)
+            onDispose(removeMarker)
+        }
     }
 
     @Composable
@@ -63,8 +72,12 @@ class MapLibreMapViewState(
         allPoints: Collection<LatLon>,
         pointsOnVisibleMap: Collection<LatLon>,
     ) {
-        if (pointsOnVisibleMap.isNotEmpty()) {
-            mapView.showHeatMap(pointsOnVisibleMap.toSet())
+        val map = mapView ?: return
+        val points = pointsOnVisibleMap.toSet()
+        LaunchedEffect(map, points) {
+            if (points.isNotEmpty()) {
+                map.showHeatMap(points)
+            }
         }
     }
 

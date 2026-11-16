@@ -85,18 +85,29 @@ internal fun MapView?.withStyle(action: MapLibreMap.(MapView, Style) -> Unit) = 
     }
 }
 
-internal fun MapView?.addMarker(latLon: LatLon) {
+internal fun MapView.addMarker(latLon: LatLon): () -> Unit {
+    var symbols: SymbolManager? = null
+    var removed = false
     withStyle { view, style ->
-        SymbolManager(view, this@withStyle, style).create(
-            SymbolOptions()
-                .withLatLng(latLon.toLatLng)
-                .withIconImage(Markers.Pin.id)
-                .withIconSize(1.3f)
-        )
+        if (!removed) {
+            symbols = SymbolManager(view, this@withStyle, style).apply {
+                create(
+                    SymbolOptions()
+                        .withLatLng(latLon.toLatLng)
+                        .withIconImage(Markers.Pin.id)
+                        .withIconSize(1.3f)
+                )
+            }
+        }
+    }
+    return {
+        removed = true
+        symbols?.deleteAll()
+        symbols?.onDestroy()
     }
 }
 
-internal fun MapView?.showHeatMap(points: Set<LatLon>) {
+internal fun MapView.showHeatMap(points: Set<LatLon>) {
     withStyle { _, style ->
         with(style) {
             removeLayer("heatMap")

@@ -30,8 +30,9 @@ import com.mapbox.maps.plugin.gestures.addOnMoveListener
 import com.mapbox.maps.plugin.gestures.addOnScaleListener
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 
-internal fun MapView.addMarker(marker: LatLon) {
-    annotations.createCircleAnnotationManager().create(
+internal fun MapView.addMarker(marker: LatLon): () -> Unit {
+    val circles = annotations.createCircleAnnotationManager()
+    circles.create(
         CircleAnnotationOptions()
             .withPoint(marker.toPoint)
             .withCircleRadius(8.0)
@@ -39,6 +40,7 @@ internal fun MapView.addMarker(marker: LatLon) {
             .withCircleStrokeWidth(2.0)
             .withCircleStrokeColor("#ffffff")
     )
+    return { annotations.removeAnnotationManager(circles) }
 }
 
 internal fun MapView.showHeatMap(points: Set<LatLon>) {

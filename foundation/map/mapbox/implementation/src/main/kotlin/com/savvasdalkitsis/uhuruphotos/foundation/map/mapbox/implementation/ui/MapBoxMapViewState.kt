@@ -16,6 +16,11 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.foundation.map.mapbox.implementation.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapView
@@ -30,14 +35,18 @@ internal class MapBoxMapViewState(
     override val initialZoom: Float,
 ) : MapViewState {
 
-    var mapView: MapView? = null
+    var mapView: MapView? by mutableStateOf(null)
     private val map get() = mapView?.mapboxMap
     private var bounds: Pair<Point, Point>? = null
     private var onStoppedMoving: (Viewport) -> Unit = {}
 
     @Composable
     override fun Marker(latLon: LatLon) {
-        mapView?.addMarker(latLon)
+        val map = mapView ?: return
+        DisposableEffect(map, latLon) {
+            val removeMarker = map.addMarker(latLon)
+            onDispose(removeMarker)
+        }
     }
 
     @Composable
@@ -45,8 +54,12 @@ internal class MapBoxMapViewState(
         allPoints: Collection<LatLon>,
         pointsOnVisibleMap: Collection<LatLon>,
     ) {
-        if (pointsOnVisibleMap.isNotEmpty()) {
-            mapView?.showHeatMap(pointsOnVisibleMap.toSet())
+        val map = mapView ?: return
+        val points = pointsOnVisibleMap.toSet()
+        LaunchedEffect(map, points) {
+            if (points.isNotEmpty()) {
+                map.showHeatMap(points)
+            }
         }
     }
 
