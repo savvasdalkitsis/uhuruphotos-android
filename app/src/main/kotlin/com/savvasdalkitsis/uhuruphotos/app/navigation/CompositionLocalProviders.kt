@@ -38,7 +38,6 @@ import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.ThumbnailImage
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LocalMapProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LocalMapViewFactoryProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LocalMapViewStateFactory
-import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.CompositeMapViewFactoryProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.CompositeMapViewStateFactory
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewFactoryProvider
@@ -75,7 +74,8 @@ class CompositionLocalProviders @Inject constructor(
     fun Provide(
         content: @Composable () -> Unit,
     ) {
-        val mapProvider by settingsUIUseCase.observeMapProvider().collectAsState(MapProvider.default)
+        val initialMapProvider = remember { settingsUIUseCase.getMapProvider() }
+        val mapProvider by settingsUIUseCase.observeMapProvider().collectAsState(initialMapProvider)
         val animateVideoThumbnails = settingsUIUseCase.observeAnimateVideoThumbnails().collectAsState(
             initial = true
         )

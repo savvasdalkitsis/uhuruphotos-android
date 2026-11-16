@@ -26,9 +26,14 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.api.navigation.LocalServerUrl
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUIUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LocalMapProvider
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.emptyFlow
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -49,10 +54,11 @@ class CompositionLocalProvidersTest {
         every { getServerUrl() } answers { serverUrl.value }
         every { observeMaybeServerUrl() } returns serverUrl
     }
+    private val settingsUIUseCase = mockk<SettingsUIUseCase>(relaxed = true)
     private val underTest = CompositionLocalProviders(
         navigator = mockk(),
         exoplayerProvider = mockk(),
-        settingsUIUseCase = mockk(relaxed = true),
+        settingsUIUseCase = settingsUIUseCase,
         fullImageLoader = mockk(),
         thumbnailImageLoader = mockk(),
         thumbnailImageWithNetworkCacheSupportLoader = mockk(),
@@ -82,6 +88,26 @@ class CompositionLocalProvidersTest {
             serverUrl.value = "https://photos.example.com"
 
             composeRule.onNodeWithText("https://photos.example.com").assertExists()
+        }
+    }
+
+    @Test
+    fun `provides the available map provider from the first composition`() {
+        every { settingsUIUseCase.getMapProvider() } returns MapProvider.Google
+        every { settingsUIUseCase.observeMapProvider() } returns emptyFlow()
+        val provided = mutableListOf<MapProvider>()
+
+        ActivityScenario.launch(ComponentActivity::class.java).use { scenario ->
+            scenario.onActivity {
+                it.setContent {
+                    underTest.Provide {
+                        provided += LocalMapProvider.current
+                    }
+                }
+            }
+            composeRule.waitForIdle()
+
+            assertEquals(listOf(MapProvider.Google), provided.distinct())
         }
     }
 }

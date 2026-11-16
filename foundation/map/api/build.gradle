@@ -5,6 +5,9 @@ plugins {
 
 android {
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.map.api'
+    testOptions {
+        unitTests.includeAndroidResources = true
+    }
 }
 
 dependencies {
@@ -17,5 +20,6 @@ dependencies {
     )
     testImplementation(
             libs.bundles.test,
+            libs.bundles.ui.test,
     )
 }
