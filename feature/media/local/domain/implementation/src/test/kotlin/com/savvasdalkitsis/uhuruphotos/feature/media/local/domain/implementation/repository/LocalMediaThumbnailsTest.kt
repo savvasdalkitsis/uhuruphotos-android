@@ -103,6 +103,16 @@ class LocalMediaThumbnailsTest {
     }
 
     @Test
+    fun `keeps photos that are already as wide as a thumbnail`() {
+        val thumbnailWide = bitmap(width = 400, height = 300)
+        every { BitmapFactory.decodeStream(any()) } returns thumbnailWide
+        every { Bitmap.createScaledBitmap(thumbnailWide, 400, 300, true) } returns thumbnailWide
+
+        assertSame(thumbnailWide, underTest.bitmap(photo(orientation = null)))
+        verify(exactly = 0) { thumbnailWide.recycle() }
+    }
+
+    @Test
     fun `saves rotated thumbnails without the orientation of the original`() {
         mockkConstructor(ExifInterface::class)
         every { anyConstructed<ExifInterface>().setAttribute(any(), any()) } just Runs

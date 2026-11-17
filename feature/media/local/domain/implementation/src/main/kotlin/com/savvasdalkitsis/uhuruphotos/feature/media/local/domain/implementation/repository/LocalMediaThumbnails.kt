@@ -99,8 +99,8 @@ class LocalMediaThumbnails @Inject constructor(
     private fun Bitmap?.scale() = try {
         this?.let { frame ->
             val ratio = frame.height / frame.width.toFloat()
-            Bitmap.createScaledBitmap(frame, thumbWidth, (thumbWidth * ratio).toInt(), true).also {
-                frame.recycle()
+            Bitmap.createScaledBitmap(frame, thumbWidth, (thumbWidth * ratio).toInt(), true).also { scaled ->
+                if (scaled !== frame) frame.recycle()
             }
         }
     }
