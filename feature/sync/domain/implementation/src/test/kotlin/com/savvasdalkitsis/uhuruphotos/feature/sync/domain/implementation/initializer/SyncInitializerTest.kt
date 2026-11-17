@@ -19,14 +19,23 @@ import androidx.work.NetworkType
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.sync.domain.api.usecase.SyncUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
+import dagger.Lazy
 import io.mockk.every
 import io.mockk.mockk
+import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
+import kotlinx.coroutines.withTimeout
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotSame
 import org.junit.Test
 
 class SyncInitializerTest {
@@ -39,16 +48,18 @@ class SyncInitializerTest {
     private val keep = replace.copy(keepExisting = true)
 
     private fun schedules(vararg pending: List<UploadItem>) = SyncInitializer(
-        mockk {
-            every { observePendingItems() } returns flow {
-                pending.forEach {
-                    emit(it)
-                    delay(1)
+        Lazy {
+            mockk {
+                every { observePendingItems() } returns flow {
+                    pending.forEach {
+                        emit(it)
+                        delay(1)
+                    }
                 }
             }
         },
-        mockk(),
-        settingsUseCase,
+        Lazy { mockk() },
+        Lazy { settingsUseCase },
     ).uploadSchedules()
 
     private fun items(vararg ids: Long) = ids.map { UploadItem(it, "content://$it") }
@@ -89,5 +100,25 @@ class SyncInitializerTest {
             listOf(replace, replace.copy(networkType = NetworkType.CONNECTED)),
             schedules(items(1)).toList(),
         )
+    }
+
+    @Test
+    fun `builds its use cases off the thread that creates the application`() = runBlocking {
+        Dispatchers.setMain(StandardTestDispatcher())
+        val resolvedOn = CompletableDeferred<Thread>()
+        try {
+            SyncInitializer(
+                Lazy {
+                    resolvedOn.complete(Thread.currentThread())
+                    mockk { every { observePendingItems() } returns flowOf(emptyList()) }
+                },
+                Lazy { mockk() },
+                Lazy { settingsUseCase },
+            ).onAppCreated(mockk())
+
+            assertNotSame(Thread.currentThread(), withTimeout(5_000) { resolvedOn.await() })
+        } finally {
+            Dispatchers.resetMain()
+        }
     }
 }

@@ -21,6 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.Setti
 import com.savvasdalkitsis.uhuruphotos.feature.sync.domain.api.usecase.SyncUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
+import dagger.Lazy
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.Flow
@@ -36,9 +37,9 @@ import javax.inject.Inject
 
 @AutoBindIntoSet
 class SyncInitializer @Inject constructor(
-    private val syncUseCase: SyncUseCase,
-    private val uploadUseCase: UploadUseCase,
-    private val settingsUseCase: SettingsUseCase,
+    private val syncUseCase: Lazy<SyncUseCase>,
+    private val uploadUseCase: Lazy<UploadUseCase>,
+    private val settingsUseCase: Lazy<SettingsUseCase>,
 ) : ApplicationCreated {
     override fun onAppCreated(app: Application) {
         MainScope().launch(Dispatchers.IO) {
@@ -47,7 +48,7 @@ class SyncInitializer @Inject constructor(
     }
 
     private suspend fun scheduleUploads(schedule: UploadSchedule) {
-        uploadUseCase.scheduleUploads(
+        uploadUseCase.get().scheduleUploads(
             networkType = schedule.networkType,
             requiresCharging = schedule.requiresCharging,
             keepExisting = schedule.keepExisting,
@@ -55,9 +56,9 @@ class SyncInitializer @Inject constructor(
     }
 
     internal fun uploadSchedules(): Flow<UploadSchedule> = combine(
-        syncUseCase.observePendingItems(),
-        settingsUseCase.observeCloudSyncNetworkRequirements(),
-        settingsUseCase.observeCloudSyncRequiresCharging(),
+        syncUseCase.get().observePendingItems(),
+        settingsUseCase.get().observeCloudSyncNetworkRequirements(),
+        settingsUseCase.get().observeCloudSyncRequiresCharging(),
     ) { pendingItems, networkRequirement, requiresCharging ->
         PendingUploads(pendingItems.map { it.id }.toSet(), networkRequirement, requiresCharging)
     }.distinctUntilChanged()
