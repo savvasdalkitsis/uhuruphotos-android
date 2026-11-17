@@ -1,0 +1,7 @@
+* Fixed a crash on every launch when your phone has a very tall or very wide image
+* Older days show up in the feed again below a very tall image
+* Thumbnails for very tall photos, photos 400 px wide and huge photos
+* Mapbox only loads when you use Mapbox maps
+* Web login recovers when the WebView stops; dark Google maps
+* Earlier crash reporting
+* Faster app start
