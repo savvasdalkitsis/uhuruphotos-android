@@ -18,6 +18,7 @@ package com.savvasdalktsis.uhuruphotos.feature.download.domain.implementation.in
 import android.app.Application
 import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
 import com.savvasdalktsis.uhuruphotos.feature.download.domain.api.usecase.DownloadUseCase
+import dagger.Lazy
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
@@ -31,11 +32,12 @@ import javax.inject.Singleton
 @AutoBindIntoSet
 @Singleton
 class DownloadInitializer @Inject constructor(
-    private val downloadUseCase: DownloadUseCase,
+    private val lazyDownloadUseCase: Lazy<DownloadUseCase>,
 ) : ApplicationCreated {
 
     override fun onAppCreated(app: Application) {
         MainScope().launch(Dispatchers.IO) {
+            val downloadUseCase = lazyDownloadUseCase.get()
             downloadUseCase.observeDownloading().collectLatest {
                 if (it.isNotEmpty()) {
                     while (isActive) {
