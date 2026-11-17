@@ -20,13 +20,18 @@ import com.fredporciuncula.flow.preferences.NullableSerializer
 import com.fredporciuncula.flow.preferences.Preference
 import com.fredporciuncula.flow.preferences.Serializer
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
+import dagger.Lazy
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class Preferences @Inject constructor(
-    private val flowSharedPreferences: FlowSharedPreferences,
+    private val lazyFlowSharedPreferences: Lazy<FlowSharedPreferences>,
 ) : Preferences {
+
+    private val flowSharedPreferences: FlowSharedPreferences
+        get() = lazyFlowSharedPreferences.get()
+
     override fun remove(key: String) {
         flowSharedPreferences.sharedPreferences.edit().remove(key).apply()
     }

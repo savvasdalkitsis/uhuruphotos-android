@@ -12,5 +12,8 @@ dependencies {
             libs.hilt,
             project(":foundation:preferences:api"),
     )
+    testImplementation(
+            libs.bundles.test,
+    )
     ksp libs.autodagger.ksp
 }

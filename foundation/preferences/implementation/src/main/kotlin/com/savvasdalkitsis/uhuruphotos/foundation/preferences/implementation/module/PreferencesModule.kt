@@ -27,6 +27,7 @@ import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.EncryptedPreferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
+import dagger.Lazy
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -40,12 +41,12 @@ class PreferencesModule {
 
     @Provides
     @PlainTextPreferences
-    fun preferences(@PlainTextPreferences prefs: FlowSharedPreferences): Preferences =
+    fun preferences(@PlainTextPreferences prefs: Lazy<FlowSharedPreferences>): Preferences =
         com.savvasdalkitsis.uhuruphotos.foundation.preferences.implementation.Preferences(prefs)
 
     @Provides
     @EncryptedPreferences
-    fun encryptedPreferences(@EncryptedPreferences prefs: FlowSharedPreferences): Preferences =
+    fun encryptedPreferences(@EncryptedPreferences prefs: Lazy<FlowSharedPreferences>): Preferences =
         com.savvasdalkitsis.uhuruphotos.foundation.preferences.implementation.Preferences(prefs)
 
     @Provides
