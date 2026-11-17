@@ -20,6 +20,7 @@ import android.view.View
 import androidx.compose.runtime.staticCompositionLocalOf
 import com.savvasdalkitsis.uhuruphotos.foundation.activity.api.extensions.getActivity
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapOptions
+import org.maplibre.android.MapLibre
 import org.maplibre.android.camera.CameraPosition
 import org.maplibre.android.maps.MapLibreMap
 import org.maplibre.android.maps.MapView
@@ -41,8 +42,17 @@ internal data class MapLibreMapSetup(
 internal val LocalMapLibreViewFactory =
     staticCompositionLocalOf<(Context, MapLibreMapSetup) -> View> { ::createMapLibreMapView }
 
+internal fun newMapLibreView(
+    context: Context,
+    initialize: (Context) -> Unit = { MapLibre.getInstance(it) },
+    create: (Context) -> MapView = ::MapView,
+): MapView {
+    initialize(context)
+    return create(context)
+}
+
 private fun createMapLibreMapView(context: Context, setup: MapLibreMapSetup): View =
-    MapView(context).apply {
+    newMapLibreView(context).apply {
         bindTo(setup.state)
         tag = lifecycleObserver().also(context.getActivity()!!.lifecycle::addObserver)
         getMapAsync { map -> map.setUp(this, setup) }

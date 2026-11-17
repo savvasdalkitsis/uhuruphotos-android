@@ -104,7 +104,7 @@ class ArchitectureTests {
     fun `map SDKs are not initialised when the app launches`() {
         Konsist.scopeFromProject()
             .classes()
-            .withPackage("com.savvasdalkitsis.uhuruphotos.foundation.map.mapbox..")
+            .withPackage("com.savvasdalkitsis.uhuruphotos.foundation.map..")
             .assertFalse { it.hasParentWithName("ApplicationCreated") }
     }
 
