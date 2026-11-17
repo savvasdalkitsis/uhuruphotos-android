@@ -33,7 +33,7 @@ internal fun DbRemoteMediaItemSummary.toRemoteMediaItem(
     displayDayDate = displayDate,
     sortableDate = date,
     isFavourite = isFavourite(rating, favouriteThreshold),
-    ratio = aspectRatio.orSquare(),
+    ratio = aspectRatio.toDisplayRatio(),
     mediaDay = mediaDay,
 )
 
@@ -48,7 +48,7 @@ internal fun MediaCollectionSourceModel.toRemoteMediaItem(
         displayDayDate = displayDate,
         sortableDate = date,
         isFavourite = isFavourite(rating, favouriteThreshold),
-        ratio = aspectRatio.orSquare(),
+        ratio = aspectRatio.toDisplayRatio(),
         latLng = latLng(lat, lon),
         mediaDay = mediaDay,
     )

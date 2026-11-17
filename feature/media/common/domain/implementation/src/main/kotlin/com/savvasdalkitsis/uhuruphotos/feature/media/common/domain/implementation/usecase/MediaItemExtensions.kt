@@ -62,10 +62,14 @@ internal suspend fun DateTime.toMediaDay(): MediaDayModel = MediaDayModel(
 
 internal val LocalMediaItem.ratio: Float get() {
     val (w, h) = orientedSize()
-    return (w / h.toFloat()).orSquare()
+    return (w / h.toFloat()).toDisplayRatio()
 }
 
-internal fun Float?.orSquare(): Float = this?.takeIf { it.isFinite() && it > 0f } ?: 1f
+private const val WIDEST_RATIO = 20f
+private const val TALLEST_RATIO = 1f / WIDEST_RATIO
+
+internal fun Float?.toDisplayRatio(): Float =
+    this?.takeIf { it.isFinite() && it > 0f }?.coerceIn(TALLEST_RATIO, WIDEST_RATIO) ?: 1f
 
 private fun LocalMediaItem.orientedSize(): Pair<Int, Int> =
     if (orientation in rotatedOrientations) height to width else width to height

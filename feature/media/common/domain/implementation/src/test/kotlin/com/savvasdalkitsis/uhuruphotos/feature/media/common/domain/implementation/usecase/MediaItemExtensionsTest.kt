@@ -46,6 +46,21 @@ class MediaItemExtensionsTest {
         assertEquals(1f, item(width = 0, height = 0).ratio)
     }
 
+    @Test
+    fun `a local item far taller than it is wide is shown at the tallest supported proportions`() {
+        assertEquals(0.05f, item(width = 30, height = 30000).ratio)
+    }
+
+    @Test
+    fun `a local panorama far wider than it is tall is shown at the widest supported proportions`() {
+        assertEquals(20f, item(width = 30000, height = 30).ratio)
+    }
+
+    @Test
+    fun `a rotated local panorama is shown at the tallest supported proportions`() {
+        assertEquals(0.05f, item(width = 30000, height = 30, orientation = ORIENTATION_90).ratio)
+    }
+
     private fun item(width: Int, height: Int, orientation: MediaOrientation = ORIENTATION_0) = LocalMediaItem(
         id = 1,
         displayName = "1.jpg",

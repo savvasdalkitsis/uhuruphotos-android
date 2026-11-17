@@ -18,6 +18,8 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.implementati
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -26,6 +28,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.test.assertHeightIsEqualTo
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.navigation3.ui.LocalNavAnimatedContentScope
 import coil.ImageLoader
@@ -52,21 +55,25 @@ class MediaItemRatioCelTest {
     @get:Rule
     val composeRule = createComposeRule()
 
-    private fun show(item: MediaItemModel) {
+    private fun show(item: MediaItemModel, width: Dp = 100.dp, expectedHeight: Dp = 100.dp) {
         composeRule.setContent {
             val context = LocalContext.current
             CompositionLocalProvider(LocalThumbnailImageLoader provides remember { ImageLoader(context) }) {
                 SharedTransitionLayout {
                     AnimatedContent(targetState = Unit) {
                         CompositionLocalProvider(LocalNavAnimatedContentScope provides this) {
-                            Cel(modifier = Modifier.width(100.dp).testTag("cel"), state = item.toCel(), onSelected = {})
+                            LazyVerticalStaggeredGrid(StaggeredGridCells.Fixed(1), Modifier.width(width)) {
+                                item {
+                                    Cel(modifier = Modifier.testTag("cel"), state = item.toCel(), onSelected = {})
+                                }
+                            }
                         }
                     }
                 }
             }
         }
         composeRule.waitForIdle()
-        composeRule.onNodeWithTag("cel").assertHeightIsEqualTo(100.dp)
+        composeRule.onNodeWithTag("cel").assertHeightIsEqualTo(expectedHeight)
     }
 
     @Test
@@ -78,6 +85,18 @@ class MediaItemRatioCelTest {
     fun `shows a device photo that reports no height`() {
         val hash = MediaItemHashModel.fromRemoteMediaHash("hash", 1)
         show(MediaItemInstanceModel(MediaIdModel.RemoteIdModel("id", false, hash), hash, ratio = localItem(height = 0).ratio))
+    }
+
+    @Test
+    fun `shows a device photo far taller than it is wide`() {
+        val hash = MediaItemHashModel.fromRemoteMediaHash("hash", 1)
+        val sliver = localItem(width = 30, height = 30000).ratio
+        show(MediaItemInstanceModel(MediaIdModel.RemoteIdModel("id", false, hash), hash, ratio = sliver), 300.dp, 6000.dp)
+    }
+
+    @Test
+    fun `shows a server photo far taller than it is wide`() {
+        show(summary(aspectRatio = 0.001f).toRemoteMediaItem(1, 4, null, null), 300.dp, 6000.dp)
     }
 
     private fun summary(aspectRatio: Float) = DbRemoteMediaItemSummary(
@@ -96,7 +115,7 @@ class MediaItemRatioCelTest {
         containerId = "1",
     )
 
-    private fun localItem(height: Int) = LocalMediaItem(
+    private fun localItem(width: Int = 1080, height: Int) = LocalMediaItem(
         id = 1,
         displayName = "1.jpg",
         displayDate = "",
@@ -105,7 +124,7 @@ class MediaItemRatioCelTest {
         dateTimeTaken = "",
         sortableDate = "",
         bucket = LocalMediaFolder(1, "Camera"),
-        width = 1080,
+        width = width,
         height = height,
         size = 1,
         contentUri = "content://1",

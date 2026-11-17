@@ -88,6 +88,16 @@ class RemoteMediaItemMappingTest {
         assertEquals(1f, source(aspectRatio = 0f).toRemoteMediaItem(1, 4, null, null)!!.ratio)
     }
 
+    @Test
+    fun `a summary far taller than it is wide is shown at the tallest supported proportions`() {
+        assertEquals(0.05f, summary(url = "${md5}1", rating = null, aspectRatio = 0.001f).toRemoteMediaItem(1, 4, null, null).ratio)
+    }
+
+    @Test
+    fun `a collection panorama far wider than it is tall is shown at the widest supported proportions`() {
+        assertEquals(20f, source(aspectRatio = 1000f).toRemoteMediaItem(1, 4, null, null)!!.ratio)
+    }
+
     private fun summary(url: String, rating: Int?, aspectRatio: Float = 1.5f) = DbRemoteMediaItemSummary(
         id = uuid,
         dominantColor = "#000000",
