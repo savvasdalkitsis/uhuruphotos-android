@@ -65,7 +65,7 @@ class LocalMediaThumbnailsTest {
         mockkStatic(Log::class, BitmapFactory::class, Bitmap::class)
         every { Log.isLoggable(any(), any()) } returns false
         Class.forName(ExifInterface::class.java.name)
-        every { BitmapFactory.decodeStream(any()) } returns decoded
+        every { BitmapFactory.decodeStream(any(), any(), any()) } returns decoded
         every { Bitmap.createScaledBitmap(decoded, 400, 300, true) } returns scaled
         every { Bitmap.createBitmap(scaled, 0, 0, 400, 300, any(), true) } returns rotated
         mockkConstructor(Matrix::class)
@@ -105,7 +105,7 @@ class LocalMediaThumbnailsTest {
     @Test
     fun `keeps photos that are already as wide as a thumbnail`() {
         val thumbnailWide = bitmap(width = 400, height = 300)
-        every { BitmapFactory.decodeStream(any()) } returns thumbnailWide
+        every { BitmapFactory.decodeStream(any(), any(), any()) } returns thumbnailWide
         every { Bitmap.createScaledBitmap(thumbnailWide, 400, 300, true) } returns thumbnailWide
 
         assertSame(thumbnailWide, underTest.bitmap(photo(orientation = null)))

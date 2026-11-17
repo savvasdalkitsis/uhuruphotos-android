@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementatio
 import android.content.ContentResolver
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory.Options
 import android.graphics.BitmapFactory.decodeStream
 import android.graphics.Matrix
 import android.media.MediaMetadataRetriever
@@ -40,7 +41,6 @@ class LocalMediaThumbnails @Inject constructor(
     private val bitmapUseCase: BitmapUseCase,
 ) {
 
-    private val thumbWidth = 400
     private val folder get() = File(context.filesDir, "localThumbnails")
 
     fun bitmap(item: LocalMediaStoreServiceItem): Bitmap? = when (item) {
@@ -80,13 +80,21 @@ class LocalMediaThumbnails @Inject constructor(
     }
 
     private val Photo.bitmap get() = try {
-        contentResolver.openInputStream(contentUri)!!.use { stream ->
-            decodeStream(stream)
-        }.scale()?.rotatedBy(orientation)
+        decodeSubsampled().scale()?.rotatedBy(orientation)
     } catch (e: Exception) {
         log(e)
         null
     }
+
+    private fun Photo.decodeSubsampled(): Bitmap? {
+        val bounds = Options().apply { inJustDecodeBounds = true }.also { decode(it) }
+        return decode(Options().apply { inSampleSize = thumbnailSampleSizeOf(bounds.outWidth, bounds.outHeight) })
+    }
+
+    private fun Photo.decode(options: Options): Bitmap? =
+        contentResolver.openInputStream(contentUri)!!.use { stream ->
+            decodeStream(stream, null, options)
+        }
 
     private fun Bitmap.rotatedBy(orientation: String?): Bitmap = when (val degrees = orientation.degrees) {
         0f -> this
@@ -98,8 +106,8 @@ class LocalMediaThumbnails @Inject constructor(
 
     private fun Bitmap?.scale() = try {
         this?.let { frame ->
-            val ratio = frame.height / frame.width.toFloat()
-            Bitmap.createScaledBitmap(frame, thumbWidth, (thumbWidth * ratio).toInt(), true).also { scaled ->
+            val size = thumbnailSizeOf(frame.width, frame.height)
+            Bitmap.createScaledBitmap(frame, size.width, size.height, true).also { scaled ->
                 if (scaled !== frame) frame.recycle()
             }
         }
