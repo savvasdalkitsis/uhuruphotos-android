@@ -19,18 +19,20 @@ import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewState
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewStateFactory
+import com.savvasdalkitsis.uhuruphotos.foundation.map.mapbox.implementation.initializer.MapBoxSdk
 import se.ansman.dagger.auto.AutoBindIntoSet
 import javax.inject.Inject
 
 @AutoBindIntoSet
-class MapBoxMapViewStateFactory @Inject constructor(
+class MapBoxMapViewStateFactory @Inject internal constructor(
+    private val sdk: MapBoxSdk,
 ): MapViewStateFactory {
     override fun create(
         mapProvider: MapProvider,
         initialPosition: LatLon,
         initialZoom: Float
     ): MapViewState? = when (mapProvider) {
-        MapProvider.MapBox -> MapBoxMapViewState(initialPosition, initialZoom)
+        MapProvider.MapBox -> MapBoxMapViewState(initialPosition, initialZoom).also { sdk.preload() }
         else -> null
     }
 

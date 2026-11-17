@@ -22,9 +22,11 @@ import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapOptions
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewFactory
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewScope
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewState
+import com.savvasdalkitsis.uhuruphotos.foundation.map.mapbox.implementation.initializer.MapBoxSdk
 import javax.inject.Inject
 
-class MapBoxMapViewFactory @Inject constructor(
+class MapBoxMapViewFactory @Inject internal constructor(
+    private val sdk: MapBoxSdk,
 ): MapViewFactory{
 
     @Composable
@@ -37,6 +39,7 @@ class MapBoxMapViewFactory @Inject constructor(
         content: @Composable (MapViewScope.() -> Unit)?
     ) {
         MapBoxMapView(
+            sdk,
             modifier,
             mapViewState as MapBoxMapViewState,
             mapOptions,

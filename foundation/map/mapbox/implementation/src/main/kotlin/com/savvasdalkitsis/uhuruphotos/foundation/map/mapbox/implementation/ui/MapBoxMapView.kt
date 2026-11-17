@@ -18,65 +18,31 @@ package com.savvasdalkitsis.uhuruphotos.foundation.map.mapbox.implementation.ui
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
-import com.mapbox.maps.CameraOptions
-import com.mapbox.maps.MapView
-import com.mapbox.maps.Style
-import com.mapbox.maps.plugin.compass.compass
-import com.mapbox.maps.plugin.gestures.addOnMapClickListener
-import com.mapbox.maps.plugin.gestures.gestures
-import com.mapbox.maps.plugin.locationcomponent.location
-import com.mapbox.maps.plugin.scalebar.scalebar
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapOptions
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewScope
+import com.savvasdalkitsis.uhuruphotos.foundation.map.mapbox.implementation.initializer.MapBoxSdk
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.LocalThemeMode
 
 @Composable
 internal fun MapBoxMapView(
+    sdk: MapBoxSdk,
     modifier: Modifier,
     mapViewState: MapBoxMapViewState,
-    mapOptions: MapOptions.() -> MapOptions = { this },
-    onMapClick: () -> Unit = {},
+    mapOptions: MapOptions.() -> MapOptions,
+    onMapClick: () -> Unit,
     content: @Composable (MapViewScope.() -> Unit)?,
 ) {
-    val isDark = LocalThemeMode.current.isDark()
+    val setup = MapBoxMapSetup(
+        sdk = sdk,
+        state = mapViewState,
+        options = mapOptions(MapOptions()),
+        isDark = LocalThemeMode.current.isDark(),
+        onMapClick = onMapClick,
+    )
+    val createMapView = LocalMapBoxViewFactory.current
     AndroidView(
         modifier = modifier,
-        factory = { context ->
-            MapView(context).apply {
-                mapboxMap.apply {
-                    with(mapOptions(MapOptions())) {
-                        gestures.doubleTouchToZoomOutEnabled = zoomGesturesEnabled
-                        gestures.pinchToZoomEnabled = zoomGesturesEnabled
-                        gestures.doubleTapToZoomInEnabled = zoomGesturesEnabled
-                        gestures.scrollEnabled = scrollGesturesEnabled
-                        gestures.rotateEnabled = false
-                    }
-                    val style = when {
-                        isDark -> Style.DARK
-                        else -> Style.MAPBOX_STREETS
-                    }
-                    loadStyle(style) {
-                        setCamera(
-                            CameraOptions.Builder()
-                                .center(mapViewState.initialPosition.toPoint)
-                                .zoom(mapViewState.initialZoom.toDouble())
-                                .build()
-                        )
-                        location.updateSettings {
-                            enabled = true
-                            pulsingEnabled = true
-                        }
-                    }
-                    scalebar.enabled = false
-                    compass.enabled = false
-                    bindTo(mapViewState)
-                    addOnMapClickListener {
-                        onMapClick()
-                        true
-                    }
-                }
-            }
-        }
+        factory = { context -> createMapView(context, setup) },
     )
     content?.invoke(mapViewState)
 }

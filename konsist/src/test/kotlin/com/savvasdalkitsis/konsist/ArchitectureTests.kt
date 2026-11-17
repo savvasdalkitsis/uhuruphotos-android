@@ -101,6 +101,14 @@ class ArchitectureTests {
     }
 
     @Test
+    fun `map SDKs are not initialised when the app launches`() {
+        Konsist.scopeFromProject()
+            .classes()
+            .withPackage("com.savvasdalkitsis.uhuruphotos.foundation.map.mapbox..")
+            .assertFalse { it.hasParentWithName("ApplicationCreated") }
+    }
+
+    @Test
     fun `classes extending 'ViewModel' should have 'ViewModel' suffix`() {
         Konsist
             .scopeFromProject()
