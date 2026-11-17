@@ -16,7 +16,9 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.foundation.video.api.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.media3.common.MediaItem
@@ -32,19 +34,23 @@ internal fun PlaybackEffect(
     onFinishedLoading: () -> Unit,
 ) {
     val startPosition = rememberSaveable(videoUrl, saver = playbackPositionSaver(exoPlayer)) { 0L }
+    val listener = remember(exoPlayer, videoUrl) { VideoLoadingListener(onReady, onFinishedLoading) }
+    DisposableEffect(exoPlayer, listener) {
+        exoPlayer.addListener(listener)
+        onDispose { exoPlayer.removeListener(listener) }
+    }
     LaunchedEffect(videoUrl, play) {
         if (play) {
-            exoPlayer.startOrResume(videoUrl, startPosition, VideoLoadingListener(onReady, onFinishedLoading))
+            exoPlayer.startOrResume(videoUrl, startPosition)
         } else {
             exoPlayer.pause()
         }
     }
 }
 
-private fun ExoPlayer.startOrResume(videoUrl: String, startPosition: Long, listener: Player.Listener) {
+private fun ExoPlayer.startOrResume(videoUrl: String, startPosition: Long) {
     if (currentMediaItem?.mediaId != videoUrl) {
         setMediaItem(MediaItem.Builder().setMediaId(videoUrl).setUri(videoUrl).build(), startPosition)
-        addListener(listener)
         prepare()
     }
     playWhenReady = true

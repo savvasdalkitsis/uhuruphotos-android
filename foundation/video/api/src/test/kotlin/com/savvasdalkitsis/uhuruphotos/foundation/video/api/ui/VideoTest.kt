@@ -59,6 +59,7 @@ class VideoTest {
         every { applicationLooper } returns Looper.getMainLooper()
         every { currentPosition } returns 4_200L
         every { addListener(capture(listeners)) } just Runs
+        every { removeListener(any()) } answers { listeners.remove(firstArg()) }
         every { setMediaItem(capture(mediaItem), any<Long>()) } just Runs
         every { currentMediaItem } answers { if (mediaItem.isCaptured) mediaItem.captured else null }
     }
@@ -72,14 +73,14 @@ class VideoTest {
     }
 
     @Composable
-    private fun PlayingVideo(play: Boolean = true) {
+    private fun PlayingVideo(play: Boolean = true, videoUrl: String = "https://photos.example.com/media/video/1") {
         CompositionLocalProvider(
             LocalExoPlayerProvider provides exoplayerProvider,
             LocalThumbnailImageLoader provides ImageLoader(LocalContext.current),
         ) {
             Video(
                 modifier = Modifier,
-                videoUrl = "https://photos.example.com/media/video/1",
+                videoUrl = videoUrl,
                 play = play,
                 videoThumbnailUrl = "https://photos.example.com/media/thumbnails/1",
                 onFinishedLoading = {},
@@ -129,6 +130,18 @@ class VideoTest {
         verify(exactly = 1) { player.setMediaItem(any(), any<Long>()) }
         verify(exactly = 1) { player.prepare() }
         verify(exactly = 2) { player.playWhenReady = true }
+        assertEquals(1, listeners.filterIsInstance<VideoLoadingListener>().size)
+    }
+
+    @Test
+    fun `keeps a single loading listener on the player across videos`() {
+        var videoUrl by mutableStateOf("https://photos.example.com/media/video/1")
+        composeRule.setContent { PlayingVideo(videoUrl = videoUrl) }
+
+        composeRule.runOnIdle { videoUrl = "https://photos.example.com/media/video/2" }
+        composeRule.waitForIdle()
+
+        verify(exactly = 2) { player.setMediaItem(any(), any<Long>()) }
         assertEquals(1, listeners.filterIsInstance<VideoLoadingListener>().size)
     }
 }
