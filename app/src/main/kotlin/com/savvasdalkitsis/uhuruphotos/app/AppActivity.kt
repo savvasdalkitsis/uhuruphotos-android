@@ -26,8 +26,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.FragmentActivity
-import com.bugsnag.android.Bugsnag
-import com.bugsnag.android.Configuration
 import com.bugsnag.android.performance.BugsnagPerformance
 import com.bugsnag.android.performance.PerformanceConfiguration
 import com.savvasdalkitsis.uhuruphotos.app.navigation.AppNavigator
@@ -55,9 +53,7 @@ class AppActivity : FragmentActivity() {
         installSplashScreen()
         enableEdgeToEdge()
         MainScope().launch(Dispatchers.IO) {
-            Bugsnag.start(this@AppActivity, Configuration.load(this@AppActivity).apply { groupInstrumentedProcessCrashes() })
             BugsnagPerformance.start(PerformanceConfiguration.load(this@AppActivity))
-            reportHandledErrorsToBugsnag()
         }
         activityInitializer.onCreated(this)
         setContent {

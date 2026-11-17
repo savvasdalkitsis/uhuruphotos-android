@@ -38,6 +38,7 @@ class App :
     lateinit var applicationInitializer: ApplicationInitializer
 
     override fun onCreate() {
+        startCrashReporting()
         super.onCreate()
         if (BuildConfig.DEBUG){
             StrictMode.setThreadPolicy(
