@@ -29,6 +29,8 @@ import org.maplibre.android.utils.BitmapUtils
 import java.net.URL
 import kotlin.concurrent.thread
 
+private const val STYLE_TIMEOUT_MILLIS = 15_000
+
 internal data class AttributionMargins(val start: Int, val top: Int, val end: Int, val bottom: Int)
 
 internal data class MapLibreMapSetup(
@@ -86,8 +88,15 @@ private fun MapLibreMap.applyOptions(options: MapOptions, margins: AttributionMa
     }
 
 private fun calmStyle(palette: BasemapPalette): Style.Builder = runCatching {
-    Style.Builder().fromJson(calmStyleJson(URL(PhotoPrismStyle.URI).readText(), palette))
+    Style.Builder().fromJson(calmStyleJson(downloadStyleJson(URL(PhotoPrismStyle.URI)), palette))
 }.getOrElse { Style.Builder().fromUri(PhotoPrismStyle.URI) }
+
+internal fun downloadStyleJson(url: URL, timeoutMillis: Int = STYLE_TIMEOUT_MILLIS): String =
+    url.openConnection().run {
+        connectTimeout = timeoutMillis
+        readTimeout = timeoutMillis
+        getInputStream().bufferedReader().use { it.readText() }
+    }
 
 private fun Style.addMarkerImages(context: Context) = Markers.entries.forEach { marker ->
     addImage(marker.id, BitmapUtils.getDrawableFromRes(context, marker.drawable, marker.tint)!!)
