@@ -4,6 +4,9 @@ plugins {
 
 android {
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.map.google.implementation'
+    testOptions {
+        unitTests.includeAndroidResources = true
+    }
 
     defaultConfig {
         manifestPlaceholders = [
@@ -30,4 +33,8 @@ dependencies {
             project(":foundation:theme:api"),
     )
     ksp libs.autodagger.ksp
+    testImplementation(
+            libs.bundles.test,
+            libs.bundles.ui.test,
+    )
 }
