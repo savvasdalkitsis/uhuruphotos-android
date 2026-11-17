@@ -23,6 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.TokenRefreshInter
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.FullImage
 import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
 import crocodile8008.videoviewcache.lib.VideoViewCacheFacade
+import dagger.Lazy
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
@@ -34,18 +35,18 @@ import javax.inject.Inject
 @AutoBindIntoSet
 class ImageInitializer @Inject constructor(
     @FullImage
-    private val imageLoader: ImageLoader,
+    private val imageLoader: Lazy<ImageLoader>,
     @AuthenticatedOkHttpClient
-    private val okHttpBuilder: OkHttpClient.Builder,
+    private val okHttpBuilder: Lazy<OkHttpClient.Builder>,
     @TokenRefreshInterceptor
-    private val tokenRefreshInterceptor: Interceptor,
+    private val tokenRefreshInterceptor: Lazy<Interceptor>,
 ) : ApplicationCreated {
 
     override fun onAppCreated(app: Application) {
-        Coil.setImageLoader { imageLoader }
+        Coil.setImageLoader { imageLoader.get() }
         MainScope().launch(Dispatchers.IO) {
-            VideoViewCacheFacade.customOkHttpClient = okHttpBuilder
-                .addInterceptor(tokenRefreshInterceptor)
+            VideoViewCacheFacade.customOkHttpClient = okHttpBuilder.get()
+                .addInterceptor(tokenRefreshInterceptor.get())
                 .build()
         }
     }
