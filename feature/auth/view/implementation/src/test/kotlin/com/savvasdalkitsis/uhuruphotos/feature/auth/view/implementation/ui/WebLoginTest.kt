@@ -19,6 +19,7 @@ import android.util.AndroidRuntimeException
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.CookieManager
+import android.webkit.RenderProcessGoneDetail
 import android.webkit.WebView
 import androidx.activity.ComponentActivity
 import androidx.compose.runtime.Composable
@@ -27,17 +28,20 @@ import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import io.mockk.every
+import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.unmockkStatic
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.PreviewContextConfigurationEffect
 import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotSame
 import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.Shadows.shadowOf
 
 @RunWith(RobolectricTestRunner::class)
 class WebLoginTest {
@@ -70,6 +74,36 @@ class WebLoginTest {
         assertTrue(webView.settings.javaScriptEnabled)
         assertEquals(true, webView.settings.userAgentString?.contains("Mobile Safari"))
     }
+
+    @Test
+    fun `recreates the WebView when the system kills its renderer`() {
+        showWebLogin()
+        val dead = composeRule.runOnIdle { webViews().single() }
+
+        val handled = composeRule.runOnIdle { rendererGone(dead, crashed = false) }
+
+        val alive = composeRule.runOnIdle { webViews().single() }
+        assertTrue(handled)
+        assertNotSame(dead, alive)
+        assertTrue(alive.settings.javaScriptEnabled)
+    }
+
+    @Test
+    fun `shows an error when the WebView renderer crashes`() {
+        showWebLogin()
+
+        val handled = composeRule.runOnIdle { rendererGone(webViews().single(), crashed = true) }
+
+        assertTrue(handled)
+        composeRule.onNodeWithText("Could not log in").assertExists()
+        assertEquals(emptyList<WebView>(), composeRule.runOnIdle { webViews() })
+    }
+
+    private fun rendererGone(webView: WebView, crashed: Boolean): Boolean =
+        shadowOf(webView).webViewClient.onRenderProcessGone(
+            webView,
+            mockk<RenderProcessGoneDetail> { every { didCrash() } returns crashed },
+        )
 
     private fun webViews(): List<WebView> =
         composeRule.activity.window.decorView.withDescendants().filterIsInstance<WebView>()

@@ -23,7 +23,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import com.google.accompanist.web.WebView
@@ -38,22 +43,37 @@ private const val USER_AGENT =
     "Mozilla/5.0 (Linux; Android 12; Pixel 6 Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/" +
             "99.0.4844.88 Mobile Safari/537.36 OPR/68.2.3557.64219"
 
-@Suppress("DEPRECATION")
 @Composable
 fun WebLogin(state: WebLoginState) {
     if (state.url == null) {
         UhuruFullLoading()
     } else {
-        val webState = rememberWebViewState(url = state.url)
-        val context = LocalContext.current
-        val loginWebView = remember(context) { createLoginWebView(context) }
-        UhuruScaffold { contentPadding ->
-            Column {
-                Spacer(modifier = Modifier.height(contentPadding.calculateTopPadding()))
-                when (loginWebView) {
-                    null -> NoContent(string.error_logging_in, refreshable = false)
-                    else -> WebView(webState, factory = { loginWebView })
-                }
+        LoginPage(state.url)
+    }
+}
+
+@Suppress("DEPRECATION")
+@Composable
+private fun LoginPage(url: String) {
+    val webState = rememberWebViewState(url = url)
+    val context = LocalContext.current
+    var renderers by remember { mutableIntStateOf(0) }
+    var rendererCrashed by remember { mutableStateOf(false) }
+    val loginWebView = remember(context, renderers, rendererCrashed) {
+        if (rendererCrashed) null else createLoginWebView(context)
+    }
+    val client = remember {
+        RendererRecoveringWebViewClient { crashed ->
+            rendererCrashed = crashed
+            renderers++
+        }
+    }
+    UhuruScaffold { contentPadding ->
+        Column {
+            Spacer(modifier = Modifier.height(contentPadding.calculateTopPadding()))
+            when (loginWebView) {
+                null -> NoContent(string.error_logging_in, refreshable = false)
+                else -> key(loginWebView) { WebView(webState, client = client, factory = { loginWebView }) }
             }
         }
     }
