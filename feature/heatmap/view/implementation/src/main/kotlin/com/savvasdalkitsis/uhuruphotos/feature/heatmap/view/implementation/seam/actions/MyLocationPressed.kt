@@ -15,41 +15,22 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.actions
 
-import android.annotation.SuppressLint
-import android.location.LocationManager
-import android.os.CancellationSignal
-import androidx.core.location.LocationManagerCompat
-import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import com.google.accompanist.permissions.PermissionState
-import com.google.accompanist.permissions.isGranted
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapMutation
+import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.awaitCurrentLocation
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state.HeatMapState
-import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewState
 import kotlinx.coroutines.flow.flow
 
-@SuppressLint("MissingPermission")
-@OptIn(ExperimentalPermissionsApi::class)
 data class MyLocationPressed(
-    val locationPermissionState: PermissionState,
-    val mapViewState: MapViewState
+    val mapViewState: MapViewState,
 ) : HeatMapAction() {
 
     override fun HeatMapActionsContext.handle(
         state: HeatMapState
     ) = flow<HeatMapMutation> {
-        if (locationPermissionState.status.isGranted) {
-            var location: LatLon? = null
-            val cancellationSignal: CancellationSignal? = null
-            LocationManagerCompat.getCurrentLocation(locationManager, LocationManager.NETWORK_PROVIDER, cancellationSignal, Runnable::run) {
-                location = LatLon(it.latitude, it.longitude)
-            }
-            location?.let {
-                mapViewState.centerToLocation(it)
-            }
-        } else {
-            locationPermissionState.launchPermissionRequest()
+        locationManager.awaitCurrentLocation()?.let {
+            mapViewState.centerToLocation(it)
         }
     }
 }

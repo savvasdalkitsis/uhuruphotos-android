@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui
 
+import androidx.annotation.MainThread
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -33,6 +34,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionState
+import com.google.accompanist.permissions.isGranted
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.actions.HeatMapAction
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.actions.MyLocationPressed
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state.HeatMapState
@@ -86,7 +88,7 @@ fun HeatMapTopBar(
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
-private fun RowScope.Actions(
+internal fun RowScope.Actions(
     state: HeatMapState,
     action: (HeatMapAction) -> Unit,
     locationPermissionState: PermissionState,
@@ -96,7 +98,21 @@ private fun RowScope.Actions(
         CircularProgressIndicator()
     }
     UhuruActionIcon(
-        onClick = { action(MyLocationPressed(locationPermissionState, mapViewState)) },
+        onClick = { onMyLocationClicked(locationPermissionState, mapViewState, action) },
         icon = drawable.ic_my_location,
     )
+}
+
+@OptIn(ExperimentalPermissionsApi::class)
+@MainThread
+internal fun onMyLocationClicked(
+    locationPermissionState: PermissionState,
+    mapViewState: MapViewState,
+    action: (HeatMapAction) -> Unit,
+) {
+    if (locationPermissionState.status.isGranted) {
+        action(MyLocationPressed(mapViewState))
+    } else {
+        locationPermissionState.launchPermissionRequest()
+    }
 }

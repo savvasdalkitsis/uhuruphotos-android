@@ -5,6 +5,9 @@ plugins {
 
 android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation'
+    testOptions {
+        unitTests.includeAndroidResources = true
+    }
 }
 
 dependencies {
@@ -37,4 +40,8 @@ dependencies {
             project(":feature:media:remote:domain:api"),
     )
     ksp libs.autodagger.ksp
+    testImplementation(
+            libs.bundles.test,
+            libs.bundles.ui.test,
+    )
 }
