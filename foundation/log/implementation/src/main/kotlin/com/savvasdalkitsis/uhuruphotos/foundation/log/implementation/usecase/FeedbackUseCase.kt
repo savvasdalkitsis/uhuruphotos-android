@@ -28,6 +28,7 @@ import com.michaelflisar.lumberjack.extensions.viewer.showLog
 import com.michaelflisar.lumberjack.loggers.file.FileConverter
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUIUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.launchers.api.onUi
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.usecase.FeedbackUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.usecase.FeedbackUseCase.Companion.EMAIL
 import com.savvasdalkitsis.uhuruphotos.foundation.log.implementation.R
@@ -68,13 +69,12 @@ internal class FeedbackUseCase @Inject constructor(
     }
 
     override suspend fun showLogs() {
-        setDefaultNightMode(
-            when (settingsUIUseCase.getThemeMode()) {
-                FOLLOW_SYSTEM -> MODE_NIGHT_FOLLOW_SYSTEM
-                DARK_MODE -> MODE_NIGHT_YES
-                LIGHT_MODE -> MODE_NIGHT_NO
-            }
-        )
+        val nightMode = when (settingsUIUseCase.getThemeMode()) {
+            FOLLOW_SYSTEM -> MODE_NIGHT_FOLLOW_SYSTEM
+            DARK_MODE -> MODE_NIGHT_YES
+            LIGHT_MODE -> MODE_NIGHT_NO
+        }
+        onUi { setDefaultNightMode(nightMode) }
         L.showLog(
             context = context,
             fileLoggingSetup = SharedSetup(logsFolder, remapped),
