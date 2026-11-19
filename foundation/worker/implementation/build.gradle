@@ -17,5 +17,9 @@ dependencies {
             project(":foundation:launchers:api"),
     )
     ksp libs.autodagger.ksp
+    testImplementation(
+            libs.bundles.test,
+            libs.robolectric,
+    )
 }
 

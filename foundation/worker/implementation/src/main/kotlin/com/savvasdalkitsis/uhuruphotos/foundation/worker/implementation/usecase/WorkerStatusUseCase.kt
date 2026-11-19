@@ -21,14 +21,14 @@ import androidx.work.WorkManager
 import androidx.work.WorkQuery
 import com.savvasdalkitsis.uhuruphotos.foundation.launchers.api.onMain
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkerStatusUseCase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import androidx.lifecycle.Observer
+import kotlinx.coroutines.channels.Channel.Factory.UNLIMITED
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.buffer
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.cancellable
-import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 
@@ -49,25 +49,16 @@ class WorkerStatusUseCase @Inject constructor(
         workManager.getWorkInfosLiveData(WorkQuery.fromTags(tag))
     }
 
-    private fun queryWork(query: () -> LiveData<List<WorkInfo>>): Flow<List<WorkInfo?>> {
-        var observer: ((List<WorkInfo?>) -> Unit)?
-        var liveData: LiveData<List<WorkInfo>>?
-        return channelFlow {
-            observer = {
-                val workInfo = it
-                CoroutineScope(Dispatchers.Default).launch {
-                    send(workInfo)
-                }
-            }
-            liveData = query()
+    private fun queryWork(query: () -> LiveData<List<WorkInfo>>): Flow<List<WorkInfo?>> = callbackFlow {
+        val observer = Observer<List<WorkInfo>> { trySend(it) }
+        val liveData = query()
+        onMain {
+            liveData.observeForever(observer)
+        }
+        awaitClose {
             onMain {
-                liveData!!.observeForever(observer!!)
+                liveData.removeObserver(observer)
             }
-            awaitClose {
-                onMain {
-                    liveData!!.removeObserver(observer!!)
-                }
-            }
-        }.cancellable()
-    }
+        }
+    }.buffer(UNLIMITED).cancellable()
 }
