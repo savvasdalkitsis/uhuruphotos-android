@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.foundation.map.google.implementation.ui
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -33,6 +34,8 @@ import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.Viewport
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.toLatLon
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewState
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 internal class GoogleMapViewState(
     internal val cameraPositionState: CameraPositionState,
@@ -55,9 +58,12 @@ internal class GoogleMapViewState(
         allPoints: Collection<LatLon>,
         pointsOnVisibleMap: Collection<LatLon>,
     ) {
-        if (pointsOnVisibleMap.isNotEmpty()) {
-            tileOverlay(remember(pointsOnVisibleMap) { heatmapTileProvider(pointsOnVisibleMap) })
+        val tiles by produceState<TileProvider?>(null, pointsOnVisibleMap) {
+            value = pointsOnVisibleMap.takeIf { it.isNotEmpty() }?.let { points ->
+                withContext(Dispatchers.Default) { heatmapTileProvider(points) }
+            }
         }
+        tiles?.let { tileOverlay(it) }
     }
 
     @Composable

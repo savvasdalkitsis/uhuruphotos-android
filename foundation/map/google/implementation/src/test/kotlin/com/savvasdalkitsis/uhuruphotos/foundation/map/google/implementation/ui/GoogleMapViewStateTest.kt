@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.map.google.implementation.ui
 
+import android.os.Looper
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -23,7 +24,11 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import com.google.android.gms.maps.model.TileProvider
 import com.google.maps.android.compose.CameraPositionState
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
+import io.mockk.every
+import io.mockk.mockkStatic
+import io.mockk.unmockkStatic
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotEquals
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -58,8 +63,25 @@ class GoogleMapViewStateTest {
 
         points = listOf(munich)
         composeRule.waitForIdle()
+        composeRule.waitUntil(5000) { overlays.distinct().size == 2 }
 
         assertEquals(2, overlays.distinct().size)
+    }
+
+    @Test
+    fun `builds the heat map tiles off the main thread`() {
+        val builtOn = mutableListOf<Thread>()
+        mockkStatic(TILES)
+        every { heatmapTileProvider(any()) } answers {
+            builtOn += Thread.currentThread()
+            callOriginal()
+        }
+
+        showHeatMap()
+        unmockkStatic(TILES)
+
+        assertEquals(1, builtOn.size)
+        assertNotEquals(Looper.getMainLooper().thread, builtOn.single())
     }
 
     @Test
@@ -76,6 +98,7 @@ class GoogleMapViewStateTest {
             state.HeatMap(points.toList(), points.toList())
         }
         composeRule.waitForIdle()
+        composeRule.waitUntil(5000) { points.isEmpty() || overlays.isNotEmpty() }
     }
 
     private fun recomposeTwice() {
@@ -83,5 +106,9 @@ class GoogleMapViewStateTest {
             recompositions++
             composeRule.waitForIdle()
         }
+    }
+
+    private companion object {
+        const val TILES = "com.savvasdalkitsis.uhuruphotos.foundation.map.google.implementation.ui.HeatmapTilesKt"
     }
 }
