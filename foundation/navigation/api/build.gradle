@@ -17,4 +17,8 @@ dependencies {
             project(":foundation:seam:api"),
             project(":foundation:theme:api"),
     )
+    testImplementation(
+            libs.bundles.test,
+            libs.log4k,
+    )
 }

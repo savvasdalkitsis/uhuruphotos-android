@@ -69,6 +69,9 @@ fun reportError(t: Throwable) {
     }
 }
 
+val Any.logName: String
+    get() = this::class.simpleName ?: this::class.toString()
+
 data object Log {
     var enabled: Boolean = false
 }

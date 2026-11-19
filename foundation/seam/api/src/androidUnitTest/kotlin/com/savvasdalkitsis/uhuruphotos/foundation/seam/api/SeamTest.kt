@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.foundation.seam.api
 
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.HANDLED_ERROR_TAG
+import com.savvasdalkitsis.uhuruphotos.foundation.log.api.Log as LogSwitch
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -32,6 +33,7 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeout
 import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import saschpe.log4k.Log
@@ -42,8 +44,10 @@ class SeamTest {
 
     private val crashes = CopyOnWriteArrayList<Throwable>()
     private val reported = CopyOnWriteArrayList<Throwable>()
+    private val messages = CopyOnWriteArrayList<String>()
     private val reporter = object : Logger() {
         override fun print(level: Log.Level, tag: String, message: String?, throwable: Throwable?) {
+            message?.let { messages += it }
             if (tag == HANDLED_ERROR_TAG && throwable != null) {
                 reported += throwable
             }
@@ -94,6 +98,18 @@ class SeamTest {
     }
 
     @Test
+    fun `logs actions and mutations by name instead of by content`() = runBlocking {
+        val wasEnabled = LogSwitch.enabled
+        LogSwitch.enabled = true
+        underTest.action("heavy")
+        withTimeout(5000) { underTest.state.first { it == 1 } }
+        LogSwitch.enabled = wasEnabled
+
+        assertEquals(emptyList<String>(), messages.filter { "every photo in the library" in it })
+        assertTrue(messages.any { "HeavyMutation" in it })
+    }
+
+    @Test
     fun `an action failing with an error still crashes`() = runBlocking {
         underTest.action("error")
         awaitOutcome()
@@ -115,6 +131,12 @@ class SeamTest {
             awaitCancellation()
         }
         "error" -> flow { throw AssertionError("fatal") }
+        "heavy" -> flowOf(HeavyMutation())
         else -> flowOf(Mutation { it + 1 })
     }
+}
+
+private class HeavyMutation : Mutation<Int> {
+    override fun reduce(state: Int) = state + 1
+    override fun toString() = "every photo in the library"
 }

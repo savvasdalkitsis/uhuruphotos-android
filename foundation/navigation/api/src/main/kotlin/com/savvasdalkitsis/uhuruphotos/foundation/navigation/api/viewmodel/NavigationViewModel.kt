@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
+import com.savvasdalkitsis.uhuruphotos.foundation.log.api.logName
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
@@ -38,7 +39,7 @@ abstract class NavigationViewModel<S : Any, A : Any, R : Any>(
     init {
         viewModelScope.launch {
             state.collect {
-                log("Seam") { "State updated to: $it" }
+                log("Seam") { "State updated to: ${it.logName}" }
             }
         }
     }
