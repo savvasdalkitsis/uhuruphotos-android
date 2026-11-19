@@ -48,6 +48,7 @@ data object Load : HeatMapAction() {
             .flatMapLatest { media ->
                 flowOf(HeatMapMutation.UpdateAllMedia(media), updateDisplay(media))
             },
+        visibleMapContentChanges(),
         mediaUseCase.observeLocalMedia()
             .mapNotNull {
                 when (it) {

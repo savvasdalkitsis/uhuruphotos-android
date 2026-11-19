@@ -25,9 +25,14 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.worker.Loc
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUIUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
-import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.mapLatest
 import javax.inject.Inject
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class HeatMapActionsContext @Inject constructor(
     val feedUseCase: FeedUseCase,
     val mediaUseCase: MediaUseCase,
@@ -40,7 +45,19 @@ class HeatMapActionsContext @Inject constructor(
 
     @Volatile
     var boundsChecker: suspend (LatLon) -> Boolean = { true }
-    var updateVisibleMapContentJob: Deferred<UpdateVisibleMapContent>? = null
+    private val viewportChanges = MutableStateFlow<ViewportChange?>(null)
+
+    fun changeViewport(change: ViewportChange) {
+        viewportChanges.value = change
+    }
+
+    fun visibleMapContentChanges(): Flow<UpdateVisibleMapContent> = viewportChanges
+        .filterNotNull()
+        .mapLatest { change ->
+            boundsChecker = change.boundsChecker
+            heatMapUseCase.setViewport(change.viewport)
+            updateDisplay(change.media)
+        }
 
     suspend fun updateDisplay(allMedia: List<MediaItemModel>): UpdateVisibleMapContent {
         val photosToDisplay = allMedia

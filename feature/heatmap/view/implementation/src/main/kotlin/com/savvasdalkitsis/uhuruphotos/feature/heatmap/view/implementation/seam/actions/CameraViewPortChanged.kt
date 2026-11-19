@@ -16,12 +16,11 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.actions
 
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapActionsContext
+import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapMutation
+import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.ViewportChange
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state.HeatMapState
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.Viewport
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.flow.flow
 
 data class CameraViewPortChanged(
@@ -31,13 +30,7 @@ data class CameraViewPortChanged(
 
     override fun HeatMapActionsContext.handle(
         state: HeatMapState
-    ) = flow {
-        updateVisibleMapContentJob?.cancel()
-        boundsChecker = newBoundsChecker
-        heatMapUseCase.setViewport(viewport)
-        updateVisibleMapContentJob = CoroutineScope(currentCoroutineContext()).async { updateDisplay(state.allMedia) }
-        updateVisibleMapContentJob?.await()?.let {
-            emit(it)
-        }
+    ) = flow<HeatMapMutation> {
+        changeViewport(ViewportChange(viewport, newBoundsChecker, state.allMedia))
     }
 }
