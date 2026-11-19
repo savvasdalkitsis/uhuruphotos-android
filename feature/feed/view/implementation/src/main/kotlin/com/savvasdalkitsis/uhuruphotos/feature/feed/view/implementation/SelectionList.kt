@@ -18,20 +18,21 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 class SelectionList @Inject constructor() {
 
-    private var selectedIds = MutableStateFlow(emptySet<MediaIdModel<*>>())
+    private val selectedIds = MutableStateFlow(emptySet<MediaIdModel<*>>())
 
     val ids: Flow<Set<MediaIdModel<*>>> = selectedIds
 
     suspend fun deselect(id: MediaIdModel<*>) {
-        selectedIds.emit(selectedIds.value - id)
+        selectedIds.update { it - id }
     }
 
     suspend fun select(id: MediaIdModel<*>) {
-        selectedIds.emit(selectedIds.value + id)
+        selectedIds.update { it + id }
     }
 
     suspend fun clear() {
