@@ -23,6 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.notifications.domain.implementati
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.domain.implementation.model.NotificationRequest.DENIED
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.domain.implementation.model.NotificationRequest.IDLE
 import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ActivityCreated
+import com.savvasdalkitsis.uhuruphotos.foundation.launchers.api.onUi
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
@@ -48,7 +49,7 @@ class NotificationActivityInitializer @Inject constructor(
     override fun onActivityDestroyed(activity: FragmentActivity) {}
 
     suspend fun askForPermission(permission: String): NotificationRequest {
-        launcher.launch(permission)
+        onUi { launcher.launch(permission) }
         return notificationRequestState.first { it != IDLE }.also {
             resetNotificationRequestState()
         }

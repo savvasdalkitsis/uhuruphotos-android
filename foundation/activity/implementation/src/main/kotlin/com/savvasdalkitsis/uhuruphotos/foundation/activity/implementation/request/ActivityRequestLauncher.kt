@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.foundation.activity.implementation.reque
 
 import android.app.Activity
 import androidx.activity.ComponentActivity
+import androidx.annotation.MainThread
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.IntentSenderRequest
@@ -28,6 +29,7 @@ import com.github.michaelbull.result.Ok
 import com.savvasdalkitsis.uhuruphotos.foundation.activity.api.holder.CurrentActivityHolder
 import com.savvasdalkitsis.uhuruphotos.foundation.activity.api.request.ActivityRequestFailed
 import com.savvasdalkitsis.uhuruphotos.foundation.activity.api.request.ActivityRequestLauncher
+import com.savvasdalkitsis.uhuruphotos.foundation.launchers.api.onUi
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -51,6 +53,14 @@ class ActivityRequestLauncher @Inject constructor(
     private val lastIncrementKey = "LAST_INCREMENT_KEY"
 
     override suspend fun performRequest(
+        requestId: String,
+        request: IntentSenderRequest,
+    ): SimpleResult = onUi {
+        performRequestOnUi(requestId, request)
+    }
+
+    @MainThread
+    private suspend fun performRequestOnUi(
         requestId: String,
         request: IntentSenderRequest,
     ): SimpleResult {

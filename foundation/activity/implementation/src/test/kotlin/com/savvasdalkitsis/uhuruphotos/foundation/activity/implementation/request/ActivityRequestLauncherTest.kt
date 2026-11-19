@@ -20,10 +20,18 @@ import android.app.Activity.RESULT_OK
 import android.app.PendingIntent
 import android.content.Intent
 import android.os.Bundle
+import android.os.Looper
+import androidx.activity.result.ActivityResultRegistry
+import androidx.activity.result.contract.ActivityResultContract
+import androidx.core.app.ActivityOptionsCompat
 import androidx.activity.result.IntentSenderRequest
 import androidx.fragment.app.FragmentActivity
 import com.github.michaelbull.result.Ok
 import com.savvasdalkitsis.uhuruphotos.foundation.activity.api.holder.CurrentActivityHolder
+import io.mockk.every
+import io.mockk.mockk
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
@@ -34,6 +42,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.Shadows.shadowOf
 
 @RunWith(RobolectricTestRunner::class)
 class ActivityRequestLauncherTest {
@@ -107,6 +116,38 @@ class ActivityRequestLauncherTest {
         })
 
         assertTrue(launcher.performRequest("orphan", request).isErr)
+    }
+
+    @Test
+    fun `launches a request made off the main thread on the main thread`() {
+        val launchedOn = mutableListOf<Thread>()
+        val registry = object : ActivityResultRegistry() {
+            override fun <I, O> onLaunch(
+                requestCode: Int,
+                contract: ActivityResultContract<I, O>,
+                input: I,
+                options: ActivityOptionsCompat?,
+            ) {
+                launchedOn += Thread.currentThread()
+                dispatchResult(requestCode, RESULT_OK, null)
+            }
+        }
+        val recording = mockk<FragmentActivity> {
+            every { activityResultRegistry } returns registry
+            every { savedStateRegistry } returns activity.savedStateRegistry
+        }
+        val launcher = ActivityRequestLauncher(object : CurrentActivityHolder {
+            override val currentActivity: FragmentActivity = recording
+        })
+
+        val result = CoroutineScope(Dispatchers.Default).async { launcher.performRequest("background", request) }
+        val deadline = System.currentTimeMillis() + 5000
+        while (!result.isCompleted && System.currentTimeMillis() < deadline) {
+            shadowOf(Looper.getMainLooper()).idle()
+        }
+
+        assertEquals(listOf(Looper.getMainLooper().thread), launchedOn)
+        assertNull(savedStateProvider())
     }
 
     private fun savedStateProvider() =

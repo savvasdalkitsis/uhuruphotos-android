@@ -13,6 +13,7 @@ dependencies {
             libs.bundles.autodagger,
             libs.hilt,
             project(":foundation:initializer:api"),
+            project(":foundation:launchers:api"),
     )
     testImplementation(
             libs.bundles.test,
