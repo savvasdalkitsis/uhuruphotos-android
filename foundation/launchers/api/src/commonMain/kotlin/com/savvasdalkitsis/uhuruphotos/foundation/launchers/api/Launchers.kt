@@ -19,6 +19,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 inline fun onMain(crossinline action: suspend () -> Unit) = CoroutineScope(Dispatchers.Main + reportingErrors).launch {
     action()
@@ -26,6 +27,10 @@ inline fun onMain(crossinline action: suspend () -> Unit) = CoroutineScope(Dispa
 
 inline fun onIO(crossinline action: suspend () -> Unit) = CoroutineScope(Dispatchers.IO + reportingErrors).launch {
     action()
+}
+
+suspend fun <T> onUi(block: suspend () -> T): T = withContext(Dispatchers.Main.immediate) {
+    block()
 }
 
 suspend inline fun <T> awaitOnMain(crossinline action: suspend () -> T) = CoroutineScope(Dispatchers.Main).async {

@@ -18,10 +18,12 @@ package com.savvasdalkitsis.uhuruphotos.foundation.launchers.api
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.HANDLED_ERROR_TAG
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
+import kotlinx.coroutines.withContext
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -29,6 +31,7 @@ import org.junit.Test
 import saschpe.log4k.Log
 import saschpe.log4k.Logger
 import java.util.concurrent.CopyOnWriteArrayList
+import java.util.concurrent.Executors
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class LaunchersTest {
@@ -75,6 +78,17 @@ class LaunchersTest {
 
         assertEquals(emptyList<Throwable>(), crashes)
         assertEquals(listOf("io failed"), reported.map { it.message })
+    }
+
+    @Test
+    fun `runs ui work on the main dispatcher and returns its result`() = runBlocking {
+        val ui = Executors.newSingleThreadExecutor { Thread(it, "ui") }.asCoroutineDispatcher()
+        Dispatchers.setMain(ui)
+
+        val thread = withContext(Dispatchers.Default) { onUi { Thread.currentThread().name.substringBefore(" @") } }
+
+        ui.close()
+        assertEquals("ui", thread)
     }
 
     @Test
