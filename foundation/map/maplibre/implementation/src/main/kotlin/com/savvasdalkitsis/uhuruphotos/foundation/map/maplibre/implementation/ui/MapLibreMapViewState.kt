@@ -21,6 +21,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.maplibre.android.camera.CameraPosition
 import org.maplibre.android.geometry.LatLng
 import org.maplibre.android.maps.MapView
@@ -43,7 +45,7 @@ class MapLibreMapViewState(
                 latLon.lat < ne.latitude && latLon.lat > sw.latitude
     } ?: false
 
-    override suspend fun centerToLocation(latLon: LatLon) {
+    override suspend fun centerToLocation(latLon: LatLon) = withContext(Dispatchers.Main.immediate) {
         mapView.withMap {
             cameraPosition = CameraPosition.Builder()
                 .target(latLon.toLatLng)

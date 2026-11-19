@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.map.maplibre.implementation.ui
 
+import android.os.Looper
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -32,9 +33,20 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.runBlocking
 import org.junit.runner.RunWith
+import org.maplibre.android.camera.CameraPosition
+import org.maplibre.android.exceptions.CalledFromWorkerThreadException
+import org.maplibre.android.geometry.LatLngBounds
+import org.maplibre.android.geometry.VisibleRegion
+import org.maplibre.android.maps.MapLibreMap
 import org.maplibre.android.maps.MapView
+import org.maplibre.android.maps.OnMapReadyCallback
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.Shadows.shadowOf
 
 @RunWith(RobolectricTestRunner::class)
 class MapLibreMapViewStateTest {
@@ -49,6 +61,8 @@ class MapLibreMapViewStateTest {
     private val state = MapLibreMapViewState(berlin, 11f)
     private var recompositions by mutableIntStateOf(0)
     private var markersRemoved = 0
+    private val map = mockk<MapLibreMap>(relaxed = true)
+    private var camera = CameraPosition.Builder().target(berlin.toLatLng).zoom(11.0).build()
 
     @Before
     fun interceptMapDrawing() {
@@ -121,6 +135,39 @@ class MapLibreMapViewStateTest {
         showOnMap { state.HeatMap(points, emptySet()) }
 
         verify(exactly = 0) { mapView.showHeatMap(any()) }
+    }
+
+    @Test
+    fun `centers the map on the ui thread when asked from a worker thread`() {
+        state.mapView = mapView
+        mapMovingOnlyOnTheUiThread()
+
+        fromWorkerThread { state.centerToLocation(munich) }
+
+        assertEquals(munich.toLatLng, camera.target)
+    }
+
+    private fun mapMovingOnlyOnTheUiThread() {
+        every { mapView.getMapAsync(any()) } answers { firstArg<OnMapReadyCallback>().onMapReady(map) }
+        every { map.cameraPosition } answers { camera }
+        every { map.cameraPosition = any() } answers {
+            if (Looper.myLooper() != Looper.getMainLooper()) {
+                throw CalledFromWorkerThreadException("Map interactions should happen on the UI thread.")
+            }
+            camera = firstArg()
+        }
+        every { map.projection.visibleRegion } returns visibleRegion()
+    }
+
+    private fun visibleRegion(): VisibleRegion {
+        val bounds = LatLngBounds.from(53.0, 14.0, 48.0, 11.0)
+        return VisibleRegion(bounds.northWest, bounds.northEast, bounds.southWest, bounds.southEast, bounds)
+    }
+
+    private fun fromWorkerThread(call: suspend () -> Unit) {
+        val result = CoroutineScope(Dispatchers.Default).async { call() }
+        while (result.isActive) shadowOf(Looper.getMainLooper()).idle()
+        runBlocking { result.await() }
     }
 
     private fun showOnMap(content: @Composable () -> Unit) {

@@ -29,6 +29,8 @@ import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.Viewport
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.toLatLon
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewState
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 internal class MapBoxMapViewState(
     override val initialPosition: LatLon,
@@ -73,7 +75,7 @@ internal class MapBoxMapViewState(
                 latLon.lat < ne.latitude() && latLon.lat > sw.latitude()
     } ?: false
 
-    override suspend fun centerToLocation(latLon: LatLon) {
+    override suspend fun centerToLocation(latLon: LatLon) = withContext(Dispatchers.Main.immediate) {
         map?.setCamera(CameraOptions.Builder()
             .center(latLon.toPoint)
             .build())

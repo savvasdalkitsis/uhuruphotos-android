@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.map.mapbox.implementation.ui
 
+import android.os.Looper
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -33,8 +34,17 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import com.mapbox.geojson.Point
+import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapView
+import com.mapbox.maps.MapboxMap
+import com.mapbox.maps.exception.WorkerThreadException
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.runBlocking
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.Shadows.shadowOf
 
 @RunWith(RobolectricTestRunner::class)
 class MapBoxMapViewStateTest {
@@ -49,6 +59,8 @@ class MapBoxMapViewStateTest {
     private val state = MapBoxMapViewState(berlin, 11f)
     private var recompositions by mutableIntStateOf(0)
     private var markersRemoved = 0
+    private val map = mockk<MapboxMap>(relaxed = true)
+    private var center: Point? = null
 
     @Before
     fun interceptMapDrawing() {
@@ -121,6 +133,30 @@ class MapBoxMapViewStateTest {
         showOnMap { state.HeatMap(points, emptySet()) }
 
         verify(exactly = 0) { mapView.showHeatMap(any()) }
+    }
+
+    @Test
+    fun `centers the map on the ui thread when asked from a worker thread`() {
+        state.mapView = mapView
+        mapMovingOnlyOnTheUiThread()
+
+        fromWorkerThread { state.centerToLocation(munich) }
+
+        assertEquals(munich.toPoint, center)
+    }
+
+    private fun mapMovingOnlyOnTheUiThread() {
+        every { mapView.mapboxMap } returns map
+        every { map.setCamera(any<CameraOptions>()) } answers {
+            if (Looper.myLooper() != Looper.getMainLooper()) throw WorkerThreadException()
+            center = firstArg<CameraOptions>().center
+        }
+    }
+
+    private fun fromWorkerThread(call: suspend () -> Unit) {
+        val result = CoroutineScope(Dispatchers.Default).async { call() }
+        while (result.isActive) shadowOf(Looper.getMainLooper()).idle()
+        runBlocking { result.await() }
     }
 
     private fun showOnMap(content: @Composable () -> Unit) {
