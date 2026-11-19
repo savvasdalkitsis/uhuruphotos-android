@@ -26,12 +26,10 @@ import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCre
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.Log
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.logError
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.usecase.FeedbackUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.log.implementation.BackgroundLogger
+import com.savvasdalkitsis.uhuruphotos.foundation.log.implementation.LogWriter
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.NotificationChannels
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
-import saschpe.log4k.ConsoleLogger
 import saschpe.log4k.FileLogger
 import saschpe.log4k.FileLogger.Limit.Files
 import saschpe.log4k.FileLogger.Rotate.After
@@ -43,40 +41,44 @@ import javax.inject.Inject
 internal class LogInitializer @Inject constructor(
     @ApplicationContext private val context: Context,
     private val settingsUseCase: SettingsUseCase,
+    private val logWriter: LogWriter,
 ) : ApplicationCreated {
 
     override fun onAppCreated(app: Application) {
         Log.enabled = settingsUseCase.getLoggingEnabled()
-        val default = Thread.getDefaultUncaughtExceptionHandler()
-
-        MainScope().launch(Dispatchers.IO) {
-            val logsFolder = File(app.filesDir, "logs")
-            saschpe.log4k.Log.loggers += FileLogger(
+        val logsFolder = File(app.filesDir, "logs")
+        saschpe.log4k.Log.loggers += BackgroundLogger(logWriter) {
+            FileLogger(
                 rotate = After(lines = 1000),
                 limit = Files(1),
                 logPath = logsFolder.absolutePath,
             )
-            saschpe.log4k.Log.loggers += ConsoleLogger()
-            Thread.setDefaultUncaughtExceptionHandler { t, e ->
-                logError(e)
-                try {
-                    L.showNotification(
-                        context = context,
-                        notificationIcon = R.mipmap.ic_launcher,
-                        notificationChannelId = NotificationChannels.Crash.id,
-                        notificationId = 1234,
-                        clickHandler = NotificationClickHandler.SendFeedback(
-                            context = context,
-                            receiver = FeedbackUseCase.EMAIL,
-                            attachments = logsFolder.listFiles().orEmpty().toList(),
-                        ),
-                    )
-                    default?.uncaughtException(t, e)
-                } catch (n: Throwable) {
-                    n.addSuppressed(e)
-                    default?.uncaughtException(t, n)
-                }
-            }
+        }
+        val default = Thread.getDefaultUncaughtExceptionHandler()
+        Thread.setDefaultUncaughtExceptionHandler { t, e ->
+            crashed(logsFolder, default, t, e)
+        }
+    }
+
+    private fun crashed(logsFolder: File, default: Thread.UncaughtExceptionHandler?, t: Thread, e: Throwable) {
+        logError(e)
+        logWriter.drain()
+        try {
+            L.showNotification(
+                context = context,
+                notificationIcon = R.mipmap.ic_launcher,
+                notificationChannelId = NotificationChannels.Crash.id,
+                notificationId = 1234,
+                clickHandler = NotificationClickHandler.SendFeedback(
+                    context = context,
+                    receiver = FeedbackUseCase.EMAIL,
+                    attachments = logsFolder.listFiles().orEmpty().toList(),
+                ),
+            )
+            default?.uncaughtException(t, e)
+        } catch (n: Throwable) {
+            n.addSuppressed(e)
+            default?.uncaughtException(t, n)
         }
     }
 }
