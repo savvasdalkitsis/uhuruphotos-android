@@ -48,7 +48,6 @@ class AppActivity : FragmentActivity() {
     @Inject lateinit var settingsUseCase: SettingsUseCase
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.enabled = true
         super.onCreate(savedInstanceState)
         installSplashScreen()
         enableEdgeToEdge()
