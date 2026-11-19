@@ -18,21 +18,17 @@ package com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.seam.ac
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.seam.WebLoginActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.seam.WebLoginMutation
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.ui.WebLoginState
-import com.savvasdalkitsis.uhuruphotos.foundation.launchers.api.onMain
+import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.flow.flow
-import kotlin.coroutines.coroutineContext
 
 data class LoadPage(val url: String): WebLoginAction() {
     override fun WebLoginActionsContext.handle(
         state: WebLoginState
     ) = flow {
         emit(WebLoginMutation.Loading)
-        cookieMonitor.monitor(coroutineContext).invokeOnCompletion {
-            onMain {
-                navigator.navigateUp()
-            }
-        }
-
+        val authCookie = cookieMonitor.monitor(currentCoroutineContext())
         emit(WebLoginMutation.LoadPage(url))
+        authCookie.join()
+        navigator.navigateUp()
     }
 }
