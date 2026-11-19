@@ -1,0 +1,5 @@
+* My location on the map works again and waits for a location fix
+* Web login no longer closes the previous screen when you go back or rotate
+* Fixed selections getting lost and job status updates arriving out of order
+* Logging no longer slows the app down on big libraries
+* Smoother Google heat map
