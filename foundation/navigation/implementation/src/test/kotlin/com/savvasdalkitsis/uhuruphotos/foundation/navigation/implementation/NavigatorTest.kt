@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.foundation.navigation.implementation
 
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.navigation.HomeNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.navigateToOnce
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.singleTop
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
@@ -108,6 +109,25 @@ class NavigatorTest {
         advanceUntilIdle()
 
         assertEquals(HomeNavigationRoute, underTest.backStack.last())
+    }
+
+    @Test
+    fun `navigating to a route once in one frame from two places adds it once`() = runTest {
+        givenRoutes(A())
+
+        underTest.navigateToOnce(B("first"))
+        underTest.navigateToOnce(B("second"))
+
+        thenRoutesAre(A(), B("first"))
+    }
+
+    @Test
+    fun `navigating to a route once keeps the one already deeper in the back stack`() = runTest {
+        givenRoutes(A(), B(), C())
+
+        underTest.navigateToOnce(B("!"))
+
+        thenRoutesAre(A(), B(), C())
     }
 
     @Test

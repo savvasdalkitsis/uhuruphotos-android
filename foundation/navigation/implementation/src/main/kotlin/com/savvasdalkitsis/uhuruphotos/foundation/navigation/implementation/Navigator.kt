@@ -66,6 +66,14 @@ class Navigator @Inject internal constructor(
         }
     }
 
+    override fun <R : NavigationRoute> navigateToOnce(route: R, routeType: KClass<R>) {
+        mutateBackStack {
+            if (none { it::class == routeType }) {
+                add(route)
+            }
+        }
+    }
+
     override fun navigateBack() {
         mutateBackStack {
             removeLastOrNull()

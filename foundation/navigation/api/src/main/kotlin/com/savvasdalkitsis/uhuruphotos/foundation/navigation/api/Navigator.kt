@@ -26,6 +26,7 @@ interface Navigator {
     fun navigateTo(intent: Intent)
     fun navigateTo(intent: Intent, fallbackIntent: Intent)
     fun <R : NavigationRoute> navigateTo(route: R)
+    fun <R : NavigationRoute> navigateToOnce(route: R, routeType: KClass<R>)
     fun <R : NavigationRoute> newRoot(route: R)
     fun navigateBack()
     fun navigateUp()
@@ -36,4 +37,8 @@ interface Navigator {
 
 inline fun <reified R : NavigationRoute> Navigator.singleTop(route: R) {
     singleTop(route, R::class)
+}
+
+inline fun <reified R : NavigationRoute> Navigator.navigateToOnce(route: R) {
+    navigateToOnce(route, R::class)
 }

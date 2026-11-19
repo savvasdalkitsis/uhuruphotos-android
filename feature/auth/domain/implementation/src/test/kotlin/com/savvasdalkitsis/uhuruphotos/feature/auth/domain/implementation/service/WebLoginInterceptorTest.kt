@@ -72,7 +72,7 @@ class WebLoginInterceptorTest {
     fun `a redirect without a location does not crash`() = runTest {
         underTest.intercept(respond(302))
 
-        verify(exactly = 0) { navigator.navigateTo(any<WebLoginNavigationRoute>()) }
+        verify(exactly = 0) { navigator.navigateToOnce(any<WebLoginNavigationRoute>(), any()) }
     }
 
     @Test
@@ -80,13 +80,22 @@ class WebLoginInterceptorTest {
         underTest.intercept(respond(302, "https://auth/login"))
 
         verify { cookies.setCookie("https://server", "") }
-        verify { navigator.navigateTo(WebLoginNavigationRoute("https://auth/login")) }
+        verify { navigator.navigateToOnce(WebLoginNavigationRoute("https://auth/login"), WebLoginNavigationRoute::class) }
+    }
+
+    @Test
+    fun `parallel redirects only open the web login when it is not open yet`() = runTest {
+        underTest.intercept(respond(302, "https://auth/login?rd=albums"))
+        underTest.intercept(respond(302, "https://auth/login?rd=photos"))
+
+        verify(exactly = 0) { navigator.navigateTo(any<WebLoginNavigationRoute>()) }
+        verify(exactly = 2) { navigator.navigateToOnce(any<WebLoginNavigationRoute>(), WebLoginNavigationRoute::class) }
     }
 
     @Test
     fun `other responses pass through`() = runTest {
         underTest.intercept(respond(200))
 
-        verify(exactly = 0) { navigator.navigateTo(any<WebLoginNavigationRoute>()) }
+        verify(exactly = 0) { navigator.navigateToOnce(any<WebLoginNavigationRoute>(), any()) }
     }
 }
