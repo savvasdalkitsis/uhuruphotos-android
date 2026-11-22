@@ -38,6 +38,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.uploads.domain.api.usecase.Upload
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.WelcomeUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.flow
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.andThenSwitchTo
+import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.atMostOncePer
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.mapValues
@@ -46,6 +47,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.observe
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
 import com.savvasdalktsis.uhuruphotos.feature.download.domain.api.usecase.DownloadUseCase
+import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
@@ -100,7 +102,7 @@ internal class FeedUseCase @Inject constructor(
         observeDownloading(),
         observeUploading(),
         ::FeedMergerUseCase
-    ).mapLatest {
+    ).atMostOncePer(1.seconds).mapLatest {
         it.mergeFeed()
     }
 
