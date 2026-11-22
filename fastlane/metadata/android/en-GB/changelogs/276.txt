@@ -1,0 +1,4 @@
+* Much lower memory use with big libraries, fixing out of memory crashes in the feed and while playing videos
+* Fixed a crash after clearing the log file
+* Fixed crashes after changing time zone, with some server addresses, device names and cookies
+* Session cookies are no longer written to the log file
