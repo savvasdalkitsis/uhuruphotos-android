@@ -74,10 +74,29 @@ class BackgroundLoggerTest {
         assertEquals(1, ShadowLog.getLogsForTag(BackgroundLogger.TAG).size)
     }
 
+    @Test
+    fun `closes the log file after every line`() {
+        val logsFolder = File(temp.root, "logs")
+        val underTest = BackgroundLogger(writer, logsFolder) { fileLogger(logsFolder) }
+        val openBefore = openFiles()
+
+        repeat(LINES) { underTest.log(Log.Level.Info, "Test", "line $it", null) }
+        writer.drain()
+
+        openBefore?.let { assertTrue(openFiles()!! - it < LINES) }
+        assertTrue(logsFolder.deleteRecursively())
+    }
+
+    private fun openFiles() = File("/proc/self/fd").list()?.size
+
     private fun fileLogger(logsFolder: File) =
         FileLogger(rotate = Rotate.After(lines = 1000), limit = Files(1), logPath = logsFolder.absolutePath)
 
     private fun logged(logsFolder: File, line: String) = logsFolder.walk()
         .filter { it.isFile }
         .any { line in it.readText() }
+
+    private companion object {
+        const val LINES = 50
+    }
 }

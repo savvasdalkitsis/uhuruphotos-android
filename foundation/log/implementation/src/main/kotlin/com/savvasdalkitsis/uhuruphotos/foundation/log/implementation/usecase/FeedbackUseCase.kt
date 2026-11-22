@@ -116,11 +116,16 @@ class SharedSetup(
         val newFile = File(remappedFolder, originalFile.name)
         newFile.printWriter().use { w ->
             originalFile.readLines().forEach { line ->
-                w.println(Regex("""(.*?)/(.*?): (.*)""").replace(line) {
-                    "[${it.groupValues[1]}] 2000-01-01 00:00:00.000 [${it.groupValues[2]}.kt:0]: ${it.groupValues[3]}"
+                w.println(logLine.replace(line) {
+                    val (date, time, level, tag, message) = it.destructured
+                    "[$level] ${date.ifEmpty { "2000-01-01" }} ${time.ifEmpty { "00:00:00" }}.000 [$tag.kt:0]: $message"
                 })
             }
         }
         return newFile
+    }
+
+    private companion object {
+        val logLine = Regex("""(?:(\S+)T(\d\d:\d\d:\d\d)\S* )?(.*?)/(.*?): (.*)""")
     }
 }
