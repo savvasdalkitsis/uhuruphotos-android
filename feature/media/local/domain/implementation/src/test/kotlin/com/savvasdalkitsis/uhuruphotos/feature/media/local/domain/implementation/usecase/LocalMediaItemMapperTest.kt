@@ -22,7 +22,9 @@ import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateDisplayer
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
+import org.joda.time.DateTimeZone
 import org.joda.time.format.DateTimeFormat
+import org.joda.time.tz.DateTimeZoneBuilder
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Test
@@ -45,10 +47,11 @@ class LocalMediaItemMapperTest {
         orientation: String? = null,
         id: Long = 7,
         bucketName: String = "Camera",
+        dateTaken: String = "2024/05/06 07:08:09",
     ) = LocalMediaItemDetails(
         id = id,
         displayName = "photo.jpg",
-        dateTaken = "2024/05/06 07:08:09",
+        dateTaken = dateTaken,
         bucketId = 540528482,
         bucketName = bucketName,
         width = 4,
@@ -74,6 +77,25 @@ class LocalMediaItemMapperTest {
         assertEquals("date", item.displayDate)
         assertEquals(LocalMediaFolder(540528482, "Camera"), item.bucket)
     }
+
+    @Test
+    fun `maps a date taken that falls into a daylight saving gap of the current time zone`() = runTest {
+        val zone = DateTimeZone.getDefault()
+        DateTimeZone.setDefault(centralEuropeanTime())
+        try {
+            val item = underTest.toItem(details(dateTaken = "2024/03/31 02:30:00"))
+
+            assertEquals("2024-03-31 02:30:00", item.dateTimeTaken)
+        } finally {
+            DateTimeZone.setDefault(zone)
+        }
+    }
+
+    private fun centralEuropeanTime() = DateTimeZoneBuilder()
+        .setStandardOffset(HOUR)
+        .addRecurringSavings("CEST", HOUR, 1996, Int.MAX_VALUE, 'u', 3, -1, 7, false, HOUR)
+        .addRecurringSavings("CET", 0, 1996, Int.MAX_VALUE, 'u', 10, -1, 7, false, HOUR)
+        .toDateTimeZone("Europe/Berlin", true)
 
     @Test
     fun `maps a valid location`() = runTest {
@@ -114,5 +136,9 @@ class LocalMediaItemMapperTest {
         val camera = LocalMediaFolder(540528482, "Camera")
         assertEquals(setOf(camera), folders.keys)
         assertEquals(listOf(camera, camera), folders.getValue(camera).map { it.bucket })
+    }
+
+    private companion object {
+        const val HOUR = 3_600_000
     }
 }

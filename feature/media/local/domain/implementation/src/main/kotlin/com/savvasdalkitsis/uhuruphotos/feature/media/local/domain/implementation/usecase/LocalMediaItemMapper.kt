@@ -46,7 +46,7 @@ class LocalMediaItemMapper @Inject constructor(
         }
 
     suspend fun toItem(details: LocalMediaItemDetails): LocalMediaItem = with(details) {
-        val date = localMediaDateTimeFormat.parseDateTime(dateTaken)
+        val date = localMediaDateTimeFormat.parseLocalDateTime(dateTaken)
         val dateTimeString = parsingDateTimeFormat.print(date)
         LocalMediaItem(
             id = id,
