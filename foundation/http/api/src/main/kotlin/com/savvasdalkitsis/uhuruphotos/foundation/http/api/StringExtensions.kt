@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.http.api
 
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import org.apache.commons.validator.routines.RegexValidator
 import org.apache.commons.validator.routines.UrlValidator
 import org.apache.commons.validator.routines.UrlValidator.ALLOW_LOCAL_URLS
@@ -34,7 +35,7 @@ val String.prefixedWithHttpsIfNeeded get() = when {
 private val String.needsHttpsPrefix get() =
     !isValidUrl && "https://$this".isValidUrl
 
-private val String.isValidUrl get() = isHttpUrl || isHttpsUrl
+private val String.isValidUrl get() = (isHttpUrl || isHttpsUrl) && trim().toHttpUrlOrNull() != null
 
 private val String.isHttpsUrl get() = httpsValidator.isValid(this.trim())
 

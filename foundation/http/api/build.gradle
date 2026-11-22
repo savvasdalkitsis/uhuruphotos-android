@@ -4,6 +4,7 @@ android {
 
 dependencies {
     implementation(
+            libs.okhttp,
             libs.urlvalidator,
     )
     testImplementation(

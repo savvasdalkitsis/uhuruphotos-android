@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.netwo
 
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
 import okhttp3.HttpUrl
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import okhttp3.Interceptor
 import okhttp3.Response
 import java.io.IOException
@@ -42,4 +43,6 @@ class DynamicDomainInterceptor @Inject constructor(
 
     private fun HttpUrl.replace(url: String) = toString()
             .replace("https://localhost", url)
+            .toHttpUrlOrNull()
+            ?: throw IOException("Server url $url is not a valid url")
 }
