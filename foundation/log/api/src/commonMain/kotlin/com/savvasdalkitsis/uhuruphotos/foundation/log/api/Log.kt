@@ -19,6 +19,7 @@ import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.andThen
+import kotlin.coroutines.cancellation.CancellationException
 
 fun log(tag: String = "", msg: () -> String) {
     if (Log.enabled) {
@@ -83,7 +84,12 @@ suspend fun <V, U> Result<V, Throwable>.andThenTry(transform: suspend (V) -> U):
 
 inline fun <T, R> T.runCatchingWithLog(block: T.() -> R): Result<R, Throwable> = try {
     Ok(block())
+} catch (e: CancellationException) {
+    throw e
 } catch (e: Throwable) {
+    if (e !is Exception) {
+        reportError(e)
+    }
     log(e)
     Err(e)
 }
