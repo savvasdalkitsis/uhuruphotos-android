@@ -31,13 +31,19 @@ class DateParser @Inject constructor(
     fun parseDateOrTimeString(dateOrTime: String?) =
         parseDateString(dateOrTime) ?: parseDateTimeString(dateOrTime)
 
-    fun parseDateString(date: String?) =  parseString(date, parsingDateFormat)
+    fun parseDateString(date: String?) = parseString(date?.takeIf { TIME_SEPARATOR !in it }, parsingDateFormat)
 
-    fun parseDateTimeString(date: String?) =  parseString(date, parsingDateTimeFormat)
+    fun parseDateTimeString(date: String?) =
+        parseString(date?.takeIf { TIME_SEPARATOR in it && it.endsWith(UTC_SUFFIX) }, parsingDateTimeFormat)
 
     private fun parseString(dateString: String?, parse: DateTimeFormatter): DateTime? = try {
-        parse.parseDateTime(dateString)
+        dateString?.let(parse::parseDateTime)
     } catch (e: Exception) {
         null
+    }
+
+    private companion object {
+        const val TIME_SEPARATOR = 'T'
+        const val UTC_SUFFIX = 'Z'
     }
 }

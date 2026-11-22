@@ -12,4 +12,7 @@ dependencies {
             project(":foundation:log:api"),
             project(":foundation:strings:api"),
     )
+    testImplementation(
+            libs.bundles.test,
+    )
 }
