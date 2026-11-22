@@ -39,6 +39,7 @@ dependencies {
     )
     testImplementation(
             libs.bundles.test,
+            libs.log4k,
     )
     ksp libs.moshi.ksp
     ksp libs.autodagger.ksp

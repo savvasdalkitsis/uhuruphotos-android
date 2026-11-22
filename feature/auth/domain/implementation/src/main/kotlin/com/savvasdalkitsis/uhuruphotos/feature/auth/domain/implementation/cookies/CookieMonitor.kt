@@ -40,8 +40,10 @@ class CookieMonitor @Inject constructor(
         var cookie: String?
         do {
             cookie = cookies.getCookie(server)
-            log { "Cookie was: $cookie" }
+            log { "Cookies present: ${cookie.names()}" }
             delay(500)
         } while (cookie?.contains("_forward_auth=") == false && !cookie.contains("authelia_session="))
     }
+
+    private fun String?.names() = orEmpty().split(";").map { it.substringBefore("=").trim() }.filter { it.isNotEmpty() }
 }
