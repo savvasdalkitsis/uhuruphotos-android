@@ -28,6 +28,7 @@ import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.LocalExoPlayerProvider
 
+@NonSkippableComposable
 @Composable
 fun Video(
     modifier: Modifier,
@@ -41,6 +42,10 @@ fun Video(
     crop: Boolean = false,
     onFinishedLoading: () -> Unit,
 ) {
+    if (!rememberStarted(videoUrl, play)) {
+        VideoThumbnail(modifier, videoThumbnailUrl, showProgress)
+        return
+    }
     val exoPlayer = LocalExoPlayerProvider.current.createExoplayer(videoUrl)
     Video(
         modifier = modifier,
@@ -85,4 +90,13 @@ fun Video(
     }
 
     PlaybackEffect(exoPlayer, videoUrl, play, onReady = { showPlayer = true }, onFinishedLoading)
+}
+
+@Composable
+private fun rememberStarted(videoUrl: String, play: Boolean): Boolean {
+    val started = remember(videoUrl) { mutableStateOf(false) }
+    if (play && !started.value) {
+        started.value = true
+    }
+    return started.value
 }

@@ -64,10 +64,14 @@ class VideoTest {
         every { currentMediaItem } answers { if (mediaItem.isCaptured) mediaItem.captured else null }
     }
     private val loading = hasProgressBarRangeInfo(ProgressBarRangeInfo.Indeterminate)
+    private var playersCreated = 0
     private val exoplayerProvider = object : ExoplayerProvider {
         @Composable
         override fun createExoplayer(url: String): ExoPlayer {
-            DisposableEffect(url) { onDispose { mediaItem.clear() } }
+            DisposableEffect(url) {
+                playersCreated++
+                onDispose { mediaItem.clear() }
+            }
             return player
         }
     }
@@ -99,11 +103,29 @@ class VideoTest {
     }
 
     @Test
-    fun `pauses instead of playing when it should not play`() {
-        composeRule.setContent { PlayingVideo(play = false) }
+    fun `shows only the thumbnail without a player until it should play`() {
+        var play by mutableStateOf(false)
+        composeRule.setContent { PlayingVideo(play) }
+        composeRule.onNode(loading).assertExists()
+        assertEquals(0, playersCreated)
+
+        composeRule.runOnIdle { play = true }
+        composeRule.waitForIdle()
+
+        assertEquals(1, playersCreated)
+        verify(exactly = 1) { player.prepare() }
+    }
+
+    @Test
+    fun `pauses the player it built once it should stop playing`() {
+        var play by mutableStateOf(true)
+        composeRule.setContent { PlayingVideo(play) }
+
+        composeRule.runOnIdle { play = false }
+        composeRule.waitForIdle()
 
         verify { player.pause() }
-        verify(exactly = 0) { player.prepare() }
+        assertEquals(1, playersCreated)
     }
 
     @Test
