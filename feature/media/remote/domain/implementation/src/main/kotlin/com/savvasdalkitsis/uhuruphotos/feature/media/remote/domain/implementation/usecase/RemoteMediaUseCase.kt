@@ -268,10 +268,7 @@ class RemoteMediaUseCase @Inject constructor(
     ) {
         val completeAlbum = remoteMediaDaySummariesFetcher(id)
         completeAlbumInterceptor(completeAlbum)
-        if (clearSummariesBeforeInserting && !completeAlbum.incomplete) {
-            remoteMediaItemSummaryQueries.deletePhotoSummariesforAlbum(id)
-        }
-        saveRemoteMediaSummaries(completeAlbum)
+        saveRemoteMediaSummaries(completeAlbum, replaceExisting = clearSummariesBeforeInserting && !completeAlbum.incomplete)
     }
 
     private suspend fun <T> withFavouriteThreshold(action: suspend (Int) -> T): Result<T, Throwable> =
@@ -284,8 +281,11 @@ class RemoteMediaUseCase @Inject constructor(
             action(it.favoriteMinRating!!).getOrThrow()
         }
 
-    private fun saveRemoteMediaSummaries(album: RemoteMediaDayCompleteResponse) {
+    private fun saveRemoteMediaSummaries(album: RemoteMediaDayCompleteResponse, replaceExisting: Boolean) {
         db.transaction {
+            if (replaceExisting) {
+                remoteMediaItemSummaryQueries.deletePhotoSummariesforAlbum(album.id)
+            }
             for (day in album.items) {
                 saveRemoteMediaSummary(album.id, day)
             }

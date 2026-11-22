@@ -42,7 +42,9 @@ class RemoteMediaUseCaseTest {
     private val summaryQueries = RemoteMediaItemSummaryQueries(RecordingDriver(statements), mockk())
     private val db: Database = mockk {
         every { transaction(any(), any()) } answers {
+            statements += "BEGIN"
             secondArg<TransactionWithoutReturn.() -> Unit>().invoke(mockk(relaxed = true))
+            statements += "COMMIT"
         }
     }
     private val underTest = RemoteMediaUseCase(
@@ -60,10 +62,10 @@ class RemoteMediaUseCaseTest {
     )
 
     @Test
-    fun `a complete day replaces the summaries of the day`() = runTest {
+    fun `a complete day replaces the summaries of the day in one transaction`() = runTest {
         refresh(RemoteMediaDayCompleteResponse("1", null, numberOfItems = 1, items = listOf(summary)))
 
-        assertEquals(listOf("DELETE FROM remoteMediaItemSummary WHERE containerId=?"), statements)
+        assertEquals(listOf("BEGIN", "DELETE FROM remoteMediaItemSummary WHERE containerId=?", "COMMIT"), statements)
         verify { remoteMediaRepository.saveRemoteMediaSummary("1", summary) }
     }
 
@@ -71,7 +73,7 @@ class RemoteMediaUseCaseTest {
     fun `an incomplete day keeps the summaries it does not list`() = runTest {
         refresh(RemoteMediaDayCompleteResponse("1", null, incomplete = true, numberOfItems = 1, items = listOf(summary)))
 
-        assertEquals(emptyList<String>(), statements)
+        assertEquals(listOf("BEGIN", "COMMIT"), statements)
         verify { remoteMediaRepository.saveRemoteMediaSummary("1", summary) }
     }
 
