@@ -49,9 +49,12 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import se.ansman.dagger.auto.AutoBind
 import java.io.File
+import java.util.concurrent.atomic.AtomicInteger
 import javax.inject.Inject
+import javax.inject.Singleton
 
 @AutoBind
+@Singleton
 internal class DownloadUseCase @Inject constructor(
     private val downloadManager: DownloadManager,
     private val downloadingRepository: DownloadingRepository,
@@ -61,13 +64,24 @@ internal class DownloadUseCase @Inject constructor(
     private val serverUseCase: ServerUseCase,
 ): DownloadUseCase {
 
+    private val queuing = AtomicInteger()
+
     override suspend fun scheduleMediaDownload(ids: Collection<RemoteIdModel>) {
         log { "Queuing download of media items [$ids]" }
         if (ids.isEmpty()) {
             return
         }
+        queuing.incrementAndGet()
+        try {
+            queueDownloads(ids)
+        } finally {
+            queuing.decrementAndGet()
+        }
+    }
+
+    private suspend fun queueDownloads(ids: Collection<RemoteIdModel>) {
         for (id in ids) {
-            downloadingRepository.setDownloading(MediaId(id.value), DownloadId(-1))
+            downloadingRepository.setDownloading(MediaId(id.value), QUEUING)
         }
         for (id in ids) {
             queueDownload(id).onFailure {
@@ -115,11 +129,13 @@ internal class DownloadUseCase @Inject constructor(
 
     override suspend fun clearFailuresAndStale() {
         val active = getActive() ?: return
-        (downloadingRepository.getAllDownloadIds() - active)
+        (downloadingRepository.getAllDownloadIds() - active - stillQueuing())
             .forEach {
                 downloadingRepository.removeDownloading(DownloadId(it))
             }
     }
+
+    private fun stillQueuing(): Set<Long> = if (queuing.get() > 0) setOf(QUEUING.id) else emptySet()
 
     private fun getActive(): Set<Long>? =
         downloadManager.query(
@@ -138,4 +154,8 @@ internal class DownloadUseCase @Inject constructor(
     private val Boolean.mimeType get() = if (this) "video/*" else "image/*"
     private fun String.path(isVideo: Boolean, extension: String) =
         "${File.separator}$this." + (extension.ifEmpty { if (isVideo) "mp4" else "jpg" })
+
+    private companion object {
+        val QUEUING = DownloadId(-1)
+    }
 }

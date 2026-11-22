@@ -18,14 +18,26 @@ package com.savvasdalktsis.uhuruphotos.feature.download.domain.implementation.us
 import android.app.DownloadManager
 import android.database.Cursor
 import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
+import com.github.michaelbull.result.Err
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.Database
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.download.DownloadingMediaItemsQueries
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel.RemoteIdModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHashModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResultModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Md5Hash
 import com.savvasdalktsis.uhuruphotos.feature.download.domain.implementation.repository.DownloadId
 import com.savvasdalktsis.uhuruphotos.feature.download.domain.implementation.repository.DownloadingRepository
 import com.savvasdalktsis.uhuruphotos.feature.download.domain.implementation.repository.MediaId
+import com.github.michaelbull.result.Result
+import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
+import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withTimeout
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -37,7 +49,8 @@ class DownloadUseCaseTest {
     private val driver = JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY).apply { Database.Schema.create(this) }
     private val repository = DownloadingRepository(DownloadingMediaItemsQueries(driver))
     private val downloadManager = mockk<DownloadManager>()
-    private val underTest = DownloadUseCase(downloadManager, repository, mockk(), mockk(), mockk(), mockk())
+    private val mediaUseCase = mockk<MediaUseCase>()
+    private val underTest = DownloadUseCase(downloadManager, repository, mediaUseCase, mockk(), mockk(), mockk())
 
     @Test
     fun `keeps downloads when the download manager cannot be queried`() = runBlocking {
@@ -58,6 +71,27 @@ class DownloadUseCaseTest {
         underTest.clearFailuresAndStale()
 
         assertEquals(setOf("running"), underTest.getDownloading())
+    }
+
+    @Test
+    fun `keeps downloads that are still being queued`() = runBlocking {
+        val queuing = CompletableDeferred<Unit>()
+        val details = CompletableDeferred<Result<MediaOperationResultModel, Throwable>>()
+        coEvery { mediaUseCase.refreshDetailsNowIfMissing(any()) } coAnswers {
+            queuing.complete(Unit)
+            details.await()
+        }
+        every { downloadManager.query(any()) } returns cursorOf()
+        val scheduling = launch(Dispatchers.IO) {
+            underTest.scheduleMediaDownload(listOf(RemoteIdModel("photo", false, MediaItemHashModel(Md5Hash("hash"), null))))
+        }
+        withTimeout(5_000) { queuing.await() }
+
+        underTest.clearFailuresAndStale()
+
+        assertEquals(setOf("photo"), underTest.getDownloading())
+        details.complete(Err(IllegalStateException("offline")))
+        scheduling.join()
     }
 
     private fun cursorOf(vararg ids: Long): Cursor {
