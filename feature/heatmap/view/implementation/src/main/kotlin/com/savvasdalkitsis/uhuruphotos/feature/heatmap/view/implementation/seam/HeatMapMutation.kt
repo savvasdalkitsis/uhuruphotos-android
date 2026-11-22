@@ -32,9 +32,10 @@ sealed class HeatMapMutation(
         val points = mediaItems
             .mapNotNull { photo -> photo.latLng }
             .map { (lat, lon) -> LatLon(lat, lon) }
+            .toImmutableList()
         it.copy(
-            allPoints = points.toImmutableList(),
-            pointsOnVisibleMap = points.toImmutableList(),
+            allPoints = points,
+            pointsOnVisibleMap = points,
             allMedia = mediaItems.toImmutableList(),
         )
     })
