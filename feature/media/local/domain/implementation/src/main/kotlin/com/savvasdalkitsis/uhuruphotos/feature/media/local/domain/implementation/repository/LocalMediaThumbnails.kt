@@ -23,6 +23,8 @@ import android.graphics.BitmapFactory.decodeStream
 import android.graphics.Matrix
 import android.media.MediaMetadataRetriever
 import android.media.MediaMetadataRetriever.OPTION_CLOSEST_SYNC
+import android.os.Build.VERSION.SDK_INT
+import android.os.Build.VERSION_CODES.O_MR1
 import androidx.exifinterface.media.ExifInterface
 import androidx.exifinterface.media.ExifInterface.ORIENTATION_NORMAL
 import androidx.exifinterface.media.ExifInterface.TAG_ORIENTATION
@@ -71,12 +73,27 @@ class LocalMediaThumbnails @Inject constructor(
     }
 
     private val Video.bitmap get() = try {
-        MediaMetadataRetriever().apply {
-            setDataSource(context, contentUri)
-        }.getFrameAtTime(0, OPTION_CLOSEST_SYNC).scale()
+        val retriever = MediaMetadataRetriever()
+        try {
+            retriever.setDataSource(context, contentUri)
+            retriever.thumbnailFrame(thumbnailBox).scale()
+        } finally {
+            retriever.release()
+        }
     } catch (e: Exception) {
         log(e)
         null
+    }
+
+    private val Video.thumbnailBox: Int? get() {
+        val width = width ?: return null
+        val height = height ?: return null
+        return thumbnailSizeOf(width, height).let { maxOf(it.width, it.height) }.takeIf { width > 0 && height > 0 }
+    }
+
+    private fun MediaMetadataRetriever.thumbnailFrame(box: Int?): Bitmap? = when {
+        box != null && SDK_INT >= O_MR1 -> getScaledFrameAtTime(0, OPTION_CLOSEST_SYNC, box, box)
+        else -> getFrameAtTime(0, OPTION_CLOSEST_SYNC)
     }
 
     private val Photo.bitmap get() = try {
