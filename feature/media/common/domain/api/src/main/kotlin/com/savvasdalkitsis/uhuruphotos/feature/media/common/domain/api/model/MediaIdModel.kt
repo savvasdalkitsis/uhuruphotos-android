@@ -57,24 +57,12 @@ sealed class MediaIdModel<T : Serializable> private constructor(
         override val isVideo: Boolean,
         override val mediaHash: MediaItemHashModel,
     ): MediaIdModel<String>() {
-        @IgnoredOnParcel
-        @Transient
-        override val preferRemote = this
-        @IgnoredOnParcel
-        @Transient
-        override val preferLocal = this
-        @IgnoredOnParcel
-        @Transient
-        override val findRemote = this
-        @IgnoredOnParcel
-        @Transient
-        override val findLocals: Set<LocalIdModel> = emptySet()
-        @IgnoredOnParcel
-        @Transient
-        override val serializableId: String = "remote:$value"
-
-        @IgnoredOnParcel
-        override val syncState: MediaItemSyncStateModel = REMOTE_ONLY
+        override val preferRemote get() = this
+        override val preferLocal get() = this
+        override val findRemote get() = this
+        override val findLocals: Set<LocalIdModel> get() = emptySet()
+        override val serializableId: String get() = "remote:$value"
+        override val syncState: MediaItemSyncStateModel get() = REMOTE_ONLY
         override fun fullResUri(serverUrl: String?): String =
             serverUrl?.let { originalKey().toFullSizeUrlFromId(isVideo, it) } ?: ""
         override fun thumbnailUri(serverUrl: String?): String =
@@ -105,9 +93,7 @@ sealed class MediaIdModel<T : Serializable> private constructor(
         @Transient
         override val findLocals: Set<LocalIdModel> = emptySet()
 
-        @IgnoredOnParcel
-        @Transient
-        override val serializableId: String = "downloading:$value"
+        override val serializableId: String get() = "downloading:$value"
 
         @IgnoredOnParcel
         override val syncState: MediaItemSyncStateModel = DOWNLOADING
@@ -139,9 +125,7 @@ sealed class MediaIdModel<T : Serializable> private constructor(
         @IgnoredOnParcel
         @Transient
         override val findLocals: Set<LocalIdModel> = setOf(local)
-        @IgnoredOnParcel
-        @Transient
-        override val serializableId: String = "uploading:$value"
+        override val serializableId: String get() = "uploading:$value"
 
         @IgnoredOnParcel
         override val syncState: MediaItemSyncStateModel = UPLOADING
@@ -173,9 +157,7 @@ sealed class MediaIdModel<T : Serializable> private constructor(
         @IgnoredOnParcel
         @Transient
         override val findLocals: Set<LocalIdModel> = setOf(local)
-        @IgnoredOnParcel
-        @Transient
-        override val serializableId: String = "processing:$value"
+        override val serializableId: String get() = "processing:$value"
 
         @IgnoredOnParcel
         override val syncState: MediaItemSyncStateModel = PROCESSING
@@ -193,24 +175,12 @@ sealed class MediaIdModel<T : Serializable> private constructor(
         val thumbnailUri: String,
         override val mediaHash: MediaItemHashModel,
     ): MediaIdModel<Long>() {
-        @IgnoredOnParcel
-        @Transient
-        override val preferRemote = this
-        @IgnoredOnParcel
-        @Transient
-        override val preferLocal = this
-        @IgnoredOnParcel
-        @Transient
-        override val findRemote = null
-        @IgnoredOnParcel
-        @Transient
-        override val findLocals: Set<LocalIdModel> = setOf(this)
-        @IgnoredOnParcel
-        @Transient
-        override val serializableId: String = "local:$value"
-
-        @IgnoredOnParcel
-        override val syncState: MediaItemSyncStateModel = LOCAL_ONLY
+        override val preferRemote get() = this
+        override val preferLocal get() = this
+        override val findRemote get() = null
+        override val findLocals: Set<LocalIdModel> get() = setOf(this)
+        override val serializableId: String get() = "local:$value"
+        override val syncState: MediaItemSyncStateModel get() = LOCAL_ONLY
         override fun fullResUri(serverUrl: String?): String = contentUri
         override fun thumbnailUri(serverUrl: String?): String = thumbnailUri
 
@@ -237,9 +207,7 @@ sealed class MediaIdModel<T : Serializable> private constructor(
         @IgnoredOnParcel
         @Transient
         override val preferLocal: MediaIdModel<*> = findLocals.firstOrNull() ?: value.first()
-        @IgnoredOnParcel
-        @Transient
-        override val serializableId: String = "group:${value.joinToString(",") { it.serializableId }}"
+        override val serializableId: String get() = "group:${value.joinToString(",") { it.serializableId }}"
 
         @IgnoredOnParcel
         override val syncState: MediaItemSyncStateModel = when {
