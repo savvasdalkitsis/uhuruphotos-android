@@ -50,7 +50,7 @@ internal class FeedLibraryFixture(
         UploadJob(localItemId = (syncedLocals + it).toLong(), displayName = null, contentUri = "content://media/$it")
     })
 
-    fun merger() = FeedMergerUseCase(remoteDays.asSequence(), localMedia, emptySet(), uploads)
+    fun merger() = FeedMergerUseCase(remoteDays.asSequence(), localMedia, emptySet(), LocalMediaInFlight.from(uploads))
 
     private fun hash(index: Int) = MediaItemHashModel(Md5Hash("%032x".format(index.toLong() * 2654435761L)), userId)
 

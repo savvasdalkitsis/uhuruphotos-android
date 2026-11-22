@@ -20,6 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadSta
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.domain.api.model.Uploads
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.domain.api.usecase.UploadsUseCase
 import io.mockk.every
+import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flowOf
 
 fun UploadsUseCase.defaults() = apply {
@@ -33,6 +34,12 @@ fun UploadsUseCase.hasNoUploadsInProgress() {
 
 fun UploadsUseCase.hasUploadsInProgress(vararg ids: Long) {
     every { observeUploadsInFlight() }.returns(flowOf(Uploads(ids.map { UploadJob(it, null, "", UploadStatus.InQueue) })))
+}
+
+fun UploadsUseCase.reportsUploadProgress(id: Long, vararg progress: Float) {
+    every { observeUploadsInFlight() }.returns(progress.map {
+        Uploads(listOf(UploadJob(id, null, "", UploadStatus.Uploading(it, "$it"))))
+    }.asFlow())
 }
 
 fun UploadsUseCase.hasNoProcessingInProgress() {

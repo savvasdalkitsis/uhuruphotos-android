@@ -20,23 +20,17 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemGroupModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstanceModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemModel
-import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadStatus
-import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadStatus.Processing
-import com.savvasdalkitsis.uhuruphotos.feature.uploads.domain.api.model.Uploads
 import java.io.Serializable
 
 internal class FeedMergerUseCase(
     private val allRemoteDays: Sequence<MediaCollectionModel>,
     private val allLocalMedia: List<MediaItemModel>,
     private val mediaBeingDownloaded: Set<String>,
-    mediaBeingUploaded: Uploads,
+    mediaInFlight: LocalMediaInFlight,
 ) {
 
-    private val processing = mediaBeingUploaded.filter { it == Processing }
-    private val uploading = mediaBeingUploaded.filter { it != Processing }
-    private val inFlight = processing + uploading
-    private fun Uploads.filter(predicate: (UploadStatus) -> Boolean) =
-        jobs.filter { predicate(it.status) }.map { it.localItemId }.toSet()
+    private val processing = mediaInFlight.processing
+    private val inFlight = processing + mediaInFlight.uploading
 
     fun mergeFeed(): List<MediaCollectionModel> {
         val remainingLocalMedia = RemainingLocalMedia(allLocalMedia)

@@ -39,6 +39,7 @@ import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -247,6 +248,17 @@ class FeedUseCaseTest {
         observeFeed().assert(
             mediaCollection("day1", remote("1"), uploading(2)),
         )
+    }
+
+    @Test
+    fun `does not rebuild the feed when only the upload progress changes`() = runTest {
+        val liveFeeds = mutableListOf<Flow<List<MediaCollectionModel>>>()
+        mediaUseCase.returnsLocalMedia(primaryFolder = localFolder(100) to listOf(localMediaItem(1, "day1")))
+        uploadsUseCase.reportsUploadProgress(1, 0.1f, 0.5f, 0.9f)
+
+        feedUseCase(unsharedFeeds(liveFeeds)).observeFeed(FeedFetchTypeModel.ALL, false)
+
+        assertEquals(1, liveFeeds.single().toList().size)
     }
 
     @Test

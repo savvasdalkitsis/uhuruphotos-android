@@ -21,8 +21,8 @@ import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.Flow
 
-fun unsharedFeeds(): SharedFeeds = mockk {
+fun unsharedFeeds(liveFeeds: MutableList<Flow<List<MediaCollectionModel>>> = mutableListOf()): SharedFeeds = mockk {
     every { share(any(), any(), any()) } answers {
-        thirdArg<() -> Flow<List<MediaCollectionModel>>>().invoke()
+        thirdArg<() -> Flow<List<MediaCollectionModel>>>().invoke().also { liveFeeds += it }
     }
 }

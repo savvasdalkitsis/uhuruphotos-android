@@ -170,6 +170,8 @@ internal class FeedUseCase @Inject constructor(
     private fun observeDownloading() = downloadUseCase.observeDownloading()
 
     private fun observeUploading() = uploadsUseCase.observeUploadsInFlight()
+        .map(LocalMediaInFlight::from)
+        .distinctUntilChanged()
 
     private fun observeRemoteMediaFeed(
         feedFetchTypeModel: FeedFetchTypeModel,
