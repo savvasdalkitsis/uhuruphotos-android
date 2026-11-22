@@ -30,8 +30,10 @@ internal class UserAgentInterceptor @Inject constructor(
         chain.proceed(chain.request().newBuilder()
             .header(
                 name = "User-agent",
-                value = "UhuruPhotos/$versionName ${System.getProperty("http.agent")}"
+                value = "UhuruPhotos/$versionName ${System.getProperty("http.agent")}".asHeaderValue()
             )
             .build()
         )
+
+    private fun String.asHeaderValue() = map { if (it == '\t' || it in ' '..'~') it else '?' }.joinToString("")
 }
