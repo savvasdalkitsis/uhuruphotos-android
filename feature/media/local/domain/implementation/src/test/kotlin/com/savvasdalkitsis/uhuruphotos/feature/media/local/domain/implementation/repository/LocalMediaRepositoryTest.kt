@@ -17,16 +17,22 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementatio
 
 import android.net.Uri
 import app.cash.sqldelight.Query
+import app.cash.sqldelight.db.QueryResult
+import app.cash.sqldelight.db.SqlCursor
 import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.Database
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.local.LocalMediaItemDetailsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.LocalMediaService
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.model.LocalMediaStoreServiceItem.Photo
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.local.LocalMediaItemDetails
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.advanceTimeBy
 import kotlinx.coroutines.test.runTest
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class LocalMediaRepositoryTest {
@@ -68,6 +74,52 @@ class LocalMediaRepositoryTest {
         underTest.refreshFolder(7)
 
         verify(exactly = 0) { thumbnails.deleteAllExcept(any()) }
+    }
+
+    @Test
+    fun `reads the device library at most once a second while a scan keeps adding items`() = runTest {
+        val items = CountingQuery()
+        every { queries.getItems() } returns items
+        backgroundScope.launch { underTest.observeMedia().collect {} }
+
+        repeat(30) {
+            advanceTimeBy(100)
+            Thread.sleep(10)
+            items.changed()
+        }
+        advanceTimeBy(100)
+        Thread.sleep(10)
+
+        assertTrue("read the library ${items.reads} times", items.reads <= 5)
+    }
+
+    private class CountingQuery : Query<LocalMediaItemDetails>({ error("no rows") }) {
+        var reads = 0
+        private val listeners = mutableListOf<Listener>()
+
+        override fun addListener(listener: Listener) {
+            listeners += listener
+        }
+
+        override fun removeListener(listener: Listener) {
+            listeners -= listener
+        }
+
+        override fun <R> execute(mapper: (SqlCursor) -> QueryResult<R>): QueryResult<R> {
+            reads++
+            return mapper(NoRows)
+        }
+
+        fun changed() = listeners.toList().forEach { it.queryResultsChanged() }
+    }
+
+    private object NoRows : SqlCursor {
+        override fun next(): QueryResult<Boolean> = QueryResult.Value(false)
+        override fun getString(index: Int): String? = null
+        override fun getLong(index: Int): Long? = null
+        override fun getBytes(index: Int): ByteArray? = null
+        override fun getDouble(index: Int): Double? = null
+        override fun getBoolean(index: Int): Boolean? = null
     }
 
     @Test

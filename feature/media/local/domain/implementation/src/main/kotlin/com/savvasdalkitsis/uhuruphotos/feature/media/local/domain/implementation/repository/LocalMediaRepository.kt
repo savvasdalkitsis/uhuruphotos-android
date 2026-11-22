@@ -36,6 +36,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.model.LocalMediaStoreServiceItem.Photo
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.model.LocalMediaStoreServiceItem.Video
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.async
+import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.atMostOncePer
 import com.savvasdalkitsis.uhuruphotos.foundation.exif.api.usecase.ExifUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
@@ -44,6 +45,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.get
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simple
+import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -70,7 +72,7 @@ class LocalMediaRepository @Inject constructor(
     private val keyLocalSyncedBefore = "keyLocalSyncedBefore"
 
     fun observeMedia(): Flow<List<LocalMediaItemDetails>> = localMediaItemDetailsQueries.getItems()
-        .asFlow().mapToList(Dispatchers.IO).distinctUntilChanged()
+        .asFlow().atMostOncePer(1.seconds).mapToList(Dispatchers.IO).distinctUntilChanged()
 
     fun observeFolder(folderId: Int): Flow<List<LocalMediaItemDetails>> =
         localMediaItemDetailsQueries.getBucketItems(folderId)
