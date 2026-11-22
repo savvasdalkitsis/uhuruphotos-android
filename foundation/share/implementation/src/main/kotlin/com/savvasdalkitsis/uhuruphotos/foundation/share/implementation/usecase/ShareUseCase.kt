@@ -22,6 +22,7 @@ import androidx.core.content.FileProvider
 import coil.ImageLoader
 import coil.annotation.ExperimentalCoilApi
 import coil.disk.DiskCache
+import coil.request.CachePolicy
 import coil.request.ImageRequest
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.FullImage
@@ -122,6 +123,7 @@ internal class ShareUseCase @Inject constructor(
             imageLoader.enqueue(
                 ImageRequest.Builder(context)
                     .data(url)
+                    .memoryCachePolicy(CachePolicy.DISABLED)
                     .build()
             ).job
         }.awaitAll()
