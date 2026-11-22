@@ -17,16 +17,28 @@ package com.savvasdalkitsis.uhuruphotos.foundation.log.implementation
 
 import saschpe.log4k.Log
 import saschpe.log4k.Logger
+import java.io.File
 import java.util.concurrent.Executor
 
 internal class BackgroundLogger(
     private val writer: Executor,
+    private val logsFolder: File,
     createLogger: () -> Logger,
 ) : Logger() {
 
     private val logger by lazy(createLogger)
 
     override fun print(level: Log.Level, tag: String, message: String?, throwable: Throwable?) {
-        writer.execute { logger.log(level, tag, message, throwable) }
+        writer.execute { write { logger.log(level, tag, message, throwable) } }
+    }
+
+    private fun write(line: () -> Unit) {
+        runCatching(line)
+            .recoverCatching { if (logsFolder.mkdirs()) line() else throw it }
+            .onFailure { android.util.Log.w(TAG, "Could not write to the log file", it) }
+    }
+
+    companion object {
+        const val TAG = "BackgroundLogger"
     }
 }

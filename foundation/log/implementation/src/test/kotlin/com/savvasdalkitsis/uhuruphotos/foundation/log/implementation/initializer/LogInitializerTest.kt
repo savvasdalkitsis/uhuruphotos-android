@@ -31,6 +31,7 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
 import saschpe.log4k.Log
 import java.io.File
+import java.util.Collections
 import java.util.concurrent.CountDownLatch
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.Log as LogSwitch
 
@@ -76,6 +77,20 @@ class LogInitializerTest {
         Thread.getDefaultUncaughtExceptionHandler()!!.uncaughtException(Thread.currentThread(), IllegalStateException("boom"))
 
         assertEquals(listOf(true), loggedWhenHandedOn)
+    }
+
+    @Test
+    fun `hands a crash on once when the log file cannot be written`() {
+        val handedOn = Collections.synchronizedList(mutableListOf<Throwable>())
+        File(app.filesDir, "logs").apply { deleteRecursively() }.writeText("")
+        Thread.setDefaultUncaughtExceptionHandler { _, e -> handedOn += e }
+        underTest.onAppCreated(app)
+
+        Thread.getDefaultUncaughtExceptionHandler()!!.uncaughtException(Thread.currentThread(), IllegalStateException("boom"))
+        writer.drain()
+
+        assertEquals(listOf("boom"), handedOn.map { it.message })
+        File(app.filesDir, "logs").delete()
     }
 
     @Test

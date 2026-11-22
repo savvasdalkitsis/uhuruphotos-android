@@ -47,7 +47,7 @@ internal class LogInitializer @Inject constructor(
     override fun onAppCreated(app: Application) {
         Log.enabled = settingsUseCase.getLoggingEnabled()
         val logsFolder = File(app.filesDir, "logs")
-        saschpe.log4k.Log.loggers += BackgroundLogger(logWriter) {
+        saschpe.log4k.Log.loggers += BackgroundLogger(logWriter, logsFolder) {
             FileLogger(
                 rotate = After(lines = 1000),
                 limit = Files(1),
