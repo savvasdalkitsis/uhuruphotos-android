@@ -34,11 +34,12 @@ internal class FeedMergerUseCase(
 
     private val processing = mediaBeingUploaded.filter { it == Processing }
     private val uploading = mediaBeingUploaded.filter { it != Processing }
+    private val inFlight = processing + uploading
     private fun Uploads.filter(predicate: (UploadStatus) -> Boolean) =
         jobs.filter { predicate(it.status) }.map { it.localItemId }.toSet()
 
     fun mergeFeed(): List<MediaCollectionModel> {
-        val remainingLocalMedia = allLocalMedia.toMutableList()
+        val remainingLocalMedia = RemainingLocalMedia(allLocalMedia)
 
         val merged = allRemoteDays
             .map { day ->
@@ -49,13 +50,12 @@ internal class FeedMergerUseCase(
             }
             .toList()
 
-        val localOnlyDays = remainingLocalMedia
+        val localOnlyDays = remainingLocalMedia.remaining()
             .groupBy { it.displayDayDate }
             .toMediaCollections()
 
         return (merged + localOnlyDays)
             .sortedByDescending { it.unformattedDate }
-            .toList()
     }
 
     private fun MediaItemModel.orDownloading(inProgress: Set<String>): MediaItemModel =
@@ -80,7 +80,7 @@ internal class FeedMergerUseCase(
     }
 
     private fun Collection<MediaItemModel>.orUploadingOrProcessing() = map {
-        it.orIf<MediaIdModel.LocalIdModel>(processing + uploading) { model ->
+        it.orIf<MediaIdModel.LocalIdModel>(inFlight) { model ->
             when (model.value) {
                 in processing -> model.toProcessing()
                 else -> model.toUploading()
@@ -89,15 +89,12 @@ internal class FeedMergerUseCase(
     }
 
     private fun MediaCollectionModel.mergeLocalMediaWithRemote(
-        remainingLocalMedia: MutableList<MediaItemModel>
+        remainingLocalMedia: RemainingLocalMedia
     ) = copy(mediaItems = mediaItems.map { item ->
-        val local = remainingLocalMedia
-            .filter { it.mediaHash == item.mediaHash && it.id.isVideo == item.id.isVideo }
-            .toSet()
+        val local = remainingLocalMedia.takeSameContentAs(item)
         when {
             local.isEmpty() -> item.orDownloading(mediaBeingDownloaded)
             else -> {
-                remainingLocalMedia.removeAll(local)
                 MediaItemGroupModel(
                     remoteInstance = item,
                     localInstances = local
@@ -107,15 +104,12 @@ internal class FeedMergerUseCase(
     })
 
     private fun MediaCollectionModel.addLocalMediaToDay(
-        remainingLocalMedia: MutableList<MediaItemModel>
+        remainingLocalMedia: RemainingLocalMedia
     ): MediaCollectionModel {
-        val local = remainingLocalMedia
-            .filter { it.displayDayDate == displayTitle }
-            .toSet()
+        val local = remainingLocalMedia.takeFromDay(displayTitle)
         return when {
             local.isEmpty() -> this
             else -> {
-                remainingLocalMedia.removeAll(local)
                 copy(mediaItems = (mediaItems + local.orUploadingOrProcessing())
                     .sortedByDescending { it.sortableDate }
                 )
