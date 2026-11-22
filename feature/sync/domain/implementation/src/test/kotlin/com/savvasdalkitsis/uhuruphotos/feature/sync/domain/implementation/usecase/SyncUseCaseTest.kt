@@ -31,9 +31,11 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.spyk
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Test
 
 class SyncUseCaseTest {
@@ -70,6 +72,21 @@ class SyncUseCaseTest {
             listOf(UploadItem(2, "content://2")),
             underTest(SyncStatus.Disabled).observePendingItems().first(),
         )
+    }
+
+    @Test
+    fun `does not build the feed while cloud sync is off`() = runTest {
+        var feedCollected = false
+        val feedUseCase: FeedUseCase = mockk {
+            every { observeFeed(any(), any()) } returns flow {
+                feedCollected = true
+                emit(listOf(sameDay))
+            }
+        }
+
+        underTest(SyncStatus.Disabled, feedUseCase = feedUseCase).observePendingItems().first()
+
+        assertFalse(feedCollected)
     }
 
     @Test

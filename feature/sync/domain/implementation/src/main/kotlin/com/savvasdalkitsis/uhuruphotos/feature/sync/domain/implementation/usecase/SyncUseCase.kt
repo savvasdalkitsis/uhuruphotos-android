@@ -32,18 +32,23 @@ import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadSta
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadStatus.InQueue
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadStatus.Uploading
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.uploads.domain.api.model.Uploads
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.domain.api.usecase.UploadsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.WelcomeUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.observe
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @AutoBind
 class SyncUseCase @Inject constructor(
     private val welcomeUseCase: WelcomeUseCase,
@@ -72,22 +77,24 @@ class SyncUseCase @Inject constructor(
     }
 
     override fun observePendingItems(): Flow<List<UploadItem>> =
-        combine(
-            observeSyncStatus(),
-            feedUseCase.observeFeed(FeedFetchTypeModel.ALL, loadSmallInitialChunk = false),
-            uploadsUseCase.observeUploadsInFlight(),
-        )
-        { syncStatus, feed, existingUploads ->
-            val (waiting, uploaded) = existingUploads.jobs.partition { it.status.isWaitingToUpload }
-            val queued = waiting.map { item ->
-                UploadItem(item.localItemId, item.contentUri)
-            }
-            val uploadedIds = uploaded.map { it.localItemId }.toSet()
+        observeSyncStatus().distinctUntilChanged().flatMapLatest { syncStatus ->
             when (syncStatus) {
-                Enabled -> (localOnlyItems(feed).filterNot { it.id in uploadedIds } + queued).distinct()
-                else -> queued
+                Enabled -> combine(
+                    feedUseCase.observeFeed(FeedFetchTypeModel.ALL, loadSmallInitialChunk = false),
+                    uploadsUseCase.observeUploadsInFlight(),
+                ) { feed, existingUploads -> existingUploads.pendingWith(localOnlyItems(feed)) }
+                else -> uploadsUseCase.observeUploadsInFlight().map { it.pendingWith(emptyList()) }
             }
         }.distinctUntilChanged()
+
+    private fun Uploads.pendingWith(localOnlyItems: List<UploadItem>): List<UploadItem> {
+        val (waiting, uploaded) = jobs.partition { it.status.isWaitingToUpload }
+        val queued = waiting.map { item ->
+            UploadItem(item.localItemId, item.contentUri)
+        }
+        val uploadedIds = uploaded.map { it.localItemId }.toSet()
+        return (localOnlyItems.filterNot { it.id in uploadedIds } + queued).distinct()
+    }
 
     private val UploadStatus.isWaitingToUpload get() = this is InQueue || this is Uploading
 
