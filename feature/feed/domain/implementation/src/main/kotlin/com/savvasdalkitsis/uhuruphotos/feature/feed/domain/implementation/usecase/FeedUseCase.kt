@@ -26,8 +26,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchTy
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchTypeModel.VIDEOS
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkScheduler
-import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.FeedCache
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.FeedRepository
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.SharedFeeds
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSourceModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemModel
@@ -53,8 +53,6 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
-import kotlinx.coroutines.flow.merge
-import kotlinx.coroutines.flow.onEach
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 
@@ -62,7 +60,7 @@ import javax.inject.Inject
 @AutoBind
 internal class FeedUseCase @Inject constructor(
     private val feedRepository: FeedRepository,
-    private val feedCache: FeedCache,
+    private val sharedFeeds: SharedFeeds,
     private val mediaUseCase: MediaUseCase,
     private val feedWorkScheduler: FeedWorkScheduler,
     private val downloadUseCase: DownloadUseCase,
@@ -89,12 +87,9 @@ internal class FeedUseCase @Inject constructor(
     private fun combinedFeed(
         feedFetchTypeModel: FeedFetchTypeModel,
         loadSmallInitialChunk: Boolean
-    ) = merge(
-            feedCache.observeFeed(feedFetchTypeModel, loadSmallInitialChunk),
-            liveFeed(feedFetchTypeModel, loadSmallInitialChunk).onEach {
-                feedCache.cacheFeed(it, feedFetchTypeModel, loadSmallInitialChunk)
-            }
-        )
+    ) = sharedFeeds.share(feedFetchTypeModel, loadSmallInitialChunk) {
+        liveFeed(feedFetchTypeModel, loadSmallInitialChunk)
+    }
 
     private fun liveFeed(
         feedFetchTypeModel: FeedFetchTypeModel,

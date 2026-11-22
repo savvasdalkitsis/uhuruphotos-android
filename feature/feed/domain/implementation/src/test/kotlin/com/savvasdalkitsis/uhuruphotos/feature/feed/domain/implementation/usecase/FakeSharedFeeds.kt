@@ -15,17 +15,14 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.usecase
 
-import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchTypeModel
-import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.FeedCache
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.SharedFeeds
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionModel
 import io.mockk.every
-import kotlinx.coroutines.flow.emptyFlow
-import kotlinx.coroutines.flow.flowOf
+import io.mockk.mockk
+import kotlinx.coroutines.flow.Flow
 
-fun FeedCache.defaults() = apply {
-    every { observeFeed(FeedFetchTypeModel.ALL, false) }.returns(emptyFlow())
-}
-
-fun FeedCache.hasFeedCached(feed: List<MediaCollectionModel>) = apply {
-    every { observeFeed(FeedFetchTypeModel.ALL, false) }.returns(flowOf(feed))
+fun unsharedFeeds(): SharedFeeds = mockk {
+    every { share(any(), any(), any()) } answers {
+        thirdArg<() -> Flow<List<MediaCollectionModel>>>().invoke()
+    }
 }

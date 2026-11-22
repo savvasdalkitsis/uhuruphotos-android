@@ -19,8 +19,8 @@ import app.cash.turbine.TurbineTestContext
 import app.cash.turbine.test
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchTypeModel
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkScheduler
-import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.FeedCache
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.FeedRepository
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.SharedFeeds
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHashModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstanceModel
@@ -29,11 +29,16 @@ import com.savvasdalkitsis.uhuruphotos.feature.portfolio.domain.api.usecase.Port
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.domain.api.usecase.UploadsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.WelcomeUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
+import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import com.savvasdalktsis.uhuruphotos.feature.download.domain.api.usecase.DownloadUseCase
+import io.mockk.every
 import io.mockk.mockk
-import io.mockk.verify
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -48,10 +53,11 @@ class FeedUseCaseTest {
     private val feedWorkScheduler: FeedWorkScheduler = mockk(relaxed = true)
     private val mediaUseCase: MediaUseCase = mockk<MediaUseCase>().defaults()
     private val feedRepository: FeedRepository = mockk<FeedRepository>().defaults()
-    private val feedCache: FeedCache = mockk<FeedCache>(relaxed = true).defaults()
-    private val underTest = FeedUseCase(
+    private val underTest = feedUseCase(unsharedFeeds())
+
+    private fun feedUseCase(sharedFeeds: SharedFeeds) = FeedUseCase(
         feedRepository,
-        feedCache,
+        sharedFeeds,
         mediaUseCase,
         feedWorkScheduler,
         downloadUseCase,
@@ -244,35 +250,19 @@ class FeedUseCaseTest {
     }
 
     @Test
-    fun `caches feed`() = runTest {
-        feedRepository.returnsRemoteFeed(
-            "day1" to listOf(mediaItem("1"), mediaItem("2")),
-        )
-
-        underTest.observeFeed(FeedFetchTypeModel.ALL, false).collect()
-
-        verify { feedCache.cacheFeed(
-            listOf(mediaCollection("day1", remote("1"), remote("2"))),
-            FeedFetchTypeModel.ALL,
-            false,
-        ) }
-    }
-
-    @Test
-    fun `loads feed from cache before loading live feed`() = runTest {
-        val cached = listOf(
-            mediaCollection("day1".localOnlyId, "day1", local(1))
-        )
-        feedCache.hasFeedCached(cached)
-        feedRepository.returnsRemoteFeed(
-            "day2" to listOf(mediaItem("2")),
-        )
-
-        observeFeed().test {
-            expect(cached)
-            expect(listOf(mediaCollection("day2", remote("2"))))
-            awaitComplete()
+    fun `builds one live feed for all its observers`() = runTest {
+        var builds = 0
+        every { feedRepository.observeRemoteMediaCollectionsByDate(FeedFetchTypeModel.ALL, false) } returns flow {
+            builds++
+            emit(Group(mapOf("day1" to listOf(mediaItem("1")))))
+            awaitCancellation()
         }
+        val shared = feedUseCase(SharedFeeds(backgroundScope))
+
+        val feeds = List(3) { async { shared.observeFeed(FeedFetchTypeModel.ALL, false).first() } }.awaitAll()
+
+        assertEquals(1, builds)
+        assertEquals(List(3) { listOf(mediaCollection("day1", remote("1"))) }, feeds)
     }
 
     private fun observeFeed() = underTest.observeFeed(FeedFetchTypeModel.ALL, false)

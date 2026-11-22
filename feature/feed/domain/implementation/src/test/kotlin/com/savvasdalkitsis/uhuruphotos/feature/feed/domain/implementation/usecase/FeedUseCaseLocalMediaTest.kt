@@ -18,7 +18,6 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.useca
 import app.cash.turbine.test
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.portfolio.PortfolioItems
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchTypeModel
-import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.FeedCache
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.FeedRepository
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
@@ -43,7 +42,7 @@ class FeedUseCaseLocalMediaTest {
     private val feedRepository: FeedRepository = mockk<FeedRepository>().defaults()
     private val underTest = FeedUseCase(
         feedRepository,
-        mockk<FeedCache>(relaxed = true).defaults(),
+        unsharedFeeds(),
         mediaUseCase,
         mockk(relaxed = true),
         mockk<DownloadUseCase>().defaults(),
