@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.foundation.network.implementation.module
 
 import android.content.Context
 import com.savvasdalkitsis.uhuruphotos.foundation.network.implementation.BasicOkHttpClient
+import com.savvasdalkitsis.uhuruphotos.foundation.network.implementation.interceptors.IOFailureInterceptor
 import com.savvasdalkitsis.uhuruphotos.foundation.network.implementation.interceptors.UserAgentInterceptor
 import com.squareup.moshi.Moshi
 import dagger.Module
@@ -46,6 +47,7 @@ internal class NetworkModule {
         .connectTimeout(60, TimeUnit.SECONDS)
         .readTimeout(60, TimeUnit.SECONDS)
         .writeTimeout(60, TimeUnit.SECONDS)
+        .addInterceptor(IOFailureInterceptor())
         .addInterceptor(userAgentInterceptor)
 
     @Provides
