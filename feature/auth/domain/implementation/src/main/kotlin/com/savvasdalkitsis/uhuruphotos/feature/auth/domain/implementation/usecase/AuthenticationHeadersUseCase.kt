@@ -30,9 +30,14 @@ class AuthenticationHeadersUseCase @Inject constructor(
 
     override fun headers(requestUrl: String): Set<Pair<String, String>> {
         val accessToken = runBlocking { authenticationRepository.getAccessToken() }
-        val cookie = cookieManager.getCookie(requestUrl)
+        val cookie = cookieManager.getCookie(requestUrl)?.withoutCookiesHeadersCannotCarry()
         return setOf(
             "Authorization" to "Bearer $accessToken",
         ) + setOfNotNull(cookie?.takeIf { it.isNotEmpty() }?.let { "Cookie" to it })
     }
+
+    private fun String.withoutCookiesHeadersCannotCarry() = split(";")
+        .map { it.trim() }
+        .filter { cookie -> cookie.isNotEmpty() && cookie.all { it in ' '..'~' } }
+        .joinToString("; ")
 }
