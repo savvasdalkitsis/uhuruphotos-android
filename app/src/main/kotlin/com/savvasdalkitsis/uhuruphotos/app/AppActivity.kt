@@ -31,12 +31,10 @@ import com.bugsnag.android.performance.PerformanceConfiguration
 import com.savvasdalkitsis.uhuruphotos.app.navigation.AppNavigator
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ActivityInitializer
+import com.savvasdalkitsis.uhuruphotos.foundation.launchers.api.onIO
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.Log
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window.LocalWindowSize
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
@@ -51,7 +49,7 @@ class AppActivity : FragmentActivity() {
         super.onCreate(savedInstanceState)
         installSplashScreen()
         enableEdgeToEdge()
-        MainScope().launch(Dispatchers.IO) {
+        onIO {
             BugsnagPerformance.start(PerformanceConfiguration.load(this@AppActivity))
         }
         activityInitializer.onCreated(this)

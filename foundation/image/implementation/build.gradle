@@ -19,6 +19,7 @@ dependencies {
             project(":feature:auth:domain:api"),
             project(":feature:settings:domain:api"),
             project(":foundation:initializer:api"),
+            project(":foundation:launchers:api"),
             project(":foundation:image:api"),
     )
     testImplementation(

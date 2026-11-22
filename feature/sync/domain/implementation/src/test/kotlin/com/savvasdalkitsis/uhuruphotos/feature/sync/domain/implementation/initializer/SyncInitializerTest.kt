@@ -19,6 +19,7 @@ import androidx.work.NetworkType
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.sync.domain.api.usecase.SyncUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
+import com.savvasdalkitsis.uhuruphotos.foundation.log.api.HANDLED_ERROR_TAG
 import dagger.Lazy
 import io.mockk.every
 import io.mockk.mockk
@@ -37,6 +38,8 @@ import kotlinx.coroutines.withTimeout
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotSame
 import org.junit.Test
+import saschpe.log4k.Log
+import saschpe.log4k.Logger
 
 class SyncInitializerTest {
 
@@ -119,6 +122,34 @@ class SyncInitializerTest {
             assertNotSame(Thread.currentThread(), withTimeout(5_000) { resolvedOn.await() })
         } finally {
             Dispatchers.resetMain()
+        }
+    }
+
+    @Test
+    fun `reports a failing upload schedule instead of crashing`() = runBlocking {
+        val outcome = CompletableDeferred<String>()
+        val reporter = object : Logger() {
+            override fun print(level: Log.Level, tag: String, message: String?, throwable: Throwable?) {
+                if (tag == HANDLED_ERROR_TAG) outcome.complete("reported ${throwable?.message}")
+            }
+        }
+        val previousHandler = Thread.getDefaultUncaughtExceptionHandler()
+        Thread.setDefaultUncaughtExceptionHandler { _, e -> outcome.complete("crashed ${e.message}") }
+        val previousLoggers = Log.loggers.toList()
+        Log.loggers.clear()
+        Log.loggers += reporter
+        try {
+            SyncInitializer(
+                Lazy { mockk { every { observePendingItems() } returns flow { throw IllegalStateException("feed failed") } } },
+                Lazy { mockk() },
+                Lazy { settingsUseCase },
+            ).onAppCreated(mockk())
+
+            assertEquals("reported feed failed", withTimeout(5_000) { outcome.await() })
+        } finally {
+            Log.loggers.clear()
+            Log.loggers += previousLoggers
+            Thread.setDefaultUncaughtExceptionHandler(previousHandler)
         }
     }
 }

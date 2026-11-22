@@ -91,6 +91,7 @@ dependencies {
             project(":foundation:activity:api"),
             project(":foundation:image:api"),
             project(":foundation:initializer:api"),
+            project(":foundation:launchers:api"),
             project(":foundation:log:api"),
             project(":foundation:map:api"),
             project(":foundation:navigation:api"),

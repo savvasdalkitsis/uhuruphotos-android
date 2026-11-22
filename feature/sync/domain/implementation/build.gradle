@@ -12,10 +12,13 @@ dependencies {
             project(":feature:uploads:domain:api"),
             project(":feature:welcome:domain:api"),
             project(":foundation:initializer:api"),
+            project(":foundation:launchers:api"),
             project(":foundation:preferences:api"),
     )
     testImplementation(
             libs.bundles.test,
+            libs.log4k,
+            project(":foundation:log:api"),
     )
     ksp libs.autodagger.ksp
 }

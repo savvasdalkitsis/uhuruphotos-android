@@ -21,9 +21,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.Setti
 import com.savvasdalkitsis.uhuruphotos.feature.sync.domain.api.usecase.SyncUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
+import com.savvasdalkitsis.uhuruphotos.foundation.launchers.api.onIO
 import dagger.Lazy
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
@@ -31,7 +30,6 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.runningFold
-import kotlinx.coroutines.launch
 import se.ansman.dagger.auto.AutoBindIntoSet
 import javax.inject.Inject
 
@@ -42,7 +40,7 @@ class SyncInitializer @Inject constructor(
     private val settingsUseCase: Lazy<SettingsUseCase>,
 ) : ApplicationCreated {
     override fun onAppCreated(app: Application) {
-        MainScope().launch(Dispatchers.IO) {
+        onIO {
             uploadSchedules().collectLatest(::scheduleUploads)
         }
     }

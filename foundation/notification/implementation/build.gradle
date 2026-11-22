@@ -10,6 +10,7 @@ dependencies {
             libs.hilt,
             project(":foundation:icons:api"),
             project(":foundation:initializer:api"),
+            project(":foundation:launchers:api"),
             project(":foundation:notification:api"),
             project(":foundation:strings:api"),
     )

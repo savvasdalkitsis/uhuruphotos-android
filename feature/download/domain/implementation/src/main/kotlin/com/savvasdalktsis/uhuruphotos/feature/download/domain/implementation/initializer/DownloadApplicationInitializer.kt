@@ -17,14 +17,15 @@ package com.savvasdalktsis.uhuruphotos.feature.download.domain.implementation.in
 
 import android.app.Application
 import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
+import com.savvasdalkitsis.uhuruphotos.foundation.launchers.api.onIO
+import com.savvasdalkitsis.uhuruphotos.foundation.log.api.reportError
 import com.savvasdalktsis.uhuruphotos.feature.download.domain.api.usecase.DownloadUseCase
 import dagger.Lazy
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.isActive
-import kotlinx.coroutines.launch
 import se.ansman.dagger.auto.AutoBindIntoSet
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -36,16 +37,26 @@ class DownloadInitializer @Inject constructor(
 ) : ApplicationCreated {
 
     override fun onAppCreated(app: Application) {
-        MainScope().launch(Dispatchers.IO) {
+        onIO {
             val downloadUseCase = lazyDownloadUseCase.get()
             downloadUseCase.observeDownloading().collectLatest {
                 if (it.isNotEmpty()) {
-                    while (isActive) {
-                        downloadUseCase.clearFailuresAndStale()
+                    while (currentCoroutineContext().isActive) {
+                        clearFailuresAndStale(downloadUseCase)
                         delay(1000)
                     }
                 }
             }
+        }
+    }
+
+    private suspend fun clearFailuresAndStale(downloadUseCase: DownloadUseCase) {
+        try {
+            downloadUseCase.clearFailuresAndStale()
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            reportError(e)
         }
     }
 }

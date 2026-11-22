@@ -17,6 +17,7 @@ package com.savvasdalktsis.uhuruphotos.feature.download.domain.implementation.in
 
 import com.savvasdalktsis.uhuruphotos.feature.download.domain.api.usecase.DownloadUseCase
 import dagger.Lazy
+import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
@@ -29,9 +30,11 @@ import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import kotlinx.coroutines.withTimeout
 import org.junit.After
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotSame
 import org.junit.Before
 import org.junit.Test
+import java.util.concurrent.CopyOnWriteArrayList
 
 class DownloadInitializerTest {
 
@@ -39,6 +42,8 @@ class DownloadInitializerTest {
     private val downloadUseCase = mockk<DownloadUseCase>(relaxed = true) {
         every { observeDownloading() } returns flowOf(setOf("download"))
     }
+    private val crashes = CopyOnWriteArrayList<Throwable>()
+    private val previousHandler = Thread.getDefaultUncaughtExceptionHandler()
     private val initializer = DownloadInitializer(Lazy {
         resolvedOn.complete(Thread.currentThread())
         downloadUseCase
@@ -47,11 +52,13 @@ class DownloadInitializerTest {
     @Before
     fun setUp() {
         Dispatchers.setMain(StandardTestDispatcher())
+        Thread.setDefaultUncaughtExceptionHandler { _, e -> crashes += e }
     }
 
     @After
     fun tearDown() {
         Dispatchers.resetMain()
+        Thread.setDefaultUncaughtExceptionHandler(previousHandler)
     }
 
     @Test
@@ -66,6 +73,16 @@ class DownloadInitializerTest {
         initializer.onAppCreated(mockk())
 
         coVerify(timeout = TIMEOUT) { downloadUseCase.clearFailuresAndStale() }
+    }
+
+    @Test
+    fun `keeps clearing stale downloads after a failed attempt`() = runBlocking {
+        coEvery { downloadUseCase.clearFailuresAndStale() } throws IllegalStateException("query failed") andThen Unit
+
+        initializer.onAppCreated(mockk())
+
+        coVerify(timeout = TIMEOUT, atLeast = 2) { downloadUseCase.clearFailuresAndStale() }
+        assertEquals(emptyList<Throwable>(), crashes)
     }
 
     private companion object {

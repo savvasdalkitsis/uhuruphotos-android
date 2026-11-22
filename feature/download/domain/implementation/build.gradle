@@ -20,6 +20,7 @@ dependencies {
             project(":feature:media:remote:domain:api"),
             project(":foundation:coroutines:api"),
             project(":foundation:initializer:api"),
+            project(":foundation:launchers:api"),
             project(":foundation:log:api"),
     )
     testImplementation(
