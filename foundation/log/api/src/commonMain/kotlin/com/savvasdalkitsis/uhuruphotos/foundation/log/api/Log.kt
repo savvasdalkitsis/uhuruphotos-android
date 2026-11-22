@@ -30,9 +30,7 @@ fun log(tag: String = "", msg: () -> String) {
 
 fun log(t: Throwable) {
     try {
-        tempEnable {
-            saschpe.log4k.Log.warn(throwable = t)
-        }
+        saschpe.log4k.Log.warn(throwable = t)
     } catch (_: Exception) {
         t.printStackTrace()
     }
@@ -40,9 +38,7 @@ fun log(t: Throwable) {
 
 fun log(t: Throwable, msg: () -> String) {
     try {
-        tempEnable {
-            saschpe.log4k.Log.warn(throwable = t, message = msg)
-        }
+        saschpe.log4k.Log.warn(throwable = t, message = msg)
     } catch (_: Exception) {
         println("$msg")
         t.printStackTrace()
@@ -51,10 +47,8 @@ fun log(t: Throwable, msg: () -> String) {
 
 fun logError(t: Throwable) {
     try {
-        tempEnable {
-            saschpe.log4k.Log.error(throwable = t)
-        }
-    }  catch (_: Exception) {
+        saschpe.log4k.Log.error(throwable = t)
+    } catch (_: Exception) {
         t.printStackTrace()
     }
 }
@@ -92,11 +86,4 @@ inline fun <T, R> T.runCatchingWithLog(block: T.() -> R): Result<R, Throwable> =
 } catch (e: Throwable) {
     log(e)
     Err(e)
-}
-
-private inline fun tempEnable(log: () -> Unit) {
-    val old = Log.enabled
-    Log.enabled = true
-    log()
-    Log.enabled = old
 }
