@@ -114,26 +114,25 @@ internal class DownloadUseCase @Inject constructor(
         .asFlow().mapToList(Dispatchers.IO).distinctUntilChanged().map { it.toSet() }
 
     override suspend fun clearFailuresAndStale() {
-        (downloadingRepository.getAllDownloadIds() - getActive().toSet())
-            .toSet()
+        val active = getActive() ?: return
+        (downloadingRepository.getAllDownloadIds() - active)
             .forEach {
                 downloadingRepository.removeDownloading(DownloadId(it))
             }
     }
 
-    private fun getActive(): List<Long> =
+    private fun getActive(): Set<Long>? =
         downloadManager.query(
             Query().setFilterByStatus(STATUS_RUNNING or STATUS_PAUSED or STATUS_PENDING)
-        ).use { cursor ->
-            val results = mutableListOf<Long>()
-            while (cursor.moveToNext()) {
-                val index = cursor.getColumnIndex(DownloadManager.COLUMN_ID)
-                if (index >= 0) {
-                    val downloadId = cursor.getLong(index)
-                    results.add(downloadId)
+        )?.use { cursor ->
+            buildSet {
+                while (cursor.moveToNext()) {
+                    val index = cursor.getColumnIndex(DownloadManager.COLUMN_ID)
+                    if (index >= 0) {
+                        add(cursor.getLong(index))
+                    }
                 }
             }
-            return results
         }
 
     private val Boolean.mimeType get() = if (this) "video/*" else "image/*"

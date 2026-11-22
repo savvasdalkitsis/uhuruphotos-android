@@ -25,6 +25,8 @@ dependencies {
     )
     testImplementation(
             libs.bundles.test,
+            libs.robolectric,
+            libs.sqldelight.sqlite,
     )
     ksp libs.autodagger.ksp
 }
