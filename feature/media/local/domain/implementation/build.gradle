@@ -28,6 +28,7 @@ dependencies {
     )
     testImplementation(
             libs.bundles.test,
+            libs.log4k,
             libs.robolectric,
             libs.sqldelight.sqlite,
     )

@@ -213,9 +213,7 @@ class LocalMediaService @Inject constructor(
         )?.use {
             log("MediaStore") { "Found ${it.count} items for $collection" }
             while(it.moveToNext()) {
-                result += rowHandler(it).apply {
-                    log("MediaStore") { "Found item $this" }
-                }
+                result += rowHandler(it)
             }
         }
         cont.invokeOnCancellation {
