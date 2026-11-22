@@ -30,6 +30,8 @@ import saschpe.log4k.FileLogger.Rotate
 import saschpe.log4k.Log
 import java.io.File
 import java.util.Collections
+import java.util.concurrent.CountDownLatch
+import java.util.concurrent.TimeUnit.SECONDS
 
 @RunWith(RobolectricTestRunner::class)
 class BackgroundLoggerTest {
@@ -55,7 +57,7 @@ class BackgroundLoggerTest {
         Thread.setDefaultUncaughtExceptionHandler { _, e -> uncaught += e }
 
         underTest.log(Log.Level.Info, "Test", "after clearing", null)
-        writer.drain()
+        awaitWrites()
 
         assertEquals(emptyList<Throwable>(), uncaught.toList())
         assertTrue(logged(logsFolder, "after clearing"))
@@ -68,7 +70,7 @@ class BackgroundLoggerTest {
         Thread.setDefaultUncaughtExceptionHandler { _, e -> uncaught += e }
 
         underTest.log(Log.Level.Info, "Test", "unwritable", null)
-        writer.drain()
+        awaitWrites()
 
         assertEquals(emptyList<Throwable>(), uncaught.toList())
         assertEquals(1, ShadowLog.getLogsForTag(BackgroundLogger.TAG).size)
@@ -81,13 +83,19 @@ class BackgroundLoggerTest {
         val openBefore = openFiles()
 
         repeat(LINES) { underTest.log(Log.Level.Info, "Test", "line $it", null) }
-        writer.drain()
+        awaitWrites()
 
         openBefore?.let { assertTrue(openFiles()!! - it < LINES) }
         assertTrue(logsFolder.deleteRecursively())
     }
 
     private fun openFiles() = File("/proc/self/fd").list()?.size
+
+    private fun awaitWrites() {
+        val written = CountDownLatch(1)
+        writer.execute { written.countDown() }
+        assertTrue(written.await(30, SECONDS))
+    }
 
     private fun fileLogger(logsFolder: File) =
         FileLogger(rotate = Rotate.After(lines = 1000), limit = Files(1), logPath = logsFolder.absolutePath)
