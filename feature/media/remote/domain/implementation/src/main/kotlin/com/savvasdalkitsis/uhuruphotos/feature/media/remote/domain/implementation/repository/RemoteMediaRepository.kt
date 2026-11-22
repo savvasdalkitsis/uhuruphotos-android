@@ -161,10 +161,11 @@ class RemoteMediaRepository @Inject constructor(
 
     fun insertMediaItem(mediaItemDetails: DbRemoteMediaItemDetails) {
         remoteMediaItemDetailsQueries.insert(mediaItemDetails)
-        remoteMediaItemSummaryQueries.setRating(
-            mediaItemDetails.rating,
-            mediaItemDetails.remoteId ?: mediaItemDetails.imageHash
-        )
+        val id = mediaItemDetails.remoteId ?: mediaItemDetails.imageHash
+        val summary = remoteMediaItemSummaryQueries.get(id).executeAsOneOrNull()
+        if (summary != null && summary.rating != mediaItemDetails.rating) {
+            remoteMediaItemSummaryQueries.setRating(mediaItemDetails.rating, id)
+        }
     }
 
     fun setMediaItemRating(id: String, rating: Int) {
