@@ -22,7 +22,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRe
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSourceModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaIdModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHashModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItems
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Md5Hash
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.model.RemoteUserModel
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
@@ -33,6 +35,12 @@ import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.awaitCancellation
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -56,7 +64,25 @@ class MediaUseCaseTest {
         every { parseDateOrTimeString(any()) } returns null
     }
     private val remoteMediaUseCase: RemoteMediaUseCase = mockk(relaxed = true)
-    private val underTest = MediaUseCase(mockk(), remoteMediaUseCase, userUseCase, dateDisplayer, dateParser)
+    private val underTest = MediaUseCase(mockk(), remoteMediaUseCase, userUseCase, dateDisplayer, dateParser, SharedLocalMedia(mockk()))
+
+    @Test
+    fun `reads the device library once for all its observers`() = runTest {
+        var reads = 0
+        val localMediaUseCase: LocalMediaUseCase = mockk {
+            every { observeLocalMediaItems() } returns flow {
+                reads++
+                emit(LocalMediaItems.Found(null, emptyList()))
+                awaitCancellation()
+            }
+        }
+        every { userUseCase.observeUser() } returns flowOf(mockk(relaxed = true))
+        val shared = MediaUseCase(localMediaUseCase, remoteMediaUseCase, userUseCase, dateDisplayer, dateParser, SharedLocalMedia(backgroundScope))
+
+        List(3) { async { shared.observeLocalMedia().first() } }.awaitAll()
+
+        assertEquals(1, reads)
+    }
 
     @Test
     fun `day collections match local copies by content hash`() = runTest {

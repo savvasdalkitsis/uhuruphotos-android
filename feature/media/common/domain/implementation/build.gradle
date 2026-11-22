@@ -46,6 +46,7 @@ dependencies {
             project(":foundation:exif:api"),
             project(":foundation:icons:api"),
             project(":foundation:image:api"),
+            project(":foundation:launchers:api"),
             project(":foundation:log:api"),
             project(":foundation:map:api"),
             project(":foundation:navigation:api"),

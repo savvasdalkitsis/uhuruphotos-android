@@ -68,15 +68,12 @@ class MediaUseCase @Inject constructor(
     private val userUseCase: UserUseCase,
     private val dateDisplayer: DateDisplayer,
     private val dateParser: DateParser,
+    private val sharedLocalMedia: SharedLocalMedia,
 ) : MediaUseCase {
 
-    override fun observeLocalMedia(): Flow<MediaItemsOnDeviceModel> =
-        combine(
-            localMediaUseCase.observeLocalMediaItems(),
-            userUseCase.observeUser(),
-        ) { localMediaItems, user ->
-            combineLocalMediaItemsWithUser(localMediaItems, user)
-        }
+    override fun observeLocalMedia(): Flow<MediaItemsOnDeviceModel> = sharedLocalMedia.share {
+        combine(localMediaUseCase.observeLocalMediaItems(), userUseCase.observeUser(), ::combineLocalMediaItemsWithUser)
+    }
 
     private suspend fun combineLocalMediaItemsWithUser(
         localMediaItems: LocalMediaItems,
