@@ -15,15 +15,12 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.usecase
 
-import android.Manifest
 import android.content.ContentValues
 import android.content.Context
 import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build.VERSION.SDK_INT
-import android.os.Build.VERSION_CODES.Q
-import android.os.Build.VERSION_CODES.TIRAMISU
 import android.os.Environment
 import android.provider.MediaStore.Images
 import android.provider.MediaStore.MediaColumns.DISPLAY_NAME
@@ -78,20 +75,7 @@ class LocalMediaUseCase @Inject constructor(
     private val localMediaWorkScheduler: LocalMediaWorkScheduler,
 ) : LocalMediaUseCase {
 
-    private val apiQPermissions = if (SDK_INT >= Q) {
-        arrayOf(Manifest.permission.ACCESS_MEDIA_LOCATION)
-    } else
-        emptyArray()
-    private val apiTPermissions = if (SDK_INT >= TIRAMISU) {
-        arrayOf(
-            Manifest.permission.READ_MEDIA_IMAGES,
-            Manifest.permission.READ_MEDIA_VIDEO,
-        )
-    } else
-        arrayOf(
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-        )
-    private val requiredPermissions = apiQPermissions + apiTPermissions
+    private val mediaPermissions = LocalMediaPermissions(SDK_INT)
     private val resolver get() = context.contentResolver
 
     override fun Long.toContentUri(isVideo: Boolean): String = contentUri(isVideo)
@@ -144,7 +128,7 @@ class LocalMediaUseCase @Inject constructor(
 
     override suspend fun getLocalMediaItems(): LocalMediaItems {
         resetMediaStoreIfNeeded()
-        return when (val permissions = checkPermissions(*requiredPermissions)) {
+        return when (val permissions = checkPermissions()) {
             is RequiresPermissions -> LocalMediaItems.RequiresPermissions(
                 permissions.deniedPermissions
             )
@@ -172,15 +156,9 @@ class LocalMediaUseCase @Inject constructor(
         localMediaRepository.refreshFolder(folderId)
     }.simple()
 
-    override fun observePermissionsState(): Flow<LocalPermissions>  =
-        observePermissionsState(*requiredPermissions)
-
-    private fun observePermissionsState(vararg permissions: String): Flow<LocalPermissions>  =
-        permissionFlow.getMultiplePermissionState(*permissions).map {
-            when {
-                !it.allGranted -> RequiresPermissions(it.deniedPermissions)
-                else -> Granted
-            }
+    override fun observePermissionsState(): Flow<LocalPermissions> =
+        permissionFlow.getMultiplePermissionState(*mediaPermissions.requested).map { state ->
+            mediaPermissions.state { it in state.grantedPermissions }
         }
 
     override fun observeLocalMediaSyncJob(): Flow<RefreshJobState?> =
@@ -227,9 +205,9 @@ class LocalMediaUseCase @Inject constructor(
     override suspend fun refreshAll(
         onProgressChange: suspend (current: Int, total: Int) -> Unit,
     ) {
-        val permissions = checkPermissions(*requiredPermissions)
-        if (permissions is RequiresPermissions){
-            throw IllegalStateException("App does not have permissions: $permissions")
+        val missing = checkPermissions()
+        if (missing is RequiresPermissions) {
+            throw IllegalStateException("App does not have permissions: $missing")
         }
         resetMediaStoreIfNeeded()
         localMediaRepository.refresh(onProgressChange)
@@ -247,15 +225,8 @@ class LocalMediaUseCase @Inject constructor(
     override fun areOtherFoldersBeingScanned(): Flow<Boolean> =
         localMediaFolderRepository.observeScanningOtherFolders()
 
-    private fun checkPermissions(vararg permissions: String): LocalPermissions {
-        val missing = permissions.filter {
-            ContextCompat.checkSelfPermission(context, it) != PERMISSION_GRANTED
-        }
-        return if (missing.isEmpty()) {
-            Granted
-        } else {
-            RequiresPermissions(missing)
-        }
+    private fun checkPermissions(): LocalPermissions = mediaPermissions.state {
+        ContextCompat.checkSelfPermission(context, it) == PERMISSION_GRANTED
     }
 
     private fun Long.contentUri(isVideo: Boolean) =
