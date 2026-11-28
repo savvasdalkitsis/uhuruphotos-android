@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.worker
 
 import androidx.work.ExistingWorkPolicy
+import androidx.work.NetworkType
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.worker.LocalMediaWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkScheduleUseCase
 import se.ansman.dagger.auto.AutoBind
@@ -31,6 +32,7 @@ class LocalMediaWorkScheduler @Inject constructor(
             workName = LocalMediaSyncWorker.WORK_NAME,
             klass = LocalMediaSyncWorker::class,
             existingWorkPolicy = ExistingWorkPolicy.KEEP,
+            networkRequirement = NetworkType.NOT_REQUIRED,
         )
     }
 
@@ -39,6 +41,7 @@ class LocalMediaWorkScheduler @Inject constructor(
             workName = LocalMediaSyncWorker.WORK_NAME,
             klass = LocalMediaSyncWorker::class,
             existingWorkPolicy = ExistingWorkPolicy.REPLACE,
+            networkRequirement = NetworkType.NOT_REQUIRED,
         )
     }
 
