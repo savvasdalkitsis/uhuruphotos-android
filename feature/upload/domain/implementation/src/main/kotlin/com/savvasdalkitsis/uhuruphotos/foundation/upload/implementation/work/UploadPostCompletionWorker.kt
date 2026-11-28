@@ -19,7 +19,7 @@ import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.WorkerParameters
 import com.github.michaelbull.result.coroutines.coroutineBinding
-import com.github.michaelbull.result.getOr
+import com.github.michaelbull.result.getOrElse
 import com.github.michaelbull.result.onFailure
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummaryStatus.Found
@@ -75,9 +75,9 @@ class UploadPostCompletionWorker @AssistedInject constructor(
         }
     }.onFailure {
         uploadUseCase.saveErrorForProcessingItem(itemId, it)
-    }.getOr(Result.retry())
+    }.getOrElse { failOrRetry(itemId) }
 
-    private fun failOrRetry(itemId: Long) = if (params.runAttemptCount < SCHEDULE_MAX_ATTEMPTS) {
+    private fun failOrRetry(itemId: Long) = if (params.runAttemptCount < MAX_ATTEMPTS_WITHIN_A_WEEK) {
         Result.retry()
     } else {
         uploadUseCase.markAsNotProcessing(itemId)
@@ -90,7 +90,7 @@ class UploadPostCompletionWorker @AssistedInject constructor(
         const val KEY_PHOTO_ID = "photoId"
         const val SCHEDULE_DELAY = 10L
         val SCHEDULE_UNIT = TimeUnit.SECONDS
-        private const val SCHEDULE_MAX_ATTEMPTS = 60480 // amount of 10 second intervals in a week
+        private const val MAX_ATTEMPTS_WITHIN_A_WEEK = 347
         fun workName(hash: String) = "postUploadSync/$hash"
         private const val NOTIFICATION_ID = 1287
     }

@@ -28,6 +28,7 @@ dependencies {
     )
     testImplementation(
             libs.bundles.test,
+            libs.robolectric,
     )
     ksp libs.autodagger.ksp
     ksp libs.moshi.ksp
