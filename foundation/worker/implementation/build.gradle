@@ -1,5 +1,8 @@
 android {
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.worker.implementation'
+    testOptions {
+        unitTests.includeAndroidResources = true
+    }
 }
 
 dependencies {
@@ -18,6 +21,7 @@ dependencies {
     )
     ksp libs.autodagger.ksp
     testImplementation(
+            libs.androidx.lifecycle.service,
             libs.bundles.test,
             libs.robolectric,
     )
