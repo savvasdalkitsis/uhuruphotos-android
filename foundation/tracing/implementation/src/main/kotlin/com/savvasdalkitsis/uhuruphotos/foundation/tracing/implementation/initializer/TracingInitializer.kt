@@ -28,10 +28,7 @@ import javax.inject.Inject
 @AutoBindIntoSet
 class TracingInitializer @Inject constructor() : ApplicationCreated {
     override fun onAppCreated(app: Application) {
-        val debuggable = (app.applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE) != 0
-        val profileable = Build.VERSION.SDK_INT >= 29 && app.applicationInfo.isProfileableByShell
-
-        if (Build.VERSION.SDK_INT != 28 && (debuggable || profileable)) {
+        if (Build.VERSION.SDK_INT != 28 && (app.isDebuggable || app.isBeingProfiled)) {
             Looper.getMainLooper().setMessageLogging { log ->
                 if (!Trace.isEnabled()) {
                     return@setMessageLogging
@@ -45,6 +42,12 @@ class TracingInitializer @Inject constructor() : ApplicationCreated {
             }
         }
     }
+
+    private val Application.isDebuggable
+        get() = (applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE) != 0
+
+    private val Application.isBeingProfiled
+        get() = Build.VERSION.SDK_INT >= 29 && applicationInfo.isProfileableByShell && Trace.isEnabled()
 
     private fun buildSectionLabel(log: String): String {
         val logNoPrefix = log.removePrefix(">>>>> Dispatching to ")

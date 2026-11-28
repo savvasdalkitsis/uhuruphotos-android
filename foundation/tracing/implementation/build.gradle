@@ -9,5 +9,9 @@ dependencies {
             libs.hilt,
             project(":foundation:initializer:api"),
     )
+    testImplementation(
+            libs.bundles.test,
+            libs.robolectric,
+    )
     ksp libs.autodagger.ksp
 }
