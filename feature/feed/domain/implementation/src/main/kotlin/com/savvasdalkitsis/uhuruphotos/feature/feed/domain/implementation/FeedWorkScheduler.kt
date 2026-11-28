@@ -28,6 +28,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.model.RefreshJobSta
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkScheduleUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkerStatusUseCase
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import se.ansman.dagger.auto.AutoBind
 import java.util.concurrent.TimeUnit
@@ -54,7 +55,7 @@ internal class FeedWorkScheduler @Inject constructor(
     }
 
     override fun observeFeedRefreshJob(): Flow<RefreshJobState?> =
-        workerStatusUseCase.monitorUniqueJob(FeedDownloadWorker.WORK_NAME).map {
+        observeFeedRefreshWork().map {
             it?.let { work ->
                 RefreshJobState(
                     status = work.state,
@@ -63,12 +64,25 @@ internal class FeedWorkScheduler @Inject constructor(
             }
         }
 
+    private fun observeFeedRefreshWork(): Flow<WorkInfo?> = combine(
+        workerStatusUseCase.monitorUniqueJob(FeedDownloadWorker.REFRESH_NOW_WORK_NAME),
+        workerStatusUseCase.monitorUniqueJob(FeedDownloadWorker.WORK_NAME),
+    ) { refreshNow, periodic ->
+        when {
+            periodic?.state == WorkInfo.State.RUNNING -> periodic
+            refreshNow?.state?.isFinished == false -> refreshNow
+            else -> periodic ?: refreshNow
+        }
+    }
+
     override fun cancelFeedSync() {
+        workScheduleUseCase.cancelUniqueWork(FeedDownloadWorker.REFRESH_NOW_WORK_NAME)
         workScheduleUseCase.cancelUniqueWork(FeedDownloadWorker.WORK_NAME)
+        scheduleFeedRefreshPeriodic()
     }
 
     override fun observeFeedRefreshJobStatus(): Flow<WorkInfo.State?> =
-        workerStatusUseCase.monitorUniqueJobStatus(FeedDownloadWorker.WORK_NAME)
+        observeFeedRefreshWork().map { it?.state }
 
     override fun observePrecacheThumbnailsJob(): Flow<RefreshJobState?> =
         workerStatusUseCase.monitorUniqueJob(PrecacheFeedThumbnailsWorker.WORK_NAME).map {
@@ -89,7 +103,7 @@ internal class FeedWorkScheduler @Inject constructor(
 
     override fun scheduleFeedRefreshNow() =
         workScheduleUseCase.scheduleNow(
-            FeedDownloadWorker.WORK_NAME,
+            FeedDownloadWorker.REFRESH_NOW_WORK_NAME,
             FeedDownloadWorker::class,
             existingWorkPolicy = ExistingWorkPolicy.KEEP,
             networkRequirement = NetworkType.CONNECTED,

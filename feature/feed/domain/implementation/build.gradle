@@ -38,7 +38,10 @@ dependencies {
             project(":foundation:worker:api"),
     )
     testImplementation(
+            libs.androidx.work.testing,
             libs.bundles.test,
+            libs.robolectric,
+            project(":foundation:worker:implementation"),
     )
     ksp libs.autodagger.ksp
     ksp libs.moshi.ksp
