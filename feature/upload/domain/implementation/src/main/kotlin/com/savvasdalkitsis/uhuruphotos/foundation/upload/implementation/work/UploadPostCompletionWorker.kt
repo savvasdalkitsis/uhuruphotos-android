@@ -17,9 +17,10 @@ package com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.work
 
 import android.content.Context
 import androidx.hilt.work.HiltWorker
+import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.github.michaelbull.result.coroutines.coroutineBinding
-import com.github.michaelbull.result.getOr
+import com.github.michaelbull.result.getOrElse
 import com.github.michaelbull.result.onFailure
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummaryStatus.Found
@@ -27,12 +28,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.Rem
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
-import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
-import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNotificationWorker
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import uhuruphotos_android.foundation.strings.api.generated.resources.Res.string
-import uhuruphotos_android.foundation.strings.api.generated.resources.finalizing_upload
 import java.util.concurrent.TimeUnit
 
 @HiltWorker
@@ -42,22 +39,14 @@ class UploadPostCompletionWorker @AssistedInject constructor(
     private val mediaUseCase: RemoteMediaUseCase,
     private val feedUseCase: FeedUseCase,
     private val uploadUseCase: UploadUseCase,
-    foregroundInfoBuilder: ForegroundInfoBuilder,
-) : ForegroundNotificationWorker<Nothing>(
-    context,
-    params,
-    foregroundInfoBuilder,
-    notificationTitle = string.finalizing_upload,
-    notificationId = NOTIFICATION_ID,
-    cancelBroadcastReceiver = null,
-) {
+) : CoroutineWorker(context, params) {
 
     private val itemId get() = params.inputData.getLong(KEY_ITEM_ID, -1)
 
     private val mediaKey: String
         get() = params.inputData.getString(KEY_PHOTO_ID) ?: params.inputData.getString(KEY_HASH)!!
 
-    override suspend fun work(): Result = coroutineBinding {
+    override suspend fun doWork(): Result = coroutineBinding {
         val hash = mediaKey
         log { "Post completion of item $hash" }
         when (val status = mediaUseCase.getRemoteMediaItemSummary(hash).bind()) {
@@ -75,9 +64,9 @@ class UploadPostCompletionWorker @AssistedInject constructor(
         }
     }.onFailure {
         uploadUseCase.saveErrorForProcessingItem(itemId, it)
-    }.getOr(Result.retry())
+    }.getOrElse { failOrRetry(itemId) }
 
-    private fun failOrRetry(itemId: Long) = if (params.runAttemptCount < SCHEDULE_MAX_ATTEMPTS) {
+    private fun failOrRetry(itemId: Long) = if (params.runAttemptCount < MAX_ATTEMPTS_WITHIN_A_WEEK) {
         Result.retry()
     } else {
         uploadUseCase.markAsNotProcessing(itemId)
@@ -90,8 +79,7 @@ class UploadPostCompletionWorker @AssistedInject constructor(
         const val KEY_PHOTO_ID = "photoId"
         const val SCHEDULE_DELAY = 10L
         val SCHEDULE_UNIT = TimeUnit.SECONDS
-        private const val SCHEDULE_MAX_ATTEMPTS = 60480 // amount of 10 second intervals in a week
+        private const val MAX_ATTEMPTS_WITHIN_A_WEEK = 347
         fun workName(hash: String) = "postUploadSync/$hash"
-        private const val NOTIFICATION_ID = 1287
     }
 }

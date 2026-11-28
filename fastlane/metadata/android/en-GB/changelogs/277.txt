@@ -1,0 +1,5 @@
+* Fixed a crash when several background jobs ran at the same time
+* Uploads no longer restart from scratch every time you open the app
+* Pull to refresh and "refresh now" work again
+* Photos from your phone are scanned offline, and "Select photos" access is supported
+* Login works again after moving the app to a new phone

@@ -58,6 +58,7 @@ internal class FeedDownloadWorker @AssistedInject constructor(
     companion object {
         // string value needs to remain as is for backwards compatibility
         const val WORK_NAME = "refreshAlbums"
+        const val REFRESH_NOW_WORK_NAME = "refreshFeedNow"
         private const val NOTIFICATION_ID = 1273
     }
 }

@@ -64,9 +64,15 @@ class PreferencesModule {
     @Singleton
     @EncryptedPreferences
     fun encryptedSharedPreferences(@ApplicationContext context: Context): SharedPreferences =
+        RecreatingSharedPreferences(
+            create = { createEncryptedSharedPreferences(context) },
+            discard = { discardEncryptedPreferences(context) },
+        ).open()
+
+    private fun createEncryptedSharedPreferences(context: Context): SharedPreferences =
         EncryptedSharedPreferences.create(
             context,
-            "encrypted_shared_prefs",
+            ENCRYPTED_PREFERENCES_FILE,
             MasterKey.Builder(context)
                 .setKeyScheme(KeyScheme.AES256_GCM)
                 .build(),
