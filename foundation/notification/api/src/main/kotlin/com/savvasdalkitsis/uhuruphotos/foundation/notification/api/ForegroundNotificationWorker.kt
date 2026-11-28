@@ -30,8 +30,11 @@ import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.math.toProgressPercent
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.minutes
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.withTimeoutOrNull
 import org.jetbrains.compose.resources.StringResource
 
 abstract class ForegroundNotificationWorker<BR>(
@@ -42,21 +45,16 @@ abstract class ForegroundNotificationWorker<BR>(
     private val notificationId: Int,
     private val notificationChannelId: String = NotificationChannels.Jobs.id,
     private val cancelBroadcastReceiver: Class<BR>? = null,
+    private val backgroundBudget: Duration = 9.minutes,
 ) : CoroutineWorker(context, params) where BR : BroadcastReceiver {
 
     private val notificationManager = NotificationManagerCompat.from(applicationContext)
 
     @SuppressLint("MissingPermission")
     final override suspend fun doWork(): Result = withContext(dispatcher) {
+        val timeLimit = if (failedToMoveToForeground()) backgroundBudget else Duration.INFINITE
         try {
-            if (notificationManager.getNotificationChannel(notificationChannelId) != null) {
-                setForeground(getForegroundInfo())
-            }
-        } catch (_: Exception) {
-            // ignore
-        }
-        try {
-            work()
+            withTimeoutOrNull(timeLimit) { work() } ?: Result.retry()
         } catch (e: Exception) {
             log(e)
             Result.failure()
@@ -71,6 +69,15 @@ abstract class ForegroundNotificationWorker<BR>(
                 }
             }
         }
+    }
+
+    private suspend fun failedToMoveToForeground(): Boolean = try {
+        if (notificationManager.getNotificationChannel(notificationChannelId) != null) {
+            setForeground(getForegroundInfo())
+        }
+        false
+    } catch (_: Exception) {
+        true
     }
 
     open suspend fun getFinishedNotification(result: Result): Pair<Int, Notification>? = null
