@@ -10,10 +10,12 @@ dependencies {
             libs.bundles.autodagger,
             libs.flowpreferences,
             libs.hilt,
+            project(":foundation:log:api"),
             project(":foundation:preferences:api"),
     )
     testImplementation(
             libs.bundles.test,
+            libs.robolectric,
     )
     ksp libs.autodagger.ksp
 }
