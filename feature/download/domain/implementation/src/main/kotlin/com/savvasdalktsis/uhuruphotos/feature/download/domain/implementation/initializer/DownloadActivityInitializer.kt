@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalktsis.uhuruphotos.feature.download.domain.implementation.initializer
 
+import android.app.DownloadManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -31,20 +32,29 @@ import javax.inject.Inject
 @AutoBindIntoSet
 @ActivityRetainedScoped
 class DownloadActivityInitializer @Inject constructor(
+    private val downloadManager: DownloadManager,
     private val localMediaWorkScheduler: LocalMediaWorkScheduler,
 ): ActivityCreated {
 
     private val receiver = object: BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
-            log { "Notified of download completion. Starting local media sync" }
-            localMediaWorkScheduler.scheduleLocalMediaSyncNowIfNotRunning()
+            if (succeeded(intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1))) {
+                log { "Notified of download completion. Starting local media sync" }
+                localMediaWorkScheduler.scheduleLocalMediaSyncNowIfNotRunning()
+            }
         }
     }
 
+    private fun succeeded(downloadId: Long): Boolean = downloadId >= 0 &&
+        downloadManager.query(DownloadManager.Query().setFilterById(downloadId))?.use { cursor ->
+            cursor.moveToFirst() &&
+                cursor.getInt(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_STATUS)) == DownloadManager.STATUS_SUCCESSFUL
+        } == true
+
     override fun onActivityCreated(activity: FragmentActivity) {
         ContextCompat.registerReceiver(activity, receiver,
-            IntentFilter("android.intent.action.DOWNLOAD_COMPLETE"),
-            ContextCompat.RECEIVER_NOT_EXPORTED,
+            IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE),
+            ContextCompat.RECEIVER_EXPORTED,
         )
     }
     override fun onActivityDestroyed(activity: FragmentActivity) {
