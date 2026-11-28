@@ -81,7 +81,10 @@ class SyncInitializer @Inject constructor(
             if (ids.isEmpty()) {
                 return null
             }
-            if (previous == null || previous.ids.isEmpty() || !sameRequirementsAs(previous)) {
+            if (previous == null) {
+                return schedule(keepExisting = true)
+            }
+            if (previous.ids.isEmpty() || !sameRequirementsAs(previous)) {
                 return schedule(keepExisting = false)
             }
             return schedule(keepExisting = true).takeUnless { previous.ids.containsAll(ids) }

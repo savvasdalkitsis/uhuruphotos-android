@@ -78,8 +78,16 @@ class SyncInitializerTest {
     @Test
     fun `keeps the running upload when more items get queued`() = runTest {
         assertEquals(
-            listOf(replace, keep),
+            listOf(keep, keep),
             schedules(items(1), items(1, 2), items(2), items(2)).toList(),
+        )
+    }
+
+    @Test
+    fun `keeps the upload that was already running when the app starts`() = runTest {
+        assertEquals(
+            listOf(keep),
+            schedules(items(1, 2)).toList(),
         )
     }
 
@@ -100,7 +108,7 @@ class SyncInitializerTest {
         }
 
         assertEquals(
-            listOf(replace, replace.copy(networkType = NetworkType.CONNECTED)),
+            listOf(keep, replace.copy(networkType = NetworkType.CONNECTED)),
             schedules(items(1)).toList(),
         )
     }
